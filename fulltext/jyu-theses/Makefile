@@ -5,7 +5,7 @@ all: pdf txt
 pdf: $(patsubst %.url,%.pdf,$(wildcard */*.url))
 
 %.pdf: %.url
-	wget -q --no-use-server-timestamps -O $@ `cat $<` || rm -f $@
+	wget -q --no-use-server-timestamps -O $@ -i $< || rm -f $@
 
 txt: $(patsubst %.url,%.txt,$(wildcard */*.url))
 
