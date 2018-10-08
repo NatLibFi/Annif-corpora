@@ -22,11 +22,14 @@ if not os.path.isdir(path):
 
 doc_uris = collections.defaultdict(list)
 
+def normalize(line):
+    return ' '.join(line.strip().split())
+
 for fn in os.listdir(path):
     with open(os.path.join(path, fn)) as f:
         uri, label = f.readline().strip().split(' ', 1)
         for line in f:
-            doc_uris[line.strip()].append(uri)
+            doc_uris[normalize(line)].append(uri)
 
 for doc, uris in doc_uris.items():
     uricol = ' '.join(('<{}>'.format(uri) for uri in uris))
