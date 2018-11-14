@@ -29,6 +29,8 @@ Directories other than `all` consist of symlinks to the `all` directory.
 
 * `all`: contains all the documents (N=6287)
 * `train`: contains 5287 documents intended for training
+* `maui-train`: random subset (N=200) of `train` intended for training Maui
+models
 * `validate`: contains 500 documents intended for validating (e.g. choosing 
 hyperparameters for a classifier)
 * `test`: contains 500 documents intended for final evaluation
