@@ -14,6 +14,8 @@ The corpus has been split into the following directories:
 * `all`: contains all the documents (N=3150)
 * `train`: contains questions asked before 2016 (N=2625), intended for
   training
+* `maui-train`: random sample subset (N=200) of `train`, intended for
+training a Maui model
 * `validate`: contains questions asked in 2016 (N=213), intended for
 validating (e.g. choosing hyperparameters for a classifier)
 * `test`: contains questions asked in 2017 (N=312), intended for final
