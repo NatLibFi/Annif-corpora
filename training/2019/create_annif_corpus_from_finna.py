@@ -11,6 +11,11 @@ ysa = Graph()
 ysa.parse('http://finto.fi/rest/v1/ysa/data?format=text/turtle')
 #print(len(ysa))  # show number of triples
 
+# load current Allärs
+from rdflib import Graph
+allars = Graph()
+allars.parse('http://finto.fi/rest/v1/allars/data?format=text/turtle')
+#print(len(allars))  # show number of triples
 
 #%%
 # load YSO 2019.3 Cicero
@@ -32,13 +37,18 @@ def is_deprecated(ysouri):
 def label_to_yso_uri(label, lang):  
     value = Literal(label, lang)
 
-    # first try YSA
+    # first try YSA/Allärs
+    if lang == 'fi':
+        voc = ysa
+    else:
+        voc = allars
+
     for prop in (SKOS.prefLabel, SKOS.altLabel):
-        ysauri = ysa.value(None, prop, value, any=True)
-        if ysauri is not None:
+        vocuri = voc.value(None, prop, value, any=True)
+        if vocuri is not None:
             # look up corresponding YSO URIs
             for matchprop in (SKOS.exactMatch, SKOS.closeMatch):
-                matches = [str(match) for match in ysa.objects(ysauri, matchprop)
+                matches = [str(match) for match in voc.objects(vocuri, matchprop)
                            if match.startswith(YSO) and not is_deprecated(match)]
                 if matches:
                     return matches
@@ -81,24 +91,30 @@ def main(ndjson_in):
         if subjects:
 #            print(line_dict['title'] + '\t' + '\t'.join(subjects))
 #            print(line_dict['title'] + '->' + '->'.join(subjects))
-            print_title_with_subject_uris(line_dict['title'], subjects, 'fi')
+            print_title_with_subject_uris(line_dict['title'], subjects)
 
 
 def get_subjects(subject_dicts_in):
     """Returns a list of subjects, i.e. strings extracted from the heading
     fields of the dictionaries in the input list."""
+
     subjects_out = []
     for subject_dict in subject_dicts_in:
-        if not ('source', 'ysa') in subject_dict.items():
+        if ('source', 'ysa') in subject_dict.items():
+            lang = 'fi'
+        elif ('source', 'allars') in subject_dict.items():
+            lang = 'sv'
+        else:
             continue
+
         subjects_out.extend(
-            [item for item in subject_dict['heading']]
+            [(item, lang) for item in subject_dict['heading']]
         )
     return subjects_out
 
 
-def print_title_with_subject_uris(title, subjects, lang):
-    urilist = [label_to_yso_uri(label, lang) for label in subjects]
+def print_title_with_subject_uris(title, subjects):
+    urilist = [label_to_yso_uri(label, lang) for label, lang in subjects]
     urilist = [uri for uri in urilist if uri is not None]
     print(title + '\t' + '\t'.join(
          ['<'+item+'>' for sublist in urilist if sublist for item in sublist ]
