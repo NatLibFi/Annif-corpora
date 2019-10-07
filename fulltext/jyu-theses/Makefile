@@ -5,12 +5,11 @@ all: pdf txt
 pdf: $(patsubst %.url,%.pdf,$(wildcard */*.url))
 
 %.pdf: %.url
-	wget -q --no-use-server-timestamps -O $@ -i $< || rm -f $@
+	wget -q --tries=5 --no-use-server-timestamps -O $@ -i $< || rm -f $@ $<
 
 txt: $(patsubst %.url,%.txt,$(wildcard */*.url))
 
 %.txt: %.pdf
-	pdftotext $<
+	pdftotext $< || true
 
 .PHONY: all pdf txt
-
