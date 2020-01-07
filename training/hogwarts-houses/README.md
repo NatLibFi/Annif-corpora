@@ -9,6 +9,7 @@ https://en.m.wikibooks.org/wiki/Muggles%27_Guide_to_Harry_Potter/Characters
 
 Suggested project configuration:
 
+```
 [hogwarts]
 name=Hogwarts Houses
 language=en
@@ -24,3 +25,4 @@ chunksize=1000
 minn=1
 maxn=4
 minCount=3
+```
