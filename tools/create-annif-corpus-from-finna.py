@@ -18,9 +18,10 @@ from rdflib.namespace import RDF, OWL, DCTERMS, SKOS
 
 
 YSO = Namespace('http://www.yso.fi/onto/yso/')
-COMPLAIN = False  # whether to complain about unknown labels
+COMPLAIN = True  # whether to complain about unknown labels
 FINNA_BASE = 'finna-all-'
-
+YSO_LOCAL_PATH = '/srv/annif-data/yso/yso-combined-2020-10-05.ttl'
+#YSO_LOCAL_PATH = '/srv/Annif-corpora/vocab/yso-skos.ttl'
 
 if len(sys.argv) < 2:
     print('No name of records batch provided.')
@@ -41,7 +42,7 @@ print('Number of triples in Allärs: ', len(allars))
 
 # load YSO and YSO Places
 yso = Graph()
-yso.parse('../vocab/yso-skos.ttl', format='turtle')
+yso.parse(YSO_LOCAL_PATH, format='turtle')
 print('Number of triples in YSO+YSO Places: ', len(yso))
 
 
@@ -51,7 +52,8 @@ def is_deprecated(ysouri):
 
 def label_to_yso_uris(label, source, voc, lang, complain=COMPLAIN):
     #print("looking up '{}' from {} in language {}".format(label, source, lang))
-    value = Literal(unicodedata.normalize('NFC', label), lang)
+    # Remove trailing "." present in labels of some records
+    value = Literal(unicodedata.normalize('NFC', label.rstrip('.')), lang)
 
     for prop in (SKOS.prefLabel, SKOS.altLabel):
         vocuri = voc.value(None, prop, value, any=True)
@@ -84,29 +86,29 @@ def label_to_yso_uris(label, source, voc, lang, complain=COMPLAIN):
 
 
 uris = label_to_yso_uris('kissa', 'yso/fin', yso, 'fi')  # YSO: kissa
-print(uris)
+#print(uris)
 assert URIRef('http://www.yso.fi/onto/yso/p19378') in uris
 uris = label_to_yso_uris('Ingmanin talo', 'yso/fin', yso, 'fi')  # YSO: Casagranden talo
-print(uris)
+#print(uris)
 assert URIRef('http://www.yso.fi/onto/yso/p18095') in uris
 uris = label_to_yso_uris('siirtäminen', 'ysa', ysa, 'fi')  # YSO: siirto
 # 23.9.2020 No more YSO: siirto (liikuttaminen) + siirto (viestintä)
-print(uris)
+#print(uris)
 assert URIRef('http://www.yso.fi/onto/yso/p5700') in uris
 uris = label_to_yso_uris('lähioikeudet', 'yso/fin', yso, 'fi')  # YSO: lähioikeudet
-print(uris)
+#print(uris)
 assert URIRef('http://www.yso.fi/onto/yso/p11910') in uris
 uris = label_to_yso_uris('kulttuuri', 'yso/fin', yso, 'fi')  # YSO: kulttuuri
-print(uris)
+#print(uris)
 assert URIRef('http://www.yso.fi/onto/yso/p372') in uris
 uris = label_to_yso_uris('Helsinki -- Kallio', 'ysa', ysa, 'fi')  # YSO-paikat: Kallio (Helsinki)
-print(uris)
+#print(uris)
 assert URIRef('http://www.yso.fi/onto/yso/p105606') in uris
 uris = label_to_yso_uris('Zambia', 'yso/fin', yso, 'fi')  # YSO-paikat: Sambia
-print(uris)
+#print(uris)
 assert URIRef('http://www.yso.fi/onto/yso/p104983') in uris
 uris = []
-print(uris)
+#print(uris)
 assert label_to_yso_uris('not found', 'yso/fin', yso, 'fi') == uris
 
 
@@ -142,7 +144,7 @@ assert URIRef('http://www.yso.fi/onto/yso/p22036') in replaced
 
 assert not check_concept(URIRef('http://www.yso.fi/onto/yso/p23766'))  # is deprecated, should return False
 
-        
+
 def get_subject_uris(subject_dicts_in):
     """Returns a list of subjects, i.e. strings extracted from the heading
     fields of the dictionaries in the input list."""
@@ -161,15 +163,20 @@ def get_subject_uris(subject_dicts_in):
             source = 'yso/fin'
             voc = yso
             lang = 'fi'
-        elif ('source', 'yso/fin') in subject_dict.items():
+        elif ('source', 'yso/swe') in subject_dict.items():
             source = 'yso/swe'
             voc = yso
             lang = 'sv'
         else:
+            if COMPLAIN:
+                if 'source' in subject_dict.keys():
+                    print(f"Incompliant source '{subject_dict['source']}'")
+                else:
+                    print("No source")
             continue
-        
+
         uris = []
-        
+
         if len(subject_dict['heading']) > 1:
             label = ' -- '.join(subject_dict['heading'])
             uris = label_to_yso_uris(label, source, voc, lang, complain=False)
@@ -179,7 +186,7 @@ def get_subject_uris(subject_dicts_in):
             uris = []
             for label in subject_dict['heading']:
                 uris.extend(label_to_yso_uris(label, source, voc, lang))
-        
+
         for uri in uris:
             newuris = replace_concept(uri)
             for newuri in newuris:
@@ -195,14 +202,20 @@ def main(ndjson_in, output):
     for ind, line in enumerate(ndjson_in):
         line_dict = json.loads(line)
         if 'title' not in line_dict:
+            if COMPLAIN:
+                print(f'Line {ind}: No title')
             continue
         if 'subjectsExtended' not in line_dict:
+            if COMPLAIN:
+                print(f'Line {ind}: No subjectsExtended')
             continue
 
         subjects = get_subject_uris(line_dict['subjectsExtended'])
         if subjects:
             print(line_dict['title'] + '\t' + '\t'.join(
                 (str(subj)for subj in subjects)), file=output)
+        elif COMPLAIN:
+            print(f'Line {ind}: No subjects found')
 
 
 # inputfile = 'finna-metadata-sample-10k.ndjson'
@@ -210,14 +223,17 @@ def main(ndjson_in, output):
 #     with gzip.open(''.join(inputfile.split('.')[:-1]) + '.tsv.gz', 'wt') as outputf:
 #         main(inputf, outputf)
 
+print('Processing Swedish records')
 with gzip.open(FINNA_BASE + batch + '-swe.ndjson.gz', 'rt') as inputf:
     with gzip.open(FINNA_BASE + batch + '-swe.tsv.gz', 'wt') as outputf:
         main(inputf, outputf)
 
+print('Processing English records')
 with gzip.open(FINNA_BASE + batch + '-eng.ndjson.gz', 'rt') as inputf:
     with gzip.open(FINNA_BASE + batch + '-eng.tsv.gz', 'wt') as outputf:
         main(inputf, outputf)
 
+print('Processing Finnish records')
 with gzip.open(FINNA_BASE + batch + '-fin.ndjson.gz', 'rt') as inputf:
     with gzip.open(FINNA_BASE + batch + '-fin.tsv.gz', 'wt') as outputf:
         main(inputf, outputf)
