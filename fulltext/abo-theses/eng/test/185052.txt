@@ -1,0 +1,7712 @@
+FACULTY OF
+SCIENCE AND ENGINEERING
+
+Master’s thesis
+
+Wilson loops in
+lattice gauge theories
+Supervisors:
+
+Author:
+
+Christian Webb
+
+Johanna Jensén
+
+Alex Karrila
+
+2022
+
+Abstract
+This thesis is based on the article "Wilson loops in finite Abelian lattice gauge
+theories" by M. Forsström, J. Lenells and F. Viklund [1]. In the article, lattice
+gauge theories on Z4 for a finite Abelian structure group are considered and the
+expectation value for the Wilson loop observable at weak coupling is computed.
+The purpose of this thesis is to explain this article in more detail and to give the
+theory necessary to understand the article.
+In this thesis, we consider the lattice Z4 , the structure group Zn and a faithful
+and one-dimensional representation. Basic theory for groups, representations
+and lattices is discussed. To state the main result, several definitions, e.g. the
+Wilson loop observable and Wilson action, are given. The main result is given
+as a theorem, where we have an inequality for the limit of the expectation value
+of the Wilson loop observable.
+The theory necessary to prove the main result is given in this thesis. Theory
+for discrete exterior calculus is given in the third chapter. This includes theory
+for k-cells and k-forms as well as definitions and applications for both the exterior derivative and the co-derivative. Furthermore, two versions of the Poincaré
+lemma are given and applied to problems, e.g. for writing the given measure
+as a measure on plaquette configurations instead of spin configurations. The
+Hodge dual of the lattice Zr is defined and both examples and lemmas, which
+are important for later proofs, are given.
+In the fourth chapter, vortices and oriented surfaces are defined using the
+theory from the previous chapter. It is important to note that these definitions
+might differ from other sources. Various lemmas are stated and proved. The
+most important result in this chapter is a proposition, in which a probability is
+computed, that is applied several times in the proof of the main result.
+Since the limit of the expectation of the Wilson loop observable is computed,
+both its existence and translation invariance must be proved. A more general
+theorem, which proves the existence and translation invariance for a real-valued
+function, is given and proved with Ginibre’s inequality. This theorem is then
+applied to the Wilson loop observable.
+
+2
+
+The last part of this thesis is the proof of the main theorem. To prove this
+theorem, the theory and results given in the earlier chapters are applied. The
+proof is divided into two parts, which are then combined to achieve the desired
+result.
+
+Contents
+1 Introduction
+
+3
+
+2 The expectation value of the Wilson loop
+
+4
+
+2.1
+
+Groups . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4
+
+2.2
+
+Representations . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5
+
+2.3
+
+The lattice Z4 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+2.4
+
+The Wilson loop observable . . . . . . . . . . . . . . . . . . . . .
+
+8
+
+2.5
+
+The functions θ(β) and λ(β) . . . . . . . . . . . . . . . . . . . . .
+
+10
+
+2.6
+
+The result for the expectation value . . . . . . . . . . . . . . . . .
+
+10
+
+3 Discrete exterior calculus
+
+12
+
+3.1
+
+Oriented k-cells and k-forms . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+3.2
+
+The exterior derivative . . . . . . . . . . . . . . . . . . . . . . . .
+
+15
+
+3.3
+
+Boundary and co-boundary . . . . . . . . . . . . . . . . . . . . .
+
+16
+
+3.4
+
+The Poincaré Lemma . . . . . . . . . . . . . . . . . . . . . . . . .
+
+19
+
+3.4.1
+
+The set ΣPN
+
+. . . . . . . . . . . . . . . . . . . . . . . . .
+
+20
+
+3.4.2
+
+The measure
+
+. . . . . . . . . . . . . . . . . . . . . . . . .
+
+21
+
+3.5
+
+The co-derivative and its Poincaré Lemma . . . . . . . . . . . . .
+
+21
+
+3.6
+
+The Hodge dual . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+23
+
+4 Vortices and oriented surfaces
+4.1
+
+4.2
+
+28
+
+Vortices . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+28
+
+4.1.1
+
+Vortex decompositions . . . . . . . . . . . . . . . . . . . .
+
+28
+
+4.1.2
+
+Minimal vortices . . . . . . . . . . . . . . . . . . . . . . .
+
+30
+
+4.1.3
+
+Distribution of vortices . . . . . . . . . . . . . . . . . . . .
+
+32
+
+Oriented surfaces . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+36
+
+1
+
+CONTENTS
+
+2
+
+5 The existence and translation invariance of the limit
+
+43
+
+6 Proof of the main theorem
+
+49
+
+6.1
+
+12
+
+The case when ℓλ(β)
+
+is small . . . . . . . . . . . . . . . . . . .
+
+49
+
+6.1.1
+
+Technical lemmas . . . . . . . . . . . . . . . . . . . . . . .
+
+50
+
+6.1.2
+
+Probabilistic bounds on vortex sizes . . . . . . . . . . . . .
+
+54
+
+6.1.3
+
+The main argument . . . . . . . . . . . . . . . . . . . . . .
+
+56
+
+12
+
+6.2
+
+The case when ℓλ(β)
+
+is large . . . . . . . . . . . . . . . . . . . .
+
+65
+
+6.3
+
+The last part of the proof . . . . . . . . . . . . . . . . . . . . . .
+
+78
+
+6.3.1
+6.3.2
+
+First case: ℓc ≥
+
+ℓ
+2
+
+Second case: ℓc <
+
+7 Svensk sammanfattning
+
+. . . . . . . . . . . . . . . . . . . . . . .
+
+78
+
+ℓ
+2
+
+79
+
+. . . . . . . . . . . . . . . . . . . . . .
+
+82
+
+CHAPTER 1. INTRODUCTION
+
+3
+
+Chapter 1
+Introduction
+Trying to mathematically describe the quantum field theories in the Standard
+Model is both a fascinating and difficult task. One method aiming to do this
+is lattice gauge theories. In these theories, space-time is discretised to a fourdimensional Euclidean lattice. Then, quantum field theories are approximated
+with methods from probability theory. Last, by taking a scaling limit, it might
+be possible to extend the model back to the continuous case and, thus, describe
+continuum quantum field theories.
+Mathematical models for lattice gauge theories have been studied for a long
+time. They can be divided into two groups depending on whether its coupling
+constant is small or large. If the coupling constant is assumed to be small, we
+say that the gauge theory is in the weak coupling regime. The recently published
+articles by S. Chatterjee [2] and S. Cao [3] both compute the expectation values of
+a Wilson loop at weak coupling. This thesis will focus on the article by Forsström
+et al. [1], which extends Chatterjee’s article. Since this model is in finite Abelian
+lattice gauge theories, it might not be relevant to the Standard Model, but it is
+still an interesting mathematical model to study.
+The purpose of this thesis is to explain the third version of this article so that
+a master’s student in mathematics understands it. The reader is expected to be
+familiar with probability theory, measure theory, complex analysis and algebra.
+Other necessary mathematical theory, e.g. group theory and discrete exterior
+calculus, will be discussed in this thesis and the reader is not required to have
+prior knowledge of them.
+
+CHAPTER 2. THE EXPECTATION VALUE OF THE WILSON LOOP
+
+4
+
+Chapter 2
+The expectation value of the
+Wilson loop
+In this chapter, the result for the expectation value of the Wilson loop observable
+will be given as a theorem. Before that, some theory necessary to understand
+this theorem is given. First, some basic theory for groups and representations
+is given. Second, the lattice used in the main theorem is described and terms
+necessary to the theorem, such as the Wilson action and the Wilson loop, are
+defined. Third, the main theorem is stated.
+
+2.1
+
+Groups
+
+In this thesis, we will have a group (G, +), which is a finite non-trivial Abelian
+group. Therefore, we have to define what that is, beginning with the definition
+of a group. A group is a set equipped with a binary operation that satisfies the
+group axioms in the definition below.
+Definition 2.1. (Group) (G, +) is a group if :
+For all a, b ∈ G : a + b ∈ G (Closure)
+For all a, b, c ∈ G : (a + b) + c = a + (b + c) (Associativity)
+There exists an identity element e ∈ G for all a ∈ G: a + e = e + a = a (Identity)
+There exists an inverse element −a ∈ G for all a ∈ G: a − a = −a + a = e
+(Inverse).
+An Abelian group is a group, for which the elements commute.
+
+CHAPTER 2. THE EXPECTATION VALUE OF THE WILSON LOOP
+
+5
+
+Definition 2.2. (Abelian group) A group is Abelian if for all a, b ∈ G : a + b =
+b + a (Commutativity).
+Example 2.3. Some examples of Abelian groups under ordinary addition are
+(Z, +), (R, +) and (Q, +). These groups are all infinite.
+In this thesis, we assume that the group G, which is often called structure
+group, is G = (Zn , +), which is a finite group under addition modulo n. Here, the
+set Zn is Zn = {0, 1, . . . , n−1} and for a, b ∈ Zn we have that a+b := a+b mod n.
+The identity element for this group is e = 0.
+
+2.2
+
+Representations
+
+In this section, two different kinds of representations, which we will have use of
+later, will be defined. Last, the representation that will be used in this thesis is
+given. First, we must define what a representation is. Therefore, we define group
+homomorphisms and the general linear group before giving the definition for a
+representation.
+Definition 2.4. (Group homomorphism) Let (G, ∗) and (H, ⋄) be groups. Then
+f : (G, ∗) ↦→ (H, ⋄) is a homomorphism if for all a, b ∈ G it holds that
+f (a ∗ b) = f (a) ⋄ f (b).
+Definition 2.5. (General linear group of a vector space) The general linear group
+of a vector space V is the group of linear invertible mappings from V to V and
+is denoted by GL(V ).
+It is well known that this is a group with the operation matrix multiplication.
+Definition 2.6. (Representation) A representation ρ of (G, +) on a vector space
+V is a group homomorphism from G to GL(V ).
+From these definitions, it follows that the following property holds for a representation ρ of (G, +) :
+ρ(g + g ′ ) = ρ(g)ρ(g ′ )
+
+for g, g ′ ∈ G.
+
+We continue by discussing faithful representations.
+
+(2.1)
+
+CHAPTER 2. THE EXPECTATION VALUE OF THE WILSON LOOP
+
+6
+
+Definition 2.7. (Faithful representation) A representation ρ is faithful if it is
+injective.
+A representation ρ is injective if ρ(g) = ρ(g ′ ) implies g = g ′ . Let IV be the
+identity matrix for the vector space V . Then, from equation (2.1) follows that
+ρ(e)ρ(g ′ ) = ρ(e + g ′ ) = ρ(g ′ )
+
+for all g ′ ∈ G.
+
+Thus,
+ρ(e) = IV .
+In this thesis, ρ is defined as a faithful and one-dimensional representation of
+the group G = Zn . That the representation is one-dimensional means that the
+dimension of the vector space V is dim(V ) = 1. We derive the representation
+and begin with calculating the value of ρ(0). Since 0 is the identity element for
+this group, we have
+ρ(0) = ρ(e) = 1.
+
+(2.2)
+
+Since
+ρ(1)n = ρ(n · 1) = ρ(e) = 1,
+it follows that ρ(g) must be the nth roots of unity (Recall that a root of unity is
+a complex or real solution to xn = 1, where n is a positive integer and the nth
+root of unity is given by e2kπi/n ). Since ρ is the roots of unity, we obtain
+|ρ(g)| = 1 for all g ∈ G.
+
+(2.3)
+
+Last, the representation must take the same value for g and g + n. Hence, it
+follows that the representation must be given by
+ρ(g) = eg·2πim/n ,
+
+g ∈ G = Zn ,
+
+(2.4)
+
+for some m ∈ {1, . . . , n − 1} relatively prime to n. For faithfulness of the representation, it is necessary that m is relatively prime to n.
+We define a unitary representation and show that the representation ρ is
+unitary.
+Definition 2.8. (Unitary representation) A representation ρ is unitary if ρ(g)
+is a unitary operator. The operator ρ(g) is unitary if ρ(g)∗ = ρ(g)−1 for every
+g ∈ G, where ρ(g)∗ is the conjugate transpose of ρ(g).
+
+CHAPTER 2. THE EXPECTATION VALUE OF THE WILSON LOOP
+
+7
+
+To show that the representation ρ, defined in equation (2.4), is unitary, we
+calculate ρ(g)ρ(g)∗ . The conjugate transpose of ρ(g) is ρ(g)∗ = e−g·2πim/n and
+ρ(g)ρ(g)∗ = eg·2πim/n e−g·2πim/n = e0 = 1.
+Thus, ρ(g)∗ = ρ(g)−1 and the representation is unitary.
+To summarise this section, the representation ρ(g) = eg·2πim/n is a faithful,
+unitary and one-dimensional representation of G = Zn , ρ(0) = 1 and ρ(g) is a
+root of unity. Last, the choice of m will determine the representation ρ.
+
+2.3
+
+The lattice Z4
+
+Consider the lattice Z4 , which is four-dimensional with a vertex at every integer
+coordinate. An edge is called positively oriented if the coordinate increases when
+traversing it. From every vertex x, exactly four positively oriented edges emerge
+to its nearest neighbours. These edges are denoted by dxi , where i = 1, 2, 3, 4.
+The opposite direction, the negative orientation, of an edge is given by −dxi . An
+oriented plaquette p is a pair of oriented edges that share a vertex and is defined
+as p := dxi ∧ dxj , where ∧ is the wedge product. The boundary ∂p of a plaquette
+p = dxj1 ∧ dxj2 is given by the edges ∂p := {dxj1 , dxj2 + (dej1 )j2 , −(dxj1 +
+(dej2 )j1 ), −dxj2 }, where dej1 and dej1 are unit vectors. An illustration of an
+oriented plaquette and its boundary is given in Figure 2.1 below. The terms
+oriented edges, oriented plaquettes and boundary are defined in more detail in
+Section 3.1 and Section 3.3.
+
+Figure 2.1: An oriented plaquette p = dxj1 ∧ dxj2 and the edges in its boundary
+∂p.
+We continue by defining some subsets of the lattice. For a given N ≥ 1, let
+BN = Z4 ∩ [−N, N ]4 . Then the set EN , whose elements are called e, is the set
+
+CHAPTER 2. THE EXPECTATION VALUE OF THE WILSON LOOP
+
+8
+
+containing all oriented edges, whose both endpoints are in BN . An oriented edge
+with the opposite direction of e is given by −e. An edge e ∈ EN is a boundary
+edge of BN if there is a plaquette p with a corner that does not belong to BN ,
+such that e ∈ ∂p. The set of oriented plaquettes, which have all their boundary
+∑︁
+edges in EN , are denoted by PN . Elements in PN are called p. Let the set EN
+be the set of functions σ : EN → G for which σe = −σ−e and σe ̸= 0 for all
+e ∈ EN . The elements σ in ΣEN are called spin configurations. For σ ∈ ΣEN ,
+(dσ)p is defined as
+(dσ)p := σe1 + σe2 + σe3 + σe4 ,
+
+p ∈ PN ,
+
+where ei are oriented edges in the boundary of p.
+Last, we have some definitions for loops. Let a0 , a1 , . . . , an be vertices. A loop
+is then a sequence of oriented edges e0 , e1 , . . . , en , where ei is a vertex between
+ai−1 and ai for i = 1, . . . , n such that an = a0 . Let γ be a loop, then the length
+|γ| is defined as the number of edges in it. A loop, which is closed and oriented,
+is called simple if all oriented edges in γ are distinct from each other. Let e
+be an edge in γ. Then the edge e′ ∈ γ, e′ ̸= e, is a corner edge if e′ or −e′
+shares a plaquette with the edge e. Edges which are not corner edges are called
+non-corner edges. This is illustrated in Figure 2.2, where the corner edges are
+given by the black edges and non-corner edges by the grey edges.
+
+Figure 2.2: Corner and non-corner edges of a loop.
+
+2.4
+
+The Wilson loop observable
+
+We begin with the definition of the Wilson action before defining the probability measure that will be used. Thereafter, the Wilson loop observable and the
+
+CHAPTER 2. THE EXPECTATION VALUE OF THE WILSON LOOP
+
+9
+
+expectation value of it are defined. In the next definition, we have the notation
+ℜ(x), which gives the real part of the complex number x.
+Definition 2.9. The Wilson action corresponding to the structure group G, representation ρ and fixed N is given by
+∑︂
+S(σ) := −
+ℜρ((dσ)p ),
+
+σ ∈ ΣEN .
+
+p∈PN
+
+∑︁
+The probability measure µH is the uniform measure on the set EN . From
+∑︁
+this measure, an associated probability measure µβ,N on EN can be defined by
+weighting the uniform measure by e−βS(σ) .
+Definition 2.10. For each β > 0, the probability measure µβ,N on
+−1 −βS(σ)
+µβ,N (σ) := Zβ,N
+e
+µH (σ),
+
+σ ∈ ΣEN ,
+
+∑︁
+
+EN
+
+is
+(2.5)
+
+where Zβ,N is a normalising constant.
+Definition 2.11. (The Wilson loop observable) Given a simple loop γ ⊆ EN ,
+the Wilson loop observable Wγ is
+(︄
+
+)︄
+∑︂
+
+Wγ := Wγ (σ) := ρ
+
+σe
+
+,
+
+σ ∈ ΣEN .
+
+(2.6)
+
+e∈γ
+
+Definition 2.12. (Expectation of the Wilson loop observable) The expectation of
+the Wilson loop observable with respect to the measure µβ,N , using free boundary
+conditions, is
+Eβ,N [Wγ ] =
+
+∑︂
+σ∈
+
+∑︁
+
+Wγ (σ)µβ,N (σ).
+
+EN
+
+Free boundary conditions means that they are no modifications at the boundary of BN . Last, the definition for the limit of this expectation.
+Definition 2.13. (The limit of the expectation of the Wilson loop observable)
+The limit of the expectation of the Wilson loop observable ⟨Wγ ⟩β is
+⟨Wγ ⟩β := lim Eβ,N [Wγ ]
+N →∞
+
+when it exists.
+In Chapter 5, we will see that the limit of the expected value of the Wilson
+loop observable both exists and is translation invariant.
+
+CHAPTER 2. THE EXPECTATION VALUE OF THE WILSON LOOP
+
+2.5
+
+10
+
+The functions θ(β) and λ(β)
+
+Before the main theorem is stated, two functions, θ(β) and λ(β), must be defined.
+For β ≥ 0, θ(β) is defined as
+∑︁
+12βℜρ(g)
+g∈G ρ(g)e
+θ(β) := ∑︁
+12βℜρ(g)
+g∈G e
+
+(2.7)
+
+and λ(β) as
+eβℜ(ρ(g))
+.
+g∈G\{0} eβℜ(ρ(0))
+
+λ(β) := max
+
+(2.8)
+
+We define a function ϕβ (g) and write the functions λ(β) and θ(β) with it. The
+function ϕβ : G = Zn → R is defined by
+ϕβ (g) := eβℜρ(g) ,
+
+g ∈ G.
+
+(2.9)
+
+Hence, the functions θ(β) and λ(β) can be written as
+∑︁
+12
+g∈G ρ(g)ϕβ (g)
+θ(β) = ∑︁
+12
+g∈G ϕβ (g)
+
+(2.10)
+
+and
+ϕβ (g)
+.
+g∈G\{0} ϕβ (0)
+
+λ(β) = max
+
+2.6
+
+(2.11)
+
+The result for the expectation value
+
+Theorem 2.14. Let n ∈ Z and n ≥ 2. Consider lattice gauge theory with the
+structure group G = Zn and a one-dimensional and faithful representation ρ of
+G. Let γ ∈ Z4 be any simple oriented loop, ℓ = |γ| its length and ℓc the number
+of corner edges in γ. Then, the limit of the expectation value of the Wilson loop
+observable exists. Furthermore, for all β0 > 0 chosen large enough, there exist
+constants C ′ = C ′ (β0 ) and C ′′ = C ′′ (β0 ) such that for any β ≥ β0 , the following
+inequality holds:
+|⟨Wγ ⟩β − e−ℓ(1−θ(β)) | ≤ C
+
+′
+
+[︃ √
+
+ℓc
++ λ(β)2
+ℓ
+
+]︃C ′′
+.
+
+(2.12)
+
+The constants C ′ and C ′′ are defined by equation (6.66) in Section 6.3.
+From this inequality, the value of ⟨Wγ ⟩β (the limit of the expectation of the
+Wilson loop) can be estimated. The function e−ℓ(1−θ(β)) takes values in ]0, 1],
+
+CHAPTER 2. THE EXPECTATION VALUE OF THE WILSON LOOP
+
+11
+
+since the constant θ(β) only takes values in ]0, 1] (This is proved in Section 6.3.).
+The right-hand side is small, especially if we have a large β and a long loop with
+few corners. If ℓ(1 − θ(β)) is very large, the exponential function will be close to
+zero and hence ⟨Wγ ⟩β ≈ 0. Likewise, if ℓ(1 − θ(β)) is very small, the exponential
+function will be close to 1 and we have ⟨Wγ ⟩β ≈ 1.
+Another approach to this is that ℓ(1 − θ(β)) is large when β is chosen to be
+much smaller than ℓ. Then it is likely that there are a lot of plaquettes p near
+the loop γ for which dσ(p) ̸= 0. This implies that there are so many plaquettes
+that the model will have independence and therefore gives the result that the
+expectation is close to zero. Similarly, when ℓ(1 − θ(β)) is small, β is much larger
+than ℓ. Hence, it is unlikely that there are any plaquettes p near γ for which
+dσ(p) ̸= 0. Therefore, the expectation will be close to one.
+Remark 2.15. The theorem holds when β0 is chosen such that both 5(|G| −
+1)λ(β0 )2 < 1 and
+[︄ ∑︁
+max
+
+g1 ,...,g6 ∈G
+
+≤
+hold.
+
+g∈G
+
+e−2β
+
+∑︁6
+
+maxg∈G e−2β
+
+1 − cos(2π/n)
+8
+
+k=1
+
+∑︁6
+
+ℜρ(g+gk )
+
+k=1
+
+ℜρ(g+gk )
+
+⃓
+⃓]︄
+∑︁6
+⃓
+⃓
+− ⃓⃓ arg max e−2β k=1 ℜρ(g+gk ) ⃓⃓
+g∈G
+
+Chapter 3
+Discrete exterior calculus
+In this chapter, we focus on discrete exterior calculus for cell complexes of the
+lattice Zr and its subset BN := [−N, N ]r ∩ Zr when r ≥ 1. However, the theory
+will later only be used for cell complexes of Z4 . We assume that the group G
+is Abelian. Hence, the results can be applied to both G = Z and G = Zn . We
+begin with theory for k-cells and k-forms.
+
+3.1
+
+Oriented k-cells and k-forms
+
+Earlier, both the oriented 1-cell and the oriented 2-cell were briefly discussed.
+Then they were called an oriented edge and an oriented plaquette. The 1-cell
+and the 2-cell will now be given new definitions and a general k-cell is defined.
+Consider the lattice Zr , which has a vertex at every point x ∈ Zr with integer
+coordinates. Between every two neighbouring vertices, there exists an edge ê.
+Definition 3.1. (Oriented 1-cell or edge) The edge ê between two neighbouring
+vertices can be divided into two oriented edges, e and −e, with the same endpoints.
+These oriented edges are called 1-cells.
+To define the direction of an oriented edge, unit vectors must first be defined.
+Let e1 = (1, 0, 0, . . . , 0), e2 = (0, 1, 0, . . . , 0), . . . , er = (0, . . . , 0, 1) and consider
+the edges from the origin to one of the vertices e1 , e2 , . . . , er . Edges, which
+have both the same length and direction as these edges, are unit vectors. These
+unit vectors are denoted by de1 , . . . , der . Positive orientation is defined as the
+direction of the unit vectors and negative orientation as the opposite direction.
+Therefore, when x ∈ Zr and j ∈ {1, 2, . . . , r}, a positively oriented edge e can
+12
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+13
+
+be written as e = dxj := x + dej . Then, the negatively oriented edge is given
+by −e = −dxj = x + ej − dej . Recall from Section 2.3 that in Z4 the set EN
+was denoted to be the set of oriented edges whose both endpoints are in the set
+Z4 ∩[−N, N ]4 . We expand this definition to the lattice Zr and define EN to be the
+set of oriented edges, whose both endpoints are in the set BN = Zr ∩ [−N, N ]r .
+Furthermore, the set of only positively oriented edges in BN is given by the set
++
+−
+EN
+and the set of only negatively oriented edges is given by EN
+.
+
+In the definition for oriented k-cells, the notation e1 ∧ e2 will be used. This
+is the wedge product between two oriented edges e1 and e2 . The wedge product
+is defined to have the following properties: For two edges e1 , e2 ∈ EN , we have
+e1 ∧ e2 = −(e2 ∧ e1 ) = (−e2 ) ∧ e1 = e2 ∧ (−e1 )
+and
+e1 ∧ e1 = 0.
+For two or more oriented edges e1 , e2 , . . . , ek in EN , the wedge product e1 ∧· · ·∧ek
+is zero if the edges e1 , . . . , ek do not have a common endpoint.
+Definition 3.2. (Oriented k-cell) Let e1 , . . . , ek be oriented edges with
+e1 ∧ · · · ∧ ek ̸= 0. Then e1 ∧ · · · ∧ ek is an oriented k-cell.
+A k-cell e1 ∧ · · · ∧ ek is positively oriented if there is an x ∈ Zr and j1 <
+j2 < · · · < jk such that ei = dxji . Correspondingly, the k-cell −(e1 ∧ · · · ∧ ek ) is
+negatively oriented. Some examples of k-cells are illustrated in the figure below.
+Notice that a 0-cell is a vertex.
+
+Figure 3.1: Examples of k-cells.
+From now on, a k-cell will refer to an oriented k-cell.
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+14
+
+Definition 3.3. (Oriented plaquette) An oriented plaquette p is an oriented 2cell.
+Since the oriented plaquette is a k-cell, the oriented plaquette p = e1 ∧ e2
+is positively oriented if there is an x ∈ Zr and j1 < j2 such that e1 = dxj1
+and e2 = dxj2 . Therefore, a positively oriented plaquette can be written as
+p := dxj1 ∧ dxj2 . The set of oriented plaquettes whose all boundary edges are in
+EN is given by PN .
+We continue with theory about k-forms, which are discrete differential forms.
+Definition 3.4. (k-form) A function f , which is defined on a subset of k-cells
+in Zr , for which f (c) = −f (−c) is a k-form.
+Consider a k-form f , which has the value fj1 ,...jk (x) on the k-cell c = dxj1 ∧
+· · · ∧ dxjk . Then the k-form f is represented by
+∑︂
+f (x) =
+fj1 ,...,jk (x)dxj1 ∧ · · · ∧ dxjk .
+
+(3.1)
+
+1≤j1 <···<jk ≤r
+
+The function fj1 ,...jk (x) can also be written shortly as fc .
+Example 3.5. Two examples of 2-forms in Z4 are
+f1 (x) = f12 (x)dx1 ∧ dx2 + f34 (x)dx3 ∧ dx4
+and
+f2 (x) = f12 (x)dx1 ∧ dx2 + f13 (x)dx1 ∧ dx3 .
+Next, we define both non-trivial k-forms and the set support.
+Definition 3.6. (Non-trivial k-form) A k-form f is non-trivial if there exists
+one or more k-cells c for which fc ̸= 0.
+Definition 3.7. (Support) The support of a k-form f is the set of oriented kcells c, for which the k-form f satisfies f (c) ̸= 0. The support of f is denoted by
+supp f .
+Example 3.8. Let A be a subset of EN and define for each e ∈ EN the function
+f by
+f (e) :=
+
+⎧
+⎪
+1
+⎪
+⎪
+⎨
+
+if e ∈ A,
+
+−1 if − e ∈ A,
+⎪
+⎪
+⎪
+⎩0
+otherwise.
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+15
+
+Since f (e) = −f (−e) and e is a 1-cell, we have that f is a 1-form. The function
+only takes the value zero outside A, hence supp f = A.
+The set ΣEN in Zr is defined as the set of G-valued 1-forms, whose support is
+in EN . Its elements are denoted by σ and called spin configurations. Recall the
+definition for ΣEN in Z4 : the set of functions σ : EN → G for which σe = −σ−e
+and σe ̸= 0 for all e ∈ EN . We see that this agrees with the definition for Zr .
+Last, the restriction (σ|E )e for a spin configuration σ ∈ ΣEN , a set E ⊆ EN
+and an edge e ∈ EN is defined by
+(σ|E )e :=
+
+3.2
+
+⎧
+⎨σ e
+
+if e ∈ E,
+
+⎩0
+
+otherwise.
+
+(3.2)
+
+The exterior derivative
+
+In this section, the exterior derivative is defined and some examples are given.
+When the exterior derivative operates on a k-form, the result is a k + 1-form.
+Definition 3.9. (Exterior derivative) Given h : Zr → G, x ∈ Zr , and i ∈
+{1, 2, . . . , r}, let
+∂i h(x) := h(x + ei ) − h(x).
+
+(3.3)
+
+If k ∈ {0, 1, . . . , r − 1} and f is a G-valued k-form, the exterior derivative d of
+f is defined as
+df (x) =
+
+∑︂
+
+r
+∑︂
+
+∂i fj1 ,...,jk (x)dxi ∧ (dxj1 ∧ . . . ∧ dxjk ),
+
+x ∈ Zr .
+
+(3.4)
+
+1≤j1 <···<jk ≤r i=1
+
+Next is an example for how the exterior derivative is calculated for 2-forms.
+Example 3.10. We calculate the exterior derivative of the 2-forms
+f1 = f12 (x)dx1 ∧dx2 +f34 (x)dx3 ∧dx4 and f2 = f12 (x)dx1 ∧dx2 +f13 (x)dx1 ∧dx3 .
+We begin with calculating the exterior derivative for the 2-form f1 . By the definition of the exterior derivative, we have
+df1 = d(f12 (x)dx1 ∧ dx2 + f34 (x)dx3 ∧ dx4 )
+= ∂3 f12 (x)dx1 ∧ dx2 ∧ dx3 + ∂4 f12 (x)dx1 ∧ dx2 ∧ dx4
++ ∂1 f34 (x)dx3 ∧ dx4 ∧ dx1 + ∂2 f34 (x)dx3 ∧ dx4 ∧ dx2 .
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+16
+
+We calculate the exterior derivative for f2 :
+df2 = d(f12 (x)dx1 ∧ dx2 + f13 (x)dx1 ∧ dx3 )
+= ∂3 f12 (x)dx1 ∧ dx2 ∧ dx3 + ∂4 f12 (x)dx1 ∧ dx2 ∧ dx4
++ ∂2 f13 (x)dx1 ∧ dx3 ∧ dx2 + ∂4 f13 (x)dx1 ∧ dx3 ∧ dx4
+= (∂3 f12 (x) − ∂2 f13 (x))dx1 ∧ dx2 ∧ dx3 + ∂4 f12 (x)dx1 ∧ dx2 ∧ dx4
++ ∂4 f13 (x)dx1 ∧ dx3 ∧ dx4 .
+A closed k-form can now be defined.
+Definition 3.11. (Closed k-form) A k-form f is closed if df = 0.
+Last, we see that we earlier had an definition for the exterior derivative on a
+spin configuration on the lattice Z4 .
+Example 3.12. Recall the definitions in Section 2.3. For σ ∈ ΣEN , we defined
+(dσ)p := σe1 + σe2 + σe3 + σe4 ,
+
+p ∈ PN ,
+
+where ei are edges in the boundary of p. This is the exterior derivative of σ ∈
+ΣEN .
+
+3.3
+
+Boundary and co-boundary
+
+Recall the definition for the boundary of a plaquette on Z4 in Section 2.3. We
+now expand this definition to Zr . When x ∈ Zr and j1 < j2 , the boundary of a
+plaquette p = dxj1 ∧ dxj2 is defined as
+∂p := {dxj1 , dxj2 + (dej1 )j2 , −(dxj1 + (dej2 )j1 ), −dxj2 }.
+This is illustrated in Figure 3.2 on page 17. The boundary for a plaquette can
+also be defined as the set of edges dxj for which
+(d(Ix=̂x dxj ))p = 1,
+where Ix=̂x is the Kronecker delta function of x with mass at x̂ ∈ Zr . Next, we
+prove that these two definitions are equivalent.
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+17
+
+Figure 3.2: The boundary of the plaquette p = dxj1 ∧ dxj2 .
+We prove this by letting the exterior derivative operate on the 1-form Ix=̂x dxj ,
+when x̂ ∈ Zr and j ∈ {1, 2, . . . , r}. By equations (3.4) and (3.3) for the function
+h = Ix=̂x , we have
+d(Ix=̂x dxj ) =
+=
+
+r
+∑︂
+i=1
+r
+∑︂
+
+r
+∑︂
+(∂i Ix=̂x )dxi ∧ dxj =
+(Ix+ei =̂x − Ix=̂x )dxi ∧ dxj
+i=1
+
+(Ix+ei =̂x − Ix=̂x )dxi ∧ dxj −
+
+i=1
+
+r
+∑︂
+
+(Ix+ei =̂x − Ix=̂x )dxj ∧ dxi .
+
+i=j+1
+
+For edges that are not in the boundary for neither the positive nor the negative
+direction, both Ix+ei =̂x = 0 and Ix=̂x = 0. Hence,
+⎧
+⎪
+(I
+− Ix=̂x )
+if e ∈ ∂p,
+⎪
+⎪
+⎨ x+ei =̂x
+(d(Ix=̂x dxj ))p = −(Ix+ei =̂x − Ix=̂x ) if − e ∈ ∂p,
+⎪
+⎪
+⎪
+⎩0
+otherwise,
+where p is chosen as an oriented plaquette and e = x̂ + dej = d̂
+xj as an oriented
+edge. Since Ix+ei =̂x − Ix=̂x = 1 for edges in the boundary, we have
+⎧
+⎪
+1
+if e ∈ ∂p,
+⎪
+⎪
+⎨
+(d(Ix=̂x dxj ))p = −1 if − e ∈ ∂p,
+⎪
+⎪
+⎪
+⎩0
+otherwise.
+
+(3.5)
+
+Thus, the definitions are equivalent.
+From this follows that if f is a 1-form, 1 ≤ j1 < j2 ≤ r and the plaquette p
+is given by p = dxj1 ∧ dxj2 , then we have that
+(df )p = (df )j1 ,j2 (x) =
+
+∑︂
+e∈∂p
+
+fe .
+
+(3.6)
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+18
+
+Next, the definition for the boundary for general k-cells and a general version
+of formula (3.6) for k-forms.
+Definition 3.13. (Boundary) Let k ∈ {1, 2, . . . , r} and c be a k-cell. The boundary ∂̂
+c of c is the set of (k − 1)-cells ĉ = dxj1 ∧ · · · ∧ d̂
+xjk1 for which
+(d(Ix=̂x d̂
+xj1 ∧ · · · ∧ d̂
+xjk−1 ))c = 1.
+Let c0 be a (k + 1)-cell, then
+(df )c0 =
+
+∑︂
+
+fc .
+
+(3.7)
+
+c∈∂c0
+
+The boundary is connected with the co-boundary, which is defined next.
+̂ of a k-cell c is defined as
+Definition 3.14. (Co-boundary) The co-boundary ∂c
+the set of every (k + 1)-cells ĉ for which c ∈ ∂̂
+c.
+̂ of an edge e is the set of all oriented plaExample 3.15. The co-boundary ∂e
+quettes p that contain e. An illustration is given in Figure 3.3. Furthermore,
+̂
+e ∈ ∂p is equivalent to p ∈ ∂e.
+
+Figure 3.3: An edge and two of the plaquettes in its co-boundary.
+
+Example 3.16. For an edge e ∈ EN , a plaquette p cannot contain both e and
+̂ ∩ ∂(−e)
+̂
+̂
+−e. Therefore, the intersection ∂e
+is empty. Moreover, if p ∈ ∂(−e),
+̂
+then −p ∈ ∂e.
+Last, boundary cells are defined and one example is given. Notice that a
+k-cell is in BN if all corners of the k-cell is in BN .
+Definition 3.17. (Boundary cell) For k ∈ {0, 1, . . . , r − 1}, a k-cell c in BN is
+̂ which is not in BN .
+a boundary cell of BN if there exists a (k + 1)-cell ĉ ∈ ∂c
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+19
+
+Example 3.18. An edge e ∈ EN is a boundary edge of BN if there exists one
+̂ which is outside BN . A plaquette p ∈ PN is a boundary plaquette
+plaquette p ∈ ∂e
+̂ which is outside BN . This is illustrated in
+of BN if there exists a 3-cell c ∈ ∂p
+Figure 3.4, where one of the boundary edges is given by the blue edge and one of
+the boundary plaquettes is given by the blue plaquette.
+
+Figure 3.4: Example of a boundary edge and a boundary plaquette.
+
+3.4
+
+The Poincaré Lemma
+
+In this section, the Poincaré Lemma will be given without proof and then applied
+to both the set ΣPN (which will be defined later in this section) and for writing
+the earlier given measure as a measure on elements in the set ΣPN instead of
+spin configurations. Another version of this lemma, the Poincaré Lemma for the
+co-derivative, will be given in the next section. Before the Poincaré lemma is
+stated, the definition for a box and a cube is given.
+Definition 3.19. (Box and cube) A set of the form ([a1 , b1 ] × · · · × [ar , br ]) ∩ Zr
+is a box if for each j ∈ {1, 2, . . . , r}, {aj , bj } ⊂ Z satisfies aj < bj . A box is a
+cube if all intervals [aj , bj ], 1 ≤ j ≤ r, are of the same length.
+An example of a box is the set BN .
+Lemma 3.20. (The Poincaré lemma). Let k ∈ {0, 1, . . . , r − 1} and B be a
+box in Zr . Then the exterior derivative d is a surjective mapping from the set
+of G-valued k-forms with support contained in B onto the set of G-valued closed
+(k+1)-forms with support contained in B. If the group G is finite and the number
+of closed G-valued k-forms with support contained in B is m, then the map is an
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+20
+
+m-to-1 correspondence. If k ∈ {0, 1, 2, . . . , r − 1} and f is a closed (k + 1)-form
+that vanishes on the boundary of B, then there is a k-form h that also vanish on
+the boundary of B and satisfies dh = f .
+For the proof, see [2, Lemma 2.2].
+
+3.4.1
+
+The set ΣPN
+∑︁
+
+is defined as the set of closed G-valued 2-forms ω with support in
+∑︁
+PN . The 2-forms in PN are called plaquette configurations. Since the set ΣPN
+
+The set
+
+PN
+
+only contains closed forms, we obtain
+dω = 0
+
+if ω ∈ ΣPN .
+
+Recall that the 1-forms in the set ΣEN do not have to be closed, while the set
+ΣPN is defined to only contain closed 2-forms. The restriction for a plaquette
+configuration ω ∈ ΣPN is defined similar to how a restriction was defined for a
+spin configuration σ ∈ ΣEN in equation (3.2). For ω ∈ ΣPN , a set P ⊆ PN and a
+plaquette p ∈ PN , the restriction (ω|P )p is defined as
+⎧
+⎨ωp if p ∈ P,
+(ω|P )p :=
+⎩0 otherwise.
+
+(3.8)
+
+Next is an example of a restriction for a 2-form in PN .
+Example 3.21. For ω ∈ ΣPN , consider the restriction ω|supp ω . By definition,
+each ω has support in PN . Hence, ω|supp
+
+ω
+
+= ω.
+
+We apply the Poincaré lemma to the k-form ω ∈ ΣPN and the box BN . Recall,
+that the set of G-valued 1-forms with support contained in PN is the set ΣEN
+and that the 1-forms in ΣEN are called σ. Furthermore, we have that both σ
+and ω vanishes on the boundary of PN . By the Poincaré Lemma, we have that
+the exterior derivative from the set ΣEN onto the set ΣPN is a surjective map.
+Since G is finite, there exists an m for which the map is a m-to-1 correspondence.
+Furthermore, since ω is closed, there is a σ such that dσ = ω. As a result of these
+three conclusions, we have that ω ∈ ΣPN if and only if there exists a σ ∈ ΣEN
+for which dσ = ω.
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+3.4.2
+
+21
+
+The measure
+
+Earlier, the measure µβ,N was defined in Definition 2.5 as a measure on spin
+configurations:
+−1 β
+µβ,N (σ) = Zβ,N
+e
+
+∑︁
+
+ℜρ((dσ)p )
+
+p∈PN
+
+µH (σ),
+
+σ ∈ ΣEN .
+
+We will later use this measure on plaquette configurations instead of spin configurations. Therefore, we have to map spin configurations to plaquette configurations. A problem is that every plaquette configuration does not arise from a
+spin configuration. Nonetheless, the Poincaré Lemma says that ω ∈ ΣPN if and
+only if there exists a σ ∈ ΣEN such that dσ = ω. Furthermore, the map from
+spin configurations σ ∈ ΣEN to plaquette configurations ω ∈ ΣPN is a many-to-1
+correspondence. Since |{σ ∈ ΣEN : dσ = ω}| does not depend on the choice of
+ω, we have
+∑︂
+
+eβ
+
+∑︁
+
+p∈PN
+
+ℜρ((dσ)p )
+
+= |{σ ∈ ΣEN : dσ = ω}|eβ
+
+∑︁
+
+p∈PN
+
+ℜρ(ωp )
+
+.
+
+σ∈ΣEN :dσ=ω
+
+Thus, a measure for plaquette configurations can be created:
+∑︁
+µβ,N ({σ ∈ ΣEN : dσ = ω}) =
+
+σ∈ΣEN
+
+∑︁
+
+= ∑︁
+
+β
+:dσ=ω e
+
+e
+
+ℜρ((dσ)p )
+
+N
+
+β
+
+∏︁
+
+e
+
+p∈PN
+
+ω ′ ∈ΣPN
+
+3.5
+
+p∈PN
+
+∑︁
+β p∈P ℜρ((dσ)p )
+N
+σ∈ΣEN e
+∑︁
+β p∈P ℜρ(ωp )
+
+ω ′ ∈ΣPN
+
+= ∑︁
+
+∑︁
+
+∏︁
+
+∑︁
+
+p∈PN
+
+ℜρ(ωp′ )
+
+(3.9)
+
+ϕβ (ωp )
+= µβ,N ({ω}).
+′
+p∈PN ϕβ (ωp )
+
+The co-derivative and its Poincaré Lemma
+
+The definition of the co-derivative is similar to the definition of the exterior
+derivative. They both operate on a k-form, but when the co-derivative operates
+the result is a k − 1-form instead of a k + 1-form.
+Definition 3.22. (Co-derivative) Given h : Zr → G, x ∈ Zr , and an i ∈
+{1, 2, . . . , r}, let
+∂̄i h(x) := h(x) − h(x − ei ).
+
+(3.10)
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+22
+
+If k ∈ {1, 2, . . . , r − 1} and f is a G-valued k-form, the co-derivative δ of f is
+defined by
+∑︂
+
+δf (x) :=
+
+k
+∑︂
+(−1)i ∂̄ji fj1 ,...,jk (x)dxj1 ∧ · · · ∧ dxji−1 ∧ dxji+1 ∧ . . . ∧ dxjk
+
+1≤j1 <···<jk ≤r i=1
+
+(3.11)
+r
+
+for x ∈ Z .
+Example 3.23. We calculate the co-derivative of the 2-forms f1 = f12 (x)dx1 ∧
+dx2 + f34 (x)dx3 ∧ dx4 and f2 = f12 (x)dx1 ∧ dx2 + f13 (x)dx1 ∧ dx3 .
+By definition, we have that the co-derivative of f1 is
+δf1 (x) = −∂̄1 f12 dx2 + ∂̄2 f12 dx1 − ∂̄3 f34 dx4 + ∂̄4 f34 dx3
+and the co-derivative of f2 is
+δf2 (x) = −∂̄1 f12 dx2 + ∂̄2 f12 dx1 − ∂̄1 f13 dx3 − ∂̄3 f13 dx1 .
+Similarly to the calculations of (d(Ix=̂x dxj ))p , we calculate the co-derivative
+of the 2-form f := Ix=̂x dxi1 ∧ dxi2 where x ∈ Zr . Let x̂ ∈ Zr , 1 ≤ i1 < i2 ≤ r
+and p0 = d̂
+xi1 ∧ x̂i2 ∈ PN . For j, j1 , j2 ∈ {1, 2, . . . , r}, we have by equation (3.10)
+that
+∂̄j fj1 ,j2 (x) = ∂̄j Ix=̂x,j1 =i1 ,j2 =i2 = Ix=̂x,j1 =i1 ,j2 =i2 − Ix=̂x−ej ,j1 =i1 ,j2 =i2 .
+Letting the co-derivative operate on f , we obtain
+δf (x) =
+
+∑︂
+
+2
+∑︂
+
+(−1)i ∂̄i fj1 ,j2 (x)dxj1 ∧ · · · ∧ dxji−1 ∧ dxji+1 ∧ . . . ∧ dxj2
+
+1≤j1 <···<j2 ≤r i=1
+
+= (−1)1 ∂̄i Ix=̂x dxi2 + (−1)2 ∂̄i Ix=̂x dxi1 = −∂̄i Ix=̂x dxi2 + ∂̄i Ix=̂x dxi1
+= −Ix=̂x dxi2 + Ix−ei1 =̂x dxi2 + Ix=̂x dxi1 − Ix−ei2 =̂x dxi1 .
+Thus,
+⎧
+⎪
+1
+if e ∈ ∂p0 ,
+⎪
+⎪
+⎨
+(δf )e = −1 if − e ∈ ∂p0 ,
+⎪
+⎪
+⎪
+⎩0
+otherwise.
+As a result, when 1 ≤ j ≤ n and f is a 2-form, we obtain for an edge e = dxj
+that
+(δf )e = (δf )j (x) =
+
+∑︂
+̂
+p∈∂c
+
+fp .
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+23
+
+This result can be extended to general k-forms. For a k-form f and a (k − 1)-cell
+c0 , we have
+(δf )c0 =
+
+∑︂
+
+fc .
+
+(3.12)
+
+̂ 0
+c∈∂c
+
+Last, the version of the Poincaré lemma for the co-derivative is stated.
+Lemma 3.24. (The Poincaré lemma for the co-derivative) Let k ∈ {1, 2, . . . , r −
+1} and f be a G-valued k-form on Zr which is zero outside a finite region and
+satisfies δf = 0. Then there is a (k + 1)-form h such that f = δh. Moreover,
+if f is equal to zero outside a box B, then there is a choice of h that is equal to
+zero outside B.
+For the proof, see [2, Lemma 2.7]. Notice that if a k-form is zero outside a
+finite region, the support of the k-form is contained in this finite region. This
+lemma will be applied when theory for oriented surfaces is discussed.
+
+3.6
+
+The Hodge dual
+
+We call the lattice Zr for the primal lattice and create a copy of it, which does
+not have its vertices at the same points as the primal lattice Zr . This copy, whose
+vertices are at the centres of the r-cells of the primal lattice, is called the dual
+lattice and denoted ∗Zr . Therefore, there is a bijection between the r-cells in
+the primal lattice and the 0-cells, i.e. vertices, in the dual lattice. Furthermore,
+we have a bijection between the set of k-cells of the primal lattice Zr and the
+set of (r − k)-cells of the dual lattice ∗Zr , which we will define. For a cell c, the
+Hodge dual of the cell is denoted by ∗c. The operator ∗ is called the Hodge star
+operator and is additive.
+We aim to define the bijection between a k-cell and its Hodge dual. First,
+some theory for permutations of sets is given. The sign of a permutation p is
+given by sgn(p) and takes the value 1 if the permutation is even and −1 if the
+permutation is odd. The sign can be calculated with the formula sgn(p) = (−1)m ,
+where m is the number of transpositions used to obtain the rearrangement from
+the given set.
+We begin with a vertex x and a r-cell dx1 ∧ · · · ∧ dxr in the primal lattice Zr .
+The point at the centre of this r-cell is in the dual lattice given by y := ∗(dx1 ∧
+· · · ∧ dxr ). The negatively oriented edges emerging from y are denoted by dy1 =
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+24
+
+y − de1 , . . . , dyr = y − der . Let k ∈ {0, 1, . . . , r} and 1 ≤ i1 < . . . < ik ≤ r be
+given. Since x ∈ Zr , the k-cell c = dxi1 ∧ . . . ∧ dxik is also in the primal lattice Zr .
+Let j1 , . . . , jr−k be an enumeration of the set {1, 2, . . . , r} \ {i1 , . . . , ik }. Consider
+the permutation that maps (1, 2, . . . , r) to (i1 , . . . , ik , j1 , . . . , jr−k ). Then the
+Hodge dual of the k-cell c is defined as
+∗ (dxi1 ∧ · · · ∧ dxik ) := sgn(i1 , . . . , ik , j1 , . . . , jr−k )dyj1 ∧ · · · ∧ dyjr−k .
+
+(3.13)
+
+Likewise, we can define the Hodge dual of a r − k-cell in the dual lattice by
+∗(dyj1 ∧ · · · ∧ dyjr−k ) := sgn(j1 , . . . , jr−k , i1 , . . . , ik )dxi1 ∧ · · · ∧ dxik
+= (−1)k(r−k) sgn(i1 , . . . , ik , j1 , . . . , jr−k )dxi1 ∧ · · · ∧ dxik .
+(3.14)
+We continue with some examples.
+Example 3.25. Let the primal lattice be Z3 . For a 3-cell in the primal lattice,
+we have that r − k = 3 − 3 = 0. Hence, the Hodge dual of a 3-cell is a 0-cell
+at the centre of the 3-cell. For a 2-cell in the primal lattice, the Hodge dual is a
+1-cell in the dual lattice. This is illustrated in the figure below. Furthermore, the
+Hodge dual of a 1-cell is a 2-cell and the Hodge dual of a 0-cell is a 3-cell.
+
+Figure 3.5: A 3-cell and a 2-cell in the primal lattice (the black cells) and their
+Hodge duals in the dual lattice (the blue cells).
+
+Example 3.26. We calculate the Hodge dual of the 2-cells dx1 ∧dx2 and dx2 ∧dx4
+in Z4 . In the first case, the permutation of {1, 2, 3, 4} is even. The permutation
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+25
+
+of {2, 4, 1, 3} is odd, since the set {1, 2, 3, 4} is obtained from {2, 4, 1, 3} with
+three transpositions. Thus,
+∗ (dx1 ∧ dx2 ) = sgn(1, 2, 3, 4)(dy3 ∧ dy4 ) = dy3 ∧ dy4 ,
+∗ (dx2 ∧ dx4 ) = sgn(2, 4, 1, 3)(dy1 ∧ dy3 ) = −dy1 ∧ dy3 .
+Example 3.27. We calculate the Hodge dual of the 3-cell dx1 ∧ dx3 ∧ dx5 in Z5 .
+The permutation of {1, 3, 5, 2, 4} is odd, since the set {1, 2, 3, 4, 5} is obtained
+from {1, 3, 5, 2, 4} with three transpositions. Thus,
+∗(dx1 ∧ dx3 ∧ dx5 ) = sgn(1, 3, 5, 2, 4)(dy2 ∧ dy4 ) = −dy2 ∧ dy4 .
+Next is the definition for the Hodge dual of a box.
+Definition 3.28. (Hodge dual ∗B of a box B) For a box B ∈ Zr , the corresponding box in the dual lattice ∗Zr is
+∗B := {y ∈ ∗Zr : ∃x ∈ B such that y is a corner in ∗ x}.
+Example 3.29. A cube B ∈ Z2 is represented by the black cube in Figure 3.6,
+where the vertices in the primal lattice are given by the grey points and the vertices
+in the dual lattice by the blue crosses. Then ∗B ∈ ∗Z2 is given by the blue cube
+and ∗ ∗ B ∈ Z2 is given by the red cube. Assume that B is of width b. Then we
+see from the figure that ∗B is of width b + 1 and ∗ ∗ B of width b + 2.
+
+Figure 3.6: The Hodge dual of a cube in Z2 .
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+26
+
+Example 3.30. The box B is defined as B := ([a1 , b1 ] × . . . × [ar , br ]) ∩ Zr . Then,
+the Hodge dual is
+(︃[︃
+∗B =
+
+]︃
+[︃
+]︃)︃
+1
+1
+1
+1
+× . . . × ar − , br +
+∩ ∗Zr .
+a1 − , b1 +
+2
+2
+2
+2
+
+Taking the Hodge dual again, we obtain
+∗ ∗ B = ([a1 − 1, b1 + 1] × . . . × [ar − 1, br + 1]) ∩ Zr .
+Thus, the width of a side in ∗B is 1 larger than its corresponding side in B
+and the width of a side in ∗ ∗ B is 2 larger than its corresponding side in B.
+Consequently, B ⊊ ∗ ∗ B. For example, if B is a cube of width b, then ∗ ∗ B is a
+cube of width b + 2 containing B.
+Next, one lemma for the Hodge dual of a box is given without proof.
+Lemma 3.31. Let B be a box in Zr . Then a k-cell c is outside B if and only if
+∗c is either outside ∗B or in the boundary of ∗B. If c is a k-cell outside B that
+contains a (k − 1)-cell of B, then ∗c belongs to the boundary of ∗B.
+For the proof, see [2, Lemma 2.4]. We define the Hodge dual for k-forms.
+Definition 3.32. (Hodge dual of a G-valued k-form) Given a G-valued k-form
+f on Zr , the Hodge dual ∗f of f is an (r − k)-form defined as
+∗ f (y) :=
+
+∑︂
+
+fi1 ,...,ik (x) sgn(i1 , . . . , ik , j1 , . . . , jr−k )dyj1 ∧ · · · ∧ dyjr−k ,
+
+1≤i1 <···<ik ≤r
+
+(3.15)
+where y = ∗(dx1 ∧ · · · ∧ dxr ) and the sequence j1 , . . . , jr−k depends on i1 , . . . , ik .
+From this definition and (3.13) follows that
+∗f (∗c) = f (c)
+for a k-cell c = dx1 ∧ · · · ∧ dxr .
+Example 3.33. We calculate the Hodge dual of the 2-form f = f12 (x)dx1 ∧dx2 +
+f34 (x)dx3 ∧ dx4 in Z4 . By Definition 3.32, we have
+∗f (y) = f12 (x) sgn(1, 2, 3, 4)dy3 ∧ dy4 + sgn(3, 4, 1, 2)f34 (x)dy1 ∧ dy2
+= f12 (x)dy3 ∧ dy4 + f13 (x)dy2 ∧ dy4 .
+
+CHAPTER 3. DISCRETE EXTERIOR CALCULUS
+
+27
+
+For the Hodge dual of a k-form holds the following formula:
+∗ (∗f ) = (−1)k(r−k) f.
+
+(3.16)
+
+We prove this by calculating ∗(∗f ):
+(︄
+)︄
+∑︂
+(3.15)
+∗(∗f ) = ∗
+fi1 ,...,ik (x) sgn(i1 , . . . , ik , j1 , . . . , jr−k )dyj1 ∧ · · · ∧ dyjr−k
+1≤i1 <···<ik ≤r
+
+∑︂
+
+=
+
+fi1 ,...,ik (x) sgn(i1 , . . . , ik , j1 , . . . , jr−k ) ∗ (dyj1 ∧ · · · ∧ dyjr−k )
+
+1≤i1 <···<ik ≤r
+(3.14)
+
+=
+
+∑︂
+
+fi1 ,...,ik (x) sgn(i1 , . . . , ik , j1 , . . . , jr−k )(−1)k(r−k)
+
+1≤i1 <···<ik ≤r
+
+· sgn(i1 , . . . , ik , j1 , . . . , jr−k )dxi1 ∧ · · · ∧ dxik
+∑︂
+=
+fi1 ,...,ik (x)(−1)k(r−k) dxi1 ∧ · · · ∧ dxik
+1≤i1 <···<ik ≤r
+
+∑︂
+
+= (−1)k(r−k)
+
+fi1 ,...,ik (x)dxi1 ∧ · · · ∧ dxik
+
+1≤i1 <···<ik ≤r
+(3.1)
+
+= (−1)k(r−k) f.
+
+The exterior derivative has different definitions on the primal and on the dual
+lattice.
+Definition 3.34. (Exterior derivative on the dual cell lattice) The exterior derivative d on the dual cell lattice is defined by
+df (y) =
+
+∑︂
+
+r
+∑︂
+
+∂̄i fj1 ,...,jk (y)dyi ∧ (dyj1 ∧ . . . ∧ dyjk ),
+
+y ∈ ∗Zr .
+
+1≤j1 <···<jk ≤r i=1
+
+Note that ∂̄i is used instead of ∂i , although the exterior derivative is denoted
+by the same symbol d in both cases. Last, a lemma is given.
+Lemma 3.35. For any G-valued k-form f on Zr and any x ∈ Zr ,
+δf (x) = (−1)r(k+1)+1 ∗ (d(∗f (y))),
+where y = ∗(dx1 ∧ · · · ∧ dxr ) is the centre of the r-cell (dx1 ∧ · · · ∧ dxr ).
+For the proof, see [2, Lemma 2.3].
+
+Chapter 4
+Vortices and oriented surfaces
+In this chapter, vortices and oriented surfaces are discussed. Lemmas crucial for
+the proof of the main theorem are stated and proved. From now on, the lattice
+is always Z4 , the group G is a finite Abelian group and the representation ρ of
+G is fixed.
+
+4.1
+
+Vortices
+
+We begin with defining vortices before discussing both decompositions and distributions of vortices. Some theory for minimal vortices will also be given. First,
+the definition for an irreducible plaquette configuration is given. This definition
+is necessary for the definition of a vortex.
+Definition 4.1. (Irreducible plaquette configuration) A plaquette configuration
+ω ∈ ΣPN is irreducible if there does not exist a non-empty set P ⊊ supp ω such
+that ω|P ∈ ΣPN .
+Recall from the definition of ΣPN that dω = 0 for ω ∈ ΣPN . Therefore, in the
+above definition ω|P ∈ ΣPN is equivalent to d(ω|P ) = 0.
+Definition 4.2. (Vortex) Let σ ∈ ΣEN . A non-trivial and irreducible plaquette
+configuration ν ∈ ΣPN is a vortex in σ if (dσ)|supp ν = ν.
+
+4.1.1
+
+Vortex decompositions
+
+The goal of this section is to prove that if a spin configuration σ ∈ ΣEN , then dσ
+can be written as a sum of vortices with disjoint supports in σ. To prove this
+28
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+29
+
+claim, we need the results from the following two lemmas.
+Lemma 4.3. Let ω ∈ ΣPN and let ν ∈ ΣPN be such that ω|supp ν = ν. Then
+ω|PN ∖supp ν ∈ ΣPN .
+Proof. We prove this by showing that d(ω|PN ∖supp ν ) = 0. Since ω ∈ ΣPN and
+ν ∈ ΣPN , we have that dω = 0 and dν = 0. Since ω ∈ ΣPN ⊆ PN and supp ν, it
+follows that ω|PN ∖supp ν = ω|PN − ω|supp
+
+ν
+
+= ω − ν. Thus,
+
+d(ω|PN ∖supp ν ) = d(ω − ν) = dω − dν = 0 − 0 = 0
+and ω|PN ∖supp
+
+ν
+
+∈ ΣPN .
+
+Lemma 4.4. Let ω ∈ ΣPN . Then either ω is irreducible or there exist nontrivial ν (1) , ν (2) ∈ ΣPN with disjoint supports contained in supp ω, such that
+ω = ν (1) + ν (2) .
+Proof. We assume that ω is reducible and then prove that there exists nontrivial ν (1) , ν (2) ∈ ΣPN with disjoint supports contained in supp ω such that
+ω = ν (1) + ν (2) . By Definition 4.1, there exists at least one non-empty set
+P ⊊ supp ω such that ν (1) := ω|P ∈ ΣPN . Consequently, P = supp ν (1) and
+ω|supp
+
+ν (1)
+
+= ν (1) .
+
+(4.1)
+
+Therefore, ν (1) fulfils the assumptions for Lemma 4.3 and
+ν (2) := ω|PN ∖supp ν (1) ∈ ΣPN .
+
+(4.2)
+
+Since supp ν (1) is non-empty, ν (1) contains at least one 2-cell for which ν (1) ̸= 0.
+Similarly, ν (2) contains at least one 2-cell for which ν (2) ̸= 0. Thus, they are both
+non-trivial. Since supp ν (2) ⊆ PN ∖ supp ν (1) , the intersection of supp ν (1) and
+supp ν (2) must be empty. Hence, they have disjoint supports. Last, we conclude
+that
+ν (1) + ν (2)
+
+(4.1),(4.2)
+
+=
+
+ω|supp
+
+ν (1)
+
++ ω|PN ∖supp
+
+ν (1)
+
+= ω|PN = ω.
+
+We now have everything necessary to prove and state the main result of this
+section.
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+30
+
+Lemma 4.5. Let σ ∈ ΣEN . Then dσ can be written as a sum of vortices in σ
+with disjoint supports.
+Proof. Since σ ∈ ΣEN and dσ|supp
+
+dσ
+
+= dσ, it follows from Definition 4.2 that
+
+there are two cases to consider. First, if dω is irreducible, then dσ is a vortex.
+Second, we consider the case when dω is not irreducible. Since dσ ∈ ΣPN , by
+Lemma 4.4 there exists non-trivial ν (1) , ν (2) ∈ ΣPN with disjoint supports in supp
+dσ for which dσ = ν (1) + ν (2) .
+If ν (1) and ν (2) are both irreducible, we have a sum of two non-trivial vortices with disjoint supports. Otherwise, by Lemma 4.4, ν (1) and/or ν (2) can be
+decomposed further. This decomposition of 2-forms is repeated until we only
+have irreducible and non-trivial plaquette configurations ν (j) ∈ ΣPN . Since this
+decomposition cannot consist of more than |PN | < ∞ parts, there must exist an
+m ≤ |PN | < ∞ for which dσ can be written as a finite sum of m vortices with
+∑︁
+(j)
+disjoint supports, i.e. dσ = m
+j=1 ν .
+
+4.1.2
+
+Minimal vortices
+
+In this section, we define minimal vortices and prove that a minimal vortex ν,
+whose support does not contain any boundary plaquettes of PN , can be written
+using an edge in EN and an element g ∈ G \ {0}. To achieve this result, two
+lemmas are necessary. We begin with the definition for a minimal vortex.
+Definition 4.6. (Minimal vortex) Let σ ∈ ΣEN . A vortex ν in σ is minimal if
+| supp ν| = 12.
+The following lemma says that the support of a minimal vortex, which contains no boundary plaquettes of PN , can be written as a union of the co-boundary
+of a positively oriented edge e0 and the co-boundary of the negatively oriented
+edge −e0 .
+Lemma 4.7. Let σ ∈ ΣEN and let ν in σ be a vortex for which supp ν contains
+no boundary plaquettes of PN . Then | supp ν| ≥ 12. If | supp ν| = 12, then there
+̂ 0 ∪ ∂(−e
+̂
+exists an edge e0 ∈ EN such that supp ν = ∂e
+0 ).
+For a proof of this lemma, see [3, Lemma 3.4.6]. Before stating the next
+lemma about minimal vortices, the Bianchi Lemma is given.
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+Lemma 4.8. (Bianchi Lemma) If ω ∈
+
+∑︁
+
+PN
+
+31
+
+and c is an oriented 3-cell in BN ,
+
+then
+∑︂
+
+ωp = 0.
+
+(4.3)
+
+p∈∂c
+
+Proof. Let c be an oriented 3-cell in BN . Since ω ∈ ΣPN , we have that
+∑︂
+(3.7)
+ωp = (dω)c = 0.
+p∈∂c
+
+The following lemma is the main result of this section.
+Lemma 4.9. Let σ ∈ ΣEN and let ν be a minimal vortex in σ. If the support
+of ν contains no boundary plaquettes of PN , then there exists an edge dxj ∈ EN
+and g ∈ G \ {0} such that for all p ∈ PN , we have
+νp = (d(gdxj ))p .
+
+Proof. By definition, | supp ν| = 12. Since the support of ν contains no boundary
+plaquettes of PN , it follows from Lemma 4.7 that there exists an edge e0 = dxj ∈
+̂ 0 ∪ ∂(−e
+̂
+EN such that supp ν = ∂e
+0 ).
+̂ 0 ∪ ∂(−e
+̂
+A 3-cell c can not contain more than two plaquettes in ∂e
+0 ). Hence,
+̂ 0 and p2 ∈ ∂(−e
+̂
+we have two plaquettes p1 and p2 such that p1 ∈ ∂e
+0 ). By
+Lemma 4.8,
+∑︂
+
+νp = νp1 + νp2 = 0.
+
+p∈∂c
+
+Since the plaquettes are in the support of ν, we have νp1 ̸= 0 ̸= νp2 . Hence,
+νp1 = g and νp2 = −g for a g ∈ G \ {0}. To conclude,
+⎧
+⎨g
+̂ 0,
+if p ∈ ∂e
+νp =
+⎩−g if p ∈ ∂(−e
+̂
+).
+0
+
+̂
+Since p ∈ ∂(−e
+0 ) is equivalent to −e0 ∈ ∂p, we see from equation (3.5) that
+(d(gdxj ))p can be written as
+(d(gdxj ))p =
+Thus, νp = (d(gdxj ))p .
+
+⎧
+⎨g
+
+̂ 0,
+if p ∈ ∂e
+
+⎩−g
+
+̂
+if p ∈ ∂(−e
+0 ).
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+32
+
+This lemma will be applied in the proof of Proposition 6.1.
+
+4.1.3
+
+Distribution of vortices
+
+In this section, the focus is on distributions of vortices. With the help of two
+lemmas, we will state and prove Proposition 4.12 that is of great importance in
+Chapter 6. We begin with the first lemma, which gives us an upper bound for a
+useful probability.
+Lemma 4.10. Let ν ∈ ΣPN . Then
+µβ,N ({σ ∈ ΣEN : (dσ)|supp
+
+ν
+
+= ν}) ≤ λ(β)| supp ν| .
+
+Proof. Let P := supp ν and define the sets EPν := {ω ∈ ΣPN : ω|P = ν} and
+EP0 := {ω ∈ ΣPN : ω|P = 0}. By the Poincare Lemma, there exists a σ ∈ ΣEN
+such that dσ = ω if and only if ω ∈ ΣPN . Therefore, by equation (3.9) we have
+that µβ,N (EPν ) = µβ,N ({σ ∈ ΣEN : (dσ)|supp
+
+ν
+
+= ν}). We calculate an upper
+
+bound for the probability. Since EP0 ⊆ ΣPN and ϕβ is positive, we have
+∑︁
+∏︁
+ω∈EPν
+p∈P ϕβ (ωp )
+ν
+∏︁ N
+µβ,N ({σ ∈ ΣEN : (dσ)|supp ν = ν}) = µβ,N (EP ) = ∑︁
+ω∈ΣPN
+p∈PN ϕβ (ωp )
+∑︁
+∏︁
+(4.4)
+p∈PN ϕβ (ωp )
+ω∈EPν
+∏︁
+≤ ∑︁
+.
+ω∈E 0
+p∈PN ϕβ (ωp )
+P
+
+We aim to compare the denominator to a sum over ω ∈ EPν . From the definitions
+of the sets EPν and EP0 follows that
+∑︂ ∏︂
+∑︂ ∏︂
+ϕβ (ωp ) =
+ϕβ ((ω − ν)p ).
+ω∈EP0 p∈PN
+
+ω∈EPν p∈PN
+
+Since the mapping ω → ω − ν from EPν to EP0 is bijective, this gives
+∑︁
+∏︁
+∑︁
+∏︁
+ω∈EPν
+p∈PN ϕβ (ωp )
+ω∈EPν
+p∈PN ϕβ (ωp )
+∑︁
+∏︁
+∏︁
+= ∑︁
+ω∈EP0
+p∈P ϕβ (ωp )
+ω∈EPν
+p∈PN ϕβ ((ω − ν)p )
+∑︁ N ∏︁
+∏︁
+ω∈E ν
+p∈P ϕβ (ωp )
+p∈P ∖P ϕβ (ωp )
+∏︁ P
+∏︁ N
+= ∑︁
+.
+ω∈E ν
+p∈P ϕβ ((ω − ν)p )
+p∈PN ∖P ϕβ ((ω − ν)p )
+
+(4.5)
+
+P
+
+To simplify it further, notice that νp = 0 when p ∈ PN \ P . Therefore,
+ϕβ ((ω − ν)p ) = ϕβ (ωp ) for p ∈ PN \ P .
+
+(4.6)
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+33
+
+For a plaquette p ∈ P and a plaquette configuration ω ∈ EPν , we have by definition
+that ωp = νp . Thus,
+(ω − ν)p = ωp − νp = 0 for p ∈ P and ω ∈ EPν .
+
+(4.7)
+
+Combining the previous conclusions, we obtain
+∑︁
+∏︁
+∏︁
+(4.4),(4.5)
+ϕβ (ωp ) p∈PN ∖P ϕβ (ωp )
+ν
+ω∈E
+p∈P
+∏︁ P
+∏︁
+µβ,N (EPν ) ≤ ∑︁
+ν
+ω∈EP
+p∈P ϕβ ((ω − ν)p )
+p∈PN ∖P ϕβ ((ω − ν)p )
+∑︁
+∏︁
+∏︁
+(4.6),(4.7)
+ω∈E ν
+p∈P ϕβ (ωp )
+p∈PN ∖P ϕβ (ωp )
+∑︁ P ∏︁
+∏︁
+=
+ω∈EPν
+p∈P ϕβ (0)
+p∈PN ∖P ϕβ (ωp )
+∏︁
+∑︁
+∏︁
+p∈P ϕβ (νp )
+ω∈EPν
+p∈P ∖P ϕβ (ωp )
+∑︁
+∏︁ N
+= ∏︁
+p∈P ϕβ (0)
+ω∈EPν
+p∈PN ∖P ϕβ (ωp )
+∏︁
+∏︂ ϕβ (νp )
+p∈P ϕβ (νp )
+=
+= ∏︁
+ϕβ (0)
+p∈P ϕβ (0)
+p∈supp ν
+(2.11)
+
+≤
+
+∏︂
+
+λ(β) = λ(β)| supp ν| .
+
+p∈supp ν
+
+Thus, µβ,N ({σ ∈ ΣEN : (dσ)|supp
+
+ν
+
+= ν}) ≤ λ(β)| supp ν| .
+
+The following lemma is about how many irreducible plaquette configurations
+there can exist.
+Lemma 4.11. For each p0 ∈ PN and each m ≥ 6, there are at most 5m−1 (|G| −
+1)m irreducible ν ∈ ΣPN with p0 ∈ supp ν and | supp ν| ≥ 2m.
+Proof. We construct an injective map from the set of irreducible 2-forms in ΣPN
+with p0 ∈ supp ν and | supp ν| ≥ 2m to the set of sequences ν (1) , ν (2) , . . . ν (m) of
+G-valued 2-forms on PN .
+Let ν ∈ ΣPN be irreducible, p0 ∈ supp ν and | supp ν| = 2m. Define ν (0) :=
+0 ∈ ΣPN , p1 := p0 and for p ∈ PN :
+⎧
+⎪
+ν
+⎪
+⎪
+⎨ p1
+νp(1) := −νp1
+⎪
+⎪
+⎪
+⎩0
+
+if p = p1 ,
+if p = −p1 ,
+else.
+
+Let k ∈ {1, 2, . . . , m} and assume that the 2-forms ν (1) , ν (2) , . . . , ν (k) are given
+such that for each j ∈ {1, 2, . . . , k}, the two following statements hold:
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+34
+
+(a) supp ν (j) ∖supp ν (j−1) = {pj , −pj } for some pj ∈ PN . This implies that
+| supp ν (j) | = 2j.
+(b) ν|supp
+
+ν (j)
+
+= ν (j) .
+
+We check that (a) and (b) hold if k = 1. Since the sequence contains only one
+element, we only have to check the conditions for ν (1) . (a) supp ν (1) \supp ν (0) =
+{p1 , −p1 } \ {∅} = {p1 , −p1 } and (b) ν|supp
+
+ν (1)
+
+= ν (1) .
+
+We prove that ν (m) = ν by considering two different cases: dν (k) = 0 and
+dν (k) ̸≡ 0. First, we assume that there exists an sequence satisfying (a) and (b)
+for which dν (k) = 0. From (b) follows that ν|supp
+
+ν (k)
+
+= ν (k) ∈ ΣPN . Since ν
+
+is irreducible, there exists no non-empty set P ⊊ supp ν such that ν|P ∈ ΣPN .
+Since it followed from (a) that supp ν (k) is non-empty, we have ν (k) = ν. Since
+| supp ν (k) | = 2k, we must have
+2k = | supp ν (k) | = | supp ν| = 2m.
+Thus, k = m and ν (m) = ν.
+Consider the second case, where we assume that the sequence is such that
+dν (k) ̸≡ 0. Since we had k = m in the first case, we now have that k < m.
+Therefore, we expand the sequence by defining ν (k+1) such that (a) and (b) hold.
+Since dν (k) ̸≡ 0, there exists an oriented 3-cell c ∈ BN such that (dν (k) )c ̸= 0.
+We assume that both the 3-cells in the set BN and the arbitrary total ordering
+of the plaquettes are given. Denote the first 3-cell for which (dν (k) )c ̸= 0 by
+ck+1 . Furthermore, (dν)ck+1 = 0. Hence, there exists at least one plaquette
+p ∈ ∂ck+1 \supp ν (k) . We denote the first plaquette for which p ∈ ∂ck+1 \supp ν (k)
+by pk+1 and let
+νp(k+1)
+
+⎧
+⎪
+ν
+⎪
+⎪
+⎨ p(k+1)
+:= −νp(k+1)
+⎪
+⎪
+⎪
+⎩ν (k)
+p
+
+if p = pk+1 ,
+if p = −pk+1 ,
+otherwise.
+
+We saw earlier that (a) and (b) holds for k = 1. We assume that ν (1) , . . . , ν (k) satisfies both (a) and (b), then they also hold for ν (k+1) . Therefore, (a) and (b) hold
+for all ν (k) , where k ∈ {1, 2, . . . , m}. Since it follows from a) that | supp ν (m) | =
+2m, from (b) that ν|supp
+
+ν (m)
+
+= ν (m) and we assumed that | supp ν| = 2m, we
+
+have that ν (m) = ν. Therefore, the injective map is constructed.
+Since this mapping is injective, we can derive the upper bound for the set of
+sequences instead of the irreducible vortices with p0 ∈ supp ν and | supp ν| ≥
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+35
+
+2m. Therefore, we calculate how many such sequences (ν (1) , ν (2) , . . . , ν (m) ) there
+are. Since νpk ∈ G \ {0}, there is for each k ∈ {1, 2, . . . , m} |G| − 1 choices for
+νpk . For each k ∈ {1, 2, . . . , m − 1}, there is a given 3-cell ck+1 for which we have
+at most 5 choices for pk+1 for each k ∈ {1, 2, . . . , m − 1}. Combining this, we
+have at most 5m−1 (|G| − 1)m sequences (ν (1) , ν (2) , . . . , ν (m) ). Hence, there exists
+at most 5m−1 (|G| − 1)m irreducible vortices p0 ∈ supp ν and | supp ν| ≥ 2m.
+Recall the definition of λ(β). Since ρ(0) = 1 and the largest value ℜρ(g) =
+cos( g·2πm
+) can take for g ̸= 0 is cos(2π/n), it follows that λ(β) can be written as
+n
+eβℜ(ρ(g))
+= max eβℜ(ρ(g)−ρ(0))
+g∈G\{0} eβℜ((ρ(0)))
+g∈G\{0}
+
+λ(β) := max
+
+= max eβℜ(ρ(g)−1) = eβ(cos(2π/n)−1) .
+g∈G\{0}
+
+Hence,
+lim λ(β) = lim eβ(cos(2π/n)−1) = 0.
+
+β→∞
+
+β→∞
+
+Thus, there always exists a β0 for which 5(|G| − 1)λ(β)2 < 1 for β > β0 . Finally,
+we have everything necessary to state and prove the proposition.
+Proposition 4.12. Fix any β0 > 0 such that 5(|G| − 1)λ(β)2 < 1 for all β > β0 .
+Fix p0 ∈ PN and M ≥ 6. Then
+µβ,N ({σ ∈ ΣEN : ∃ a vortex ν in σ with p0 ∈ supp ν and | supp ν| ≥ 2M })
+(M )
+
+≤ C0
+
+λ(β)2M
+
+for all β > β0 , where
+(M )
+
+C0
+
+:=
+
+5M (|G| − 1)M
+.
+1 − 5(|G| − 1)λ(β)2
+
+(4.8)
+
+Proof. Let m ∈ Z+ and p0 ∈ PN . For ν ∈ ΣPN , we have
+(4.10)
+
+µβ,N ({σ ∈ ΣEN : (dσ)|supp
+
+ν
+
+= ν}) ≤ (λ(β))| supp
+
+ν|
+
+= λ(β)2m .
+
+From Lemma 4.11 follows that there are at most 5m−1 (|G| − 1)m irreducible
+plaquette configurations ν ∈ ΣPN , such that p0 ∈ supp ν and | supp ν| = 2m.
+Therefore,
+µβ,N ({σ ∈ ΣEN : ∃ a vortex ν in σ with p0 ∈ supp ν and | supp ν| = 2m})
+≤ 5m−1 (|G| − 1)m λ(β)2m ≤ (5(|G| − 1))m λ(β)2m .
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+36
+
+We sum over every m ≥ M :
+µβ,N ({σ ∈ ΣEN : ∃ a vortex ν in σ with p0 ∈ supp ν and | supp ν| ≥ 2M )
+∞
+∑︂
+=
+µβ,N ({σ ∈ ΣEN : ∃ a vortex ν in σ with p0 ∈ supp ν and
+m=M
+
+| supp ν| = 2m})
+∞
+∑︂
+(5(|G| − 1))M λ(β)2M
+(M )
+m
+2m
+= C0 λ(β)2M .
+≤
+(5(|G| − 1)) λ(β) =
+2
+1 − 5(|G| − 1)λ(β)
+m=M
+The second to last step follows from the sum being a geometric sum, which
+converges when (5(|G| − 1))λ(β)2 < 1.
+
+4.2
+
+Oriented surfaces
+
+This section focuses on oriented surfaces. Their relation to simple loops is given
+by the second lemma. First, the definitions for an oriented surface and its boundary are given.
+Definition 4.13. (Oriented surface) A Z-valued 2-form q on PN is an oriented
+surface if we have for every e ∈ EN that
+∑︂
+qp ∈ {−1, 0, 1}.
+(δq)e =
+
+(4.9)
+
+̂
+p∈∂e
+
+If a 2-form q is such that |qp | = 1 for all p ∈ PN , then the oriented surface
+is a collection of oriented plaquettes, where every plaquette shares at least one
+edge with another plaquette in the collection. An example of an oriented surface
+and its boundary is illustrated in Figure 4.1.
+
+Figure 4.1: Example of an oriented surface and its boundary when |qp | = 1.
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+37
+
+Definition 4.14. (The boundary of an oriented surface) Let q be an oriented
+surface. Then
+Bq := {e ∈ EN :
+
+∑︂
+
+qp = 1}
+
+̂
+p∈∂e
+
+is the boundary of q.
+Before stating the first lemma, we define for an oriented surface q that
+⎧
+⎨max(qp , 0) for p ∈ PN ,
++
+qp :=
+(4.10)
+⎩0
+for p ̸∈ P .
+N
+
+Lemma 4.15. Let q be an oriented surface with boundary Bq . Then,
+∑︂
+
+∑︂
+
+qp+ (dσ)p =
+
+p∈PN
+
+for all σ ∈ ΣEN .
+
+σe ,
+
+e∈Bq
+
+Note that this lemma is a discrete version of Stokes theorem.
++
+Proof. Let σ ∈ ΣEN and p ∈ PN . Recall that the set EN
+only contains the
+−
+positively oriented edges in the set EN and that the set EN
+only contains the
+
+negatively oriented edges. Furthermore,
+σe = −σ−e .
+From equation (3.7) follows that (dσ)p =
+∑︂
+
+qp+ (dσ)p =
+
+p∈PN
+
+∑︂
+
+qp+
+
+p∈PN
+
+=
+
+∑︂
+
+∑︁
+
+∑︂
+
+(4.11)
+
+e∈∂p
+
+σe . Therefore,
+
+σe
+
+e∈∂p
+
+∑︂
+
+σe
+
+e∈EN
+
+qp+
+
+̂
+p∈(∂e)∩P
+N
+
+∑︂
+(4.10)∑︂
+=
+σe
+qp+
+e∈EN
+
+=
+
+∑︂
++
+e∈EN
+
+̂
+p∈∂e
+
+σe
+
+∑︂
+
+qp+ +
+
+̂
+p∈∂e
+
+∑︂
+
+σe
+
+−
+e∈EN
+
+∑︂
+
+qp+
+
+̂
+p∈∂e
+
+∑︂
+∑︂
+∑︂
+(4.11)∑︂
+=
+σe
+qp+ −
+σe
+qp+
++
+e∈EN
+
+̂
+p∈∂e
+
++
+e∈EN
+
+̂
+p∈∂(−e)
+
+⎛
+=
+
+∑︂
++
+e∈EN
+
+σe ⎝
+
+⎞
+∑︂
+̂
+p∈∂e
+
+qp+ −
+
+∑︂
+̂
+p∈∂(−e)
+
+qp+ ⎠ .
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+38
+
+̂ ∩ ∂(−e)
+̂
+̂
+Recall from Example 3.16 that ∂e
+= ∅. Moreover, if p ∈ ∂(−e),
+then
+̂ Since q is a 2-form, we have for p ∈ ∂e
+̂ that q−p = −qp . Therefore,
+−p ∈ ∂e.
++
+= max(qp , 0) − max(q−p , 0) = max(qp , 0) − max(−qp , 0) = qp
+qp+ − q−p
+
+(4.12)
+
+and
+⎛
+∑︂
++
+e∈EN
+
+⎞
+∑︂
+
+σe ⎝
+
+∑︂
+
+qp+ −
+
+̂
+p∈∂e
+
+⎛
+∑︂
+
+qp+ ⎠ =
+
+σe ⎝
+
++
+e∈EN
+
+̂
+p∈∂(−e)
+
+⎞
+∑︂
+
+∑︂
+
+qp+ −
+
+̂
+p∈∂e
+
++ ⎠
+q−p
+
+̂
+p∈∂e
+
+∑︂
+(4.12)∑︂
+=
+σe
+qp .
++
+e∈EN
+
+̂
+p∈∂e
+
+Furthermore,
+∑︂
+∑︂
+∑︂
+∑︂
+∑︂
+σe
+qp = −σ−e
+(−q−p ) = σ−e
+q−p = σ−e
+qp = σ−e
+qp .
+̂
+p∈∂e
+
+̂
+p∈∂e
+
+̂
+p∈∂e
+
+̂
+−p∈∂e
+
+̂
+p∈∂(−e)
+
+(4.13)
+Therefore,
+∑︂
++
+e∈EN
+
+σe
+
+∑︂
+̂
+p∈∂e
+
+⎛ ⎛
+⎞⎞
+∑︂
+∑︂
+∑︂
+∑︂
+1
+1 ∑︂
+(4.13)
+⎝ ⎝σe
+qp =
+σe
+qp
+qp + σ−e
+qp ⎠⎠ =
+2
+2 e∈E
++
+̂
+̂
+̂
+e∈EN
+
+(4.9) 1
+=
+2
+
++
+
+=
+
+=
+
+=
+
+1
+2
+1
+2
+
+p∈∂e
+
+∑︂
+
+σe
+
+∑︁ e∈EN :
+̂ qp =−1
+p∈∂e
+
+1
+2
+
+σe
+
+∑︁ e∈EN :
+̂ qp =1
+p∈∂e
+
+σe
+
+∑︂
+
+σe
+
+∑︁ e∈EN :
+̂ qp =1
+p∈∂e
+
+e∈Bq
+
+σe
+
+∑︂
+
+∑︂
+
+∑︂
+∑︁ e∈EN :
+̂ qp =0
+p∈∂e
+
+∑︂
+
+qp +
+
+∑︂
+
+qp +
+
+̂
+p∈∂e
+
+∑︂
+
+1
+2
+
+1
+2
+
+∑︂
+
+p∈PN
+
+qp
+
+̂
+p∈∂e
+
+∑︂
+∑︁ e∈EN :
+̂ qp =1
+p∈∂e
+
+σe .
+
+e∈Bq
+
+qp+ (dσ)p =
+
+σe
+
+∑︁ e∈EN :
+̂ qp =1
+p∈∂e
+
+Thus,
+∑︂
+
+σe
+
+∑︂
+
+qp
+
+̂
+p∈∂e
+
+qp =
+
+̂
+p∈∂e
+
+1
+qp +
+2
+
+N
+
+̂
+p∈∂e
+
+∑︁ e∈EN :
+̂ qp =−1
+p∈∂e
+
+∑︂
+
+∑︂
+̂
+p∈∂e
+
+∑︂
+
+∑︂
+
+p∈∂(−e)
+
+∑︂
+e∈Bq
+
+σe .
+
+σe
+
+∑︂
+
+qp
+
+̂
+p∈∂e
+
+∑︂
+̂
+p∈∂e
+
+qp
+
+p∈∂e
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+39
+
+This lemma is applied in the final proof of this section. The next lemma says
+that a simple loop is the boundary of an oriented surface. This is illustrated in
+Figure 4.2.
+
+Figure 4.2: A simple loop γ and an oriented surface, whose boundary is γ.
+Lemma 4.16. Let γ in BN be a simple loop contained in the cube B ⊆ BN .
+Then there exists an oriented surface q, whose support is in B, such that γ is the
+boundary of q.
+Proof. Let γ be a given simple loop contained in the cube B. For each e ∈ EN ,
+define the 1-form f γ as
+⎧
+⎪
+1
+if e ∈ γ,
+⎪
+⎪
+⎨
+feγ := −1 if − e ∈ γ,
+⎪
+⎪
+⎪
+⎩0
+otherwise.
+By definition, the cube B contains the support of f γ . For the co-derivative of
+f γ , we have that δfeγ = 0. Hence, the assumptions of Lemma 3.24 are fulfilled
+for f γ . Therefore, there exists a 2-form q γ on PN , with support only in B, for
+which
+f γ = δq γ .
+
+(4.14)
+
+From equation (3.12) follows that
+(δq γ )e =
+
+∑︂
+
+qpγ
+
+for e ∈ EN .
+
+̂
+p∈∂e
+
+By combining these conclusions, we obtain
+∑︂ (4.15)
+(4.14)
+qpγ = (δq γ )e = feγ ∈ {−1, 0, 1}.
+̂
+p∈∂e
+
+(4.15)
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+40
+
+Thus, q γ is an oriented surface with support contained in B and γ is the boundary
+of q γ .
+This lemma is applied in the proof of Proposition 6.1. Next, we define internal
+plaquettes and edges.
+Definition 4.17. (Internal plaquette) Let q be an oriented surface and let p̂ ∈
+supp q. A plaquette p̂ is an internal plaquette of q if
+∑︂
+
+for each e ∈ ∂ p̂.
+
+qp = 0
+
+̂
+p∈∂e
+
+We derive another definition of internal plaquettes. If p is not an internal
+∑︁
+plaquette of the oriented surface q, then p∈∂e
+̂ qp ∈ {−1, 1}. For edges in the
+∑︁
+boundary of q, we have p∈∂e
+̂ qp = 1. Since q−p = −qp , we obtain
+∑︂
+
+qp = −
+
+∑︂
+
+q−p = −
+
+qp
+
+̂
+−p∈∂e
+
+̂
+p∈∂e
+
+̂
+p∈∂e
+
+∑︂
+
+and
+∑︂
+
+qp = −1 ⇔
+
+∑︂
+
+qp = 1.
+
+̂
+−p∈∂e
+
+̂
+p∈∂e
+
+̂ is equivalent to e ∈ ∂p. Therefore, a plaquette p ∈ supp q is
+Recall that p ∈ ∂e
+internal if
+(∂p ∪ ∂(−p)) ∩ Bq = ∅.
+
+(4.16)
+
+Definition 4.18. (Internal edge) An edge e ∈ EN is an internal edge of an
+oriented surface q if there exists a plaquette p ∈ supp q, such that e ∈ ∂p and
+neither e nor −e is in the boundary of q.
+Last, we have the final lemma of this chapter.
+Lemma 4.19. Let σ ∈ ΣEN and let ν ∈ ΣPN be a vortex in σ. Let q be an
+oriented surface. If there exists a box B, which contains the support of ν, for
+which the intersection (∗ ∗ B) ∩ supp q only contains internal plaquettes of q,
+then
+∑︂
+p∈PN
+
+qp+ νp = 0.
+
+(4.17)
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+41
+
+Proof. Since ν is a 2-form and the lattice is Z4 , it follows from equation (3.16)
+that
+∗ (∗ν) = (−1)2(4−2) ν = ν.
+
+(4.18)
+
+Since ν ∈ ΣPN , we have dν = 0. By Lemma 3.35, the co-derivative of ∗ν is
+(4.18)
+
+δ(∗ν) = (−1)4(2+1)+1 ∗ (d(∗(∗ν))) = − ∗ dν = −1 · 0 = 0.
+Assume that the box B contains supp ν. By Lemma 3.31, we have that the
+2-form ∗ν has no support outside ∗B. Thus, the assumptions of Lemma 3.24 are
+fulfilled for ∗ν. Therefore, there exists a 3-form g without support outside ∗B,
+such that ∗ν = −δg. By Lemma 3.35, we have
+δg = (−1)4(3+1)+1 ∗ (d(∗g)) = (−1) ∗ d(∗g).
+
+(4.19)
+
+Since ∗g is a 1-form, d(∗g) is a 2-form and
+(3.16)
+
+∗ (∗(d(∗g))) = −12(4−2) (d(∗g)) = d(∗g).
+
+(4.20)
+
+Thus,
+(4.18)
+
+(4.19)
+
+(4.20
+
+ν = ∗(∗ν) = ∗(−δg) = ∗(∗d(∗g)) = d(∗g).
+(4.21)
+∑︁
+Since the support of q is finite, we have that p∈PN qp+ νp is well defined. Let Bq
+be the boundary of q. From Lemma 4.15 follows that
+∑︂
+
+(4.21)
+
+qp+ νp =
+
+p∈PN
+
+∑︂
+
+qp+ (d(∗g))p =
+
+p∈PN
+
+∑︂
+
+(∗g)e .
+
+e∈Bq
+
+A k-form f0 is elementary if there exists a k-cell c for which supp f0 = {c, −c}.
+Since g only has support inside ∗B, the support is finite. Therefore, we can write
+the 3-form g as a finite sum of elementary 3-forms g0 , whose support is contained
+in ∗B. Since
+∑︂
+
+(∗g)e =
+
+∑︂ ∑︂
+(∗g0 )e ,
+e∈Bq g0
+
+e∈Bq
+
+we only have to prove that
+∑︂
+
+(∗g0 )e = 0
+
+e∈Bq
+
+for each g0 .
+Take any elementary 3-form g0 whose support is contained in ∗B. Then, the
+Hodge dual of g0 is an elementary 1-form ∗g0 . Since g0 is elementary, there exists
+
+CHAPTER 4. VORTICES AND ORIENTED SURFACES
+
+42
+
+a 3-cell c0 in ∗B, such that supp g0 = {c0 , −c0 }. Likewise, we have supp (∗g0 ) =
+̂ 0 = ∂(∗c
+̂ 0 ) = ∗(∂c0 ).
+{e0 , −e0 }, where e0 = ∗c0 . Since e0 = ∗c0 , we have ∂e
+̂ 0 is in ∗ ∗ B. Therefore, (∂e
+̂ 0∩
+Since ∂c0 is in ∗B, it follows that ∗(∂c0 ) = ∂e
+supp q) ⊆ (∗ ∗ B ∩ supp q). Since we assumed that (∗ ∗ B) ∩ supp q only
+̂ 0 ∩supp q must be internal
+contains internal plaquettes of q, the plaquettes p ∈ ∂e
+̂ 0 ∩ supp q is an internal plaquette
+plaquettes of q. Recall that a plaquette p ∈ ∂e
+if (∂p ∪ ∂(−p)) ∩ Bq = ∅. Since ±e0 ∈ ∂p ∪ ∂(−p), it follows that ±e0 ̸∈ Bq .
+Therefore, Bq only contains elements for which ∗g0 is zero. Thus,
+∑︂
+
+(∗g0 )e = 0
+
+e∈Bq
+
+and
+0=
+
+∑︂
+e∈Bq
+
+(∗g)e =
+
+∑︂
+p∈PN
+
+qp+ νp .
+
+Chapter 5
+The existence and translation
+invariance of the limit
+This chapter focuses on the limit of the expectation of the Wilson loop observable
+Wγ . This limit is also called the infinite volume limit. Both the existence and
+the translation invariance of this limit will be proved. For these proofs, Ginibre’s
+inequality is needed. Before stating the inequality, we define both cones and
+convex cones.
+Definition 5.1. (Cone and convex cone) A set A ⊂ V , where V is a vector
+space, is a cone if for every x ∈ A and positive α ∈ R we have αx ∈ A. The
+cone is convex if for positive α, β ∈ R and x, y ∈ A we have αx + βy ∈ A [6].
+We will use the notation Cone(A) for a convex cone generated by the set A.
+This means that the cone is the intersection of all convex cones containing A.
+Lemma 5.2. (Ginibre’s inequality). Let K be a compact metric space and let
+µ be a probability measure on K. Let C(K) be the algebra of complex-valued
+continuous functions on K. Let S be a subset of C(K) which is both invariant
+under complex conjugation and such that for any f1 , . . . fm ∈ S and any choice
+of signs s1 , . . . , sm ∈ {−1, 1}, the inequality
+∫︂ ∫︂
+m
+∏︂
+µ(x)µ(y) (fi (x) + si fi (y)) ≥ 0
+i=1
+
+holds. Let h be a real-valued function and let f ∈ C(K). Define
+/︃ ∫︂
+∫︂
+−h(x)
+⟨f ⟩h = f (x)e
+µ(x)
+e−h(x) µ(x).
+43
+
+(5.1)
+
+CHAPTER 5. THE EXISTENCE AND TRANSLATION INVARIANCE OF THE LIMIT44
+
+Let Cone(S) be the convex cone generated by the set S. Then, for any f, g, −h
+in Cone(S), ⟨f ⟩h , ⟨g⟩h and ⟨f g⟩h are real and
+⟨f g⟩h ≥ ⟨f ⟩h ⟨g⟩h .
+
+(5.2)
+
+For the proof, see [7].
+In the following theorem, there is a function from the set of G-valued 1-forms
+on the set of all oriented edges in Z4 . Therefore, we introduce the two following
+notations: E∞ is the set of oriented edges in Z4 and ΣE∞ is the set of G-valued
+1-forms on E∞ . In the theorem, f only depends on the spins of the edges in
+EM and we have that f (σ) = f (σ|EM ) for σ ∈ ΣE∞ . To simplify, when N ≥ M
+we write f (σ) instead of f (σ|EM ) and f for the natural restriction of f to ΣEN .
+A translation τ of the lattice changes where the origin of the lattice is. That
+the limit is translation invariant means that it does not depend on where in the
+lattice the Wilson loop observable is.
+Theorem 5.3. Let G = Zn and f : ΣE∞ → R be a real-valued function, which
+only depends on the spins of edges in EM for some integer M ≥ 1. Let β ≥ 0.
+Then,
+(i) the limit limN →∞ Eβ,N [f (σ)] exists.
+(ii) for any translation τ of Z4 , we have
+lim Eβ,N [f ◦ τ (σ)] = lim Eβ,N [f (σ)].
+
+N →∞
+
+N →∞
+
+Proof. (i) To prove the existence of the limit, we write f as a finite sum of
+functions gj , for which the limit of the expectation value exists. We will show
+that ⟨gj ⟩h (h is defined later in the proof) is both increasing and bounded, which
+implies that the limit for f exists.
+First, we prove that f can be written as a finite sum and that we can use
+Ginibre’s inequality on ⟨gj ⟩h . For this, we need some statements from Example
+∑︁
+4 in [7]. These statements hold when N ≥ 1 for the group Γ(N ) = ( EN , +).
+First, the group homomorphisms Γ(N ) ↦→ C \ {0} are given by the functions
+′
+∏︁
+∑︁
+′
+σ ↦→ e∈EN e2πiσe σe /n , where σ ′ is fixed and σ, σ ∈ EN . We notice that σ ↦→
+ρ((dσ)p ), σ ∈ EN is one of these group homomorphisms. Second, let S (N ) be
+the set of real parts of the group homomorphisms Γ(N ) ↦→ C \ {0}. Denote the
+
+CHAPTER 5. THE EXISTENCE AND TRANSLATION INVARIANCE OF THE LIMIT45
+
+convex cone of this set by Cone(S (N ) ), then
+ℜ(ρ((dσ)p )) ∈ S (N ) ⊆ Cone(S (N ) ).
+Third, inequality (5.1) holds for the functions f1 , . . . , fn ∈ S (N ) and the signs
+∑︁
+s1 , . . . , sm ∈ {−1, 1} when µ is the uniform measure on EN .
+We show that f can be written as a finite sum of functions g ∈ S (M ) . Since
+M ≤ N , the set ΣEM is finite. Thus, the group homomorphisms Γ(M ) ↦→ C \
+{0} span the set of all real-valued functions on the set ΣEM . Therefore, there
+exists scalars a1 , a2 , . . . , am ∈ R and functions g1 , g2 , . . . , gm ∈ S (M ) such that
+the function f can be written as f = a1 g1 + . . . + am gm . Since the functions
+′
+
+g1 , . . . , gm ∈ S (M ) , they are also in Cone(S (M ) ). For M ≥ M and j ∈ {1, . . . , m},
+we simplify and write gj for the natural extension of gj from ΣEM to the larger
+set ΣEM ′ .
+′
+
+We define the function −h and show that −h ∈ Cone(S (N ) ). Fix N ′ ≥ N ≥
+M and let β, β ′ ≥ 0. Then, for σ ∈ ΣEN ′ define
+∑︂
+−h(σ) := −h(σ)N,N ′ ,β,β ′ := β
+ℜ(ρ((dσ)p )) + β ′
+p∈PN
+
+∑︂
+
+ℜ (ρ((dσ)p )) .
+
+p∈PN ′ ∖PN
+
+′
+
+By definition, S (N ) contains the function σ ↦→ ℜ(ρ((dσ)p )), σ ∈ ΣEN ′ . Since
+both β and β ′ are non-negative, it follows from the definition of a convex cone
+′
+
+that −h(σ) ∈ Cone(S (N ) ).
+We check the assumptions for Ginibre’s inequality. Since the metric space
+∑︁
+K = EN is finite and equipped with discrete topology, it is compact. The set
+′
+
+S = S (N ) contains only continuous functions and since it consists of the real parts
+of the group homomorphisms, it is invariant under complex conjugation. Let the
+probability measure be the uniform measure µ, thus, the third statement from
+the example fulfils inequality (5.1). Since Ginibre’s inequality will be applied
+∑︁
+∑︁
+to ⟨gj p∈PN ′ ∖PN ℜ(ρ((dσp )))⟩h , the functions gj (σ), p∈PN ′ ∖PN ℜ(ρ((dσp ))) and
+′
+
+−h must be in Cone(S (N ) ). We proved earlier that both gj and −h are in
+∑︁
+′
+′
+Cone(S (N ) ). Since p∈PN ′ ∖PN ℜ(ρ((dσp ))) is a sum of elements in S (N ) , it follows
+′
+
+that it is in Cone(S (N ) ). Therefore, all assumptions for Ginibre’s inequality are
+fulfilled.
+We show that the derivative of ⟨gj ⟩h is non-negative in β ′ for j ∈ {1, 2, . . . , m}.
+Ginibre’s inequality will be applied in the calculations:
+(︃ ∫︁
+)︃
+gj (σ)e−h(σ) µ(σ)
+d
+d
+∫︁
+⟨gj ⟩h = ′
+dβ ′
+dβ
+e−h(σ) µ(σ)
+
+CHAPTER 5. THE EXISTENCE AND TRANSLATION INVARIANCE OF THE LIMIT46
+
+)︁ ∫︁
+∫︁
+∫︁
+gj (σ)e−h(σ) µ(σ) · e−h(σ) µ(σ) − gj (σ)e−h(σ) µ(σ) · dβd ′ e−h(σ) µ(σ)
+∫︁
+=
+( e−h(σ) µ(σ))2
+∫︁
+∑︁
+ℜ(ρ((dσ)
+))
+gj (σ)e−h(σ) µ(σ)
+p
+p∈PN ′ ∖PN
+∫︁
+=
+e−h(σ) µ(σ)
+∫︁ −h(σ)
+∑︁
+µ(σ)
+p∈PN ′ ∖PN ℜ(ρ((dσ)p )) e
+∫︁
+− ⟨gj ⟩h
+e−h(σ) µ(σ)
+⟨︂
+⟩︂
+⟨︂ ∑︂
+⟩︂
+∑︂
+= gj (σ)
+ℜ(ρ((dσ)p )) − ⟨gj (σ)⟩h
+ℜ(ρ(dσ(p))
+d
+dβ ′
+
+(︁∫︁
+
+h
+
+p∈PN ′ ∖PN
+(5.2)
+
+≥ ⟨gj (σ)⟩h
+
+⟨︂
+
+∑︂
+
+⟩︂
+⟨︂
+ℜ(ρ((dσ)p )) − ⟨gj (σ)⟩h
+h
+
+p∈PN ′ ∖PN
+
+h
+
+p∈PN ′ ∖PN
+
+∑︂
+
+⟩︂
+ℜ(ρ((dσ)p )
+
+p∈PN ′ ∖PN
+
+h
+
+= 0.
+Thus, we have proved that ⟨gj ⟩hN,N ′ ,β,β′ is increasing in β ′ . Moreover, gj depends
+on a finite set of edges. Hence, ∥gj ∥∞ < ∞ and ⟨gj ⟩hN,N ′ ,β,0 is bounded. The
+expectation value of gj is
+Eβ,N [gj (σ)] = ⟨gj ⟩hN,N ′ ,β,0 ,
+which was proved to be both bounded and monotone in β. Therefore, the limit
+of Eβ,N [gj (σ)] exists.
+We have left to prove that limN →∞ Eβ,N [f (σ)] exists:
+m
+∑︂
+j=1
+
+aj lim Eβ,N [gj (σ)] = lim
+N →∞
+
+N →∞
+
+m
+∑︂
+
+aj µβ,N [gj (σ)] = lim Eβ,N
+
+j=1
+
+N →∞
+
+[︄ m
+∑︂
+
+]︄
+aj gj (σ)
+
+j=1
+
+= lim Eβ,N [f (σ)].
+N →∞
+
+Thus, the limit exists.
+ii) We prove that the limit is translation invariant. Let τ be a translation of Z4
+and choose N ′ ≥ N ≥ M large enough for BN ′ to contain BN , τ BN and τ −1 BN .
+An illustration of this translation is given in Figure 5.1.
+
+Figure 5.1: The sets BN , BN ′ and τ BN ′ .
+
+CHAPTER 5. THE EXISTENCE AND TRANSLATION INVARIANCE OF THE LIMIT47
+
+Define the functions hN := hN,N ′ ,β,0 and hN ′ := hN,N ′ ,β,β . For a translation τ
+of hN , we have
+hN ◦ τ = β
+
+∑︂
+
+∑︂
+
+ℜ((ρ((dσ)τ (p) )) = β
+
+p∈PN
+
+ℜ(ρ((dσ)p )).
+
+p∈τ (PN )
+
+Since both τ BN and τ −1 BN are in BN ′ and ⟨gj ⟩h is increasing in N (This can be
+proved with a similar argument to that in part i).), it follows that
+⟨gj ⟩hN ◦τ ≤ ⟨gj ⟩hN ′
+
+(5.3)
+
+⟨gj ⟩hN ◦τ −1 ≤ ⟨gj ⟩hN ′ .
+
+(5.4)
+
+and
+
+We derive two inequalities for the expectation value of gj and gj ◦ τ :
+Eβ,N [gj (σ)] = ⟨gj ⟩hN
+= ⟨gj ◦ τ ◦ τ −1 ⟩hN
+= ⟨gj ◦ τ ⟩hN ◦τ
+(5.3)
+
+≤ ⟨gj ◦ τ ⟩hN ′ = Eβ,N ′ [gj ◦ τ (σ)]
+and
+(5.4)
+
+Eβ,N [gj ◦ τ (σ)] = ⟨gj ◦ τ ⟩hN = ⟨gj ⟩hN ◦τ −1 ≤ ⟨gj ⟩hN ′ = Eβ,N ′ [gj (σ)].
+Take the limits, first for N ′ and then for N on both inequalities. We obtain
+lim Eβ,N [gj (σ)] ≤ lim
+Eβ,N ′ [gj ◦ τ (σ)],
+′
+
+N →∞
+
+N →∞
+
+and
+lim Eβ,N [gj ◦ τ (σ)] ≤ lim
+Eβ,N ′ [gj (σ)].
+′
+
+N →∞
+
+N →∞
+
+Combining these inequalities, we obtain
+lim Eβ,N [gj ◦ τ (σ)] ≤ lim
+Eβ,N ′ [gj (σ)] ≤ lim
+Eβ,N ′ [gj ◦ τ (σ)]
+′
+′
+
+N →∞
+
+N →∞
+
+N →∞
+
+and as a result,
+lim Eβ,N [gj ◦ τ (σ)] = lim
+Eβ,N ′ [gj (σ)].
+′
+
+N →∞
+
+N →∞
+
+CHAPTER 5. THE EXISTENCE AND TRANSLATION INVARIANCE OF THE LIMIT48
+
+Thus, the limit of the expectation of gj is translation invariant, but we wish to
+prove this property for the expectation of f . Similarly to the end of the proof in
+part (i), we obtain
+lim Eβ,N [f ◦ τ (σ)] = lim Eβ,N [
+
+N →∞
+
+N →∞
+
+=
+
+m
+∑︂
+
+m
+∑︂
+
+aj gj ◦ τ (σ)] =
+
+j=1
+
+m
+∑︂
+
+aj lim Eβ,N [gj ◦ τ (σ)]
+
+j=1
+
+aj lim Eβ,N [gj ] = lim Eβ,N [
+N →∞
+
+j=1
+
+N →∞
+
+N →∞
+
+m
+∑︂
+
+aj gj ]
+
+j=1
+
+= lim Eβ,N [f (σ)].
+N →∞
+
+Therefore, the limit of the expectation value of f is translation invariant.
+We check the assumptions for the Wilson loop observable
+)︄
+(︄
+∑︂
+Wγ = ρ
+σe , σ ∈ ΣEN .
+e∈γ
+
+Since the Wilson loop observable maps ΣE∞ to R, has real values and only
+depends on the spins of edges in EM , the function f in Theorem 5.3 can be
+chosen as Wγ . Thus, the limit
+lim Eβ,N [Wγ ] = ⟨Wγ ⟩β
+
+N →∞
+
+both exists and is translation invariant.
+
+Chapter 6
+Proof of the main theorem
+The proof is divided into two cases; one when ℓλ(β)12 is small and one when
+ℓλ(β)12 is large. In the final part of the proof, these two parts are combined. We
+begin with the case when ℓλ(β)12 is small.
+
+6.1
+
+The case when ℓλ(β)12 is small
+
+First, the proposition for the case when ℓλ(β)12 is small is stated, then some
+lemmas necessary for the proof of the proposition are given and proved. Last,
+the proposition is proved.
+Proposition 6.1. Consider lattice gauge theory with the structure group G = Zn
+and a one-dimensional faithful representation ρ of G. Let γ be a simple oriented
+loop in Z4 , ℓ = |γ| the length of it and ℓc the number of corner edges in γ. Let
+N be large enough so that γ ⊆ EN and such that there exists a cube B of width
+|γ| containing γ inside BN . Let β0 > 0 be such that 5(|G| − 1)λ(β)2 < 1 for all
+β > β0 . Then for all β > β0 , we have
+2C ∗ ℓλ(β)12
+
+|Eβ,N [Wγ ] − e−ℓ(1−θ(β)) | ≤ CA e
+
+(︄√︃
+
+)︄
+ℓc
++ λ(β)2 .
+ℓ
+
+Here θ(β) is defined by equation (2.7) and CA by equation (6.41). Furthermore,
+CA only depend on β0 , G and ρ.
+To prove this proposition, we show that it is very likely that only minimal
+vortices, which are centred at the edges in γ, have an impact on a Wilson loop (A
+minimal vortex is centred at dxj if it can be written as d(gdxj ) for a g ∈ G \ {0}
+49
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+50
+
+and a dxj ∈ EN .). A number of lemmas will be needed. We begin with defining
+the constant C ∗ and recalling the definitions for θ(β) and λ(β). Let β0 > 0 be
+given and define
+]︁
+[︁
+C ∗ := sup (1 − θ(β))λ(β)−12 .
+
+(6.1)
+
+β>β0
+
+Recall that
+
+∑︁
+12
+g∈G ρ(g)ϕβ (g)
+θ(β) = ∑︁
+12
+g∈G ϕβ (g)
+
+and
+ϕβ (g)
+,
+g∈G\{0} ϕβ (0)
+
+λ(β) = max
+where
+ϕβ (g) := eβℜρ(g) ,
+
+6.1.1
+
+g ∈ G.
+
+Technical lemmas
+
+Lemma 6.2. The function θ(β) is a real-valued function and can be written as
+∑︁
+12
+g∈G ℜ(ρ(g))ϕβ (g)
+∑︁
+.
+(6.2)
+θ(β) =
+12
+g∈G ϕβ (g)
+.
+Proof. Since ρ(g)−1 = ρ(g)∗ , we have
+ℜ(ρ(−g)) = ℜ(ρ(g)−1 ) = ℜ(ρ(g)∗ ) = ℜ(ρ(g)).
+Therefore,
+ϕβ (−g) = eβℜ(ρ(−g)) = eβℜ(ρ(g)) = ϕβ (g) for g ∈ G.
+Furthermore, since g → −g is a bijection, we have that
+∑︁
+∑︁
+1 g∈G ρ(g)ϕβ (g)12 1 g∈G ρ(−g)ϕβ (−g)12
+∑︁
+∑︁
+θ(β) =
++
+12
+12
+2
+2
+g∈G ϕβ (g)
+g∈G ϕβ (−g)
+∑︁
+∑︁
+1 g∈G ρ(g)ϕβ (g)12 1 g∈G ρ(−g)ϕβ (g)12
+∑︁
+∑︁
+=
++
+12
+12
+2
+2
+g∈G ϕβ (g)
+g∈G ϕβ (g)
+∑︁
+12
+g∈G (ρ(g) + ρ(−g))ϕβ (g)
+∑︁
+=
+12
+g∈G ϕβ (g)
+∑︁
+12
+g∈G ℜ(ρ(g))ϕβ (g)
+∑︁
+=
+∈ R.
+12
+g∈G ϕβ (g)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+51
+
+Lemma 6.3. Let β ≥ 0 be such that 5(|G| − 1)λ(β)2 < 1. Then
+0<1−
+
+2
+56 (|G|
+
+−
+
+< 1 − C ∗ λ(β)12 ≤ θ(β) ≤ 1.
+
+1)5
+
+(6.3)
+
+Proof. We calculate the upper bound for 1 − C ∗ λ(β)12 :
+]︁
+[︁
+1 − C ∗ λ(β)12 = 1 − sup (1 − θ(β))λ(β)−12 λ(β)12
+β>β0
+
+(6.4)
+
+)︁
+(︁
+≤ 1 − (1 − θ(β))λ(β)−12 λ(β)12
+= θ(β).
+
+Since Lemma 6.2 gives that θ(β) is real, we have
+∑︁
+⃓ ∑︁
+⃓ ∑︁
+⃓ g∈G ρ(g)ϕβ (g)12 ⃓
+|ρ(g)|ϕβ (g)12 (2.3) g∈G ϕβ (g)12
+g∈G
+⃓≤
+∑︁
+θ(β) ≤ |θ(β)| = ⃓⃓ ∑︁
+= ∑︁
+= 1.
+⃓
+12
+12
+12
+g∈G ϕβ (g)
+g∈G ϕβ (g)
+g∈G ϕβ (g)
+(6.5)
+We calculate an upper bound for C ∗ . Notice that ℜρ(g) ∈ [−1, 1[ for g ∈ G \ {0}
+and ϕβ > 0. Hence,
+[︄(︄
+C
+
+∗(6.1),(6.2)
+
+= sup
+
+∑︁
+1−
+
+ℜ(ρ(g))ϕβ (g)12
+∑︁
+12
+g∈G ϕβ (g)
+
+g∈G
+
+β>β0
+
+)︄
+
+]︄
+−12
+
+λ(β)
+
+[︄ ∑︁
+
+]︄
+12
+(1
+−
+ℜρ(g))ϕ
+(g)
+β
+(2.2)
+g∈G∖{0}
+∑︁
+= sup
+λ(β)−12
+12
+β>β0
+g∈G ϕβ (g)
+[︄ ∑︁
+]︄
+12
+2ϕ
+(g)
+β
+g∈G∖{0}
+∑︁
+≤ sup
+λ(β)−12
+12
+β>β0
+g∈G ϕβ (g)
+[︄
+]︄
+∑︁
+12
+2ϕ
+(g)
+β
+g∈G∖{0}
+∑︁
+= sup
+λ(β)−12
+12
+12
+β>β0 ϕβ (0) +
+g∈G∖{0} ϕβ (g)
+⎤
+⎡
+12
+∑︂ ϕβ (g)
+≤ sup ⎣2
+λ(β)−12 ⎦
+12
+ϕ
+(0)
+β>β0
+β
+g∈G∖{0}
+⎡
+⎤
+∑︂
+= sup ⎣2
+λ(β)12 λ(β)−12 ⎦
+β>β0
+
+=2
+
+g∈G∖{0}
+
+∑︂
+
+1 = 2(|G| − 1).
+
+g∈G∖{0}
+
+Therefore,
+C ∗ λ(β)12 ≤ 2(|G| − 1)λ(β)12 =
+<
+
+2
+.
+56 (|G| − 1)5
+
+(︁
+)︁
+2
+2 6
+5(|G|
+−
+1)λ(β)
+56 (|G| − 1)5
+
+(6.6)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+52
+
+Thus,
+0<1−
+
+(6.4)
+(6.5)
+(6.6)
+2
+∗
+12
+<
+1
+−
+C
+λ(β)
+≤
+θ(β)
+≤ 1.
+56 (|G| − 1)5
+
+Notice that C ∗ > 0 by equations (6.4) and (6.5). The next lemma gives two
+inequalities for the function θ.
+Lemma 6.4. Let β > β0 . For 0 ≤ j ≤ ℓ, we have
+θ−j ≤ 2eC
+
+∗ ℓλ(β)12
+
+.
+
+(6.7)
+
+For 1 ≤ j ≤ ℓ, we have
+θ−j − 1 ≤ 2jC ∗ λ(β)12 eC
+
+∗ ℓλ(β)12
+
+.
+
+(6.8)
+
+For the proof of this lemma, the two following inequalities are needed.
+First, for x ∈ [0, 21 ], we have
+(1 − x)−1 ≤ 2ex ,
+
+(6.9)
+
+and second, Bernoulli’s inequality: For x ≥ −1 and n ≥ 1, we have
+(1 + x)n ≥ 1 + nx.
+
+(6.10)
+
+Proof of Lemma 6.4. First, notice that
+2
+
+(6.6)
+
+0 < C ∗ λ(β)12 <
+
+56 (|G|
+
+−
+
+≤
+
+1)5
+
+2
+1
+< .
+6
+5
+2
+
+Therefore, inequality (6.9) can be applied on (1 − C ∗ λ(β)12 )−1 . For 0 ≤ j ≤ ℓ,
+we have
+(6.3)
+
+θ−j ≤ θ−ℓ ≤
+
+(︁
+
+(1 − C ∗ λ(β)12 )−1
+
+)︁ℓ
+
+(6.9)
+
+≤ 2eC
+
+∗ ℓλ(β)12
+
+.
+
+(6.11)
+
+For 1 ≤ j ≤ ℓ, we have by inequality (6.10) that
+θj = (1 + (θ − 1))j ≥ 1 + j(θ − 1).
+Thus,
+1 − θj ≤ j(1 − θ)
+and
+θ−j − 1 = θ−j (1 − θj ) ≤ j(1 − θ)θ−j
+
+(6.3),(6.11)
+
+≤
+
+2jC ∗ λ(β)12 eC
+
+∗ ℓλ(β)12
+
+.
+
+(6.12)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+53
+
+Lemma 6.5. For ℓ ≥ 1 and θ = θ(β), we have
+−ℓ(1−θ)
+
+ℓ
+
+|θ − e
+
+|≤
+
+e2C
+
+∗ ℓλ(β)12
+
+2ℓ
+
+.
+
+(6.13)
+
+We state two inequalities necessary for the proof of the lemma. First, for
+ℓ ≥ 1, |x| ≤ 1 and |y| ≤ 1, we have
+|xℓ − y ℓ | ≤ ℓ|x − y|.
+
+(6.14)
+
+Indeed, by the intermediate value theorem, there exists a ξ ∈ [−1, 1] such that
+|xℓ − y ℓ | = |ℓξ ℓ−1 ||x − y| ≤ ℓ|x − y|.
+Second, for x > 0, we have
+1 + x ≤ ex .
+
+(6.15)
+
+This follows from the Taylor series for the exponential function:
+x
+
+e =
+
+∞
+∑︂
+xn
+k=0
+
+n!
+
+,
+
+which is also otherwise useful in the proof.
+Proof of Lemma 6.5. Since 0 ≤ 1 − θ < 1, it follows from the Taylor series that
+−(1−θ)
+
+e
+
+(1 − θ)2
+(−(1 − θ))2
+=θ+
+.
+≤ 1 + (−(1 − θ)) +
+2
+2
+
+(6.16)
+
+From equation (6.15) follows that
+1 + (θ − 1) ≤ e(θ−1) ⇔ θ ≤ e−(1−θ) .
+
+(6.17)
+
+Thus,
+(6.14)
+
+(6.17)
+
+|θℓ − e−ℓ(1−θ) | ≤ ℓ|θ − e−(1−θ) | = ℓ(θ − e−(1−θ) )
+− 2θ − (1 − θ)2 )
+ℓ(1 − θ)2
+=
+2
+2
+(6.3) (ℓC ∗ λ(β)12 )2
+≤
+2ℓ
+∗
+12
+(6.15)e2C ℓλ(β)
+≤
+.
+2ℓ
+
+(6.16)ℓ(2θ
+
+≤
+
+(6.18)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+6.1.2
+
+54
+
+Probabilistic bounds on vortex sizes
+
+We want to calculate the probabilities for the events A1 , A2 and A3 , which are
+soon defined. Before that, some necessary definitions and notations are given.
+Let γ be a simple loop, then the cube B is defined as a fixed cube that contains γ,
+is inside BN and is of width ℓ = |γ|. Let q be an fixed oriented surface such that
+its support is contained in B and such that γ is the boundary of q (we will later
+prove that q exists). Denote the support of this oriented surface by Q := supp q.
+Then, define the set Q′ as the set of plaquettes p ∈ Q for which the oriented
+loop γ does not intersect any cube of width b + 2 containing p, where b is chosen
+∑︁
+as the smallest number for which the support of any irreducible ω ∈ PN with
+| supp ν| ≤ 48 is inside the cube. Last, the set
+̂ ∩ (γ ∪ −γ)| ≥ 2}
+γc := {e ∈ γ : |∂(∂e)
+is the set of corner edges in γ. Recall that the number of corner edges in γ is
+given by ℓc .
+We define the events:
+A1 :={There exists no vortex ν in σ with | supp ν| ≥ 50 whose support
+intersects Q}
+A2 :={There exists no vortex ν in σ with | supp ν| ≥ 14 and
+supp ν ∩ (Q \ Q′ ) ̸= ∅}
+̂ ∪ ∂(−e)
+̂
+A3 := {There exists no vortex ν in σ : supp ν = ∂e
+for some e ∈ γc }.
+Notice that the vortex in the event A3 is minimal by Lemma 4.7. The probabilities of these events are calculated in the following three lemmas.
+Lemma 6.6. Let β0 > 0 be such that 5(|G| − 1)λ(β)2 < 1 for all β > β0 . Then
+(25) 4
+
+µβ,N (A1 ) ≥ 1 − C0
+
+ℓ λ(β)50 .
+
+Proof. Fix p0 ∈ PN and define the event
+E1 (p0 ) :={There exists at least one vortex ν in σ with p0 ∈ supp ν
+and | supp ν| ≥ 50}.
+
+(6.19)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+55
+
+The assumptions for Proposition 4.12 are fulfilled for E1 . Therefore,
+(25)
+
+µβ,N (E1 (p0 )) ≤ C0
+
+λ(β)50 ,
+
+for any p0 ∈ PN .
+
+(6.20)
+
+Since B is of width ℓ and supp q is contained in B, there is at most ℓ4 choices
+for p0 ∈ supp ν for which supp ν intersects Q. Hence, by a union bound and
+inequality (6.20), we have
+(25)
+
+µβ,N (Ac1 ) ≤ ℓ4 C0
+
+λ(β)50 .
+
+Thus,
+(25) 4
+
+µβ,N (A1 ) = 1 − µβ,N (Ac1 ) ≥ 1 − C0
+
+ℓ λ(β)50 .
+
+Lemma 6.7. Let β0 > 0 be such that 5(|G| − 1)λ(β)2 < 1 for all β > β0 . Then
+(7)
+
+µβ,N (A2 ) ≥ 1 − C1 C0 ℓλ(β)14 .
+Proof. Fix p0 ∈ PN . The event E2 is defined by
+E2 (p0 ) := {σ ∈ ΣEN : ∃ a vortex ν in σ with p0 ∈ supp ν and | supp ν| ≥ 14}.
+By Proposition 4.12, we have
+(7)
+
+µβ,N (E2 (p0 )) ≤ C0 λ(β)14 .
+Consider the plaquettes p ∈ Q \ Q′ . By definition, any cube of width b + 2 that
+contains one of these plaquettes intersects γ. Hence
+|Q \ Q′ | ≤ C1 |γ| = C1 ℓ,
+
+(6.21)
+
+where the constant C1 depends on the width of the box.
+By a union bound,
+µβ,N (Ac2 ) ≤ C1 ℓµβ,N (E2 (p0 )).
+Thus,
+(7)
+
+µβ,N (A2 ) = 1 − µβ,N (Ac2 ) ≥ 1 − C1 ℓµβ,N (E2 (p0 )) ≥ 1 − C1 C0 ℓλ(β)14 .
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+56
+
+Lemma 6.8. Let β0 > 0 be such that 5(|G| − 1)λ(β)2 < 1 for all β > β0 . Then
+µβ,N (A3 ) ≥ 1 − C (6) ℓc λ(β)12 .
+
+(6.22)
+
+Proof. By Proposition 4.12 for a minimal vortex and the fact that there are at
+̂ ∪ ∂(−e),
+̂
+most ℓc corner edges for which supp ν = ∂e
+we have that
+µβ,N (Ac3 ) ≤ ℓc C (6) λ(β)12
+and
+µβ,N (A3 ) ≥ 1 − C (6) ℓc λ(β)12 .
+
+6.1.3
+
+The main argument
+
+We continue with some more definitions and notations for sets and conditional
+probability. Define the set of edges
+γ1 := γ \ γc
+and the random set of edges
+̂ with (dσ)p ̸= (dσ)p′ }.
+γ ′ := {e ∈ γ1 : ∃p, p′ ∈ ∂e
+Notice that γ1 is the set of the non-corner edges of γ (Recall that both corner
+and non-corner edges are illustrated in Figure 2.2.).
+̂
+We investigate how dσ can be written on two different plaquettes p, p′ ∈ ∂e:
+(dσ)p =
+
+∑︂
+
+σe′ = σe +
+
+e′ ∈∂p
+
+∑︂
+
+σe′
+
+e′ ∈∂p∖{e}
+
+and
+(dσ)p′ =
+
+∑︂
+
+σe′ = σe +
+
+e′ ∈∂p′
+
+∑︂
+
+σe′ .
+
+e′ ∈∂p′ ∖{e}
+
+Therefore, the event (dσ)p ̸= (dσ)p′ does not depend on the value of σe . Hence,
+if we know the spins of the edges which are not in ±γ1 , then the edges in γ ′
+are determined. Furthermore, a plaquette cannot contain two non-corner edges.
+Therefore, when we condition on (σe )e̸∈±γ1 , the spins (σe )e∈γ1 are independent.
+This is concluded in the following lemma.
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+57
+
+Lemma 6.9. The random set γ ′ is determined by the spins (σe )e̸∈±γ1 and conditioning on the latter, (σe )e∈γ1 are independent.
+Lastly, we have one more inequality for an expectation value, the expected
+value of the number of edges in the set γ ′ .
+Lemma 6.10. Let β0 > 0 be such that 5(|G| − 1)λ(β)2 < 1 for all β > β0 . Then
+(6)
+
+Eβ,N [|γ ′ |] ≤ C0 ℓλ(β)12 .
+
+(6.23)
+
+Proof. If (dσ)p ̸= 0, then the plaquette is in the support of a vortex ν. Since the
+size of the vortex is 12 or larger, we have that | supp ν| ≥ 12 if supp ν contains
+(dσ)p ̸= 0. Then, from Proposition 4.12 follows for a fixed p0 that
+(6)
+
+µβ,N {A plaquette p is such that (dσ)p ̸= 0} ≤ C0 λ(β)12 .
+Since |γ| = ℓ and γ ′ ⊆ γ, there are at most ℓ plaquettes in γ ′ for which (dσ)p ̸= 0.
+Thus,
+(6)
+
+Eβ,N [|γ ′ |] ≤ C0 ℓλ(β)12 .
+
+We prove the proposition. Six inequalities and equations for expectations will
+be calculated and then combined to obtain the desired inequality.
+Proof of Proposition 6.1. Since γ is a simple loop and B ⊆ BN , we have by
+Lemma 4.16 there exists an oriented surface q such that its support is contained
+in B and γ is the boundary of q. Recall that the support of this oriented surface
+is Q. Let σ ∼ µβ,N .
+Since σ ∈ EN , it follows from Lemma 4.5 that we can write dσ as a sum
+of vortices ν1 , ν2 , . . . with disjoint supports. Let the decomposition be fixed and
+define the set V as the set of vortices in this decomposition for which the support
+intersects Q. For the oriented surface q with boundary γ, we have by Lemma
+4.15 that
+∑︂
+e∈γ
+
+σe =
+
+∑︂
+
+qp+ (dσ)p
+
+for σ ∈ ΣEN .
+
+p∈PN
+
+Therefore, the Wilson loop observable Wγ can be written as
+(︄
+)︄
+(︄
+)︄
+(︄
+)︄
+∑︂
+∑︂
+∑︂ ∑︂
+Wγ = ρ
+σe = ρ
+qp+ (dσ)p = ρ
+qp+ (dσ)p .
+e∈γ
+
+p∈PN
+
+v∈V p∈supp ν
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+58
+
+Note that since |ρ(g)| = 1 for g ∈ G, we have |Wγ | = 1.
+The first expectation (Eβ,N [|Wγ − Wγ0 |])
+We define the subset V0 of V as
+V0 := {ν ∈ V : | supp ν| ≤ 48}
+and Wγ0 as
+(︄
+Wγ0 := ρ
+
+)︄
+∑︂
+
+∑︂
+
+qp+ (dσ)p
+
+.
+
+ν∈V0 p∈supp ν
+
+We estimate the expectation value of |Wγ − Wγ0 |. First, consider the case when
+the event A1 occurs. Then there is no vortex with | supp ν| ≥ 50, thus, V0 = V ,
+Wγ = Wγ0 and |Wγ − Wγ0 | = 0. Second, consider the case when the event A1 does
+not occur. Then,
+|Wγ − Wγ0 | ≤ |Wγ | + |Wγ0 | = 1 + 1 = 2.
+Thus, by Lemma 6.6, the expectation value is
+(25) 4
+
+|Eβ,N [|Wγ − Wγ0 |] ≤ 0 · µβ,N (A1 ) + 2 · µβ,N (Ac1 ) ≤ 2C0
+
+ℓ λ(β)50 .
+
+(6.24)
+
+The second expectation (Eβ,N [|Wγ0 − Wγ3 |])
+Consider a cube B of width b, where b is chosen as the smallest number for
+∑︁
+which the support of any irreducible ω ∈ PN with | supp ν| ≤ 48 is inside the
+cube. Let
+V1 := {ν ∈ V0 : supp ν ∩ Q′ ̸= ∅}.
+Fix ν ∈ V1 . Since B is a cube of width b, we have from Example 3.30 that the
+cube ∗ ∗ B is of width b + 2. By definition, for plaquettes p ∈ Q′ the intersection
+between a cube of width b+2 containing p and γ is empty. Hence, the intersection
+(∗∗B)∩Q only consists of internal plaquettes of q. Recall that γ is the boundary
+of q. Thus, from Lemma 4.19 follows that
+∑︂
+qp+ (dσ)p = 0 for v ∈ V1 .
+p∈supp ν
+
+We define the set
+V2 := V0 \ V1
+and
+
+(︄
+Wγ0 = ρ
+
+)︄
+∑︂
+
+∑︂
+
+ν∈V0 p∈supp ν
+
+qp+ (dσ)p
+
+(︄
+=ρ
+
+)︄
+∑︂
+
+∑︂
+
+ν∈V2 p∈supp ν
+
+qp+ (dσ)p
+
+.
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+59
+
+We define a subset V3 of V2 , which only contains minimal vortices. Let
+V3 := {ν ∈ V2 : | supp ν| = 12} = {ν ∈ V : | supp ν| = 12 and supp ν ∩ Q′ = ∅}
+and
+
+)︄
+
+(︄
+Wγ3
+
+∑︂
+
+:= ρ
+
+∑︂
+
+qp+ (dσ)p
+
+.
+
+ν∈V3 p∈supp ν
+
+We calculate the expectation value of |Wγ0 − Wγ3 |. Consider the event A2 . If
+A2 occurs, then there is no vortex ν with | supp ν| ≥ 14. Thus, V3 = V2 and
+Wγ3 = Wγ0 . Similarly as earlier, if A2 does not occur, then |Wγ0 − Wγ3 | ≤ 2. By
+Lemma 6.7, the expectation value is
+(7)
+
+Eβ,N [|Wγ0 − Wγ3 |] ≤ 0 · µβ,N (A2 ) + 2 · µβ,N (Ac2 ) ≤ 2C1 C0 ℓλ(β)14 .
+
+(6.25)
+
+The third expectation (Eβ,N [|Wγ3 − Wγ4 |])
+Let
+̂ ∪ ∂(−e)}
+̂
+V4 := {ν ∈ V3 : ∃e ∈ γ such that supp ν = ∂e
+and
+
+(︄
+Wγ4 := ρ
+
+)︄
+∑︂
+
+∑︂
+
+qp+ (dσ)p
+
+.
+
+ν∈V4 p∈supp ν
+
+Consider ν ∈ V3 \ V4 . Since ν is minimal, by Lemma 4.7 there exists an edge
+̂ ∪ ∂(−e).
+̂
+e ∈ EN such that supp ν = ∂e
+Furthermore, since ν ̸∈ V4 , the edge
+e cannot be in the boundary of q. Thus, e is an internal edge of q. By Lemma
+4.16,
+∑︂
+
+qp+ (dσ)p = 0 for v ∈ V3 \ V4 .
+
+p∈supp ν
+
+Therefore,
+(︄
+Wγ3 = ρ
+
+)︄
+∑︂
+
+∑︂
+
+ν∈V3 p∈supp ν
+
+qp+ (dσ)p
+
+(︄
+=ρ
+
+)︄
+∑︂
+
+∑︂
+
+qp+ (dσ)p
+
+= Wγ4 .
+
+ν∈V4 p∈supp ν
+
+Since Wγ3 = Wγ4 , the expectation of |Wγ3 − Wγ4 | is
+Eβ,N [|Wγ3 − Wγ4 |] = Eβ,N [0] = 0.
+The fourth expectation (Eβ,N [|Wγ4 − Wγ5 |])
+Let
+̂ ∪ ∂(−e)}
+̂
+V5 := {ν ∈ V4 : ∃e ∈ γ1 such that supp ν = ∂e
+
+(6.26)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+and
+
+(︄
+Wγ5
+
+:= ρ
+
+60
+
+)︄
+∑︂
+
+∑︂
+
+qp+ (dσ)p
+
+.
+
+ν∈V5 p∈supp ν
+
+If the event A3 occurs, then V4 = V5 and Wγ4 = Wγ5 . If A3 does not occur, then
+|Wγ4 − Wγ5 | ≤ 2. Thus, by Lemma 6.8, the expectation value of |Wγ4 − Wγ5 | is
+Eβ,N [|Wγ4 − Wγ5 |] ≤ 0 · µβ,N (A3 ) + 2µβ,N (Ac3 ) ≤ 2C (6) ℓc λ(β)12 .
+
+(6.27)
+
+The fifth expectation (Eβ,N [|Wγ5 − Wγ6 |])
+We first define a set of edges:
+̂ ∪ ∂(−e)}.
+̂
+E5 := {e ∈ γ : ∃ν ∈ V5 such that supp ν = ∂e
+Then Wγ5 can be written as
+(︄
+∑︂
+
+Wγ5 = ρ
+
+⎛
+
+)︄
+∑︂
+
+qp+ (dσ)p
+
+= ρ⎝
+
+ν∈V5 p∈supp ν
+
+∑︂ ∑︂
+
+qp+ (dσ)p ⎠
+
+e∈E5 p∈±∂e
+̂
+
+⎛
+= ρ⎝
+
+⎞
+
+⎞
+∑︂ ∑︂
+
+qp (dσ)p ⎠ .
+
+e∈E5 p∈∂e
+̂
+
+Define
+̂
+E6 := {e ∈ γ1 : (dσ)p = (dσ)p′ for all p, p′ ∈ ∂(−e)}
+and
+
+⎛
+Wγ6 := ρ ⎝
+
+⎞
+∑︂ ∑︂
+
+qp+ (dσ)p ⎠ .
+
+e∈E6 p∈∂e
+̂
+
+Notice that the set E6 can be written as
+E6 = γ1 \ γ ′ .
+
+(6.28)
+
+′
+̂ ∪ ∂(−e)
+̂
+̂ ′ ∪ ∂(−e
+̂
+Consider two disjoint edges e, e′ ∈ γ1 , then ∂e
+and ∂e
+) are
+
+disjoint. Since any vortex ν ∈ V5 is minimal, we have by Lemma 4.9 for a vortex
+ν ∈ V5 that (dσ)p = d(gdxj )p = {−g, g} for all p ∈ PN . Thus, (dσ)p does not
+̂ For e ∈ E6 , fix pe ∈ ∂e.
+̂ Since q is an oriented surface and E6
+depend on p ∈ ∂e.
+only contains edges in the boundary of q, we obtain
+⎛
+⎞
+∑︂
+∑︂
+∑︂
+qp (dσ)p =
+qp (dσ)pe = ⎝
+qp ⎠ (dσ)pe = (dσ)pe ,
+̂
+p∈∂e
+
+̂
+p∈∂e
+
+̂
+p∈∂e
+
+fore ∈ E6 .
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+61
+
+Therefore,
+(︄
+
+)︄
+∑︂
+
+Wγ6 = ρ
+
+(dσ)pe
+
+.
+
+e∈E6
+
+If the event A2 occurs, then E5 = E6 and Wγ5 = Wγ6 . If A2 does not occur, then
+|Wγ5 − Wγ6 | ≤ 2. Hence, by Lemma 6.7,
+(7)
+
+Eβ,N [|Wγ5 − Wγ6 |] ≤ 0 · µβ,N (A2 ) + 2µβ,N (Ac2 ) = 2C1 C0 ℓλ(β)14 .
+
+(6.29)
+
+The sixth expectation (|Eβ,N [Wγ6 ] − θℓ |)
+The strategy will be to first compute the conditional expectation of Wγ6 given
+(σe )e̸=±γ1 and then apply the law of total expectation. Given (σe )e̸∈±γ1 , denote
+the conditional probability by µ′β,N and the conditional expectation by E′β,N .
+We calculate the conditional expectation value of Wγ6 given (σe )e̸=±γ1 . By
+Lemma 6.9, we have that the spins (σe )e∈γ1 are independent. For e ∈ γ1 \ γ ′ ,
+∑︁
+define σ e := ê∈pe ∖{e} σê such that
+̂
+for each p ∈ ∂e.
+
+(dσ)p = σ e + σe
+
+(6.30)
+
+Then,
+[︄ (︄
+
+)︄]︄
+∑︂
+
+E′ β,N [Wγ6 ] = E′ β,N ρ
+
+(dσ)pe
+
+e∈E6
+
+[︄ (︄
+
+)︄]︄
+
+(6.28) ′
+
+∑︂
+
+= E β,N ρ
+
+e∈γ1
+
+(dσ)pe
+
+∖γ ′
+
+[︄
+= E′ β,N
+
+]︄
+∏︂
+
+ρ ((dσ)pe )
+
+e∈γ1 ∖γ ′
+⊥
+⊥
+
+∏︂
+
+=
+
+E′ β,N [ρ((dσ)pe )]
+
+e∈γ1 ∖γ ′
+(6.30)
+
+=
+
+∏︂
+
+E′ β,N [ρ(σ e + σe )]
+
+e∈γ1 ∖γ ′
+
+(︄
+∑︂
+
+ϕβ (σ e + g)12
+=
+ρ(σ e + g) ∑︁
+e
+12
+g∈G ϕβ (σ + g)
+g∈G
+e∈γ1 ∖γ ′
+(︄ ∑︁
+)︄
+12
+∏︂
+ρ(g)ϕ
+(g)
+β
+g∈G
+∑︁
+=
+12
+g∈G ϕβ (g)
+e∈γ1 ∖γ ′
+′
+(︄ ∑︁
+)︄
+12 |γ1 ∖γ |
+ρ(g)ϕ
+(g)
+β
+g∈G
+∑︁
+=
+12
+g∈G ϕβ (g)
+∏︂
+
+)︄
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+62
+
+′
+
+= θ(β)|γ1 ∖γ | .
+By the law of total expectation, we have
+′
+
+′
+
+Eβ,N [Wγ6 ] = Eβ,N [E′ β,N [Wγ6 ]] = Eβ,N [θ(β)|γ1 ∖γ | ] = Eβ,N [θ(β)|γ1 | θ(β)−|γ | ]
+′
+
+= θ(β)|γ1 | Eβ,N [θ(β)−|γ | ]
+
+(6.31)
+
+Note that since θ ≤ 1, it follows that
+θ(β)|γ1 | ≤ 1.
+
+(6.32)
+
+Since |γ1 | is the number of non-corner edges in γ and ℓc is the number of corner
+edges in γ, we have
+|γ1 | + ℓc = ℓ.
+
+(6.33)
+
+Let j be such that 0 ≤ j ≤ ℓ. Then,
+(6.31)
+
+′
+
+|Eβ,N [Wγ6 ] − θℓ | = |θ|γ1 | Eβ,N [θ−|γ | ] − θℓ |
+(6.33) |γ1 |
+
+= |θ
+
+′
+
+Eβ,N [θ−|γ | ] − θ|γ1 | + θ|γ1 | − θ|γ1 |+ℓc |
+′
+
+= |θ|γ1 | (Eβ,N [θ−|γ | ] − 1) − θ|γ1 | (θℓc − 1)|
+′
+
+≤ |θ|γ1 | (Eβ,N [θ−|γ | ] − 1)| + |θ|γ1 | (θℓc − 1)|
+(6.32)
+
+′
+
+(6.12)
+
+′
+
+≤ |Eβ,N [θ−|γ | ] − 1| + |θℓc − 1|
+
+≤ |Eβ,N [θ−|γ | ] − 1| + 2C ∗ ℓc λ(β)12 eC
+′
+
+∗ ℓλ(β)12
+
+′
+
+′
+
+= |Eβ,N [θ−|γ | ] − Eβ,N [θ−|γ | I{|γ ′ |≤j} ] + Eβ,N [θ−|γ | I{|γ ′ |≤j} ] − 1|
++ 2C ∗ ℓc λ(β)12 eC
+
+∗ ℓλ(β)12
+
+′
+
+′
+
+′
+
+≤ |Eβ,N [θ−|γ | ] − Eβ,N [θ−|γ | I{|γ ′ |≤j} ]| + |Eβ,N [θ−|γ | I{|γ ′ |≤j} ] − 1|
++ 2C ∗ ℓc λ(β)12 eC
+
+∗ ℓλ(β)12
+
+(6.34)
+We focus on the first term on the right-hand side above:
+′
+
+′
+
+′
+
+|Eβ,N [θ−|γ | ] − Eβ,N [θ−|γ | I{|γ ′ |≤j} ]| = Eβ,N [θ−|γ | I{|γ ′ |>j} ]
+≤ θ−ℓ µβ,N ({σ ∈ ΣEN : |γ ′ | > j})
+≤
+
+θ−ℓ Eβ,N [|γ ′ |]
+j
+
+(6.23)
+
+≤
+
+θ
+
+−ℓ
+
+j
+
+∗
+12
+(6.11) 2C (6) ℓλ(β)12 eC ℓλ(β)
+0
+
+≤
+
+(6.35)
+
+(6)
+C0 ℓλ(β)12
+
+j
+
+.
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+63
+
+Then we focus on the second term:
+′
+
+′
+
+|Eβ,N [θ−|γ | I{|γ ′ |≤j} ] − 1| ≤ |Eβ,N [(θ−|γ | − 1)I{|γ ′ |≤j} ]| + Eβ,N [I{|γ ′ |≤j} ]
+Eβ,N [|γ ′ |]
+j
+
+≤ (θ−j − 1) +
+
+(6.36)
+(6)
+
+C ℓλ(β)12
+≤ 2C jλ(β) e
++ 0
+.
+j
+√
+We combine these two inequalities and choose j = ℓ:
+(6.12),(6.23)
+
+′
+
+12 C ∗ ℓλ(β)12
+
+∗
+
+′
+
+′
+
+|Eβ,N [θ−|γ | ] − Eβ,N [θ−|γ | I{|γ ′ |≤j} ]| + |Eβ,N [θ−|γ | I{|γ ′ |≤j} ] − 1|
+∗
+12
+(6.35),(6.36) 2C (6) ℓλ(β)12 eC ℓλ(β)
+0
+
+≤
+
+(6)
+
++ 2C ∗ jλ(β)12 eC
+
+∗ ℓλ(β)12
+
+j
+√
+√
+∗
+12
+∗
+12
+(6)
+= 2C0 ℓλ(β)12 eC ℓλ(β) + 2C ∗ ℓλ(β)12 eC ℓλ(β)
+√
+√
+∗
+12
+(6)
+(6)
+= 2(C0 + C ∗ ) ℓλ(β)12 eC ℓλ(β) + C0 ℓλ(β)12 .
+
+√
+j= ℓ
+
+C0 ℓλ(β)12
+j
+√
+(6)
++ C0 ℓλ(β)12
+
++
+
+(6.37)
+
+We return to inequality (6.34) and obtain
+(6.37)
+√
+√
+∗
+12
+(6)
+(6)
+|Eβ,N [Wγ6 ] − θℓ | ≤ 2(C0 + C ∗ ) ℓλ(β)12 eC ℓλ(β) + C0 ℓλ(β)12
+∗
+
+12
+
++ 2ℓc C ∗ λ(β)12 ec ℓλ(β)
+(︄
+)︄
+(6)
+√
+C0 + C ∗ C ∗ ℓc
+∗
+12
+(6)
+√
+=2
+ℓλ(β)12 eC ℓλ(β) + C0 ℓλ(β)12 .
++
+ℓ
+ℓ
+(6.38)
+Combining the expectation values
+We combine equations (6.24), (6.25), (6.26), (6.27), (6.29) and (6.38):
+|Eβ,N [Wγ ] − θℓ | ≤ |Eβ,N [Wγ6 ] − θℓ | + Eβ,N [|Wγ6 − Wγ5 |] + Eβ,N [|Wγ5 − Wγ4 |]
++ Eβ,N [|Wγ4 − Wγ3 |] + Eβ,N [|Wγ3 − Wγ0 |] + Eβ,N [|Wγ0 − Wγ |]
+)︄
+(︄
+(6)
+√
+C0 + C ∗ C ∗ ℓc
+∗
+12
+(6)
+√
++
+ℓλ(β)12 eC ℓλ(β) + C0 ℓλ(β)12
+≤2
+ℓ
+ℓ
+(7)
+
+(6)
+
+(7)
+
++ 2C1 C0 ℓλ(β)14 + 2C0 ℓc λ(β)12 + 0 + 2C1 C0 ℓλ(β)14
+(25)
+
++ 2C0 ℓ4 λ(β)50
+)︄
+(︄
+(6)
+C0 + C ∗ ℓc
+∗
+12
+√
+=2
++
+C ∗ ℓλ(β)12 eC ℓλ(β)
+∗
+ℓ
+C ℓ
+(︄
+)︄
+(6)
+(6)
+(7)
+C0
+2C1 C0 λ(β)2 C0 ℓc
+√ +
++
++
+2C ∗ ℓλ(β)12
+∗
+∗
+∗
+C
+C ℓ
+2C ℓ
+(25)
+
++
+
+C0 λ(β)2
+(2C ∗ ℓλ(β)12 )4 .
+3
+∗
+4
+2 (C )
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+64
+
+Note that for x > 0 the two following inequalities hold:
+x ≤ ex and x4 ≤ 5ex .
+Hence,
+C ∗ ℓλ(β)12 eC
+
+∗ ℓλ(β)12
+
+≤ e2C
+
+2C ∗ ℓλ(β)12 ≤ e2C
+
+∗ ℓλ(β)12
+
+,
+
+∗ ℓλ(β)12
+
+and
+(2C ∗ ℓλ(β)12 )4 ≤ 5e2C
+
+∗ ℓλ(β)12
+
+.
+
+Furthermore, since 1 ≤ ℓc ≤ ℓ, we have
+√︃
+√︃
+ℓc
+1
+ℓc
+ℓc
+√ ≤
+and
+≤
+.
+ℓ
+ℓ
+ℓ
+ℓ
+
+(6.39)
+
+Therefore,
+|Eβ,N [Wγ ] − θℓ |
+(︄
+)︄
+(6)
+(6)
+(7)
+(6)
+(25)
+C0 + C ∗ 2ℓc
+C0
+2C1 C0 λ(β)2 C0 ℓc 5C0 λ(β)2
+√
+√ +
+≤ 2
++
++
++
++
+ℓ
+C∗
+C ∗ℓ
+23 (C ∗ )4
+C∗ ℓ
+2C ∗ ℓ
+∗
+
+12
+
+∗
+
+12
+
+· e2C ℓλ(β)
+(︄
+)︄
+(7)
+(6)
+(25)
+(6)
+5C0 + 4C ∗ 2ℓc 2C1 C0 λ(β)2 C0 ℓc 5C0 λ(β)2
+∗
+12
+√
++
++
++
+· e2C ℓλ(β)
++
+=
+∗
+∗
+3
+∗
+4
+∗
+ℓ
+C
+C ℓ
+2 (C )
+2C ℓ
+(︄
+)︄ (︄√︃
+)︄
+(7)
+(6)
+(25)
+(6.39) 5C (6) + 4C ∗
+2C1 C0
+C0
+5C0
+ℓc
+0
+≤
++2+
++ ∗ + 3 ∗ 4
++ λ(β)2
+2C ∗
+C∗
+C
+2 (C )
+ℓ
+· e2C ℓλ(β)
+)︄ (︄√︃
+)︄
+(︄
+(6)
+(7)
+(25)
+2C1 C0
+5C0
+ℓc
+7C0
+2
+2C ∗ ℓλ(β)12
++
+4
++
++
++
+λ(β)
+e
+=
+2C ∗
+C∗
+23 (C ∗ )4
+ℓ
+(︄√︃
+)︄
+ℓc
+∗
+12
+= (CA − 1/2)
++ λ(β)2 e2C ℓλ(β) ,
+ℓ
+where
+
+(6)
+
+CA =
+
+(7)
+
+(6.40)
+
+(25)
+
+7C0
+2C1 C0
+5C0
+9
++
++
++
+.
+2C ∗
+C∗
+23 (C ∗ )4 2
+
+Finally, we can calculate the last inequality:
+|Eβ,N [Wγ ] − e−ℓ(1−θ(β)) | = |Eβ,N [Wγ ] − θℓ + θℓ − e−ℓ(1−θ(β)) |
+≤ |Eβ,N [Wγ ] − θℓ | + |θℓ − e−ℓ(1−θ(β)) |
+
+(6.41)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+65
+
+)︄
+∗
+12
+e2C ℓλ(β)
+ℓc
+∗
+12
++ λ(β)2 e2C ℓλ(β) +
+≤ (CA − 1/2)
+ℓ
+2ℓ
+⎛
+⎞
+)︄
+(︄√︃
+1
+ℓc
+1
+⎜
+⎟
+= ⎝CA − 1/2 + · (︂√︂
++ λ(β)2
+)︂ ⎠
+2 ℓ
+ℓ
+ℓc
++ λ(β)2
+(︄√︃
+
+(6.13),(6.40)
+
+ℓ
+
+2C ∗ ℓλ(β)12
+
+·e
+)︄
+(︃
+)︃ (︄√︃
+1
+ℓc
+∗
+12
+≤ CA − 1/2 +
++ λ(β)2 e2C ℓλ(β)
+2
+ℓ
+)︄
+(︄√︃
+ℓc
+∗
+12
++ λ(β)2 e2C ℓλ(β) .
+= CA
+ℓ
+
+6.2
+
+The case when ℓλ(β)12 is large
+
+We now consider the case when ℓλ(β)12 is large. First, some notations and
+definitions of importance are stated.
+Let the set K be a finite and non-empty index set. The arguments of the
+maxima are the elements for which the value of the function is maximised and
+is denoted by arg max. Likewise, the arguments of the minima are the elements
+for which the value of the function is minimised and denoted by arg min. Given
+gk ∈ G, define for each K, the set
+G0 [(gk )k∈K ] := arg max
+g∈G
+
+∏︂
+
+ϕβ (g + gk ).
+
+k∈K
+
+Next, an assumption is given and we prove that it is satisfied if β0 is chosen large
+enough.
+(⋆) For all β ≥ β0 and choices of gk ∈ G for k ∈ K and any g ′ ∈ G0 [(gk )k∈K ], the
+following inequality holds:
+∑︂
+g∈G∖G0 [(gk )k∈K ]
+
+∏︂ ϕβ (g + gk )2
+1 − cos(2π/n)
+≤
+.
+′
+2
+ϕ
+8
+β (g + gk )
+k∈K
+
+Let β ≥ 0 and g ∈ G. Since
+∏︂
+k∈K
+
+ϕβ (g + gk ) =
+
+∏︂
+k∈K
+
+eβℜ(ρ(g+gk )) = eβ
+
+∑︁
+
+k∈K
+
+ℜ(ρ(g+gk ))
+
+,
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+66
+
+we obtain
+G0 [(gk )k∈K ] = arg max eβ
+
+∑︁
+
+k∈K
+
+ℜ(ρ(g+gk ))
+
+= arg max
+
+g∈G
+
+g∈G
+
+∑︂
+
+ℜ(ρ(g + gk )).
+
+k∈K
+
+We see that G0 [(gk )k∈K ] does not depend on β. Let g ′ ∈ G0 [(gk )k∈K ]. Then g ′ is
+∑︁
+one of the elements in G for which k∈K ℜ(ρ(g + gk )) takes its maximum value.
+For g ∈ G \ G0 [(gk )k∈K ], we have
+∑︂
+
+ℜ(ρ(g ′ + gk )) >
+
+k∈K
+
+∑︂
+
+ℜ(ρ(g + gk )).
+
+k∈K
+
+Thus, by taking the limit when β → ∞ we obtain
+(︄
+)︄
+∏︂ ϕβ (g + gk )2
+∑︂
+′
+= lim exp 2β
+(ℜρ(g + gk ) − ℜρ(g + gk )) = 0.
+lim
+β→∞
+ϕβ (g ′ + gk )2 β→∞
+k∈K
+k∈K
+Thus, there exists a β0 for which (⋆) holds. This implies that there exists a β0 for
+which (⋆) holds for all K simultaneously, since β0 can be chosen as the maximum
+of β0 for all fixed K.
+Proposition 6.11. Consider lattice gauge theory with structure group G = Zn
+and a one-dimensional faithful representation ρ of G. Let γ be a simple oriented
+loop in Z4 , ℓ = |γ| the length of it and ℓc the number of corner edges in γ. Let
+N be large enough so that the edges of γ are internal edges of BN . Let β0 > 0
+satisfy the assumption (⋆) when applied with sets K with |K| = 6, and be such
+that 2λ(β0 )2|K| ≤ 1. Then for all β > β0 , we have
+12
+
+|Eβ,N [Wγ ]| ≤ e−C∗ (ℓ−ℓc )λ(β) ,
+
+where C∗ :=
+
+1 − cos(2π/n)
+.
+4
+
+(6.42)
+
+To prove this proposition, three lemmas will be applied. We begin with
+stating the main lemma of this section, which will require two lemmas to be
+proved.
+Lemma 6.12. Let K be a finite and non-empty index set and assume that β0 =
+β0 (|K|) > 0 satisfies (⋆) applied with K and
+2λ(β0 )2|K| ≤ 1.
+
+(6.43)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+67
+
+Then, for all choices of gk ∈ G for k ∈ K and in the setting of Lemma 6.11, we
+have
+
+∏︁
+⃓ ∑︁
+⃓
+⃓ g∈G ρ(g) k∈K ϕβ (g + gk )2 ⃓
+⃓ ∑︁
+⃓ ≤ 1 − C∗ λ(β)2|K| .
+∏︁
+⃓
+ϕβ (g + gk )2 ⃓
+g∈G
+
+(6.44)
+
+k∈K
+
+The left-hand side of inequality (6.44) is the conditional expected value of
+a single spin (see the beginning of the proof of this proposition). To lighten
+notations, we define
+∑︁
+∏︁
+ρ(g)
+ϕβ (g + gk )2
+g∈G
+∏︁ k∈K
+Sβ ((gk )k∈K ) := ∑︁
+2
+g∈G
+k∈K ϕβ (g + gk )
+
+(6.45)
+
+ω := 1 − Sβ ((gk )k∈K ).
+
+(6.46)
+
+and
+
+We state and prove two lemmas for the case when the set G0 [(gk )k∈K ] only
+consists of one element (We will later prove that G0 [(gk )k∈K ] = {0} in this
+case.). Thereafter, the proof of Lemma 6.12 is given.
+Lemma 6.13. Let K be a finite and non-empty index set and assume that β0 =
+β0 (|K|) > 0 satisfies (⋆) applied with K. If G0 [(gk )k∈K ] = {0}, then
+(i) |ω|2 ≤ ℜω,
+(ii) |Sβ ((gk )k∈K )| ≤ 1 − C∗
+
+(6.47)
+∑︂
+g∈G∖{0}
+
+∏︁
+ϕβ (g + gk )2
+∏︁k∈K
+.
+2
+k∈K ϕβ (0 + gk )
+
+Proof. (i) From equations (6.45) and (6.46) follows that
+∏︁
+∑︁
+ϕβ (g + gk )2
+ρ(g)
+g∈G
+∏︁ k∈K
+ω = 1 − ∑︁
+2
+g∈G
+k∈K ϕβ (g + gk )
+∑︁
+∏︁
+2
+g∈G (1 − ρ(g))
+k∈K ϕβ (g + gk )
+∑︁
+∏︁
+=
+2
+g∈G
+k∈K ϕβ (g + gk )
+∑︁
+∏︁
+∏︁
+2
+2
+g∈G (1 − ρ(g))
+k∈K ϕβ (g + gk )
+k∈K ϕβ (0 + gk )
+∏︁
+∑︁
+∏︁
+=
+·
+2
+2
+k∈K ϕβ (0 + gk )
+g∈G
+k∈K ϕβ (g + gk )
+)︄
+(︄
+∏︁
+2
+∑︂
+∏︂ ϕβ (g + gk )2
+k∈K ϕβ (0 + gk )
+∑︁
+∏︁
+·
+.
+=
+(1 − ρ(g))
+2
+ϕβ (0 + gk )2
+g∈G
+k∈K ϕβ (g + gk )
+g∈G
+k∈K
+
+(6.48)
+
+(6.49)
+
+Since G0 [(gk )k∈K ] = {0}, by (⋆) we have
+∑︂
+g∈G∖{0}
+
+∏︂ ϕβ (g + gk )2
+1 − cos(2π/n)
+≤
+.
+2
+ϕβ (0 + gk )
+8
+k∈K
+
+(6.50)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+We focus on the second factor in (6.49):
+∏︁
+2
+k∈K ϕβ (0 + gk )
+∑︁
+∏︁
+1≥
+2
+g∈G
+k∈K ϕβ (g + gk )
+∑︁
+∏︁
+2
+g∈G∖{0}
+k∈K ϕβ (g + gk )
+∏︁
+= 1 − ∑︁
+2
+g∈G
+k∈K ϕβ (g + gk )
+∑︁
+∏︁
+2
+g∈G∖{0}
+k∈K ϕβ (g + gk )
+∏︁
+>1−
+2
+k∈K ϕβ (0 + gk )
+
+68
+
+(6.51)
+
+1 − cos(2π/n)
+8
+7 + cos(2π/n)
+=
+8
+1
+6
+≥ > .
+8
+2
+
+(6.50)
+
+≥1−
+
+We calculate ℜω. Notice first that
+min (1 − ℜρ(g)) = 1 − cos(2π/n) > 0.
+
+(6.52)
+
+g∈G∖{0}
+
+Thus,
+)︄
+∏︁
+∏︁
+2
+2
+ϕ
+(g
++
+g
+)
+β
+k
+k∈K ϕβ (0 + gk )
+k∈K
+∑︁
+∏︁
+·
+ℜω =
+(1 − ℜ(ρ(g))) ∏︁
+2
+2
+k∈K ϕβ (0 + gk )
+g∈G
+k∈K ϕβ (g + gk )
+g∈G
+⎛
+⎞
+∏︁
+∏︁
+2
+∑︂
+ϕβ (0 + gk )2
+ϕβ (g + gk )
+k∈K
+⎠ · ∑︁ k∈K
+∏︁
+=⎝
+(1 − ℜ(ρ(g))) ∏︁
+2
+2
+k∈K ϕβ (0 + gk )
+g∈G
+k∈K ϕβ (g + gk )
+g∈G∖{0}
+∏︁
+2
+∑︂
+(6.51),(6.52)
+1
+k∈K ϕβ (g + gk )
+∏︁
+> (1 − cos(2π/n))
+·
+2
+2
+k∈K ϕβ (0 + gk )
+(︄
+∑︂
+
+g∈G∖{0}
+
+1 − cos(2π/n)
+(1 − cos(2π/n))2
+≥ (1 − cos(2π/n))
+=
+.
+2
+8
+42
+
+(6.50)1
+
+(6.53)
+Since
+max |1 − ρ(g)| ≤ 1 + 1 = 2,
+g∈G
+
+(6.54)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+69
+
+we have
+⎛
+⎞
+∏︁
+∏︁
+⃓
+⃓
+2
+2
+∑︂
+⃓
+⃓
+ϕ
+(0
++
+g
+)
+ϕ
+(g
++
+g
+)
+β
+k
+β
+k
+k∈K
+k∈K
+⃓
+⎠ · ∑︁
+∏︁
+|ω| = ⃓⃓ ⎝
+(1 − ρ(g)) ∏︁
+ϕβ (0 + gk )2
+ϕβ (g + gk )2 ⃓
+k∈K
+
+g∈G∖{0}
+
+g∈G
+
+k∈K
+
+⃓
+2
+∏︂ ϕβ (g + gk )2
+⃓
+k∈K ϕβ (0 + gk )
+⃓
+∑︁
+∏︁
+·
+2
+2⃓
+g∈G
+ϕ
+ϕ
+β (0 + gk )
+β (g + gk )
+g∈G
+k∈K
+g∈G∖{0} k∈K
+∏︁
+2
+∑︂ ∏︂ ϕβ (g + gk )2
+(6.54)
+k∈K ϕβ (0 + gk )
+∑︁
+∏︁
+≤2
+·
+2
+ϕβ (0 + gk )2
+g∈G
+k∈K ϕβ (g + gk )
+k∈K
+∏︁
+
+⃓ ∑︂
+⃓
+≤ max |1 − ρ(g)|⃓⃓
+
+g∈G∖{0}
+
+(6.51)
+
+≤ 2
+
+∑︂
+g∈G∖{0}
+
+(6.50) 1
+
+≤
+
+∏︂ ϕβ (g + gk )2
+·1
+2
+ϕ
+β (0 + gk )
+k∈K
+
+− cos(2π/n)
+.
+4
+
+Therefore,
+2
+
+|ω| ≤
+
+(︃
+
+1 − cos(2π/n)
+4
+
+)︃2
+
+(6.53)
+
+≤ ℜω.
+
+(ii) We calculate |Sβ ((gk )k∈K )| = |1 − ω|:
+√︁
+√︁
+(1 − ℜω)2 + (ℑω)2 = 1 − 2ℜω + |ω|2
+√︃
+|ω|4
+≤ 1 − 2ℜω + |ω|2 + ℜω(−|ω|2 + ℜω) +
+4
+√︄(︃
+)︃
+2
+|ω|2
+|ω|2
+= 1 − ℜω +
+=
+1 − ℜω +
+2
+2
+
+|1 − ω| =
+
+ℜω
+ℜω
+≤ 1 − ℜω +
+=1−
+2
+⎛ 2
+⎞
+∏︁
+2
+∑︂
+(6.53)
+ϕβ (g + gk )
+1 (1 − cos(2π/n))
+⎠
+∏︁k∈K
+≤1− ⎝
+2
+ϕ
+(0
++
+g
+)
+2
+2
+β
+k
+k∈K
+g∈G∖{0}
+∏︁
+∑︂
+ϕβ (g + gk )2
+∏︁k∈K
+= 1 − C∗
+.
+2
+k∈K ϕβ (0 + gk )
+(6.47)
+
+g∈G∖{0}
+
+Before the following lemma, the notation ∠(z1 , z2 ) is introduced. Let z1 , z2 ∈
+C \ {0}, then ∠(z1 , z2 ) is the absolute value of the smallest angle between these
+numbers.
+Lemma 6.14. Let K be a finite and non-empty index set and assume that β0 =
+β0 (|K|) > 0 satisfies (⋆) applied with K. For each k ∈ K, let gk ∈ G. If
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+70
+
+G0 [(gk )k∈K ] = {0}, then
+∏︂ ϕβ (g + 0)
+∏︂ ϕβ (g + gk )
+≥ max
+.
+g∈G∖{0}
+g∈G∖{0}
+ϕ
+ϕ
+β (0 + gk )
+β (0 + 0)
+k∈K
+k∈K
+max
+
+(6.55)
+
+Proof. Since
+∏︂
+
+ϕβ (g + gk ) = exp(βℜ(ρ(g)
+
+k∈K
+
+∑︂
+
+ρ(gk ))),
+
+k∈K
+
+inequality (6.55) can be written as
+(︁
+)︁
+(︁
+)︁
+∑︁
+∑︁
+exp βℜ(ρ(g) k∈K ρ(gk ))
+exp βℜ(ρ(g) k∈K ρ(0))
+(︁
+)︁ ≥ max
+(︁
+)︁ ,
+∑︁
+∑︁
+max
+g∈G∖{0} exp βℜ(ρ(0)
+g∈G∖{0} exp βℜ(ρ(0)
+ρ(g
+))
+ρ(0))
+k
+k∈K
+k∈K
+which is equivalent to
+)︄)︄
+
+(︄ (︄
+∑︂
+
+ℜ(ρ(g)
+
+max exp β
+g∈G∖{0}
+
+∑︂
+
+ρ(gk )) − ℜ(ρ(0)
+
+ρ(gk ))
+
+k∈K
+
+k∈K
+
+)︄)︄
+
+(︄ (︄
+≥ max exp β
+
+∑︂
+
+ℜ(ρ(g)
+
+g∈G∖{0}
+
+∑︂
+
+ρ(0)) − ℜ(ρ(0)
+
+ρ(0))
+
+k∈K
+
+k∈K
+
+and
+(︄
+
+)︄
+
+ℜ(ρ(g)
+
+max
+g∈G∖{0}
+
+∑︂
+
+ρ(gk )) − ℜ(ρ(0)
+
+k∈K
+
+∑︂
+
+ρ(gk ))
+
+k∈K
+
+(︄
+≥ max
+
+)︄
+ℜ(ρ(g)
+
+g∈G∖{0}
+
+∑︂
+
+ρ(0)) − ℜ(ρ(0)
+
+k∈K
+
+∑︂
+
+(6.56)
+
+ρ(0)) .
+
+k∈K
+
+∑︁
+
+Since ρ(g) and k∈K ρ(−gk ) are non-zero complex numbers, we have
+)︄
+(︄
+(︄
+)︄
+∑︂
+∑︂
+ℜ ρ(g)
+ρ(gk ) = ℜ
+ρ(−gk )ρ(g)
+k∈K
+
+k∈K
+
+(︄ (︄
+)︄)︄
+⃓ ∑︂
+⃓
+∑︂
+⃓
+⃓
+= ⃓⃓
+ρ(gk )⃓⃓|ρ(g)| cos ∠
+ρ(−gk ), ρ(g)
+k∈K
+k∈K
+(︄ (︄
+)︄)︄
+⃓
+⃓
+∑︂
+∑︂
+⃓
+⃓
+= ⃓⃓
+ρ(gk )⃓⃓ cos ∠
+ρ(−gk ), ρ(g)
+.
+k∈K
+
+k∈K
+
+Fix ĝ ∈ G \ {0}. Then ĝ ̸∈ G0 [(gk )k∈K ] and
+∏︂
+k∈K
+
+ϕβ (̂
+g + gk ) <
+
+∏︂
+k∈K
+
+ϕβ (0 + gk ),
+
+(6.57)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+71
+
+which is equivalent to
+(︄
+)︄
+(︄
+)︄
+(︄
+)︄
+∑︂
+∑︂
+∑︂
+ℜ ρ(g)
+ρ(gk ) < ℜ ρ(0)
+ρ(gk ) = ℜ 1 ·
+ρ(gk ) .
+k∈K
+
+k∈K
+
+(6.58)
+
+k∈K
+
+From equation (6.57) follows that inequality (6.58) is equivalent to
+(︄ (︄
+)︄)︄
+⃓
+⃓
+∑︂
+⃓ ∑︂
+⃓
+⃓
+ρ(gk )⃓⃓ cos ∠
+ρ(−gk ), ρ(g)
+⃓
+k∈K
+k∈K
+(︄ (︄
+)︄)︄
+⃓
+⃓
+∑︂
+⃓ ∑︂
+⃓
+< ⃓⃓
+ρ(gk )⃓⃓ cos ∠
+ρ(−gk ), 1
+.
+k∈K
+
+k∈K
+
+Thus,
+(︄ (︄
+
+)︄)︄
+∑︂
+
+cos ∠
+
+(︄ (︄
+− cos ∠
+
+ρ(−gk ), ρ(g)
+
+k∈K
+
+)︄)︄
+∑︂
+
+ρ(−gk ), 1
+
+< 0.
+
+(6.59)
+
+k∈K
+
+We write G0 [(gk )k∈K ] with arg max and arg min. Note that cos(x) is decreasing in [0, π] and therefore takes it largest value when the angle is as small as
+possible. Therefore,
+{0} = G0 [(gk )k∈K ]
+(︄
+
+)︄)︄
+
+(︄
+
+= arg max exp βℜ ρ(g)
+g∈G
+
+∑︂
+
+(g + gk )
+
+k∈K
+
+(︄ ⃓
+(︄ (︄
+)︄)︄)︄
+⃓
+∑︂
+∑︂
+⃓
+⃓
+(6.57)
+= arg max exp β ⃓⃓
+ρ(gk )⃓⃓ cos ∠
+ρ(−gk ), ρ(g)
+g∈G
+
+k∈K
+
+k∈K
+
+(︄ (︄
+= arg max cos ∠
+g∈G
+
+)︄)︄
+∑︂
+
+ρ(−gk ), ρ(g)
+
+k∈K
+
+(︄
+= arg min ∠
+g∈G
+
+)︄
+∑︂
+
+ρ(−gk ), ρ(g) .
+
+k∈K
+
+Thus, ρ(0) is the point in ρ(G) that is closest to
+
+∑︁
+
+k∈K
+
+ρ(−gk ). Similarly, we
+
+have for ĝ that
+(︄
+ĝ ∈
+
+arg max
+
+∏︂
+
+ϕβ (g + gk ) = arg min ∠
+
+g∈G∖G0 [(gk )k∈K ] k∈K
+
+Hence, ρ(̂
+g ) is the point second closest to
+
+g∈G∖{0}
+
+∑︁
+
+k∈K
+
+)︄
+∑︂
+
+ρ(−gk ), ρ(g) .
+
+k∈K
+
+ρ(−gk ). These results for 0 and
+
+ĝ are illustrated in Figure 6.1. Note that there are two possibilities for where
+∑︁
+k∈K ρ(−gk ) is.
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+72
+
+Figure 6.1: The points in ρ(G) and the two possibilities for
+
+∑︁
+
+k∈K
+
+ρ(−gk ). The
+
+figure is from [1].
+We see that the angle ∠(1, ρ(̂
+g )) can be written as a sum of two angles:
+(︄
+)︄
+(︄
+)︄
+∑︂
+∑︂
+∠
+ρ(−gk ), 1 + ∠
+ρ(−gk ), ρ(̂
+g ) = ∠(1, ρ(̂
+g )).
+k∈K
+
+k∈K
+
+Since cos(x) is decreasing on [0, π], we have
+(︄ (︄
+)︄)︄
+∑︂
+cos ∠
+ρ(−gk ), ρ(̂
+g)
+≥ cos(∠(1, ρ(̂
+g )).
+k∈K
+
+Furthermore,
+(︄ (︄
+
+)︄)︄
+∑︂
+
+1 = cos(∠(1, 1)) ≥ cos ∠
+
+ρ(−gk ), 1
+
+.
+
+k∈K
+
+Therefore, we have
+(︄ (︄
+cos(∠(1, 1)) + cos ∠
+
+)︄)︄
+∑︂
+
+ρ(−gk ), ρ(̂
+g)
+
+k∈K
+
+(︄ (︄
+≥ cos ∠
+
+)︄)︄
+∑︂
+
+ρ(−gk ), 1
+
++ cos(∠(1, ρ(̂
+g ))
+
+k∈K
+
+and
+(︄ (︄
+cos ∠
+
+)︄)︄
+∑︂
+
+(︄ (︄
+− cos ∠
+
+ρ(−gk ), ρ(̂
+g)
+
+k∈K
+
+)︄)︄
+∑︂
+
+ρ(−gk ), 1
+
+k∈K
+
+(6.60)
+
+≥ cos (∠(1, ρ(̂
+g ))) − cos (∠(1, 1)) .
+Since
+
+⃓
+⃓
+∑︂
+⃓ ∑︂
+⃓ ∑︂
+⃓
+⃓
+ρ(g
+)
+≤
+|ρ(g
+)|
+≤
+1 = |K|,
+k ⃓
+k
+⃓
+k∈K
+
+k∈K
+
+k∈K
+
+(6.61)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+73
+
+we have
+ℜ(ρ(̂
+g)
+
+∑︂
+k∈K
+
+⃓
+= ⃓⃓
+
+(6.57)⃓ ∑︂
+k∈K
+
+∑︂
+
+ρ(gk )) − ℜ(ρ(0))
+
+ρ(gk ))
+
+k∈K
+
+(︄
+)︄
+⃓
+∑︂
+⃓
+ρ(gk )⃓⃓ cos ∠(
+ρ(−gk ), ρ(̂
+g ))
+k∈K
+
+(︄
+)︄
+⃓
+⃓
+∑︂
+⃓ ∑︂
+⃓
+− ⃓⃓
+ρ(gk )⃓⃓ cos ∠(
+ρ(−gk ), ρ(1))
+k∈K
+k∈K
+(︄ (︄
+)︄
+(︄
+)︄)︄
+∑︂
+∑︂
+(6.59),(6.61)
+≥ |K| cos ∠(
+ρ(−gk ), ρ(̂
+g )) − cos ∠(
+ρ(−gk ), ρ(1))
+k∈K
+
+k∈K
+
+(6.60)
+
+≥ |K| cos (∠(1, ρ(̂
+g )) − cos(∠(1, 1)))
+)︄)︄
+)︄
+(︄
+⃓
+⃓ (︄ (︄
+∑︂
+∑︂
+⃓ ∑︂
+⃓
+ρ(0), ρ(0))
+= ⃓⃓
+ρ(0)⃓⃓ cos ∠(
+ρ(0), ρ(̂
+g )) − cos ∠(
+k∈K
+
+(6.57)
+
+k∈K
+
+k∈K
+
+= ℜ(ρ(̂
+g)
+
+∑︂
+
+ρ(0)) − ℜ(ρ(0))
+
+∑︂
+
+ρ(0)).
+
+k∈K
+
+k∈K
+
+Since ĝ ∈ G \ {0}, it follows that
+)︄
+(︄
+∑︂
+∑︂
+ρ(gk )
+ρ(gk )) − ℜ(ρ(0))
+max
+ℜ(ρ(g)
+g∈G∖{0}
+
+k∈K
+
+k∈K
+
+)︄
+
+(︄
+≥ max
+
+ℜ(ρ(g)
+
+g∈G∖{0}
+
+∑︂
+
+ρ(0)) − ℜ(ρ(0))
+
+∑︂
+
+ρ(0) .
+
+k∈K
+
+k∈K
+
+This is the same as inequality (6.56), which was shown to be equivalent to inequality (6.55).
+We continue to the proof of Lemma 6.12.
+Proof of Lemma 6.12. We investigate how many elements G0 [(gk )k∈K ] can consist of:
+(︄
+∏︂
+
+ϕβ (g + gk )2 = exp β
+
+k∈K
+
+)︄
+∑︂
+
+ℜ(ρ(g + gk ))
+
+(︄
+= exp β
+
+k∈K
+
+ℜ(ρ(g)ρ(gk ))
+
+k∈K
+
+(︄
+= exp βℜ(ρ(g)
+
+)︄
+∑︂
+
+)︄
+∑︂
+
+ρ(gk )) .
+
+k∈K
+
+Recall that G0 [(gk )k∈K ] is the set of the elements g ∈ G for which the above
+function is maximised.
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+First, if
+
+∑︁
+
+k∈K
+
+∏︁
+
+ρ(gk ) = 0, then
+
+k∈K
+
+74
+
+ϕβ (g + gk )2 = 1 for all g ∈ G. Thus,
+
+G0 [(gk )k∈K ] consists of G elements.
+Second, we consider the case when
+
+∑︁
+
+k∈K
+
+ρ(gk ) ∈ R \ {0}. If
+
+∑︁
+
+k∈K
+
+ρ(gk ) > 0,
+
+then the function is maximised when ℜρ(g) is maximised, i.e. g = 0. Otherwise,
+it is maximised when ℜρ(g) is minimised. This happens when ρ(g) = eg·2πim/n is
+as close to eπi as possible. Thus, there is 1 or 2 elements in G0 [(gk )k∈K ].
+∑︁
+∑︁
+Third, if k∈K ρ(gk ) ̸∈ R, then k∈K ρ(gk ) = reiθ . Hence,
+ℜ(ρ(g)
+
+∑︂
+
+ρ(gk )) = rℜ(ρ(g)eiθ ).
+
+k∈K
+
+This is maximised when ρ(g) = eg·2πim/n is as close as possible to e−iθ . Thus, we
+have that there are 1 or 2 elements in G0 [(gk )k∈K ].
+To conclude, there are three possibilities for the numbers of elements in
+G0 [(gk )k∈K ]: 1, 2 or G elements. We continue by proving that inequality (6.44)
+holds in all three cases.
+First case: G elements
+∏︁
+If |G0 [(gk )k∈K ]| = G, then k∈K ϕβ (g + gk )2 = 1 for all g ∈ G. Hence
+∏︁
+∑︁
+⃓ ∑︁
+⃓
+∑︁
+k·2πim/n
+⃓ g∈G ρ(g) k∈K ϕβ (g + gk )2 ⃓ | g∈G ρ(g)|
+|
+| n−1
+k=0 e
+⃓ ∑︁
+⃓
+∏︁
+=
+=
+⃓
+⃓
+2
+|G|
+|G|
+g∈G
+k∈K ϕβ (g + gk )
+=
+
+1 e2πim − 1
+= 0 ≤ 1 − C∗ λ(β)2|K| .
+2πim/n
+|G| e
+−1
+
+Second case: two elements
+If |G0 [(gk )k∈K ]| = 2, then
+∏︁
+⃓ ∑︁
+⃓
+⃓ g∈G ρ(g) k∈K ϕβ (g + gk )2 ⃓
+⃓
+∏︁
+|Sβ ((gk )k∈K )| = ⃓⃓ ∑︁
+⃓
+2
+g∈G
+k∈K ϕβ (g + gk )
+∏︁
+⃓ ∑︁
+⃓
+⃓
+ρ(g) k∈K ϕβ (g + gk )2 ⃓
+g∈G
+⃓
+∏︁
+≤ ⃓⃓ ∑︁
+2⃓
+g∈G0 [(gk )k∈K ]
+k∈K ϕβ (g + gk )
+∏︁
+⃓ ∑︁
+⃓
+⃓ g∈G0 [(gk )k∈K ] ρ(g) k∈K ϕβ (g + gk )2 ⃓
+⃓
+∏︁
+≤ ⃓⃓ ∑︁
+⃓
+2
+ϕ
+(g
++
+g
+)
+β
+k
+g∈G0 [(gk )k∈K ]
+k∈K
+∑︁
+∏︁
+⃓
+⃓
+⃓ g∈G∖G0 [(gk )k∈K ] ρ(g) k∈K ϕβ (g + gk )2 ⃓
+⃓
+⃓.
+∑︁
+∏︁
++⃓
+⃓
+2
+ϕ
+(g
++
+g
+)
+k
+g∈G0 [(gk )k∈K ]
+k∈K β
+Notice that for every g ∈ G0 [(gk )k∈K ], the function ϕβ (g + gk ) takes the same
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+75
+
+value. Let g ′ ∈ G0 [(gk )k∈K ]. Then,
+∏︁
+⃓ ∑︁
+⃓ ⃓ ∑︁
+⃓
+⃓ g∈G0 [(gk )k∈K ] ρ(g) ⃓ ⃓ g∈G∖G0 [(gk )k∈K ] k∈K ϕβ (g + gk )2 ⃓
+⃓
+⃓
+⃓
+⃓
+∏︁
+|Sβ ((gk )k∈K )| ≤ ⃓
+⃓ + ⃓ ∑︁
+2 ⃓
+G0 [(gk )k∈K ]
+ϕ
+(g
++
+g
+)
+k
+g∈G0 [(gk )k∈K ]
+k∈K β
+· |ρ(g)|
+∏︁
+∑︁
+⃓ ∑︁
+⃓
+⃓ g∈G∖G0 [(gk )k∈K ] k∈K ϕβ (g + gk )2 ⃓
+(2.3) |
+g∈G0 [(gk )k∈K ] ρ(g)|
+⃓
+⃓
+∏︁
++ ⃓ ∑︁
+=
+2 ⃓
+2
+ϕ
+(g
++
+g
+)
+k
+g∈G0 [(gk )k∈K ]
+k∈K β
+∑︁
+⃓
+⃓
+2
+∑︂
+∏︂
+| g∈G0 [(gk )k∈K ] ρ(g)| ⃓
+ϕβ (g + gk ) ⃓⃓
+⃓
++⃓
+≤
+2
+ϕβ (g ′ + gk )2 ⃓
+g∈G∖G0 [(gk )k∈K ] k∈K
+∑︁
+(⋆) |
+1 − cos(2π/n)
+g∈G0 [(gk )k∈K ] ρ(g)|
+≤
++
+.
+2
+8
+(6.62)
+Since G0 [(gk )k∈K ] = {j, j + 1} for a j ∈ Zn , we have
+|
+
+∑︁
+
+g∈G0 [(gk )k∈K ]
+
+2
+
+ρ(g)|
+
+|ρ(j) + ρ(j + 1)|
+2
+√︁
+(1 + cos(2π/n))2 + sin2 (2π/n)
+≤
+2
+√︁
+1 + 2 cos(2π/n) + cos2 (2π/n) + sin2 (2π/n)
+=
+2
+√︃
+1 + cos(2π/n)
+=
+2
+√︃
+1 − cos(2π/n)
+= 1−
+2
+√︃
+1 − cos(2π/n)
+≤ 1−
+4
+1 − cos(2π/n)
+≤1−
+.
+4
+=
+
+Combining this with inequality (6.62), we have
+1 − cos(2π/n) 1 − cos(2π/n)
++
+4
+8
+1 − cos(2π/n)
+1
+=1−
+= 1 − C∗
+8
+2
+
+|Sβ ((gk )k∈K )| ≤ 1 −
+
+(6.43)
+
+≤ 1 − C∗ λ(β0 )2|K| .
+
+Third case: one element
+Last, we focus on the case when |G0 [(gk )k∈K ]| = 1. First, we investigate which
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+76
+
+element is in G0 [(gk )k∈K ]. For any g ′ ∈ G, we have
+∏︁
+⃓ ∑︁
+⃓
+⃓ g∈G ρ(g) k∈K ϕβ (g + (g ′ + gk ))2 ⃓
+′
+⃓
+∏︁
+|Sβ ((g + g)k∈K )| = ⃓⃓ ∑︁
+⃓
+′ + g ))2
+ϕ
+(g
++
+(g
+β
+k
+g∈G
+k∈K
+∏︁
+⃓ ∑︁
+⃓
+⃓ g∈G ρ(g) k∈K ϕβ (g + (g ′ + gk ))2 ⃓
+′ ⃓
+⃓
+∏︁
+= |ρ(g )|⃓ ∑︁
+⃓
+′ + g ))2
+ϕ
+(g
++
+(g
+β
+k
+g∈G
+k∈K
+∏︁
+⃓ ∑︁
+⃓
+⃓ g∈G ρ(g)ρ(g ′ ) k∈K ϕβ (g + (g ′ + gk ))2 ⃓
+⃓
+∑︁
+∏︁
+= ⃓⃓
+⃓
+′ + g ))2
+ϕ
+(g
++
+(g
+β
+k
+g∈G
+k∈K
+∑︁
+∏︁
+⃓
+⃓
+⃓ g∈G ρ(g + g ′ ) k∈K ϕβ ((g + g ′ ) + gk )2 ⃓
+⃓
+⃓
+∑︁
+∏︁
+=⃓
+⃓
+′ ) + g )2
+ϕ
+((g
++
+g
+β
+k
+g∈G
+k∈K
+∑︁
+∏︁
+⃓
+⃓
+⃓ g∈G ρ(g) k∈K ϕβ (g + gk )2 ⃓
+⃓
+⃓
+∏︁
+= ⃓ ∑︁
+⃓
+2
+ϕ
+(g
++
+g
+)
+β
+k
+g∈G
+k∈K
+= |Sβ ((gk )k∈K )|.
+Thus, it implies that 0 ∈ G0 [(gk )k∈K ], which only consists of one element. Therefore, G0 [(gk )k∈K ] = {0}. Then, from Lemma 6.13 follows that
+∏︁
+∑︂
+ϕβ (g + gk )2
+∏︁k∈K
+|Sβ ((gk )k∈K )| ≤ 1 − C∗
+2.
+k∈K ϕβ (0 + gk )
+g∈G∖{0}
+
+Therefore, inequality (6.44) holds if
+∏︁
+(︃
+)︃2|K|
+2
+∑︂
+ϕβ (g)
+k∈K ϕβ (g + gk )
+2|K|
+∏︁
+≥ λ(β)
+=
+max
+2
+g∈G∖{0} ϕβ (0)
+k∈K ϕβ (0 + gk )
+g∈G∖{0}
+
+∏︂ ϕβ (g + 0)2
+,
+2
+g∈G∖{0}
+ϕ
+β (0 + 0)
+k∈K
+
+= max
+which holds if
+
+∏︂ ϕβ (g + gk )
+∏︂ ϕβ (g + 0)
+≥ max
+.
+g∈G∖{0}
+g∈G∖{0}
+ϕ
+ϕ
+β (0 + gk )
+β (0 + 0)
+k∈K
+k∈K
+max
+
+Inequality (6.63) was proved to be true in Lemma 6.14. Thus,
+∏︁
+∑︂
+ϕβ (g + gk )2
+∏︁k∈K
+|Sβ ((gk )k∈K )| ≤ 1 − C∗
+2
+k∈K ϕβ (0 + gk )
+g∈G∖{0}
+∏︁
+∑︂
+ϕβ (g + 0)2
+∏︁k∈K
+≤ 1 − C∗
+2
+k∈K ϕβ (0 + 0)
+g∈G∖{0}
+
+= 1 − C∗ λ(β)2|K| .
+
+(6.63)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+77
+
+We continue to the proof of Proposition 6.11.
+Proof of Proposition 6.11. Recall, by Lemma 6.9 follows that the spins (σe )e∈γ1
+̂
+are independent if the spins (σe )e̸∈±γ1 are given. Take an edge e ∈ γ1 . For p ∈ ∂e,
+∑︁
+let σpe := e′ ∈∂p∖{e} σe′ . For g ∈ G, the conditional probability when σe = g is
+∏︁
+2
+e
+̂ ϕβ (σp + g)
+p∈∂e
+′
+∏︁
+µβ,N (σe = g) = ∑︁
+e
+′ 2
+̂ ϕβ (σp + g )
+g ′ ∈G
+p∈∂e
+and the conditional expectation of ρ(σe ) is
+∑︁
+∏︁
+e
+2
+̂ ϕβ (σp + g)
+g∈G ρ(g)
+′
+∏︁ p∈∂e e
+.
+Eβ,N [ρ(σe )] = ∑︁
+2
+̂ ϕβ (σp + g)
+g∈G
+p∈∂e
+Since the spins (σe )e∈γ1 are independent, we obtain
+[︄
+]︄
+∏︂
+∏︂
+E′β,N
+ρ(σe ) =
+E′β,N [ρ(σe )].
+e∈γ1
+
+(6.64)
+
+e∈γ1
+
+̂ and
+Before calculating the expectation of Wγ , we apply Lemma 6.12 for K = ∂e
+gk = σpe . Since |K| = 6, we obtain
+∏︁
+⃓ ∑︁
+e
+2⃓
+⃓ g∈G ρ(g) p∈∂e
+̂ ϕβ (σp + g) ⃓
+′
+⃓
+∏︁
+|Eβ,N [ρ(σe )]| = ⃓⃓ ∑︁
+⃓
+e
+2
+̂ ϕβ (σ + g)
+g∈G
+
+p∈∂e
+
+p
+
+(6.44
+
+≤ 1 − C∗ λ(β)2|K|
+
+(6.65)
+
+= 1 − C∗ λ(β)12
+12
+
+≤ e−C∗ λ(β) .
+Thus, the upper bound for the expectation is
+[︄ (︄
+)︄ (︄
+)︄]︄ ⃓
+[︄ (︄
+)︄]︄ ⃓ ⃓
+⃓
+∑︂
+∑︂
+∑︂
+⃓
+⃓ ⃓
+⃓
+⃓ = ⃓Eβ,N ρ
+⃓
+|Eβ,N [Wγ ]| = ⃓⃓Eβ,N ρ
+σe
+σ
+ρ
+σ
+e
+e
+⃓ ⃓
+⃓
+e∈γ∖γ1
+e∈γ1
+e∈γ
+[︄
+]︄ ⃓
+⃓
+∏︂
+∏︂
+⃓
+⃓
+= ⃓⃓Eβ,N
+ρ (σe )
+ρ (σe ) ⃓⃓
+e∈γ∖γ1
+e∈γ1
+[︄
+[︄
+]︄]︄ ⃓
+⃓
+∏︂
+∏︂
+⃓
+⃓
+= ⃓⃓Eβ,N E′β,N
+ρ (σe )
+ρ (σe ) ⃓⃓
+e∈γ∖γ1
+e∈γ1
+[︄
+[︄
+]︄]︄ ⃓
+⃓
+∏︂
+∏︂
+⃓
+⃓
+= ⃓⃓Eβ,N
+ρ (σe ) E′β,N
+ρ (σe ) ⃓⃓
+e∈γ∖γ1
+e∈γ1
+[︄⃓
+[︄
+]︄ ⃓]︄
+∏︂
+⃓ ∏︂
+⃓
+≤ Eβ,N ⃓⃓
+ρ (σe ) E′β,N
+ρ (σe ) ⃓⃓
+e∈γ∖γ1
+
+e∈γ1
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+78
+
+[︄
+]︄ ⃓]︄
+[︄⃓
+⃓ ⃓
+∏︂
+⃓ ⃓ ′
+⃓
+⃓ ∏︂
+ρ (σe ) ⃓⃓
+= Eβ,N ⃓⃓
+ρ (σe ) ⃓⃓ · ⃓⃓Eβ,N
+e∈γ1
+e∈γ∖γ1
+[︄ ⃓
+[︄
+]︄ ⃓]︄
+∏︂
+⃓
+⃓
+= Eβ,N 1 · ⃓⃓E′β,N
+ρ (σe ) ⃓⃓
+e∈γ1
+[︄
+⃓]︄
+⃓
+∏︂ ⃓
+⃓
+(6.64)
+⃓E′β,N [ρ (σe )] ⃓
+= Eβ,N
+⃓
+⃓
+e∈γ1
+[︄
+]︄
+∏︂
+(6.65)
+12
+≤ Eβ,N
+e−C∗ λ(β)
+e∈γ1
+
+]︂
+[︂
+12
+12
+= Eβ,N e−C∗ λ(β) |γ1 | = e−C∗ λ(β) |γ1 |
+12
+
+= e−C∗ (ℓ−ℓc )λ(β) .
+
+6.3
+
+The last part of the proof
+
+Recall that the inequality we want to prove is inequality (2.12):
+|⟨Wγ ⟩β − e
+
+−ℓ(1−θ(β))
+
+|≤C
+
+′
+
+[︃ √
+
+ℓc
++ λ(β)2
+ℓ
+
+]︃C ′′
+.
+
+We begin with defining the constants C ′ and C ′′ . Let
+√
+∗
+∗
+C ′ := 2(CA 24C /C∗ )1/(1+4C /C∗ ) and C ′′ := 1/(1 + 4C ∗ /C∗ ).
+The proof is divided in two cases, one when ℓc ≥
+inequality
+|Eβ,N [Wγ ] − e−ℓ(1−θ(β)) | ≤ C
+
+′
+
+[︃ √
+
+ℓ
+2
+
+(6.66)
+
+and one when ℓc < 2ℓ . The
+
+ℓc
++ λ(β)2
+ℓ
+
+]︃C ′′
+(6.67)
+
+will be proved, which then implies inequality (2.12). Since we earlier proved
+that the limit ⟨Wγ ⟩ exists and both the right-hand side of the inequality and
+e−ℓ(1−θ(β)) are independent of N , taking the limits of inequality (6.67) when N
+goes to infinity proves inequality (2.12).
+
+6.3.1
+
+First case: ℓc ≥
+
+Assume that ℓc ≥
+
+ℓ
+.
+2
+
+ℓ
+2
+
+First, a lower bound for the right-hand side of (6.67)
+
+is calculated. From the definitions of C ∗ and C∗ (equations (6.42) and (6.1))
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+79
+
+follows that they are positive. Therefore, 4C ∗ /C∗ > 0 and C ′′ ∈]0, 1[. From the
+definition of CA (equation (6.41)) follows that CA ≥ 29 . Thus,
+√
+∗
+∗
+C ′ = 2(CA 24C /C∗ )1/(1+4C /C∗ )
+√
+∗
+∗
+∗
+= 2(CA )1/(1+4C /C∗ ) · (24C /C∗ )1/(1+4C /C∗ )
+√
+√
+≥ 2 · 1 · 2 = 2 2.
+From the assumption that ℓc ≥
+
+ℓ
+2
+
+follows that
+√︃
+√︃
+lc
+1
+≥
+.
+l
+2
+
+Therefore, the lower bound of the right-hand side of inequality (6.67) is
+C
+
+′
+
+[︄√︃
+
+lc
++ λ(β)2
+l
+
+]︄C ′′
+
+√
+≥2 2
+
+(︄√︃
+
+1
++0
+2
+
+)︄C ′′
+3
+
+= 22−
+
+C ′′
+2
+
+≥ 2.
+
+For the left-hand side of inequality (6.67), we obtain
+|Eβ,N [Wγ ] − e−ℓ(1−θ(β)) | ≤ |Eβ,N [Wγ ]| + |e−ℓ(1−θ(β)) |
+)︄]︄ ⃓
+[︄ (︄
+⃓
+∑︂
+⃓
+⃓
+⃓ + |e−ℓ(1−θ(β)) |
+σe
+= ⃓⃓Eβ,N ρ
+⃓
+e∈γ
+
+)︄ ⃓]︄
+[︄⃓ (︄
+⃓
+⃓ ∑︂
+σe ⃓⃓ + 1
+≤ Eβ,N ⃓⃓ρ
+e∈γ
+
+≤ Eβ,N [1] + 1 = 1 + 1 = 2.
+Hence, we obtain
+(︃ √
+)︃C ′′
+ℓ
+c
+|Eβ,N [Wγ ] − e−ℓ(1−θ(β)) | ≤ 2 ≤ C
++ λ(β)2
+.
+ℓ
+′
+
+6.3.2
+
+Second case: ℓc <
+
+ℓ
+2
+
+Assume that ℓc < 2ℓ . Then ℓ − ℓc ≥ 12 ℓ. From this assumption and Proposition
+6.11 follows that
+1
+
+12
+
+12
+
+|Eβ,N [Wγ ]| ≤ e−C∗ (ℓ−ℓc )λ(β) ≤ e− 2 C∗ ℓλ(β) .
+Therefore,
+|Eβ,N [Wγ ] − e−ℓ(1−θ(β)) | ≤ |Eβ,N [Wγ ]| + |e−ℓ(1−θ(β)) |
+1
+
+12
+
+≤ e− 2 C∗ ℓλ(β) + e−ℓ(1−θ(β)) .
+
+(6.68)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+80
+
+Since 5(|G| − 1)λ(β)2 < 1 and 0 < λ(β) < 1, we have
+1 − 5(|G| − 1)λ(β)2 > 0
+λ(β)10
+− (|G| − 1)λ(β)12 ≥ 0
+5
+1
+⇒
+− (|G| − 1)λ(β)12 ≥ 0
+5
+4
+1
+⇔ 1 − (|G| − 1)λ(β)12 ≥ ≥ .
+5
+2
+⇔
+
+(6.69)
+
+The lower bound for 1 − θ(β) is then
+∑︁
+12βℜρ(g)
+(6.2)
+g∈G ℜ(ρ(g))e
+∑︁
+1 − θ(β) = 1 −
+12βℜρ(g)
+g∈G e
+∑︁
+12βℜρ(g)
+g∈G (1 − ℜ(ρ(g)))e
+∑︁
+=
+12βℜρ(g)
+g∈G e
+∑︁
+12β(ℜρ(g)−1)
+g∈G (1 − ℜ(ρ(g)))e
+∑︁
+=
+12β(ℜρ(g)−1)
+g∈G e
+∑︁
+12β(ℜρ(g)−1)
+g∈G∖{0} (1 − ℜ(ρ(g)))e
+∑︁
+=
+1 + g∈G∖{0} e12β(ℜρ(g)−1)
+∑︁
+12β(ℜρ(g)−1)
+(6.52)
+g∈G∖{0} (1 − cos(2π/n))e
+∑︁
+≥
+1 + g∈G∖{0} maxg∈G∖{0} e12β(ℜρ(g)−1)
+∑︁
+(1 − cos(2π/n)) g∈G∖{0} e12β(ℜρ(g)−1)
+=
+1 + (|G| − 1) maxg∈G∖{0} e12β(ℜρ(g)−1)
+(1 − cos(2π/n)) maxg∈G∖{0} e12β(ℜρ(g)−1)
+1 + (|G| − 1) maxg∈G∖{0} e12β(ℜρ(g)−1)
+12
+(2.8) (1 − cos(2π/n))λ(β)
+=
+1 + (|G| − 1)λ(β)12
+(1 − cos(2π/n))λ(β)12 (1 − (|G| − 1)λ(β)12 )
+=
+(1 + (|G| − 1)λ(β)12 )(1 − (|G| − 1)λ(β)12 )
+(1 − cos(2π/n))λ(β)12 (1 − (|G| − 1)λ(β)12 )
+=
+1 − ((|G| − 1)λ(β)12 )2 )
+≥
+
+≥ (1 − cos(2π/n))λ(β)12 (1 − (|G| − 1)λ(β)12 )
+= 4C∗ λ(β)12 (1 − (|G| − 1)λ(β)12 )
+(6.69)
+
+≥ 2C∗ λ(β)12 .
+
+Thus,
+12
+
+e−ℓ(1−θ) ≤ e−2C∗ ℓλ(β)
+
+(6.70)
+
+CHAPTER 6. PROOF OF THE MAIN THEOREM
+
+81
+
+and
+(6.68),(6.70) 1
+
+12
+
+12
+
+|Eβ,N [Wγ ] − e−ℓ(1−θ(β)) | ≤ e− 2 C∗ ℓλ(β) + e−2ℓC∗ λ(β)
+1
+
+1
+
+12
+
+≤ e− 2 ℓC∗ λ(β) + e− 2 ℓC∗ λ(β)
+1
+
+12
+
+(6.71)
+
+12
+
+= 2e− 2 ℓC∗ λ(β) .
+From Proposition 6.1 follows that
+|Eβ,N [Wγ ] − e−ℓ(1−θ(β)) | ≤ CA e2C
+
+∗ ℓλ(β)12
+
+(︄√︃
+
+)︄
+
+ℓc
++ λ(β)2 .
+ℓ
+
+(6.72)
+
+By combining this with inequality (6.71), we obtain
+∗
+
+|Eβ,N [Wγ ] − e−ℓ(1−θ(β)) |1+4C /C∗
+)︄)︄1
+(︄
+(︄√︃
+)︂ ∗
+(︂
+(6.72),(6.71)
+1
+ℓ
+∗
+12
+12 4C /C∗
+c
+≤
+CA e2C ℓλ(β)
++ λ(β)2
+· 2e− 2 ℓC∗ λ(β)
+ℓ
+(︄√︃
+)︄
+(︂ ∗
+)︂
+ℓ
+∗
+12
+∗
+12
+c
+≤ CA 24C /C∗
++ λ(β)2
+e2C ℓλ(β) · e−2C ℓλ(β)
+ℓ
+(︄√︃
+)︄
+ℓ
+∗
+c
++ λ(β)2 .
+= CA 24C /C∗
+ℓ
+Thus,
+)︄)︄1/(1+4C ∗ /C∗ )
+ℓ
+c
+|Eβ,N [Wγ ] − e−ℓ(1−θ(β)) | ≤ CA 2
++ λ(β)2
+ℓ
+(︄√︃
+)︄1/(1+4C ∗ /C∗ )
+∗
+(︁
+)︁
+ℓc
+1/(1+4C /C∗)
+∗
+= CA 24C /C∗
++ λ(β)2
+ℓ
+∗
+√ (︁
+)︁
+1/(1+4C /C∗)
+∗
+≤ 2 CA 24C /C∗
+(︄√︃
+)︄1/(1+4C ∗ /C∗ )
+ℓc
+·
++ λ(β)2
+ℓ
+(︄√︃
+)︄C ′′
+ℓ
+c
+= C′
++ λ(β)2
+.
+ℓ
+(︄
+
+4C ∗ /C∗
+
+We have proved the main theorem.
+
+(︄√︃
+
+Chapter 7
+Svensk sammanfattning
+Denna avhandling är baserad på artikeln "Wilson loops in finite Abelian lattice
+gauge theories" av M. Forsström, J. Lenells och F. Viklund [1], där väntevärdet
+för en Wilsonloopobservabel uppskattas. Avhandlingens mål är att förklara artikeln så att matematikstuderande på magisternivå kan förstå den. I denna
+avhandling behandlas därför den matematiska teori som behövs för att förstå
+artikeln. Därtill ges bevisen i artikeln i en mera detaljerad och förklarande form.
+Det första kapitlet i avhandlingen är en introduktion som ger en bakgrund
+till problemet som behandlas i denna avhandling. Matematiska modeller inom
+gittergaugeteorier har länge studerats och målet med dem är att försöka förklara
+kvantfältteorier inom standardmodellen. Även om dessa modeller inte ännu kan
+användas inom kvantfysiken är de värdefulla också som matematiska modeller.
+Det andra kapitlet introducerar artikelns huvudsats. Den teori som behövs för
+att satsen ska kunna förstås diskuteras och satsen ges. Grundläggande teori om
+grupper och representationer behandlas och både gruppen och representationen
+som används i artikeln definieras. Gruppen som används är G = (Zn , +) som
+är en ändlig abelsk grupp. Representationen som används är endimensionell,
+unitär och injektiv. Det visas att om en representation uppfyller dessa krav
+för den valda gruppen så ges den av ρ(g) = eg·2πim/n , där g tillhör gruppen
+Zn och m ∈ {0, 1, . . . , n − 1} är relativt primt till n. Därtill definieras det
+fyrdimensionella gittret Z4 vars noder är i varje heltalspunkt. Delmängder av
+detta gitter och begrepp som hör till det ges, bland annat plaketter1 som bildas av
+två riktade bågar. Därefter tas begrepp för loopar och bågar upp innan ett mått
+1
+
+En svensk term är inte etablerad (eng. plaquette).
+
+82
+
+CHAPTER 7. SVENSK SAMMANFATTNING
+
+83
+
+med Wilsonverkan ges och Wilsonloopobservabeln Wγ definieras. Gränsvärdet
+för denna observabels väntevärde betecknas med ⟨Wγ ⟩β . Kapitlet avslutas med
+att satsen ges och kommenteras. Som följande ges satsen.
+Sats. Låt n vara ett heltal med n ≥ 2. Låt gittergaugeteorin ha strukturgruppen
+G = Zn . Låt representationen ρ vara en endimensionell och injektiv representation av G. Låt γ ∈ Z4 vara en riktad cykel, ℓ dess längd och ℓc antalet hörnbågar
+i γ. Då existerar gränsvärdet av Wilsonloopobservabelns väntevärde och β0 kan
+väljas så att det existerar konstanter C ′ (β0 ) och C ′′ (β0 ) för vilka följande olikhet
+gäller för alla β ≥ β0 :
+|⟨Wγ ⟩β − e−ℓ(1−θ(β)) | ≤ C
+
+′
+
+(︃ √
+
+ℓc
++ λ(β)2
+ℓ
+
+)︃C ′′
+.
+
+Funktionen θ(β) är definierad i ekvation (2.7) och λ(β) i ekvation (2.8).
+Från denna sats kan dras som slutsats att väntevärdet på Wilsonloopobservabeln tar ett värde väldigt nära 0 om ℓ(1 − θ(β)) är stort och ett värde väldigt
+nära 1 om ℓ(1 − θ(β)) är litet.
+Det tredje kapitlet behandlar teori om diskret yttre algebra då Zr har valts
+som gitter. Denna teori diskuteras alltså mera generellt än vad som skulle behövas för resten av avhandlingen. Riktade differentialceller och -former både
+definieras och ges exempel på (se Figur 3.1 för exempel på differentialceller).
+Dessa kallas också för k-celler och k-former. En riktad 1-cell är detsamma som
+en båge i gittret Zr och en riktad 2-cell detsamma som en plakett. Därefter ges
+två operatorer för k-former. Dessa är den yttre derivatan, som avbildar en k-form
+på en k+1-form, och koderivatan som avbildar en k-form på en k−1-form. Exempel illustrerar hur dessa används. Ränder och koränder för k-former och speciellt
+en plakett behandlas. Dessutom ges två olika versioner av Poincarés lemma som
+både appliceras på en viss mängd av 2-former och används för att visa att måttet
+med Wilsonverkan kan skrivas om så att det blir ett mått för plakettkonfigurationer. Till sist diskuteras den diskreta Hodge dual-operatorn och bijektionen
+mellan det ursprungliga gittret och det som skapas av Hodge dual-operatorn.
+Lemman med Hodge dual-operatorn som är nödvändiga för fjärde kapitlets bevis
+ges.
+Det fjärde kapitlet behandlar teori för virvlar2 och riktade ytor. Dessa begrepp definieras och illustreras, observera att dessa definitioner kan variera mellan
+2
+
+En svensk term är inte etablerad (eng. vortex).
+
+CHAPTER 7. SVENSK SAMMANFATTNING
+
+84
+
+olika källor. Först behandlas uppdelningar av virvlar, sedan definieras minimala
+virvlar och lemman med dessa som behövs till huvudbeviset ges och bevisas.
+Dessutom ges en proposition för en viss fördelning för virvlar som har en stor
+roll i huvudbeviset. Till sist ges några lemman för riktade ytor och en riktad ytas
+koppling till loopar förklaras. Dessutom definieras inre bågar och inre plaketter
+och ett lemma för riktade ytor ges.
+I det femte kapitlet behandlas gränsvärdet för väntevärdet av en Wilsonloopobservabel. Det viktigaste resultatet i detta kapitel är en sats som säger att
+måtten Eβ,N konvergerar svagt i topologin av lokal konvergens när N närmar
+sig oändligheten och det begränsade måttet är translationsinvariant i Zr . Denna
+sats bevisas med hjälp av Ginibres olikhet. Till sist tillämpas satsen på Wilsonloopobservabeln för att visa att dess väntevärdes gränsvärde både existerar och
+är invariant under translation.
+I det sjätte kapitlet bevisas slutligen huvudsatsen med hjälp av den teori och
+de resultat som getts i de tidigare kapitlen. Beviset delas upp i två fall, först i
+Proposition 6.1 där ℓλ(β)12 är stort och därefter i Proposition 6.11 där ℓλ(β)12
+är litet. Beviset för Proposition 6.1 är uppdelat i flera delar där olika väntevärden beräknas innan de kombineras för att bevisa den önskade olikheten. Till
+beviset behövs flera lemman som ges innan. Dessa lemman är främst olikheter
+för funktionen θ samt sannolikheter för olika händelser, vilka beräknas med hjälp
+av propositionen från det fjärde kapitlet. Därefter bevisas Proposition 6.11. Till
+detta bevis behövs några lemman som först ges och bevisas och även vissa slutsatser från beviset för Proposition 6.1 används. Därefter kombineras dessa två
+fall för att bevisa olikheten
+|Eβ,N [Wγ ] − e−ℓ(1−θ(β)) | ≤ C
+
+′
+
+(︃ √
+
+ℓc
++ λ(β)2
+ℓ
+
+)︃C ′′
+.
+
+Med hjälp av resultatet för gränsvärdets existens för Wilsonloopobservabeln kan
+satsen därefter bevisas genom att ta gränsvärdet då N närmar sig oändligheten.
+För de som är intresserade av liknande problem finns bland annat artiklarna
+"Wilson loops in Ising lattice gauge theory" av S. Chatterjee [2] och "Wilson
+loop expectations in lattice gauge theories with finite gauge groups" av S. Cao
+[3] som båda publicerades år 2020.
+
+Bibliography
+[1] Forsström, M, Lenells, J and Viklund, F, Wilson loops in finite Abelian
+lattice gauge theories, arXiv:2001.07453v3 (Hämtad 2021)
+[2] Chatterjee, S., Wilson loops in Ising lattice gauge theory, Commun. Math.
+Phys. 377, 307-340 (2020)
+[3] Cao, S., Wilson loop expectations in lattice gauge theories with finite gauge
+groups, Commun. Math. Phys. 380, 1439-1505 (2020)
+[4] C.
+
+Glader
+
+and
+
+M.
+
+Lindström,
+
+Diskret
+
+matematik
+
+(2006)
+
+http://web.abo.fi/fak/mnf/mate/kurser/algebrab/kapitel2nyast.pdf (Hämtad 2021)
+[5] M. Burrow, Representation Theory of Finite Groups (Academic Press, 1965)
+p.1-5
+[6] R. T. Rockafellar, Convex Analysis (Princeton University Press, 1970) p.1015
+[7] Ginibre,
+ties.
+
+J.
+
+Comm.
+
+General
+Math.
+
+formulation
+Phys.
+
+16
+
+of
+
+(1970),
+
+Griffiths’
+
+inequali-
+
+no.
+
+310–328.
+
+4,
+
+https://projecteuclid.org/euclid.cmp/1103842172 (Hämtad 2021)
+
+85
+
+

@@ -1,0 +1,3881 @@
+MASTER’S DEGREE THESIS
+
+Production schedule optimization in an
+animal feed industry
+
+Cassandra Mabel Giesbrecht Rempel
+
+Supervisor:
+Docent Frank Pettersson
+
+Faculty of Science and Engineering
+Åbo Akademi University
+2021
+
+Abstract
+This thesis focuses on the optimization of the supply chain for an animal feed plant, including product deliveries and the production schedule. A Capacitated Vehicle Routing
+Planning (CVRP) model has been developed to optimize the bulk products deliveries.
+The bag products demand has been obtained with the Autoregressive Integrated Moving
+Average (ARIMA) model, a forecast model based on time series analysis of past sales.
+The results from the routing planning and the sales forecast models have been used as
+input in the production schedule models. Here, two models, a State Task network (STN)
+and Resource Task Network (RTN) model have been developed for this purpose. The
+CVRP, STN and RTN models have been solved using the commercial optimization software Gurobi, and the ARIMA model has been solved with RStudio, an open data analysis
+software. It has been found that an optimal schedule can be obtained with this approach.
+Keywords: CVRP, STN, RTN, ARIMA, production schedule, optimization
+
+i
+
+Acknowledgments
+I would first like to thank my supervisor Frank Pettersson for the invaluable support received during the writing of this thesis. His expertise and knowledge has guided me
+through the whole master’s study.
+I would also like to thank my family and friends for supporting me during the time of
+this study program. Special thanks go to my husband, who always motivated me, even in
+moments when the distance between us seemed insurmountable.
+Last but not least, my biggest gratitude goes to God, who loves me and gives me the
+opportunity to develop the talents that he has given me.
+
+ii
+
+Contents
+Abstract
+
+i
+
+Acknowledgments
+
+ii
+
+Nomenclature
+
+v
+
+List of Figures
+
+ix
+
+List of Tables
+
+xi
+
+1
+
+Introduction
+1.1 Objective . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1
+3
+
+2
+
+Problem formulation
+2.1 Process description . . . . . . .
+2.2 Logistic management challenges
+2.2.1 Grain intake . . . . . . .
+2.2.2 Production process . . .
+2.2.3 Packing and distribution
+
+.
+.
+.
+.
+.
+
+4
+4
+5
+5
+5
+5
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+8
+8
+10
+11
+11
+12
+14
+14
+14
+17
+
+3
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+Methods and models
+3.1 Capacitated Vehicle Routing Planning model . .
+3.2 Autoregressive Integrated Moving Average model
+3.3 Discrete-time State-Task-Network model . . . . .
+3.3.1 Objective function . . . . . . . . . . . .
+3.3.2 Constraints . . . . . . . . . . . . . . . .
+3.4 Continuous-time Resource-Task-Network model .
+3.4.1 Objective function . . . . . . . . . . . .
+3.4.2 Constraints . . . . . . . . . . . . . . . .
+3.5 Computational aspects . . . . . . . . . . . . . .
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+4
+
+5
+
+Results and discussion
+4.1 Production schedule model validation
+4.2 Case study 1 . . . . . . . . . . . . . .
+4.2.1 CVRP solution . . . . . . . .
+4.2.2 STN solution . . . . . . . . .
+4.2.3 RTN solution . . . . . . . . .
+4.3 Sales forecast for bag products . . . .
+4.4 Case study 2 . . . . . . . . . . . . . .
+4.4.1 Bag products demand . . . . .
+4.4.2 CVRP solution . . . . . . . .
+4.4.3 STN solution . . . . . . . . .
+4.4.4 RTN solution . . . . . . . . .
+Conclusion
+
+Bibliography
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+18
+18
+25
+27
+28
+29
+33
+36
+36
+37
+38
+42
+45
+47
+
+Nomenclature
+Capacitated Vehicle Routing Planning model
+Indices
+i,j clients
+k truck
+Sets
+N
+V
+K
+
+set of clients
+set of clients and depot
+set of trucks
+
+Parameters
+distance between clients i and j
+order quantity of client i
+maximum capacity of truck k
+minimum number of trips for truck k
+maximum number of trips for truck k
+large number
+
+ci, j
+Di
+Ck
+ntrips,min
+k
+trips,max
+nk
+M
+Variables
+xi, j,k
+u j,k
+
+binary variable, active if truck k visits client i and afterwards client j
+accumulated capacity of truck k at client j
+
+State Task Network model
+Indices
+i
+s
+j
+k
+t
+
+task
+state
+unit
+storage tank for bulk product
+time interval
+
+Sets
+Ij
+Ki
+
+set of tasks performed in unit j
+set of production units performing task i
+v
+
+T̄s
+Ts
+Sraw
+S f inal
+Sstored
+
+set of tasks i producing state s
+set of tasks i consuming state s
+subset of raw materials
+subset of final products
+subset of stored states
+
+Parameters
+pi
+pis
+ρis
+ρ̄ is
+Vimin
+j
+Vimax
+j
+V Tikmin
+V Tikmax
+Ss,0
+Draws
+Dst
+M
+H
+
+production time of task i (in number of time steps)
+total performance (production, transportation) time of task i (in number of time steps)
+storage efficiency
+machine efficiency
+minimum batch size for task i performed in unit j
+maximum batch size for task i performed in unit j
+minimum storage capacity for state s in tank k
+maximum storage capacity for state s in tank k
+initial amount of state s
+raw material deliveries
+final product demand in time step t
+large number
+time horizon
+
+Variables
+non-negative variable, batch size of task i produced in unit j in time step t
+non-negative variable, amount of state s in time step t
+non-negative variable, amount of final product s not delivered in time step t
+binary variable, active if task i is performed in unit j in time step t
+binary variable, active if state s is stored in tank k in time step t
+
+Bi jt
+Sst
+Rst
+Wi jt
+Zskt
+
+Resource Task Network model
+Indices
+i
+k
+t
+r
+n
+
+task
+bulk product storage tank
+time interval
+resource
+time index (start for interval n)
+vi
+
+n’
+
+time index (end for interval n)
+
+Sets
+Ir
+IrZW
+RJ
+RP
+RFP
+RT Q
+N
+
+set of tasks consuming or producing resource r
+set of tasks producing resource r which require zero-wait
+set of resources that are production units
+set of final products
+set of final bulk products
+set of storage tanks
+set of time indices
+
+Parameters
+M
+H
+αi
+βi
+µirp
+µirc
+νirp
+νirc
+Vimin
+Vimax
+Vrmin
+Vrmax
+Rmin
+r
+Rmax
+r
+Rr,0
+
+large number
+time horizon
+fixed processing time for task i
+variable batch-size-dependent processing time for task i
+coefficient for fixed amount of resource r produced by task i, µirp ≥ 0
+coefficient for fixed amount of resource r consumed by task i, µirc ≤ 0
+coefficient for variable amount of resource r produced by task i, νirp ≥ 0
+coefficient for variable amount of resource r consumed by task i, νirc ≤ 0
+minimum batch size for task i
+maximum batch size for task i
+minimum capacity of tank r
+maximum capacity of tank r
+minimum amount for resource r
+maximum amount for resource r
+initial amount of resource r
+
+Variables
+Winn′
+Binn′
+Tn
+Tn′
+Rrn
+Zrr′ n
+
+binary variable, active if task i starts at time interval n and ends at latest at time interval n’
+non-negative variable, size of batch starting at time n and ending at latest at time n’
+non-negative variable, starting time for interval n
+non-negative variable, ending time for interval n
+non-negative variable, amount of resource r in time interval n
+binary variable, active if final bulk product r ∈ RFP is stored in tank r’ ∈ RT Q at time n
+vii
+
+DLrn
+
+non-negative variable, amount of final product r ∈ RP with delay
+
+viii
+
+List of Figures
+2.1
+
+Complete logistic chain, consisting of grain intake, production process
+and packing and distribution . . . . . . . . . . . . . . . . . . . . . . . .
+
+5
+
+3.1
+3.2
+
+STN representation . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+RTN representation . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+11
+14
+
+4.1
+4.2
+4.3
+4.4
+4.5
+4.6
+4.7
+4.8
+4.9
+4.10
+4.11
+4.12
+4.13
+4.14
+4.15
+4.16
+4.17
+4.18
+4.19
+4.20
+4.21
+4.22
+4.23
+4.24
+
+STN representation for a simplified case . . . . . . . . . . . . . . . . . .
+RTN representation for a simplified case . . . . . . . . . . . . . . . . . .
+Gantt chart for production tasks, STN model . . . . . . . . . . . . . . . .
+Gantt chart for packing tasks, STN model . . . . . . . . . . . . . . . . .
+Gantt chart for production tasks, STN model, modified objective function
+Gantt chart for packing tasks, STN model, modified objective function . .
+Amount of products in time, STN model, modified objective function . .
+Use of tanks during time, STN model, modified objective function . . . .
+Gantt chart for production tasks, STN model, increased packing batch size
+Gantt chart for packing tasks, STN model, increased packing batch size .
+Gantt chart for production tasks, RTN model . . . . . . . . . . . . . . . .
+Gantt chart for packing tasks, RTN model . . . . . . . . . . . . . . . . .
+Case study 1. Locations for product delivery [Google, n.d.] . . . . . . . .
+Case study 1. Routes covered by truck 1 with 27 tons capacity . . . . . .
+Case study 1. Gantt chart for production line, STN model . . . . . . . . .
+Case study 1. Gantt chart for packing line 1, STN model . . . . . . . . .
+Case study 1. Gantt chart for packing line 2, STN model . . . . . . . . .
+Case study 1. Gantt chart for production line, RTN model . . . . . . . .
+Case study 1. Gantt chart for packing line 1, RTN model . . . . . . . . .
+Case study 1. Gantt chart for packing line 2, RTN model . . . . . . . . .
+Cumulative production and sales of product BP20 . . . . . . . . . . . . .
+Cumulative production and sales of product BP15 . . . . . . . . . . . . .
+Sales of bag product BP15 from October 2019 to March 2021 . . . . . .
+Sales forecast for bag product BP15 for the last six weeks of the time series
+
+19
+20
+21
+21
+22
+22
+23
+23
+24
+24
+25
+25
+26
+28
+30
+30
+31
+32
+32
+33
+34
+34
+35
+35
+
+ix
+
+4.25
+4.26
+4.27
+4.28
+4.29
+4.30
+
+Sales forecast for bag product BP20 for the last six weeks of the time series
+Case study 2. Locations for product delivery [Google, n.d.] . . . . . . . .
+Case study 2. Routes covered by truck 1 with 27 tons capacity . . . . . .
+Case study 2. Routes covered by truck 2 with 12 tons capacity . . . . . .
+Case study 2. Gantt chart for production and packing tasks, STN model .
+Case study 2. Gantt chart for production and packing lines, STN model,
+modified objective . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.31 Case study 2. Gantt chart for production and packing lines, STN model,
+one packing machine . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.32 Case study 2. Gantt chart for production and packing lines, RTN model .
+4.33 Case study 2. Gantt chart for production and packing lines, RTN model,
+modified objective . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+x
+
+36
+37
+39
+39
+40
+41
+42
+43
+44
+
+List of Tables
+2.1
+
+Example of nutritional values of raw materials for animal feed . . . . . .
+
+6
+
+3.1
+
+Practical restrictions on storage use for final bulk products . . . . . . . .
+
+16
+
+4.1
+4.2
+4.3
+4.4
+4.5
+4.6
+4.7
+4.8
+4.9
+4.10
+4.11
+4.12
+
+Product demand in simplified case study . . . . . . . . . . . .
+Case study 1. Orders for a specific day in December . . . . . .
+Case study 1. Optimal routes for bulk product delivery . . . .
+Case study 1. Distance, time, and product quantity per trip . .
+Case study 1. Product demand . . . . . . . . . . . . . . . . .
+Case study 1. Product delay, STN model . . . . . . . . . . . .
+Case study 1. Product delay, RTN model . . . . . . . . . . . .
+Case study 2. Bag products demand based on ARIMA forecast
+Case study 2. Orders for a specific day in January 2021 . . . .
+Case study 2. Optimal route for product delivery . . . . . . .
+Case study 2. Distance, time, and product quantity per trip . .
+Case study 2. Total product demand . . . . . . . . . . . . . .
+
+19
+26
+27
+27
+29
+29
+31
+36
+37
+38
+38
+40
+
+xi
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+Chapter 1
+Introduction
+Today, high requirements exist for an integrated supply chain management. This includes
+raw material acquisition, manufacturing, inventory management and sales strategies. Depending on the objective of the company, the approach to manage the supply chain is
+different. Some factories produce to fulfill orders. In these cases, the objective is to deliver the orders on time, that is, to minimize production delays. Other factories seek to
+increase the profit margin by minimizing production and logistics costs, as well as increasing production and sales of high-income products. In all cases, restrictions govern
+the decisions. For example, the available quantity or limited storage capacity of certain
+raw material can be limiting for production. Also, available machines and manpower may
+be limited.
+Scheduling is a decision-making process that aims to allocate limited resources to competing activities [Georgiadis et al., 2019]. The components for a scheduling problem
+can be summarized as following: recipes, available processing equipment, intermediate storage policy, production requirements, utilities and manpower, and a time horizon
+[Floudas and Lin, 2005]. With these elements, according to the authors, the objective is
+to find a sequence, timing, and batch size for each task.
+The combination of objective and restrictions builds the framework for a mathematical
+model. The variables in these models are of two types: continuous, for example batch
+sizes and the amount of a product in time, or binary, for example the availability of a
+machine at a specific time point. In addition to variables, every scheduling model has
+parameters describing the process, such as machine and storage capacities, production
+times, product demand and raw material costs.
+The objective function can be defined as a maximization or a minimization function. Pro1
+
+duction volume and profit might be maximized, while production costs and production
+time are minimized. Identifying the needs of a scheduling process is crucial to define the
+objective function. Inappropriate choices for the objective function can make the problem
+unnecessarily complicated.
+The constraints can limit the objective function or the variables. A mass balance, for example, limits the objective function. If the objective function attempts to maximize the
+quantity of a final product, the mass balance will not allow this quantity to be higher than
+the sum of production batches for the product. The storage capacity of the final products
+limits the variables for these products.
+Every model can be classified as either continuous or discrete with respect to time representation. Discrete-time formulations allow a straightforward modelling of tasks
+[Floudas and Lin, 2004]. However, the time interval needed to describe all processes accurately enough can become very small. In that way, the problem becomes very large in
+terms of number of variables. The continuous-time models are subdivided into sequential
+processes and network representations. The two models differ in that the last one allows
+splitting and merging of batches [Floudas and Lin, 2004].
+Two mathematical models commonly used in production schedule optimization are the
+state task network (STN) model and the resource task network (RTN) model. The STN
+model was first introduced in 1993 [Kondili et al., 1993]. These authors divided a process diagram into states, which represent raw materials, intermediate and final products,
+and tasks, which represent transformation activities between states. In this model, variables are defined for each task taking place in every machine and producing each possible
+product. The RTN model includes the production units in the set of resources, together
+with the material states. In this way, variables are also defined for the availability of the
+machines.
+One of the industrial sectors facing scheduling challenges is the animal feed industry. Due
+to sensitive storage conditions and short shelf life of the final product, the warehouse must
+maintain a balance between stock quantity and rotation. Also, farmers cannot run out of
+feed. Therefore, orders must be delivered on time. Besides scheduling issues, delivery
+planning plays an important role. Many farmers have their own silos and order the feed
+as bulk product. Delivery trucks usually have a certain number of bodies. As different
+products cannot be mixed, the trucks are limited by the quantity and number of different
+products they can carry at a time.
+
+2
+
+1.1
+
+Objective
+
+The main objective of this work is to build a model that can schedule the batch production
+of animal feed minimizing missed orders, maintaining a final product stock level based
+on historical demand and optimizing the routes for product delivery.
+Specific objectives are:
+1. Build a capacitated vehicle routing planning (CVRP) model to optimize the route
+of delivery trucks.
+2. Build a sales forecast model for bag products to define the number of bags to be
+produced per day.
+3. Use the results of the above models to build a resource task network (RTN) and
+state task network (STN) model to schedule the production.
+4. Compare the two models used to schedule the production.
+
+3
+
+Chapter 2
+Problem formulation
+2.1
+
+Process description
+
+The animal feed factory described in this work is producing around 40 different products.
+The recipes for these include grains and chemical additives. The grains are stored in silos
+and the chemical additives in warehouses. For the grains, there are different types of silos
+with different capacities. The use of one silo or another for a specific grain depends not
+only on availability, but also on the grain humidity, since some silos have a better ventilation system.
+The production facility has one production line and plans are made to install a second
+line. The first step in the production process is to grind the grains. Then, chemicals,
+such as minerals and vitamins, are added and the bulk is mixed. The material is then
+heated with steam. At this stage, the bulk material is wet and can be pushed through a
+pelletizing machine. Finally, the pellets are cooled and stored in tanks. The sizes of the
+production batches are multiples of 1500 kg, which corresponds to one production cycle.
+The processing time depends on the pellet size. There are two possible sizes, but every
+product has a predefined size. The pellets are transported to the storage tanks. There are
+12 storage tanks with capacities between 36 and 42 tons. The products are delivered as
+bulk product or packed in bags of 25 kg. Products are made-to-stock and made-to-order.
+The logistic management can be divided into three sections, as shown in figure 2.1, and
+explained below.
+
+4
+
+Figure 2.1: Complete logistic chain, consisting of grain intake, production process and
+packing and distribution
+
+2.2
+2.2.1
+
+Logistic management challenges
+Grain intake
+
+The grain supply in the market depends on the time of the year. Harvest times vary for
+each species and the price increases when purchased in times of low supply. Therefore,
+the product recipes are made depending on the available grains in stock. Each product
+has its requirement for proteins, fats, and carbohydrates. The planning challenge in this
+section is to meet the product demand while minimizing the cost of raw material and at the
+same time satisfying nutritional requirements and considering the limitations of available
+material.
+
+2.2.2
+
+Production process
+
+Currently, the factory has one production line with an average capacity of 10 ton/h. A new
+line with twice this capacity will be constructed soon. As there are no parallel machines
+for grinding, mixing, or pelletizing within each production line, the process can be modeled as a single production task for each line. The challenge in this step is to define the
+production sequence. Each product has its setup time, and after some products a thorough
+cleaning must be done to avoid cross contamination with chemical additives.
+
+2.2.3
+
+Packing and distribution
+
+After the cooling step, the pellets are stored in tanks, until they can be transported to the
+packing lines or loaded to a truck for delivery. There are two packing machines with an
+5
+
+average capacity of 10 ton/h. For the bulk product delivery, two trucks are available with
+four bulk bodies with a capacity of three tons each. In addition, there is a trailer with
+five bodies with a capacity of three tons each, which can be coupled to any of the trucks.
+The challenge in this section consists of determining the shortest routes for the trucks to
+deliver the orders as fast as possible.
+To integrate all the mentioned parts of the supply chain, an optimization problem could
+look as follows.
+First, the total production volume for the year is estimated monthly. Also, the costs of
+raw materials are estimated, on the same time basis. This can be done based on historical
+data, for example. The nutritional values are obtained for each raw material and the
+nutritional requirements are defined for each product. Table 2.1 gives example values
+of nutritional values for raw materials. With these data, a diet problem is formulated to
+minimize raw material costs. For example, the total amount of protein, fat and starch
+needed for the whole year is calculated with the predicted product demand. This means
+that if the protein content in product P1 is 22% and the predicted quantity of product P1
+is QP1 (t) in month t, the total amount of protein needed is ∑t 0.22QP1 (t). The mass of
+corn multiplied by the fraction of protein in the corn gives the amount of protein available
+from this raw material. The same calculation is done for the other raw materials. The sum
+of these quantities must be greater or equal to the total protein demand for the production.
+The minimization function is the sum of the quantity of raw materials multiplied by their
+unitary cost.
+Table 2.1: Example of nutritional values of raw materials for animal feed
+Raw material Protein (%) Fat (%) Starch (%)
+Corn
+9
+4
+72
+Sorghum
+13
+2
+66
+Soybean meal
+47
+1
+5
+While the first step is a long-term scheduling problem, the next steps are planned on a
+much shorter term. The bulk products are ordered usually one day in advance. This
+means the routes for the delivery trucks need to be scheduled daily. This is done in the
+following step. With the quantity of ordered products and delivery locations, a capacitated
+routing vehicle problem is solved to obtain the shortest route. The result is the amount
+and time when bulk products need to be ready every day.
+Once the previous problem is solved, the next question that arises is how much additional
+animal feed should be produced to pack in bags of 25 kg. To solve this, a warehouse
+6
+
+policy is defined. For example, a minimum stock level can be maintained, and the plant
+produces only the necessary to maintain this level. Another option is to do a sales forecast. This might be more difficult, but the warehouse level will probably be lower.
+Finally, once the amount to be produced is defined and the time at which the bulk products
+should leave the factory are set, the production sequence is obtained with a scheduling
+model, such as state task network or resource task network.
+In this work, only the production process and the packing and distribution logistics, i.e.
+the short-term scheduling problems, will be addressed.
+
+7
+
+Chapter 3
+Methods and models
+This work focuses on the delivery logistics, the demand forecast and the production schedule for the animal feed plant described in the previous chapter. First, the model used to
+optimize the delivery routes is explained. Then, the model used to forecast bag products is
+described and, finally, the models used to schedule the production process are presented.
+
+3.1
+
+Capacitated Vehicle Routing Planning model
+
+Vehicle routing problems have been studied for more than 60 years and, presently, the results are used for strategical decisions within the industry [Vidal et al., 2020]. The same
+authors claim that cost optimization is the main objective in these types of problems, but
+also other aspects need to be considered, as for example service quality and consistency.
+In this work, the total distance covered by the delivering trucks is minimized. The distance
+can be proportional to the costs and the time, as constant speed and road conditions are
+assumed. The objective function is presented in equation 3.1. Every client is represented
+by a node i, and the distance between clients i and j is denoted by ci, j . In theory, ci, j can
+be different than c j,i . The variable xi, j,k is a binary variable, active if truck k visits client i
+and afterwards client j.
+min
+
+∑
+
+ci, j xi, j,k
+
+(3.1)
+
+i, j∈A
+
+Every i ∈ N, where N is the set of clients, is visited once. Mathematically, this means that
+every node is left once (equation 3.2) and visited once (equation 3.3). In these equations,
+K is the set of trucks and V includes the clients and the depot. In this work, there is only
+one depot at the animal feed factory.
+
+8
+
+∑ ∑
+
+xi, j,k = 1
+
+i∈N
+
+(3.2)
+
+∑ ∑
+
+x j,i,k = 1
+
+i∈N
+
+(3.3)
+
+k∈K j∈V, j̸=i
+
+k∈K j∈V, j̸=i
+
+To avoid sub-tours in the results, a variable is added, whose function is to accumulate
+a specific quantity while the truck visits the clients. A sub-tour is a route where the
+truck does not start and end at the depot. The variable can be related to time or product
+amount. In this work, the accumulated product quantity (orders) is a good choice. This
+variable will be limited by the maximum truck capacity. The mathematical formulation is
+presented in equation 3.4. In words, the equation states that if truck k goes from client i
+to j, the accumulated capacity when leaving j must be greater than or equal to the sum of
+the accumulated capacity when leaving i and the product order for j.
+u j,k ≥ ui,k + D j − M(1 − xi, j,k )
+
+i ∈ V, j ∈ N, k ∈ K
+
+(3.4)
+
+The variable u cannot be greater than the truck capacity. This constraint is formulated in
+equation 3.5, where Ck denotes the maximum capacity of truck k.
+ui,k ≤ Ck
+
+i ∈ N, k ∈ K
+
+(3.5)
+
+The lower bound for the variable u is the order quantity D, as shown in equation 3.6.
+ui,k ≥ Di
+
+i ∈ N, k ∈ K
+
+(3.6)
+
+To complete the model, some constraints are needed to guarantee that every client is only
+connected to one truck, i.e., every node is visited and left by the same truck k. These
+constraints are presented in equations 3.7-3.10. Here, M is a very large number.
+
+∑
+
+xi j′ k′ ≤ M(1 − xi, j,k )
+
+i, j ∈ N; k ∈ K
+
+(3.7)
+
+∑
+
+x j′ ik′ ≤ M(1 − xi, j,k )
+
+i, j ∈ N; k ∈ K
+
+(3.8)
+
+j′ ∈N,k′ ̸=k
+
+j′ ∈N,k′ ̸=k
+
+i, j ∈ N; k, k′ ∈ K, k ̸= k′
+
+xi, j,k + x j,1,k′ ≤ 1
+
+j ∈ N; k, k′ ∈ K, k′ ̸= k
+
+∑ x j,i′,k′ + x j,1,k′ ≤ M(1 − x1, j,k )
+′
+
+(3.9)
+
+(3.10)
+
+i ∈N
+
+In practice, it might be necessary to limit the number of trips made by each truck. This is
+9
+
+done including equation 3.11 in the model. Here, ntrips,min
+and ntrips,max
+are the minimum
+k
+k
+and maximum number of trips allowed for truck k.
+≤
+ntrips,min
+k
+
+∑ x1, j,k ≤ ntrips,max
+k
+
+k∈K
+
+(3.11)
+
+j∈N
+
+3.2
+
+Autoregressive Integrated Moving Average model
+
+To forecast the bag sales, the Autoregressive Integrated Moving Average (ARIMA) model
+is used. This is a time series forecast model that describes the autocorrelation in the
+data [Hyndman and Athanasopoulos, 2018]. An autoregressive model uses past values
+in a linear combination to forecast a variable, whereas a moving average model uses
+past forecast errors to predict future values [Hyndman and Athanasopoulos, 2018]. The
+combination of these two models builds the ARIMA model. This model is characterized by three parameters (p, d, q), which describe the order of the autoregression,
+the degree of the differencing and the order of the moving average part, respectively
+[Hyndman and Athanasopoulos, 2018].
+An autoregressive model has the form of equation 3.12 [Hyndman and Athanasopoulos, 2018].
+
+yt = c + φ1 yt−1 + φ2 yt−2 + ... + φ p yt−p + εt
+
+(3.12)
+
+Here, the order of the equation is p, and ε represents the noise. In this model, the present
+variable yt is being forecast with a linear combination of past values yt−1 , yt−2 until yt−p .
+In a moving average model, the forecast is calculated with a linear combination of the
+past forecast errors, as written in equation 3.13 [Hyndman and Athanasopoulos, 2018].
+
+yt = c + εt + θ1 εt−1 + θ2 εt−2 + ... + θq εt−q
+
+(3.13)
+
+The combination of these two models gives the ARIMA model, presented in equation
+3.14.
+
+′
+′
++ φ2 yt−2
++ ... + φ p yt−p c + θ1 εt−1 + θ2 εt−2 + ... + θq εt−q εt
+yt′ = c + φ1 yt−1
+
+(3.14)
+
+In this model, instead of using the variable y, the differenced variable y′ is used, i.e. the
+difference between consecutive observations. This is necessary to make non-stationary
+10
+
+series stationary [Hyndman and Athanasopoulos, 2018].
+
+3.3
+
+Discrete-time State-Task-Network model
+
+In discrete-time models, the time span is divided into intervals of equal length. The activities can only take place at a specific time point, such as, for example, the beginning
+of each time interval [Floudas and Lin, 2005]. Therefore, the accuracy depends on the
+length of the time interval [Floudas and Lin, 2005].
+One discrete-time model with straightforward and simple formulations is the STN model.
+This model represents a process as depicted in figure 3.1. The circular nodes represent
+raw materials, intermediate and final products and are called states, whereas the activities transforming one state to another are represented as rectangular boxes and are called
+tasks [Kondili et al., 1993]. There are no nodes for the machines. These are included as
+subindexes in the variables related to the tasks. The green boxes in the figure indicate that
+the tasks Mixing 1 and Mixing 2 can take place in Machines 1 and 2, and the reactions
+take place in Machine 3.
+
+Machine 1,
+Machine 2
+Raw
+material 1
+
+Machine 3
+
+Mixing 1
+
+Reaction 1
+
+Final
+product 1
+
+Reaction 2
+
+Final
+product 2
+
+Intermediate
+1
+
+Raw
+material 2
+
+Mixing 2
+
+Figure 3.1: STN representation
+
+3.3.1
+
+Objective function
+
+In the animal feed factory studied in this work, the most important objective is to deliver on time and to cover the demand. Therefore, profit maximization is not the correct
+approach to define the objective function. It is sufficient to minimize the delay. This is
+formulated in equation 3.15.
+11
+
+H
+
+min
+
+(3.15)
+
+∑ ∑ Rst
+
+s∈S f inal t=1
+
+Here, Rst is the amount of product s not being delivered at time t.
+
+3.3.2
+
+Constraints
+
+Machine overlap
+Every machine is restricted to one task per time step. This constraint is given by equation
+3.16. It says that if task i is performed in unit j at time t, no other binary variable Wi′ jt ′
+can be active at the times where i is performed.
+t+pi −1
+
+∑ ∑
+
+Wi′ jt ′ − 1 ≤ M(1 −Wi jt )
+
+∀ j,t, i ∈ I j
+
+(3.16)
+
+i′ ∈I j t ′ =t
+
+Batch size
+The production process is continuous. The model treats a certain amount of product as
+one batch. Therefore, the batch size must be fixed, and equal to the machine capacity in
+the considered time interval.
+max
+Bi jt = Vimin
+j Wi jt = Vi j Wi jt
+
+∀ j,t, i ∈ I j
+
+(3.17)
+
+Mass balance
+The mass balance for every state s is shown in equations 3.18 and 3.19. In words, the
+equations say that the amount of state s at time point t is equal to the amount of s at the
+previous point, adding the amount produced in the related production batch and subtracting the amount consumed in the subsequent production steps related to that state. Also,
+the variable R is included to balance the equation in case the order cannot be delivered on
+time. For raw materials, R is the amount of material purchased to complete the production.
+Also, raw materials are not produced in the process, only consumed.
+Sst = Ss(t−1) + ∑ ρ̄ is
+i∈T̄s
+
+∑ Bi j(t−pis) − ∑ ρis ∑ Bi jt + Rst − Dst − Rs(t−1)
+
+j∈Ki
+
+i∈Ts
+
+∀s ∈ S f inal ,t
+
+j∈Ki
+
+(3.18)
+Sst = Ss(t−1) − ∑ ρis
+i∈Ts
+
+∑ Bi jt + Rst
+
+∀s ∈ Sraw ,t
+
+(3.19)
+
+j∈Ki
+
+The maximum final amount of state s is restricted, as shown in equation 3.20. This restriction, however, is more important if the objective function maximizes profit. In our
+
+12
+
+case, where delay is minimized, there is no risk of this variable being very large at the
+end.
+SsH ≤ Smax,s
+
+∀s ∈ S f inal
+
+(3.20)
+
+Setup time
+The setup time for every product is considered in equation 3.21. In this case, the setup
+time of all tasks is supposed to be equal to pi , the production time of one batch.
+
+t
+
+∑
+′
+
+∀ j, i ∈ I j , i′ ̸= i,t − pi ≥ 1
+
+Wi′ jt ′ ≤ M(1 −Wi′ jt ′ )
+
+(3.21)
+
+t =t−pi
+
+Storage constraints
+The previous constraints are part of the conventional STN formulation. The following
+storage constraints are customized for this scheduling problem.
+Every tank can only store one bulk product at each time point. This is formulated in
+equation 3.22.
+
+∑
+
+Zskt ≤ 1
+
+∀k,t
+
+(3.22)
+
+s∈Sstored
+
+Every tank has a minimum and maximum storage capacity. This constraint is represented
+in equation 3.23. In this equation, the middle term is the sum of the amount of state
+existing at time t, the amount of batch starting to be produced at time t and the demand at
+that time point.
+
+T
+) ≤ Sst + ∑
+∑(ZsktVmin
+k
+
+(i, j)∈I j
+
+T
+Bi jt +Dst ≤ ∑(Zskt Vmax
+)
+
+∀s,t, (s, i) ∈ T̄sbulk (3.23)
+
+k
+
+The last constraint related to the storage tanks forces a product to stay in the same tank k
+at time t if it was there already in the previous time step and if the amount is greater than
+zero. This constraint will prevent transfer between tanks of the bulk product, as this does
+not happen in the factory.
+
+Sst +
+
+∑
+
+Bi jt + Dst ≤ M(−2Zsk(t−1) + Zskt + 2)
+
+∀t > 1, (s, i) ∈ T̄sbulk , k
+
+(i, j)∈I j
+
+(3.24)
+
+13
+
+3.4
+
+Continuous-time Resource-Task-Network model
+
+In continuous-time models, the time intervals are variable. This means the starting and
+ending point of a task can take place at any time inside the time horizon [Floudas and Lin, 2005].
+The advantage of this time representation is the smaller size of the problem, due to a less
+amount of time intervals needed [Floudas and Lin, 2005]. The resource task network is
+represented in figure 3.2. Unlike the STN representation, in this model the machines are
+part of the set of resources.
+Machine 1
+
+Machine 2
+
+Raw
+material 1
+
+Machine 3
+
+Mixing 1
+
+Reaction 1
+
+Final
+product 1
+
+Reaction 2
+
+Final
+product 2
+
+Intermediate
+1
+
+Raw
+material 2
+
+Mixing 2
+
+Figure 3.2: RTN representation
+
+3.4.1
+
+Objective function
+
+In this model, as in the previous one, again the amount of delayed product is minimized,
+as expressed in equation 3.25.
+H
+
+min
+
+∑ ∑ DLrn
+
+(3.25)
+
+r∈RP n=1
+
+Here, DLrn is the amount of final product r not being delivered at time point n.
+
+3.4.2
+
+Constraints
+
+Time allocation
+If task i is a production task, it might have a fixed and a variable batch-dependent processing time. If the task occurs between time points n and n’, the time interval n → n’ must
+be at least equal to the processing time, as expressed in equation 3.26. Here, Tn′ − Tn is
+the difference between time points n and n′ , αi and βi are the fixed and batch-dependent
+
+14
+
+processing times, respectively, Winn′ is a binary variable equal to one if task i takes place
+in the mentioned time interval and Binn′ is the batch size.
+Tn′ − Tn ≥
+
+∀r ∈ RJ , n, n′ (n < n′ )
+
+∑ (αiWinn′ + βiBinn′ )
+
+(3.26)
+
+i∈Ir
+
+If task i is a zero-wait task, i.e., if after completing task i, the material has to start immediately the next task, the lower bound for time allocation as expressed in constraint 3.26
+is not enough, but an upper bound need to be added:
+Tn′ − Tn ≤ H(1 −
+
+∀r ∈ RJ , n, n′ (n < n′ ) (3.27)
+
+∑ZW Winn′ ) + ∑ZW (αiWinn′ + βiBinn′ )
+
+i∈Ir
+
+i∈Ir
+
+Batch size
+The batch size for every task is limited by equipment capacity or operational rules. For
+example, in the case of the factory studied in this work, a batch in the production line
+cannot have less than 1.5 tons, because the automation system is designed for production
+cycles of the amount mentioned. The constraint is formulated as follows:
+ViminWinn′ ≤ Binn′ ≤ VimaxWinn′
+
+∀i, n, n′ (n < n′ )
+
+(3.28)
+
+The binary variables are necessary to force the batch size to zero in case the task is not
+performed in that time interval.
+Mass balance
+The amount of resource r at time point n is equal to the amount at the previous time point,
+adding the produced quantity in the previous steps and subtracting the consumed quantity
+in the future time intervals. This is formulated in equation 3.29. In this work, the mass
+balance is applied to raw materials, final products and production and packing units. The
+storage tanks are handled in a different way.
+)︄
+
+(︄
+Rrn = Rr(n−1) + ∑
+
+i∈Ir
+
+(µirpWinn′ + νirp Binn′ ) + ∑ (µirc Winn′ + νirc Binn′ )
+∑
+′
+′
+
+n <n
+
+∑
+
+n >n
+p
+(µirWi(n−1)n + µirc Win(n+1) )
+
++
+
+∀r, n > 1
+
+(3.29)
+
+i∈I ST
+
+A maximum amount of resource r allowed to exist at time point n is formulated as follows:
+Rrn ≤ Rmax
+r
+
+∀r, n
+
+Storage constraints
+15
+
+(3.30)
+
+Let Z be a binary variable, active if final bulk product r ∈ RFP is stored in tank r’ ∈ RT Q at
+time point n. Every tank can only store one product at time point n, as shown in equation
+3.31.
+∀r′ ∈ RT Q , n
+
+∑FP Zrr′n ≤ 1
+
+(3.31)
+
+r∈R
+
+The amount of resource Rrn existing at time point n is stored in one of the available tanks
+and, therefore, related to the minimum and maximum tank capacity as shown in equation
+3.32. The sum of batches producing resource r are also included in the middle term. In
+this way, if a batch starts at time n, it has already a designated storage tank.
+
+(Vrmin Zrr′ n ) ≤ Rrn + ∑ Binn′ ≤ ∑ (Vrmax Zrr′ n )
+∑
+FP
+′
+TQ
+′
+TQ
+
+r ∈R
+
+∀r ∈ RFP , n
+
+(3.32)
+
+r ∈R
+
+i∈Ir
+
+Also, some practical limitations exist. For example, if one product is stored in a specific
+tank at time point n, it should not change tank until it is sold or packed. These constraints
+are explained in the table 3.1. They need to be defined for every resource r in every tank
+r’, at every time point n<N.
+Table 3.1: Practical restrictions on storage use for final bulk products
+State of Constraint
+Condition
+Description
+Description
+Zrr′ n
+for Zrr′ n+1
+Resource stays in the
+No or same
+1
+1
+same tank
+amount of
+Rr,n − Rr,n+1 = 0
+No new empty tank is
+resource r at n
+0
+0
+used
+and n+1
+
+Rr,n − Rr,n+1 > 0
+
+Smaller amount
+of resource r at
+n+1 than at n
+
+Rr,n − Rr,n+1 < 0
+
+Larger amount of
+resource r at n+1
+than at n
+
+1
+
+1 or 0
+
+0
+
+0
+
+1
+
+1
+
+0
+
+0 or 1
+
+Remaining resource
+stays in the same tank,
+no empty tank can be
+used but used tank can
+be released
+The same tank is used,
+and any additional tank
+can be used
+
+The limitations in table 3.1 are formulated as big-M constraints in the following equations.
+Binn′ ≥ M(Zrr′ n − Zrr′ n′ )
+
+∀r ∈ RFP , r′ ∈ RT Q , (i, r) ∈ Ir , n ∈ N
+16
+
+(3.33)
+
+Rrn − Rr(n+1) ≥ M(Zrr′ n − Zrr′ (n+1) − 1)
+
+∀r ∈ RFP , r′ ∈ RT Q , n ∈ N
+
+(3.34)
+
+Rrn − Rr(n+1) ≤ M(Zrr′ n − 2Zrr′ (n+1) + 2)
+
+∀r ∈ RFP , r′ ∈ RT Q , n ∈ N
+
+(3.35)
+
+Rrn − Rr(n+1) ≥ M(2Zrr′ n − 2Zrr′ (n+1) − 1.9999)
+
+∀r ∈ RFP , r′ ∈ RT Q , n ∈ N
+
+(3.36)
+
+The last constraint is not perfectly accurate for some cases. However, if M is not set to be
+much higher than the maximum amount produced over the time horizon, the restriction
+will most likely be satisfied for all possible cases.
+
+3.5
+
+Computational aspects
+
+The calculations in this work were performed with an Intel Core i7 processor at 1.30GHz
+speed and 12 GB RAM installed.
+The CVRP, STN and RTN models were solved with the commercial software Gurobi
+version 9.1.0. This software uses branch-and-bound algorithms to solve mixed integer linear problems. A branch-and-bound algorithm consists in solving a relaxed linear program, where the integrality constraints have been removed. New constraints are
+added to the problem for the integer variables until all of these have integer solutions
+[Gurobi Optimization, 2021].
+The ARIMA forecast model was solved with RStudio, a free data analysis software
+[RStudio Team, 2016]. Here, the package forecast was used, and specifically the command auto.arima, written by Rob J. Hyndman [Hyndman and Khandakar, 2008]. This
+function finds the best ARIMA model for the specified time series.
+
+17
+
+Chapter 4
+Results and discussion
+In this chapter, the results of the production planning are presented. First, a simplified
+case study is used to validate the Resource Task Network and State Task Network models.
+Then, based on bulk product orders, the Capacitated Vehicle Routing Planning model
+is used to obtain the deadlines for these products, which are integrated in the STN and
+RTN models. Afterwards, alternatives to determine the bag products demand are studied.
+These results are then also integrated into the STN and RTN models in another case study.
+Finally, some comparisons between these models are made.
+
+4.1
+
+Production schedule model validation
+
+To analyze how the production scheduling models STN and RTN handle different situations, a validation is carried out with a reduced number of products and machines. Figures
+4.1 and 4.2 illustrate the STN and RTN graphs representing this simplified case study.
+In this simplified case study, four bulk products are produced in one machine M1 and
+stored in six possible tanks T1-T6. The bulk products can be sold directly or packed in
+bags of 25 kg, in a packing machine denoted by M2. The demand for each product is
+summarized in table 4.1.
+The packing process starts at 6:00 am and ends at 12:00 am. The Gantt charts for production and packing tasks obtained with the STN model are illustrated in figures 4.3 and 4.4.
+These results are obtained after one second of computational time, reaching an objective
+function of zero, indicating no delayed orders.
+In chapter two it was mentioned that the animal feed plant operates in terms of cycles,
+where one production cycle is equal to 1500 kg. As it is unlikely that only one cycle will
+18
+
+Figure 4.1: STN representation for a simplified case
+Table 4.1: Product demand in simplified case study
+Product
+FP01
+FP02
+FP03
+FP04
+BP01
+BP02
+BP03
+BP04
+
+Time (h) Quantity (kg)
+Bulk products
+06:00
+27,000
+10:00
+27,000
+13:00
+27,000
+15:00
+27,000
+Bag products
+23:59
+20,000
+23:59
+20,000
+23:59
+20,000
+23:59
+20,000
+
+be produced at a time, the minimum batch size in this simplified case is set to be 3000
+kg, i.e., two cycles. In the figures, every batch is represented with one block. The number
+above each block is a sequential number representing the number of cycles.
+
+19
+
+Figure 4.2: RTN representation for a simplified case
+Finding a balance between sufficiently low batch sizes and low computational cost is very
+important. Increasing the batch size reduces the number of variables and decreases computational time. But it should be noticed that if the demand is not a multiple of this batch
+size, more than necessary might be produced.
+As can be observed in the charts 4.3 and 4.4, the batches are not very continuous. The
+animal feed plant has a maximum capacity of 240 tons per day. The total sum of products
+to be produced in this case study is 188 tons. As the objective function presented in
+equation 3.15 only minimizes the delay of orders, the solution presented above distributes
+the batches through the entire time horizon, leaving empty time steps during the day and
+lacking continuity. To avoid this, other terms can be included in the objective function,
+such as the minimization of product switches or the minimization of storage time. Using
+this last approach, another term is added to the objective function, accounting for the
+total time that bulk products occupy the storage tanks. The modified objective function is
+shown in equation 4.1. Here, Zskt is the binary variable, active if bulk product s is stored
+in tank k at time t.
+
+20
+
+2 4 6 8 10 12 14 16 18 20
+
+22
+
+24 26 28 30 32
+
+Production task
+
+P01
+2 4 6 8 10 12 14
+
+16 18 20
+
+22 24 26 28 30
+
+32
+
+P02
+2 4 6 8 10 12 14 16 18
+
+20
+
+22
+
+24 26 28 30 32 34 36
+
+P03
+2 4 6 8 10
+
+12 14 16 18 20 22 24 26 28
+
+30 32
+
+P04
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+24
+
+Figure 4.3: Gantt chart for production tasks, STN model
+
+2
+
+4 6
+
+8 101214
+
+B01
+Packing task
+
+2
+
+4 6 8 1012
+
+14
+
+B02
+2
+
+4 6 8 10121416
+
+B03
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+14
+
+B04
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+24
+
+Figure 4.4: Gantt chart for packing tasks, STN model
+
+(︄
+min
+
+H
+
+H
+
+∑ ∑ Rst + ∑ ∑ ∑ Zskt
+
+S f inal t=1
+
+)︄
+(4.1)
+
+Sstored k∈K t=1
+
+The Gantt charts for production and packing tasks obtained with the modified objective
+function are illustrated in figures 4.5 and 4.6. It can be observed that the production is
+much more continuous than in the previous solution. This result is obtained after 2000
+seconds of computational time. The value of the objective function is 74. There are no
+missed orders, and the value of the objective function is referred to the sum of binary
+
+21
+
+variables Zskt . Although this result is much more realistic than the previous, it might not
+be practical to pack only one or two batches, as suggested by figure 4.6, unless there is a
+real need to empty the storage tanks.
+
+2 4 6 8 101214161820
+
+222426283032
+
+Production task
+
+P01
+2 4 6 8 10121416182022
+
+2426283032
+
+P02
+2 4 6 8 1012141618
+
+20222426283032
+
+P03
+2 4 6 8 101214161820222426283032
+
+P04
+0
+
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+24
+
+Figure 4.5: Gantt chart for production tasks, STN model, modified objective function
+
+2
+
+4 6 8 101214
+
+B01
+Packing task
+
+2
+
+4
+
+6 8 101214
+
+B02
+2 4 6 8 101214
+
+B03
+2 4 6 8 101214
+
+B04
+0
+
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+Figure 4.6: Gantt chart for packing tasks, STN model, modified objective function
+For this solution, the development of the amount of products in time is illustrated in Figure 4.7. It can be observed that once the bulk products FP01 to FP04 are delivered at
+times 6:00, 10:00, 13:00 and 15:00 am, respectively, the amount of these is zero until
+the end of the time horizon. This means that they are immediately packed while being
+produced to empty the storage tank and minimize the storage time.
+
+22
+
+24
+
+40000
+
+FP01
+FP02
+FP03
+FP04
+BP01
+BP02
+BP03
+BP04
+
+Amount of product (kg)
+
+35000
+30000
+25000
+20000
+15000
+10000
+5000
+0
+
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+24
+
+Figure 4.7: Amount of products in time, STN model, modified objective function
+The use of the storage tanks is shown in figure 4.8. FP01, for example, is stored in tank
+TQ6 until it is delivered at 6:00 am. After this, no tank is used for this product, because the
+packing follows the production immediately. In real life, however, a storage tank might
+be needed as a buffer tank for the packing line.
+
+('FP01', 'TQ6')
+('FP02', 'TQ5')
+('FP03', 'TQ2')
+('FP04', 'TQ3')
+
+not empty
+
+empty
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+Figure 4.8: Use of tanks during time, STN model, modified objective function
+Another attempt to make the batches more continuous is to increase the batch size. Figures
+4.9 and 4.10 illustrate the results obtained by doubling the batch size of the packing tasks.
+23
+
+24
+
+This result is obtained after 4000 seconds of computational time. The amount of missed
+orders is 2000 kg for every bag product and the gap between the objective function and
+the best bound is 67.2%. To satisfy the bag product demand, one additional batch of 6000
+kg for every product would have to be produced. Then, however, an amount of 4000 kg
+of every product would remain. As explained in the previous chapter, having batch sizes
+that are not multiples of the product orders becomes a problem when trying to increase
+the batch size. This indicates that the previous method to improve continuity of tasks is a
+more efficient approach.
+
+2 4 6 8 10 12 14 16 18
+
+20
+
+22 24 26
+
+28 30
+
+Production task
+
+P01
+2 4 6 8 10 12 14 16 18 20 22 24 26 28 30
+
+32 34
+
+P02
+2
+
+4 6
+
+8 10 12 14 16 18
+
+20 22 24 26
+
+28 30
+
+P03
+2 4
+
+6 8 10 12 14 16 18 20 22 24 26
+
+28
+
+30
+
+P04
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+24
+
+Figure 4.9: Gantt chart for production tasks, STN model, increased packing batch size
+
+4
+
+8
+
+12
+
+B01
+8
+
+12
+
+Product
+
+4
+
+B02
+4
+
+8
+
+12
+
+B03
+4
+
+8
+
+12
+
+B04
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+Figure 4.10: Gantt chart for packing tasks, STN model, increased packing batch size
+
+24
+
+24
+
+The RTN model for this simplified case reaches the results shown in figures 4.11 and 4.12.
+In this case, 24 time points were used. Small breaks are observed between production
+batches of the same product. This is because in the model, every batch produced from
+time n to n′ has a setup time, no matter which product is produced from n − 1 to n.
+
+37500
+
+10000
+
+Production task
+
+P01
+37500
+
+10000
+
+P02
+27001
+
+11499
+
+10000
+
+P03
+17500
+
+17500
+
+12000
+
+P04
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+hours since start
+Figure 4.11: Gantt chart for production tasks, RTN model
+
+10500
+
+10000
+
+B01
+Packing task
+
+10500
+
+10000
+
+B02
+21500
+
+B03
+10000
+
+10000
+
+B04
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+hours since start
+Figure 4.12: Gantt chart for packing tasks, RTN model
+
+4.2
+
+Case study 1
+
+The first case study models a production schedule for a specific day in December 2020.
+The bulk product orders to be delivered are shown in table 4.2. The locations of the clients
+25
+
+are depicted in figure 4.13.
+Table 4.2: Case study 1. Orders for a specific day in December
+Order
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+Product
+FP17
+FP20
+FP20
+FP15
+FP21
+FP39
+FP27
+FP20
+FP16
+
+Quantity (kg)
+6000
+12,000
+5000
+10,000
+9000
+12,000
+12,000
+6000
+8000
+
+Location
+Neuanlage
+Schönau
+Chortitz
+Paratodo
+Neu-Rheinfeld
+Buena Vista
+Buena Vista
+Schönau
+Buena Vista
+
+Figure 4.13: Case study 1. Locations for product delivery [Google, n.d.]
+
+26
+
+4.2.1
+
+CVRP solution
+
+Minimizing the total distance, the optimal solution obtained is shown in tables 4.3 and
+4.4. In this solution, no restrictions were made about the number of trips each truck
+should make. The optimal solution suggests that only the larger truck should make all
+trips. The total distance covered is 403.8 km. The computational time with 4.01 seconds
+is very low. The total travelling time shown in table 4.4 is calculated assuming a constant
+speed of 80 km/h and adding 15 min per order for discharge.
+
+Truck
+1
+1
+1
+1
+
+Table 4.3: Case study 1. Optimal routes for bulk product delivery
+Trip Route (Order)
+1
+Factory → Schönau (2) → Chortitz (3) → Factory
+2
+Factory → Neu-Rheinfeld (5) → Neuanlage (1) → Factory
+3
+Factory → Buena Vista (6) → Paratodo (4) → Factory
+4
+Factory → Schönau (8) → Buena Vista (7) → Buena Vista (9) → Factory
+
+Quantity (kg)
+17,000
+15,000
+22,000
+26,000
+
+Table 4.4: Case study 1. Distance, time, and product quantity per trip
+Trip Total Quantity (kg) Total distance (km) Total time (hours)
+1
+17,000
+47.1
+1.1
+2
+15,000
+62.6
+1.3
+3
+22,000
+238.7
+3.8
+4
+26,000
+108.2
+2.3
+The routes are depicted in figure 4.14. In the figure, only the direct line between clients
+is shown. In the calculations, however, the directions suggested in Google Maps are used
+to obtain the distances.
+
+27
+
+Figure 4.14: Case study 1. Routes covered by truck 1 with 27 tons capacity
+
+4.2.2
+
+STN solution
+
+Assuming one truck is assigned to make all the deliveries, and the longest route should
+be covered first and the shortest last, the time points at which the products must be ready
+for delivery can be calculated. The remaining time is used to produce bag products. The
+total demand is presented in table 4.5. The second column shows the time at which the
+order must be ready. The total production amount is 220,000 kg, equal to 91.7% of the
+maximum capacity. This means, with the setup times for each product, it will be difficult
+to satisfy all orders.
+The Gantt charts presented in figures 4.15, 4.16 and 4.17 show the schedule proposed
+by the STN model. As the time available to make a production schedule in practice is
+limited, the termination criterion for the computing time is set to 6000 seconds. After
+this time, the total amount of missed orders is 26,000 kg. This is about 2.5 hours of
+production. Table 4.6 presents the details of these missed orders. All of them correspond
+to bag products. As the order time for them has been set at the end of the time horizon,
+this solution indicates that they are not made at all.
+
+28
+
+Table 4.5: Case study 1. Product demand
+Product Time (h) Quantity (kg)
+Bulk products
+FP15
+06:00
+10,000
+FP39
+06:00
+12,000
+FP16
+10:00
+8000
+FP20
+10:00
+6000
+FP27
+10:00
+12,000
+FP17
+12:00
+6000
+FP21
+12:00
+9000
+FP20
+13:00
+17,000
+Bag products
+BP02
+23:59
+20,000
+BP05
+23:59
+10,000
+BP18
+23:59
+10,000
+BP20
+23:59
+20,000
+BP21
+23:59
+20,000
+BP26
+23:59
+20,000
+BP36
+23:59
+20,000
+BP38
+23:59
+20,000
+Table 4.6: Case study 1. Product delay, STN model
+Product Amount not delivered on time (kg)
+BP02
+2000
+BP05
+7000
+BP18
+1000
+BP20
+5000
+BP21
+5000
+BP26
+2000
+BP36
+2000
+BP38
+2000
+
+4.2.3
+
+RTN solution
+
+For the RTN model, the computing time is again set to 6000 seconds. After this time, the
+commercial software Gurobi finds the best schedule, presented in figures 4.18, 4.19 and
+4.20. This solution has a total delay of 24,500 kg, detailed in table 4.7. As mentioned
+before, the total amount of product orders in this case study is 220,000 kg. With a maximum capacity of 10,000 kg per hour, only two hours in total would be available in theory
+for production setup. With 13 products, there are at least 12 product changes. If every
+product change requires 15 minutes setup time, at least 3 hours would be needed. This
+means that, if the other constraints allow, 10,000 kg (one hour) will not be satisfied by any
+means. Therefore, this solution can be considered good, even though the solver has not
+29
+
+2 4 6 8 10 12
+
+Production task
+
+P02
+P05
+P15
+P16
+P17
+P18
+P20
+P21
+P26
+P27
+P36
+P38
+P39
+
+2 4 6
+
+8
+2 4 6
+2 4
+2 4 6
+2 4 6 8
+
+2
+
+4 6
+
+10 12 14 16 18 20 22 24 26
+8 10 12 14
+2 4 6 8 10 12
+
+2 4 6 8
+2 4 6 8 10 12
+2 4 6 8 10 12
+2 4 6 8
+
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+24
+
+Figure 4.15: Case study 1. Gantt chart for production line, STN model
+
+Product
+
+B02
+B05
+B15
+B16
+B17
+B18
+B20
+B21
+B26
+B27
+B36
+B38
+B39
+
+2
+
+4 6
+
+2
+2
+
+4
+
+6
+
+4
+
+6
+
+8
+2 4 6 8
+
+2 4 6 8 10
+2
+
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+Figure 4.16: Case study 1. Gantt chart for packing line 1, STN model
+
+30
+
+21
+
+24
+
+2 4
+
+6
+
+2
+
+2 4 6
+
+Product
+
+B02
+B05
+B15
+B16
+B17
+B18
+B20
+B21
+B26
+B27
+B36
+B38
+B39
+
+2 4
+2
+2 4
+
+2
+2 4
+
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+Figure 4.17: Case study 1. Gantt chart for packing line 2, STN model
+reached an optimal solution after the defined time. It can also be observed that the RTN
+solution is better than the STN result. Even though the missed quantity obtained with the
+RTN model is only 1500 kg less, the batches are considerably more continuous.
+
+Table 4.7: Case study 1. Product delay, RTN model
+Product Amount not delivered on time (kg)
+BP21
+4500
+BP18
+10,000
+BP05
+10,000
+
+31
+
+6 8 10
+
+24
+
+20000
+
+10000
+8000
+6000
+
+Production task
+
+P02
+P05
+P15
+P16
+P17
+P18
+P20
+P21
+P26
+P27
+P36
+P38
+P39
+
+12500
+
+10500
+
+20000
+
+14500
+
+10000
+20000
+
+12000
+20000
+20000
+12000
+
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+hours since start
+Figure 4.18: Case study 1. Gantt chart for production line, RTN model
+
+10000
+
+Packing task
+
+B02a
+B05a
+B18a
+B20a
+B21a
+B26a
+B38a
+
+20000
+5500
+
+5000
+20000
+
+17000
+
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+hours since start
+Figure 4.19: Case study 1. Gantt chart for packing line 1, RTN model
+
+32
+
+10000
+
+Packing task
+
+B02b
+B05b
+B18b
+B20b
+B21b
+B26b
+B38b
+
+5000
+
+3000
+
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+hours since start
+Figure 4.20: Case study 1. Gantt chart for packing line 2, RTN model
+
+4.3
+
+Sales forecast for bag products
+
+In the first case study, the amount of bag products to be produced was a guess. There are
+different strategies to approach the production planning of bag products. For example, a
+minimum stock level can be defined that must be maintained. Figure 4.21 shows the cumulative amount of product BP20 produced and sold in bags during about three months.
+It can be observed that the difference between the produced and sold units is almost constant. This indicates a constant level of product BP20 in the warehouse. On average, this
+level is equal to 3516 bag units. This is about the number of sold units per week.
+Another strategy is to produce a huge amount of product and then wait until the stock
+level reaches almost zero. This seems to be the case of product BP15, as shown in figure
+4.22. It should be noted that the starting stock level in the cumulative graphs is not known.
+Therefore, the difference between production and sales is relative. It is, however, a good
+representation of the warehouse behavior.
+For this study, the amount of sold bag products is available from October 2019. Figure
+4.23 illustrates the sales of a product for milk cows, identified here as BP15. A slow
+decrease over time can be observed. This is probably due to the introduction of a new
+product that has replaced this one. Using the function auto.arima from the package
+forecast in RStudio to find the best ARIMA model, the sales of the last six weeks from
+this time series are predicted. The result is presented in figure 4.24 as a red, dashed line.
+
+33
+
+Cumulative amount of bags (units)
+
+45000
+40000
+35000
+30000
+25000
+
+Production
+
+20000
+
+Sales
+
+15000
+10000
+5000
+
+01−12−2020
+
+01−01−2021
+
+01−02−2021
+
+01−03−2021
+
+Date
+
+Figure 4.21: Cumulative production and sales of product BP20
+
+Cumulative amount of bags (units)
+
+30000
+
+25000
+
+20000
+Production
+
+15000
+
+Sales
+10000
+
+5000
+
+01−10−2020
+
+01−11−2020 01−12−2020
+
+01−01−2021
+
+01−02−2021 01−03−2021
+
+Date
+
+Figure 4.22: Cumulative production and sales of product BP15
+The sales forecast of another product for milk cows, identified as BP20, is shown in figure
+4.25, also as a red dashed line. As can be observed in these figures, the ARIMA model is
+
+34
+
+4000
+2000
+0
+
+Sales (units)
+
+0
+
+20
+
+40
+
+60
+
+80
+
+Week (since October 2019)
+
+Figure 4.23: Sales of bag product BP15 from October 2019 to March 2021
+
+4000
+2000
+0
+
+Sales (units)
+
+not very precise. In fact, in the long term, the forecast values will converge to a constant
+value. Even so, these forecasts will be used in the next section to determine the amount
+of bag products to be produced.
+
+0
+
+20
+
+40
+
+60
+
+80
+
+Week (since October 2019)
+
+Figure 4.24: Sales forecast for bag product BP15 for the last six weeks of the time series
+
+35
+
+6000
+5000
+4000
+3000
+2000
+0
+
+1000
+
+Sales (units)
+
+0
+
+20
+
+40
+
+60
+
+80
+
+Week (since October 2019)
+
+Figure 4.25: Sales forecast for bag product BP20 for the last six weeks of the time series
+
+4.4
+4.4.1
+
+Case study 2
+Bag products demand
+
+In the following case study, the amount of bag products to be produced in a specific
+week in January 2021 has been determined with the ARIMA forecast model. As it is
+not practical to produce each product every day, the products have been grouped such
+that each day approximately the same amount of product is packed. The amounts of bag
+products to be produced at the day being studied are shown in table 4.8. With a production
+rate of 10,000 kg per hour, the total amount represents about ten hours of production time.
+Table 4.8: Case study 2. Bag products demand based on ARIMA forecast
+Product Quantity (kg)
+BP15
+39,000
+BP08
+18,000
+BP11
+9000
+BP21
+33,000
+Total
+99,000
+
+36
+
+4.4.2
+
+CVRP solution
+
+The orders for bulk products are shown in table 4.9. The locations where these orders
+must be delivered are shown in figure 4.26.
+
+Table 4.9: Case study 2. Orders for a specific day in January 2021
+Order
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+Product
+FP20
+FP22
+FP20
+FP15
+FP20
+FP20
+FP21
+FP20
+FP20
+FP20
+
+Quantity (kg) Location
+12,000
+Blumenort
+7000
+San José
+6000
+Hamburg
+6000
+Lolita
+12,000
+San José
+3000
+San José
+9000
+Lichtenau
+9000
+Steinfeld
+3000
+San José
+6000
+San José
+
+Figure 4.26: Case study 2. Locations for product delivery [Google, n.d.]
+The minimization of the total distance obtains the results shown in tables 4.10 and 4.11.
+The total distance covered by the trucks is 669.4 km. This solution is obtained after 155
+seconds of computational time. The total travelling time shown in table 4.11 is calculated
+37
+
+assuming a constant speed of 80 km/h and adding 30 min per order for discharge. In this
+model, both trucks must make at least one trip.
+The optimal routes are depicted in figures 4.27 and 4.28. The optimal solution suggests to
+make three trips with the largest truck and only one trip with the smaller truck. It can also
+be observed that only one trip, with the larger truck, is made with full capacity, whereas
+the other two trips with the same truck are only 67% full. This suggests that the constraint
+forcing both trucks to make at least one trip is maybe increasing the total distance covered,
+and therefore, increasing the travelling costs.
+
+Truck
+1
+1
+1
+2
+
+Table 4.10: Case study 2. Optimal route for product delivery
+Trip Route (Order)
+1
+Factory → Steinfeld (8) → Lichtenau (7) → Factory
+2
+Factory → San José (6) → Hamburg (3) → Blumenort (1) → Lolita (4)→ Factory
+3
+Factory → San José (5) → San José (10) → Factory
+4
+Factory → San José (9) → San José (2) → Factory
+
+Table 4.11: Case study 2. Distance, time, and product quantity per trip
+Trip Total Quantity (kg) Total distance (km) Total time (hours)
+1
+18,000
+146
+2.7
+2
+27,000
+247.8
+5.1
+3
+18,000
+137.8
+2.7
+4
+10,000
+137.8
+2.7
+
+4.4.3
+
+STN solution
+
+The total production demand for this case study is shown in table 4.12. The total amount
+is 172,000 kg, equal to 72% of the maximum capacity.
+Minimizing the total delay of product orders, the STN model obtains the results shown in
+the Gantt chart 4.29. As in the previous case study, the tasks with the letter P are production tasks and those with the letter B, packing tasks. Pack1 is referred to packing machine
+1 and Pack2 to packing machine 2. The result is obtained after 148 seconds of computational time. Including the minimization of total storage time for the bulk products, the
+solution is as shown in figure 4.30. This solution is optimal for the specified tolerance
+and is obtained after 370 seconds. The final value is 140. This means the tanks are, in
+average, 11% of the time occupied. Without including the minimization of storage time,
+the tank occupancy is, on average, 23%.
+
+38
+
+Quantity (kg)
+18,000
+27,000
+18,000
+10,000
+
+Figure 4.27: Case study 2. Routes covered by truck 1 with 27 tons capacity
+
+Figure 4.28: Case study 2. Routes covered by truck 2 with 12 tons capacity
+
+39
+
+Table 4.12: Case study 2. Total product demand
+Product Time (h) Quantity (kg)
+Bulk products
+FP20
+06:00
+24000
+FP15
+06:00
+6000
+FP22
+06:00
+7000
+FP20
+11:00
+18000
+FP20
+14:00
+9000
+FP21
+14:00
+9000
+Bag products
+BP15
+23:59
+39000
+BP08
+23:59
+18000
+BP11
+23:59
+9000
+BP21
+23:59
+33000
+
+2 4
+
+6 8 1012
+
+2
+
+4
+
+6 8
+2
+
+2
+
+4
+
+4 6
+2
+2
+
+Production and packing tasks
+
+P08
+B08-Pack1
+B08-Pack2
+P11
+B11-Pack1
+B11-Pack2
+P15
+B15-Pack1
+B15-Pack2
+P20
+B20-Pack1
+B20-Pack2
+P21
+B21-Pack1
+B21-Pack2
+P22
+B22-Pack1
+B22-Pack2
+
+4
+
+2 4 6
+
+8
+2
+
+1012141618202224262830
+4
+
+6 8 10
+
+121416
+2 4 6 8
+
+2 4 6 8 10121416
+
+10
+
+182022242628303234
+
+2 4 6 8 1012
+
+1416182022242628
+2
+
+2
+
+4 6 8 10
+
+4
+
+6
+
+12
+
+1416
+
+2 4 6
+
+0
+
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+24
+
+Figure 4.29: Case study 2. Gantt chart for production and packing tasks, STN model
+As in the previous cases, including the minimization of the tank use makes the whole
+production more continuous. However, in figure 4.30, it can be seen that always both
+packing machines are used. In real life, this might be impractical. As the total amount
+of product to be packed is lower than the maximum capacity of one packing machine,
+
+40
+
+2
+
+4 6 8 1012
+2
+
+4
+2
+
+6
+4
+
+6
+2
+
+4 6
+2
+
+4
+2
+
+Production and packing tasks
+
+P08
+B08-Pack1
+B08-Pack2
+P11
+B11-Pack1
+B11-Pack2
+P15
+B15-Pack1
+B15-Pack2
+P20
+B20-Pack1
+B20-Pack2
+P21
+B21-Pack1
+B21-Pack2
+P22
+B22-Pack1
+B22-Pack2
+
+2 4 6 8 10121416182022
+2
+2 4
+2 4 6 8 10121416
+
+4
+
+6
+6 8
+
+24262830
+8
+
+10
+
+10
+
+121416
+182022242628
+
+303234
+
+2 4 6 8 10121416182022242628
+2
+2 4
+
+4
+6
+
+6 8
+8 101214
+
+2 4 6
+
+0
+
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+24
+
+Figure 4.30: Case study 2. Gantt chart for production and packing lines, STN model,
+modified objective
+an option is to exclude one machine from the schedule. The result is shown in figure
+4.31. Even though the packing tasks are now uninterrupted, it has to be noted that in
+this solution, three products, P15, P20 and P21, are separated by the production of other
+products in between, whereas in the previous solution only two products, P20 and P15,
+were not produced at once.
+
+41
+
+2 4 6 8 1012
+2 4 6 8 1012
+
+Production and packing tasks
+
+P08
+B08
+P11
+B11
+P15
+B15
+P20
+B20
+P21
+B21
+P22
+B22
+
+2 4 6
+2 4 6
+2 4 6
+
+8 1012141618202224262830
+2
+
+2 4 6 8 10121416
+
+4 6 8 101214161820222426
+182022242628
+
+303234
+
+2 4 6 8
+
+10121416182022242628
+2
+
+4 6 8 10121416182022
+
+2 4 6
+
+0
+
+3
+
+6
+
+9
+
+12
+15
+hours since start
+
+18
+
+21
+
+24
+
+Figure 4.31: Case study 2. Gantt chart for production and packing lines, STN model, one
+packing machine
+
+4.4.4
+
+RTN solution
+
+Figure 4.32 shows the result obtained by minimizing only the amount of delayed products.
+This optimal result is obtained after 70 seconds. The total storage time is ..... Looking at
+the continuity of the solution, it can be concluded that there might be an improvement by
+minimizing also the storage time. Figure 4.33 shows the Gantt chart for the solution that
+minimizes the sum of delayed products and the total storage time for the bulk products.
+This result is obtained after 6000 seconds and the gap between the best bound and the
+solution is 20.3%. The total storage time is 21.25 hours. In comparison to figure 4.32,
+this solution is not jumping that much from one product to another.
+Having a closer look at the production batches in figure 4.33, a small limitation of the
+model can be observed. First, every time step includes a fixed setup time. Batch P08,
+for example, is produced during two time steps, from 17:09 to 17:41 and from 17:41 until
+19:27, but the setup time is included twice, as can be observed also in the figure. In reality,
+the setup time is only needed once. Also, for the same product, the packing starts later
+than it could in practice. This is because, according to the mass balance, the bulk product
+is only available at the end of the time step. In real life, the packing task B08a could start
+a little bit after the production task is initialized. Also, the same problem regarding the
+setup time is observed for the packing task.
+
+42
+
+Comparing the results obtained with the STN and RTN model in this case study, it is
+observed that the STN is faster. It solves the modified objective in less than 10 minutes,
+whereas the RTN model does not reach the optimal value after 100 minutes. Also, the
+STN model presents less product changes during production time. In contrast to the first
+case study, the STN obtains faster and better results in this case.
+
+18000
+
+P08
+B08a
+B08b
+P11
+B11a
+B11b
+P15
+B15a
+B15b
+P20
+B20a
+B20b
+P21
+B21a
+B21b
+P22
+B22a
+B22b
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+hours since start
+18000
+
+9000
+
+9000
+
+Production task
+
+9870
+
+7100
+
+25030
+
+3000
+
+10970
+
+3000
+
+3000
+
+24100
+
+3000
+
+26900
+
+3000
+
+26530
+
+12470
+
+3000
+
+6500
+
+3000
+
+23500
+
+7030
+
+3000
+
+3030
+
+Figure 4.32: Case study 2. Gantt chart for production and packing lines, RTN model
+
+43
+
+22030
+
+3000
+
+15010
+
+P08
+B08a
+B08b
+P11
+B11a
+B11b
+P15
+B15a
+B15b
+P20
+B20a
+B20b
+P21
+B21a
+B21b
+P22
+B22a
+B22b
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+hours since start
+3000
+
+15000
+
+3000
+
+9995
+
+12995
+
+Production task
+
+14500
+
+21000
+
+9500
+
+21030
+
+8470
+
+9500
+
+27000
+
+24000
+
+12000
+
+6000
+
+3000
+
+3000
+
+13000
+
+29000
+
+33000
+
+10000
+
+3000
+
+Figure 4.33: Case study 2. Gantt chart for production and packing lines, RTN model,
+modified objective
+
+44
+
+Chapter 5
+Conclusion
+In this study, a production schedule has been developed for an animal feed plant. The
+delivery of bulk products has been optimized by finding the shortest routes to the clients.
+The demand for bag products has been predicted using a time series analysis. These results have been used to obtain a production schedule that minimizes product delays.
+It was found that the Capacitated Vehicle Routing Planning model is able to find in a short
+time the fastest route to deliver bulk products. The trips are subject to the constraints that
+products cannot be mixed in the bodies of the trucks and that each truck has a maximum
+capacity.
+For the sales forecast of bag products, it was found that a time series analysis is not very
+precise in predicting the sales. This is due to the many factors that influence consumption
+of this type of animal feed, such as the available amount of own forages at the farms.
+This, in turn, depends on the amount of rainfall the forage plantations have received.
+To schedule the production, two models were used. The State Task Network was found
+to be efficient after certain additional conditions, such as including a minimization term
+of storage use in the objective function or using only one packing machine instead of the
+two installed. The Resource Task Network was found to be efficient in cases where the
+total demand reaches the maximum production capacity. However, in cases with lower
+demand, such as the second case study, the STN model performed better.
+In practice, the combination of route optimization and production planning could be implemented in the animal feed factory. However, the intake of product orders, such as
+quantity and delivery location, and the presentation of results should be systematized.
+The handling of the optimization program must be user friendly.
+45
+
+Further studies could include a larger scheduling time horizon, manpower minimization
+or, profit maximization. It would also be beneficial to use other sales forecast models,
+such as neural networks, for example. Besides, theoretical studies on how the acquisition
+of parallel machines could save other costs or if the investment in additional machines
+could be replaced with an optimized schedule, could be simulated with these optimization
+problems.
+
+46
+
+Bibliography
+[Floudas and Lin, 2004] Floudas, C. and Lin, X. (2004). Continuous-time versus
+discrete-time approaches for scheduling of chemical processes: a review. Computers
+and Chemical Engineering, 28:2109–2129.
+[Floudas and Lin, 2005] Floudas, C. and Lin, X. (2005). Mixed Integer Linear Programming in Process Scheduling: Modeling, Algorithms, and Application. Annals of Operations Research, 139:131–162.
+[Georgiadis et al., 2019] Georgiadis, G. P., Elekidis, A. P., and Georgiadis, M. C. (2019).
+Optimization-Based Scheduling for the Process Industries: From Theory to Real-Life
+Industrial Applications. Processes, 7:1–35.
+[Gurobi Optimization, 2021] Gurobi Optimization, L. (2021). Gurobi optimizer reference manual, url: http://www.gurobi.com.
+[Hyndman and Athanasopoulos, 2018] Hyndman, R. J. and Athanasopoulos, G. (2018).
+Forecasting: princples and practice, url: OTexts.com/fpp2.
+[Hyndman and Khandakar, 2008] Hyndman, R. J. and Khandakar, Y. (2008). Automatic
+Time Series Forecasting: The forecast Package for R. Journal of Statistical Software,
+27:1–22.
+[Kondili et al., 1993] Kondili, E., Pantelides, C. C., and Sargent, R. W. H. (1993). A
+general algorithm for short-term scheduling of batch operations–I. MILP formulation.
+Computers and Chemical Engineering, 17:211–227.
+[RStudio Team, 2016] RStudio Team (2016). RStudio: Integrated Development Environment for R. RStudio, Inc., Boston, MA.
+[Vidal et al., 2020] Vidal, T., Laporte, G., and Matl, P. (2020). A concise guide to existing and emerging vehicle routing problem variants. European Journal of Operational
+Research, 286:401–416.
+
+47
+
+

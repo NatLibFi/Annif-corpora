@@ -1,0 +1,3403 @@
+ÅBO AKADEMI UNIVERSITY
+FACULTY OF SCIENCE AND ENGINEERING
+
+Reduction of iron oxides with hydrogen
+
+Master’s thesis
+by
+Richard Sundberg
+
+10.06.2021
+
+Carried out at Process and Energy
+Technology of Åbo Akademi University
+under the supervision of prof. Henrik
+Saxén and prof. Henrik Grénman.
+
+1
+
+Abstract
+Iron is produced from iron ore in one of two ways, either through a blast furnace, where coke
+is used as fuel and reduction agent, or by a direct reduction process. The blast furnace is
+currently dominating iron production, although iron reduction processes are gaining traction.
+The increased demands for low CO2 emitting and environmentally friendly processes make the
+direct reduction process favorable compared to the blast furnace.
+Direct reduction has been researched for a few decades, and there already exist several
+industrial implementations that can be considered state of the art. However, most
+implementations include the use of carbon monoxide (CO), or gas mixtures containing both
+CO and hydrogen (H2) in the reduction process. With requirements growing for the use of nonfossil and low carbon emitting processes, the aim is to phase out the use of CO and fully replace
+it with hydrogen produced, in the optimal case, by electrolysis of water by renewable
+electricity. Hydrogen has a few advantages over carbon monoxide. The by-product from
+reducing iron oxide with hydrogen is harmless water vapor, while reduction with carbon
+monoxide produces carbon dioxide, which contributes to climate change. Even though the
+reaction mechanisms and kinetics of the direct reduction of iron oxides have been reported in
+numerous publications, there exist significant discrepancies and gaps in the results. Moreover,
+the mathematical models developed for the kinetics are often very simplified and utilize lumped
+parameters. Moreover, the precisions of experimental data vary significantly. This has led to
+large discrepancies in the results, e.g., the values of reported activation energies can range
+between 26 to 250 kJ/mol.
+The water gas shift reaction, which occurs in the typical reaction conditions and is catalyzed
+by iron compounds has often been overlooked when it comes to researching iron oxide
+reduction. Yet in some investigations, it has been shown that the reaction can have a significant
+impact on the reduction rate. Certain publications have shown that at lower temperatures, the
+water gas shift speeds up the reduction by producing hydrogen, as the reduction rate of
+hydrogen has been shown to be faster compared to carbon monoxide according to many
+publications.
+The aim of this work is focused on literature review and analysis. Additionally, the aim was to
+develop a model in order to compare simulations with selected parameter values with literature
+data A three-interface shrinking core model was developed to analyze and predict the reduction
+process of a single ore particle. A few comparisons were made and found that the model looks
+2
+
+promising, although some parameter values are currently very likely to be incorrect. Additional
+testing of the model with experimentally verified parameters should be performed to further
+evaluate it.
+
+3
+
+Table of contents
+
+Abstract ...................................................................................................................................... 2
+Table of contents ........................................................................................................................ 4
+List of abbreviations .................................................................................................................. 6
+1.
+
+Introduction ........................................................................................................................ 7
+
+2.
+
+Background ......................................................................................................................... 8
+2.1 Ironmaking processes ....................................................................................................... 8
+2.1.1 Hydrogen production ............................................................................................... 15
+2.2 Reduction process and rate-limiting steps ...................................................................... 15
+2.3 Reaction kinetics ............................................................................................................ 20
+2.3.1 Temperature ............................................................................................................. 20
+2.3.2 Porosity of the iron oxide material .......................................................................... 21
+2.3.3 Gas composition ...................................................................................................... 22
+2.3.4 Grain/pellet size ....................................................................................................... 23
+2.3.5 Pressure .................................................................................................................... 24
+2.3.6 Mineralogy............................................................................................................... 25
+2.3.7 Impurities ................................................................................................................. 26
+
+3 Models................................................................................................................................... 27
+3.1 Apparent activation energy ............................................................................................ 28
+3.2 Arrhenius equation ......................................................................................................... 29
+4 Water gas shift reaction ........................................................................................................ 31
+5 Experiments and results from literature ................................................................................ 34
+6 The shrinking core model ..................................................................................................... 58
+6.1 One-interface SCM ........................................................................................................ 58
+
+4
+
+6.2 Three-interface SCM ...................................................................................................... 59
+6.3 Base cases of the three-interface SCM ........................................................................... 65
+6.3.1 Pellet radius ............................................................................................................. 66
+6.3.2 Tortuosity................................................................................................................. 67
+6.3.3 Porosity .................................................................................................................... 69
+6.3.4 H2 and H2O content ................................................................................................. 71
+6.3.5 Temperature ............................................................................................................. 72
+6.3.6 Pre-exponential factors ............................................................................................ 73
+6.3.7 Apparent activation energies ................................................................................... 76
+6.3.8 Partial pressure of hydrogen .................................................................................... 79
+6.3.9 Temperature using approximated values for the activation energies ...................... 80
+7 Analysis of results from literature......................................................................................... 82
+8 Conclusions ........................................................................................................................... 88
+Summary in Swedish ............................................................................................................... 90
+The Matlab model .................................................................................................................... 93
+References .............................................................................................................................. 100
+
+5
+
+List of abbreviations
+DRI - Direct reduced iron
+HBI - Hot briquetted iron
+SCM - Shrinking core model
+WGS - Water gas shift
+
+6
+
+1. Introduction
+The blast furnace has been the dominant method of ironmaking for the past two centuries
+(Kazemi, 2016). However, the method consumes large amounts of fossil fuels, and is
+responsible for up to 9% of the direct carbon dioxide emission caused the global use of fossil
+fuel, which is a sizeable percentage from a single industrial sector (Schenk and Spreitzer,
+2020). With increasing interest in low carbon footprint processes, direct reduction of iron ore
+has emerged as a promising alternative, and this method is gaining increasing attention. Direct
+reduction has also other advantages besides lower carbon emissions, such as the possibility to
+efficiently control the quality of the iron due to high selectivity and precise control of the
+process (Kazemi, 2016). The gas used to reduce iron in direct reduction processes is most
+commonly a mixture of hydrogen (H2) and carbon monoxide (CO). The focus of this thesis is
+on studying the reduction kinetics of iron ore pellets with H2, CO, or mixtures of H2 and CO
+as reducing agents. Emphasis was placed on performing a thorough literature study on pellet
+and powder scale as well as developing a mechanistically based mathematical model base for
+describing the overall reaction kinetics.
+Research into the direct reduction of iron ore has commonly been performed on two scales: the
+pellet scale and the macroscopic or reactor scale (Ghadi et al., 2020). Research on the pellet
+scale yields valuable information for studying the kinetics of the chemical reactions as well as
+evaluating the heat and mass transfer phenomena, while research on the macroscopic scale
+focuses on the overall reduction process on reactor scale. The data on the developed kinetics
+and mathematical models obtained by studying the pellet scale are the fundamental base for
+describing the process at the macroscopic scale. These mathematical models describing the
+kinetics as well as the heat and mass transfer phenomena are vital to properly design and utilize
+direct reduction processes for iron- and steelmaking, since well-established models are the
+foundation for understanding and influencing the quality and quantity of the iron produced
+(Kazemi, 2016). Although extensive research has already been performed, further
+investigations are necessary to meet the demands of the advancements in the iron and steel
+industry, as no industrial-scale process utilizing direct reduction based on solely hydrogen as
+reducing agent has been operated to date, and significant gaps and uncertainties exist in the
+current knowledge.
+
+7
+
+2. Background
+2.1 Ironmaking processes
+The blast furnace, which is still the dominant ironmaking process in 2021, made its first
+appearance in the 15th century, along with the realization that cast iron could be used to forge
+gun barrels efficiently (Walker, 2017). Until the 18th century, charcoal was mainly used to fuel
+blast furnaces, until coke was discovered. Coke is a far more efficient fuel than charcoal for
+blast furnaces and is still being used today, as it can support much larger furnaces. However,
+using coke as fuel causes a lot of CO2 emissions that are hazardous to the environment. The
+introduction of the steam engine meant that the blast furnace could be provided with more air
+(“blast”). Later, in 1828, James Beaumont Nielsen invented the hot blast stove which preheats
+the blast and uses a round blast furnace rather than a square one. These advancements greatly
+increased the production of iron. However, the processes for converting the iron from blast
+furnaces into wrought iron, were not developed at the same speed. Eventually, the use of
+wrought declined when new inventions allowed furnaces to operate at temperatures high
+enough to melt iron. This, in turn, led to the possibility of producing steel, which is a superior
+material to iron.
+Blast furnaces employ nearly the same operating principles now as they did in the 18th century.
+The size of the furnaces has greatly increased, however, and a large modern furnace can supply
+a steelmaking plant with up to 10 000 tons of liquid iron per day. Figure 1 shows how a blast
+furnace typically operates.
+
+8
+
+Figure 1: The blast furnace (Cavaliere, 2019).
+Many new ironmaking processes were proposed throughout the 20th century, and direct
+reduction was discovered in experiments in the 1950s (Walker, 2017). Direct reduction
+processes can be divided into two categories: fluidized bed processes such as Circored and
+Finmet, and shaft furnace processes such as Midrex and Energiron (Abdelghany, Fan and Sohn,
+2021). Direct reduced iron (DRI) furnaces are chemical reactors that prepare conditions for
+converting iron oxides to sponge iron using gas-solid reactions (Ghadi et al., 2020). Direct
+reduction plants do not only have less environmental impact, but they also have lower capital
+costs compared to blast furnaces and wider ranges of annual capacities. Direct reduction routes
+have slightly smaller energy demand than blast furnaces, and CO2 emissions are decreased by
+50% even when the reducing gas is natural gas based (Mirgaux and Patisson, 2020). If the
+reducing gas is hydrogen produced by renewable energy processes, e.g., water splitting, then
+the CO2 emissions can be further reduced by 89–99% compared to standard blast furnaces. The
+furnaces using standard gas-based direct reduction consist of three parts: an upper part which
+has a pellet charging system, a middle part which has a reaction zone and a reducing gas
+charging system, and a lower part which contains cooling and discharge systems, as seen in
+Figure 2 (Ghadi et al. 2020). Of these three, the middle part is the most significant, as it strongly
+affects the performance and operation of the furnace. Figure 2 displays a typical layout of a
+direct reduction reactor (Béchara et al., 2018).
+9
+
+Figure 2: A schematic representation of the direct reduction reactor (Béchara et al., 2018).
+
+The gas used for reduction is typically reformed natural gas, which consists mainly of H2 and
+CO. However, the process should ideally be operated by renewable, non-fossil reactants.
+Regardless of which gas is used, the most common reducing agents are hydrogen, H2 and
+carbon monoxide, CO. The highly porous solid iron (sponge iron) obtained from direct
+reduction processes has a metallization degree varying of 90–95%, and it contains 0.5–4%
+carbon, depending on the process (Kazemi, 2016). However, the sponge iron has a high
+oxidation tendency, due to its large surface area and porosity. The most common method to
+reduce the extent of oxidation is to minimize the surface area by briquetting the sponge iron
+into hot briquetted iron (HBI). An important advantage that DRI has is that it can reproduce
+products with uniform composition, which is especially important for steelmaking. In fact,
+steelmaking is what most DRI is used for. The properties of DRI, such as metallization degree,
+carbon content and amount of slag, depend on the initial raw material and the process
+conditions.
+
+10
+
+Industrial implementation of direct reduction can be found employing e.g., the Midrex,
+Energiron, Circored and Finmet processes. Of these, Circored is the only one that uses solely
+hydrogen as the reduction agent (Schenk and Spreitzer, 2020). The Midrex process accounts
+for about 60% of the global direct reduced iron production (Atsushi, Sakaguchi and Uemura,
+2010). The gas used in the process is obtained by reforming natural gas, so the reducing agents
+are carbon monoxide and hydrogen. Pores are formed in the iron when oxygen is removed and
+reoxidation can occur if the pores are filled with water. Therefore, briquetting of the iron after
+the reduction is often performed to increase density and lower the porosity and, thus, decrease
+the rate of reoxidation. Before technology was developed to transform the direct reduced iron
+into hot briquetted iron, direct reduced iron manufacturing sites had to be in the vicinity of the
+steelmaking plants to minimize the transportation distance of the reactive iron. Figure 3
+displays a flow chart of the Midrex process. The lump ore, or pellets prepared for direct
+reduction are charged from the top of the shaft furnace (Figures 2 and 3). The iron oxides are
+then reduced in the middle of the furnace and discharged from the bottom. The reducing gases
+are blown in from about the middle of the shaft to reduce the iron oxides. The exhaust gas is
+cleaned and cooled by a wet scrubber and then recirculated in the process. The carbon dioxide
+and steam are pressurized, mixed with natural gas, and fed into a reformer furnace (Figure 3).
+In the reformer furnace, there are hundreds of reformer tubes that contain nickel catalysts. The
+gas mixture consists of CO2, steam, and natural gas, which react and produce carbon monoxide
+and hydrogen according to the reactions presented in Figure 3.
+
+11
+
+Figure 3: A simplified schematic representation of the MIDREX process (Atsushi, Sakaguchi and
+Uemura, 2010).
+Studies have also been conducted on how introducing hydrogen into blast furnaces affects their
+performance (Schenk and Spreitzer, 2020). Blast furnaces cannot operate without coke for
+several different reasons, such as poor gas permeability in the bed, as well as slag and metal
+drainage. The addition of hydrogen may be useful in producing iron in blast furnaces, but it
+can only be used to a certain extent due to the endothermic nature of the reduction reaction.
+Higher hydrogen concentration will require more energy which, in turn, means that more coke
+is needed to supply enough energy. This means that hydrogen cannot fully replace the use of
+coke in the blast furnace process.
+The iron oxides to be reduced exist in different forms: hematite Fe2O3, magnetite Fe3O4 and
+wustite FeO (Winn, 2004, Schenk and Spreitzer 2020). Reduction occurs stepwise, so hematite
+reduction does not lead to iron directly, but magnetite is formed first (Schenk and Spreitzer
+2020). Depending on the temperature, magnetite may be reduced directly to iron if the
+temperature is below 570 °C, since wustite is unstable in temperatures lower than 570 °C. At
+temperatures above 570 °C, the intermediate reaction of magnetite to wustite must be taken
+into consideration in the reduction process (Chen et al., 2018, Schenk and Spreitzer, 2020). In
+direct reduction processes, the oxygen in the iron oxide pellets is removed by reducing agents
+according to the following heterogenous gas-solid chemical reactions (Ghadi et al., 2020):
+3 Fe2 O3 + H2 → 2 Fe3 O4 + H2 O
+
+(1)
+12
+
+Fe3 O4 + H2 → 3 FeO + H2 O
+
+(2)
+
+FeO + H2 → Fe + H2 O
+
+(3)
+
+3 Fe2 O3 + CO → 2 Fe3 O4 + CO2
+
+(4)
+
+Fe3 O4 + CO → 3 FeO + CO2
+
+(5)
+
+FeO + CO → Fe + CO2
+
+(6)
+
+Some gas-phase reactions occur as well on the particle surface (Ghadi et al., 2020).
+Understanding the balance of these reactions is vital to maximizing the reduction of iron. The
+most important gas-phase reactions are:
+H2 O + CO ↔ H2 + CO2
+
+(7)
+
+3 H2 + CO ↔ CH4 + H2 O
+
+(8)
+
+A diagram which is often used to describe the thermodynamics of iron oxide reduction is the
+Baur-Glässner diagram, which is shown in Figure 4. It displays the stability of the different
+iron oxide phases depending on temperature and gas oxidization degree. The gas oxidization
+degree is the ratio of oxidized gas components over the sum of oxidized and oxidizable gas
+components. Thus, a lower gas oxidation degree has greater reduction potential. The dotted
+line in the diagram shows the equilibrium of the Boudouard reaction (9) at a pressure of 1 bar
+and carbon activity of unity.
+2CO ↔ C + CO2
+
+(9)
+
+13
+
+Figure 4: Baur-Glässner diagram displaying the stability of different iron oxides or pure
+iron under different temperatures and gas oxidation degrees (Schenk and Spreitzer, 2020).
+
+Figure 4 shows that from a thermodynamic point of view, reduction with hydrogen should be
+carried out at the highest possible temperature since the stability area of iron expands with
+increasing temperature. By contrast, iron oxide reduction using carbon monoxide should be
+performed below 570 °C, since the stability area of iron decreases above that temperature, and
+wustite can be formed above 570 °C and hinder the reduction. Additionally, the Boudouard
+equilibrium line should be taken into consideration. If the temperature and the gas mixture
+composition is below the equilibrium line, carbon precipitation will occur which, in turn, will
+lead to a slower reduction speed. However, no precipitation will occur if the temperature and
+gas composition are above the equilibrium line.
+Direct reduction of iron oxides using hydrogen is an endothermic reaction, while reduction
+using carbon monoxide is exothermic (Schenk and Spreitzer, 2020). Thus, using hydrogen
+requires external energy to be added to the system, or the temperature will drop, and, in turn,
+the reduction rate will decrease. Depending on the process, this requirement can prove
+troublesome. Nonetheless, the thermodynamics of iron ore reduction play a key role in
+designing the process. However, even if thermodynamics show that the process could work,
+kinetic limitations can still constrain the reduction rate and hinder the realization of the process.
+
+14
+
+2.1.1 Hydrogen production
+Hydrogen is often produced by reforming of fossil fuels such as methane, but renewable
+processes exist and are already used on a semi-industrial scale and many more are in the
+experimental phase (Efstathiou and Kalamaras, 2013). However, natural gas reforming is
+currently the most widespread method of hydrogen production in the world. In this process,
+steam reacts with methane at high temperature and pressure to produce carbon monoxide and
+hydrogen. The method also incorporates the water gas shift reaction (WGS), which uses the
+produced carbon monoxide to react with water and, thus, produces even more hydrogen. This
+method is both highly efficient and low in operational costs. Its major disadvantages are the
+large CO2 emissions, and the use of fossil fuel in the process itself.
+An emerging, renewable method for industrial production of hydrogen is electrolysis of water
+using electricity produced from renewable sources (Efstathiou and Kalamaras, 2013). This old
+method splits water into hydrogen and oxygen, and it has been known since the 1890s. In this
+process, a direct current passes through two electrodes in a water solution, which results in the
+breaking of the chemical bonds present in a water molecule. The process does not require a
+specific temperature and is often performed at room temperature. A common electrolyte is
+sulfuric acid, and the electrodes are commonly platinum, which does not react with sulfuric
+acid. The process does not produce any greenhouse gases, and the byproduct oxygen can also
+be utilized for various purposes. The big disadvantage comes from energy-efficiency:
+electrolysis requires large amounts of electricity and is therefore a very expensive way of
+producing hydrogen.
+
+2.2 Reduction process and rate-limiting steps
+The following process steps occur during the reduction of porous iron oxide particles (Schenk
+and Spreitzer, 2020, Ghadi et al. 2020):
+-
+
+mass transfer of the gaseous species (the reducing gases, mostly H2 and CO) from the
+gas stream to the surface of the particle
+
+-
+
+diffusion through the gas film surrounding the particles
+
+-
+
+diffusion through the pores of the reduced layer to the reaction front/oxide surface
+
+-
+
+adsorption at the oxide interface
+
+-
+
+oxygen removal via phase boundary reaction
+
+-
+
+formation of H2O, CO2, and iron oxides or ferrous iron
+15
+
+-
+
+desorption of gaseous reaction products
+
+-
+
+possible solid-state diffusion of solid reaction products
+
+-
+
+diffusion of gaseous reaction products back to the particle surface
+
+-
+
+mass transfer of gaseous products through the gas film back to the gas stream
+
+The porosity of the iron oxide particle has a significant impact on the reduction rate, as it
+directly influences the diffusion of the gases inside the pellets as well as the surface area of
+the pellet (Schenk and Spreitzer, 2020, Ghadi et al. 2020). If the particle has low porosity,
+the reducing gas is unable to efficiently penetrate the particle. Other mechanisms, such as
+solid-state diffusion, become especially important in this case, but they are generally
+several magnitudes slower than gas diffusion. The chemical reaction occurs after the
+reducing gas is adsorbed at the iron oxide surface. Figure 5 shows how hematite is reduced
+to magnetite by CO at the phase interface (Gao et al., 2017).
+
+Figure 5: Illustration of hematite reduction to magnetite by CO at the phase interface
+(Gao et al., 2017).
+As is the case with all chemical reactions, the slowest step in the process will always determine
+the reduction rate and it is called the rate-limiting step (Schenk and Spreitzer, 2020). The
+chemical reaction itself generally depends strongly on temperature and the chemical reaction
+typically becomes the rate-limiting step at low temperatures. Increasing the temperature will
+lead to an exponential increase in the reduction rate, according to the Arrhenius equation (10).
+Increasing the temperature will eventually lead to mass transfer becoming the rate-limiting
+step, as the transport of reactants and products becomes slower than the chemical reactions.
+𝐸𝑎
+
+𝑘 = 𝐴𝑒 −𝑅𝑇
+
+(10)
+16
+
+The rate-limiting steps can be displayed with a concentration profile of gaseous reactant A
+between the gas stream and the reaction interface, as shown in Figure 6. The driving force
+behind mass transport of the reducing gas through the laminar layer is the concentration
+difference between the gas stream and the reaction interface (Schenk and Spreitzer 2020).
+
+17
+
+Figure 6: Gas concentration profile of gaseous reactant A at
+a particle with limitation by a) external mass transfer, b) pore
+diffusion and c) chemical reaction (Schenk and Spreitzer,
+2020).
+18
+
+In Figure 6a, the rate-limiting step is mass transfer, which means the chemical reactions occur
+so fast that the reducing gas hardly penetrates the iron oxide pellet, but instead only reduces
+the iron oxides near the surface of the pellet (Schenk and Spreitzer, 2020). CAg is the
+concentration of the reducing gas A in the reducing gas mixture, CAs is the concentration at the
+outer surface of the particle, and CAc the concentration at the surface of the unreacted core.
+Figure 6b shows the concentration profile of the reducing gas for the case of pore diffusion
+being the rate-limiting step. In this case, the concentration decreases until it reaches zero on the
+surface of the unreacted core. However, unlike the depiction in the figure, the decrease in
+concentration is not linear, due to the spherical nature of the particles. Pore diffusion being the
+rate-limiting step means that the diffusion rate of the reducing gas is the slowest step of the
+reduction process. An increase in temperature will also increase the diffusion rate of the
+reducing gas, thus allowing better diffusion of the pellets, however, the temperature
+dependence of diffusion is typically much lower than for chemical reactions. The composition
+of the reducing gas also has an impact on the diffusion coefficient. Hydrogen diffuses faster
+than carbon monoxide, since the molecule is smaller. Therefore, even adding a small amount
+of carbon monoxide in a hydrogen-reducing gas mixture will significantly impact the overall
+diffusion rate negatively. However, the substitution of hydrogen with carbon monoxide does
+not have such a negative impact on the reaction rate compared to the diffusion coefficient.
+Figure 6c depicts the concentration for a case where the chemical reaction is the limiting step.
+The concentration of A is high everywhere except for the unreacted core, where the
+concentration quickly becomes zero, although this is an exaggerated case. If hydrogen is used
+as the reducing agent, the problem can often be solved by increasing the temperature. The
+concentration of the reducing gas at the interface as well as the type of iron oxide to be reduced
+also strongly affect the chemical reaction rates. If the iron oxide pellets are porous, the reducing
+gas can penetrate the particle and reduce all its surfaces at the same time. Then, the size of the
+pellet will then have little impact on the reduction rate if it is porous. If the pellets have low
+porosity, the reaction occurs stepwise according to the shrinking core model and it will take
+longer to reduce the larger the pellets are.
+Dense iron layers can sometimes be formed during reduction, which will drastically lower the
+reduction rate, as the reducing gases cannot penetrate the particle properly (Schenk and
+Spreitzer 2020). The reduction must then proceed by solid-state diffusion through the layer to
+further reduce the iron oxide particles. Compared to gaseous diffusion, solid-state diffusion is
+far slower. This occurrence is most common with magnetite reduction using carbon monoxide
+19
+
+as reducing agent. If the temperature is above 570 °C, wustite will be produced before metallic
+iron during magnetite reduction, and wustite has vacancies that support reduction. However,
+the temperature is often low when carbon monoxide is the main reducing agent, which means
+that less wustite is produced. This, in turn, means that diffusion becomes more difficult and,
+thus, slower.
+Water vapor can have several negative effects on the reduction rate (Schenk and Spreitzer,
+2020). According to the Baur-Glässner diagram (Figure 4), water vapor can reduce the
+thermodynamic driving force for the chemical reactions, as it is a product of the reduction.
+Water vapor can also adsorb at the reaction interface and block free reaction sites and, thus,
+slow down the reduction rate. At low temperatures, the effects of water vapor are more
+prominent. It also affects hematite and magnetite reduction differently. The hematite reduction
+rate is hardly affected by the presence of up to 5% water vapor, whereas the magnetite reduction
+rate can decrease drastically. Carbon deposition can also occur during iron oxide reduction,
+which can slow down the diffusion of the reducing gases through the iron oxide particles
+(Valipour, 2009). Carbon deposition more commonly occurs when the reducing gas mixtures
+contain large amounts of CO and the operating temperature of the system is below 900 °C.
+However, at increasing temperature and decreasing amounts of CO in the gas mixture, the
+extent of carbon deposition decreases.
+
+2.3 Reaction kinetics
+The kinetics of iron oxide reduction is influenced by many different parameters. Apart from
+process parameters, such as temperature, pressure and gas composition, the reduction rate can
+be heavily affected by grain/pellet size, porosity, and morphology of the particles.
+2.3.1 Temperature
+The temperature strongly affects how fast iron oxides can be reduced. The higher the
+temperature, the faster the reduction rate becomes, according to the Arrhenius equation (eq.
+10) (Kazemi, 2016, Schenk and Spreitzer 2020). The findings that higher temperatures result
+in higher overall reaction rates are also very logical, as many rate-limiting steps are dependent
+on the temperature. The time to reach 80% reduction rate varies depending on the temperature
+as can be seen in Figure 7, where iron ore compacts were reduced by hydrogen at different
+temperatures (700 °C–1000 °C) (El-Geassy et al., 1994). Not only does increasing temperature
+speed up the chemical reactions, but it can also increase the porosity of the iron oxide material
+20
+
+(Ghadi et al., 2020), which, in turn, can positively influence the diffusion rates. Increasing the
+temperature can also increase the total reduction extent. The increase in temperature enables
+the H2 or the CO to diffuse faster through the dense iron layers that typically slow the reduction
+rate when the degree of reduction is near 80% (Schenk and Spreitzer, 2020).
+
+Figure 7: Reduction curves of iron ore compacts reduced at
+temperatures between 973 K and 1273 K (El–Geassy et al., 1994)
+
+However, increasing the temperature can be costly, and if the temperature becomes high
+enough the pellets can soften and deform, which leads to more complex and slower reduction
+process limited by diffusion (Dong et al., 2015).
+2.3.2 Porosity of the iron oxide material
+According to many sources, including Ghadi et al., 2020, the diffusivity of iron oxides is
+heavily correlated with the porosity of the iron oxide pellets. Figure 8 shows that to achieve
+90% reduction, the porosity is inversely proportional to the time needed to reduce the pellet.
+Since diffusion can be a rate-limiting step, it is logical that porosity can have a significant
+impact on the reduction rate. However, the porosity also strongly influences the specific surface
+area of the pellets, which, in turn, is directly proportional to the available surface area for
+reduction. This can also explain the linear dependence of reduction rate with porosity. The
+interpretation of precisely performed experimental data is vital for evaluating the overall
+process.
+
+21
+
+Figure 8: Effect of pellet porosity on the rate of reduction (Ghadi et al., 2020).
+
+2.3.3 Gas composition
+The composition of the reducing gas is one of the most important factors that influences the
+rate of reduction. Many studies have been performed on what the gas composition should be
+to maximize the reduction rate, and the literature sources agree that hydrogen can reduce iron
+oxides faster than carbon monoxide (Kazemi, 2016, Ghadi et al., 2020, Schenk and Spreitzer
+2020). An investigation into the effect of gas composition tested the reduction of hematite
+pellets with hydrogen, carbon monoxide, and a mixture of mostly hydrogen and carbon
+monoxide (Schenk and Spreitzer, 2020). The reduction was carried out at 850 °C, which is the
+temperature where both gases have about the same reduction potential according to
+thermodynamics (Figure 4). The results showed that hydrogen could reduce the hematite pellets
+significantly faster than the gas mixtures and the carbon monoxide gas. The H2 was able to
+fully reduce the hematite in about 15 minutes while the degree of reduction of the CO gas was
+about 50%. Dong et al. (2015), found logically that when using pure H2, the diffusivity and
+chemical reaction rate increase when temperature increases, and that the increase of the
+reduction rate constant with increasing temperature is amplified with increasing hydrogen
+content. The effective diffusion coefficient is determined by the temperature and the physical
+properties of the gas. With increasing temperature and H2 content, the diffusion coefficient also
+increases. The difference between H2 and CO diffusivities can easily be explained by the much
+22
+
+smaller molecule size of H2 compared to CO, as well as the diffusion mechanism; molecular
+motion increases along with the temperature, which, in turn, leads to diffusion enhancement.
+Mixing just a small amount of CO into a H2 reducing gas mixture decreases the diffusion
+coefficient drastically. However, the reaction rate constant is not as negatively affected as the
+diffusion coefficient when CO is introduced to a hydrogen gas mixture according to Dong et
+al. (2015). The explanation for this could be that it only takes a small amount of CO molecules
+to lower the fluidity of the gas and block the diffusion path, due to the higher viscosity and
+molecular size of CO and, thus, holding back H2 from reducing the iron oxides, while the
+reaction rate constant is largely unaffected.
+
+2.3.4 Grain/pellet size
+If the iron oxide pellets are non-porous, it will take significantly longer to reduce large pellets
+(Valipour, 2009, Schenk and Spreitzer 2020). By contrast, if the pellets are, however, very
+porous, then the size will only have a small impact on the reduction rate (Schenk and Spreitzer
+2020). The size of the iron oxide particles can lead to different rate-limiting steps. Particles that
+are between 110 and 508 μm large were found to have a largely similar reduction rate. At such
+small particle sizes, the diffusion is fast enough not to become rate-limiting. Particles that were
+larger took longer to reduce, since pore diffusion into the particles becomes slower due to the
+increasing diffusion path. If the reduction temperature is low, other rate-limiting steps, such as
+chemical reactions, become dominant. Figure 9 shows the experimental results for reduction at
+different grain sizes using hydrogen at low temperatures, demonstrating that the size of the iron
+oxide pellets used in the experiments have a significant impact on the reduction rate. However,
+it must be kept in mind in the data interpretation that e.g., smaller, non-porous particles without
+gas diffusion limitations also react faster compared to larger particles.
+
+23
+
+Figure 9: The influence of particle size on reduction rate of magnetite concentrate with
+hydrogen at 400 °C (Schenk and Spreitzer 2020).
+
+2.3.5 Pressure
+Pressure and its effect on the reduction rate has also been investigated. Habermann et al. (2000),
+investigated the effects of increased absolute pressure and increased partial pressure of H 2.
+They found that increasing the absolute pressure while maintaining the partial pressure of H2
+did not have an impact on the reduction rate during the early and medium stages of reduction,
+although it did result in higher degrees of conversion in the final stages in their experiments.
+On the other hand, increasing the partial pressure of H2 led to significantly higher rates of
+reduction as the hydrogen concentration increased. However, this information alone is
+insufficient to draw a conclusion on how the pressure quantitatively affects the reduction
+process. Figure 10 shows the effect of both absolute and partial pressure on the reduction rate
+of hematite at 1053 K.
+
+24
+
+Figure 10: The effect of absolute and partial pressure of H2 on the reduction rate of
+hematite at 1053 K.
+A: pH2 = 0.55 bar, pCO = 0.09 bar, pCO2 = 0.05 bar
+B: pH2 = 0.55 bar, pCO = 0.09 bar, pCO2 = 0.05 bar
+C: pH2 = 1.65 bar, pCO = 0.27 bar, pCO2 = 0.15 bar
+Balance is N2 (Habermann et al., 2000).
+
+2.3.6 Mineralogy
+The type of iron oxide to be reduced also has an impact on the reduction rate (Schenk and
+Spreitzer, 2020). As mentioned in section 2.2, magnetite generally takes longer to reduce than
+hematite. Magnetite often has very low porosity and it can form dense iron layers when
+reduced. During the pelletizing process, magnetite is often oxidized to hematite, and later
+shows nearly similar reducibility as hematite after being reduced back into magnetite. The main
+reason for this is that structural changes can occur, and porosities can vary during the reduction
+process depending on the raw material. Figure 11 shows the rate of reduction of hematite and
+magnetite using H2 and CO as reducing gases. Magnetite has a clearly slower reduction rate
+compared to hematite, especially when CO is the reducing gas. The kinetics of magnetite
+reduction by CO in Figure 11 strongly suggests that significant diffusion limitations define the
+observed reduction rate.
+
+25
+
+Figure 11: The effect of mineralogy and reducing gas composition on the reduction rate at
+1000 °C (Schenk and Spreitzer 2020).
+
+2.3.7 Impurities
+Iron ore never consists of pure iron oxides, but also gangue or impurities (Schenk and Spreitzer,
+2020). The type and amount of gangue depends on the iron ore as well as the beneficiation
+process. The effect that the gangue has on the reduction rate of the iron oxides depends on the
+type and the amount of oxides. The oxides are typically SiO2, CaO, MgO and Al2O3. Al2O3 can
+increase the reduction rate if the content is less than 3%. Normally when magnetite is reduced,
+dense iron layers can form and simultaneously prevent the reducing gases from diffusing
+through to the core of the pellet. If Al2O3 is present, the formation of the dense iron layer can
+at least be partially hindered, and the overall reduction rate is maintained. Some amount of
+CaO may also increase the reduction rate, while MgO lowers it. On the other hand, Sastri, et
+al. (1982) found that all impurities will decrease the reduction rate, due to a change in the
+structure.
+
+26
+
+3 Models
+Shrinking core models (SCM) are often used to describe the reactions in iron oxide reduction.
+Consider the reduction of solid species 𝐴 to C using the gas species B as reductant:
+𝑎 𝐴(𝑠) + 𝑏 𝐵(𝑔) → 𝑐 𝐶(𝑠) + 𝑑 𝐷(𝑔)
+
+(11)
+
+The mass of 𝐴 is obtained from
+4
+
+𝑚𝐴 = 3 𝜋𝜌𝑟𝑖 1/3
+
+(12)
+
+where 𝑟𝑖 is the radius of the interface to the unreacted core. By dividing the difference between
+the initial mass of 𝐴 and the mass of 𝐴 at time 𝑡 by the initial mass of 𝐴, the reduction fraction
+𝑋 is obtained:
+4
+4
+𝜋𝜌𝑟0 1/3 − 𝜋𝜌𝑟𝑖 1/3
+3
+3
+4
+𝜋𝜌𝑟0 1/3
+3
+
+1
+
+⇒ 1−
+
+𝑟 3
+(𝑟 𝑖 )
+𝑜
+
+= 𝑋(𝑡)
+
+(13)
+
+where 𝑟0 is the radius of the initial particle. The radius of the unreacted core can from Eq. (13)
+be expressed as
+𝑟𝑖 (𝑡) = 𝑟0 (1 − 𝑋(𝑡))1/3
+
+(14)
+
+The model can at times be very accurate, especially when the iron oxide pellets have low
+porosity (Ghadi et al., 2020). However, the accuracy of the model also depends on e.g., what
+the rate-limiting step is and whether there are impurities in the raw material. As the reduction
+of iron oxides includes several reaction steps, the shrinking core model can be further
+developed into a three-interface shrinking core model, which also incorporates the magnetite
+and wustite layers rather than just hematite and metallic iron. The one-interface and threeinterface shrinking core models based on the treatment by Canu (2014) and Melchiori (2014)
+are explained further in Chapter 6.
+The shrinking core model can be formulated in different ways. The reduction of FeO to ferrous
+iron is the step with the largest extent of deoxygenization, so Dong et al. (2015) modeled the
+reduction as if only one interface, the iron/wustite interface, existed in the whole pellet, and
+considered the reaction only at this interface. The overall reduction rate was described by
+
+27
+
+𝑉𝑡 =
+
+4𝜋𝑟0 (𝑐𝑏 −𝑐𝑒 )
+2
+𝑟
+(𝑟
+−𝑟 )
+1
+𝐾
+𝑟
++ 0 0 𝑖+
+( 0)
+𝑘𝑔
+𝐷𝑒𝑓𝑓 𝑟𝑖
+𝑘𝑟𝑒𝑐 (1+𝐾) 𝑟𝑖
+
+(15)
+
+where 𝑉𝑡 is the reaction rate, 𝑐𝑏 is the concentration of the reducing agent, 𝑐𝑒 is the equilibrium
+concentration of the reducing agent, 𝑘𝑔 is the mass transfer coefficient of gaseous species in
+the gas film, 𝑘𝑟𝑒𝑐 is the reaction rate constant, 𝐷𝑒𝑓𝑓 is the effective diffusion coefficient of
+gaseous species, and 𝐾 is the equilibrium constant of chemical reaction.
+According to the conservation of mass, the reaction rate can also be expressed as:
+𝑉𝑡 d𝑡 = −4𝜋𝑟𝑖2 𝑑0 d𝑟𝑖
+
+(16)
+
+where 𝑑0 is the oxygen density of the pellet. Combining these equations gives a relationship
+between the reduction fraction and time:
+𝑡
+
+𝑐𝑏 −𝑐𝑒
+𝑟0 𝑑0
+
+𝑋
+
+𝑟
+
+2
+
+= 3𝑘 + 6𝐷 0 (1 − 3(1 − 𝑋)3 + 2(1 − 𝑋)) + 𝑘
+𝑔
+
+𝑒𝑓𝑓
+
+𝐾
+𝑟𝑒𝑐 (1+𝐾)
+
+(1 − (1 − 𝑋)1/3 )
+
+(17)
+The models typically take into account one rate-limiting step, which can be problematic as the
+rate-limiting step often changes during the reduction (Ghadi et al., 2020). Dong et al. (2015)
+found in their investigations that initially, chemical reaction was the rate-limiting step, but as
+the reduction degree increased, the diffusion resistance increased and eventually became the
+rate-limiting step. However, this can possibly be taken into account by combining two or more
+models.
+The Thiele modulus can also help in determining the rate-limiting step (Szent-Gyorgyi, 2006).
+It is defined as the reaction rate divided by the diffusion rate. If the Thiele modulus is large,
+the diffusion is limiting, and if the module is small, the reaction rate is limiting.
+
+3.1 Apparent activation energy
+The apparent activation energy required to reduce iron oxide varies depending on many factors.
+Temperature, particle type and shape, reducing gas composition, input material, impurities in
+the material and the type of experiment all seem to influence the apparent activation energy,
+i.e., the temperature dependence of the overall reduction rate. These parameters also influence
+what the rate-limiting step of the reaction is, meaning that different rate-limiting steps lead to
+different activation energies. The chemical activation energy generally follows the Arrhenius
+28
+
+equation (10). Table 1 lists reported activation energies for the different iron oxide reduction
+steps using hydrogen as reducing gas.
+Table 1: Apparent activation energies for different reduction steps using hydrogen reported
+in literature.
+Apparent activation energies for different reduction steps.
+
+Reaction
+
+Value
+
+Source
+
+Fe2O3→Fe3O4
+
+48.70 kJ/mol
+
+(Gao et al.,2017)
+
+Fe2O3→Fe3O4
+
+30.1 kJ/mol
+
+(Abd Elhamid et al., 1996)
+
+Fe2O3→Fe3O4
+
+102.9 kJ/mol
+
+(Chen et al., 2018)
+
+Fe3O4→FeO
+
+42.00 kJ/mol
+
+(Chatterjee, Ghosh, Kuila, 2016)
+
+Fe3O4→FeO
+Fe3O4→FeO
+Fe3O4→FeO
+FeO→Fe
+FeO→Fe
+FeO→Fe
+FeO→Fe
+
+33.00 kJ/mol
+47.00 kJ/mol
+71.05 kJ/mol
+30.00 kJ/mol
+11.00 kJ/mol
+55.00 kJ/mol
+62.75 kJ/mol
+
+(Schenk, Spreitzer, 2020)
+(Barde et al., 2016)
+(Chen et al., 2018)
+(Barde et al., 2016)
+(Schenk, Spreitzer, 2020)
+(Chatterjee, Ghosh, Kuila, 2016)
+(Chen et al., 2018)
+
+3.2 Arrhenius equation
+It is well known that thermal energy relates directly to motion at the molecular level (Chacha
+et al., 2020). Higher temperatures lead to faster molecule movement and, thus, more vigorous
+collisions, which greatly increases the likelihood of bond cleavages and rearrangements. In
+1899, Svante Arrhenius combined the concepts of activation energy and the Boltzmann
+distribution law into one very important relationship in chemistry:
+𝐸𝑎
+
+𝑘 = 𝐴𝑒 −𝑅𝑇
+
+(10)
+
+where 𝐴 is the pre-exponential factor, 𝐸𝑎 the activation energy, 𝑅 the universal gas constant,
+and 𝑇 is the temperature expressed in Kelvin. The Arrhenius equation has been used in many
+investigations regarding iron oxide reduction reactions. However, because the activation
+energy depends on many different factors, the reported values vary strongly due to
+experimental limitations. Schenk and Spreitzer (2020), summed up several activation energies
+for reactions 1–6 or combinations of these reactions, which they found in literature. The highest
+29
+
+activation energy was 246 kJ/mol, while the lowest one was 11 kJ/mol. The Arrhenius equation
+can also be written in a non-exponential form that is more convenient to use and interpret:
+𝐸
+
+ln 𝑘 = ln 𝐴 − 𝑅𝑇𝐴
+
+(18)
+
+By transforming the equation this way, it can be solved using linear regression.
+
+30
+
+4 Water gas shift reaction
+The water gas shift reaction is a gas-phase reaction, which can also occur in the direct reduction
+process. As described by equation 7, water reacts with carbon monoxide to produce hydrogen
+and carbon dioxide (Idris, Scott and Subramani, 2015). The reaction is moderately exothermic
+(ΔH°=−41 kJ/mol), which means that the equilibrium constant decreases with increasing
+temperature. The reaction is utilized in many different industrial processes and it is a crucial
+step in large-scale production of hydrogen (Basile et al., 2015). Some iron oxides, especially
+magnetite, catalyze this reaction and, thus, it is highly relevant to take the WGS reaction into
+account when studying and modeling the iron ore reduction process. Its effect on direct
+reduction processes has been studied, although not to any great extent (Ghadi et al., 2020). One
+study reported by Valipour and Mokhtari (2011) found that the WGS reaction did not have a
+significant effect on the reduction rate of wustite by syngas (a mixture of H2, CO, CO2, and
+water vapor), although the little effect it had was negative. The WGS reaction influences the
+concentrations of the gaseous species. Since the WGS reaction is an exothermic gas-phase
+reaction, there is a risk that it will react in the other direction (reverse WGS) when reducing
+iron oxides with high hydrogen concentrations at high temperatures to produce carbon
+monoxide and water, which would slow down the reduction rate.
+An investigation on the reduction rate of olivine pellets (hematite pellets containing some
+(MgFe)2SiO4)) was performed by Fabritius et al. (2012), where the pellets were reduced in two
+different gas compositions at temperatures between 750 °C and 1150 °C. One of the gas
+mixtures contained CO and CO2, while the other contained CO, CO2, H2 and H2O. At higher
+temperatures, particularly at 1150 °C, the reduction rate of the two gas mixtures was practically
+identical. However, at lower temperatures, the gas mixtures containing CO, CO2, H2 and H2O
+showed visibly faster reduction of pellets compared to the gas mixture containing only CO and
+CO2, as can be seen in Figure 12.
+
+31
+
+Figure 12: Reduction rates for pellets at different degrees and gas mixtures (Fabritius et
+al., 2012).
+
+The explanation for this phenomenon is that water gas shift reaction occurs and produces H2
+and CO2 (Fabritius et al., 2012). The H2 accelerates the reduction rate compared to reduction
+using only CO, and after reducing the iron oxides, H2O can react with CO to form H2, and take
+part in reducing the iron oxides again. The high percentage of water vapor also helps in making
+the water gas shift reaction occur. The water gas shift reaction shows ΔG = 0 is at 827 °C,
+which explains why the effect of the reaction is stronger in the low-temperature experiments.
+The experiments that were performed at 850 °C and higher did not show a significant increase
+in reduction rate, likely because the reverse water gas shift consumes the faster reacting H2.
+These experiments, however, only show that the water gas shift reaction is helpful when the
+main reducing agent is CO, and the temperature is sufficiently low. On the other hand, it is
+likely that the WGS reaction will impede the reduction rate when reduction is performed using
+32
+
+mainly H2 in the presence of some carbon at high temperatures, but very few investigations of
+this have been reported. Dong et al. (2015), claim that the WGS reaction did not change the
+molar ratios of the reducing agents CO and H2 or the products H2O and CO2 at high
+temperatures (up to 1273 K), which would imply that the reaction has little to no effect on the
+reduction rate at high temperatures. As mentioned, this is definitely a point which requires
+further investigations.
+
+33
+
+5 Experiments and results from literature
+The reduction experiments by Dong et al. (2015) were performed with hematite pellets at
+varying temperatures and gas compositions in a programmed reducing furnace. The diameter
+of the pellets was rather large, 12 mm, and the volume flow of the gas was 5 l/min. With the
+reducing gas consisting of pure hydrogen, the time to reach 98% reduction degree was 19.5
+min, 25.8 min and 37.5 min at 1273 K, 1173 K and 1073 K respectively. No exact values for
+activation energies and pressure were given, and the reactor type was neither mentioned. The
+results showed, that adding carbon monoxide to the reducing gas slowed down the reduction
+rate and lowered the total reduction degree. The authors found that the chemical reaction rate
+was the rate-limiting step initially, and as the reduction degree increased, the diffusion
+resistance increased, and eventually became the rate-limiting step. Figure 13 shows the
+reduction rates of the experiments as a function of time. Table 2 displays the effective diffusion
+coefficient and reaction rate constant at different temperatures and reducing gas compositions.
+Table 2: Estimated values of the effective diffusion coefficient and the reaction rate
+constant at different temperatures and gas compositions (Dong et al., 2015).
+
+34
+
+Figure 13: Change of reduction degree at different temperatures and gas mixtures:
+(a)=1073 K, (b)=1173 K, (c)=1273 K r=6 mm, V=5 l/min, (Dong et al., 2015).
+Kazemi (2016) conducted several experiments on the reduction kinetics for modeling of iron
+oxide reduction. Two types of hematite pellets were used in different experiments, and both
+were tested at two temperatures. Type 1 had an average porosity of 26% and type 2 34%. The
+flow rate was 2 l/min, and the reducing gas was pure hydrogen. The temperatures were 1073
+K and 1123 K, and the pressure was atmospheric. Reactor type and activation energies were
+not mentioned. Results are shown in Figures 14 and 15. The effective diffusivity was estimated
+from the experimental results. The final values for the effective diffusivity are shown in Table
+3. The governing equation used in their model is the mass balance equation:
+𝜕𝑐
+
+𝜕𝐶
+
+𝜕𝐶
+
+1 𝜕
+
+𝜕𝐶
+
+𝜕2 𝐶
+
++ (𝑣𝑟 𝜕𝑟 + 𝑣𝑧 𝜕𝑧 ) = 𝐷 [𝑟 𝜕𝑟 (𝑟 𝜕𝑟 ) + 𝜕𝑧 2 ]
+𝜕𝑡
+
+(19)
+
+It is not quite clear from the results (Figures 14 and 15) whether the difference in the reduction
+process was due to diffusion resistance or difference between the specific surface areas of the
+particles.
+35
+
+Figure 14: Change of reduction degree at different temperatures with hydrogen as the
+reducing gas, hematite pellet average porosity of 26 %, diameter 11.25 mm, gas flow
+rate=2 l/min, atmospheric pressure (Kazemi, 2016).
+
+Figure 15: Change of reduction degree at different temperatures with hydrogen as the
+reducing gas, hematite pellet average porosity 34%, diameter 11.25 mm, gas flow rate 2
+l/min, atmospheric pressure (Kazemi, 2016).
+
+36
+
+Table 3: The final calculated value of the effective diffusion coefficient (Kazemi, 2016).
+
+Bonalde et al. (2005) investigated the kinetics of iron oxide reduction using pure hydrogen,
+pure carbon monoxide and Midrex reducing gas. Hematite with two different mean diameters,
+10.7 mm (type A), and 12.4 mm (type B), were compared in different experiments. The Midrex
+gas consists of 55.7% H2, 34.0% CO, 6.3% CO2, and 4.0% CH4. The gas flow rate was 2 l/min
+to ensure that external mass transfer would not be a rate-limiting step. The characteristics of
+the pellets are listed in Table 4, and the results of the three reduction experiments with pure
+hydrogen, pure carbon monoxide, and Midrex gas as the reducing agents are shown in Figures
+16, 17 and 18. (For some reason, the reported diameter in the figures was 11 mm). Figure 19
+contains all results to make comparison easier. The temperature in the experiment was 850 °C
+(1123 K). The reactor type and pressure were not mentioned (but the pressure was likely
+atmospheric). The model used by the authors to describe the kinetics was a grain model, which
+was formulated by describing the diffusion of the gaseous reactants between the grains, as well
+as the chemical reaction within the grains.
+1
+
+𝜕2𝐶
+
+2 𝜕𝐶
+
+(
++ 𝜂 𝜕𝜂 ) − (1 − 𝜀0 )𝜉𝐺2 𝜆1 𝜔𝐶 = 0
+𝜂 2 𝜕𝜂 2
+
+(20)
+
+where 𝐶=𝐶𝑖 /𝐶0 is the dimensionless concentration of gaseous species, 𝜂 = 𝑅/𝑅0 is the
+dimensionless radial coordinate, 𝜉𝐺 = 𝑟/𝑟0 the dimensionless radius of the grain, 𝜔 = 𝑅0 /𝑟0
+the pellet to grain size ratio, 𝜆1 = 𝑘𝑅0 /𝐷𝑖 (a dimensionless group), 𝐶0 the initial molar
+concentration of gaseous reactants, 𝜀0 the porosity of the pellet, 𝑘 the chemical reaction rate
+coefficient, and 𝐷𝑖 the effective diffusion coefficient of gaseous species.
+
+37
+
+Table 4: Characteristics of the iron oxide pellets used in the experiments from Bonalde et
+al. (2005).
+
+Figure 16: Reduction of type A hematite pellets with H2, T=1123 K, diameter 11 mm,
+porosity 22% (Bonalde et al., 2005).
+
+38
+
+Figure 17: Reduction of type A hematite pellets with CO gas at 1127 K, diameter 11 mm,
+porosity 22% (Bonalde et al., 2005).
+
+Figure 18: Reduction of type A hematite pellets with Midrex gas at 1127 K, diameter 11
+mm, porosity 22% (Bonalde et al., 2005).
+
+39
+
+Figure 19: Reduction of type A hematite pellets with hydrogen, carbon monoxide, and Midrex
+gas at 1127 K, porosity 22%, diameter11 mm (Bonalde et al., 2005).
+
+Achieving 100% reduction took about 15 minutes when using hydrogen, about 30 minutes for
+the Midrex gas, and much longer when using carbon monoxide, as seen in Figure 19 (Bonalde
+et al., 2005). Using information obtained from their reduction model, the authors concluded
+that when the reducing gas was pure hydrogen, internal gas diffusion and chemical reaction
+were competing processes during the first 5 minutes, then internal gas diffusion became the
+rate-limiting step at the last stages of the reduction process, although this is not evident from
+the graph alone. Similar behavior was found the case for when the reducing gas was carbon
+monoxide, the difference being that the system was mixed controlled during the first 20
+minutes, and the process took much longer. The reduction of iron oxide with Midrex gas was
+also mixed controlled, meaning that the diffusion rate and the chemical reaction rate were
+similar throughout the entire reduction process under the conditions used in this work.
+Minamide et al. (1982) investigated the reduction of singe hematite pellets over a temperature
+range of 600–1000 °C (873–1273 K) using hydrogen as reducing gas. Pellet porosity, density
+and diameter were 24%, 5.1 g/cm3 and 11.0 mm respectively, and the flow rate was 0.1–5 l/min
+at atmospheric pressure. The reactor was of packed-bed type. Activation energies for the
+different reduction steps were not reported. The chemical analysis of the hematite pellets is
+listed in Table 5. The reduction results are shown in Figures 20, 21 and 22.
+
+40
+
+Table 5: Chemical analysis of the hematite sample pellets (Minamide et al., 1982).
+
+Figure 20: Reduction curves of hematite pellets at different temperatures using hydrogen
+as reducing gas, porosity 24%, diameter 1.10 cm (Minamide et al., 1982).
+
+An interesting thing to notice is that the kinetics presented in Figure 20 differ significantly from
+the ones reported by Bonalde et al. (2005) and presented in Figure 16, although the particle
+characteristics and experimental conditions were very similar. The kinetics in Figure 16 appear
+significantly faster compared to Figure 20. The reason for this difference is not quite clear, but
+it can be noted from the reported data, that Bonalde et al. (2005) had higher concentration of
+Al2O3, SiO2 and MgO in the pellets, which could have helped in maintaining the porosity
+during the process.
+
+41
+
+Figure 21: Reduction curves of hematite pellets at different temperatures using hydrogen
+as reducing gas, porosity 24%, diameter 1.10 cm (Minamide et al., 1982).
+
+Figure 22: Reduction curves of hematite pellets at different temperatures using hydrogen
+as reducing gas, porosity 24%, diameter 1.10 cm (Minamide et al., 1982).
+
+42
+
+At low gas flow rates, it was noticeable in Figures 20–22 that the reaction rate was slow, due
+to the resistance caused by nitrogen which was introduced to the reactor until a certain
+temperature was reached (Minamide et al., 1982). At high temperatures the rate of reduction
+slowed down drastically once the reduction extent reached about 75%. A microscopic
+observation revealed that wustite particles were covered by dense iron layers all over the
+section, slowing down diffusion and, thus, decreasing the reduction rate of the hematite pellets.
+Sastri et al. (1982) studied the reduction of hematite at different temperatures. Hematite pellets
+were initially heated up with nitrogen gas and then reduced by hydrogen once the desired
+temperature was achieved. Porosity, pressure, and reactor type were not mentioned. Their
+results are seen in Figure 23, and reported activation energies are found in Table 6. It is
+interesting to note that at these temperatures, wustite is unstable. Instead, magnetite is reduced
+directly to iron. Another matter worth noting is that the time to reach 100 % reduction at 400
+℃ was only about 45 minutes, which is very fast considering the low temperature. The fast
+reduction rate can be explained by the very small size of the particles.
+
+Table 6: Activation energy values for the reduction of hematite/hematite with different
+oxides in the 460–500°C range (Sastri et al., 1982).
+
+43
+
+Figure 23: Reduction curves of hematite pellets at different temperatures using hydrogen
+as reducing gas, d=0.18 ±0.09 nm, (Sastri, Viswanath and Viswanathan, 1982).
+
+Mirgaux and Patisson (2020) performed kinetic experiments researching the reduction of iron
+ore pellets by hydrogen. The volume flow was 2 l/min, and the gas was 60 % hydrogen and 40
+% helium. Pellet porosity was 33% and pellet diameter was 14 mm. Activation energies and
+pressure were not mentioned. Results from their study are presented in Figure 24.
+
+44
+
+Figure 24: a) Calculated solid fractions as a function of time of the experiment at 900 °C.
+b) Experimental (and model) data from reduction experiments, flow rate 2 l/min, gas
+composition 60% hydrogen and 40% nitrogen, porosity 33% (Mirgaux and Patisson, 2020).
+
+It was found that the rates slow down at the end of the reaction at certain temperatures,
+especially at 700 °C and 950 °C, as seen in Figure 24 (Mirgaux and Patisson, 2020). The
+reduction of hematite to magnetite was the fastest step, while the reduction of wustite to
+metallic iron was the slowest, as seen in Figure 24a. In the 900 °C (1173 K) experiment, 100%
+reduction was achieved in about 30 minutes.
+Mondal et al. (2004) investigated the effect of different gas compositions on the kinetics of
+iron oxide reduction. Rather than full reduction of hematite ore to ferrous iron, the reduction
+steps of hematite to magnetite and magnetite to wustite were investigated. The authors
+determined that a 10% weight loss (in comparison to the theoretical 11%) of the hematite
+sample means that the sample has been fully reduced into wustite. The mean diameter of the
+hematite particles was 91 µm. Porosity, pressure, and reactor type were not mentioned. Figures
+25, 26 and 27 show the conversion degrees for the different gas compositions and temperatures.
+It is evident from Figures 25 and 26 that the kinetics is much faster with hydrogen than for
+carbon monoxide.
+
+45
+
+Figure 25: Reduction curves of hematite pellets at different temperatures. Reducing gas
+consisted of 10% hydrogen and 90% nitrogen, d=91 µm (Mondal et al., 2004).
+
+Figure 26: Reduction curves of hematite pellets at different temperatures. Reducing gas
+consisted of 10% carbon monoxide and 90% nitrogen, d=91 µm (Mondal et al., 2004).
+
+46
+
+Figure 27: Reduction curves of hematite pellets at different temperatures. Reducing gas
+consisted of 5.7% carbon monoxide, 4,3% hydrogen, and 90% nitrogen, d=91 µm
+(Mondal et al., 2004).
+
+Mondal et al. (2004) also calculated the activation energies for the different reducing gases,
+and obtained the values 122.5 kJ/mol, 93.7 kJ/mol and 28.1 kJ/mol for the carbon monoxide
+and nitrogen mixture, the carbon monoxide, hydrogen, and nitrogen gas mixture, and the
+hydrogen and nitrogen mixture, respectively. The activation energy describes the reduction
+step of hematite to wustite. They concluded that the reduction rate increases with temperature
+and decreases when CO content is increased.
+Chatterjee et al. (2016) investigated the reduction of magnetite ore fines by hydrogen in a
+packed bed reactor. They studied many different variables, including temperature, particle size,
+hydrogen flow rate, hydrogen partial pressure, etc.
+Five different flow rates were tested: 0.1 l/min, 0.2 l/min, 0.3 l/min, 0.4 l/min and 0.5 l/min of
+hydrogen gas at 1.0 atm and 1173 K. Figure 28 presents results of the flow rate investigation.
+A clear increase in reduction rate can be observed when increasing the flow rate from 0.1 l/min
+to 0.2 l/min and from 0.2 l/min to 0.3 l/min. A small increase can also be between 0.3 l/min to
+0.4 l/min, but a further increase had little to no effect on the reduction rate. The takeaway from
+this is that a flow rate below 0.4 l/min causes the external mass transfer to become important
+in the experimental setup they were using.
+47
+
+Figure 28: Reduction curves of magnetite reduction at different flow rates of hydrogen,
+T=1173 K, p=1 atm, porosity 27% (Chatterjee et al., 2016).
+The temperature was tested at four different points, 973 K, 1073 K, 1173 K and 1273 K. The
+hydrogen flow rate was 0.4 l/min, pressure was 1.0 atm, and particle size was 106 µm. The
+results, shown in Figure 29, indicate that with increasing temperature the reduction rate also
+increases. The activation energies were calculated: the magnetite to wustite reduction step was
+found to be 42 kJ/mol, while the reduction of wustite to iron was 55 kJ/mol.
+
+48
+
+Figure 29: Reduction curves of magnetite reduction by hydrogen at different
+temperatures, p=1 atm, d=106 µm, porosity 27% (Chatterjee et al., 2016).
+Four different partial pressures were also investigated by the authors. Experiments were
+performed at 0.25 atm, 0.5 atm, 0.75 atm and 1.0 atm hydrogen partial pressures at 1173 K.
+Results from these experiments are shown in Figure 30 showing a clear increase in reduction
+rate with increasing hydrogen partial pressure. However, the apparent reaction order with
+respect to hydrogen seems to be below unity because the observed initial reduction rate is
+sublinear with respect to the hydrogen partial pressure.
+
+49
+
+Figure 30: Reduction curves of magnetite reduction at different partial pressure of
+hydrogen, T=1173 K, d=106 µm, porosity=27% (Chatterjee et al., 2016).
+
+Gaballah at al. (2007) studied the kinetics of magnetite reduction by hydrogen and carbon
+monoxide at different temperatures. They used two different samples of magnetite, produced
+at 600 °C and 1200 °C, respectively. The grain size of the 600 °C sample was 1–2 µm, and its
+apparent specific surface area was 0.7 m2/g, while the grain size of the 1200 °C sample was
+10–20 µm, and its apparent specific surface area was about 0.1 m2/g. Figures 31 and 32 show
+the reduction extent vs. time for the reduction of the 600 °C and 1200 °C magnetite samples
+respectively, with hydrogen as reducing gas.
+When comparing the results, the larger particles with lower specific surface area seem to reach
+80% conversion faster at low temperatures, while the smaller particles produced at 600 °C react
+faster at high temperatures. The times to reach 80% conversion were about 2200 min at 229
+°C, 600 min at 246 °C, and 5 min at 426 °C for the smaller particles, while the corresponding
+results were 1500 min at 229 °C, 700 min at 246 °C, and 10 min at 428 °C for the larger
+particles. The reason for this kinetic behavior is not clear, as it cannot be explained simply by
+the difference in specific surface area or particle size.
+50
+
+Figure 31: Reduction extent vs. time for the 600 °C magnetite sample with hydrogen,
+d=1–2 µm, SA=0.7 m2/g (Gaballah et al., 2007).
+
+51
+
+Figure 32: Reduction extent vs. time for the 1200 °C magnetite sample with hydrogen,
+d=10–20 µm, SA=0.1 m2/g (Gaballah et al., 2007).
+
+The results show how large an impact the temperature has on the reduction rate (Figure 32).
+Achieving 100% reduction at <300 °C takes hours, even days, while at >600 °C it takes less
+than 20 minutes to reach 100% reduction.
+Figure 33 shows the reduction extent vs. time for reducing the 600 °C magnetite sample with
+CO. The reason why the reduction extent appears to go down after reaching certain points, as
+seen in Figure 33, is due to iron carbide formation due to carbon monoxide decomposing
+(Gaballah et al., 2007). Weight loss of the sample was used for calculating the reduction extent,
+so the reduction curve starts going down if iron carbide forms faster than oxygen is removed
+from the iron oxides, meaning that only the beginning of the curve accurately portrays the
+reduction extent.
+
+52
+
+Figure 33: Apparent reduction extent vs. time for the 600 °C magnetite sample with CO,
+d=1–2 µm, SA=0.7 m2/g (Gaballah et al.,2007).
+Gao et al. (2017) studied the kinetics of hematite to magnetite reduction by CO in a microfluidized bed reactor. The reducing gas composition was 20% CO and 80% CO2, and the
+temperature varied between 500 °C and 600 °C. The grain size varied between 74 µm and 100
+µm. The activation energy was estimated to be 48.7 kJ/mol. The surface area and pore volume
+of the hematite ore were 0.669 m2/g and 0.003 m3/g, respectively. Figure 34 shows the
+conversion degree vs. time at different process temperatures, while Figure 35 shows the
+reaction rate vs. time for the different temperatures. The reduction curves seem to behave
+largely similarly. The 500 °C kinetics seems to be slightly delayed at the beginning of the
+experiment, and all the overall reaction rates slow down drastically when reaching about 90%
+reduction, likely due to diffusion becoming increasingly limiting.
+
+53
+
+Figure 34: Conversion degree of hematite to magnetite vs. time for different process
+temperatures, d=74–100 µm, SA=0.67 m2/g (Gao et al., 2017).
+
+Figure 35: Reaction rate of hematite to magnetite vs. time for different process temperatures,
+d=74–100 µm, SA=0.67 m2/g (Gao et al., 2017).
+
+54
+
+El-Geassy and Rajakumar (1985), investigated the reduction kinetics of wustite by different
+reducing gas compositions and temperatures. The temperature varied between 900 °C and 1100
+°C for the experiments and the grain size was about 150 µm. The reported composition of the
+wustite was Fe0.941O, and the specific surface area was 0.052 m2/g. Figures 36–40 show the
+reduction degree vs. time for different gas compositions and temperatures.
+
+Figure 36: Reduction degree vs. time for wustite in different reducing gas compositions at
+900 °C, d=150 µm, SA=0.052 m2/g (El–Geassy and Rajakumar, 1985).
+
+Figure 37: Reduction degree vs. time for wustite in different reducing gas compositions at
+950 °C, d=150 µm, SA=0.052 m2/g (El–Geassy and Rajakumar, 1985).
+
+55
+
+Figure 38: Reduction degree vs. time for wustite in different reducing gas compositions at
+1000 °C, d=150 µm, SA=0.052 m2/g (El–Geassy and Rajakumar, 1985).
+
+Figure 39: Reduction degree vs. time for wustite in different reducing gas compositions at
+1050 °C, d=150 µm, SA=0.052 m2/g (El–Geassy and Rajakumar, 1985).
+
+56
+
+Figure 40: Reduction degree vs. time for wustite in different reducing gas compositions at
+1100 °C, d=150 µm, SA=0.052 m2/g (El–Geassy and Rajakumar, 1985).
+
+The authors found that the rate of reduction of any given reducing gas mixture increased with
+temperature. The reduction rate was also always highest when the reducing gas was pure H2,
+while the slowest reduction rate was obtained with pure CO. Including just 2.5% H2 in the
+educing gas resulted in a clear acceleration of the reduction rate and the difference in kinetics
+was dramatic when more than 25% of hydrogen was added to the feed. The results reveal that
+hydrogen reduction is very efficient compared to CO reduction also for wustite. At 900 °C and
+950 °C, the pure CO reducing gas could not reach 100% reduction, due to carbon deposition.
+From these investigations it can be concluded that hydrogen is a superior reducing gas
+compared to CO, as the kinetics are significantly faster. Parameters such as temperature,
+particle diameter and particle porosity also play a significant role in determining the reduction
+rate. The wustite to iron reduction step seems to be the slowest, which is logical due to the
+substantial amount of oxygen that is removed during wustite reduction.
+
+57
+
+6 The shrinking core model
+Shrinking core models (SCM) are commonly used to describe reduction processes, but they
+can be formulated differently. The following chapter will describe the development of two
+models, based on the theory reported in Canu (2014) and Melchiori (2014).
+
+6.1 One-interface SCM
+The basic equations for a one-interface shrinking core model were presented in Chapter 3,
+applying them to the reaction (12). These equations are used together with the differential
+equation describing the diffusion of component B in a binary gas mixture of B and D in a
+spherical particle
+
+𝐷𝐵𝐷
+
+1 𝜕
+𝑟 2 𝜕𝑟
+
+(𝑟 2
+
+𝜕𝑐𝐵
+𝜕𝑟
+
+)=0
+
+(21)
+
+together with an expression for the time derivative of the conversion degree
+𝜕𝑋
+𝜕𝑡
+
+=
+
+𝑎 3𝑟𝑖2
+0 𝑟3
+𝑐𝐴
+0
+
+𝑘′𝑐𝐵 (𝑟𝑖 )
+
+(22)
+
+Here 𝐷𝐵𝐷 is the diffusion coefficient of gas mixture B and D, and 𝑘′ is the rate constant of the
+reaction between solid A and gas B. Here, the chemical reaction (between A and B) is assumed
+to be non-reversible. Using the boundary conditions of Eqs. (23-25), expressing that the
+diffusion rate to the interface (𝑟 = 𝑟𝑖 ) is equal to chemical reaction rate, mass transfer to the
+particle surface is equal to diffusion rate at 𝑟 = 𝑟0 , and that the conversion is zero at the start
+of the reaction
+
+𝐷𝐵𝐷
+𝐷𝐵𝐷
+
+𝜕𝑐𝐵
+𝜕𝑟
+
+𝜕𝑐𝐵
+𝜕𝑟
+
+= 𝑏𝑘′𝑐𝐵 (𝑟𝑖 ); 𝑟 = 𝑟𝑖
+
+= ℎ𝑏 (𝑐𝐵,𝑏𝑢𝑙𝑘 − 𝑐𝐵 (𝑟0 )) ; 𝑟 = 𝑟0
+
+𝑋 = 0; 𝑡 = 0
+
+(23)
+(24)
+(25)
+
+where ℎ𝑏 is the mass transfer coefficient from the bulk gas to the particle. An expression for
+the rate of conversion, which only requires information about the concentration of component
+B in the bulk of the gas
+
+58
+
+𝜕𝑋
+𝜕𝑡
+
+=
+
+𝑐𝐵,𝑏𝑢𝑙𝑘
+1
+0
+𝑐𝐴 𝑟0
+𝑏𝑟2
+−
+𝑏𝑟
+0
+−2/3
+(1−𝑋(𝑡))
++
+((1−𝑋(𝑡)) 3 −1)+ ℎ 0
+𝐷𝐵𝐷
+𝑘′
+𝑏
+
+3𝑎
+
+(26)
+
+can be derived.
+Shrinking core models with only one interfaces are typically used to describe single reactions.
+It is still possible to model a system with several reaction steps, but the reactions must be
+assumed to occur simultaneously. In order to decouple the kinetics and progress of the different
+reactions, it is a good idea to utilize a shrinking core model with several interfaces, which can
+take into account different reaction rates for the different reaction steps at the interfaces.
+
+6.2 Three-interface SCM
+The model used in the current work to simulate and analyze results from previous
+investigations is a three-interface shrinking core model, developed together with the
+supervisors. The model is an extension of the two-interface SCM presented in Melchiori (2014)
+for the case with reversible reactions. The three reduction steps are described by equations
+𝑎 𝐴(𝑠) + 𝑏1 𝐵(𝑔) ↔ 𝑐1 𝐶(𝑠) + 𝑑1 𝐷(𝑔)
+
+(27)
+
+𝑐2 𝐶(𝑠) + 𝑏2 𝐵(𝑔) ↔ 𝑒1 𝐸(𝑠) + 𝑑2 𝐷(𝑔)
+
+(28)
+
+𝑒2 𝐸(𝑠) + 𝑏3 𝐵(𝑔) ↔ 𝑓 𝐹(𝑠) + 𝑑3 𝐷(𝑔)
+
+(29)
+
+is applied to iron oxide reduction, 𝐴 is hematite, 𝐵 is the reducing gas (e.g., hydrogen or CO),
+𝐶 is magnetite, 𝐷 is the product gas component (water or CO2), 𝐸 is wustite, 𝐹 is ferrous iron,
+and 𝑎𝑖 , 𝑏𝑖 , 𝑐𝑖 , 𝑑𝑖 , 𝑒𝑖 , and 𝑓𝑖 are the stoichiometric coefficients for the respective reagents or
+products. The three reactions are assumed to be occurring at three interfaces, dividing the
+particle into four regions, as shown in Figure 41.
+
+59
+
+Figure 41: Representation of a pellet simulated by the three–interface shrinking core
+model. The three reactions (27), (28) and (29) take place at r1, r2, and r3, respectively
+(Melchiori, 2014).
+The three reaction rates, 𝑅1 , 𝑅2 and 𝑅3 , can be expressed as:
+
+𝑟2
+
+𝑐𝐷 (𝑟1 )
+
+0
+
+𝐾1
+
+𝑟2
+
+𝑐𝐷 (𝑟2 )
+
+0
+
+𝐾2
+
+𝑟2
+
+𝑐𝐷 (𝑟3 )
+
+0
+
+𝐾3
+
+𝑅1 = 3 𝑟13 𝑘 ′1 (𝑐𝐵 (𝑟1 ) −
+
+𝑅2 = 3 𝑟23 𝑘 ′ 2 (𝑐𝐵 (𝑟2 ) −
+
+𝑅3 = 3 𝑟33 𝑘 ′ 3 (𝑐𝐵 (𝑟3 ) −
+
+)
+
+(30)
+
+)
+
+(31)
+
+)
+
+(32)
+
+𝐸𝑎
+
+where 𝑘 ′ 𝑖 represents the lumped reaction rate constant, 𝑘 ′ = 𝐴𝑒 −𝑅𝑇 , and 𝐾𝑖 is the equilibrium
+constant for reaction i. The mass balance for the solid species is expressed by:
+𝑑𝐶𝐴
+𝑑𝑡
+
+𝑑𝐶𝐶
+𝑑𝑡
+
+= −𝑎𝑅1
+
+(33)
+
+= 𝑐1 𝑅1 − 𝑐2 𝑅2
+
+(34)
+60
+
+𝑑𝐶𝐸
+𝑑𝑡
+
+𝑑𝐶𝐹
+𝑑𝑡
+
+= 𝑒1 𝑅2 − 𝑒2 𝑅3
+
+(35)
+
+= 𝑒2 𝑅3
+
+(36)
+
+The boundary conditions are defined by writing the mass balances at the four surfaces, in the
+same way as for the on-interface model: the difference between the inlet and outlet molar fluxes
+of each species is the fluxes “produced” by the chemical reactions (Melchiori, 2014). The
+concentration profiles of the gases are described by:
+−
+𝑐𝐵 (𝑟) = −
+{−
+
+−
+𝑐𝐷 (𝑟) = −
+{−
+
+𝐴11
+𝑟
+𝐴12
+𝑟
+𝐴13
+𝑟
+
+𝐴21
+𝑟
+𝐴22
+𝑟
+𝐴23
+𝑟
+
++ 𝐵11 ; 𝑟1 ≤ 𝑟 ≤ 𝑟2
+(37)
+
++ 𝐵12 ; 𝑟2 ≤ 𝑟 ≤ 𝑟3
++ 𝐵13 ; 𝑟3 ≤ 𝑟 ≤ 𝑟0
+
++ 𝐵21 ; 𝑟1 ≤ 𝑟 ≤ 𝑟2
+(38)
+
++ 𝐵22 ; 𝑟2 ≤ 𝑟 ≤ 𝑟3
++ 𝐵23 ; 𝑟3 ≤ 𝑟 ≤ 𝑟0
+
+where 𝐴𝑖𝑗 are integration constants that must be solved. Their values can be obtained by
+expressing the mass balances at the interfaces and the continuity in the concentrations:
+
+𝐷𝐵𝐶
+
+𝐴11
+
+𝐷𝐷𝐶
+
+𝐴21
+
+𝐷𝐵𝐸
+
+𝐴12
+
+𝑟1 2
+
+𝑟1 2
+
+𝑟2
+
+2
+
+= 𝑏1 𝑘 ′1 (−
+
+𝐴11
+
+= 𝑑1 𝑘 ′1 (−
+
+𝐴11
+
+𝐴
+
+𝑟1
+
+𝑟1
+
++ 𝐵11 −
+
+1
+
+(−
+
++ 𝐵11 − 𝐾 (−
+
+= 𝐷𝐵𝐶 𝑟 112 + 𝑏2 𝑘 ′ 2 (−
+2
+
+1
+𝐾1
+
+1
+
+𝐴11
+𝑟2
+
+𝐴21
+𝑟1
+
+𝐴21
+𝑟1
+
++ 𝐵21 ))
+
+(39)
+
++ 𝐵21 ))
+
+(40)
+
+1
+
++ 𝐵11 − 𝐾 (−
+2
+
+𝐴21
+𝑟2
+
++ 𝐵21 )) (41)
+
+61
+
+𝐷𝐷𝐸
+
+𝐴22
+𝑟2 2
+
+𝐴
+
+= 𝐷𝐷𝐶 𝑟 212 + 𝑑2 𝑘 ′ 2 (−
+
+𝐴
+
+2
+
+𝑟2
+
++ 𝑏3 𝑘 ′ 3 (−
+
+𝐴12
+
++ 𝑑3 𝑘 ′ 3 (−
+
+𝐴12
+
+𝐷𝐵𝐹 𝑟 132 = ℎ𝐵 𝑐𝐵,𝑏𝑢𝑙𝑘 − ℎ𝐵 (−
+
+𝐴13
+
+𝐷𝐵𝐹 𝑟 132 = 𝐷𝐵𝐸
+3
+
+𝐴
+
+𝐷𝐷𝐹 𝑟 232 = 𝐷𝐷𝐸
+3
+
+𝐴12
+
+𝐴11
+
+𝑟3
+
+2
+
+𝐴22
+𝑟3 2
+
+𝐴
+
+0
+
+𝐴
+
+𝐷𝐷𝐹 𝑟 232 = ℎ𝐷 𝑐𝐷,𝑏𝑢𝑙𝑘 − ℎ𝐷 (−
+0
+
+−
+
+−
+
+−
+
+−
+
+𝐴11
+𝑟2
+
+𝐴21
+𝑟2
+
+𝐴12
+𝑟3
+
+𝐴22
+𝑟3
+
++ 𝐵11 = −
+
++ 𝐵21 = −
+
++ 𝐵12 = −
+
++ 𝐵22 = −
+
+𝐴12
+𝑟2
+
+𝐴22
+𝑟2
+
+𝐴13
+𝑟3
+
+𝐴23
+𝑟3
+
+𝑟3
+
+𝑟3
+
+𝑟0
+
+𝐴23
+𝑟0
+
+1
+
++ 𝐵11 − 𝐾 (−
+2
+
+1
+
++ 𝐵12 − 𝐾 (−
+
+𝐴21
+𝑟2
+
+𝐴22
+
+3
+
+𝑟3
+
+1
+
+𝐴22
+
++ 𝐵12 − 𝐾 (−
+3
+
+𝑟3
+
++ 𝐵21 )) (42)
+
++ 𝐵22 )) (43)
+
++ 𝐵22 )) (44)
+
++ 𝐵13 )
+
+(45)
+
++ 𝐵23 )
+
+(46)
+
++ 𝐵12
+
+(47)
+
++ 𝐵22
+
+(48)
+
++ 𝐵13
+
+(49)
+
++ 𝐵23
+
+(50)
+
+By solving this linear equation system, the reaction rates, 𝑅1 , 𝑅2 and 𝑅3 , can be obtained as a
+function of the gas bulk concentrations. If the solid concentrations are integrated in time, the
+equation system can be solved for any time since the interface positions can be expressed as a
+function of the solid concentrations (by equations of the same type as Eq. 11).
+62
+
+The most important parameters that can be changed in our model are the following:
+Initial radius of the particle, 𝑟0 .
+Tortuosity, expressing the mean path length from the surface to the core that the reducing gas
+must travel divided by the straight path (in the radial direction), 𝜏.
+Porosity of the pellet, 𝜀.
+The molar ratio of H2 or CO in the reducing gas, 𝑥𝐵,bulk
+The molar of H2O or CO2 in the reducing gas, 𝑥𝐷,bulk .
+Absolute temperature of the reactor, 𝑇.
+The pre-exponential factors, 𝑘1 , 𝑘2 and 𝑘3 in the Arrhenius equation.
+The activation energy of the three reduction steps, 𝐴1 , 𝐴2 and 𝐴3 , here assumed to be around
+50 kJ/mol
+The total pressure in the reactor, 𝑝tot .
+
+An example of the results from the model is given in Figure 42, which shows the normalized
+concentrations of hematite (black solid line), magnetite (red solid line), wustite (green solid
+line) and metallic iron (blue solid line) expressed at the left ordinate, as well as the reduction
+degree (dashed blue line) expressed on the right ordinate. The figure shows the stepwise
+reduction of the iron oxide pellet.
+
+63
+
+Figure 42: Example of resulting normalized concentration of the iron oxides and metallic
+iron (left scale) and the reduction degree right scale) of the model.
+
+As with all models, assumptions are needed to simplify the calculations. The most important
+assumptions in this model were:
+-
+
+The gas-solid reactions are confined to their respective interfaces, separating the solid
+reagent and product
+
+-
+
+Particle porosity is uniform
+
+-
+
+Temperature and pressure are constant
+
+-
+
+Kinetics are first order with respect to the gas phase reagent (and product) concentration
+
+However, these assumptions can cause limitations and inaccuracies in the models developed
+(Melchiori, 2014). The most important ones are:
+-
+
+The reaction being limited to the surface is not always realistic, especially if the particle
+is porous. This means that the model is applicable only if the particle is not initially
+porous.
+
+-
+
+Thermal homogeneity is often a correct assumption. However, large particles that are
+not properly heated before the reaction can cause inaccuracies for the modeling.
+64
+
+-
+
+With reversible reactions, it is assumed that the interface can shift towards the particle
+center or towards the external surface if the reaction rate is globally positive or negative,
+respectively. In reality, this is not the case. In the model, the product gas is assumed to
+diffuse through the product layer without reacting. However, in reversible reactions,
+the product gas will react with the product solid to some extent, which causes the
+reaction interface to be less well defined. Depending on the reaction and the reaction
+conditions, this can lead to an inaccurate model.
+
+-
+
+For the same reason, multiple interfaces existing in a shrinking core are not physically
+possible, as the gas is supposed to move between the core and the external shell without
+reacting. However, the intermediate layers react with the gas, meaning that reactions
+take place outside the interfaces, which negatively affects the accuracy of the model.
+
+-
+
+Moreover, the WGS reaction is not yet considered in these calculations and causes
+further inaccuracies when modeling.
+
+6.3 Base cases of the three-interface SCM
+To gain a better understanding of the significance of the different model parameters, the model
+was tested by performing a sensitivity analysis, where all but one or two parameters in the
+model are perturbed to analyze how much the simulated reduction process is affected. Table 7
+shows the base values that the parameters were set as, unless specified otherwise:
+
+65
+
+Table 7: Base values for the parameters, unless specified otherwise.
+
+Parameter
+
+Value (unit)
+
+Parameter, matlab form
+
+𝑟0
+
+10 mm
+
+r_0
+
+𝜀
+
+0.15
+
+eps
+
+𝜏
+
+1.5
+
+tau
+
+𝑘1
+
+0.5 m/s
+
+k1
+
+𝑘2
+
+0.5 m/s
+
+k2
+
+𝑘3
+
+0.5 m/s
+
+k3
+
+𝐴1
+
+40 kJ/mol
+
+Act1
+
+𝐴2
+
+60 kJ/mol
+
+Act2
+
+𝐴3
+
+55 kJ/mol
+
+Act3
+
+𝑝tot
+
+101300 Pa
+
+p_tot
+
+𝑇
+
+973 K
+
+T
+
+𝑥𝐵,bulk
+
+1
+
+x_Bbulk
+
+𝑥𝐷,bulk
+
+0
+
+x_Dbulk
+
+6.3.1 Pellet radius
+Four different values of the radius of the pellets were used, i.e., 0.1 mm, 0.2 mm, 0.4 mm, and
+0.8 mm. The resulting reduction degrees are shown in Figure 43 showing that with increasing
+initial particle radius, the reduction time also greatly increases. The time to reach 100%
+reduction seems to increase linearly with the radius; a doubling of the radius will double the
+time to reach 100 % reduction. It is unclear if diffusion has any effect on the reduction process
+at these parameter values, so the linear increase may not always be applicable.
+
+66
+
+Figure 43: Effect of pellet radius on the reduction degree.
+
+6.3.2 Tortuosity
+The effect of different values on the tortuosity was investigated. The tortuosity was set to 1.0
+(straight channels), 2.5, 5.0 and 10 (increasingly non-linear channels), while the other
+parameters were kept unchanged. The pellet radius was here set to 1 mm. It is good to note that
+tortuosity is generally around 1.5, and a value of 10 is very unrealistic. The results shown in
+Figure 44 indicate that the tortuosity has negligible effect on the reduction degree.
+A simulation of the impact of tortuosity was conducted for a larger pellet, r = 10 mm. The
+results are presented in Figure 45, showing somewhat stronger but still minor influence on the
+reduction degree.
+
+67
+
+The effect that the tortuosity has on the reduction process depends on the radius of the particle:
+the reduction process of small particles is largely unaffected by the tortuosity, while the
+reduction rate of large particles will be slowed down to some extent.
+
+Figure 44: Effect of tortuosity with r=1 mm.
+
+68
+
+Figure 45: Effect of tortuosity, with r=10 mm.
+
+6.3.3 Porosity
+The effect of different values on the porosity was studied by setting 𝜀 = 0.01 (very non-porous,
+compact particles), 0.10, 0.20 and 0.40 (very porous). Also, here the pellet radius was either r
+= 1 mm (Figure 46) or r = 10 mm.
+Like tortuosity, the porosity shows a marginal effect on the reduction process if the particle is
+small. In such cases, diffusion never becomes the rate-limiting step. However, with larger
+particles it becomes clear that the porosity may play a role for the reduction process.
+
+69
+
+Figure 46: Effect of porosity, with r = 1 mm.
+
+Figure 47: Effect of porosity, with r=10 mm.
+
+70
+
+6.3.4 H2 and H2O content
+The molar ratio of H2 in the bulk gas was simulated with the values 1.0 (pure hydrogen), 0.75,
+0.5 and 0.25, while the H2O content was zero. Thus, the molar ratio of inert gas was 0.00, 0.25,
+0.50 and 0.75. The pellet radius was here r = 1 mm. Figure 48 shows the marked effect of the
+hydrogen concentration on the reduction degree.
+
+Figure 48: Effect of molar ratio of H2 content in a mixture with an inert gas, with r = 1 mm.
+Next, presence of H2O was tested. The molar ratio of H2 in the bulk gas was 1.0, 0.9, 0.8 and
+0.7, while the corresponding molar ratios of H2O were 0.0, 0.1, 0.2 and 0.3. Figure 49 shows
+the marked effect of water in the gas when the molar ratio exceeds a certain limit (here about
+0.2), and the effect is much stronger that what was observed for the case with an inert gas as
+the complement of H2 (Figure 48). This happens because the driving force for the reaction is
+the concentration difference between the reactant and its equilibrium concentration.
+
+71
+
+Figure 49: Effect of molar ratios of t H2 and H2O in the bulk gas on the reduction degree,
+with r = 1 mm.
+
+6.3.5 Temperature
+The effect of temperature was investigated next, setting it to T = 873 K, 973 K, 1073 K and
+1173 K. As seen in Figure 50, the temperature has a significant positive impact on the reduction
+process.
+
+72
+
+Figure 50: Effect of temperature on the reduction degree, with r = 1 mm.
+6.3.6 Pre-exponential factors
+Next, the pre-exponential factors (𝑘1 , 𝑘2 and 𝑘3 ,) were varied in order to study their influence
+on the kinetics. First, different values, 𝑘1 = 0.1, 1.0, 5.0 and 10.0 were tested, with 𝑘2 = 𝑘3 =
+0.5. A small difference can be observed in Figure 51 at the start of the reduction process. As
+𝑘1 affects the reduction step of hematite to magnetite, which is fast due to a high driving force,
+the effect is minor. The reduction step of hematite to magnetite also removes the smallest
+amount of oxygen of the three steps.
+
+73
+
+Figure 51: Effect of 𝑘1 , with 𝑘2 = 𝑘3 = 0.5, T = 973 K, and r = 1 mm.
+
+Then, the value of 𝑘2 was varied in the same way, keeping 𝑘1 = 𝑘3 = 0.5. Figure 52 shows
+that can have a significantly greater impact on the reduction process compared to 𝑘1 , but mainly
+for low values of 𝑘2 .
+
+74
+
+Figure 52: Effect of 𝑘2 , with 𝑘1 = 𝑘3 = 0.5, T = 973 K, and r = 1 mm.
+
+Finally, different values of 𝑘3 were investigated, keeping 𝑘1 = 𝑘2 = 0.5. Like in the test of
+𝑘2 , 𝑘3 significantly impacts the reduction process if the value is low. The parameter affects the
+final reduction step, wustite to ferrous iron, which is why the differences are largest at the
+middle and latter stages of the reduction process, while the very early stages are unaffected.
+
+75
+
+Figure 53: Effect of 𝑘3 , with 𝑘1 = 𝑘2 =0.5, T = 973 K, and r = 1 mm.
+6.3.7 Apparent activation energies
+The last set of parameters to be tested are the apparent activation energies (𝐴1 , 𝐴2 and 𝐴3 ).
+First, 𝐴1 was tested with the values set to 5 kJ/mol, 20 kJ/mol, 40 kJ/mol, and 60 kJ/mol.
+(Higher values than 70 kJ/mol caused errors in code), while 𝐴2 = 𝐴3 = 50 kJ/mol. Results are
+shown in Figure 54.
+
+76
+
+Figure 54: Effect of 𝐴1 ,with 𝐴2 = 𝐴3 = 50 𝑘𝐽/𝑚𝑜𝑙, T = 973 K and r = 1 mm.
+As expected, in a similar fashion as 𝑘1 , 𝐴1 most notably affects the beginning of the reduction
+process. Values between 5 –40 kJ/mol shows a very similar reduction process, while higher
+values yield notably slower reduction.
+Next, the sensitivity of 𝐴2 was studied by giving it values of 45 kJ/mol, 60 kJ/mol, 80
+kJ/mol and 100 kJ/mol, while 𝐴1 = 𝐴3 = 50 kJ/mol. (Values 𝐴2 < 45 kJ/mol caused errors
+in the code). The results (Figure 55) look similar those of the sensitivity analysis of 𝑘2 : it can
+be concluded that 𝐴2 significantly affects the entire reduction process, as it controls the
+reduction rate of magnetite to wustite.
+Finally, 𝐴3 was studied in the same was as 𝐴2 and 𝐴1 above. As seen in Figure 56, this
+activation has a strong influence of the reduction process, since the wustite reduction is the
+most important step in it.
+The investigation of the effect of activation energy shows how vital it is to estimate accurate
+values for the activation energies, since relatively small changes in the values have a significant
+impact on the simulated reduction process.
+
+77
+
+Figure 55: Effect of 𝐴2 , with 𝐴1 = 𝐴3 = 50 𝑘𝐽/𝑚𝑜𝑙, T = 973 K and r = 1 mm.
+
+78
+
+Figure 56: Effect of 𝐴3 , with 𝐴1 = 𝐴2 = 50 𝑘𝐽/𝑚𝑜𝑙, T = 973 K and r = 1 mm.
+
+6.3.8 Partial pressure of hydrogen
+The effect of partial pressure of hydrogen in the reactor was also investigated. The pressure
+was set to 0.5, 1.0, 2.0 and 5.0 times atmospheric pressure (100300 Pa), with 𝑥𝐻2 ,bulk = 1.0, T
+= 973 K and r = 1 mm. The results in Figure 57 show that the partial pressure of hydrogen
+significantly impacts the reduction rate and that increasing the total pressure would improve
+the reduction process.
+
+79
+
+Figure 57: Effect of pressure of pure hydrogen, with T = 973 K, r = 1 mm.
+6.3.9 Temperature using approximated values for the activation energies
+After approximations of the activation energies and pre-exponential factors for the different
+reaction steps were made (Chapter 7), another investigation into the effect of temperature was
+conducted. Table 8 shows the activation energies, pre-exponential factors and radius used in
+this investigation (The rest of the parameters were set according to Table 7). The temperature
+was set to T = 873 K, 973 K, 1073 K and 1173 K, yielding the results depicted in Figure 58.
+
+80
+
+Table 8: Base values for the activation energies, pre-exponential factors and radius.
+
+Parameter Value (unit)
+
+𝑟0
+
+5 mm
+
+𝑘1
+
+7.1 m/s
+
+𝑘2
+
+4.0 m/s
+
+𝑘3
+
+4.1 m/s
+
+𝐴1
+
+43 kJ/mol
+
+𝐴2
+
+51 kJ/mol
+
+𝐴3
+
+45 kJ/mol
+
+Figure 58: Effect of temperature with approximated activation energies and pre-exponential factors
+(cf. Chapter 7), r = 5 mm.
+
+81
+
+7 Analysis of results from literature
+Using the three-interface shrinking core model developed, some comparisons of its results with
+findings of investigations reported in the literature were undertaken. As many details of the
+experiments are often not reported in the literature, assumptions had to be made. For instance,
+the reaction coefficient 𝑘 for all reduction steps is assumed to be around 0.005 m/s, taken from
+Dong et al. 2015, and the apparent activation energy for hematite, magnetite and wustite
+reduction to be close to the values of 40 kJ/mol, 50 kJ/mol and 50 kJ/mol, respectively.
+Parameters that were obtained from the literature are marked with an asterisk (*).
+The first comparison between the simulations and experimental data was performed using the
+results from Mirgaux and Patisson (2020). As these authors also included a graph showing
+species atom fraction, it was used to extrapolate the activation energies and the pre-exponential
+constants. Accurate comparison was achieved when the parameters were set to the values in
+Table 9. Using these parameters, the results obtained match well with the results from Mirgaux
+and Patisson (2020), as is seen in Figure 59.
+
+82
+
+Table 9: Values for the parameters in the model used in the comparisons with the
+experiments by Mirgaux and Patisson (2020).
+Parameter
+
+Value (unit)
+
+𝑟0
+
+7 mm*
+
+𝜀
+
+0.33*
+
+𝜏
+
+1.5
+
+𝑘1
+
+7.1 m/s
+
+𝑘2
+
+4.0 m/s
+
+𝑘3
+
+4.1 m/s
+
+𝐴1
+
+43 kJ/mol
+
+𝐴2
+
+51 kJ/mol
+
+𝐴3
+
+45 kJ/mol
+
+𝑝tot
+
+101300 Pa
+
+𝑇
+
+1173 K*
+
+𝑥𝐵,bulk
+
+0.6*
+
+𝑥𝐷,bulk
+
+0
+
+83
+
+Figure 59: Comparison of the results from Mirgaux and Patisson (2020) in the top panels
+and the present author’s model (bottom panels), with a comparison with the experimental
+points at T = 900 °C.
+Next, a comparison to the results from Kazemi (2016), was performed (type 1 pellets reduced
+at 1123 K). The parameters extrapolated from the comparison of the results from Mirgaux and
+Patisson (2020), were left unchanged (𝜏, 𝑘1 , 𝑘2 , 𝑘3 , 𝐴1 , 𝐴2 and 𝐴3 ), while the rest of the
+parameters were obtained from the literature (marked with a *), as shown in Table 10. The
+model and experimental results are shown in Figure 60.
+
+84
+
+Table 10: Values for the parameters in the model used in the comparison with the
+experiments by Kazemi (2016).
+Parameter
+
+Value (unit)
+
+𝑟0
+
+5.5125 mm*
+
+𝜀
+
+0.26*
+
+𝜏
+
+1.5
+
+𝑘1
+
+7.1 m/s
+
+𝑘2
+
+4.0 m/s
+
+𝑘3
+
+4.1 m/s
+
+𝐴1
+
+43 kJ/mol
+
+𝐴2
+
+51 kJ/mol
+
+𝐴3
+
+45 kJ/mol
+
+𝑝tot
+
+101300 Pa
+
+𝑇
+
+1123 K*
+
+𝑥𝐵,bulk
+
+1.0*
+
+𝑥𝐷,bulk
+
+0
+
+The model and experimental results are shown in Figure 60. When comparing the graphs, it is
+noted that there are some small differences. The model predicts slightly faster kinetics initially
+compared to the experimental results, but the overall agreement is very good.
+
+85
+
+Figure 60: Comparison of the results from Kazemi (2016), and our model. The left picture is
+the results from the experiments, and to the right is the results from our model. The dots on
+the right graph represent data points from the experimental results.
+
+The results from the investigation by Bonalde et al. (2005) were also used to test the viability
+of the model. Some parameter values were changed (marked with a *) to the ones used in the
+experiments, while those that were not mentioned in the literature were left unchanged. The
+parameters are shown in Table 11, and the results are shown in Figure 61. The results illustrated
+in Figure 61 show a nice match.
+
+86
+
+Table 11: Values for the parameters in the model used in the comparison with the
+experiments by Bonalde et al. (2005).
+Parameter
+
+Value (unit)
+
+𝑟0
+
+5.5005 mm*
+
+𝜀
+
+0.22*
+
+𝜏
+
+1.5
+
+𝑘1
+
+7.1 m/s
+
+𝑘2
+
+4.0 m/s
+
+𝑘3
+
+4.1 m/s
+
+𝐴1
+
+43 kJ/mol
+
+𝐴2
+
+51 kJ/mol
+
+𝐴3
+
+45 kJ/mol
+
+𝑝tot
+
+101300 Pa
+
+𝑇
+
+1123 K*
+
+𝑥𝐵,bulk
+
+1.0*
+
+𝑥𝐷,bulk
+
+0
+
+Figure 61: Comparison of the results from Bonalde et al. 2005) in the left panel, and the
+present model in the right panel.
+87
+
+8 Conclusions
+Current industrial methods of producing iron and steel include the use of fossil fuels, especially
+coke, and cause considerable amounts of CO2 gas emissions. Direct reduction processes are
+generally more environmentally friendly, as the main reductant is natural gas. Even though
+they still lead to undesired CO2 emissions as the reducing gas contains carbon, it could be
+possible to replace CO with H2. This option has been shown not only to be more
+environmentally friendly, but also more efficient in reducing iron oxides. The main challenge
+is that hydrogen is much too expensive today to be used industrially.
+Direct reduction with H2 has been investigated recently, but there are still significant gaps in
+understanding the process details. One of these is the influence of the water gas shift (WGS)
+reaction, which is a reversible reaction where CO2 and H2 can react and become CO and water,
+which affect the kinetics of the process. A few publications have found that the WGS reaction
+has a positive effect on the reduction rate at lower temperatures, and hardly any noticeable
+effect at higher temperatures. The kinetics for the direct reduction process are still being
+investigated, and the effects of the water gas shift reaction, as well as many other reaction
+conditions, such as pressure, temperature and gas composition, are still not fully understood.
+The current work performed a literature review of the reduction kinetics of iron oxides,
+especially on the full reduction from hematite to iron with a primary focus on hydrogen
+reduction. Additionally, a three-interface shrinking core model was developed in order to
+compare simulations with selected parameter values with findings reported in the literature.
+Investigations up until now have all concluded that faster reduction kinetics is achieved with
+H2 compared to CO and that higher temperatures (up to about 1000 °C) are favorable.
+Increasing the temperature further could further increase the reduction rate, but such
+temperatures may be hard to maintain in the process and can eventually cause the iron oxides
+to melt, which would slow the reduction rate down drastically. Parameters such as temperature,
+particle diameter and particle porosity all have a significant impact on the reduction reactions.
+The slowest reduction stage is the wustite-to-iron step, which is very logical as this reduction
+step removes most of oxygen in the ore.
+To increase the understanding of the reduction process kinetics, models are developed and used
+to predict the reduction behavior. The shrinking core model, or a modified version of it, is the
+most common model used to describe the reduction of iron oxides. In this work, a threeinterface shrinking core model was used to analyze data from other investigations. The model
+88
+
+can consider the porosity, tortuosity, activation energies, temperature, pressure, and H2 and
+H2O content in the gas composition. Comparisons between the results from literature and this
+model using adjusted parameter values show that the model can produce fairly accurate results,
+although some parameters are currently very likely to have incorrect values. The findings are
+partly due to the large number of parameters that can be manipulated. Therefore, it is in practice
+difficult to determine the parameters accurately based on limited experimental data, and the
+effect of some parameters are strongly coupled. Modeling and parameter estimation should be
+performed using a large bulk of experimental data to study the kinetics in more detail. It would
+also be beneficial to study the chemical kinetics for reduction of very small particles in order
+to avoid overlapping effects of chemical reaction rates, mass transfer and diffusion. Also, an
+independent study of the different reduction steps (hematite to magnetite, magnetite to iron,
+magnetite to wustite, and wustite to iron) could shed light on the detailed kinetics of the
+reduction of iron oxides.
+
+89
+
+Summary in Swedish
+Produktion av järn har sedan 1400-talet skett med hjälp av smältugnar (Walker, 2017). Sedan
+dess har nya uppfinningar förbättrat effektiviteten och mängden järn som producerats med
+smältugnar. Smältugnar orsakar dock mycket utsläpp av växthusgaser, då de används krävs
+dessutom fossila bränslen, först och främst koks, som bildar koldioxid efter användning.
+Produktion av järn med direkt reduktion började bli populärt under 1970-talet, tack vare att
+denna process har många fördelar mot smältugnar (Atsushi, Sakaguchi och Uemura, 2010).
+Ugnar som fungerar enligt direkt reduktion (DR) är kemiska ugnar som reducerar järnoxider
+till rent järn med hjälp av kemikalier och värme. DR-ugnar kräver mindre energi, och
+koldioxidutsläppen minskas med minst 50 % jämfört med smältugnar, även om
+reduktionsgaserna som används baserar sig på naturgaser (Mirgaux och Patisson, 2020). Om
+reduktionsgasen är vätgas (H2), som dessutom är producerad från förnybara processer, kan
+utsläppen minska med upp till 99 % jämfört med standardiserade smältugnar. Kolmonoxid
+(CO) är hittills den mest vanliga reduktionsgasen som används för att reducera järnmalmer,
+men användning av vätgas (H2) börjar få ett fotfäste, då biprodukterna av vätgasanvändning är
+vatten, medan kolmonoxid bildar koldioxid efter den har reagerat, vilket bidrar till
+växthuseffekten.
+Järnoxider förekommer i tre olika former: hematit (Fe2O3), magnetit (Fe3O4) och wustit (FeO)
+(Ghadi et al., 2020). Dessa reagerar stegvis med CO eller H2 enligt följande reaktioner:
+3 𝐹𝑒2 𝑂3 + 𝐻2 → 2 𝐹𝑒3 𝑂4 + 𝐻2 𝑂
+
+(1)
+
+𝐹𝑒3 𝑂4 + 𝐻2 → 3 𝐹𝑒𝑂 + 𝐻2 𝑂
+
+(2)
+
+𝐹𝑒𝑂 + 𝐻2 → 𝐹𝑒 + 𝐻2 𝑂
+
+(3)
+
+3 𝐹𝑒2 𝑂3 + 𝐶𝑂 → 2 𝐹𝑒3 𝑂4 + 𝐶𝑂2
+
+(4)
+
+𝐹𝑒3 𝑂4 + 𝐶𝑂 → 3 𝐹𝑒𝑂 + 𝐶𝑂2
+
+(5)
+
+𝐹𝑒𝑂 + 𝐶𝑂 → 𝐹𝑒 + 𝐶𝑂2
+
+(6)
+
+Några gas-fasreaktioner kan också ske i direkt reduktionsugnar (Ghadi et al., 2020). De
+viktigaste tas upp i ekvationerna 7 och 8.
+𝐻2 𝑂 + 𝐶𝑂 ↔ 𝐻2 + 𝐶𝑂2
+
+(7)
+
+2𝐶𝑂 ↔ 𝐶 + 𝐶𝑂2
+
+(8)
+
+90
+
+Ekvation 7 är vattengasens konverteringsreaktion och ekvation 8 är Boudouard-reaktionen
+(Schenk och Spreitzer, 2020). Boudouard-reaktionen har i många undersökningar haft en
+negativ inverkan på reduktionshastigheten, dock enbart då reduktionsgasen var CO (Gaballah,
+Kanari och Pineau, 2007). I Boudouard-reaktionen, som brukar ske i högre temperaturer,
+förbrukas reduktionsgasen CO, vilket kan orsaka långsammare reduktionshastighet, och faller
+ut som kol och koldioxid (Schenk och Spreitzer, 2020). Kolet som bildas kan dessutom falla ut
+på järnoxidpartiklarna och blockera reduktionsgasen, vilket betyder att reduktionshastigheten
+sänks ytterligare. Vattengasens konverteringsreaktion har inte undersökts noggrant, men några
+undersökningar har funnit att dess inverkan brukar vara positiv vid låga temperaturer om gasen
+ursprungligen innehåller både vatten och CO, medan reaktionen vid högre temperaturer har en
+mindre påverkan på reduktionshastigheten (Fabritius et al., 2012).
+Enligt termodynamiken bör reduktion av järnoxider med vätgas ske vid så höga temperaturer
+som möjligt (Schenk och Spreitzer, 2020). Detta stämmer till en viss temperatur, ända tills
+järnoxiderna börjar smälta och därmed försämrar reduktionsgasens diffusionsförmåga, som har
+en stor påverkan på reduktionshastigheten (Dong et al., 2015). Reduktionskinetiken har också
+stor inverkan på reduktionshastigheten, och beror på många olika faktorer (Schenk och
+Spreitzer, 2020). De viktigaste faktorerna är reduktionsgasens sammansättning, temperaturen
+i reaktorn, samt storleken på partiklarna.
+Ytterst många undersökningar har kommit till slutsatsen att vätgas är en mycket mer effektiv
+reduktionsgas än CO (Kazemi, 2016, Ghadi et al., 2020, Schenk och Spreitzer 2020, Dong et
+al., 2015, Bonalde, Henriquez och Manrique, 2005). En förklaring till detta resultat kommer
+från diffusion: vätgasmolekyler är mycket mindre än kolmonoxidmolekyler, vilket gör det
+enklare för vätgasmolekyler att transporteras genom järnoxidpartiklarna (Schenk och Spreitzer,
+2020). Viskositeten för vätgas är också lägre än för kolmonoxid, vilket ytterligare bidrar till
+vätgasens fördel. Undersökningar har också funnit att enbart en liten tillsats av CO till
+reduktions gasen minskar drastiskt på reduktionshastigheten. Detta tros vara på grund av
+skillnaden på molekylstorleken och viskositeten hos de olika gaserna: kolmonoxidmolekylerna
+blockerar vätgasmolekylerna från att transporteras till järnoxiderna som ska reduceras.
+Enligt Arrhenius ekvation (ekvation 10) kommer reduktionshastigheten att öka om
+temperaturen ökar. Hittills överensstämmer alla undersökningar med denna teori.
+𝐸𝑎
+
+𝑘 = 𝐴 × 𝑒 −𝑅×𝑇
+
+(10)
+
+91
+
+Partikelstorleken kan ha en stor inverkan på reduktionshastigheten (Valipour, 2009, Schenk
+och Spreitzer 2020). Om partiklarna är stora och har mycket låg porositet, kommer
+reduktionshastigheten drastiskt saktas ner. Å andra sidan kommer stora partiklar med hög
+viskositet att inte ha så stor inverkan på reduktionshastigheten, då diffusionskoefficienten hålls
+tillräckligt hög tack vare den höga porositeten.
+Denna avhandling var fokuserad på litteraturgenomgång, samt lite modellering. En modell
+utvecklades för att analysera resultat från tidigare undersökningar. Modellen är en tre-fas
+krympande kärnmodell, som gjordes med stor hjälp av prof. Henrik Saxén från Åbo Akademi.
+Modellen baserar sig starkt på uträkningarna av Melchiori (2014), men även andra källor har
+använts för att utveckla modellen. Modellen kan ta bl. a. partikelstorleken, temperaturen,
+partikelporositeten och trycket i beaktande. Eftersom det är en modell görs en del antaganden
+för att simplifiera processen, men man bör lägga märke till att i vissa fall kan dessa antaganden
+orsaka stora fel.
+Modellen jämfördes med flera tidigare undersökningar och med baserat på dessa ser den ut att
+vara träffsäker. Dock var man tvungen att göra ytterligare antaganden för vissa parametrar, då
+de tidigare undersökningarna inte nämnde dessa. Ytterligare testningar och jämförelser borde
+göras, särskilt med tillgång till experiment bestämda parametrar, för att försäkra modellens
+pålitlighet.
+
+92
+
+The Matlab model
+File one:
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%
+
+threefront_diff
+Henrik Saxen 04-2021
+Differential equations dC_A/dt, dC_C/dt and dC_E/dt defined in threefront
+for the three reversible reactions
+a A(s)+ b_1 B(g)? c_1 C(s) + d_1 D(g)
+c_2 C(s)+ b_2 B(g)? e_1 E(s) + d_2 D(g)
+e_2 E(s)+ b_3 B(g)?
+f F(s) + d_3 D(g)
+applied to
+3Fe_2O_3(s) + H2(g) ? 2 Fe_3O_4(s) + H_2O(g)
+Fe_3O_4(s) + H2(g) ? 3 FeO(s)
++ H_2O(g)
+FeO(s )
++ H2(g) ?
+Fe(s)
++ H_2O(g)
+
+function dY
+
+= threefront_diff(t,Y,T,x_Bbulk,x_Dbulk,C_A0,r_0,eps)
+
+global a b_1 b_2 b_3 c_1 c_2 d_1 d_2 d_3 e_1 e_2 f % Stoichiometric
+coefficients
+% Use local variable names
+sigmin=1e-10;
+sigA=max(sigmin,1/(1+exp(-Y(1))));
+sigC=max(sigmin,1/(1+exp(-Y(2))));
+sigE=max(sigmin,1/(1+exp(-Y(3))));
+C_A=C_A0*sigA;
+C_C=c_1/a*C_A0*sigC;
+C_E=c_1/a/c_2*e_1*C_A0*sigE;
+% t
+% C_F=2*C_A0-(2*C_A+3*C_C+C_E)
+% pause(0.1)
+% Parameters
+R=8.314;
+%r_0=5e-3;
+tau=1.5;
+p_tot=101300;
+
+% J/(mol K)
+% m, 10 mm diameter of pellet
+% tortuosity
+% Pa, total pressure
+
+% Bulk gas concentrations of B and D
+c_Bbulk = x_Bbulk*p_tot/(R*T); % Concentration of H2 (= B) in the gas
+c_Dbulk = x_Dbulk*p_tot/(R*T); % Concentration of H20 (= D) in the gas
+% Chemical reaction rates
+% Act1=105400; % J/mol, Hou et al.2012
+% Act2=131500; % J/mol, Hou et al.2012
+% Act3=76000; % J/mol, Hou et al.2012
+% k1=4.6e4;
+% m/s, Hou et al.2012
+% k2=1.3e5;
+% m/s, Hou et al.2012
+% %k3=9.5;
+% m/s, Hou et al.2012
+% k3=100;
+% m/s, Hou et al.2012
+k1=0.33;
+k2=0.7;
+k3=0.7;
+Act1=45000; % J/mol
+Act2=62000; % J/mol
+Act3=56000; % J/mol
+% k1 = 56;
+
+% 1/s, reaction rate (Barde et al. 2016)
+
+93
+
+% k2
+k_1p
+1
+k_2p
+2
+k_3p
+3
+
+= 5;
+= k1*exp(-Act1/(R*T))
+
+% 1/s, reaction rate (Barde et al. 2016)
+% Arrhenius temperature dependence of reaction
+
+= k2*exp(-Act2/(R*T))
+
+% Arrhenius temperature dependence of reaction
+
+= k3*exp(-Act3/(R*T))
+
+% Arrhenius temperature dependence of reaction
+
+% Equilibrium constants from delta G values (Kuila et al. 2016)
+% 3 Fe_2O_3(s) + H_2(g) <=> 2 Fe_3O_4(s) + H_2O(g)
+%
+Fe_3O_4(s) + H_2(g) <=> 3 FeO(s)
++ H_2O(g)
+%
+FeO(s)
++ H_2(g) <=>
+Fe(s)
++ H_2O(g)
+% K_1=exp(-(6780-88*T)/R/T);
+% Approx from Najiha et al. 2019
+% K_2=exp(-(70160-92.25*T)/R/T);
+% K_3=exp(-(16240-8.45*T)/R/T);
+% K_3=exp(-(23430-16.16*T)/R/T); % Zuo et al. 2016
+% Barin & Knacke, regression to points at 300 K, 600 K, 900 K, 1200 K and
+1500 K
+K_1=exp(-(-5823-81.35*T)/R/T);
+% Actually very linear
+%K_2=exp(-(63410-54.37*T)/R/T);
+% Linear approximation
+K_2=exp(-(78170-96.53*T+2.342e-2*T^2)/R/T);
+% Slightly non-linear
+%K_3=exp(-(19070-15.04*T)/R/T);
+% Linear approximation
+K_3=exp(-(21610-22.28*T+4.021e-3*T^2)/R/T);
+% Slightly non-linear
+
+% Diffusion coefficient of H2-H2O
+nu_B=7.07;
+% H2 factor in model by Valipour
+nu_D=12.7;
+% H2O factor in model by Valipour
+M_B=2;
+% H2 molar mass (g/mol)
+M_D=18;
+% H2O molar mass (g/mol)
+D_BD=1e-7*T^1.75/((p_tot/1e5)*(nu_B^(1/3)+nu_D^(1/3))^2)*(1/M_B+1/M_D)^0.5;
+% Valipour 2009
+D_eff = D_BD*eps/tau % Consider porosity and tortuosity
+% Fictitious diffusion coefficients for B (=H2) and D (=H2O) in C (=Fe3O4)
+and E (=Fe)
+D_BupC = D_eff;
+D_DupC = D_eff;
+D_BupE = D_eff;
+D_DupE = D_eff;
+D_BupF = D_eff;
+D_DupF = D_eff;
+% Mass transfer in film on particle surface
+lambda_B=0.4;
+% W/(m K), thermal conductivity of H2
+lambda_D=0.04;
+% W/(m K), thermal conductivity of H2O
+lambda=(x_Bbulk*M_B^(1/3)*lambda_B+x_Dbulk*M_D^(1/3)*lambda_D)/(x_Bbulk*M_B
+^(1/3)+x_Dbulk*M_D^(1/3)); % Gas mixture
+w_0=2;
+% m/s, bulk velocity of gas
+mu_g = 1e-5;
+% Pa s, dynamic viscosity
+rho_g = p_tot*((x_Bbulk*M_B+x_Dbulk*M_D)/1000)/(R*T); % kg/m^3, gas density
+Re = w_0*2*r_0/(mu_g/rho_g); % Reynolds number
+Sc = mu_g/(rho_g*D_BD);
+% Schmidt number
+Sh = 2+0.6*Re^(1/2)*Sc^(1/3); % Correlation for Sheerwood number of sphere
+h_B = Sh*D_BD/(2*r_0);
+% Mass transfer coefficient
+h_D = h_B;
+% Calculate the radii of the present fronts (Melchiori, Eqs. (2.109-110))
+% OBS! Radius not allowed to exceed
+r_0!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+94
+
+r_1 = r_0*min(1,(C_A/C_A0)^(1/3));
+r_2 = r_0*min(1,((C_A+a/c_1*C_C)/C_A0)^(1/3));
+r_3 = r_0*min(1,((C_A+a/c_1*C_C+a/c_1*c_2/e_1*C_E)/C_A0)^(1/3));
+% Diffusion coefficient of H20 function of iron shell thickenss%
+% D_BupF = D_eff/(1+exp(20*(-0.2+(r_0-r_3)/r_0)));
+if r_2 < r_1 | r_3 < r_2 | r_3 > r_0+1e-4
+r_0-r_3
+r_3-r_2
+r_2-r_1
+t
+disp('Arrgh')
+pause
+end
+% Set up equation system XX p = y to be solved
+%
+A11
+B11
+A12
+B12
+A13
+B13
+A21
+B21
+A22
+B22
+A23
+B23
+XX=[D_BupC/r_1^2+b_1*k_1p/r_1
+(-b_1*k_1p)
+0
+0
+0
+0
+(-b_1*k_1p/(K_1*r_1))
+b_1*k_1p/K_1
+0
+0
+0
+0;
+-d_1*k_1p/r_1
+d_1*k_1p
+0
+0
+0
+0
+D_DupC/r_1^2+d_1*k_1p/(K_1*r_1)
+d_1*k_1p/K_1)
+0
+0
+0
+0;
+-D_BupC/r_2^2+b_2*k_2p/r_2 (-b_2*k_2p)
+D_BupE/r_2^2
+0
+0
+0
+(-b_2*k_2p/(K_2*r_2))
+b_2*k_2p/K_2
+0
+0
+0
+0;
+-d_2*k_2p/r_2
+d_2*k_2p
+0
+0
+0
+0
+d_2*k_2p/(K_2*r_2)-D_DupC/r_2^2
+d_2*k_2p/K_2)
+D_DupE/r_2^2
+0
+0
+0;
+0
+0
+-D_BupE/r_3^2+b_3*k_3p/r_3
+b_3*k_3p)
+D_BupF/r_3^2
+0
+0
+0
+-b_3*k_3p/(K_3*r_3)
+b_3*k_3p/K_3
+0
+0;
+0
+0
+-d_3*k_3p/r_3
+d_3*k_3p
+0
+0
+0
+0
+d_3*k_3p/(K_3*r_3)-D_DupE/r_3^2 (-d_3*k_3p/K_3) D_DupF/r_3^2
+0;
+0
+0
+0
+0
+D_BupF/r_0^2-h_B/r_0
+h_B
+0
+0
+0
+0
+0
+0;
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+D_DupF/r_0^2-h_D/r_0
+h_D;
+-1/r_2
+1
+1/r_2
+-1
+0
+0
+0
+0
+0
+0
+0
+0;
+0
+0
+0
+0
+0
+0
+-1/r_2
+1
+1/r_2
+-1
+0
+0;
+
+(-
+
+((-
+
+95
+
+0
+1
+0
+0;
+
+0
+1/r_3
+
+-1/r_3
+
+-1
+0
+
+0
+0
+
+0
+0
+0
+0
+0
+0
+0
+-1/r_3
+1
+-1];
+yy = [0 0 0 0 0 0 h_B*c_Bbulk h_D*c_Dbulk 0 0 0 0]';
+p = XX\yy;
+
+0
+0
+1/r_3
+
+% Change to Melchiori's symbols
+A_11=p(1);
+B_11=p(2);
+A_12=p(3);
+B_12=p(4);
+A_13=p(5);
+B_13=p(6);
+A_21=p(7);
+B_21=p(8);
+A_22=p(9);
+B_22=p(10);
+A_23=p(11);
+B_23=p(12);
+% Calculate the gas concentrations at r_1 and r_2 (Melchiori, Eqs. (2.99110))
+c_B_r_1 = -A_11/r_1+B_11;
+c_B_r_2 = -A_11/r_2+B_11; %-A_12/r_2+B_12
+c_B_r_3 = -A_12/r_3+B_12;
+c_D_r_1 = -A_21/r_1+B_21;
+c_D_r_2 = -A_21/r_2+B_21; %-A_22/r_2+B_22
+c_D_r_3 = -A_22/r_3+B_22;
+if t>300*60
+%
+D_eff
+%
+D_DupF
+r_1
+r_2
+r_3
+for i=1:1001,
+rr(i)=(i-1)*r_0/1000;
+if rr(i)<r_1,
+c_B_r(i)=0;
+c_D_r(i)=0;
+else
+if rr(i)<r_2
+c_B_r(i)=-A_11/rr(i)+B_11;
+c_D_r(i)=-A_21/rr(i)+B_21;
+else
+if rr(i)<r_3
+c_B_r(i)=-A_12/rr(i)+B_12;
+c_D_r(i)=-A_22/rr(i)+B_22;
+else
+c_B_r(i)=-A_13/rr(i)+B_13;
+c_D_r(i)=-A_23/rr(i)+B_23;
+end
+end
+end
+end
+figure(4)
+
+96
+
+clf
+plot(rr,c_B_r)
+hold on
+plot(rr,c_D_r)
+pause
+end
+
+% Calculate the rates of the two reactions (Melchiori, Eqs. (2.89-90))
+R_1=3*r_1^2/r_0^3*k_1p*(c_B_r_1-c_D_r_1/K_1);
+R_2=3*r_2^2/r_0^3*k_2p*(c_B_r_2-c_D_r_2/K_2);
+R_3=3*r_3^2/r_0^3*k_3p*(c_B_r_3-c_D_r_3/K_3);
+% Calculate the time derivatives of the concentration of A and C
+(Melchiori, Eqs. (2.93-94))
+dC_Adt = -a*R_1;
+dC_Cdt = c_1*R_1-c_2*R_2;
+dC_Edt = e_1*R_2-e_2*R_3;
+% Rename and transpose
+dY(1)=dC_Adt/(C_A0*sigA*(1-sigA));
+dY(2)=dC_Cdt/(c_1/a*C_A0*sigC*(1-sigC));
+dY(3)=dC_Edt/(c_1/a/c_2*e_1*C_A0*sigE*(1-sigE));
+%15.13f',Y)
+dY=dY';
+
+File 2:
+% threefront
+Henrik Saxen 04-2021
+% Solves the differential equation dC_A/dt, cC_C/dt and dC_D/dt defined in
+threefront_diff
+% for the three reversible reactions
+%
+a A(s)+ b_1 B(g)? c_1 C(s) + d_1 D(g)
+% c_2 C(s)+ b_2 B(g)? e_1 E(s) + d_2 D(g)
+% e_2 E(s)+ b_3 B(g)?
+f F(s) + d_3 D(g)
+% applied to
+% 3Fe_2O_3(s) + H2(g) ? 2 Fe_3O_4(s) + H_2O(g)
+%
+Fe_3O_4(s) + H2(g) ? 3 FeO(s)
++ H_2O(g)
+%
+FeO(s )
++ H2(g) ?
+Fe(s)
++ H_2O(g)
+clear all
+global a b_1 b_2 b_3 c_1 c_2 d_1 d_2 d_3 e_1 e_2 f
+figure(1)
+clf
+% figure(2)
+% clf
+% Stoichiometric coefficients
+a=3;
+b_1=1;
+c_1=2;
+d_1=1;
+c_2=1;
+b_2=1;
+
+97
+
+e_1=3;
+d_2=1;
+e_2=1;
+b_3=1;
+f=1;
+d_3=1;
+% Parameters
+r_0=0.001101/2;
+V_0=4/3*pi*r_0^3;
+M_A = 0.156;
+
+% initial radius of particle
+% m3, volume of initial particle
+% kg/mol, molar mass of hematite (= A)
+
+% Coordinates of unit circle
+for i=1:37
+circ_x(i)= 1000*cos(i*pi/18);
+circ_y(i)= 1000*sin(i*pi/18);
+end
+% Time range and temperature points
+tint0=60;
+% Progress step-by-step using a time interval
+t_max=30*60+0.01; % Upper limit of time
+%Tval=[700 850 1000 1150]+273.15;
+T=1000; % K
+eps=0.22;
+rho_p=5.3e3*(1-eps);
+C_A0=rho_p/M_A;
+x_Bbulk=1.0;
+x_Dbulk=0;
+
+% kg/m3, particle density of hematite pellet
+% mol/m3, initial concentration of hematite
+
+while T >0
+T=input(' Temperature (K) = ');
+%
+r_0=r_0/1000; % m
+%
+k1=input(' Rate 1 (m/s) = ');
+%
+k2=input(' Rate 2 (m/s) = ');
+%
+k3=input(' Rate 3 (m/s) = ');
+%x_Bbulk=input(' x_H2(bulk) = ');
+%x_Dbulk=1-x_Bbulk;
+% Only H2 and H2O
+%
+if i==4, clf; pause(4); end
+%
+fprintf('\n k1, k2, k3 = %3.1f %3.1f %3.1f ',k1,k2,k3)
+% Apply transformation
+Y_A0=7;
+% Corresponds to C_A=C_A0
+Y_C0=-7;
+% Corresponds to C_C=0, no magnetite
+Y_E0=-7;
+% Corresponds to C_E=0, no wustite
+Y0=[Y_A0 Y_C0 Y_E0];
+% Initial state for the variables in
+differential equations
+Y=Y0;
+nostop=1;
+j=0;
+% Counter
+tint=tint0;
+% Maximum time interval
+tstart=0;
+% Lower limit of (first) time interval
+while nostop
+j=j+1;
+tend=tstart+tint;
+tspan=[tstart tend];
+[t1,Y1] = ode23t(@(t,Y)
+threefront_diff(t,Y,T,x_Bbulk,x_Dbulk,C_A0,r_0,eps),tspan,Y0);
+Y0=Y1(end,:);
+tstart=tend;
+
+98
+
+if j==1,
+tt=t1;
+YY=Y1;
+else
+tt=[tt' t1(2:end)']';
+YY=[YY' Y1(2:end,:)']';
+if t1(end)> t_max
+nostop=0; % Stop integrating if maximum time exceeded
+end
+%
+if C1(end,1)-1.2*(C1(1,1)-C1(end,1))<0
+% Criterion for
+reducing time interval when C_A=0 is approached
+%
+tint=tint/3;
+%
+if tint < 2
+%
+nostop=0; % Stop if less than 2 s left
+
+%
+%
+
+end
+end
+
+end
+end
+% Calculate and depict the concentrations
+CC=[];
+CC(:,1)=C_A0./(1+exp(-YY(:,1)));
+CC(:,2)=c_1/a*C_A0./(1+exp(-YY(:,2)));
+CC(:,3)=c_1/a/c_2*e_1*C_A0./(1+exp(-YY(:,3)));
+CC_F = 2*C_A0-(2*CC(:,1)+3*CC(:,2)+CC(:,3)); % Fe balance gives
+metallic iron concentration
+figure(1)
+yyaxis left
+plot(tt/60,CC(:,1)/C_A0,'k-')
+hold on
+plot(tt/60,CC(:,2)/C_A0,'r-')
+plot(tt/60,CC(:,3)/C_A0,'g-')
+plot(tt/60,CC_F/C_A0,'b-')
+xlabel(' t (min)')
+ylabel(' C_A/C_{A0}, C_C/C_{A0}, C_E/C_{A0}')
+yyaxis right
+Xred=1-(3*CC(:,1)+4*CC(:,2)+CC(:,3))/(3*C_A0); % Reduction degree
+plot(tt/60,Xred,'b--')
+ylabel(' Reduction degree')
+% Calculate the front radii
+r_1 = r_0*(CC(:,1)/C_A0).^(1/3);
+r_2 = r_0*((CC(:,1)+a/c_1*CC(:,2))/C_A0).^(1/3);
+r_3 = r_0*((CC(:,1)+a/c_1*CC(:,2)+a/c_1*c_2/e_1*CC(:,3))/C_A0).^(1/3);
+%
+figure(2)
+%
+plot(tt/60,1000*r_1,'k')
+%
+hold on
+%
+plot(tt/60,1000*r_2,'r-')
+%
+plot(tt/60,1000*r_3,'g-')
+%
+xlabel(' t (min)')
+%
+ylabel(' r_1, r_2, r_3 (mm)')
+% % %
+% Plot the pellets at some states
+%
+figure(3)
+%
+clf
+%
+for ii=1:16
+%
+ttt(ii)=tt(end)*ii/17; % Plot at discrete time steps
+%
+ii_set = find(tt<ttt(ii));
+%
+ii_max =max(ii_set); % Index of closest time lower than ttt(ii)
+%
+% Draw circles
+%
+subplot(4,4,ii)
+
+99
+
+%
+h=fill([r_0*circ_x r_3(ii_max)*circ_x],[r_0*circ_y
+r_3(ii_max)*circ_y],'b');
+%
+set(h,'edgecolor','blue');
+%
+hold on
+%
+h=fill([r_2(ii_max)*circ_x
+r_3(ii_max)*circ_x],[r_2(ii_max)*circ_y r_3(ii_max)*circ_y],'g');
+%
+set(h,'edgecolor','green');
+%
+h=fill([r_1(ii_max)*circ_x
+r_2(ii_max)*circ_x],[r_1(ii_max)*circ_y r_2(ii_max)*circ_y],'r');
+%
+set(h,'edgecolor','red');
+%
+h=fill(r_1(ii_max)*circ_x,r_1(ii_max)*circ_y,'k');
+%
+set(h,'edgecolor','black');
+%
+axis([-12 12 -12 12])
+%
+axis equal
+%
+time=sprintf('%4.1f min',tt(ii_max)/60);
+%
+title(time)
+%
+end
+%
+xlabel(' t (min)')
+%
+ylabel(' r (mm)')
+pause(2)
+end
+
+References
+Abd Elhamid, M. H., Ateya, B.G., El Anadouli, B. E., Khader, M. M., Mahgoub, A. E. (1996).
+Autocatalytic reduction of hematite with hydrogen under conditions of surface control: a
+vacancy-based mechanism. Journal of solid state chemistry, volume 123, issue 2, pages 249–
+254
+Abdelghani, A., Fan, D., Sohn, H. Y. (2021). Design of novel flash ironmaking reactors for
+greatly reduced energy consumption and CO2 emissions. Metals 2021, 11, 332.
+Atsushi, M., Sakaguchi, T., Uemura, H. (2010). MIDREX processes. [pdf]. Acquired from:
+https://www.kobelco.co.jp/english/ktr/ktr_29.html. Acquired 29.04.2021
+Barde, A. A., Klausner, J. F., Mei, R. (2016). Solid state reaction kinetics of iron oxide
+reductionusing hydrogen as a reducing agent. International Journal of Hydrogen Energy
+Volume 41, Issue 24, pages 10103–10119
+Basile, A., Comazzi, A., Galli, F., Iulianelli, A., Manenti, F., Pirola C. (2015). Membrane
+reactions for energy applications and basic chemical production. Woodhead Publishing Series
+in Energy. Elsevier. pages 3–29.
+Béchara, R., Hamadeh, H., Mirgaux, O., Patisson, F. (2018). Optimization of the iron ore direct
+reduction process through multiscale process modeling. [www]. Acquired from:
+https://europepmc.org/article/pmc/pmc6073552. Acquired 09.04.2021
+100
+
+Bonalde, A., Henriquez, A., Manrique, M. (2005). Kinetic Analysis of the Iron Oxide Reduction
+Using Hydrogen-Carbon Monoxide Mixtures as Reducing Agent. ISIJ International, Vol. 45
+No. 9, pages 1255–1260.
+Canu,
+
+P.
+
+(2014).
+
+Reacting
+
+solids
+
+–
+
+evolution
+
+models.
+
+[pdf].
+
+Acquired
+
+from:
+
+https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwjeu
+MXMnsTwAhWJtYsKHQbhDOkQFjAKegQIBRAD&url=http%3A%2F%2Fweb.abo.fi%2F
+fak%2Ftkf%2Ftek%2FFiles%2Fcacre2014%2FReactingSolids-PC2.pdf&usg=AOvVaw1dDRzTQFyr1c-qYWgbOnpc. Acquired 13.05.2021
+Cavaliere P. (2019) Blast Furnace: Most efficient technologies for greenhouse emissions
+abatement. in: clean ironmaking and steelmaking processes. Springer, Cham. Acquired from:
+https://doi.org/10.1007/978-3-030-21209-4_4. Acquired 29.01.2021.
+Chacha, P., Chin, F. K., Florence-Damilola, O., Galaxy, M., Guenevieve, D. M., Kan, Kareem,
+M.
+
+(2020).
+
+Arrhenius
+
+equation.
+
+[www].
+
+Acquired
+
+from:
+
+https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Ma
+ps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Kinetics/06%3A_Modeli
+ng_Reaction_Kinetics/6.02%3A_Temperature_Dependence_of_Reaction_Rates/6.2.03%3A_
+The_Arrhenius_Law/6.2.3.01%3A_Arrhenius_Equation. Acquired 29.01.2021.
+Chattarjee, R., Ghosh, D., Kuila, S. K. (2016). Kinetics of hydrogen reduction of magnetite ore
+fines. International journal of hydrogen energy, 41, pages 9256–9266.
+Chen, Z., Dang, J., Hu, X., Yan, H. (2018). Reduction kinetics of hematite powder in hydrogen
+atmosphere at moderate temperatures. [pdf]. Acquired from: https://www.mdpi.com/20754701/8/10/751?type=check_update&version=1. Acquired 05.01.2021.
+Dong, J., Jiao, K., Wang, C., Xu, R., Zuo, H. (2015) Reduction kinetics of iron oxide pellets
+with H2 and CO mixtures. International Journal of Minerals, Metallurgy and Materials Volume
+22, Number 7, July 2015, pages 1–9.
+Efstathiou, A. M., Kalamaras, C. M. (2013). Hydrogen production technologies: current state
+and future developments. Hindawi Publishing Corporation Conference Papers in Energy.
+Volume 2013, Article ID 690627.
+El-Geassy, A. A., El-Kashif, F. O., Nasr, M. I., Omar, A. A. (1994). Kinetics and mechanisms
+of re-oxiation of freshly reduced iron compacts. ISIJ International, Vol. 34, no 7, pages 541–
+547.
+101
+
+El-Geassy, A. A., Ezz, S. Y., Shehata, K. A. (1976). Mechanism of iron oxide reduction with
+hydrogen/carbon
+
+monoxide
+
+Mixtures.
+
+[pdf].
+
+Acquired
+
+https://www.jstage.jst.go.jp/article/isijinternational1966/17/11/17_629/_article.
+
+from:
+Acquired
+
+04.01.2021.
+El-Geassy, A., A., Rajakumar, K. (1985). Gaseous reduction of wustite with H2, CO and H2CO mixtures. ISIJ, 1985 Volume 25 Issue 12, pages 1202–1211.
+Fabritius, T., Heikkinen, E-P., Kemppainen, A., Mattila, O., Paananen, T. (2012). Effect of H2H2O on the reduction of olivine pellets in CO-CO2 gas. ISIJ International, Vol. 52, pages 1973–
+1978.
+Gaballah, I., Kanari, N., Pineau, A. (2007). Kinetics of reduction of iron oxides by H2 Part II.
+Low temperature reduction of magnetite. Thermochimica Acta 456, pages 75–88.
+Ghadi, A. Z., Vahedi, S. M., Valipour, M. S., Sohn, H. Y. (2020). A review on the modeling of
+gaseous reduction of iron oxide pellets. Steel research int. 2020, 91, 1900270.
+Gao, P., Han, Y., Li, W., Li, Y., Yu, J. (2017). Mechanism and kinetics of the reduction of
+hematite to magnetite with CO-CO2 in a micro-fluidized bed. Minerals 2017, 7, 209
+Habermann, A., Hofbauer, H., Schenk, J. L., Winter, F., Zirngast, J. (2000). An experimental
+study on the kinetics of fluidized bed iron ore reduction. ISIJ International, Vol. 40 (2000), No.
+10, pages 935–942
+Idriss, H., Scott, M., Subramani, V. (2015). Compendium of hydrogen energy. Woodhead
+Publishing Series in Energy. Elsevier, Pages 3–19.
+Kazemi, M. (2016). Fundamental studies related to gaseous reduction of iron oxide. ISBN
+978-91-7729-061-2.
+Melchiori, T. (2014). Study of non-catalytic gas-solid reactions: development of a single
+particle model. Acquired from: http://paduaresearch.cab.unipd.it/6402/. Acquired 02.05.2021
+Minamide, Y., Naito, M., Ohmi, M., Usui, T. (1982). Experimental study of the resistance due
+to the rate of gas flow on the hydrogen reduction of an iron oxide pellet. Transactions ISIJ,
+Vol. 23, 1983
+Mirgaux, O., Patisson, F. (2020). Hydrogen Ironmaking: How it works. Metals 2020,10, 922
+
+102
+
+Mondal, K., Lorethova, H., Piotrowski, K., Stonawski, L., Szymanski, T., Wiltowski, T.
+(2005). Effect of gas composition on the kinetics of iron oxide reduction in a hydrogen
+production process. International Journal of Hydrogen Energy 30, pages 1543–1554.
+Mostinsky,
+
+I.
+
+L.
+
+(2011).
+
+Diffusion.
+
+[www].
+
+Acquired
+
+from:
+
+https://www.thermopedia.com/content/695/. Acquired 08.02.2021
+Schenk, J., Spreitzer, D. (2020). Reduction of Iron Oxides with Hydrogen - A Review. steel
+research int. 2019, 90, 1900108
+Szent-Gyorgyi, A. (2006). Diffusion and reaction. Elements of Chemical reaction engineering,
+fourth edition.
+Valipour, M. S. (2009). Mathematical modeling of a non–catalytic gas-solid reaction: hematite
+pellet reduction with syngas. Transactions C: Chemistry and Chemical Engineering Vol. 16,
+No. 2, pages 108–124
+Valipour, M. S., Mokhtari, M. H. (2011). Effect of water gas shift reaction on the nonisothermal reduction of wustite porous pellet using syngas. International journal of ISSI, Vol.
+8, No. 2, pages 9–15.
+Walker,
+
+R.
+
+D.
+
+(2017).
+
+Iron
+
+processing.
+
+[www].
+
+Acquired
+
+from:
+
+https://www.britannica.com/technology/iron-processing. Acquired 28.01.2021.
+Winn,
+
+J.
+
+S.
+
+(2004).
+
+Stoichiometry
+
+of
+
+iron
+
+oxides.
+
+[www].
+
+https://www.dartmouth.edu/~genchem/0304/winter/5w04/lecture/rust.html.
+
+Acquired
+
+from:
+
+Acquired
+
+03.01.2021.
+
+103
+
+

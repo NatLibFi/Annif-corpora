@@ -1,0 +1,1293 @@
+JUNE 24, 2021
+
+OVERVIEW OF NOSQL DATABASES
+
+MASTER’S THESIS IN COMPUTER SCIENCE
+
+PRANOY RANJAN BHOWMICK
+
+ÅBO AKADEMI UNIVERSITY
+Student ID: 42125
+
+Abstract
+The proliferation of big data necessitates the business storing an increasing amount of data.
+The data in the enterprise's database must be accessible quickly. However, the Relational
+Database (RDB) is limited in its speed due to the join process. Therefore, numerous businesses
+have shifted to NoSQL databases, which can fulfill the need for rapid data access. Nonetheless,
+there are hundreds of NoSQL databases. It is critical to choose an appropriate NoSQL database
+for a particular business since this choice will affect the performance of the enterprise's
+operations. Four major types of NoSQL databases will be discussed in this thesis paper to
+determine their features and compare them to one another. Some ideas and examples are
+provided for selecting a suitable NoSQL database for various sectors and a comparison of
+NoSQL with RDBMS.
+
+Subject headings, (Keywords) : Key-value pairs database, Document-oriented database,
+Wide column database, Graph database, NoSQL database.
+
+Table of Contents
+Introduction ................................................................................................................................ 4
+Different types of NoSQL .......................................................................................................... 3
+1. Key-value pairs NoSQL database ...................................................................................... 3
+Basic ideas .......................................................................................................................... 3
+Typical key value design and operations ............................................................................ 3
+Operations ........................................................................................................................... 4
+Essential features and key characteristics ........................................................................... 6
+Advantages and drawbacks ................................................................................................ 7
+Use cases............................................................................................................................. 8
+2. Document-oriented database .............................................................................................. 8
+Basic idea ............................................................................................................................ 8
+General document storage design ....................................................................................... 9
+Characteristics/ features .................................................................................................... 13
+Advantages ....................................................................................................................... 14
+Disadvantages ................................................................................................................... 15
+Use Cases with examples ................................................................................................. 15
+3. Wide-column database ..................................................................................................... 16
+Basic idea .......................................................................................................................... 16
+Typical storage design and characteristics ....................................................................... 16
+Advantages ....................................................................................................................... 18
+Disadvantage .................................................................................................................... 19
+Use Cases .......................................................................................................................... 19
+4. Graph database ................................................................................................................. 21
+Basic idea .......................................................................................................................... 21
+Data storage design ........................................................................................................... 22
+Features and Characteristics ............................................................................................. 24
+Advantages ....................................................................................................................... 25
+Disadvantage .................................................................................................................... 26
+Use cases........................................................................................................................... 27
+Comparison of RDBMS and NoSQL ...................................................................................... 28
+CAP Theorem ....................................................................................................................... 28
+The CAP trade-off ............................................................................................................ 31
+
+ACID properties in RDBMS ................................................................................................ 33
+Base vs ACID ....................................................................................................................... 35
+Differences between RDBMS and NoSQL.......................................................................... 35
+Conclusion and Discussion ...................................................................................................... 39
+References: ............................................................................................................................... 41
+
+Preface
+This thesis paper has overviewed NoSQL Databases and their properties, storage design, uses,
+advantages and drawbacks. In addition, I compared NoSQL databases and RDBMSs in terms
+of design and various issues. Furthermore, I have also discussed the similarities and differences
+between the different NoSQL types. By researching fundamental database characteristics and
+needs, I have gained a better understanding of NoSQL's growing popularity. I want to thank
+my teacher, mentor, and supervisor, Mr. Mats Aspnäs, who guided me throughout the process
+and gave me valuable suggestions, which helped me focus on my thesis. Furthermore, I want
+to thank him for encouraging me to overcome the difficulties I have faced during my thesis
+writing. I'd also like to thank all of my teachers, especially my course teacher, Maria Walden,
+who guided me through my Master's program and helped me through difficult times. Thank
+you all.
+
+Introduction
+NoSQL, an acronym for "Not Only SQL," refers to a diverse and increasingly recognized set
+of non-relational data management systems in which databases are not mainly based on tables
+and do not often utilize SQL for data manipulation. NoSQL database management solutions
+are advantageous for dealing with large amounts of data that do not need a relational paradigm.
+Carlo Strozzi coined the word NoSQL in 1998 to refer to his open-source, lightweight
+"relational" database that did not require SQL. In 2009, Eric Evans and Johan Oskarsson
+adopted the term to refer to non-relational databases [1]. However, SQL systems are frequently
+used to refer to relational databases. Thus, the word NoSQL can refer to either "No SQL
+systems" or the more widely recognized translation "Not Only SQL" to stress that specific
+systems may support SQL-like query languages.
+Before discussing NoSQL, it is necessary to discuss relational databases, which serve as a good
+benchmark for comprehending non-relational databases. The Relational Database (RDB) was
+designed more than 50 years ago to support commercial data processing. It is based on the
+relational paradigm. Since then, it has grown to be the best location for storing data of all types,
+including corporate and personal data. The relational database, invented by Edgar F. Codd in
+1970, organizes data into distinct rows and columns by associating a unique key with each row
+[2]. Almost all relational database systems are incredibly complicated and are written in
+Structured Query Language (SQL). Historically, they have been more rigid or controlled
+systems, with a limited or restricted ability to transform complex data, such as unstructured
+data. Nevertheless, SQL systems continue to be widely used and are extremely valuable for
+keeping reliable transactional records, historical data sources, and various other use cases in
+businesses of all kinds.
+Since 1970, user needs and numerous hardware features have been developed, including data
+warehouses, text management, and stream data processing. These processes have significantly
+different requirements from those associated with conventional corporate data processing.
+Additionally, web 2.0 technologies support various applications that need the storage and
+processing of large quantities of data, necessitating high availability and scalability, posing
+additional difficulties for relational databases [3]. In the mid-1990s, the internet acquired
+enormous popularity, and relational databases could not keep up with the increased flow of
+information required by users and the resulting diversity of data types. This resulted in the
+[1]
+
+creation of non-relational databases, often known as NoSQL databases. NoSQL databases can
+rapidly convert unusual data and avoid the rigidity of SQL by substituting more flexible storage
+for "organised" storage.
+While relational databases remain the most frequently used application, they are unsuitable for
+dealing with real-time data's exponential rise. For example, the exceptional growth of big data
+and unstructured data fetched from the web is a challenge for relational databases. Globally,
+the quantity of data produced, collected, transferred, and consumed is expected to grow fast,
+reaching 64.2 zettabytes in 2020. Global data production is expected to reach more than 180
+zettabytes during the next five years, up to 2025. [4]. Many developers have switched to
+NoSQL databases to assist them in handling the difficulties of this unstructured growth.
+NoSQL databases are used by businesses such as Amazon, Google, Twitter, and Facebook that
+need enormous amounts of data that relational databases cannot handle. These databases can
+process unstructured data from today's social media, email, and documents effectively. Several
+examples are provided below:
+Google Cloud Platform (GCP) provides a comprehensive set of database services. Its NoSQL
+database services are unusual in quickly handling large, dynamic datasets that lack a defined
+structure. Google Cloud Platform supports various NoSQL services, including Cloud Firestore,
+Cloud Datastore, Cloud Bigtable, and MongoDB Atlas [5]. Amazon utilizes its own database,
+Amazon DynamoDB, a NoSQL key-value, and document database with sub-millisecond
+response times. It is a fully managed, multi-region, multi-active, and persistent database
+designed for internet-scale applications. In addition, it has built-in security, backup and restores
+capabilities, and in-memory caching. DynamoDB can handle over 10 trillion queries per day
+and peaks of over 20 million requests per second [6]. Furthermore, a considerable amount of
+real-time social media data is extracted from the Twitter network through live-streaming using
+the Twitter Streaming APIs and then modeled on Apache Cassandra using a Query-Driven
+method. This architecture facilitates the capture of provenance for choosing, aggregating,
+updating, and historical queries [7].
+However, over 225 NoSQL databases are available [8], and selecting a suitable NoSQL
+database for a particular company is critical since changing the database may negatively impact
+the enterprise's business operations. This thesis summarizes basic concepts, compares the data
+formats and features, and the differences between RDBMS and NoSQL and their security
+issues.
+[2]
+
+Different types of NoSQL
+There are four main types of NoSQL databases based on data modelling techniques: Key-value
+pairs, Document-oriented, Wide-column, and Graph databases. This section focuses on their
+unique basic ideas, data storage structure, operating techniques, characteristics, advantages,
+drawbacks, and use cases.
+
+1. Key-value pairs NoSQL database
+Basic ideas
+A key-value pair database, or key-value store, is one of the four main types of NoSQL database
+and the most straightforward or typical data storage paradigm. Its description is given in its
+naming, which refers to the fact that it uses a simple method of storing data as pairs to the
+corresponding database as a set of unique identifiers (keys), each of which has an associated
+value. An associative array or a real-life dictionary has a similar concept compared to the
+simplest form of a key-value store. In an associative array, the same type of values (objects)
+can be identified by keys associated with corresponding integer numbers called indexes.
+Another real-life example of a key-value database is the dictionary. It(dictionary) has a pairs
+collection of words, and there is a corresponding definition (sometimes very elaborate) for each
+word (key). A person can retrieve the definition of a specific word just by scanning the list of
+words (keys) and will be faster than scanning the definitions (though it is possible in terms of
+dictionary but takes too much time).
+
+Typical key value design and operations
+There are two major elements in a key-value database, and they are: Key, Value.
+Characteristics of a key:
+1. Unlike the RDMS keys, these keys can be number, string, Json, uncommon binary data
+type (image), or even set or list. Sometimes it may be a BLOB. Foreign key does not
+exist in key-value pair database.
+
+[3]
+
+2. There is no method to scan or search values in key-value databases, so the right key
+naming strategy is crucial without using many namespaces.
+3. Unlike RDMS’s key, to retrieve all the information of a given object, a key-value
+store’s keys should be meaningful and chosen very carefully concerning the
+aggregation boundaries.
+4. In a key-value store database, the design of naming keys should be done keeping in
+mind the facts of specifically targeted data and not just a random sequence number.
+Characteristics of Value:
+1. It increases the efficiency of writing and reading, limitation of values, and latency
+reduction; aggregation boundaries should be checked carefully like key naming
+strategy.
+2. Unlike RDMS, big aggregation is a common practice in terms of storing values in the
+key-value database.
+3. The standard strategy used in storing values is to keep together all the commonly used
+information.
+4. The nature of stored values could be structured or unstructured without defaults and
+constraints.
+5. Small values support memory buffer (cache).
+Operations
+On a key-value database, there are only three operations possible. The specifics of the
+following operations are dependent on the consistency model and indexing. The following
+operations are available:
+1. put (key, value): The user uses put command to add a new key-value pair to the table or
+update a value if this key is already in the table.
+2. get (key): The user uses the get command, if he wants to return any value if it exists for an
+associated key in the table.
+3. delete (key): The user uses the delete command to remove a key (if the key exists) and its
+value from the table.
+
+[4]
+
+These single-key actions do not allow for simultaneous manipulation of multiple values. Figure
+(1) illustrates a typical simple key-value store used by an online shopping system. It is assumed
+that product records are queried using the indexed key, system-generated or applicationdefined (URI, hash, or filename). Moreover, that product's values that are rarely modified may
+represent an arbitrary type, structure, or size (e.g., text, document, or picture) that is uniquely
+identified by that key.
+
+Most existing key-value stores place data in a single global environment, which can lead to
+conflicting between key names in large databases. That is why key-value databases include a
+feature called buckets, which allows clients to create independent namespaces, which are
+logical data structures that may hold any number of key-value pairs.
+
+[5]
+
+Suppose that a Stock Trading business system uses a key-value store database to store data, as
+shown above in Figure 2. This database includes several namespaces, such as “Buy Stocks”
+and “Sell Stocks”, where,
+1. The key in the namespace “Buy Stocks” is the ID of buying stocks, and the value is the
+details of the client or company who is buying that stock.
+2. The key in the namespace “Sell Stocks” is the ID of selling stocks, and the value is the details
+of the client or company who is selling that stock.
+
+Essential features and key characteristics
+Simplicity
+The phrase "simplicity" comes to mind when discussing key-value databases. Because a keyvalue store does not impose any structure on the data, it allows considerable flexibility and
+freedom in modelling data (types, attributes) to meet the application’s demand. There is no
+need to update the database code to reflect the new attribute set and BLOBs (more often called
+binary big object, or sometimes basic big object) allowing programmers to insert any types of
+data that the application may subsequently alter.
+
+High performance and speed
+In contrast to standard relational databases, a key-value store does not need searching through
+columns or tables in order to locate an object. Each query specifies the key explicitly and
+always returns a single value; it does not conduct complex query-resolving logics such as lock,
+join, union, or other operations when dealing with objects. Their only responsibility is to locate
+the matching value utilizing data-intensive operations such as get, put, and delete, which makes
+them very adept at processing constant streams of read/write operations.
+
+Scalability
+Scalability is another most wanted feature of key-value stores. This type of database handles
+size well, and all write and read requests are independent with no relational dependencies,
+which makes it highly scalable. Scalability of key-value stores is achieved by the use of
+partitioning (distributed data storage across several nodes), replication, and auto recovery.
+[6]
+
+They can scale by keeping the database in RAM and avoiding locks, latches, and low-overhead
+server calls in order to minimize the impact of ACID guarantees (a guarantee that committed
+transactions to persist somewhere). The majority of key-value databases support on-demand
+scaling out on commodity hardware without requiring extensive database redesign.
+
+Advantages and drawbacks
+Advantage:
+Cache capabilities: Despite some differences, the NoSQL key-value database has an integrated
+capability similar to cache of keeping frequently used data in memory and quickly accessing it
+late to improve performance.
+Personalized and increased user experience: When consumers surf the web, use social media,
+or make transactions online, they leave a digital footprint of their habits and interests.
+Administrators may use this information to identify and profile consumers, as well as their
+behaviour and interests. The key-value store database can handle this massive amount of data
+and scale up easily while maintaining its speed. Administrators may then retrieve data quickly
+to identify customers and their behaviours and preferences at this speed. This data enable the
+customization of the user experience within a high-performance environment.
+Faster Application Response: A key-value database allows for immediate data retrieval,
+advantageous for real-time statistics applications. Additionally, its speed and reliability of
+retrieving data quickly across several channels help applications access numerous platforms or
+web servers and integrate multi-channel applications smoothly, enabling them to operate as a
+unified operating system.
+Portability and operational cost-effectiveness: Migrating a specific application across systems
+without changing code or developing a new architecture is a significant advantage of a keyvalue store. Due to its portability and cost-effectiveness, businesses may vary their product
+offerings across various operating systems without jeopardizing their core technology.
+Drawbacks:
+1. The only method of retrieving any information is through a key. Due to the lack of columntype relations, the process of updating and retrieving a specific part of a value is time[7]
+
+consuming and expensive compared to SQL databases due to the absence of column-type
+relations.
+2. When several transactions are conducted, the key-value store database architecture is not
+intended to maintain consistency. The application developer is responsible for maintaining the
+application's consistency.
+3. As the number of consumers rises, the volume generated grows proportionately. Creating
+and maintaining millions of unique keys for ever-increasing data becomes more challenging,
+for which a well-designed algorithm is needed to generate complicated and unique character
+strings.
+Use cases
+1. A key-value store works better for session data in session-oriented systems, such as web
+applications, where a session begins with a user signing in and is active until the user logs out
+or the session times out. Data will be stored in memory or a database throughout this time
+period. Session data may comprise a user profile, various messaging, targeted promotions, and
+discounts. Every session is uniquely identified, and only primary keys access the session data.
+2. The e-commerce platform receives billions of orders throughout the shopping season. The
+ability to scale massive quantities of data and manage very high quantities of state changes is
+made possible by using key-value databases. It is possible to handle the loss of storage nodes
+with the built-in redundancy feature in the key-value database.
+3. Arithmetic operations such as increment, decrement, and number-modifying operations are
+often fast in key-value stores, ideal for telemetry or analytics like counting page views on a
+high-traffic site.
+
+2. Document-oriented database
+Basic idea
+A document database is considered an aggregate-oriented database, which is analogous to the
+key-value base to some extent or is seen as further developing the key-value database, as
+explained in the above section. As with any NoSQL database, a document database is "schema[8]
+
+free," with the document serving as the most fundamental data unit, similar to the row in a SQL
+database. The documents are generally ordered collections of key-value pairs, similar to those
+in the key-value databases, and permit nested key-value pairs. However, the value comprises
+more complicated data types, such as structured or semi-structured data.
+
+General document storage design
+Any data associated with a user's record is stored as a single document in a document-oriented
+database. The collection is composed of several documents usually related to the same subject.
+Document-oriented databases generally support secondary indexes wherein each document, a
+value usually linked to a key, contains a set of encapsulated fields; each can be individually
+indexed.
+
+Atomic or composite values of a document in hierarchy form are considered embedded
+documents. It improves database performance by enabling users to store related data in a single
+document.
+Users can store any type of information in a document that does not require specifying the
+structure before adding documents to a collection formally. However, most of the document
+[9]
+
+databases tend to be concerned about using schema with a predefined file format and structure.
+Document-oriented databases are capable of understanding and querying various forms of data,
+including XML (eXtensible Markup Language), JSON (JavaScript Object Notation) and
+BSON (Binary JSON), among others, using a self-describing, hierarchical tree data structure
+composed of maps, collections, and scalar values. The majority of document databases allow
+data access through the HTTP protocol either using a RESTful API or over the Apache Thrift
+protocol, which provides cross-language interoperability.
+A document-oriented database is capable of storing various types/formats of documents within
+it, with the fields included inside each format being optional. Users may often encode using a
+variety of alternative coding techniques as well.
+For instance, the following JSON-encoded document is stored in a document-oriented
+database:
+{
+"player’s Name": "Ronaldo",
+"Address": "6 Henry St., Portugal",
+“Nationalities”: “Portugal”,
+“Salary”: “10 million”,
+“Contract”: “Valid”,
+"Position": "Forward"
+}
+There is another second document encoded in XML also stored in same database as:
+<contact>
+<firstname>Lioen</firstname>
+<lastname>Messi</lastname>
+<phone type="Agent">(240) 515-0163</phone>
+<address>
+<type>Home</type>
+<street1>4 Privet Dv.</street1>
+<city>Boka Juniors</city>
+<state>ARC</state>
+[10]
+
+<zip>367</zip>
+<country>Argentina</country>
+</address>
+</contact>
+
+Though the fundamental architecture of each document is consistent, the fields are unique. The
+document's information and design are often referred to as its content, which the user may
+access through updating or retrieval.
+Unlike RDBMS, there are no blank fields in documents, and it is not required to have a similar
+structure for all other records to add new information to the records. Instead of restricting the
+entire database, users can only do it on the new entries to update the database. Each document
+is identified by a unique identifier that enables the user to add, amend, delete, and query data.
+However, the identifier is not very important. Users may access documents by either utilizing
+the whole route or a simple number of series. Documents themselves are searched, and data
+are extracted directly from the document during the information querying instead of searched
+or extracted from database columns.
+Here are some more examples of document content using JSON:
+One document may provide information about a student whose whole details are not
+completely known:
+{
+"StudentID": "SDM11",
+"FirstName": "Uccash",
+"LastName": "Paul",
+"Age": 15,
+"Sex": Male
+}
+A second document may have complete details about another student:
+{
+"StudentID": "SDF22",
+"FirstName": "Payel",
+"LastName": "Sarker",
+[11]
+
+"Age": 14,
+"Sex": Female,
+"Address": {
+"Line1": "12/kha, 6th Street",
+"City": "Sodor",
+"State": "Mymensingh"
+},
+"Projects": [
+"Drone-simulator",
+"project no- 08"
+]
+}
+A third document may contain the data about one of the school locations:
+{
+"AreaID": "Dhaka-CDS-TPB-NVRC",
+"SchoolName": "Dhaka City college"
+"RegisteredAddress": {
+"Line1": "453, 3rd Street",
+"City": "Metropoliton-1",
+"State": "Dhaka"
+},
+}
+The examples above show that the first two JSON-encoded documents have some similar
+contents compared to the third document, where the second document has more details than
+the first. The first two documents contain student information, while the third document
+contains school location information.
+The StudentID or AreaID may not be the document ID. However, when the database enables
+access through RESTful APIs, the document ID is either included in the URL or specified
+within the request's body. Moreover, embedding the document ID in a document's standard
+location is considered best practice, though it is not always necessary or mandatory.
+For example, the modified content may be:
+[12]
+
+{
+"docmentId": "SDM11",
+...
+}
+{
+"docmentId": "MDF22",
+...
+}
+{
+"docmentId": " Dhaka-CDS-TPB-NVRC ",
+...
+}
+This flexibility is provided by document-oriented databases—dynamic or changing schema, or
+even schema less documents.
+
+Characteristics/ features
+Nature of Data
+A document-oriented database supports encoded file/document formats such as JSON and
+XML for storing structured and semi-structured data depending on the user’s application. This
+JSON and XML format supports the storage and transmission of a wide variety of data types
+such as integers, chains, Booleans, and data arrays. Semi-structured data, such as free text, can
+also be stored in JSON format as key-value pairs where users can create an index that enables
+searching for specific chains inside the text.
+Data relationship and referential integrity
+As a document store, objects may be serialized and stored in documents that are entirely
+independent of one another, and there is no need for or enforcement of relational integrity.
+However, document relationships are maintained solely at the application layer, where a
+document identifier (embedded in the document) is added as a reference to other documents to
+create relationships between two entities.
+[13]
+
+Built-in versioning
+As the database grows in size and complexity, the user can add new fields to documents by
+assigning them a version number. The majority of solutions available today use versioning to
+avoid conflicts and maintain processing efficiency. In a document-oriented database, a TTL
+(time to live) value can be set and defined (based on a specific date) in a document which will
+cause the GC (garbage collector) to destroy the whole document when the TTL expires.
+
+Data manipulations and analysis
+Data manipulation in document collections can be done using CRUD operations (CREATE,
+READ, UPDATE, DELETE). Document-oriented databases use the "Map-Reduce" algorithm
+to do data aggregation on document collections.
+
+Persistency and fault tolerance
+A document-oriented database allows a flexible feature called data replication which provides
+better system availability in times of sudden or incorrect shutdown of a database. This failover
+process puts all pending write operations in a temporary log file which can be recovered quickly
+and performed later.
+
+Advantages
+1. A document database may dynamically store vast amounts of data in unstructured, semistructured, or structured formats. Additionally, it can generate persisted views from a base
+document and store them for analytic purposes.
+2. Putting constraints on the data structure or format and declaring them in advance is not
+mandatory in a document-oriented database. Because of this advantage, the system can grow
+by adding more data without changing the existing data format. The document's design can be
+modified at any moment, and there is no need for schema migration. This technique of storing
+different types of content over time allows web-based applications to evolve.
+
+[14]
+
+3. Document-oriented databases are quicker and simpler to design for developers due to their
+intuitive data modelling. They can make documents more intuitive to handle by mapping the
+object in their code into documents. As a result, data partitioning between tables, performing
+expensive JOINS, or integrating a separate ORM (Object-Relational Mapping) layer is
+unnecessary. Data that are accessed together are stored together and, for that reason, developers
+write less code and provide higher performance to their users.
+4. Flexible indexing, powerful ad hoc queries, and analytics over collections of documents are
+all capabilities of document databases.
+
+Disadvantages
+1. It is challenging to create relationships between documents, which creates complexity.
+2. References do not work well in document databases and become frustrating to use
+sometimes.
+3. Managing multiple documents in document databases can be challenging at times.
+4. Aggregation operations may not be accurate sometimes in document databases.
+
+Use Cases with examples
+Various web applications use document databases for blogging platforms where the blogger
+posts his blogs, e-commerce applications, content management systems, web analytics, and
+video platforms. Each entity that the application tracks may be kept as a separate document in
+a document database. Developers can easily update applications as requirements evolve and
+only update the affected documents if the data model changes. Schema update and database
+downtime do not need to change.
+Document databases are an efficient and effective way to store catalogue data such as user
+account information, product catalogues and device registers for the Internet of Things (IoT).
+Thousands of different products or users have different attributes or details in an online shop.
+It is inefficient to manage this amount of unstructured data in RDBMS and will affect the
+reading performance. The document database is used for easy management and faster reading
+[15]
+
+performance. Each product's attribute details can be stored in a single document and will not
+affect others at the time of update. Moreover, document database is also used to store and
+update the unstructured data generated by users, such as chat sessions, tweets, movie ratings,
+and comments.
+The gaming industry makes extensive use of the concept of a document-oriented database to
+store massive amounts of data such as in-game statistics or chat messages, social media
+integration, player guild memberships, challenges completed missions, and so on. Various
+random sensor data from mobile devices, log files in a network, real-time analytics data, and
+various other data from IoT devices are stored as documents in document databases.
+
+3. Wide-column database
+
+Basic idea
+A wide column-store database is one of the four significant NoSQL databases, also known as
+column database, column family database, column-oriented database, wide-column store
+database, columnar database, and columnar store. Database management systems aggregate
+similar facts into columns and provide multi-dimensional, nested maps of maps, where data is
+kept in column cells and organized into column families. Wide-column databases, like
+relational databases, store data in rows and columns but can handle more ambiguous and
+complicated data types, such as unformatted text and images. All column families are stored in
+a keyspace in wide-column databases. Each column family consists of several rows, each of
+which has numerous columns. Data stored as a name/value pair in each column of a particular
+row with a timestamp explains that data is physically kept per column-family rather than per
+row.
+Typical storage design and characteristics
+In NoSQL, the column data store uses an object called keyspace to group together all of a
+database's column families. It is the data store's outermost grouping of data. It is similar to the
+idea of a schema in relational database management systems. The keyspace typically contains
+N column families that are related to one another. A column family consists of multiple rows.
+For instance, a keyspace name such as Product_inventory can have column families such as
+Products and Inventory associated with each other. A column family's structure is malleable
+[16]
+
+since its columns may be added or deleted at runtime. Typically, a column family is a logical
+division of similar data in NoSQL similar to the table in RDBMS.
+Each row typically consists of simple or complex structured data types identified uniquely by
+a string row identifier or key. The row key must be unique within a column family but can be
+reused in another. Additionally, users can also use different data types for each row key.
+Suppose in the same column family, User-1 wants to use a cell_number as a row key, and User2 wants to use an email as the row key, which is possible.
+
+Figure 1: Wide-column database storage representation
+A row can contain any number of columns with no limit where each column stores data as a
+series of nested (name, value) pairs which are analogous to key-value stores. The column name,
+column number, and data type of columns in a row may differ from those in other rows. Unlike
+the name of a column family, a column qualifier does not need to be defined during the creation.
+[17]
+
+Typically, wide-column stores maintain an arbitrary number of copies of each cell value,
+indexed by timestamps. It can either be specified from the client-side application or can
+automatically be assigned by the store. A timestamp (abbreviated as ts) is an integer that
+represents the time and date of data insertion and identifies the most current version of data.
+Some wide-column stores provide additional aggregates, enabling a column family to be nested
+by another column family called a super column family. The client interfaces of wide-column
+databases are more dynamic than key-values stores because they have indexing and querying
+capabilities depending on numerous aggregates. For instance, it is possible to retrieve data
+using the row key, specific column family name, the column qualifier, or timestamp.
+Advantages
+There are some advantages to using wide-column databases. It works well with both organized
+and semi-structured data and updating is easy. Columnar databases make data exploration
+easier, and they compress better than row-based systems. These kinds of databases are also
+efficient at compressing and partitioning data. In comparison to traditional relational databases,
+which store data per row, it is highly compressed. It reduces the storage of multiple indexes,
+views, and aggregation, allowing users additional storage reduction facilities while holding a
+massive amount of information in a single column and maintaining high performance.
+In the data structure of a wide-column database, we see that the majority of the data is
+represented in columns. That is why wide-column databases perform exceptionally well with
+aggregation queries (such as SUM, COUNT, AVG). This quality gives an advantage to projects
+that require a high volume of queries in a short period. Suppose a user was looking for a
+collection of tuples with a value greater than x. Instead of searching for all tuples and gathering
+tuples with a value over x, users target the value and skip over any tuples that do not qualify;
+thus, fewer disk blocks/bytes are checked, and querying becomes faster. Generally, querying a
+single attribute is quicker.
+Another advantage of using a wide-column database is that the system effectively allows users
+to segregate storage by column, which allows the database system to load columns in parallel
+using multiple threads. For that reason, the entire table columns can be added and discarded
+without downing the system and without re-tuning the database. It enables the user to load a
+
+[18]
+
+table containing millions of rows within a few seconds and start querying and analyzing
+immediately.
+Data is stored in columns in a wide-column database rather than rows, which makes it highly
+scalable. These databases are faster and easier to scale, allowing them to store large amounts
+of data and distribute it across large clusters of machines, often thousands of computing nodes.
+Users do not need to depend on the applications to sort and alter data, and it can be done directly
+from the database. Users can add new and different columns without disturbing the database
+process as there is no restriction of columns to look the same.
+Despite several advantages of a wide-column database, there are some limitations too. For that
+reason, it is necessary to implement this approach according to the requirements of users.
+
+Disadvantage
+1. Inserting and deleting data for a single record is much slower and time-consuming. To write
+or delete a record, a user has to go through several columns.
+2. It takes more blocks to update a specific tuple for multiple attributes, which is a costly affair.
+RDBMS can do this very quickly.
+3. In terms of searching or retrieving, a record that is joined across several columns will give
+users slower performance.
+4. A wide-column database is not well suited for OLTP application since it requires much
+reading and writing on numerous columns for each item.
+Use Cases
+A wide-column store database is utilized for extensive data analytics when performance is
+critical, depending on the many characteristics, strengths, and limitations. Developers often use
+column databases in content management systems such as blogging platforms, services that
+have expiring usage, and log aggregators systems that have a high volume of write requests.
+A wide-column database may also be used to analyze and comprehend massive amounts of
+historical data to run business intelligence operations. In data warehouses, businesses use
+[19]
+
+structured data repositories to make corporate decisions. Companies collect data from various
+sources such as cloud-based applications and in-house repositories and then route these data in
+batches to various data warehouses. This collected data serves as the foundation of business
+intelligence tools. Data warehouses get better performance from a column-oriented database
+over a row-oriented database, which is beneficial.
+Users may convert their row-based inventory OLTP database to a columnar store by taking a
+snapshot. In an online store sale, using a wide-column database enables the user to quickly
+determine which goods sell best and when what kind of people purchase particular things, and
+which marketing strategies succeed. These extra features will increase their online store's sales.
+Additionally, it might be used to analyze application logs, and it will do efficient analysis on a
+variety of topics, including user behaviour, troubleshooting issues, and auditing security.
+A wide-column database can handle large amounts and infinite sources of time-stamped data
+generated by sensors, applications, and infrastructure. This unique adaptability gives the
+developers the flexibility to construct time series applications according to their needs and
+familiar tools.
+
+[20]
+
+4. Graph database
+Basic idea
+Generally, a graph database stores data and represents data using a graph structure composed
+of nodes, edges, and attributes that enable semantic search. This approach provides for the
+storage of highly related data as well as complicated querying. A graph is a collection of nodes
+and edges in a database. Nodes hold the data, and edges represent the relationship between the
+nodes.
+
+Figure 1: The connections (relationships) between different users (nodes)
+
+NoSQL graph data management techniques are capable of managing massive volumes of
+structured, semi-structured, and unstructured data. The semantic graph database, also known
+as Resource Description Framework triplestore (RDF triplestore), is a NoSQL graph database
+that integrates heterogeneous data from diverse sources. It stores data as a network of objects
+with materialized links between them. By concentrating on the connections between objects, it
+is possible to derive new information from existing data.
+
+[21]
+
+Data storage design
+A conceptual model of primary data storage design in a graph NoSQL database and its
+components (nodes, relationships) are given below:
+
+Figure 2
+
+Figure 2 illustrates a conceptual model (a). It builds a doubly linked list that contains all the
+edges that connect each node. If a node is the source or destination of an edge, the edge is
+linked with that node. Edge A < 1,2 >, for example, is linked to both node 1 and node 2. The
+actual node storage is shown in Figure 2 (b). Each record contains a node's first relationship ID
+(first rid). The initial relationship for both nodes 1 and 2 is, for example, A.
+The actual relationship storage is shown in Figure 2 (c). A relationship between the source (src)
+and destination (dst) is stored in each record. It also keeps the previous and next relationship
+IDs (src_prev_rid, src_next_rid, dst_prev_rid, dst_next_rid) for both the source and destination
+nodes. This effectively keeps both the source and destination's conceptual doubly linked lists
+but saves a specific edge for one time only. Assume now that we want to obtain all of node 2's
+outbound relationships. Consider the blue arrows in Figure 2 (c). When we visit the node's
+
+[22]
+
+storage, we see that node 2's first_rid is A. Following that, if we go to the relationships database
+to look up at A which is not an outbound connection of 2 since A's destination (dst) is 2.
+However, that is all right. Now in A, we follow the dst_next_rid (because 2 is the destination
+in relationship A). This points to the C, an outbound connection for 2, and 2 is the source (src)
+in C. Now we proceed to go to src_next_rid, which returns us to A. Now we know that we have
+used up all of node 2's connections.
+Suppose we add a fourth node and want two of them to follow it. A summary of the changes
+that happened is presented in figure 3.
+
+Figure 3
+
+[23]
+
+The desired output is seen in figure 3 (a). Figure 3 (b) depicts the improved conceptual model.
+A new record is generated for the storage of node 4's first_rid, which is D [figure 3 (c)]. Figure
+3 (d) shows the creation of a new record D in the relationships store, with the source (src) and
+destination (dst) fields set to 2 and 4, respectively. Its dst_prev_rid and dst_next_rid attributes
+are meaningless since the destination (dst) node 4 has only one relationship, which is to D.
+Updating the doubly linked list of relationships for node 2 presents several difficulties. They
+have been highlighted in red. It should be fairly evident how the component for node 2 in figure
+3 (b) is represented in figure 3 (d). This is the essence of the native graph-storage method. We
+purposely omitted node and connection labels and attributes in order to concentrate only on the
+graph structure. These may be constructed as lookup storage using the node/relationship IDs.
+Additionally, there are significant practical concerns. For instance, a doubly linked list is used
+to hold all of a node's affiliations. One could put inbounds at the top of the list and outbounds
+at the bottom to quickly read the directed connections.
+
+Features and Characteristics
+Many databases have comparable features and qualities. However, the two factors described
+above distinguish a graph database (GDB).
+The storage that underpins it all
+Specific graph databases employ native graph storage, designed specifically for the
+management and storage of graphs. Some databases serialize graph data into relational
+databases, object-oriented databases, or other general-purpose data stores rather than native
+graph storage.
+A key aspect of graph databases is that they have native processing capabilities or, at the
+absolute least, a trait known as index-free adjacency, which means that every node is
+immediately accessible. It is connected to the node next to it. The term "index-free adjacency"
+refers to a database engine that does not use indexes. It means each node has direct connections
+to its neighbours’ node. As a result, it serves as an index for other adjacent nodes, which is
+substantially less expensive than utilizing indices on a global scale. This is suitable for local
+graph queries where just one index is required. We will start by looking for the first node and
+
+[24]
+
+then work our way through the connections. Direct physical pointers would probably need to
+link additional tables in an RDBMS through foreign keys and, maybe, extra index lookups.
+Querying Graphs
+Each DBMS must have query capabilities. Naturally, those utilized in graph databases derive
+from the underlying graph model. The index-free adjacency is preferred for the most basic
+queries, which are the most common in practice. They involve locating a node, locating its
+neighbors in a single hop, scanning edges in several hops (layers), and extracting attribute
+values. This practice of looking for a node based on its properties or identifier is called point
+querying. Some more complicated queries, such as subgraph and super graph queries, belong
+to rather traditional queries based on exact matching and often require iterative computation.
+
+The processing engine
+According to specific definitions, databases employ index-free adjacency, implying that
+connected nodes in a database physically point to each other. However, if we take a more
+comprehensive view, any database that, from the user's viewpoint, operates similarly to the
+GDB (i.e., exposes a graph model through CRUD operations) qualifies as a graph database.
+While index-free adjacency and native graph processing improve traversal efficiency, they
+complicate other queries that do not require traversals.
+Advantages
+Graph databases have a few advantages, and their popularity has been growing in recent years.
+One of the arguments for adopting a graph database over relational databases and other NoSQL
+stores is that sheer performance rises when dealing with related data. In contrast to relational
+databases, where join-intensive query performance diminishes as the dataset becomes larger,
+graph database performance remains relatively constant as the dataset expands. The graph's
+superior speed is that queries are limited to a subset of the graph. Consequently, the query
+execution time is proportional to the size of the graph visited rather than the total size of the
+graph.
+Another advantage is that graphs have additive capabilities, enabling a user to add new
+connections, labels, subgraphs, and nodes to an existing structure without affecting the queries
+or application functionality. Growing with graph databases matches ideally with test-driven
+[25]
+
+development approaches, allowing the graph database backend to evolve in tandem with the
+rest of the application and any evolving business needs.
+Enterprises may integrate data with less work and cost using the schema-less NoSQL semantic
+graph database, eliminating the need to alter schemas every time a new data source is added.
+The capacity to accommodate rich semantic data structure, known as ontologies, distinguishes
+the semantic graph database from other forms of graph databases.
+Disadvantage
+Despite of their popularities, graph databases have some major drawbacks which need to
+overcome in the next few years.
+In graph databases, the possibilities for data structure and constraint definitions are limited. As
+a result, data discrepancies can quickly diminish their use. The graph model is frequently
+limited. Let us recall that nodes in Neo4j, for example, cannot refer to themselves directly.
+There may be times when self-reference is essential in the current world. FlockDB, for
+example, addresses the challenge of horizontal graph scalability by restricting the complexity
+of graph traversal. FlockDB does not support multi-hop graph walks. Hence, it cannot perform
+a complete "transitive closure." FlockDB, in contrast allows for rapid and scalable 1-hop query
+processing.
+This is also necessary for horizontal scalability to be supported. It is tough to divide a graph so
+that most queries do not require access to numerous partitions. They provide a method that
+successively writes data from multiple buffers to a single data stream or reads data from a
+single data stream to multiple buffers. Horizontally scalable NoSQL databases support this
+form of data access. It appears that this is not the case with today's graph databases. Declarative
+querying is not possible in most commercial graph databases. This implies a deficiency in query
+optimization skills. Many graph databases cannot segment and distribute data over a computer
+network.
+Most graph analytics tools presume that the graph is explicitly given. In many circumstances,
+though, the graph will have to be built by merging data from various sources that are not
+particularly graphical. Even though the data is stored in a graph database, we usually only need
+to load a subset of the database graph for analysis. Some queries have a high cost because most
+real-world graphs are very dynamic and frequently generate significant amounts of data
+[26]
+
+quickly. One difficulty is storing the historical trail compactly while allowing effective
+execution of point queries and global or neighborhood-centric analytic operations. The quantity
+of data, the concentration on distributed and in-memory contexts, and the necessity to provide
+global analytics are key distinctions from previous temporal DBMSs. The last job generally
+entails memorizing full historical pictures.
+Use cases
+Semantic search: Apart from presenting private corporate data in a linked and intelligible
+manner, the NoSQL graph database simplifies content administration and customization via its
+cost-effective method of integrating and combining extensive data collection.
+Big data analytics: Due to the proliferation of IoT and social media, as well as the increasing
+use of big data analytics, the NoSQL graph database has emerged as the preferred choice for
+mastering large sets of data, integrating heterogeneous data from multiple sources, combining,
+and analyzing highly connected data, and obtaining meaning and insights to support decisions.
+Fraud detection: To identify fraud, business events and consumer data might be described in a
+graph by examining suspicious patterns of client activity information and cross-referencing
+them with previously discovered fraud. To be more exact, entities take business operations
+from an extensive database, create associations between them, represent them in a graph, and
+perform entity link analysis to find unusual connections between different kinds of entities that
+may suggest fraudulent conduct. By analysing the relationships between customer properties
+such as names and dates of birth and contextual entities such as IP addresses, device IDs, and
+access times, it is feasible to flag those that have previously been flagged as fraudulent. It has
+the advantage of directing analysis to just noteworthy events, rather than wasting resources on
+outliers, because it uses intelligence techniques rather than hard-coded criteria.
+360-degree customer view: Effective use of graph databases is the integration of data from a
+business's estate of data silos. This results in a sharp picture of the broader terrain, which may
+be utilized to enhance understanding. Previously, the sheer magnitude of integrating this much
+data into a single graph would have made provisioning and scaling problematic. However, the
+development of horizontally scalable graph databases such as DataStax Organization Graph
+has created a scalable reference design capable of scaling up to the size of even the most
+prominent enterprise. It is a standard data format that enables integration and provides
+[27]
+
+marketing and sales teams with a "360-degree customer perspective." This is the frequent use
+of data streaming frameworks like Apache Kafka.
+Graph solution in neural networks: Graph neural networks may be used to train machine
+learning and neural networks on the graph itself. Due to the model's flexibility, the graph may
+be able to store more data than typical tables. Machine learning models constructed using graph
+data often outperform machine learning models constructed from table data. This form of the
+neural network is now undergoing evaluation in a variety of sectors. Certain studies indicate
+that it enhances accuracy.
+Neo4j: Neo4j mentions this as a use case. It stores information about parties (such as
+administrators, business units, and end-users) and resources (such as files, shares, network
+devices, and agreements) to determine who has permission to access and alter resources by
+following the path of the person through groups, roles, and the final result.
+Network and IT operations: This is the primary use case since network topology resembles a
+graph; hence a Graph DB model makes sense.
+Google search engine: Google is one of the companies that employ the Knowledge Graph
+approach. This method gathers documents from many sources and presents them to the user in
+a searchable format.
+
+Comparison of RDBMS and NoSQL
+CAP Theorem
+It is important to understand the NoSQL database's limits. NoSQL is unable to guarantee both
+consistency and high availability. Eric Brewer initially stated this in his CAP Theorem.
+According to the CAP theorem, we can accomplish no more than two out of three database
+guarantees:
+1. Consistency
+2. Availability
+3. Partition Tolerance
+[28]
+
+Consistency: Consistency indicates that all nodes view the same information simultaneously,
+which means that it replicates to the rest of the system's nodes when a user writes to a node. A
+distributed system is considered consistent if a transaction begins and finishes with the system
+consistently. According to this paradigm, a distributed system may (often does) enter an
+inconsistent state throughout the transaction. However, the whole transaction will roll back if
+an error occurs at any point throughout the process.
+
+Figure : 1
+As seen in Figure 1, the user has two distinct records ("Mina" and "Raju") with distinct
+timestamps. The third partition's output is "Raju," which corresponds to the most recent input.
+However, the nodes take time to update and are therefore not available on the network as
+frequently.
+
+Availability: Availability states that every request made to the system will have a response.
+Additionally, a distributed system must be 100 percent operational in order to achieve
+availability. As a result, regardless of the state of any one node in the system, every client
+receives a response, implying that a user may either send read/write instructions or they may
+not. As a result, the databases are time-independent because the nodes must be available online
+at all times.
+
+[29]
+
+Figure : 2
+Figure 2 illustrates that, unlike the previous example, the user is unaware whether "Mina" or
+"Raju" was inserted first. Either one could produce something. Availability states that every
+request made to the system will have a response.
+Partition tolerance:
+
+Partition Tolerance guarantees that the system will continue to work even when a portion of
+the nodes gets disconnected from the rest or becomes unavailable. A partition-tolerant system
+can handle any number of network failures without causing the whole network to fail. The data
+records are properly duplicated across several nodes and networks to ensure that the system
+remains operational during occasional outages. In other words, even if there is a network outage
+[30]
+
+in the data center and a few machines become inaccessible, the system continues to function.
+In terms of dealing with modern distributed systems, partition tolerance is a necessity instead
+of an option. Figure3 illustrates partition tolerance in distributed systems.
+
+The CAP trade-off
+Out of these three guarantees, no system can provide more than 2 guarantees. Accordingly, by
+forfeiting any one of the discussed CAP properties, distributed data stores are categorized as
+follows:
+
+1. CA (Consistency and Availability) – Non-distributed system
+The algorithm used by CA systems make no assumptions regarding network partitioning. As a
+result, obtaining this combination is essentially unachievable in distributed systems due to the
+inevitability of network partitions. Popular relational databases, such as Oracle, MySQL, and
+PostgreSQL, are consistent and available (CA). They do not support partitioning; thus, they
+can only be scaled up, not out. They guarantee that modifications are atomic by using
+transactions and other database strategies.
+Furthermore, they propagate entirely or not at all. As a result, they ensure that all users view
+the same state concurrently. Banking and financial applications rely on available and consistent
+data.
+
+[31]
+
+2. AP (Availability and Partition Tolerance) – True Distributed system
+All distributed systems must be able to tolerate partitions. Consistency is sacrificed for
+availability in AP-based systems. This implies that they are unable to ensure data consistency
+across nodes. Distributed NoSQL data stores such as Amazon's Dynamo, Cassandra,
+CouchDB, and Riak all employ an AP-based data store. These NoSQL databases enable users
+to write data to a single database node without waiting for other nodes to agree, choosing
+availability over immediate consistency.
+3. CP (Consistency and Partition Tolerance) – True Distributed system
+In a CP-based distributed system, the database prefers consistency over availability. This
+implies that data is consistent across all nodes, but the system may not be completely accessible
+in the event of a node failure. Before any read or write operation on the CP-based data storage
+can occur, all nodes must first reach to the agreement. As a result, complete availability takes
+second place to strong consistency.
+The CAP theorem talks about the choice that the user has to make between consistency and
+availability when the network partition is not absent. Eric Brewer argues that the 2 out of 3
+concepts are not absolutely right, and it is somewhat misleading because he believes that
+designers of computer systems only need to sacrifice consistency or availability while the
+partitions are present. But in several computer systems, partitions are rare.
+
+To conclude, the CAP theorem may greatly assist an organization in determining which
+database to use. Additionally, in the event of a partition, it depends on whether the organization
+decides to return obsolete values or none. In the event of partition unavailability, instead of
+providing a nil response, the user might wait a few seconds for the system to return any value.
+Thus, it is sensible to exhibit some patience and decide it is preferable to lose consistency or
+access instead of losing them both.
+Moreover, specific NoSQL databases are pretty versatile, so the user may now alter certain
+features here and there to bring more consistency and availability to the database system.
+[32]
+
+ACID properties in RDBMS
+A relational database management system (RDBMS) is used to handle data that must be
+integrated when modified. This is because if the data integrity is compromised, the whole set
+of data will be disrupted and damaged. Thus, to ensure the integrity of the data, the database
+management system must adhere to four criteria referred to as the ACID properties. ACID is a
+term (and acronym) that refers to the four attributes of a transaction process in a database
+system. They are Atomicity, Consistency, Isolation, and Durability. These features assure
+the accuracy and integrity of the database's data, preventing it from being corrupted due to
+failure and assuring the data's validity even when mistakes or failures occur. The ACID
+properties allow us to develop applications regardless of the complexity of the application's
+environment. This is necessary for database transactions to be processed. Due to the ACID
+features, we may concentrate on application logic rather than on failures, recovery, and
+synchronization.
+The ACID properties are intended for use with RDBMS transactions. A transaction is a
+collection of actions that are performed as a single unit of work, and it may have one or more
+phases. The purpose of a transaction is to maintain the data's integrity and consistency. If a
+transaction succeeds, the database will store the data that was updated during the transaction.
+However, if an error occurs and the operation must be aborted or the data modifications will
+not be performed. When we operate on a relational database, we execute SQL statements, and
+these statements are often performed in blocks, which are referred to as transactions. They
+enable the addition, modification, deletion, and search of data, among other functions.
+
+Atomicity:
+This property states that each transaction must be treated as an atomic unit of work. All the
+updates in a single transaction must be completed entirely or not at all. If any single portion of
+the transaction fails, the entire transaction will be considered a failure which provides
+reliability. For instance, a user is transferring money from account A to account B. In this
+financial transaction, both activities should be performed entirely. Both activities mean
+deducting money from account A and adding the money to account B. If any of these activities
+fail, the remaining activities will be omitted. That means the transaction is considered a single
+entity, a single command. Although a transaction may include more than two actions, it will
+consistently execute either all of them or none of them. When money is moved from account
+[33]
+
+A to account B in this example, if anything goes wrong, the whole transaction will be
+terminated and rolled back.
+Consistency:
+This property guarantees that all transactions adhere to data integrity restrictions, hence
+maintaining the consistency of the data. A transaction updates the data's valid state. If an error
+occurs, it will return all the state data prior to the transaction being conducted. The objective is
+to ensure that the database remains consistent before and after the transaction. If a transaction
+leaves data in an incorrect condition, it will be terminated, and an error will be reported.
+The data stored in the database must be accurate at all times. This ensures that data is legitimate
+according to stated rules, which may include any restrictions, cascades, or triggers applied to
+the database. In this way, we can avoid database corruption as a result of an unauthorized
+transaction. For instance, if we attempt to add a record to a sale table using a product code that
+does not exist in the product data, the transaction will fail. Another example is that if a user has
+a column that does not support negative integers and attempts to add or change a record with a
+value of less than zero in this column, the transaction will fail.
+Isolation:
+If multiple transactions are executing simultaneously, then all the transactions should be
+processed as a single transaction. This property ensures the isolation of each transaction, which
+means any transaction will not be affected or interfered with by other concurrent transactions.
+That is, each transaction should be treated as if it were distinct. Suppose two transactions are
+happening in parallel. One transaction is updating X address, and another is updating Y phone
+number. According to this property, each of these changes should be performed independently
+in order to finish its transaction without interfering with the execution of other transactions.
+Durability:
+The database must be robust enough to withstand a system failure. It should not be limited to
+a single transaction, but it should handle several transactions as well. It should handle any
+inserts/updates and commit them to the database. Additionally, in the event of a failure, the
+database should be capable of recovering to a consistent state. If the system fails during the
+transaction's modification of X's address, the database should be robust enough to retrieve X's
+original address before committing the transaction to the database. It is not necessary to change
+it to a more recent address.
+[34]
+
+Base vs ACID
+It is generally safe to say that the best way to ensure that specific databases are ACID-compliant
+is to use a relational database management system. MySQL, PostgreSQL, Oracle, SQLite, and
+Microsoft SQL server are just a few examples. On the other hand, certain NoSQL DBMSs,
+such as Apache's CouchDB or IBM's Db2, also adhere to some degree of ACID compliance.
+However, the mindset behind the NoSQL database management technique violates the strict
+ACID rules. As a result, NoSQL databases are not recommended for users who need a restricted
+environment.
+Some NoSQL database systems ignore maintaining ACID properties in favor of a technique
+known as BASE. The BASE is an acronym for Basically Available, Soft State with Eventual
+Consistency. Basically available implies that, though there is no assurance that any particular
+piece of data will be available, the system will respond to any request. In a soft state, system
+changes occur continuously. However, the data retrieved by a user at a particular moment in
+time may be eventually overwritten by more current data. Eventual consistency implies that
+the database will sometimes be in an inconsistent state. When numerous copies of the data are
+stored on various servers, a modification to one copy may not be applied to all copies promptly.
+As a result, the data is inconsistent for some time, but the database replication mechanism
+eventually updates all copies of the data to make them consistent. Specific applications are
+capable of tolerating inconsistent data, whereas others are not.
+
+Differences between RDBMS and NoSQL
+Transaction Reliability
+Relational database management system provides extremely high reliability since it completely
+supports ACID characteristics, but NoSQL does not provide very high dependability since it
+ranges from BASE to ACID attributes.
+Data model
+RDBMS and NoSQL data models are diametrically opposed. The relational data model
+organizes data into numerous linked tables with rows and columns. Foreign keys, which are
+also stored in columns, are used to connect tables. When doing a data search, the needed
+[35]
+
+information must be gathered from many tables and integrated before being presented to the
+application. Similarly, while writing data, the process must be coordinated and executed across
+several tables. On the other hand, NoSQL databases operate in a fundamentally different
+manner and store data in structured, semi-structured, and unstructured forms. For instance, a
+document-oriented NoSQL database aggregates the data it stores into JSON documents. Each
+JSON document may be seen as an object that is used by a user's application. For example, a
+JSON document may collect all the data in a row that spans 20 rows in a relational database
+into a single document/object.
+Text, music, video, social network feeds, weblogs, and other data types that conventional
+relational databases cannot manage effectively might be accommodated by NoSQL databases.
+Schema type
+Another critical distinction is that relational databases have fixed schemas, while NoSQL
+models do not. RDBMS uses a well-designed pre-defined schema for structured data, while
+NoSQL uses a dynamic schema for unstructured data and stores it without having a pre-defined
+structure. Changing the schema after data has been added is a significant undertaking that is
+very disruptive and is frequently avoided in RDBMS.
+Query Speed
+A query requires data that is stored in a database in the form of a single record. In relational
+database models, data is kept on separate tables, and one must join and limit data across the
+tables during query execution. The database must analyse many tables, which substantially
+slows down query performance. On the other hand, NoSQL databases depend on
+denormalization and attempt to optimize them appropriately. All the information required to
+assess the query is included in a single record, which simplifies the process of identifying the
+list of matched records and results in a much faster query time.
+Scalability
+Applications and their underlying databases use either scale-up or scale-out techniques to deal
+with the humongous amount of data and ever-increasing concurrent users. Scaling vertically
+(vertical scalability) entails a centralized method that depends on larger and larger servers with
+more memory, computing power, storage, and I/O capacity. Scaling out (horizontal scalability)
+suggests a distributed technique that employs many commodities real or virtual servers to
+handle increased user and data volumes. NoSQL databases were primarily designed to be
+[36]
+
+distributed and scalable to store large amounts of data in a cluster of physical or virtual servers,
+support all standard database operations, and add more servers to the cluster at any time.
+Performance
+Advanced NoSQL database enhanced the performance by using caching data of its system
+memory to reduce latency and increase sustained data throughput. This behaviour is transparent
+to the application developer and operations team. However, with relational technology, a cache
+layer is often a distinct infrastructure layer that must be created, deployed, and expressly
+maintained by the operations team.
+Cloud
+Traditional relational databases are inappropriate for cloud settings due to their inability to
+perform full-text data searches and difficulty scaling beyond a certain point. As more
+applications are deployed in situations with high-volume workloads, such as web services, their
+scalability needs evolve rapidly and grow very large. However, NoSQL key-value type
+databases are well suited for cloud databases because the data is heavily document-oriented,
+and the development environment is heavily object-oriented. The data store is inexpensive,
+quickly interfaces with the vendor's web services platform, and provides on-demand high-end
+scalability. All of these features of NoSQL databases make them ideal for cloud databases.
+Big data handling
+Relational databases struggle with big data handling due to their vertical scaling methods and
+inability to store unstructured data. In today's real-time applications, data size growth always
+outpaces the growth of storage capacity over time. Therefore, SQL solutions cannot meet
+today's requirements for dealing with massive data volumes in real-time. On the other hand,
+NoSQL databases are designed to handle big data as they are designed to work on unstructured
+and unrelated data and are highly scalable. Moreover, it also stores data in a distributed way
+but is accessed and analysed as if it resides on a single machine, which is ideal for storing,
+accessing, and analysing big data.
+Data warehouse
+Relational databases are used for data warehousing, where data is gathered from many sources,
+and the data storage size increases over time. This resulted in big data issues, which in turn
+caused other issues, such as performance degradation when performing an OLAP (Online
+[37]
+
+analytical processing), data mining, or statistical process. On the other hand, NoSQL databases
+are not designed for severe data warehouse applications because the designers focused on high
+performance, scalability, availability, and storing big data, which may benefit from the data
+warehouse to solve the problem of increasing storage size.
+Crash recovery
+Relational databases provide crash recovery through a recovery manager responsible for
+maintaining the atomicity and durability of transactions via log files and the ARIES algorithm.
+On the other hand, most NoSQL databases allow data replication, which stores several copies
+of the same data throughout the cluster and even across data centres to achieve high availability
+(HA) and disaster recovery. However, others use a different approach, such as a journal file in
+the Mango database.
+Authentication
+NoSQL databases are vulnerable to brute force, injection, and replay attacks, all of which result
+in information leakage. These attacks are possible as a result of insecure authentication
+methods. Many NoSQL databases do not have an authentication or authorization system by
+default. However, they may utilize specific external techniques to accomplish this task. On the
+other hand, all relational databases provide an authentication method from which the user may
+select.
+Data Integrity
+NoSQL follows the denormalized tables technique in terms of storing data, which creates data
+redundancy. Additionally, there is also the risk of synchronization problems between data or
+whole data sets. This is called an integrity violation or a data anomaly. Though NoSQL
+supports eventual consistency, which is one of the BASE property principles, data integrity is
+not always achieved in NoSQL databases. A normalized relational database (RDBMS) is
+designed to prevent such integrity violations. Additionally, the ACID characteristics of
+relational databases assure the reliability of database transactions, which is necessary for data
+integration.
+
+[38]
+
+Confidentiality
+Relational databases often accomplish data confidentiality via the use of encryption methods
+to store data encrypted. On the other hand, a NoSQL database does not provide enough data
+confidentiality. Several of the finest encryption techniques used by NoSQL include enforcing
+database connections, encrypting data at rest, and signing and rotating encryption keys.
+
+Auditing
+The majority of NoSQL databases do not have an auditing mechanism. Some of them generate
+audit trails or logs that may be utilized for compliance purposes. Auditing best practices include
+monitoring changes to the database setup and changes to the data.
+Relational databases provide methods for database auditing. Auditing enables tracking data
+movement inside a database, such as connection attempts, data changes, deletes, inserts and
+selections, and executing functions. It is helpful to prevent illegal activity at post-mortem
+scenes and ongoing monitoring.
+
+Conclusion and Discussion
+As I have seen first-hand, despite having similar properties, different NoSQL databases have
+their properties, uses, advantages, and drawbacks. By researching fundamental database
+characteristics and needs, I have gained a better understanding of NoSQL's growing popularity.
+These systems are not intended to be a revolutionary replacement for relational database
+systems but rather to address the needs of specific kinds of distributed applications that include
+a large quantity of data and need great scalability and availability. This overview presents a
+comprehensive presentation of various design decisions of NoSQL stores concerning their
+basic ideas, data storage models, use cases, advantages, and drawbacks. Moreover, similarities
+between the key-value store and document data stores and their dissimilarities with the column
+database are also included. There is also a presentation of the differences between NoSQL and
+RDBMS regarding transaction reliability, data modelling, scalability, performance, data
+integration, and security.
+
+[39]
+
+The CAP theorem and ACID properties' presentation helped me understand NoSQL, RDBMS,
+and their establishment more thoroughly. The CAP theorem can significantly assist an
+organization in determining which database to use. Moreover, specific NoSQL databases are
+pretty versatile, so the user may now alter certain features here and there to bring more
+consistency and availability to the database system. The ACID properties of the RDBMS
+transaction process assure the accuracy and integrity of the database's data, preventing it from
+being corrupted due to failure and assuring the data's validity even when mistakes or failures
+occur. The ACID properties allow us to develop applications regardless of the complexity of
+the application's environment. This is necessary for database transactions to be processed. Due
+to the ACID features, we may concentrate on application logic rather than on failures, recovery,
+and synchronization. NoSQL databases lack a variety of security capabilities, including
+authentication, authorization, and integrity, implying that sensitive data is safer in a
+conventional relational database management system. Although relational databases use highly
+secure methods to offer security services, they also face many security risks, such as cross-site
+scripting, SQL injections, and rootkits.
+Compared to SQL databases, the findings indicate that NoSQL databases may be very distinct
+and focus on particular issues in the information technology sector. It is self-evident that
+specialized tools perform better in their respective fields. As a result, combining several
+databases with distinct responsibilities is the optimum approach to addressing issues. The
+performance of SQL is unimportant for the majority of the world's projects. SQL should not be
+chosen or rejected based on this but instead based on convenience, database expertise, platform
+support, language choice, and emotion. NoSQL becomes significant when large amounts of
+data are involved or when the data must be delivered in real-time.
+The purpose of this thesis is to offer an impartial assessment of the merits and drawbacks of
+different NoSQL database methods for enabling applications that handle massive amounts of
+data, as well as a worldwide overview of these non-relational NoSQL databases.
+
+[40]
+
+References:
+1. Malgorzata Bach, Aleksandra Werner. Standardization of NoSQL Database Languages.
+https://dx.doi.org/10.1007/978-3-319-06932-6_6.
+2. Llull, R., CPU, M., Tools, C. and Calculators, M., 2021. Edgar Codd – Creator of the
+Relational Database. [online] History-computer.com. Available at: <https://historycomputer.com/edgar-codd-creator-of-the-relational-database/> [Accessed 22 June 2021].
+3. Stonebraker, Michael; Madden, Samuel; Abadi, Daniel J.; Harizopoulos, Stavros, “The end
+of an architectural era: (it’s time for a complete rewrite),” Proceedings of the 33rd international
+conference on Very large data bases, VLDB, p. 1150–1160, 2007.
+4. Statista. 2021. Total data volume worldwide 2010-2025 | Statista. [online] Available at:
+<https://www.statista.com/statistics/871513/worldwide-data-created/> [Accessed 23 June
+2021].
+5. Yifat Perry, P., 2021. Google Cloud NoSQL: Firestore, Datastore, and Bigtable. [online]
+Cloud.netapp.com. Available at: <https://cloud.netapp.com/blog/gcp-cvo-blg-google-cloudnosql-firestore-datastore-and-bigtable> [Accessed 23 June 2021].
+6. Amazon Web Services, Inc. 2021. Amazon DynamoDB | NoSQL Key-Value Database |
+Amazon Web Services. [online] Available at: <https://aws.amazon.com/dynamodb/>
+[Accessed 23 June 2021].
+7. Rani A., Goyal N., Gadia S.K. (2021) Twitter Data Modelling and Provenance Support
+for Key-Value Pair Databases. In: Qiao M., Vossen G., Wang S., Li L. (eds) Databases
+Theory and Applications. ADC 2021. Lecture Notes in Computer Science, vol 12610.
+Springer, Cham. https://doi.org/10.1007/978-3-030-69377-0_8
+8. Hosting Data. 2021. NoSQL Databases List by Hosting Data - Updated 2021. [online]
+Available at: <https://hostingdata.co.uk/nosql-database/> [Accessed 23 June 2021].
+9. Vaish, Gaurav. 2013. Getting Started with Nosql. 1st ed. Birmingham B3 2PB, UK.: Packt
+Publishing Ltd.
+10. Ali Davoudian, Liu Chen, and Mengchi Liu. 2018. A Survey on NoSQL Stores.
+ACMComput. Surv. 51, 2, Article 40 (April 2018), 43 pages. https://doi.org/10.1145/3158661
+11. Chen, Jeang-Kuo, and Wei-Zhe Lee. "An Introduction of NoSQL Databases Based on Their
+Categories and Application Industries." Algorithms 12, no. 5 (2019): 106.
+https://dx.doi.org/10.3390/a12050106.
+12. Raj, Pethuru, Pethuru Raj, and Ganesh Chandra Deka. A Deep Dive into NoSQL
+Databases: The Use Cases and Applications. First edition. Cambridge, MA: Academic Press,
+is an imprint of Elsevier, 2018.
+13. Celko, Joe. Joe Celko's Complete Guide to NoSQL: What Every SQL Professional Needs
+to Know About Non-Relational Databases. 1st edition. Burlington: Elsevier Science, 2013.
+14. Ahmed, Jeelani, and Raafiya Gulmeher. 2015. "NOSQL DATABASES: NEW TREND OF
+DATABASES, EMERGING REASONS, CLASSIFICATION AND SECURITY
+[41]
+
+ISSUES". INTERNATIONAL JOURNAL OF ENGINEERING SCIENCES & RESEARCH
+TECHNOLOGY.
+15. FULMAŃSKI, PIOTR. 2020. Nosql. Theory And Examples. 1st ed. PIOTR
+FULMAŃSKI.
+16. Moniruzzaman, A B M., and Syed Akhter Hossain. NoSQL Database: New Era of
+Databases for Big Data Analytics - Classification, Characteristics and Comparison. 2013.
+17. Bouaziz, Senda, Ahlem Nabli, and Faiez Gargouri. "Design a Data Warehouse Schema
+from Document-Oriented Database." Procedia Computer Science 159 (2019): 221-230.
+https://dx.doi.org/10.1016/j.procs.2019.09.177.
+18. Jiang, Zhen, Yongqing Zheng, and Yuliang Shi. Document-Oriented Database-Based
+Privacy Data Protection Architecture. 2013. https://dx.doi.org/10.1109/WISA.2013.12.
+19. Truica, Ciprian-Octavian, Florin Radulescu, Alexandru Boicea, and Ion
+Bucur. Performance Evaluation for CRUD Operations in Asynchronously Replicated
+Document Oriented Database. 2015. https://dx.doi.org/10.1109/CSCS.2015.32.
+20. Hashem, Hadi, and Daniel Ranc. Evaluating NoSQL Document Oriented Data Model.
+2016. https://dx.doi.org/10.1109/W-FiCloud.2016.26.
+21. Mason, R. T. (2015). NoSQL databases and data modeling techniques for a documentoriented NoSQL database. Proceedings of Informing Science & IT Education Conference
+(InSITE)
+2015,
+259-268.
+Retrieved
+from
+http://Proceedings.InformingScience.org/InSITE2015/InSITE15p259-268Mason1569.pdf
+22. Mason, R. T. (2015). NoSQL databases and data modeling techniques for a documentoriented NoSQL database. Proceedings of Informing Science & IT Education Conference
+(InSITE)
+2015,
+259-268.
+Retrieved
+from
+http://Proceedings.InformingScience.org/InSITE2015/InSITE15p259-268Mason1569.pdf
+23. Grisha Weintraub, Ehud Gudes. Data Integrity Verification in Column-Oriented NoSQL
+Databases. 32th IFIP Annual Conference on Data and Applications Security and Privacy
+(DBSec), Jul 2018, Bergamo, Italy. pp.165-181, 10.1007/978-3-319-95729-6_11 hal01954409
+24. Abadi, Daniel J., Peter A. Boncz, and Stavros Harizopoulos. "Column-oriented Database
+Systems." Proceedings of the VLDB Endowment 2, no. 2 (2009): 1664-1665.
+https://dx.doi.org/10.14778/1687553.1687625.
+25. D. Abadi, P. Boncz, S. Harizopoulos, S. Idreos and S. Madden. The Design and
+Implementation of Modern Column-Oriented Database Systems. Foundations and TrendsR in
+Databases, vol. 5, no. 3, pp. 197–280, 2012. DOI: 10.1561/1900000024.
+26. “Gaining the Performance Edge Using a Column-Oriented Database Management System.”
+(2010).
+27. Küçükkeçeci, C., & Yazıcı, A. (2018). Big data model simulation on a graph database for
+surveillance in wireless multimedia sensor networks. Big data research, 11, 33-43.
+
+[42]
+
+28. Barik, M. S., Sengupta, A., & Mazumdar, C. (2017). Attack Graph Generation and Analysis
+Using Graph Database. In NoSQL: Database for Storage and Retrieval of Data in Cloud (pp.
+291-310). Chapman and Hall/CRC.
+29. Messina, A., Fiannaca, A., La Paglia, L., La Rosa, M., & Urso, A. (2018). BioGraph: a web
+application and a graph database for querying and analyzing bioinformatics resources. BMC
+systems biology, 12(5), 75-89.
+30. Mathew, A. B., & Kumar, S. M. (2015, August). Analysis of data management and query
+handling in social networks using NoSQL databases. In 2015 International Conference on
+Advances in Computing, Communications and Informatics (ICACCI) (pp. 800-806). IEEE.
+31. Namdeo, B., & Suman, U. (2020). Performance Analysis of Schema Design approaches for
+migration from RDBMS to NoSQL Databases. In Advances in Data and Information
+Sciences (pp. 413-424). Springer, Singapore.
+32. Mathew, A. B. (2018). Data allocation optimization for query processing in graph databases
+using Lucene. Computers & Electrical Engineering, 70, 1019-1033.
+33. Barik, M. S., Sengupta, A., & Mazumdar, C. (2017). Attack Graph Generation and Analysis
+Using Graph Database. NoSQL: Database for Storage and Retrieval of Data in Cloud, 291.
+
+[43]
+
+

@@ -1,0 +1,4942 @@
+IMPROVED MODELING OF ROTARY
+MOMENTUM MASS TRANSPORT EQUIPMENT
+Fredrik Nyholm
+
+Master’s Thesis
+Supervisor: Frank Pettersson
+Laboratory of Process and Systems Engineering
+Faculty of Science and Engineering
+Åbo Akademi University
+June 2020
+
+Aut viam inveniam
+aut faciam
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Abstract
+Work:
+
+Master of Science Thesis
+
+Title:
+
+Improved modeling of rotary momentum mass transport equipment
+
+Author:
+
+Fredrik Nyholm, Laboratory of Process and Systems Engineering, Faculty
+of Science and Engineering, Åbo Akademi University
+
+Supervisor:
+
+Senior Lecturer, Docent Frank Pettersson
+
+Place and date:
+
+Turku, 2020
+
+Keywords:
+
+Dynamic simulation, process modeling, pumps, centrifugal compressors,
+turbines, operator training simulator, off-design operation, exit flow
+coefficient, dimensionless operating curve
+
+Pumps, compressors and turbines are vital parts of any process plant. Thus, accurate modeling
+of these machines is crucial for a dynamic process simulator, especially if the simulator is used
+for operator training. The operation of the machines is usually described by operating curves
+provided by the manufacturer, but these are strictly valid only for the set of process conditions
+they were created for. Accurately predicting the performance of the machines outside of the
+design conditions can be a challenging endeavor.
+ProsDS is a software used by NAPCON to construct operator training simulators. In order to
+improve the performance of the compressors in these simulators, a new dynamic model for a
+centrifugal compressor was developed in ProsDS during the course of this thesis. The
+developed model was based on dimensionless operating curves defined by the head coefficient
+and the exit flow coefficient. Simple calculation of the outlet temperature and power
+consumption was also included.
+The stability of the developed model was verified by dynamic ramp tests of the operating
+conditions. Furthermore, the accuracy of the developed model was determined by performing
+process data tests. The results were promising and, in most cases, an improvement from the
+performance of the currently implemented model, although some further development of the
+new model is needed to reach a fully acceptable accuracy of the performance.
+
+I
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Table of Contents
+Abstract ..................................................................................................................................... I
+Table of Contents ..................................................................................................................... II
+Preface ................................................................................................................................... IV
+Nomenclature .......................................................................................................................... V
+Roman ................................................................................................................................. V
+Greek ................................................................................................................................. VII
+Subscripts ........................................................................................................................ VIII
+1 Introduction ........................................................................................................................... 1
+2 Theory ................................................................................................................................... 3
+2.1 Pumps............................................................................................................................. 3
+2.1.1 Performance map .................................................................................................... 5
+2.1.2 Cavitation ................................................................................................................ 8
+2.1.3 Power consumption ............................................................................................... 11
+2.2 Compressors................................................................................................................. 12
+2.2.1 Performance map .................................................................................................. 13
+2.2.1.1 Inlet flow coefficient ...................................................................................... 18
+2.2.1.2 Exit flow coefficient....................................................................................... 20
+2.2.2 Surge ..................................................................................................................... 23
+2.2.3 Stonewall............................................................................................................... 25
+2.2.4 Outlet temperature................................................................................................. 26
+2.2.5 Power consumption ............................................................................................... 28
+2.3 Turbines ....................................................................................................................... 30
+3 Current pump, compressor and turbine models .................................................................. 32
+3.1 ProsDS ......................................................................................................................... 32
+3.2 Other simulator software .............................................................................................. 33
+4 Developed compressor model ............................................................................................. 38
+4.1 Model ........................................................................................................................... 39
+4.2 Tests ............................................................................................................................. 48
+4.2.1 Static tests for operating curve and power consumption....................................... 48
+4.2.2 Dynamic tests ........................................................................................................ 50
+4.2.3 Process data tests................................................................................................... 58
+5 Results ................................................................................................................................. 69
+5.1 Issues ............................................................................................................................ 69
+5.2 Suggestions for future improvements .......................................................................... 70
+II
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+5.2.1 Improvements of the operating curve calculation ................................................. 70
+5.2.2 Improved modeling of the operating curve limits ................................................. 77
+5.2.3 Improved calculation of the outlet temperature .................................................... 78
+5.2.4 Enhanced power calculation ................................................................................. 78
+5.2.5 Additional features ................................................................................................ 79
+6 Summary ............................................................................................................................. 81
+7 Svensk sammanfattning ...................................................................................................... 83
+8 References ........................................................................................................................... 86
+Appendix A – Deduction of equation for the discharge pressure from the polytropic head .. 90
+Appendix B – Deduction of equation for the polytropic exponent ........................................ 91
+Appendix C – Deduction of equation for the static volumetric flow rate at impeller exit ..... 92
+Appendix D – Deduction of equation for the inlet volume flow ........................................... 93
+Appendix E – Deduction of equation for the compressibility and the ratio of specific heats 94
+Appendix F – Deduction of equation for direct conversion of the polytropic head ............... 95
+Appendix G – Deduction of equation for direct conversion of the inlet volume flow........... 96
+Appendix H – Performance maps of compressors A, B and C ............................................ 100
+Appendix I – Dimensionless inlet flow coefficient performance maps of compressors A and
+B ........................................................................................................................................... 102
+Appendix J – Predicted performance curves of compressor A ............................................ 103
+Appendix K – Predicted performance curves of compressor B ........................................... 106
+Appendix L – Predicted performance curves of compressor C ........................................... 109
+Appendix M – Process data ................................................................................................. 114
+
+III
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Preface
+This thesis was carried out as a collaboration between the NAPCON business unit of Neste
+Engineering Solutions Oy and the Thermal and Flow Engineering subject at the Laboratory of
+Process and Systems Engineering of Åbo Akademi University. While this work took its time
+to finish and seemed rather challenging at times, it was definitely an interesting and
+educational endeavor.
+Firstly, I would like to thank NAPCON for offering this interesting topic for a thesis, which
+combined both theoretical aspects and practical application and included cooperation between
+several of the company’s disciplines. My deepest gratitude goes to my supervisor, Docent
+Frank Pettersson, for his interest in this thesis, for impeccable practical facilitation of my work
+and for always having his door open for discussing both the thesis and a plethora of completely
+different topics. I also want to extend my thanks to my instructors from NAPCON, M.Sc.
+Teemu Saarinen and M.Sc. Niina Turunen, for their regular support and guidance during the
+entire process, despite their busy schedules.
+I also wish to thank Docent Leif Hammarström for clarifications regarding the current
+implementations of the pump and compressor models in ProsDS as well as general insights on
+the modeling of these machines, M.Sc. Teemu Liikala for help with formulating the
+compressor calculations in Lisp and implementation in ProsDS and M.Sc. Juha Lauttamus for
+input from an equipment design point of view, as well as for providing equipment data for the
+compressors. Without their help this thesis would have turned out quite differently and
+certainly taken a lot longer to finish.
+Lastly, I would like to thank my family for their continuous support and my fellow students
+for making my time at Åbo Akademi the unforgettable journey it turned out to be.
+
+Fredrik Nyholm
+Turku, Midsummer’s Eve 2020
+
+IV
+
+Improved modeling of rotary momentum mass transport equipment
+
+Nomenclature
+Roman
+Notation
+
+Description
+
+A
+
+Efficiency coefficient varying with Mach number
+
+B
+
+Efficiency coefficient varying with Mach number
+
+C
+
+Specific heat capacity
+
+CV
+
+Valve flow coefficient
+
+D
+
+Outer diameter
+
+E
+
+Efficiency coefficient varying with Mach number
+
+F
+
+Form loss coefficient
+
+H
+
+Head
+
+I
+
+Number of impeller blades
+
+K
+
+Stodola coefficient
+
+M
+
+Mach number
+
+MW
+
+Molecular weight
+
+N
+
+Impeller speed
+
+NPSH
+
+Net positive suction head
+
+P
+
+Power
+
+R
+
+Universal gas constant
+
+Rxn
+
+Stage reaction
+
+S
+
+Suction specific speed
+
+SG
+
+Specific gravity
+V
+
+Fredrik Nyholm
+
+Improved modeling of rotary momentum mass transport equipment
+
+T
+
+Temperature
+
+U
+
+Impeller tip speed
+
+V
+
+Volume
+
+W
+
+Work
+
+X
+
+Generalized compressibility function
+
+Y
+
+Generalized compressibility function
+
+Z
+
+Compressibility
+
+a
+
+Sonic speed
+
+b
+
+Width of fluid element, impeller blade height
+
+d
+
+Diameter
+
+f
+
+Leakage factor
+
+g
+
+Gravitational acceleration
+
+h
+
+Specific enthalpy
+
+k
+
+Hub narrowing
+
+m
+
+Polytropic temperature exponent
+
+n
+
+Polytropic exponent, polytropic index
+
+p
+
+Pressure
+
+r
+
+Radius
+
+s
+
+Work input factor
+
+u
+
+Velocity
+
+v
+
+Specific volume
+
+x
+
+Fraction
+
+z
+
+Height
+
+Fredrik Nyholm
+
+A single dot accent over a variable denotes a flow, e.g. 𝑉̇ for volumetric flow rate.
+
+VI
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Greek
+Notation
+
+Description
+
+ΔH
+
+Enthalpy difference
+
+Δh
+
+Specific enthalpy difference
+
+Δp
+
+Pressure difference
+
+Δs
+
+Empiric correction parameter
+
+Δz
+
+Difference in elevation
+
+Π
+
+Pressure ratio
+
+Ω
+
+Impeller speed in rad/s
+
+α
+
+Vane angle
+
+β
+
+Angle between impeller blade tip and the tangent to the direction of its
+motion
+
+γ
+
+Polytropic co-efficient
+
+η
+
+Efficiency
+
+κ
+
+Ratio of specific heats, isentropic exponent
+
+ξ
+
+Mole
+
+ρ
+
+Density
+
+σ
+
+Critical cavitation number
+
+φ
+
+Flow coefficient
+
+ψ
+
+Head coefficient
+
+ω
+
+Angular velocity
+
+VII
+
+Improved modeling of rotary momentum mass transport equipment
+
+Subscripts
+Notation
+
+Description
+
+0
+
+Absolute, surrounding
+
+1
+
+Inlet
+
+2
+
+Impeller exit
+
+3
+
+Outlet
+
+A
+
+Actual
+
+L
+
+Leakage
+
+R
+
+Required
+
+RP
+
+Rated point
+
+S
+
+Specific
+
+T
+
+Temperature
+
+V
+
+Volume
+
+ad
+
+Adiabatic
+
+avg
+
+Average
+
+c
+
+Choke point
+
+corr
+
+Correction
+
+e
+
+Electric
+
+ent
+
+Entropic
+
+f
+
+Friction
+
+i
+
+Input
+
+inc
+
+Inception
+
+init.circ.
+
+Initial circulation test case
+
+VIII
+
+Fredrik Nyholm
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+int
+
+Internal
+
+is
+
+Isentropic
+
+l
+
+Liquid phase
+
+m
+
+Molar
+
+mech
+
+Mechanical
+
+max
+
+Maximum
+
+mcorr
+
+Quantity related to the polytropic temperature exponent correction factor
+
+min
+
+Minimum
+
+new
+
+New state
+
+p
+
+Polytropic
+
+peak
+
+Point of peak efficiency
+
+rated
+
+Rated test case
+
+ref
+
+Reference state
+
+rel
+
+Relative
+
+s
+
+Suction
+
+scaled
+
+Scaled quantity
+
+shaft
+
+Machine shaft
+
+surge
+
+Condition at surge
+
+steam
+
+Steam phase
+
+t
+
+Tangential
+
+u
+
+Impeller tip speed
+
+v
+
+Virtual, vane
+
+vap
+
+Vapor
+
+IX
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+1 Introduction
+NAPCON, a business unit of Neste Engineering Solutions, offers a dynamic, high fidelity
+process simulator as a part of their product portfolio geared towards revealing and utilizing the
+untapped potential of the customer’s production, processes and professionals. The simulator
+is highly interactive, providing a safe yet intriguing training environment for the process
+operators. [1] The simulator is based on an in-house software called ProsDS, which is
+programmed in ANSI Common Lisp.
+Pumps and compressors are a vital part of the processes of the manufacturing industry, which
+is demonstrated by the fact that around 60-65% of energy consumed by industry is used by
+machines driven by electric motors, many of which are pumps or compressors. [2, p. 28] [3,
+p. 534] Depending on the industry sector, some 12% (non-ferrous metal) to 63% (pulp and
+paper) of the consumed electricity is used by pumps, fans and compressors. [4, pp. 41, 59, 73,
+88, 104, 116, 129, 146] Thus, accurate modeling of these machines is required in order to study
+startup, shutdown and capacity adjustment situations in the processes.
+The driving force for this work from the company’s side is precisely to make the process
+simulations more realistic by improving the modeling of rotary equipment such as pumps,
+compressors and turbines, and matching their function to real-world operations. It is seen as
+important to study both steady-state and dynamic simulation methods and apply these to a
+large operation regime in the dynamic simulation environment. Performance issues and typical
+fault scenarios of the mentioned equipment are also a point of interest for the company, to the
+extent needed in the operator training simulator. Equipment performance curves, local
+operations and other equipment parameters are expected to be analyzed and then implemented
+in the rotary equipment modeling in ProsDS. [5]
+During initial discussions with the instructors the scope was limited so that literature studies
+of the pumps, compressors and turbines would be conducted. A model of the compressor
+would be constructed by using existing modeling options in ProsDS and tested in the
+simulator, later to be implemented to the source code by the software development team.
+Interest in the operation during shut-down, start-up and other peculiar operating points was
+again brought up, as was interest in the effect of variations in the rotation speed of the
+equipment. [6]
+
+1
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+In order to acquire more specific details of the need for improvement, the simulator trainers at
+Neste were also interviewed. In their experience, the machines function in a decent manner
+when operated close to their design points. It had been noted that the temperatures behaved in
+an odd manner, rising too quickly. This issue was pronounced for piston machines, but also
+occurred for centrifugal machines. An interest in modeling of compressor surge and the
+improvement of the effects of changes in the composition of the compressed gas was
+mentioned. [7]
+For further insights into the behavior of pumps and compressors, a senior process specialist at
+Neste was consulted. The differences between the operating curves of pumps and compressors,
+effect of rotating speed on the curves, limits for surge and stonewall for compressors, the
+affinity laws, net positive suction head curves and cavitation curves for pumps were suggested
+as subjects for further study. It was recommended that the focus remain on the operating curves
+and their behavior. [8]
+
+2
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+2 Theory
+In this chapter the theory behind the operation of pumps and compressors, along with some
+notes on the construction and classification of the machines, is presented. Focus lies on the
+centrifugal machines, the operating curves and their dependence on the operating conditions
+and affinity laws. Turbines are only briefly covered here, as they are rather shallowly dealt
+with in the studied chemical engineering literature. The reader would be well advised to look
+for a more in-depth review of the turbines in literature regarding the energy technology sector.
+
+2.1 Pumps
+Pumps are machines used for transport of liquids. The pumps are used in several different
+applications, ranging from administering small, accurately controlled flows of catalyst to
+reactors, to supplying processes with massive amounts of cooling water. The characteristics
+of the pumped fluids may also vary significantly, ranging from low viscous fluids to slurries
+of a non-Newtonian nature. This imposes a plethora of requirements on the pumps and, as a
+consequence, several different types of the machines have been developed. [9, p. 379]
+Pumps can be divided into two main categories, namely centrifugal and piston, with other
+types of pumps considered as special cases. [10, p. 1] A more general classification system is
+the division into dynamic and displacement machines. In a dynamic pump energy is
+continuously added to increase the fluid velocity. As the velocity decreases at discharge, a
+pressure increase is produced. In displacement pumps energy is periodically added to a
+moveable boundary of an enclosed volume containing the fluid, resulting in a pressure
+increase. Dynamic pumps can be further divided into centrifugal and several special effect
+pumps, while displacement pumps are divided into reciprocating (e.g. piston and diaphragm
+pumps) and rotary (e.g. gear and lobe pumps). [11, pp. 1.2-4]
+For positive displacement pumps, such as piston pumps, the delivered liquid volume is directly
+related to the piston displacement and directly increases with the revolution speed. It is not
+largely affected by the pressure or the properties of the pumped liquid. The liquid properties,
+such as viscosity, density and vapor pressure, as well as the type of liquid (Newtonian or nonNewtonian, single or multiple phase etc.), strongly influence the function of the centrifugal
+3
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+pumps. These machines are also strongly influenced by the properties of the solids in a slurry.
+[9, p. 380]
+The reciprocating pumps are typically used in applications that require higher pressures, while
+centrifugal pumps are used to deliver high volumetric flows. [11, p. 1.5] The majority of the
+pumps used in the chemical and petroleum industries are of the centrifugal type and of all
+pumps the centrifugal pumps account for 80%. [9, p. 379] [11, p. 9.101] [2, p. 28] Thus, the
+theory presented here will focus on centrifugal pumps.
+The centrifugal pump consists of a casing, a vaned impeller, an inlet and an exit connecting
+the pump to the suction and discharge side piping. As Figure 1 shows, the liquid from the
+impeller may be discharged directly into a volute, which is a chamber gradually increasing in
+cross section with a tangential outlet. The impeller can also be surrounded by a diffuser ring,
+consisting of static guide vanes. The diffuser allows for a less abrupt change in the flow
+direction of the fluid, resulting in a more efficient conversion of the kinetic energy. [9, p. 397]
+
+Figure 1. Centrifugal pump with a volute (A) and a diffuser (B). [9, p. 397]
+
+The fluid is fed to the pump through the center of the rotating impeller, from where it is picked
+up by the impeller blades and thrown outward by centrifugal action. The liquid thus acquires
+a high kinetic energy, which is converted to potential energy in the form of a pressure
+difference between the suction and discharge side, as the flow velocity at the exit decreases.
+The tip angles of the impeller vanes are a central factor for the operating characteristics of the
+pump. The required vane angle in the diffuser is dependent on the volume flow, impeller
+rotation speed and impeller blade angles. The maximum operational efficiency is thus
+achieved only in a narrow range of conditions. [9, p. 397]
+
+4
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+2.1.1 Performance map
+
+The pressure rise delivered by the pump is commonly referred to as "head" and is usually given
+in bar or as meters of water column (i.e. the height the pump can raise water to). Virtual head
+Hv, also known as the ideal head or Euler head, is the head that would be gained if the fluid
+velocity at impeller exit would be exactly parallel to the blades. It is related to the actual input
+head Hi by Equation 1, where ηv is the vane efficiency. [12, p. 88]
+𝐻𝑖 = 𝜂𝑣 𝐻𝑣
+
+(1)
+
+Hv is given by Equation 2, where r2 is the impeller radius, ω is the angular velocity, g is the
+gravitational acceleration, 𝑉̇ is the volume flow rate and b is the width of the fluid element.
+The angle β is the angle between the impeller blade tip and the tangent to the direction of its
+motion, as shown by Figure 2, where uv is the velocity of the liquid relative to the vane, ut is
+the tangential velocity of the vane tip and u2 is the combination of these two (i.e. the velocity
+of the liquid). [9, pp. 398-400]
+𝐻𝑣 =
+
+𝑟22 𝜔2
+𝑉̇ 𝜔
+−
+𝑔
+2𝜋𝑏𝑔 tan 𝛽
+
+Figure 2. Velocity diagram. [9, p. 398]
+
+5
+
+(2)
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+The developed virtual head is proportional to the square of the radius and angular speed, while
+being independent of the density of the liquid. The pressure will thus be directly proportional
+to the density, following from Stevin’s law, Equation 3, where p is pressure, ρ is density, and
+z is height (or here, head). For a given speed of rotation, there is a linear relation between the
+head developed and the volume flow rate. [9, pp. 398, 400]
+𝑝 = 𝜌𝑔𝑧
+
+(3)
+
+The output of a pump is a function of its linear dimensions, the shape, number and arrangement
+of impellers, angular speed and the head against which it is operating. The specific speed Ns
+of a pump is given by Equation 4, and is a constant for geometrically similar pumps. Some
+other forms of the expression also exist, but this one is dimensionless. A typical form is to
+replace the angular speed ω with the impeller speed N, given in rpm. If the flowrate is given
+in US gallons per minute and the head in feet, the specific speed for a centrifugal pump
+frequently assumes values between 400 and 10 000, depending on the type of impeller. The
+specific speed may also be useful for indicating whether a single-stage pump is sufficient or
+not. For values below 1 000, the efficiency for a single-stage pump is low and multi-stage
+pumps should be considered. In general, a low specific speed results in low capacity and high
+specific speed in high capacity. [9, pp. 401-402] [13, pp. 200-201] [14, pp. 10.22-32]
+𝜔𝑉̇ 1/2
+𝑁𝑠 =
+(𝑔𝐻𝑖 )3/4
+
+(4)
+
+Equations 1 to 4 can then be used to calculate the produced head and pressure increase and to
+map their dependence of the volume flow. The characteristics of a pump are usually displayed
+in a plot with the head H, power P and efficiency η against the flow Q, as seen in Figure 3.
+The optimum operation condition is at the duty point, where the vertical line through
+maximum efficiency cuts the head curve. The efficiency remains reasonably constant when
+the pump is operating near optimum conditions. [9, pp. 402-403]
+
+6
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 3. Plot of pump characteristics. [9, p. 402]
+
+The so-called fan laws, also known as the affinity laws, can be used to recalculate the pump
+characteristics for different operating conditions and to calculate the characteristics for
+geometrically similar pumps. The laws take into account changes in angular speed, impeller
+diameter d and fluid density. Indices ref and new refer to the initial and the new condition,
+respectively. The new pressure difference is given by Equation 5, Equation 6 describes the
+new volume flow rate, while Equations 7 and 8 describe the new power and efficiency of the
+pump. [15, pp. 117-118] Equations 5 and 6 give an accurate approximation for the new
+pressure and flow rate, but Equations 7 and 8 give somewhat inaccurate approximations for
+the power and efficiency. [16]
+2
+
+∆𝑝𝑛𝑒𝑤
+
+2
+
+𝜔𝑛𝑒𝑤
+𝑑𝑛𝑒𝑤 𝜌𝑛𝑒𝑤
+=(
+∆𝑝
+) (
+)
+𝜔𝑟𝑒𝑓
+𝑑𝑟𝑒𝑓
+𝜌𝑟𝑒𝑓 𝑟𝑒𝑓
+
+(5)
+
+3
+
+̇
+𝑉𝑛𝑒𝑤
+
+𝜔𝑛𝑒𝑤 𝑑𝑛𝑒𝑤
+=
+(
+) 𝑉̇𝑟𝑒𝑓
+𝜔𝑟𝑒𝑓 𝑑𝑟𝑒𝑓
+3
+
+𝑃𝑛𝑒𝑤 ≈ (
+
+(6)
+
+5
+
+𝜔𝑛𝑒𝑤
+𝑑𝑛𝑒𝑤 𝜌𝑛𝑒𝑤
+𝑃
+) (
+)
+𝜔𝑟𝑒𝑓
+𝑑𝑟𝑒𝑓
+𝜌𝑟𝑒𝑓 𝑟𝑒𝑓
+𝜂𝑛𝑒𝑤 ≈ 𝜂𝑟𝑒𝑓
+
+7
+
+(7)
+(8)
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+As can be seen from the affinity laws, the capacity and head for the same pump can be related
+to each other as in Equation 9. This means the head will change as the square of the liquid
+flow. [14, pp. 10.22-32]
+̇2
+𝑉𝑛𝑒𝑤
+∆𝑝𝑛𝑒𝑤
+=
+2
+∆𝑝𝑟𝑒𝑓
+𝑉̇𝑟𝑒𝑓
+
+(9)
+
+2.1.2 Cavitation
+
+Should the pressure of the pumped liquid fall below its vapor pressure at any point in the pump,
+the liquid will start to vaporize. This is called cavitation. The phenomenon affects the process
+in three negative ways, namely by causing noise and vibration, damaging the process
+equipment and reducing the flow. The vaporization causes the density of the liquid-vapor
+mixture to decrease, leading to a reduction in the transport capacity of the pump. The vapor
+may also form pockets of gas. As these pockets collapse they send shockwaves through the
+fluid, which can rapidly cause mechanical damage to the pump. There are several ways to
+reduce cavitation and mitigate its negative effects. For example, damage to the equipment can
+be reduced by using harder materials in the construction and by directing the cavitating stream
+away from the walls. Careful attention must, thus, be paid when designing the pump, to make
+sure the minimum pressure that will arise at any point in the pump remains above the vapor
+pressure at the pumping temperature. [9, p. 404] [15, p. 129] [14, pp. 8.72-73]
+The required net positive suction head NPSHR, expressed as head of the liquid to be pumped,
+describes by how much the pressure at the suction point of the pump must exceed the vapor
+pressure at the pumping temperature in order to avoid cavitation. It is a function of the design
+parameters of the pump, such as characteristics of the liquid, total head, impeller speed, pump
+capacity and impeller design. NPSHR is given by the manufacturer as a curve relating it to
+capacity and impeller speed. As a rule of thumb, the NPSH should be above 3m for capacities
+up to 100 m3/h and 6m beyond this capacity. The available net positive suction head NPSHA
+is calculated with Equation 10, where p0 is the absolute pressure in the liquid reservoir, pvap is
+the vapor pressure, z0 is the height of the liquid level above the suction point and zf is the head
+lost to friction. Here it is assumed that the liquid kinetic head can be converted to pressure
+head. The system must be designed so that NPSHA is greater than NPSHR during all operating
+conditions. An adequate margin for design can be obtained from Equations 11 and 12, using
+8
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+the larger of the calculated values for NPSHA. The required NPSH depends on the pumped
+fluid, and, since water is considered as the standard fluid, various correction methods have
+been developed for evaluating NPSHR for other fluids. One such method is presented in Figure
+4, where a reduction in NPSH is displayed for various fluids over different temperatures and
+vapor pressures. The data displayed is for pure liquids and extrapolation outside of the shown
+ranges is likely inaccurate. [9, pp. 404-406] [13, p. 212] [14, pp. 10.22-32]
+𝑝0 − 𝑝𝑣𝑎𝑝
++ 𝑧0 − 𝑧𝑓
+𝜌𝑔
+
+(10)
+
+𝑁𝑃𝑆𝐻𝐴 = 𝑁𝑃𝑆𝐻𝑅 + 1.524 𝑚
+
+(11)
+
+𝑁𝑃𝑆𝐻𝐴 = 1.35 × 𝑁𝑃𝑆𝐻𝑅
+
+(12)
+
+𝑁𝑃𝑆𝐻𝐴 =
+
+Figure 4. Estimation of NPSH for various fluids. [14, pp. 10.22-32]
+
+As previously mentioned, the limit for the onset of cavitation can also be monitored by directly
+studying the pressure at the suction side, as shown by Equation 13. Here ps is the pressure at
+the suction side and ps,min is the minimum allowable suction pressure. The minimum pressure
+is described by Equation 14, where Δps is a characteristic value for every pump and is
+influenced by the rotation speed. [15, p. 129] This value may be given by the manufacturer, or
+it can be evaluated using Equation 15, where k is the hub narrowing and S is the suction
+specific speed. Note that the impeller speed has the unit
+
+1
+𝑚𝑖𝑛
+
+here, the volume flow is in
+
+𝑚3
+.
+𝑠
+
+The hub narrowing is given by Equation 16, where dn is the hub diameter of the impeller inlet
+and Ds is the outer diameter of the impeller inlet. [10, pp. 189, 195] The suction specific speed
+is useful in evaluating the suction limitations of the pump. It is either given by the manufacturer
+9
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+or calculated with Equation 17. If S is not readily given by the manufacturer, it may be easiest
+to just use NPSH, as calculating S requires knowing NPSH. [11, p. 2.15] [14, pp. 10.22-32]
+𝑝𝑠 > 𝑝𝑠,𝑚𝑖𝑛
+
+(13)
+
+𝑝𝑠,𝑚𝑖𝑛 = 𝑝𝑣𝑎𝑝 + ∆𝑝𝑠
+
+(14)
+
+2/3
+𝜔 2 𝑉̇
+∆𝑝𝑠 = ((
+)
+)
+100 𝑘𝑆
+
+(15)
+
+𝑘 =1−
+
+𝑆 = 51.65 ×
+
+𝑑𝑛2
+𝐷𝑠2
+
+𝜔𝑉̇ 1/2
+𝑁𝑃𝑆𝐻 3/4
+
+(16)
+
+(17)
+
+Several dimensionless numbers for studying the inception of cavitation exist in the literature.
+For cavitation in a fluid flow a critical cavitation number at inception of cavitation, σinc, can
+be defined according to Equation 18, where u is the flow velocity. The number is characteristic
+for each piece of equipment and can be used to correlate equipment performance data. [14, p.
+6.41]
+𝜎𝑖𝑛𝑐 =
+
+𝑝𝑠 − 𝑝𝑣𝑎𝑝
+𝜌𝑢2 /2
+
+(18)
+
+For rotating equipment, the inlet tip velocity is often used instead of u. Perhaps more common
+for these types of machines is the use of inception suction specific speed Sinc, as defined by
+Equation 19, where Ω is the impeller speed in rad/s. This number represents the critical value
+for the suction specific speed at which cavitation first appears and is similar in concept to the
+critical cavitation number. Using the inception suction specific speed, it is possible to
+determine if the pump is operating under conditions close to cavitation. [17, pp. 278-279]
+𝑆𝑖𝑛𝑐 =
+
+𝛺𝑉̇ 0.5
+𝑝𝑠 − 𝑝𝑣𝑎𝑝 0.75
+(
+)
+𝜌
+
+10
+
+(19)
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+2.1.3 Power consumption
+
+The work required for pumping a liquid is given by Equation 20, where Δz is the difference in
+elevation, Δp is the pressure difference in the system, and Δpf is the pressure drop due to losses.
+The shaft work required for the reversible process is given by Equation 21. A negative W
+indicates the need of a pump, whereas a positive value means a turbine could be used to extract
+energy. The head required from the pump is calculated with Equation 22. [13, pp. 206-207]
+[14, p. 4.10]
+𝑊 = 𝑔𝛥𝑧 +
+
+𝛥𝑝 𝛥𝑝𝑓
+−
+𝜌
+𝜌
+
+𝑊𝑠ℎ𝑎𝑓𝑡 =
+
+𝐻=
+
+𝛥𝑝
+𝜌
+
+𝑊
+𝑔
+
+(20)
+
+(21)
+
+(22)
+
+As can be seen the energy required by the pump depends on the raised height of the fluid,
+pressure required at delivery point, flow resistance of the pipe, flow rate and the physical
+properties of the liquid (particularly density and viscosity). [9, p. 379] Increase in the viscosity
+of the fluid will increase the power required for generating the same head at the same flow
+rate, while lowering the efficiency of the pump. [14, pp. 10.22-32] Power developed by the
+pump is given by Equation 23, where 𝑚̇ is mass flow. [9, p. 399]
+𝑃 = 𝑚̇𝐻𝑣 𝑔
+
+(23)
+
+The power consumed by the pump when pumping an incompressible fluid is given by Equation
+24, where Δp is the pressure difference developed by the pump. The total efficiency of the
+pump η is given by Equation 25, where ηmech is the mechanical efficiency of the pump and ηint
+is the pump’s internal efficiency. [15, p. 110] [13, p. 480] If the work required by the pump is
+known, or if it is calculated from the produced head, the power consumed can be calculated
+with Equation 26. [13, p. 207]
+𝑃=
+
+𝑉̇ ∆𝑝
+𝜂
+
+𝜂 = 𝜂𝑚𝑒𝑐ℎ 𝜂𝑖𝑛𝑡
+𝑃=
+
+𝑊𝑚̇
+𝜂
+
+11
+
+(24)
+(25)
+(26)
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+2.2 Compressors
+Compressors are in many ways similar to pumps. Both machines are used to transport fluids
+and, thus, share many similarities in both working principles and mechanical components.
+Same as for pumps, the basic division of compressors is also into displacement and dynamic
+machines. The displacement machines are constant volume, variable head compressors. They
+are not largely affected by the characteristics of the gas and, as the displacement pumps, are
+in general used for low flows or low molecular weight gases. Dynamic compressors are
+variable volume, constant energy machines. Contrary to displacement machines, they are
+significantly influenced by gas characteristics. Dynamic machines are typically used whenever
+possible, due to their lower maintenance costs. The dynamic machines can be divided into
+axial and centrifugal compressors. In this work, the focus lies on the centrifugal variant. [18,
+pp. 7-21]
+The centrifugal compressor and centrifugal pump share the same central mechanical parts. The
+compressor consists of an impeller inside a casing, an inlet leading the gas to the impeller and
+an exit leading out from the volute surrounding the impeller. The impeller may also be
+surrounded by a vaned diffuser, but the diffusers in the machines used in the oil refining and
+petrochemical industries usually come without vanes. If the machine consists of multiple
+compression stages, the gas is led from the exit, through deswirling vanes, into the inlet of the
+next impeller. The energy of the gas is increased by increasing its speed, which is done by the
+impeller. The diffuser and volute then convert the speed to a pressure and temperature increase
+by efficiently reducing the fluid velocity. [14, p. 10.22] [18, pp. 21-22] [19, pp. 12-13] [20,
+pp. 41-43]
+The compressor is characterized by its performance map, where the produced head (or
+discharge pressure), efficiency and required power are plotted against the inlet volume flow.
+The manufacturer usually provides a number of performance maps valid for varying inlet
+conditions.
+The compressor has an operating range defined between the surge point and choke point. The
+surge point is the lower flow limit of stable operation and, at this point, the flow is reversed in
+the machine. When this occurs, all the forces acting on the compressor are reversed. In the
+worst case, this can lead to total destruction of the machine. At the choke point, or stonewall,
+the fluid flow reaches Mach 1, meaning the flow velocity is as high as the speed of sound in
+the fluid. At this point, the maximum flow through the unit at the current operating conditions
+has been reached. The choke condition causes a considerable drop in efficiency but does not
+12
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+cause damage to the machine. The operating range decreases if the pressure ratio per stage or
+the number of stages is increased. [14, pp. 10.37-52]
+
+2.2.1 Performance map
+
+Transport of gases in pipes mainly follows the same theory as transport of liquids. The density
+of the gas, however, is often only a fraction of the density of the fluids. More importantly, it
+can also be heavily influenced by both the pressure and the temperature of the gas. This leaves
+its mark on the design and operation of gas transport equipment. The density of a gas can be
+calculated with Equation 27, where Z is the compressibility, R is the universal gas constant
+and MW is the molecular weight of the gas. [15, p. 136] When the desired pressure increase is
+so large a compressor is needed, the fluid can no longer be treated as incompressible. Instead,
+the changes in the thermodynamic state of the fluid must be considered when studying the
+machine. [15, p. 141]
+𝜌=
+
+𝑀𝑊𝑝
+𝑍𝑅𝑇
+
+(27)
+
+Due to the variance in density for the gases, it is not practical to give the head developed by
+the compressor as meters of fluid column. Instead, it is commonly defined as the energy it
+takes to compress and deliver the gas from one energy level to the next and is given in Joule
+per kilogram. Additionally, the isothermal, isentropic (adiabatic) and polytropic compression
+processes all have their own corresponding heads and efficiencies. [18, pp. 53-54] Both the
+isothermal and isentropic curves can be regarded as idealized boundary cases. [15, pp. 142146] As can be seen from Figure 5 and Figure 6, the polytropic curve lies to the right of both
+the isothermal and the isentropic curves. As the polytropic head also is an ideal reversible
+compression path, the actual compression curve lies still to the right of the polytropic curve,
+as seen in Figure 5. Notwithstanding this fact, of the presented curves the polytropic one is the
+best description of the actual compression curve. Figure 7 displays an approximation of the
+relative sizes of the isothermal, isentropic and polytropic heads. [18, p. 62]
+
+13
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 5. Mollier diagram displaying the various compression processes. [18, p. 59]
+
+Figure 6. Compression curves. [14, pp. 10.37-52]
+
+Figure 7. Relative values of compression heads. [18, p. 60]
+
+14
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Most compressors operate along a polytropic curve approaching the adiabatic curve. The
+adiabatic curve is often used as a basis for compressor calculations, but as the polytropic head
+contains an efficiency term it is the one most used by the equipment manufacturers. [14, pp.
+10.37-52] [18, p. 62] The adiabatic head is given by Equation 28 and the polytropic head is
+given by Equation 29, where the ratio of specific heats κ has been replaced by the polytropic
+index n and the average value of the inlet and outlet compressibility Zavg is used. The polytropic
+efficiency, defined as the ratio of the polytropic work to the actual work required, is given by
+the ratio of the fractions containing κ and n, as shown by Equation 30. [13, p. 852] [14, pp.
+10.37-52] [21, p. 103] Here, κ is the ratio of specific heats, given by Equation 31. Cp is the
+specific heat capacity of the fluid at constant pressure and CV is the specific heat capacity at
+constant volume. [9, p. 40] As shown in Appendix E, the compressibility Z can be calculated
+with Equation 32, where Vm is the molar volume of the gas.
+𝜅
+𝑝3 (𝜅−1)/𝜅
+− 1)
+(( )
+𝜅 − 1 𝑝1
+
+(28)
+
+𝑅
+𝑛
+𝑝3 (𝑛−1)/𝑛
+− 1)
+(( )
+𝑀𝑊 𝑛 − 1 𝑝1
+
+(29)
+
+𝐻𝑎𝑑 = 𝑍𝑅𝑇1
+
+𝐻𝑝 = 𝑍𝑎𝑣𝑔 𝑇1
+
+𝜂𝑝 =
+
+(𝜅 − 1)/𝜅
+(𝑛 − 1)/𝑛
+
+(30)
+
+𝐶𝑝
+𝐶𝑉
+
+(31)
+
+𝑝𝑉𝑚
+𝑅𝑇
+
+(32)
+
+𝜅=
+
+𝑍=
+
+In the industry, the compressors are monitored to follow up their performance and to reduce
+downtime and maintenance costs. This monitoring is often done by comparing process data
+from measurements to some form of simulation model. [20, p. 16] [22] Simulations can also
+be used for compressor system design. Dynamic simulators can be used to train process
+operators. Such simulations require a high-fidelity model of the compressor, of which the
+performance maps are a key component. The performance maps provided by the manufacturer,
+however, are only valid at the specific suction conditions and rotation speeds they were
+constructed for. [23] Thus, in order to model the whole operating range of the compressor, a
+method for predicting the performance maps for varying operating conditions is needed.
+
+15
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+The affinity laws presented in Equations 5 to 8, also known as the fan laws, can be used for a
+crude approximation, but their accuracy significantly decreases as the molecular weight of the
+gas and the number of compression stages in the machine increase. As the compressors do not
+strictly follow the affinity laws, some modified version of the equations is needed for a proper
+prediction. [18, p. 72] [23] Several alternatives of varying complexity and accuracy for
+predicting the performance are available.
+In general for compression and expansion, if the process follows an isothermal path, the
+product of the pressure and volume is constant, as shown in Equation 33. If the compression
+is polytropic, an exponent n is added, yielding Equation 34. The exponent n is the polytropic
+index and it takes a different value depending on the process conditions and the design of the
+machine. [13, pp. 81-82]
+𝑝𝑉 = 𝑐𝑜𝑛𝑠𝑡𝑎𝑛𝑡
+
+(33)
+
+𝑝𝑉 𝑛 = 𝑐𝑜𝑛𝑠𝑡𝑎𝑛𝑡
+
+(34)
+
+Like for the pump, the flow characteristics of the compressor can be described by certain
+dimensionless numbers. The specific speed NS, similar to the suctions specific speed S for the
+pumps, describes the relation of the adiabatic head to the flow rate at various rotating speeds
+in geometrically similar machines. It is given by Equation 35. Another useful number is the
+specific diameter dS, which describes the relation of the head and flow rate at various impeller
+diameters, according to Equation 36. [14, pp. 10.37-52]
+𝑁𝑆 =
+
+𝑑𝑆 =
+
+𝜔𝑉̇ 1/2
+3/4
+
+𝐻𝑎𝑑
+
+𝐻1/4 𝑑
+𝑉̇ 1/2
+
+(35)
+
+(36)
+
+In dynamic simulation the machine is subjected to a wide range of operating conditions and,
+thus, the operating curve of the machine should be scaled smoothly in a user-friendly manner
+to match the governing conditions, while maintaining a sufficient accuracy of the predicted
+performance. As directly scaling the performance curves with the affinity laws is not viable
+for compressors, approaches that consider the vital machine and operating condition
+parameters influencing the compressor performance are needed for an accurate prediction of
+new performance curves. One option is the computationally heavy CFD simulation of the
+machine. Another approach would be to utilize empirical correlations for the predictions.
+However, both methods require detailed information of the machine geometry, which often is
+not readily available.
+16
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+A third alternative is to convert the performance curve to a dimensionless form, from which
+performance curves at new operating conditions can be predicted. Here the head is converted
+into the head coefficient ψ. For the volume flow either the inlet flow coefficient φ1 or the exit
+flow coefficient φ3 is used. Using the inlet flow coefficient, an array of dimensionless curves
+is obtained and, as the impeller tip speed Mach number varies, the needed dimensionless curve
+can be interpolated or extrapolated from the curve array and the converted back to the sought
+performance curve in natural scale. The aim of utilizing the exit flow coefficient is to obtain a
+single dimensionless performance curve for the compressor, which can then be used to
+calculate all the curves in natural scale. The inlet flow coefficient is described as more of an
+external characteristic, while the exit flow coefficient is an internal component of the
+compressor. The advantage with both methods is that only the manufacturer performance
+curves, impeller diameter and blade tip height and knowledge of the governing process
+conditions are needed for the predictions. As both the impeller diameter and blade tip height
+are typically provided in the datasheet of the machine, the difficulties of obtaining information
+of the detailed geometry of the machine can be avoided. [22, p. 2] [19, pp. 133-135]
+To make the dimensionless performance maps more robust, all the different regions of the map
+should be represented by an appropriate function. As the behavior of the curve differs between
+the surge, normal operation and stonewall sections, each section should be predicted by an
+own function with parameters fitted to the reduced data. Figure 8 shows a dimensionless
+polytropic head curve with the surge section described by an exponential function to the left
+of the vertical black line, the normal operation region described by a power function between
+the two vertical lines and the stonewall section described by a quadratic function to the right
+of the blue vertical line. The operating regions are marked in the same manner in Figure 9,
+which shows a dimensionless compressor power curve, where both the surge and stonewall
+sections are described by quadratic functions, while the section for normal operation is
+described by a power function. [23, p. 45]
+
+17
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 8. Sections of a dimensionless polytropic head curve depicted by different functions. [23]
+
+Figure 9. Sections of a dimensionless power curve depicted by different functions. [23]
+
+2.2.1.1 Inlet flow coefficient
+
+The presented inlet flow coefficient method requires the impeller diameter and the
+performance maps of the manufacturer, as well as the reference conditions for these, for
+transforming the curves to the dimensionless variant. The governing process conditions are
+needed for estimation of the new performance curves. [22, p. 2]
+
+18
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+The performance of the compressor is influenced by inlet conditions such as temperature,
+compressibility, ratio of specific heats, molecular weight and impeller blade tip speed. The
+effects of all these variables are considered by the dimensionless tip speed Mach number,
+calculated by Equation 37, where U is the blade tip speed, given by Equation 38. Note that
+the rotation speed should be given as revolutions per second. If two sets of inlet conditions
+have equivalent Mach numbers, their dimensionless performance curves will also be the same.
+[22, pp. 2-4]
+𝑀𝑢 =
+
+𝑈
+√𝜅1 𝑍1 𝑇1 𝑅
+𝑀𝑊
+
+𝑈 = 𝜋𝑑𝜔
+
+(37)
+
+(38)
+
+Conversion of the performance curves themselves is done by transforming the polytropic head
+into the dimensionless head coefficient ψ and the volumetric flow into the inlet flow coefficient
+φ1. These conversions are done with Equations 39 and 40. [22, p. 4]
+𝜓=
+
+𝜑1 =
+
+2𝐻𝑝
+𝑈2
+
+(39)
+
+4𝑉̇
+𝜋𝑑2 𝑈
+
+(40)
+
+After the conversion, an array of dimensionless operating curves, each corresponding to a
+certain Mach number, has been obtained. One such array is shown in Figure 10. Using
+Equation 37, a new Mach number Mu,new is calculated from the new inlet conditions. Based on
+the relation of the new Mach number to the Mach numbers of the previously calculated
+dimensionless curves, the full dimensionless curve, consisting of the new head coefficient ψnew
+and the new inlet flow coefficient φ1,new, is created by a curve approximation method, e.g.
+linear interpolation or cubic spline interpolation. [22, p. 5]
+
+19
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 10. Dimensionless inlet flow coefficient operating curves. [22, p. 5]
+
+Lastly, the actual new operating curve, consisting of Hp,new plotted against 𝑉̇new, is calculated
+from the new dimensionless curve using Equations 41 and 42. [22, p. 6]
+𝐻𝑝,𝑛𝑒𝑤 = 𝜓𝑛𝑒𝑤
+
+2
+𝑈𝑛𝑒𝑤
+2
+
+̇
+𝑉𝑛𝑒𝑤
+= 𝜑1,𝑛𝑒𝑤 𝑈𝑛𝑒𝑤 𝑑2
+
+(41)
+𝜋
+4
+
+(42)
+
+When operating within the Mach numbers given in the design data, using this method the new
+polytropic head curves can be approximated within an accuracy of 3%. [22, pp. 1,6-7] The
+method does, however, have some weaknesses. It is strictly valid only if each stage of the
+compressor is treated separately. In addition, the accuracy of the prediction quickly
+deteriorates if the new dimensionless curves are extrapolated from those derived from the
+manufacturer data. [22, pp. 7-8]
+
+2.2.1.2 Exit flow coefficient
+
+If the head coefficient ψ is used in conjunction with the exit flow coefficient φ3 instead of the
+inlet flow coefficient φ1, the performance of each compressor stage can be presented in a single
+dimensionless curve for all conditions up to a critical Mach number. For Mach numbers above
+20
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+the critical values, the curves will be reduced and lie to the left of the curve for the lower Mach
+numbers. During tests performed for two compressors, both the head coefficients and
+efficiencies could be presented in a single curve while operating below the critical Mach
+numbers, even as molecular weights of the compressed gas ranged from 29 g/mol to 365 g/mol.
+These curves are shown in Figure 11. The tests for one machine also showed that, even for the
+reduced curves, both the maximum head coefficient and the maximum efficiency occurred at
+a constant value of φ3. For another machine, however, the maximum efficiency was not only
+reduced in magnitude, but also shifted to lower values of φ3 when exceeding the critical Mach
+number. [24, pp. 93, 96-98] A central finding is that a single gas parameter does not affect the
+flow similarity. Rather, the combination of the parameters making up the tip speed Mach
+number is what counts as a flow similarity characteristic. [19, pp. 136-137]
+
+Figure 11. Exit flow coefficient performance curves for the second stage of two compressors. [19, p.
+136]
+
+21
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+To calculate φ3 Equation 43 is used, where b2 is the impeller blade tip height. Alternatively,
+φ3 can be calculated from φ1, as shown in Equation 44, where f is a leakage factor. [19, p.
+135]
+𝜑3 =
+
+𝑉̇3
+𝜋𝑑𝑏2 𝑈
+
+𝜑3 = 𝑓𝜑1
+
+𝑉̇3 /𝑉1̇
+4(𝑏2 /𝑑)
+
+(43)
+
+(44)
+
+The impeller diameter is usually known. The blade tip height might also be provided by the
+manufacturer, but if this is not the case, an approximation for b2 can be obtained from Equation
+45, where ηL is a leakage efficiency and the value of φ3 is approximated from an empiric
+relation to φ1 at the best efficiency point. Said empiric relation is presented in Equations 46
+and 47. [25, p. 3] [19, p. 175]
+𝑏2 𝜑1 (𝑉̇3 /𝑉1̇ )𝑓
+=
+𝑑
+4𝜑3 𝜂𝐿
+
+(45)
+
+𝜑3 = 𝜑1 + 0.215 𝑓𝑜𝑟 𝜑1 < 0.038
+
+(46)
+
+𝜑3 = 1.8𝜑1 + 0.187 𝑓𝑜𝑟 𝜑1 ≥ 0.038
+
+(47)
+
+The ratio of the static volumetric flow rate 𝑉̇3 to the inlet flow rate is given by Equation 48,
+from which 𝑉̇3 is easily solved. [25, p. 4] A description of the calculation of the temperature
+relation is given in Chapter 2.2.4.
+𝑉̇3 𝑇3 𝑝1 𝑍3
+=
+𝑇1 𝑝3 𝑍1
+𝑉1̇
+
+(48)
+
+Once the dimensionless curve consisting of ψ and φ3 has been constructed, calculation of the
+performance curve for the new operating conditions can commence. Equation 41 is used to
+calculate the new values for the polytropic head. As deduced in Appendix D, the values for
+the new inlet volume flow can be calculated with Equation 49, where 𝑉̇3 is given by Equation
+50, deduced in Appendix C.
+̇
+𝑉1,𝑛𝑒𝑤
+= 𝑉̇3
+
+𝑇1,𝑛𝑒𝑤 𝑝3,𝑛𝑒𝑤 𝑍1,𝑛𝑒𝑤
+𝑇3,𝑛𝑒𝑤 𝑝1,𝑛𝑒𝑤 𝑍3,𝑛𝑒𝑤
+
+𝑉̇3,𝑛𝑒𝑤 = 𝜑3 𝜋𝑑𝑏2 𝑈𝑛𝑒𝑤
+
+22
+
+(49)
+(50)
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+As stated in Appendix G, the new temperature ratio is given by Equation 51. The new outlet
+pressure is given by Equation 52, deduced in Appendix A. As shown in Appendix B, n can be
+calculated from κ and ηp according to Equation 53. The value of the polytropic efficiency
+should correspond to the value of φ3. Equation 32 is used in the calculation of the
+compressibilities.
+𝑇1,𝑛𝑒𝑤
+1
+=
+𝑚𝑛𝑒𝑤
+𝑝
+𝑇3,𝑛𝑒𝑤
+(𝑝3,𝑛𝑒𝑤 )
+1,𝑛𝑒𝑤
+
+𝑝3,𝑛𝑒𝑤 = 𝑝1,𝑛𝑒𝑤 ×
+
+𝑛
+−1
+( 𝑛𝑒𝑤 )
+𝑛𝑛𝑒𝑤
+
+√
+
+𝐻𝑝,𝑛𝑒𝑤
+𝑅
+𝑛𝑛𝑒𝑤
+𝑀𝑊𝑛𝑒𝑤 𝑍𝑎𝑣𝑔,𝑛𝑒𝑤 𝑇1,𝑛𝑒𝑤 (𝑛𝑛𝑒𝑤 − 1)
+
+𝑛=
+
+1
+𝜅−1
+1 − 𝜅𝜂
+𝑝
+
+(51)
+
++1
+
+(52)
+
+(53)
+
+̇
+Once Hp,new and 𝑉1,𝑛𝑒𝑤
+are calculated for the range of the dimensionless curve, the new
+operating curve is ready for use. Unfortunately, even this method is strictly applicable only for
+a single compression stage. Searching for a general way to describe the operation of the whole
+compressor in a single curve, which would be a great benefit for accurate dynamic simulation,
+appears to be a Sisyphean task, as no such thing as an invariant performance curve seems to
+exist for multistage compressors. [19, p. 134] In Appendix F and Appendix G equations are
+deduced for direct conversion of a point on the operating curve to a point on a curve for new
+operating conditions.
+
+2.2.2 Surge
+
+As previously mentioned, operating the compressor at a flow below the surge point causes the
+operation to become unstable. Surge occurs when the machine attempts to achieve an
+excessive increase in pressure at an insufficient flow rate. [26, p. 6.4] The instabilities appear
+as pressure and flow oscillations in the process system. The oscillations may be present in the
+magnitude of the flow in the forward direction, but the entire direction of the flow may also
+alternate. System surge can best be explained by the extended operating curve shown in Figure
+12. The region to the left of point A is usually not shown, as this is unstable operating region.
+23
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+In short, operations to the right of point A are stable, as momentarily shifting the operating
+point from point 1 to point 2 or 3 will cause the dynamics of the rest of the system to restore
+the initial operating point. If, however, the machine is forced to operate on the part of the curve
+with a positive slope, i.e. to the left of point A, a small disturbance from a point 1´ to 2´ will
+cause the system to move the point even further away from point 1´, causing the machine to
+enter the surge cycle ADBEA. The instabilities generally occur when the gradient of the
+system resistance curve is larger than the compressor curve gradient. [19, pp. 140-142]
+Increases in the gas discharge temperature can also be observed, as gas at discharge
+temperature enters the impeller during back flow and is thus re-heated for each oscillation
+cycle the machine undergoes. [26, p. 7]
+
+Figure 12. Extended performance curve detailing surge oscillations. [19, p. 141]
+
+Surge is a very rapid phenomenon. The flow reverses in 20 to 40 milliseconds and the machine
+can go from normal operation to surge in a few tenths of a second. [26, p. 6.9] Due to the
+swiftness and destructive nature of the phenomenon, a surge margin is usually defined, above
+which the machine is to be operated to ensure surge does not occur. The margin can be defined
+to the automation system controlling the compressor. The system will then, for example,
+initiate minimum flow circulation to prevent surge. The impeller pulsation can be expected to
+occur at a constant value for the exit flow coefficient. [24, pp. 95, 97] The surge point usually
+corresponds to the minimum inlet flow coefficient plotted. If the surge point is based on the
+exit flow coefficient, it may be possible to scale the coefficient’s value at surge from its value
+at the design point. A surge margin as a percentage can then be defined according to Equation
+54. [25, p. 5]
+𝑆𝑢𝑟𝑔𝑒 𝑚𝑎𝑟𝑔𝑖𝑛 =
+
+𝜑3,𝑠𝑢𝑟𝑔𝑒 − 𝜑3
+× 100
+𝜑3
+24
+
+(54)
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+2.2.3 Stonewall
+
+As previously stated, the second limit of the operating curve is the stonewall, or choke point,
+where flow velocity at the impeller blade inlet reaches the sonic velocity in the medium. [19,
+p. 148] The speed of sound in the medium can be calculated with Equation 55. [27, p. 8] The
+Mach number relates the flow velocity to the sonic speed. When the relative Mach number
+reaches a value of 1, the maximum possible flow is achieved. The number is calculated by
+Equation 56, where uin,rel is the inlet flow velocity relative to the impeller blade. [18, p. 92]
+
+𝑎 = √𝜅𝑇𝑍
+
+𝑀𝑟𝑒𝑙 =
+
+𝑅
+𝑀𝑊
+
+𝑢𝑖𝑛,𝑟𝑒𝑙
+√𝜅𝑔𝑇1 𝑅
+𝑀𝑊
+
+(55)
+
+(56)
+
+While stonewall as a phenomenon may not be as destructive as surge, operation at stonewall
+conditions is still not desirable, as the efficiency of the compressor is severely reduced. In
+Figure 13, the choke point of the compressor is defined as the point where the head of the last
+stage reaches zero. If the compressor is pushed a little more, the operating point of the last
+stage will be driven into the fourth quadrant of the coordinate system. If this happens, the stage
+starts consuming the compressor head rather than generating it. Operation in the fourth
+quadrant does not mean the stage acts as a power generating turbine. On the contrary, it
+requires power input in order to operate at this unusual mode. [19, pp. 148-149]
+
+25
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 13. Performance curve of a four-stage compressor, along with individual stage performance
+curves. PL stands for part load, RP for rated point, OL for overload and CH for choke. [19, p. 149]
+
+2.2.4 Outlet temperature
+
+As a large portion of the compression energy appears as heat in the gas, the temperature
+increase in a compressor is often substantial. This can be a limiting factor for the operation of
+the machine, unless cooling of the compressor or interstage heat exchangers are deployed. For
+an ideal gas undergoing isentropic compression, the ratio of the outlet and inlet temperatures
+can be calculated with Equation 57. [9, pp. 412, 417] Sometimes the polytropic efficiency is
+added to the exponent, as shown in Equation 58. [19, p. 56]
+𝑇3
+𝑝3 (𝜅−1)/𝜅
+=( )
+𝑇1
+𝑝1
+
+(57)
+
+𝑇3
+𝑝3 (𝜅−1)/𝜅𝜂𝑝
+=( )
+𝑇1
+𝑝1
+
+(58)
+
+26
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+The irreversibility of a real compression process results in a higher outlet temperature than
+that given by Equation 57. [9, p. 418] For a better estimation, the polytropic temperature
+exponent m is used, as shown in Equation 59. The exponent is calculated with Equation 60,
+where X is a generalized compressibility function, supplementing the compressibility factor Z.
+It is, in turn, given by Equation 61. If the operating conditions are not close to critical
+conditions, the equation for m reduces to Equation 62. [13, pp. 84-85]
+𝑝3 𝑚
+𝑇3 = 𝑇1 ( )
+𝑝1
+
+(59)
+
+𝑚=
+
+𝑍𝑅 1
+( + 𝑋)
+𝐶𝑝 𝜂𝑝
+
+(60)
+
+𝑋=
+
+𝑇 𝜕𝑉
+( ) −1
+𝑉 𝜕𝑇 𝑝
+
+(61)
+
+𝜅−1
+𝜅𝜂𝑝
+
+(62)
+
+𝑚=
+
+When used for calculating the dimensionless 𝜑3 performance maps, m is sometimes defined
+by Equations 63 to 66. Here ηp3 is the impeller total-to-static polytropic efficiency, κT3 is the
+isentropic temperature coefficient, Rxn is the stage reaction and s is the impeller work input
+factor. As the stage reaction contains 𝜑3 , this approach is iterative. [25, p. 4]
+𝑚=
+
+𝑍1 𝑅 1
+𝜅 𝑇3 − 1
+− 1) +
+(
+𝐶𝑝,1 𝜂𝑝3
+𝜅 𝑇3
+
+(63)
+
+𝑇3,𝑖𝑠
+𝜅 𝑇3 − 1 ln ( 𝑇1 )
+=
+𝑝
+𝜅 𝑇3
+ln (𝑝3 )
+1
+
+(64)
+
+𝜂𝑝3 =
+
+√𝜂𝑝 + 𝑅𝑥𝑛 − 1
+𝑅𝑥𝑛
+
+𝑅𝑥𝑛 = 1 −
+
+27
+
+𝜑3 − 𝑠 2
+2𝑠
+
+(65)
+
+(66)
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+2.2.5 Power consumption
+
+The compression work done on a gas during isothermal conditions is given by Equation 67.
+The polytropic process is more complex and the expression for the compression work takes
+the form of Equation 68. An estimation for the required work by the machine can be obtained
+by calculating the ideal work and correcting the value with a suitable efficiency. For
+centrifugal machines the polytropic work is normally used. [13, pp. 81-82]
+𝑊 = 𝑝1 𝑉1 ln
+
+𝑊 = 𝑝1 𝑉1
+
+𝑝3 𝑅𝑇1 𝑝3
+=
+ln
+𝑝1 𝑀𝑊 𝑝1
+
+𝑛
+𝑝3 (𝑛−1)/𝑛
+𝑅𝑇1 𝑛
+𝑝3 (𝑛−1)/𝑛
+− 1) = 𝑍
+− 1)
+(( )
+(( )
+𝑛 − 1 𝑝1
+𝑀𝑊 𝑛 − 1 𝑝1
+
+(67)
+
+(68)
+
+If no estimation of the ideal work is available, the polytropic work can be calculated with the
+help of another generalized compressibility function Y, in addition to the previously presented
+function X. Expressions for these functions are given in Equation 61 and 69. The functions
+can be used to calculate the polytropic exponent n and polytropic temperature exponent m,
+which in turn are used to determine the polytropic work and the outlet temperature. Calculation
+of m was presented in Equation 60, 62 and 63. The polytropic exponent is given by Equation
+70. Unless operating at extreme conditions, the expression reduces to Equation 71. [13, pp.
+84-85]
+𝑝 𝜕𝑉
+( )
+𝑉 𝜕𝑝 𝑇
+
+𝑌=−
+
+𝑛=
+
+(69)
+
+1
+𝑌 − 𝑚(1 + 𝑋)
+
+(70)
+
+1
+1−𝑚
+
+(71)
+
+𝑛=
+
+Once the compression work W has been calculated, the electric power required to drive the
+compressor can be estimated by Equation 72, where ηe is the efficiency of the electric motor.
+[13, p. 93] If the compressor head is known, the power can be calculated from Equation 73.
+[14, pp. 10.37-52]
+𝑊𝑚̇
+𝜂𝑒
+
+(72)
+
+𝑃 = 𝑚̇𝐻
+
+(73)
+
+𝑃=
+
+28
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+For an adiabatic (no heat losses) and isentropic (no entropy generation) compressor, the
+required power is given by Equation 74, where h is the specific enthalpy of the gas.
+Considering the adiabatic and mechanical the efficiency and combining these into one general
+efficiency for the compressor, the total power required by the compressor will be given by
+Equation 75. [15, pp. 142-144] [19, p. 17] If 𝑚̇ and Hp are given in imperial units, the shaft
+horsepower of the compressor can be calculated with Equation 76. The factor 1.02 accounts
+for 2% gear losses. [28, p. 116]
+𝑃𝑎𝑑 = 𝑚̇(ℎ3 − ℎ1 )
+
+(74)
+
+𝑚̇(ℎ3 − ℎ1 )
+𝜂
+
+(75)
+
+𝑃𝑡𝑜𝑡 =
+
+𝑃𝑠ℎ𝑎𝑓𝑡 =
+
+𝑚̇𝐻𝑝
+× 1.02
+33000𝜂𝑝
+
+(76)
+
+As the dimensionless work input factor s appears as a single curve when plotted against the
+exit flow coefficient, regardless of the governing Mach number, it could prove quite useful for
+predicting the required work input. The work input factor describes the sum of the
+dimensionless thermodynamic, disk friction and shroud leakage work and can be calculated
+from the enthalpy difference between the inlet and the outlet according to Equation 77. It can
+also be bound to φ3 at best efficiency point, as shown in Equation 78, where β2 is the impeller
+blade exit angle, I is the number of impeller blades and Δs is an experimentally determined
+correction. Equation 79 gives an approximate size for the correction. [19, pp. 37, 138, 177178]
+𝑠=
+
+𝑠 =1−
+
+∆ℎ
+𝑈2
+
+𝜑3
+√sin 𝛽2
+−
+− ∆𝑠
+0.7
+𝐼
+tan 𝛽2
+
+∆𝑠 = −0.017 ± 0.005
+
+29
+
+(77)
+
+(78)
+(79)
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+2.3 Turbines
+Turbines, also known as expanders, can in many regards be viewed as the opposite machinery
+of the pump and compressor. Where pumps and compressors add energy to a fluid stream, the
+turbine can be used to extract energy from a stream. Turbines can be built for use in both liquid
+and gas streams. The turbines usually consist of a casing, vaned impellers mounted on a shaft
+and guide vanes between the impeller stages. The turbine converts the kinetic and potential
+energy of the stream to shaft work. The shaft can be connected directly to a machine requiring
+power, such as a pump or compressor, or to an electric generator. [29, p. 37] [14, p. 722] It is
+usually worthwhile to consider driving large pumps and compressors with steam turbines on
+site and using the exhaust steam as a heat source for the process, as this improves the energy
+integration of the process and reduces total electricity cost. [13, pp. 900-901] Steam turbines
+are utilized in power generation systems responsible for over 60% of the global electricity
+generation. [30, p. 3]
+Like the compressors, the turbines are characterized by an operating curve. The turbine can
+experience choke when the inlet flow reaches the velocity of sound. [31, p. 251] The curve is
+not limited by surge, as the flow through the unit is from high pressure to low pressure
+conditions. However, in low-pressure applications condensation may occur, leading to
+aerodynamic, mechanical and irreversible thermodynamic losses. [30, p. 19] This phenomenon
+must be considered for turbines operating at conditions where condensation may occur.
+The expansion process can be modeled as polytropic. [13, p. 108] The outlet temperature at
+expansion can be calculated with Equation 59. For expansion m is calculated with Equation
+80 if using the generalized compressibility functions X and Y. The expression for m reduces
+to Equation 81 when not operating at critical conditions. For expansion, the polytropic
+efficiency is defined as the ratio of the actual work obtained to the polytropic work. [13, p. 85]
+𝑚=
+
+𝑍𝑅
+(𝜂 + 𝑋)
+𝐶𝑝 𝑝
+
+(80)
+
+(𝜅 − 1)𝜂𝑝
+𝜅
+
+(81)
+
+𝑚=
+
+The power generated by the turbine is given by Equation 82, where W is the work done by the
+expanding fluid and η is the turbine efficiency. [13, p. 207] The expansion work can be
+calculated with Equation 68. [13, p. 82] Effects of changes in outlet pressure Δp3 on steam
+turbine power can be approximated with Equation 83, if entropy generation is neglected. Here
+
+30
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+v3 is the specific volume of the steam at the outlet. Estimation of the effects of changes in the
+inlet conditions is more complex. Usually enthalpy-entropy diagrams are used for this. [29, p.
+43]
+𝑃 = 𝑊𝑚̇𝜂
+
+(82)
+
+∆𝑃 = −𝜂𝑚̇𝑣3 ∆𝑝3
+
+(83)
+
+31
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+3 Current pump, compressor and turbine
+models
+In this chapter the current state of the pump and compressor models in ProsDS is described.
+Modeling of pumps, compressors and turbines is also present in several other simulation
+software. User manuals and various other sources have been briefly reviewed for Aspen Plus,
+Aspen HYSYS, Honeywell UniSim Design, Dynsim and Apros. There would appear to be
+several similarities, but also differences, between the implementations in the various
+simulators. For example, most use some form of a performance curve to model the equipment.
+However, some seem to have the machine operate along only one curve, while other programs
+utilize several performance curves or curve scaling to better describe the dynamic behavior of
+the machine.
+
+3.1 ProsDS
+In ProsDS the machine itself is only a part of the various calculations. For flow calculations,
+for example, the surrounding equipment supply the rest of the information, such as pressure
+loss in pipes. [32] Flow resistance in pipes is usually considered in the CV value of the valves
+during modeling, but various other options for modeling the pressure loss are also available.
+However, all these options rely on conversion to Aspen AV to determine the flow resistance.
+[33]
+The pumps are modeled using theoretical maximum head at zero flow and pressure loss due
+to flow. The head Hmax can be given either as pressure difference or height of fluid column.
+The pressure loss is modeled using the equation for the valve flow coefficient CV, which
+relates pressure loss to flow as a quadratic function. [32] The CV value is calculated with
+Equation 84, where SG is the specific gravity of the pumped fluid. The flow is given as US
+gallons per minute and the pressure loss is given in psi. [34, pp. 18-19] The operating curve
+for the pump is thus given by Equation 85. A curve of this sort is usually accurate enough for
+pumps around their normal operating points. Effects of changes in the rotating speed are taken
+into account in the head of the pump quadratically. [32]
+32
+
+Improved modeling of rotary momentum mass transport equipment
+
+𝑆𝐺
+𝐶𝑉 = 𝑉̇ √
+∆𝑝
+
+𝐻 = 𝐻𝑚𝑎𝑥 − 𝑆𝐺
+
+Fredrik Nyholm
+
+(84)
+
+𝑉̇ 2
+𝐶𝑉 2
+
+(85)
+
+The compressors are modeled as pumps with some extra features. Generally, a better fit to the
+machine data should be made for the compressors. For compressor curve fitting a correction
+function is used, which takes the actual load of the compressor into account. A correction
+factor for the effect of guide vanes is also available. These correction factors are modeled
+individually for each compressor by the person doing the modeling work. The quality of the
+fit is usually dependent on the required accuracy of the modeling of a unit. These requirements
+are said to seldom be very high, as this equipment is only considered to be a small part of the
+whole process model. Any other calculations regarding the operating curves are usually carried
+out as external calculations modeled outside of the machine. Cavitation, surge and stonewall
+are very rarely modeled. No automatic curve correction for changes in e.g. molecular weight
+or inlet temperature exists in the simulator, these are defined by the modeler as external
+calculations. For compressors in general, the curve type should be steeper at higher loads than
+what the CV based quadratic curve is. A fourth-degree ellipsoid should give a considerably
+better fit. [32]
+The power requirement of the machines is also modeled in a simple manner. It is based on the
+flow and pressure difference over the machine, with a corresponding efficiency. The outlet
+temperature is also modeled in a simple way, based on either an empirically approximated
+constant or on the inlet and outlet pressures. [32]
+
+3.2 Other simulator software
+Aspen Plus is a modeling tool mainly used in the oil and gas industries. It uses the underlying
+physical relationships, such as material balances, energy balances, thermodynamic
+equilibrium and rate equations, to predict the behavior and output of the simulated process.
+The software can simulate both steady state and dynamic state. The operation of the pumps in
+Aspen Plus can be specified in three ways; with pressure by defining the discharge pressure,
+the pressure increase or the pressure ratio, by required pumping power or by defining the
+
+33
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+performance curve of the pump. Using this input, the software calculates the fluid and brake
+horsepower, required electricity and available NPSH. If information about the specific speed
+and suction specific speed are supplied to the model, the required NPSH will also be calculated.
+[35]
+Aspen HYSYS is an engineering simulation tool with capabilities for both steady state and
+dynamic state simulations. The tool is used in industries related to gas processing, cryogenics,
+refining and chemicals. Simulation of pumps, compressors and expanders is possible in
+HYSYS. The simulator utilizes equations of state along with component and stream properties
+to perform the calculations. The pump increases the pressure of an inlet liquid stream. The
+simulator either calculates the outlet pressure, outlet temperature or pump efficiency,
+depending on what information is provided. If the inlet stream is fully specified and the outlet
+pressure is given to the pump, the simulator has enough information to perform the
+calculations. [36, pp. 32-40]
+The HYSYS compressor block works in the same manner as the pump; it increases the pressure
+of a stream and solves the stream outlet pressure, outlet temperature or compressor efficiency,
+depending on the provided information. Both centrifugal and reciprocating compressors can
+be modeled. A polytropic or adiabatic efficiency can be defined for the machine. Furthermore,
+the compressor can be specified to operate along a single performance curve, or it can be given
+multiple curves for varying molecular weights or inlet guide vane settings. [36, pp. 41-51] The
+expander block decreases the pressure of a gas stream. Like the pump and compressor, the
+expander calculates either a property of the outlet stream or an expansion efficiency. The
+expander can use several methods to perform the calculations, but in general the solution is a
+function of flow, pressure difference, work and efficiency. The efficiency can be either
+adiabatic or polytropic. [36, pp. 52-58]
+Honeywell’s UniSim Design is a process simulation tool featuring simulation of event driven
+operation and modular operations. [37, p. 1.2] The software is used in gas processing,
+cryogenic, refining and chemical industries. It can be used for both steady state and dynamic
+simulation. [37, pp. 2.2-3] Positive displacement pumps, centrifugal pumps, reciprocating
+compressors, centrifugal compressors and expanders can be modeled with UniSim. The sizing
+and configuration variables, as well as the specification types, e.g. head or speed, for these
+machines are static. The specification values, however, are dynamic. [37, pp. 7.43-44] Enough
+information of the inlet, outlet and energy streams connected to the pump must be specified,
+so that the pump duty and the pressure difference across the pump can be calculated. Otherwise
+the simulation will not run. The pressure difference and pump duty can also be specified by
+the modeler. Much of the same holds true for both the compressors and expanders, but
+34
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+information is only needed for the calculation of the duty. A value for the duty can also be
+given by the modeler. It is calculated if both the inlet and outlet pressures are specified. [37,
+pp. 8.11-12]
+Dynsim is a dynamic process simulator by Invensys Process Systems. It is used for simulation
+of gas processing, liquified natural gas, refining, petrochemical and chemical process plants.
+[38] Modeling of pumps, centrifugal compressors, reciprocating compressors and expanders
+is available in Dynsim. The modeler can specify either the entire operating curve for the pump
+and centrifugal compressor or use scaling parameters to adjust a default curve for the head,
+flow and efficiency. A reference speed should also be provided. Both machines use the fan
+laws to calculate the flow and head at other speeds. The software seems to fit a third-degree
+polynomial to the curve to obtain a continuous modified performance curve. The pump can be
+modeled at three different operating regions, namely normal operation with positive head,
+hydraulic turbine operation where the suction pressure is higher than the discharge pressure
+and reverse flow operation, where the developed head is not enough to reach the discharge
+pressure. The pump calculates the shaft work and fluid enthalpy rise. The speed of the pump
+is given as an input, either by the modeler or by some other part of the process model. The
+model uses the pressure difference between the inlet and outlet to calculate the available head,
+which is then used to interpolate the volume flow from the specified operating curve. The
+efficiency is interpolated in the same manner from the efficiency curve. [39]
+Effects of inlet guide vanes can be considered in the performance curve of the Dynsim
+compressor. The model can indicate when the compressor goes into surge if the modeler has
+specified a surge flow point at the design condition. The software uses this point to define a
+surge line through the coordinate system origin. Dynsim can simulate compressor operation
+in four regions. The regions are normal operation with positive head, surge at low flows or
+high head, reverse flow when the developed head is insufficient to compress the fluid against
+the discharge pressure and stonewall operation when the suction pressure is higher than the
+discharge pressure. The calculated compressor head is based on isentropic calculations. In the
+same manner as for the pump, the volumetric flow and compressor efficiency are interpolated
+once the head is calculated. [39]
+The Dynsim expander block can be used to model a steam turbine or a gas expander. The
+speed of the turbine is decided by other parts of the process model. The expander is modeled
+using isentropic efficiency and a flow conductance equation. The modeler gives the efficiency
+and a conductance parameter as inputs. A custom efficiency curve can also be defined. The
+power generated by the expander is based on the isentropic efficiency. [39]
+
+35
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Apros is a dynamic simulation software developed by Fortum and VTT. It is mainly used for
+the modeling of power plants, energy systems and industrial processes. [40] For the
+compressors in Apros the required input data is the dimensions of the flow area and design
+point values for inlet pressure and temperature, pressure ratio, mass flow, compressor speed
+and efficiency. The user can also specify a number of custom performance curves for the
+compressor. Otherwise a predefined curve is used. The performance curves plot the pressure
+ratio against the mass flow. The curves have their own corresponding dimensionless speeds.
+The modeler defines the curve by giving the mass flow and pressure ratio at the vertex point
+and at a point to the right of the vertex. The software then approximates the curve as a seconddegree polynomial. The compressor block calculates the pressure and enthalpy increase of the
+stream with Equations 86 and 87. Π is the pressure ratio, which is read from the operating
+curve. It is a function of the mass flow, rotation speed and inlet temperature and pressure. The
+outlet enthalpy is a function of the specific heat capacity and outlet temperature, of which the
+latter in turn is a function of inlet temperature, pressure ratio, polytropic efficiency and
+molecular weight. [41]
+∆𝑝 = 𝑝1 (𝛱 − 1)
+
+(86)
+
+∆𝐻 = 𝑚(ℎ3 − ℎ1 )
+
+(87)
+
+The behavior of the Apros turbine is defined by specific volume, efficiency and inlet and outlet
+mass flows and pressures at the design point. The rotation speed is also given as an input if the
+turbine is not connected to a separate shaft module. The modeler can specify an efficiency
+curve for the turbine. It can be given either as a function of volumetric or mass flow. If the
+flow goes outside of the given points for the curve, the first or last value for the efficiency is
+used. A curve for the efficiency as a function of the rotation speed can be defined in a similar
+manner. The isentropic efficiency used for the expansion process is obtained by interpolating
+a value from both curves using the flow and rotation speed and multiplying these two values.
+The modeler can also give the Stodola coefficient K as input, which generally is used in
+defining the dependence of outlet pressure to flow and is of importance in turbine calculations
+when operating outside of design conditions. The coefficient is usually calculated at nominal
+load with Equation 88, where v1 is the specific volume at inlet. The coefficient is assumed to
+be constant for the turbine. In the flow and pressure calculations the turbine is treated as a flow
+resistance causing pressure drop in the stream. The pressure loss is solved from the equation
+for the form loss coefficient F, Equation 89. The simulator calculates the outlet enthalpy as a
+function of the inlet enthalpy and the turbine efficiency and design point values. Different
+models are used for steam and gas turbines. Gas turbines use Equation 87 with the enthalpies
+reversed. For a steam turbine Equation 90 is used, where ηent is the entropic expansion
+36
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+efficiency. Equation 91 is used if the stream contains droplets. The index l denotes liquid,
+xsteam is the steam fraction and notation h(p) is for the saturation enthalpy at pressure p. The
+mechanical power produced by the turbine is also calculated by the simulator. [41]
+𝑝1 𝑣1
+𝐾 = 𝑚̇√ 2
+𝑝1 − 𝑝32
+
+𝐹=
+
+2
+𝑝
+𝐾 2 𝜌 (1 − 𝑝3 )
+
+(88)
+
+(89)
+
+1
+
+𝑝3 𝜂𝑒𝑛𝑡 /4.27
+∆𝐻𝑆 = 𝑚̇ (ℎ1,𝑠𝑡𝑒𝑎𝑚 − (ℎ1,𝑠𝑡𝑒𝑎𝑚 − ℎ𝑟𝑒𝑓 ) ( )
+− ℎ𝑟𝑒𝑓 )
+𝑝1
+
+(90)
+
+∆𝐻 = 𝑥𝑠𝑡𝑒𝑎𝑚 ∆𝐻𝑠𝑡𝑒𝑎𝑚 + (1 − 𝑥𝑠𝑡𝑒𝑎𝑚 ) (ℎ1,𝑙 (𝑝1 ) − ℎ3,𝑙 (𝑝3 )) 𝑚̇
+
+(91)
+
+37
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+4 Developed compressor model
+For a dynamic simulator used in operator training, correct and accurate behavior is vital. The
+simulator should, at the bare minimum, be able to run in real-time, which limits the acceptable
+computational complexity for any single piece of machinery or equipment in the process
+model. As the process model needs to be able to handle a plethora of operating conditions and
+upset scenarios, the compressor model should also be flexible and robust. Changes in the inlet
+temperature, gas composition, pressure and flowrate, rotation speed of the compressor, as well
+as changes in the outlet pressure, should affect the compressor operation in an appropriate
+manner.
+The compressor operation is characterized by the operating point, outlet temperature and
+consumed power, of which the operating point is most important. As such, the focus during
+this work was mainly on calculating the operating point and describing its behavior during offdesign operation. Power and outlet temperature calculations were also implemented, but in a
+relatively simple manner. As computationally heavy methods such as CFD modeling of the
+entire machine is not an option for dynamic simulation, the best way to accurately calculate
+the operation of the machine would seem to be to use the performance curves and determine
+how they change with varying operating conditions.
+Implementing a single performance curve and using empiric correction coefficients for each
+variable to scale it would likely not work in a sufficient manner, as determining such
+coefficients would be difficult. Additionally, due to the complexity of the machine, such
+simple coefficients would probably not be able to sufficiently predict the entire performance
+curve for the wide range of operating conditions the machine may be exposed to.
+Building a model that takes several performance curves as input and interpolates between these
+might also be difficult, as each curve is strictly valid only at the specific operating conditions
+they were created for. The availability of performance curves may also be limited, so creating
+a performance map for each variable would likely not be possible. To properly determine how
+to interpolate between the curves, some parameter describing the lumped impact of all the
+operating condition variables would have to be found. One such parameter would be the Mach
+number, but sadly the curves do not seem to be arranged in any strict order corresponding to
+their respective Mach numbers in a performance map in the natural dimensions. Extrapolation
+to off-design operation would also likely be inaccurate.
+
+38
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Dimensionless curves unaffected by the rotational speed and inlet condition, on the other hand,
+can be accurately implemented to the process simulator. [23, p. 42] The inlet flow coefficient
+method appears as accurate, flexible and relatively simple to implement, but the need for
+interpolation and, in particular, extrapolation of the dimensionless curves is an unwanted
+feature. The inlet flow coefficient performance curves are still affected by the inlet conditions
+and the rotating speed, as they vary with the Mach number. The exit flow coefficient method
+appears as similar but slightly more complex than the inlet flow coefficient method, with the
+distinction that it produces a single dimensionless performance curve for a wide range of Mach
+numbers, which is thus largely unaffected by changes in the operating conditions. Using the
+exit flow coefficient to predict compressor operation appears as a viable method for dynamic
+simulation and, as such, it was selected for further study.
+Equipment data for three multi-stage compressors, referred to as A, B and C, was provided for
+testing and validation of the model. Process data from a real process plant was also available
+for compressor C. The equations and the prediction capability of the method was first tested
+in Excel for these compressors. Once a working model in Excel was ready, implementation
+and testing began in ProsDS. Note, that the values of polytropic head, volumetric flow and
+compressor power presented in certain graphs in this chapter, as well as in some of the
+appendices, have been scaled to mask the actual values.
+
+4.1 Model
+At first, the polytropic head versus volumetric inlet flow operating curves of compressors A
+and B were converted to the dimensionless form in Excel using Equations 39 and 43. The
+expression for the volume flow ratio was simplified from Equation 48 to Equation 92, as the
+compressibilities generally did not seem to vary that much and calculation of the outlet
+compressibility seemed a bit challenging at this stage. The temperature ratio was calculated
+based on Equation 59. Equations 52 and 53 were used to calculate the outlet pressure. In
+Equation 52 the inlet compressibility was used instead of the average. Both compressors were
+modeled as a single stage operation, meaning only one dimensionless curve was used for the
+entire machine. To align the dimensionless curves, the exponent m was used as a tuning
+parameter with a constant value common for every curve of the same compressor.
+
+39
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+𝑉̇3 𝑇3 𝑝1
+=
+𝑇1 𝑝3
+𝑉1̇
+
+(92)
+
+Figure 14. Dimensionless exit flow coefficient performance curve of compressor A.
+
+Figure 15. Dimensionless exit flow coefficient performance curves of compressor B.
+
+As Figure 14 and Figure 15 show, this method of alignment worked rather well for both
+compressors. As can be seen in Appendix H, however, most of the operating curves for
+compressors A and B were quite close to each other to begin with. Nevertheless, the figures in
+Appendix J show that the predicted operating curves for compressor A are a near perfect
+match, while it can be seen in Appendix K that, while most of the predictions are a good match,
+there are some issues with the prediction of a few of the stonewall regions and with the startup case for compressor B. The dimensionless performance curve and dimensionless polytropic
+efficiency curve of the rated case were used to calculate the predicted curves in Excel.
+Regrettably, the same approach did not work as well for compressor C. This might be due to
+aerodynamic mismatch between the stages, which means "a progressive drift-off for each
+40
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+subsequent stage from its intrinsic best efficiency point once the first stage is operated at an
+off-design point". [19, p. 43] As can be seen from the performance maps in Appendix H the
+performance curves of compressor C are also more scattered compared to those of the other
+two compressors. It was possible to slightly improve the alignment by calculating an individual
+value for m for each point on the converted curve. Based on Equation 62 and the relationship
+between n and κ described in Appendix B, calculation of m was performed with Equation 93.
+To compensate for the reduced assumption made in Equation 62, the polytropic efficiency was
+also added. In addition, a tuning parameter mcorr was added. This parameter is common for all
+the curves and can be used by the modeler to align the curves.
+𝑚=
+
+𝑛−1
+𝑚
+𝑛𝜂𝑝 𝑐𝑜𝑟𝑟
+
+(93)
+
+The aligned dimensionless curves for compressor C are displayed in Figure 16. The
+performance curves provided by the manufacturer were digitalized by hand, which is the cause
+for some of the irregularities that can be seen in the curves. It is clear that the alignment of the
+dimensionless curves for compressor C did not work as well as for compressors A and B, but
+as can be seen in the figures of Appendix L, most of the predicted performance curves are not
+that far off. Figure 17 shows that the dimensionless polytropic efficiency curves for
+compressor C are quite close to each other which, as can be seen in Figure 18, was also the
+case for the efficiency curves of compressor B. This is likely a contributing factor for some of
+the good predictions, even though the dimensionless operating curves for the cases do not
+overlap.
+
+Figure 16. Dimensionless exit flow coefficient performance curves of compressor C, with a correction
+factor of 3.2 used for m.
+
+41
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 17. Dimensionless polytropic efficiency curves of compressor C.
+
+Figure 18. Dimensionless polytropic efficiency curves of compressor B.
+
+Initially attempts were made to fit a function to the operating curves in natural scale. This
+function would then have been transformed to the dimensionless plane, but as can be seen
+from Figure 19, the second-degree polynomial is a poor match to the data and polynomials of
+higher order show a wobbling behavior, even within the data range they were fitted to. In
+addition, polynomials of higher degree may behave unexpectedly outside of the plotted range.
+Both features are unwanted in a dynamic process simulator. [23, p. 45] Thus, the operating
+curves were first transformed to the dimensionless form and the polynomials then fitted to this
+data range. The second-degree polynomials proved a good approximation for the normal
+operating region, as can be seen in Figure 20. Strict limits were imposed for the surge and
+42
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+stonewall regions, although a better approach would be to use functions similar to those
+presented in Figure 8 and Figure 9. The modeler gives the values for the exit flow coefficient
+for the inception of surge respective stonewall. The first and last point of the dimensionless
+performance curve for the rated case were used as the limits in the test model. Surge is modeled
+by dropping the flow through the compressor to zero. At stonewall the volume flow is capped
+at the value corresponding to the exit flow coefficient stonewall limit.
+As can be seen in Appendix L, some of the predicted curves started turning backwards as they
+approached stonewall operation. To avoid any problems caused by this, the ProsDS model
+checks if the volume flow in each point is greater than in the previous point on the curve. If
+this is not the case, the volume flow of the point is assigned the value of the previous point on
+the curve. This marks the end of the ordinary operating curve and the start of the stonewall
+region.
+
+Figure 19. Attempts to fit a second-degree polynomial to the polytropic efficiency curve and a sixthdegree polynomial to the operating curve of compressor B in natural dimensions.
+
+43
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 20. Attempts to fit a second-degree polynomial to the polytropic efficiency and head
+coefficient curves for compressor B in the dimensionless plane.
+
+Once polynomials have been fitted to the dimensionless performance curve and the
+dimensionless polytropic efficiency curve, the coefficients of the polynomials are given as
+input to the constructed compressor model in ProsDS as shown in Figure 21. Coefficients A,
+B and C are for the second-degree polynomial of the performance curve, while coefficients
+AE, BE and CE are for the efficiency curve. Phi3min and Phi3max are the surge respective
+stonewall limits. The model divides the range between the limits to a specified amount of
+points. Together these points create a list, which constitutes the values of a variable over the
+specified operating range. By pairing the values in two lists together, the model is able to
+specify curves. The dimensionless performance curve, for example, is created by pairing the
+lists of φ3 and ψ together. The model also needs the impeller diameter, impeller blade tip
+height, mcorr and the voltage of the machine as inputs by the modeler. If the speed of the
+machine would change Nnew would be used in the prediction of the new operating curves.
+
+44
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 21. The compressor model constructed in ProsDS.
+
+The simulator model contains three source-sinks; IN1, C and OUT, with streams in between.
+These are the inlet and outlet streams, with source-sink C representing the compressor. The
+inlet stream is connected to a stirred tank block, which can be used to change the equation of
+state used for the stream. The non-linear function block COMPRESSOR contains the
+equations and performs the necessary calculations of the simulated compressor. The function
+block reads the temperature, pressure, molar weight, specific heat capacity, molar flow, molar
+volume and enthalpy from the inlet flow. The pressure and enthalpy are read from the outlet
+stream. The compressor block then calculates and writes the volume flow to the inlet stream
+and the temperature to the outlet stream. The mass flow and weight fractions are written from
+the inlet stream, over source-sink C, to the outlet stream. The stirred tank in the inlet was found
+to alter the temperature occasionally, so the inlet temperature was read before tank. The inlet
+volume flow was also written before the tank. The other parameters had to be read after the
+tank in order to get the desired effect when changing the used equation of state in the tank.
+
+45
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Once the model has all the needed inputs from the modeler and the streams, it starts by
+calculating values for the new polytropic head using Equation 41. Next, κ is calculated with
+Equation 94, as deduced in Appendix E. The polytropic index is calculated with Equation 53
+and m is calculated with Equation 93. After the inlet compressibility has been calculated with
+Equation 32, the outlet pressure list for the new performance curve can be evaluated. The
+outlet pressure is calculated with Equation 52.
+𝜅=
+
+𝐶𝑝
+𝐶𝑝 − 𝑅
+
+(94)
+
+To calculate the values in the inlet volume flow list, the model largely follows the procedure
+described in Chapter 2.2.1.2. The model first calculates the ratio of the inlet and outlet
+temperature using Equation 51. Values for 𝑉̇3,𝑛𝑒𝑤 are obtained with Equation 50. Next, the
+new values for the inlet volume flow are calculated using Equation 95, which is based on
+Equation 49 but, as in Equation 92, the compressibilities have been left out.
+̇
+𝑉1,𝑛𝑒𝑤
+= 𝑉̇3,𝑛𝑒𝑤
+
+𝑇1,𝑛𝑒𝑤 𝑝3,𝑛𝑒𝑤
+𝑇3,𝑛𝑒𝑤 𝑝1,𝑛𝑒𝑤
+
+(95)
+
+Once the new values in the lists for the outlet pressure and inlet volume flow have been
+successfully evaluated, the new operating curve can be described by pairing together the
+corresponding values from the lists. Now the actual operating point of the compressor can be
+found. Of the conditions at the outlet, the outlet pressure can be regarded as known. [15, p.
+142] The required outlet pressure is defined by the rest of the process system. This pressure
+then dictates the volume flow the compressor can transport. Thus, using the actual value of the
+pressure at the compressor outlet, the corresponding value for the inlet volume flow is
+interpolated from the new operating curve.
+Again based on the relationship between n and κ described in Appendix B and Equation 58,
+the outlet temperature at the operating point was calculated with Equation 96. The polytropic
+index at the operating point is calculated by interpolating from the previously calculated lists
+for the index and the inlet volume flow. An issue with the iteration was noticed if the
+compressor operated in the stonewall region. As the value of the volume flow had been limited,
+several values for the polytropic index corresponded to a single value of the volume flow. In
+this situation, the model used the last value in the list of the polytropic index, which caused a
+jump in the outlet temperature. To avoid this, a small constant value was subtracted from the
+volume flow used in the interpolation. The outlet temperature is said to be a tricky variable to
+calculate and the polytropic index may be a too ideal assumption here. [32] Based on some
+tests in Excel for compressor B, adding Z to the exponent seemed to improve the accuracy of
+46
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+the temperature calculation at design point operation. The effect of this correction depends on
+the used equation of state; if the ideal equation of state is used Z will not affect the calculated
+temperature.
+𝑝3 (𝑛−1)/𝑛𝑍
+𝑇3 = 𝑇1 ( )
+𝑝1
+
+(96)
+
+During the testing it was discovered that the values calculated for κ and Z by the simulator
+differ from those reported by the manufacturer. The Cp value used for obtaining κ is calculated
+from the enthalpies in the simulator. The enthalpy calculations are based on the used equation
+of state and are typically accurate at low pressures. The accuracy deteriorates as the pressures
+increase. No-one but the manufacturers themselves can say how they have obtained their
+parameters. The parameters may even be completely empirical or based on previous
+experience. [32] These discrepancies in the values affect both the calculated outlet temperature
+and the predicted operating curve.
+The power consumption was calculated with Equation 97. It closely resembles Equation 74,
+but the molar flow ξ̇ was used in stead of the mass flow, as the enthalpy values in the simulator
+were per mole. To calculate the electric current consumption of the machine the power was
+divided by the machine voltage. Accurately calculating the power consumption may be
+challenging, as the outlet enthalpy is affected by the outlet temperature, which, as previously
+discussed, suffers from certain issues. Additionally, various losses are associated with the
+power demand. These should also be considered. [32]
+𝑃 = 𝜉̇ (ℎ3 − ℎ1 )
+
+47
+
+(97)
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+4.2 Tests
+To evaluate the stability, accuracy and dynamic behavior of the constructed model, a series of
+test were performed in the simulator. The results were compared to both manufacturer data
+and process data.
+
+4.2.1 Static tests for operating curve and power consumption
+
+To determine the impact of the previously mentioned differences in the values of κ and Z used
+by the manufacturer and the values calculated by the simulator two tests were carried out for
+compressor B. Step changes were made to the outlet pressure and the volume flow calculated
+by the model was recorded. In one test κ and Z were given constant values, matching those
+reported by the manufacturer, while in the other test the simulator calculated the values. The
+resulting predictions for the operating curve can be seen in Figure 22.
+The figure shows that, in this case, the values differing from those used by the manufacturer
+result in a slightly reduced curve. If the values of κ and Z match the values used by the
+manufacturer the prediction is almost perfect. The modeling of surge and stonewall had not
+yet been implemented in the model at the time the test was carried out, which is why the
+predicted curves can be seen bending slightly backward on the right-hand side. The reduced
+curve also forms a wall of points on the left-hand side, as the range of the volume flow the
+model could use was still limited at this time. If the surge modeling had been implemented at
+this stage, these points would have corresponded to zero flow.
+
+48
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 22. Comparison of scaled original equipment manufacturer curve and simulator test curves
+used to approximate the effects of the differences in the values of κ and Z.
+
+Similar tests were also carried out to test the accuracy of the implemented power calculation.
+The outlet pressure was changed in steps, while the calculated volume flow and corresponding
+power consumption were recorded. The impact of κ and Z was tested in the same manner as
+previously. Additionally, tests were carried out to determine the effects of the used equation
+of state on the power calculation. The ideal and the Soave-Redlich-Kwong equations of state
+were used in the test.
+
+Figure 23. Comparison of scaled manufacturer power curve and predicted curves. Values for κ and Z
+were given as constants.
+
+49
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 24. Comparison of scaled manufacturer power curve and predicted curves. Values for κ and Z
+were calculated by the simulator.
+
+As Figure 23 and Figure 24 show, the predicted power consumption is increased when using
+the values calculated by the simulator. Use of the SRK equation of state also increases the
+power consumption, as can be expected. It yields a very good result for most of the curve when
+the values of κ and Z match the values used by the manufacturer. The accuracy deteriorates
+somewhat at lower volume flows. For the case where κ and Z are calculated by the simulator,
+the ideal equation of state gives a better result than the SRK method.
+
+4.2.2 Dynamic tests
+
+The stability and correct dynamic behavior of the model was verified by performing a series
+of dynamic test for the constructed compressor model in the simulator. During the tests, the
+temperature, pressure and molecular weight of the inlet stream as well as the pressure of the
+outlet stream were adjusted up and down by a ramp function in the simulator. The results are
+presented in the figures below. Clarifications to the legends of the figures are given in Table
+1. The model performed well when the variables were ramped within reasonable ranges. Some
+issues could be observed when the values were ramped down to extremely low, abnormal
+levels.
+
+50
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Table 1. Explanation of dynamic test graph legends.
+
+Figure legend entries
+
+Explanation
+
+COMPRESSOR POWER
+
+Calculated power consumption
+
+ST1-1 VOLUME FLOW IN
+
+Inlet volume flow
+
+ST1-1 PRESSURE IN
+
+Inlet pressure
+
+C-1 PRESSURE OUT
+
+Outlet pressure
+
+Delta DP
+
+Pressure difference over compressor
+
+Delta PRATIO
+
+Pressure ratio
+
+ST1-1 TEMPERATURE IN
+
+Inlet temperature
+
+C-1 TEMPERATURE OUT
+
+Outlet temperature
+
+Delta DT
+
+Temperature difference over compressor
+
+COMPRESSOR K
+
+Calculated κ
+
+COMPRESSOR POLEXP-FOR-TOUT
+
+Calculated n used in outlet temperature
+calculation
+
+COMPRESSOR Z
+
+Calculated Z
+
+ST1-1 MW
+
+Flow molecular weight
+
+COMPRESSOR N-EXPMIN
+
+Minimum value of the calculated list for n
+
+Figure 25 and Figure 26 show the ramp down and ramp up of the outlet pressure. As can be
+seen, the model makes a smooth transition from surge all the way to stonewall. Since the power
+calculation in the model was based on the flow through the compressor, the power
+consumption is zero when the model is in surge, which was modeled as zero flow through the
+compressor. When approaching stonewall the power consumption decreases, as the outlet
+pressure approaches the inlet pressure. As the pressure ratio decreases the calculated outlet
+temperature also decreases. The opposite behavior can be observed during the ramp up of the
+outlet pressure. Figure 27 shows the behavior of the model during unnatural operating
+conditions. As the outlet pressure is ramped down close to complete vacuum, the power curve
+can be seen to make a spike towards the end. Such errors were typical when ramping the
+process variables extremely low. The power consumption also drops to negative as the
+compressor is forced further into stonewall operation, which, as described in section 2.2.3 is
+not realistic behavior.
+51
+
+Improved modeling of rotary momentum mass transport equipment
+
+Figure 25. Ramp down of outlet pressure.
+
+Figure 26. Ramp up of outlet pressure.
+
+52
+
+Fredrik Nyholm
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 27. Ramp down of outlet pressure to abnormal levels.
+
+Next, the operating conditions of the inlet stream were ramped. First in order was the inlet
+pressure. As can be seen in Figure 28 and Figure 29 both the ramp up and ramp down went
+smoothly at realistic ranges for the pressure. At the start of the ramp down the machine is in
+stonewall. As the inlet pressure decreases the pressure difference and pressure ratio are
+increased. From this follows that the outlet temperature increases, which leads to an increase
+in the compressor power consumption. The volume flow smoothly decreases from its
+maximum value until it drops to zero as the compressor goes into surge. The power
+consumption decreases along with the volume flow. As the figures are as good as mirror
+images of each other the same processes occur in the ramp down of the inlet pressure, but in a
+reversed order.
+
+53
+
+Improved modeling of rotary momentum mass transport equipment
+
+Figure 28. Ramp down of inlet pressure.
+
+Figure 29. Ramp up of inlet pressure.
+
+54
+
+Fredrik Nyholm
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+While the pressure ramp tests encompassed the entire operating range of the compressor from
+surge to stonewall, the temperature variations had a much milder impact on the operating point
+of the machine. The results of the temperature ramp test are displayed in Figure 30 and Figure
+31. A decrease in the inlet temperature leads to a decrease in both the outlet temperature and
+the temperature difference. From this follows that the transported volume flow also decreases,
+which in turn reduces the power consumption. The model again behaves in a similar manner
+when the process is reversed.
+
+Figure 30. Ramp down of inlet temperature.
+
+55
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 31. Ramp up of inlet temperature.
+
+The ramping of the molecular weight was last in the series of dynamic tests. The ramping was
+achieved by creating three streams that merged into the compressor inlet stream. Each stream
+had a different composition, resulting in a low, medium and high molecular weight. A function
+was created to adjust the position of a valve in each stream, resulting in the ramping of the
+molecular weight in the compressor inlet stream.
+Figure 32 and Figure 33 show the behavior of the model during the ramp down and ramp up
+of the molecular weight. The behavior is again similar but reversed for the cases. As the
+molecular weight decreases, the volume flow increases. This causes the power consumption
+and the polytropic exponent to rise. The rise in the polytropic exponent results in an increase
+in the outlet temperature, which also contributes to the rise in the calculated power
+consumption.
+
+56
+
+Improved modeling of rotary momentum mass transport equipment
+
+Figure 32. Ramp down of molecular weight.
+
+Figure 33. Ramp up of molecular weight.
+
+57
+
+Fredrik Nyholm
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+4.2.3 Process data tests
+
+Once the validity of the concept had been proved in Excel and the stability of the constructed
+model ascertained with the dynamic tests, the testing could progress to assess the actual
+accuracy of the model by performing the process data tests. Process data of three different
+operating cases was obtained for compressor C. The basic model presented in Figure 21 was
+expanded to the model shown in Figure 34 to accommodate for the process data testing. The
+data of the stream inlet temperature, composition and pressure as well as outlet pressure, all
+displayed in Appendix M, was fed to the test model, which then predicted the inlet volume
+flow, outlet temperature and compressor power consumption.
+To import and export the data to ProsDS from excel and vice versa, several connectors were
+added to the test model: TI for temperature data, PI for pressure, FI for flow, IIA for current
+and AI for composition. The mass flow of the inlet stream was read form the simulator, as the
+available process data was the mass flow measurement. The data of the component analyzers
+was given as volume fractions. [33] It had to be converted into weight fractions for the
+simulator, so a function block was added to the model for this purpose.
+Parallel to the new compressor model the existing compressor block in the simulator was
+connected to inlet and outlet streams. Process data was written to these streams in a similar
+manner as for the new model and the results were gathered for a comparison of the current
+implementation and the developed model.
+
+58
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 34. The compressor model constructed in ProsDS expanded for process data testing.
+
+The first process data case tested was the shutdown case. This case was tested twice to
+determine whether to use the SRK or the ideal equation of state for the remaining cases. The
+SRK method was tested first. The results are displayed in Figure 35 to Figure 39. The first
+figure shows that the mass flow curve predicted by the new model has a similar shape as the
+process data curve. At conditions close to normal operation the predicted flow lies slightly
+below the measured flow. It is possible that inaccuracies in the measurements, which can be
+up to several tens of percent in some cases, may lie behind some of the differences. Various
+calculations and corrections may also be done to the measured data in the automation system.
+[33] However, the most likely reason for the difference in this case is the effect of the values
+of κ and Z calculated by the model. As shown by Figure 22 the difference in the calculated
+values and the manufacturer values may have a reducing effect on the predicted operating
+curve, leading to lower mass flows at the given pressures.
+
+59
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+As the process conditions diverge from normal operation the offset between the curves can be
+seen to increase. The reason behind this would seem to be increasing inaccuracies in the
+predicted operating curves. As the figures in Appendix L show, predictions for some of the
+curves will lie to the left of the manufacturer performance curves when moving from the rated
+operating conditions towards conditions resembling the initial circulation case. The range of
+some curves will also be shorter as they are cut off when they start turning backwards.
+At times, the predicted mass flow can be seen to jump back and forth between zero flow and
+the continuous operation trend. The reason behind this behavior is the way surge was taken
+into consideration in the model. At the mentioned points, the model is balancing on the verge
+of surge. As described in section 4.1 the limit for the inception of surge was strictly set to the
+value read from the operating curves provided by the manufacturer. As these values may
+contain some inaccuracies and reading values from graphs always causes some errors, a better
+approach would be to give the surge limit with a margin for error to the model, instead of
+giving the exact value read from the operating curve.
+The flow prediction of the old model is far off from the process data. It starts off close to the
+process data but quickly starts behaving in a completely different manner. Instead of
+decreasing, the flow rapidly increases. It then remains on a higher level for most of the time
+before it quickly starts to decrease to a level close to the initial operation. The predicted flow
+remains at this level for a while, before sharply dropping as the machine is turned off. The
+flow does not go all the way to zero but remains at a small value above the process data for
+the rest of the test.
+
+Figure 35. Test result for the suction mass flow of the shutdown case using the SRK equation of state.
+"New model" refers to the developed model while "Old model" refers to the existing compressor
+model in ProsDS.
+
+60
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+The outlet temperature predicted by the new model, depicted in Figure 36, seems quite good
+and, rather interestingly, the prediction seems to improve in accuracy towards the end of the
+test. That is, until the compressor is turned off. At this point, the temperature spikes and starts
+oscillating quite violently. This can be seen in Figure 37. According to the process data in
+Appendix M, the inlet temperature exceeds the outlet temperature at this point, while both the
+inlet and the outlet pressure fall close to zero. It is thus no wonder the outlet temperature
+predicted by the model behaves in a strange manner at these conditions, as the calculation is
+based on both the inlet temperature and the pressure ratio. At this point the model should be
+told that the machine has been shut off and that it should stop calculating the outlet temperature
+in this manner.
+The temperature calculation of the old model works quite well. The shape of the predicted
+curve is very similar to that of the process data, even though there is an offset between the two
+when using the SRK equation of state. During normal operation, this prediction is slightly
+better than the new model’s prediction, but as the conditions diverge from normal operation
+the new model clearly gives a better prediction. The old model suffers from even heavier
+oscillations in the temperature as the machine is turned off.
+
+Figure 36. Test results for the compressor outlet temperature of the shutdown case using the SRK
+equation of state. The predicted graphs have been cut before spiking to better visualize the normal
+operation.
+
+61
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 37. Full range of the SRK shutdown case outlet temperature predictions detailing the spikes
+and elevated values of the model.
+
+The new model’s prediction of the electric current is rather good throughout the entire test, as
+displayed in Figure 38. It does drop to zero at times, which is due to the aforementioned issue
+of the model balancing on the verge of surge. The predicted current of the old model again
+differs completely from the process data. It is constantly increasing, until finally doing a
+massive spike and going into oscillation as the compressor is shut off, as seen in Figure 39.
+
+Figure 38. Test results for the compressor electric current of the shutdown case using the SRK
+equation of state. The predicted graph of the old model has been cut before spiking to better visualize
+the normal operation.
+
+62
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 39. Full range of the SRK shutdown case electric current predictions detailing the spike and
+highly elevated values of the old model.
+
+When the test was performed using the ideal equation of state, the results, which are displayed
+in Figure 40 to Figure 42, were similar to the results of the previous test. Nonetheless, certain
+differences between the two methods were visible. The predicted mass flow initially stayed
+slightly above the process data flow but fell below it once the operating conditions started to
+change. The offset between the curves mostly remained smaller than when the SRK method
+was used. The model started jumping between surge and normal operation only towards the
+end of the test. The shape of the predicted curve was once again very similar to that of the
+process data. The old model appears to behave in the same manner as previously.
+
+Figure 40. Test result for the suction mass flow of the shutdown case using the ideal equation of state.
+
+63
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+A resemblance can also be seen between the temperature predictions of both cases. The offset
+between the predicted curve and the process data is somewhat smaller when using the ideal
+equation of state and the shape of the curves seem similar, as seen in Figure 41. For the most
+part of the test the old model manages to predict the outlet temperature very well. Predictions
+of the new model are better than those of the old model only towards the end of the normal
+operation, before the machine is shut off. Both predictions spiked in the same manner as in
+Figure 37 also in this test. It is worth noting that the correction with Z used in Equation 96 is
+effectively not active in this test, as Z will have a value of 1 when the ideal equation of state
+is used.
+
+Figure 41. Test results for the outlet temperature of the shutdown case using the ideal equation of
+state. The predicted graphs have been cut before spiking to better visualize the normal operation.
+
+The predicted electric current initially lies above the process data with a bigger offset than in
+the SRK test case but approaches the process data curve towards the end of the operation, as
+seen in Figure 42. Figure 24 gave some indication of such behavior of the model, although it
+would suggest a bigger offset for the SRK test. The reason for a larger offset in the ideal test
+case is likely the higher predicted mass flow and slightly higher outlet temperature. The current
+consumption of the old model behaves in the same way as in the SRK test and also spikes in
+the same manner as in Figure 39.
+
+64
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 42. Test results for the compressor electric current of the shutdown case using the ideal
+equation of state. The predicted graphs have been cut before spiking to better visualize the normal
+operation.
+
+As particularly the flow predictions seemed better when the ideal equation of state was used,
+the same method was used for the two remaining test cases. Next in order was the normal
+operation case, where the capacity of the compressor varied to some extent. The results of the
+test can be seen in Figure 43, Figure 44 and Figure 45. The observations of the developed
+model’s performance from the previous cases largely held true also for this test.
+The predicted mass flow lies a bit above the process data and would seem to follow the shape
+of the latter rather nicely. Same goes for the outlet temperature prediction, which lies a few
+degrees beneath the process data curve. A slight concern is the predicted electric current. The
+shape of the curve is satisfactory, but it is situated quite a bit above the process data curve.
+
+Figure 43. Test result for the suction mass flow of the normal operation case using the ideal equation
+of state.
+
+65
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+The behavior of the old model is certainly rather perplexing, as nothing in the process data
+would seem to warrant such a sudden drop in the flow and the consequent radical rise, nor the
+swinging nature of the curve. The old model’s prediction of the outlet temperature is very good
+for most of the test, save for the part where the flow drops to zero. At this point the temperature
+also drops, albeit not as much as the mass flow. The electric current prediction follows the
+same pattern as the mass flow prediction, exhibiting fluctuating behavior and suddenly
+dropping to zero for a while.
+
+Figure 44. Test results for the outlet temperature of the normal operation case using the ideal equation
+of state.
+
+Figure 45. Test results for the compressor electric current of the normal operation case using the ideal
+equation of state.
+
+66
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+The last case in the process data test series was the startup operation. The results, displayed in
+Figure 46, Figure 47 and Figure 48, was mainly consistent with the results from previous tests.
+A noticeable difference was that the new model predicted full surge operation for some time
+during the startup before exhibiting the previously encountered behavior of jumping between
+surge and normal operation. For the rest of the test the shape of the predicted curve followed
+that of the process data, starting off somewhat below it and rising slightly above towards the
+end.
+
+Figure 46. Test result for the suction mass flow of the startup case using the ideal equation of state.
+
+The outlet temperature of the new model matched the process data well, with a minor increase
+in the offset towards the end of the test case. The same behavior displayed in Figure 37 was
+again present. Once the model started predicting normal operation the current prediction
+initially worked well, but as was the case in both of the previous test where the ideal equation
+of state was used, the offset increase is a bit excessive when moving closer to normal operating
+conditions for the compressor.
+The behavior of the old model is again detached from the process data and seems to combine
+elements of the results for the shutdown and normal operation cases. The old model correctly
+predicts the inception of flow through the machine, but it starts off at a much higher level.
+After this, the flow rises to a higher level which is then maintained for quite some time, similar
+to the behavior in the shutdown case. Once the flow starts to decline it drops all the way to
+zero, much like in the normal operation case. The flow stays at zero for a while before rapidly
+rising back to a level above the process data, where it starts to fluctuate in a similar manner as
+in the normal operation case.
+67
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+The discharge temperature prediction of the old model exhibited the same oscillating behavior
+at an elevated level as in Figure 37 while the machine was shut off. After normal operation
+started, the prediction was a decent match to the process data, improving as conditions neared
+normal operation. A drop in the temperature occurred as the flow dropped to zero, similar as
+in the normal operation case. The predicted current initially follows the same pattern as in
+Figure 39. It remains at a high level for the duration of the test, shortly dropping to zero along
+with the flow prediction before rising up again.
+
+Figure 47. Test results for the outlet temperature of the startup case using the ideal equation of state.
+The spikes of the predicted graphs have been cut to better visualize the normal operation.
+
+Figure 48. Test results for the compressor electric current of the startup case using the ideal equation
+of state. The spike of the predicted graph of the old model has been cut to better visualize the normal
+operation.
+
+68
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+5 Results
+Upon inspection of the figures in section 4.2.2 it is clear that the developed model is stable
+over a wide range of operating conditions, supporting the feasibility of the selected method of
+modeling the compressor operation. When examining the tests and figures of section 4.2.3, it
+can be found safe to claim that modeling of the compressor flow and required electric current
+were substantially improved by the developed model.
+The flow and outlet temperature calculations of the new model performed better when using
+the ideal equation of state, while the electric current calculation fared better when the SRK
+equation of state was used. When using the SRK method the outlet temperature predicted by
+the developed model seemed better compared to the old model’s prediction. When the ideal
+equation of state was used, however, the outlet temperature predicted by the old model
+described the process data more accurately for the most part of the test. The accuracy of the
+new model’s temperature prediction was better only shortly before the machine was shut off
+or shortly after it was turned on.
+When studying the graphs in the aforementioned sections, the possibility of inaccuracies and
+various uncertainties pertaining to both the manufacturer data and the measured process data
+should be kept in mind. Albeit the developed model overall appears to be a clear improvement,
+it still suffers from certain shortcomings and requires further development to overcome these
+issues.
+
+5.1 Issues
+The main issue discovered in the developed model was the offset between the predicted flow
+and the process data, which grew in size as the operating conditions diverged from the normal
+operating state. The nature of the operating curve predictions and the difference between the
+calculated values for κ and Z and the values provided by the manufacturer were identified as
+possible causes for this behavior of the model.
+
+69
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+The model could be seen balancing on the verge of surge during the shutdown and startup test
+cases. During the startup case the model also initially predicted full surge for some time. These
+issues are caused by the poor accuracy of the predicted performance curves at these operating
+conditions, but to avoid having the model jump between surge and normal operation for
+extended periods of time, the limit of the exit flow coefficient used to predict the onset of surge
+could be given a smaller value. This would move the surge limit a little to the left on the
+operating curves and the model would not be balancing right on the limit, as it now can be
+seen doing for certain parts of the shutdown and startup tests.
+Another issue encountered during the shutdown and startup tests was elevated and oscillating
+predictions of the outlet temperature when the machine was not running. When the machine is
+not running the model should not be calculating the outlet temperature. Lastly, the model
+calculated a too high current consumption for the machine when the ideal equation of state
+was used. The power calculation should altogether be improved, as it was implemented in a
+rather simple manner, using only the transported mass flow and the difference between the
+inlet and outlet flow enthalpies.
+
+5.2 Suggestions for future improvements
+Based on the results of the various tests performed for the developed model several areas of
+improvement were identified. These subjects mainly relate to the operating curve, outlet
+temperature calculation and power calculation, but some entirely new features are also
+suggested. Certain features have already been introduced in Chapter 2, but some new concepts
+are also presented.
+
+5.2.1 Improvements of the operating curve calculation
+
+There are a number of approaches to address the most serious issue with the model, which is
+the inaccuracy of the flow calculation. Firstly, as the compressibility could be calculated in the
+simulator, the simplified form of Equation 52 used in the model could be expanded to use the
+70
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+average compressibility instead of just the inlet compressibility. The outlet compressibility
+could also be used to expand Equation 92 into its full form of Equation 48. The use of the
+compressibilities of course require that some other equation of state than the ideal is used.
+Similar problems as with the values of the inlet compressibility and the ratio of specific heat
+would likely also be encountered with the outlet compressibility.
+Since the difference in the calculated values of Z and κ compared to the manufacturer values
+resulted in slightly reduced volume flow predictions, a second improvement to the flow
+prediction accuracy may be achieved by using the values calculated by the simulator for Z and
+κ already in Excel when transforming the manufacturer curves to the dimensionless curves.
+That way, the transformed dimensionless curves would match the values calculated for Z and
+κ by the simulator.
+A third method would be to address the issue of the curve predictions seemingly being
+increasingly reduced as the operating conditions diverge from the rated conditions. As was
+discovered during the initial testing of compressors A and B, the temperature exponent m is a
+powerful parameter for controlling the shape of the dimensionless curves and the predictions
+made from these. In the developed model mcorr was used as a tuning parameter to adjust the
+temperature exponent when aligning the dimensionless curves. As the stage performance
+curves are supposed to follow only the Mach numbers according to the literature, a possible
+approach may be to scale mcorr based on the relation of the governing Mach number in the
+machine to the Mach number pertaining to the dimensionless curve used in the model. By
+decreasing the value of mcorr the reduced curves could be pushed further to the right-hand side
+of the coordinate system, closer to the manufacturer curves.
+The fourth and final suggestion for a way to improve the flow calculation is to scale the
+polytropic efficiency used in the flow calculation to match the governing process conditions.
+This in turn can be implemented by a handful of different methods. In the model the curves of
+the head coefficient and polytropic efficiency plotted against the exit flow coefficient of the
+rated case were used for predicting the operating curves at other operating conditions. As the
+prediction for the initial circulation case seemed to differ the most from the manufacturer data,
+this case was selected for further polytropic efficiency scaling studies in Excel. The results of
+these tests are displayed in Figure 49 and Figure 50 with a mcorr value of one and in Figure 51
+and Figure 52 with a value of 3.2 for mcorr. Substantial improvements in the predictions in the
+first case would mean that mcorr would be made obsolete, while improvements in the second
+case would imply that the accuracy of the developed model can be enhanced by scaling the
+efficiency.
+
+71
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+"Eta, rated case" and "Eta, initial circulation" in Figure 49 are the manufacturer efficiency
+curves transformed to dimensionless form. The initial thought was that an extension of the
+initial circulation efficiency curve into the exit flow coefficient values of the rated case would
+yield a good prediction for the operating curve. Initially, the value of the first point of
+"Approximated Eta" in Figure 49 was approximated in this manner and each consecutive value
+of the efficiency was reduced by one percent. This yielded a poor result, so the initial value
+was adjusted until "Initial Circ. prediction, approximated Eta" in Figure 50 matched the
+manufacturer curve "Initial Circ." as well as possible. Even though the approximation was far
+from a perfect fit, Figure 50 showed that it was still considerably better than the current
+prediction of the developed model, "Initial Circ. prediction", demonstrating that the polytropic
+efficiency significantly influences the operating curves and thus proving the feasibility of the
+approach.
+To form an idea of the shape of the actual efficiency curve needed to obtain a good prediction
+for the initial circulation case operating curve from the rated case dimensionless operating
+curve, "Initial Circ. prediction, fitted Eta, mcorr=1" was empirically matched to the
+manufacturer curve by adjusting the values of "Fitted Eta, mcorr=1" in Figure 49 one by one.
+Attempts were made to use exit flow coefficient values scaled with Equation 98, both alone
+and in conjunction with scaled efficiency values, to obtain a desirable polytropic efficiency
+curve. The efficiency values were supposed to be scaled with Equation 99 in this case, but
+Equation 100 was accidentally used. The "φ3 scaled" and the "φ3 & Eta scaled" in Figure 49
+both proved to be poor matches and extensions for the empiric curve and, thus, further attempts
+to use exit flow coefficient scaling for this purpose were abandoned and no attempts to predict
+operating curves using these efficiency curves were made.
+Scaling only the polytropic efficiency using Equation 99, however, yielded rather promising
+results. The curve obtained by this, "Eta scaled", lied just below the fitted curve and the
+predicted operating curve "Initial Circ. prediction, scaled Eta" was situated slightly to the left
+of the actual operating curve. The predicted curve can be seen to turn backwards, but the
+developed model would cut off the curve at the point it starts turning, resulting in a curve
+bearing a good resemblance to the performance curve provided by the manufacturer. The
+curves "Eta scaled, mcorr" and "Fitted Eta, mcorr=3.2" in Figure 49 as well as curves "Initial
+Circ. prediction, scaled mcorr Eta" and "Initial Circ. prediction, fitted Eta, mcorr=3.2" in
+Figure 50 are related to the scaling test where mcorr is used.
+
+72
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 49. Various attempts to scale the dimensionless polytropic efficiency of the rated case for use
+in the prediction of the initial circulation case of compressor C, with a value of 1 for mcorr. The actual
+efficiency curves provided by the manufacturer for the rated and the initial circulation case are also
+included for reference.
+
+Figure 50. Attempts to predict the initial circulation operating curve using various polytropic
+efficiency curves with a value of 1 for mcorr. The actual performance curve provided by the
+manufacturer is also included for reference.
+
+73
+
+Improved modeling of rotary momentum mass transport equipment
+
+𝜑3,𝑠𝑐𝑎𝑙𝑒𝑑 = 𝜑3,𝑟𝑎𝑡𝑒𝑑 − (𝑀𝑢,𝑖𝑛𝑖𝑡.𝑐𝑖𝑟𝑐. − 𝑀𝑢,𝑟𝑎𝑡𝑒𝑑 )
+
+𝜂𝑝,𝑠𝑐𝑎𝑙𝑒𝑑 = 𝜂𝑝,𝑟𝑎𝑡𝑒𝑑
+
+𝜂𝑝,𝑠𝑐𝑎𝑙𝑒𝑑,𝑚𝑐𝑜𝑟𝑟 = 𝜂𝑝,𝑟𝑎𝑡𝑒𝑑
+
+Fredrik Nyholm
+
+𝑀𝑢,𝑟𝑎𝑡𝑒𝑑
+𝑀𝑢,𝑖𝑛𝑖𝑡.𝑐𝑖𝑟𝑐.
+
+(98)
+
+𝑀𝑢,𝑖𝑛𝑖𝑡.𝑐𝑖𝑟𝑐. − 𝑀𝑢,𝑟𝑎𝑡𝑒𝑑
+𝑀𝑢,𝑖𝑛𝑖𝑡.𝑐𝑖𝑟𝑐.
+
+𝑀𝑢,𝑖𝑛𝑖𝑡.𝑐𝑖𝑟𝑐. − 𝑀𝑢,𝑟𝑎𝑡𝑒𝑑 𝑚𝑐𝑜𝑟𝑟
++
+𝑀𝑢,𝑖𝑛𝑖𝑡.𝑐𝑖𝑟𝑐.
+10
+
+(99)
+
+(100)
+
+The results of the scaling test for the case where mcorr is used are presented in Figure 51 and
+Figure 52. The curves are the same as in the previous figures, but their shapes have been altered
+by the effect of mcorr. The curves "Fitted Eta, mcorr=3.2" and "Initial Circ. prediction, fitted
+Eta, mcorr=3.2" were obtained by a similar empiric procedure as in the previous test. In order
+to account for the use of the correction factor, Equation 99 was expanded to Equation 100,
+which was used to obtain "Eta scaled, mcorr" in Figure 51. This efficiency curve was used in
+the calculation of "Initial Circ. prediction, scaled mcorr Eta" in Figure 52. The prediction lies
+close to the manufacturer curve, but it is not perfect. It is still located to the left of the actual
+operating curve and the operating range of the prediction is too wide. It seems that the scaling
+did not work as well when mcorr was used.
+
+Figure 51. Various attempts to scale the dimensionless polytropic efficiency of the rated case for use
+in the prediction of the initial circulation case of compressor C, with a value of 3.2 for mcorr.
+
+74
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 52. Attempts to predict the initial circulation operating curve using various polytropic
+efficiency curves with a value of 3.2 for mcorr.
+
+The equations used in the scaling tests bear some resemblance to the equations used in another
+method for predicting the polytropic efficiency at a given operating point. The ratio of the
+efficiency to the peak efficiency is a function of the tip-speed Mach number and the ratio of
+the inlet flow coefficient to the maximum flow coefficient at the choke point, as shown in
+Equation 101. [42, p. 2]
+𝜂
+𝜂𝑝𝑒𝑎𝑘
+
+= 𝑓(
+
+𝜑1
+,𝑀 )
+𝜑1,𝑐 𝑢
+
+(101)
+
+The stage efficiency as a function of flow at varying Mach numbers can be modeled as a
+modified elliptic curve. For flows below the maximum efficiency point the function is
+described by Equation 102, where E is a coefficient that varies with the Mach number. Typical
+values for E range from 1.7 to 2.1 for high respective low speed characteristics. [42, p. 3]
+𝜂
+𝜂𝑝𝑒𝑎𝑘
+
+𝐸 1/𝐸
+
+𝜑1 /𝜑1,𝑐
+= (1 − (1 −
+) )
+𝜑1,𝑝𝑒𝑎𝑘 /𝜑1,𝑐
+
+𝑓𝑜𝑟 𝜑1 < 𝜑1,𝑝𝑒𝑎𝑘
+
+(102)
+
+If the flow is greater than at peak efficiency the function is described by Equation 103, where
+A and B are similar coefficients as E, varying with the Mach number. B usually assumes values
+between 2 and 3.5 for low respective high speeds, while usual values for A lie between 0.3 and
+2 for high respective low speed characteristics. [42, p. 3]
+
+75
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+1/𝐵
+
+𝜂
+𝜂𝑝𝑒𝑎𝑘
+
+𝜑1 𝜑1,𝑝𝑒𝑎𝑘 𝐵
+𝜑1,𝑐 − 𝜑1,𝑐
+= (1 − 𝐴) + 𝐴 1 − (1 −
+𝜑1,𝑝𝑒𝑎𝑘 )
+1−
+𝜑1,𝑐
+(
+)
+
+𝑓𝑜𝑟 𝜑1 > 𝜑1,𝑝𝑒𝑎𝑘
+
+(103)
+
+Another method makes use of both the inlet flow coefficient and the exit flow coefficient to
+shift the point of peak efficiency. Equation 104 is used to shift the best efficiency point to
+smaller flow coefficient values for Mach numbers below the rated point Mach number. At
+Mach numbers exceeding the rated point, Equation 105 is used to shift the point of maximum
+efficiency to lower exit flow coefficient values. [19, p. 139]
+
+𝜑1 ≈
+
+(𝑉̇3 /𝑉1̇ )𝑅𝑃
+𝜑1,𝑅𝑃
+𝑉̇3 /𝑉1̇
+
+(104)
+
+𝜑3 ≈
+
+𝑉̇3 /𝑉1̇
+(𝑉̇3 /𝑉1̇ )
+
+(105)
+
+𝜑3,𝑅𝑃
+
+𝑅𝑃
+
+A final method is to use an iterative calculation for determining the polytropic efficiency at
+the governing process conditions. First, the polytropic efficiency is determined as a function
+of the gas properties according to Equation 106. To avoid rounding errors in the
+compressibility functions Y and X these are calculated with Equations 107 and 108. The
+volume polytropic exponent nV is calculated with Equation 109, where κT is the temperature
+isentropic exponent and nT is the temperature polytropic exponent, which in turn is given by
+Equation 110. This equation itself contains the polytropic efficiency, which contributes to the
+iterative nature of the method. [43, p. 8502]
+𝜂𝑝 =
+
+𝑛𝑉 𝑌(1 − 𝜅)
+(1 + 𝑋)𝜅 − 𝑛𝑉 𝑌(𝑋 + 𝜅)
+
+(106)
+
+1
++ 𝑛 𝑇 (1 + 𝑋)
+𝑛𝑉
+
+(107)
+
+𝐶𝑝 𝜅 𝑇 − 1
+−1
+𝑍𝑅 𝜅 𝑇
+
+(108)
+
+𝑌=
+
+𝑋=
+
+𝑛𝑉 =
+
+𝑛 𝑇,𝑛𝑒𝑤
+
+𝜅1
+𝐶𝑝 (𝜅1 − 1) 1 𝜅1 − 1
+1+
+(𝑛 + 𝜅
+− 1)
+𝑍1 𝑅
+𝑇
+1
+
+𝑍𝑟𝑒𝑓 𝑅 1
+𝜅𝑟𝑒𝑓
+1−𝐶
+(𝜂 − 1) − 𝜅 − 1
+𝑝,𝑟𝑒𝑓
+𝑝
+𝑟𝑒𝑓
+= 𝑛 𝑇,𝑟𝑒𝑓
+𝑍𝑛𝑒𝑤 𝑅 1
+𝜅
+1−𝐶
+( − 1) − 𝜅 𝑛𝑒𝑤
+𝑝,𝑛𝑒𝑤 𝜂𝑝
+𝑛𝑒𝑤 − 1
+
+76
+
+(109)
+
+(110)
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+To incorporate the effects of the compressor itself in the polytropic efficiency, the obtained
+value is further iterated to correct the efficiency based on the flow coefficient and the Mach
+number. The value calculated for the efficiency in the previous step is used to calculate the
+polytropic head. If the flow coefficient changes from its design value, Equation 111 is used to
+correct the polytropic efficiency previously calculated in Equation 106. [43, pp. 8502-8503]
+
+𝜂𝑝,𝑛𝑒𝑤
+
+2
+𝑠𝑟𝑒𝑓 𝐻𝑝,𝑛𝑒𝑤 𝑈𝑟𝑒𝑓
+= 𝜂𝑝,𝑟𝑒𝑓
+2
+𝑠𝑛𝑒𝑤 𝐻𝑝,𝑟𝑒𝑓 𝑈𝑛𝑒𝑤
+
+(111)
+
+If any of the presented methods for improved prediction of the polytropic efficiency at offdesign operation can be incorporated in the developed model with satisfactory accuracy, the
+flow predictions would significantly improve even if the dimensionless performance curves
+would not be aligned, making mcorr largely obsolete.
+
+5.2.2 Improved modeling of the operating curve limits
+
+For more realistic behavior of the model, modeling of the surge and stonewall operation should
+be further developed. In the model both the surge and stonewall were implemented as a limit
+value for the exit flow coefficient. As the process data test results for the model demonstrated,
+the selection of the limits should be reviewed. In addition, the behavior of the model outside
+of the normal operating range should be developed in the direction of the behavior described
+in sections 2.2.2 and 2.2.3, instead of simply limiting the flow or stopping it all together.
+Simulation of pre-surge perturbations has been achieved with a one-dimensional flow model,
+consisting of a set of nonlinear ordinary differential equations. The model makes a quasisteady assumption and requires a system geometry distribution, element characteristics, inlet
+conditions and working fluid data to be able to solve the equations. It is thought that the model
+would be able to simulate full surge cycles, should negative flow characteristics of the
+compressor be available. [44]
+
+77
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+5.2.3 Improved calculation of the outlet temperature
+
+It may be worth looking into replacing the compressibility used as a correction in the outlet
+temperature calculation with the polytropic efficiency. This would at least have the benefit
+that the correction would have an effect even if the ideal equation of state is used. The model
+should also know when the machine is shut off and stop calculating the outlet pressure at this
+point. This would prevent most of the spikes and oscillations in the temperature predictions
+now visible in the tests, but some other safeguards may also be needed. Implementation of a
+power switch to the model should be a trivial matter.
+
+5.2.4 Enhanced power calculation
+
+The tests showed that the power calculation worked rather well when the SRK equation of
+state was used. However, when the equation of state was switched to ideal, the calculated
+power at normal operation was quite high compared to the process data. The model should
+also account for various losses during the compression process, so an efficiency should be
+added for this purpose.
+Using one of the presented options in section 2.2.5, such as Equation 72 or 76, could work
+well as an improvement. It would be particularly interesting to investigate the use of the work
+input factor, presented in Equations 77 and 78 , in more detail as this factor is also linked to
+the exit flow coefficient, which is the backbone of the developed model. The work input factor
+equations are strictly valid for a single compression stage, so some correction will likely be
+needed if it is used to describe compression in a multi-stage machine.
+
+78
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+5.2.5 Additional features
+
+In addition to the several improvements mentioned above, the developed model could benefit
+from some entirely new features. In the current implementation in ProsDS the effect of
+adjustable impeller inlet guide vanes was modeled. This modeling, along with adjustable
+diffuser vanes, could also be added to the developed model. Adjustable inlet guide vanes are
+a form of regulation that can offer a wider operating range and higher efficiency for the
+compressor. The row of inlet guide vanes is positioned before the impeller and can be used to
+create a negative of positive prerotation of the gas. As Figure 53 shows, positive prerotation
+reduces the head while negative prerotation increases it, to some extent. Positive prerotation
+shifts the entire operating curve to smaller volume flows. [19, pp. 79-80, 118-120]
+The adjustable diffuser vanes are located downstream of the impeller. They contribute with a
+more efficient transformation of the kinetic energy. As Figure 54 shows, use of adjustable
+diffuser vanes enables a much wider operating range at constant pressure ratio by stabilizing
+the flow in the diffuser. [19, pp. 120-121]
+
+Figure 53. Effect of adjustable inlet guide vanes on a single-stage performance map, α1 denotes the
+inlet guide vane angle. [19, p. 119]
+
+79
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 54. Effect of adjustable diffuser vanes on a single-stage performance map, α2 denotes the
+diffuser vane angle. [19, p. 121]
+
+80
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+6 Summary
+The central status of the pumps, compressors and turbines for the process industry warrant an
+interest in detailed dynamic modeling of the equipment. The methods used to model the
+equipment in a dynamic operator training simulator should be both accurate over a wide
+regime of operating conditions and computationally relatively light. The underlying theory
+and principles of the pumps, compressors and turbines was presented. The machines shared
+many similarities both in construction and working principles, but each machine also had its
+individual characteristics. Among these characteristics, cavitation for pumps, surge and
+stonewall for compressors and condensation for turbines could be mentioned. Various
+approaches to model the operating curve, outlet temperature and power consumption or
+generation of the machines were presented. The focus lied on describing the function of the
+compressor. The modeling currently implemented in ProsDS as well as approaches used in
+other simulator software for the mentioned machines was also briefly presented.
+Due to the requirements of accuracy and computational efficiency, as well as ease of
+implementation, it was desirable to find either a single invariant operating curve able to
+describe the function of the compressor, or a version of the affinity laws valid for the
+compressor. The method coming closest to these criteria was converting the operating curves
+to a dimensionless form using the head coefficient and the exit flow coefficient. The task
+appeared to be a bit of a snipe hunt as, regrettably, the dimensionless curves were strictly valid
+only for a single compression stage. Nevertheless, this method was used as a basis for the
+developed compressor model.
+The constructed model was subjected to rigorous testing both by ramping the inlet and outlet
+conditions and by feeding it measured process data for three different dynamic operating cases
+from an actual process plant and comparing the resulting predictions against measured data.
+The inlet volume flow, power consumption and outlet temperature of the compressor were
+predicted in the tests. The results were also compared against the predictions of the currently
+implemented compressor model in ProsDS. During the dynamic ramp tests the model yielded
+satisfactory results, demonstrating a stable operation over a wide range of operating
+conditions.
+
+81
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+During the process data testing the flow prediction of the new model fared considerably better
+than the prediction of the current compressor model of the simulator. The developed model
+captured the correct shape of the curve rather well and the predictions were quite accurate at
+normal operation. Some further development is however needed, as the predicted flow dropped
+too low during the shutdown and startup operations.
+The temperature prediction functioned in a satisfactory manner for the most part, but the
+accuracy could still be improved. When using the ideal equation of state, the temperature
+prediction of the old model seemed to be more accurate for the most part. The new model
+seemed more accurate when operating further away from normal operation. The model should
+also be stopped from calculating the temperature once the machine is turned off.
+The electric current prediction of the new model worked better than that of the old one. When
+using the SRK equation of state the prediction was quite accurate and followed the shape of
+the process data curve well. However, when using the ideal equation of state the predicted
+current during normal operation was unreasonably high, although the offset did decrease when
+the operating conditions diverged from normal operation. A contributing factor to the decrease
+in the offset is the excessive decrease of the predicted flow, which influences the calculation
+of the power consumption.
+Suggestions for methods to improve the accuracy of the model by developing the calculation
+of the operating curve, modeling of operation at the curve limits, calculation of the outlet
+temperature and power consumption as well as ideas for a couple of new features were brought
+up. Implementation of these should considerably enhance the performance of the compressor
+model.
+In conclusion, the new model, although still requiring some further development, appears to
+be a clear improvement based on the results of the performed process data tests. To verify that
+the model can be used as a general approach for compressor modeling, it should still be
+validated by further testing for several other machines.
+
+82
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+7 Svensk sammanfattning
+NAPCON, en del av Neste Engineering Solutions, erbjuder en mångfald av
+mjukvaruprodukter för sina kunder. Dessa produkter avslöjar produktionsanläggningarnas
+dolda potential och möjliggör deras maximala utnyttjande. En av dessa produkter är en
+verklighetstrogen dynamisk processimulator, med vilken processoperatörerna kan utbildas till
+att köra anläggningen. Målet med detta arbete var att förbättra behandlingen av
+centrifugalkompressorer i simulatorn, samt att lägga grunden för fortsatt förbättring av
+centrifugalpumparnas och turbinernas modellering. Pumpar och kompressorer utgör centrala
+delar av processanläggningar, vilket framgår av att en ansenlig andel av energin som förbrukas
+av industrin går åt till att driva dessa maskiner. Således är det också viktigt att dessa maskiners
+modeller också beter sig verklighetsenligt.
+Centrifugalpumpar
+
+och
+
+-kompressorer
+
+används
+
+för
+
+att
+
+transportera
+
+fluider
+
+i
+
+processanläggningar. Dessa maskiner är både till sin konstruktion och funktionsprincip rätt
+lika, även om kompressorn kan anses något mer invecklad till följd av det transporterade
+mediets egenskaper. Maskinerna består av ett hölje samt kopplingar till inloppet och utloppet.
+Inuti höljet finns en roterande impeller. Impellern kan vara omgiven av en skovelförsedd
+diffusor, vilken möjliggör mer effektiv omvandling av den kinetiska energin till potentiell
+energi i form av en tryckökning hos fluiden. Den transporterade fluiden leds in i impellerns
+mitt, varifrån den slungas ut som en följd av centrifugalverkan. I detta sammanhang ökar
+flödeshastigheten, och när fluidens hastighet minskar vid utloppet omvandlas den kinetiska
+energin till en tryckökning.
+Maskinerna beskrivs av sina karaktäristikor, där lyfthöjden, verkningsgraden och den
+förbrukade effekten är uppritade mot volymflödet. För pumpar anges lyfthöjden vanligen som
+meter vätskepelare. För kompressorer ges lyfthöjden som energi per massaenhet som tillförs
+flödet mellan kompressorns inlopp och utlopp, eftersom gasernas densitet varierar kraftigt
+jämfört med vätskornas. Kompression som fenomen beskrivs oftast som isotermisk,
+isentropisk (adiabatisk) eller polytropisk. Av dessa kan de två första ses som idealiserade
+gränsfall, medan den polytropiska processen bäst beskriver verkliga kompressionsprocesser.
+Maskintillverkarna
+
+tillhandahåller
+
+vanligen
+
+kompressorkaraktäristikorna
+
+polytropiska lyfthöjden och den polytropiska verkningsgraden uppgivna.
+
+83
+
+med
+
+den
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Karaktäristikorna som fås av tillverkaren gäller endast vid det uppgivna drifttillståndet. För att
+kunna förutspå maskinens funktion vid avvikande drifttillstånd bör man veta hur
+karaktäristikorna påverkas av förändringar i bland annat maskinens varvtal och fluidens
+temperatur, tryck och molmassa. För pumparna kan maskinens beteende predikteras med hjälp
+av affinitetslagarna med en rätt god noggrannhet. För kompressorer är dessa dock otillräckliga.
+I detta arbete utnyttjades en metod baserad på dimensionslösa lyfthjöds- och
+utloppsflödeskoefficienter vid modellbygget. Denna metod går ut på att ett antal vanliga
+karaktäristikor kan sammanföras till en enda dimensionslös karaktäristika, ur vilken
+karaktäristikor för nya drifttillstånd kan beräknas.
+Modellen tar koefficienter för ett andra gradens polynom anpassat till den dimensionslösa
+karaktäristikan som indata. Samma sak görs för ett polynom för den polytropiska
+verkningsgraden. Modellen avläser utloppsflödets tryck och entalpi samt inloppsflödets tryck,
+temperatur, molmassa, specifika värmekapacitet, molära volym och entalpi. Med hjälp av
+dessa beräknar modellen en ny karaktäristika och interpolerar ur det inloppets volymflöde, då
+utloppstrycket kan anses vara känt. Modellen beräknar även utloppstemperaturen och
+kompressorns effekt. För beräknandet av utloppstemperaturen används inloppstemperaturen,
+tryckförhållandet och den polytropiska exponenten korrigerad med gasens kompressibilitet.
+Effektbehovet beräknades ur strömmarnas entalpidifferens.
+Den byggda modellens dynamik testades genom att variera utloppets tryck och inloppets tryck,
+temperatur samt molmassa över ett brett spektrum. Endast vid väldigt extrema värden,
+exempelvis nära den absoluta nollpunkten, uppvisade modellen osammanhängande beteende,
+vilket är föga överraskande. Då värdena varierades kring normala drifttillstånd uppvisade
+modellen ett robust och sammanhängande dynamiskt beteende.
+För att närmare undersöka modellens prediktionsförmåga kopplades strömmarna till en
+databas med processdata uppmätta som funktion av tiden. Data omfattade utloppsströmmens
+tryck och temperatur, den elektriska strömmen genom kompressorn samt inloppsströmmens
+sammansättning, tryck, temperatur och volymflöde. Värdena som modellen behövde för
+prediktionen lästes ur databasen, medan de predikterade värdena för volymflödet,
+utloppstemperaturen och elektriska strömmen beräknad ur effekten skrevs till databasen för
+jämförelse med de verkliga värdena. Den gamla kompressormodellen kördes även parallellt
+på samma vis för att de båda modellerna skulle kunna jämföras sinsemellan.
+Då modellernas predikterade data uppritades mot processdata framgick det att den nya
+modellen var en klar förbättring. Formen för den nya modellens grafer var mycket nära
+processdata, medan den gamla modellens grafer avsevärt avvek från processdata och hade helt
+annat dynamiskt beteende. Det förekom en förskjutning mellan den nya modellens volymflöde
+84
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+och processens uppmätta volymflöde. Förskjutningen var mindre kring normaldrift, medan
+den växte då maskinen närmade sig nedstängning eller då den nyligen startats upp. En liten
+förskjutning kommer från att de beräknade värdena för kompressibiliteten och
+värmekapaciteternas förhållande i processimulatorn avviker från tillverkarens värden. Orsaken
+till att förskjutningen växer ju mer man avviker från normaldrift beror på att modellens
+prediktionsförmåga försämras, eftersom det använda polynomet för den polytropiska
+verkningsgraden gäller vid normaldriften. För att förbättra prediktionsförmågan borde även
+verkningsgraden skalas om då driftsförhållandet förändras.
+Trots att några smärre förbättringar kvarstår för att förbättra modellens prediktionsförmåga
+kunde det konstateras att en klar förbättring i noggrannheten och det dynamiska beteendet
+hade åstadkommits.
+
+85
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+8 References
+[1] Neste Engineering Solutions, "NAPCON Simulator," NAPCON, [Online]. Available:
+https://www.napconsuite.com/product/napcon-simulator/. [Accessed 19 February
+2020].
+[2] H. Vogelsang, "An introduction to energy consumption in pumps," World Pumps, vol.
+2008, no. 496, pp. 28-31, 2008.
+[3] R. Banerjee, Y. Cong, D. Gielen, G. Jannuzzi, F. Maréchal, A. T. McKane, M. A.
+Rosen, D. van Es, E. Worrell, R. Ayres, M. Olshanskaya, L. Price, D. Saygin and A.
+Srivastava, "Global Energy Assessment - Toward a Sustainable Future, Chapter 8:
+Energy End-Use - Industry," Cambridge University Press, Cambridge, 2012.
+[4] ICF Consulting Limited, "Study on energy efficiency and energy saving potential in
+industry and on possible policy mechanisms," ICF Consulting Limited, London, 2015.
+[5] NAPCON, Master's thesis proposal, Porvoo, 2019.
+[6] J. Harju, N. Turunen, T. Saarinen and F. Pettersson, Interviewees, Thesis kick-off
+meeting. [Interview]. 2 September 2019.
+[7] K. Liljemark, R. Kemi and M. Asujamaa, Interviewees, Observations of the simulator
+trainers. [Interview]. 12 September 2019.
+[8] E. Tamminen, Interviewee, Contents of the thesis. [Interview]. 12 September 2019.
+[9] R. Chhabra and V. Shankar, Coulson and Richardson's Chemical Engineering, 7th ed.,
+Vols. 1A: Fluid Flow, Fundamentals and Applications, Oxford: Elsevier ButterworthHeinemann, 2017.
+[10] C. Pfleiderer, Die Kreiselpumpen für Flüssigkeiten und Gase, Berlin: Springer-Verlag,
+1961.
+[11] I. J. Karassik, W. C. Krutzsch, W. H. Fraser and J. P. Messina, Pump Handbook, New
+York: McGraw Hill, 1986.
+[12] J. M. Kay, J. E. Kay and R. M. Nedderman, An Introduction to Fluid Mechanics and
+Heat Transfer: With Applications in Chemical and Mechanical Process Engineering,
+London: Cambridge University Press, 1974.
+[13] R. K. Sinnott, Coulson & Richardson's Chemical Engineering, 4th ed., vol. 6:
+Chemical Engineering Design, Oxford: Elsevier Butterworth-Heinemann, 2005.
+
+86
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+[14] D. W. Green and M. Z. Southard, Perry's chemical engineers' handbook, 9th ed., New
+York: McGraw-Hill Education, 2019.
+[15] T. Westerlund, Anläggnings- och systemteknik, Åbo: Tekniska fakulteten vid Åbo
+Akademi, 2009.
+[16] F. Pettersson, H. Skrifvars, K. Lundqvist, K. Fagervik and T. Westerlund, "Ett
+övningsarbete i pumpdimensionering," Åbo Akademi, Kemisk-tekniska fakulteten,
+Institutionen för anläggningsteknik, Åbo, 1990.
+[17] C. E. Brennen, Hydrodynamics of Pumps, Norwich: Concepts ETI, 1994.
+[18] W. E. Forsthoffer, Fortshoffer's Rotating Equipment Handbooks, vol. 3: Compressors,
+Elsevier Science, 2005.
+[19] K. H. Lüdtke, Process Centrifugal Compressors, New York: Springer-Verlag Berlin
+Heidelberg GmbH, 2004.
+[20] T. Mäkelä, Kiertokaasukompressorin monitorointi simulointimallilla, Lappeenranta:
+Lappeenranta Univeristy of Technology, 2018.
+[21] O. S. Ochiche and B. T. Lebele-Alawa, "Improving Compressor Performance to
+Reduce Loss Production Opportunities in Oil and Gas Production," Journal of
+Mechanical Engineering and Automation, vol. 4, no. 3, pp. 101-109, 2014.
+[22] A. Ravi, L. Sznajder and I. Bennett, "Compressor map prediction tool," IOP
+Conference Series: Materials Science and Engineering, vol. 90, 2015.
+[23] G. Stephenson, "Integrate Compressor Performance Maps into Process Simulation,"
+Chemical Engineering Progress, vol. 107, no. 6, pp. 42-47, 2011.
+[24] H. E. Sheets, "Nondimensional Compressor Performance for a Range of Mach
+Numbers and Molecular Weights," Transactions of the ASME, vol. 74, no. 1, pp. 93102, January 1952.
+[25] E. Liese and S. E. Zitney, "The Impeller Exit Flow Coefficient as a Performance Map
+Variable for Predicting Centrifugal Compressor Off-Design Operation Applied to a
+Supercritical CO2 Working Fluid," in ASME Turbo Expo 2017: Turbomachinery
+Technical Conference and Exposition, Charlotte, 2017.
+[26] ESD Simulation Training Ltd, Control & Operation of Centrifugal Gas Compressors,
+Aberdeenshire: ESD Simulation Training Ltd, 2003.
+[27] L. A. Ostromuhov, "Uniform Conversions of Operating Points and Characteristics of
+Compressor," 2011.
+[28] T. Barletta and S. W. Golden, "Centrifugal Compressor Operations," Petroleum
+Technology Quarterly, vol. 9, no. 4, pp. 113-119, 2004.
+
+87
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+[29] T. Westerlund, Processindustriell Energiteknik, Turku: Institutionen för Kemiteknik
+vid Åbo Akademi, 2006.
+[30] Y. Patel, Computational modelling of non-equilibrium condensing steam flows in lowpressure steam turbines, Lappeenranta: Lappeenranta University of Technology, 2016.
+[31] R. Kurz and K. Brun, "Gas Turbine Performance - What Makes the Map?," in
+Proceedings of the 29th Turbomachinery Symposium, 2000.
+[32] L. Hammarström, Interviewee, Private communication regarding modeling in ProsDS.
+[Interview]. 2019 - 2020.
+[33] T. Saarinen and N. Turunen, Interviewees, Private communication with the instructors.
+[Interview]. 2019 - 2020.
+[34] Johnson Controls, Engineering Data Book, vol. Vb1: Valves, Johnson Controls Inc.,
+1994.
+[35] K. Abdulla and S. M. Walke, "Simulation of Pumps by Aspen Plus," International
+Journal of Engineering Science and Innovative Technology, vol. 4, no. 3, pp. 50-57,
+2015.
+[36] A. Hamid and M. Kamaruddin, HYSYS®: An Introduction to Chemical Engineering
+Simulation for UTM Degree++ Program, Universiti Teknologi Malaysia, 2007.
+[37] Honeywell, UniSim® Design User Guide, Honeywell, 2009.
+[38] Schneider Electric, "Invensys Process System enhances Dynsim simulation software,"
+Schneider Electric, 17 September 2008. [Online]. Available:
+https://www.automation.com/en-us/products/product17/invensys-process-systemenhances-dynsim-simulation. [Accessed 11 May 2020].
+[39] Invensys Process Systems, DYNSIM OTS Training Course, DYNSIM Modelling: Flow
+Devices, Invensys Process Systems, 2008.
+[40] Fortum, VTT Technical Research Centre of Finland Ltd., "Apros - Dynamic Process
+Simulation Software for Nuclear and Thermal Power Plant Applications," Fortum,
+VTT Technical Research Centre of Finland Ltd., [Online]. Available:
+http://www.apros.fi/en/. [Accessed 11 May 2020].
+[41] Fortum, VTT Technical Research Centre of Finland Ltd., Apros Process component
+reference guide, Fortum, VTT Technical Research Centre of Finland Ltd., 2015.
+[42] M. Casey and C. Robinson, "A Method to Estimate the Performance Map of a
+Centrifugal Compressor Stage," Journal of turbomachinery, vol. 135, no. 2, p. 021034,
+2013.
+
+88
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+[43] W. Albusaidi and P. Pilidis, "An Iterative Method to Derive the Equivalent Centrifugal
+Compressor Performance at Various Operating Conditions: Part I: Modelling of
+Suction Parameters Impact," Energies, vol. 8, no. 8, pp. 8497-8515, 2015.
+[44] I. Macdougal and R. L. Elder, "Simulation of centrifugal compressor transient
+performance for process plant applications," Journal of engineering for power, vol.
+105, no. 4, pp. 885-890, 1983.
+[45] S. Modekurti, J. Eslick, B. Omell, D. Bhattacharyya, D. C. Miller and S. E. Zitne,
+"Design, dynamic modeling, and control of multistage CO2 compression system,"
+International Journal of Greenhouse Gas Control, vol. 62, pp. 31-45, 2017.
+
+89
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Appendix A – Deduction of equation for the
+discharge pressure from the polytropic head
+Polytropic head for a centrifugal compressor as given by Equation 29:
+𝐻𝑝 = 𝑍𝑎𝑣𝑔 𝑇1
+
+𝑅
+𝑛
+𝑝3 (𝑛−1)/𝑛
+− 1)
+(( )
+𝑀𝑊 𝑛 − 1 𝑝1
+
+Division by the factors in front of the parenthesis:
+𝐻𝑝
+𝑝3 (𝑛−1)/𝑛
+=( )
+−1
+𝑅
+𝑛
+𝑝1
+𝑍𝑎𝑣𝑔 𝑇1 𝑀𝑊 𝑛 − 1
+Moving 1 to left hand side and switching sides:
+𝐻𝑝
+𝑝3 (𝑛−1)/𝑛
+( )
+=
++1
+𝑅
+𝑛
+𝑝1
+𝑍𝑎𝑣𝑔 𝑇1
+𝑀𝑊 𝑛 − 1
+Taking the root of the exponent:
+𝑝3
+=
+𝑝1
+
+𝐻𝑝
++1
+√
+𝑅
+𝑛
+𝑍𝑎𝑣𝑔 𝑇1 𝑀𝑊 𝑛 − 1
+
+(𝑛−1)/𝑛
+
+Multiplying both sides by inlet pressure finally gives:
+
+𝑝3 = 𝑝1 ×
+
+𝐻𝑝
++1
+√
+𝑅
+𝑛
+𝑍𝑎𝑣𝑔 𝑇1 𝑀𝑊 𝑛 − 1
+
+(𝑛−1)/𝑛
+
+90
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Appendix B – Deduction of equation for the
+polytropic exponent
+Two equations are given for the polytropic co-efficient γ, which can be combined to relate n
+to κ. [26, p. A28]
+𝛾=
+
+𝑛−1
+𝑛
+
+𝛾=
+
+𝜅−1
+𝜅𝜂𝑝
+
+Combining these:
+𝑛−1 𝜅−1
+=
+𝑛
+𝜅𝜂𝑝
+Multiplication by n:
+𝑛 −1 = 𝑛(
+
+𝜅−1
+)
+𝜅𝜂𝑝
+
+Moving to same side:
+𝑛 −1−𝑛(
+
+𝜅−1
+)=0
+𝜅𝜂𝑝
+
+Moving -1 to right hand side and factorizing left hand side for n:
+𝑛 (1 −
+
+𝜅−1
+)=1
+𝜅𝜂𝑝
+
+Division by the parenthesis finally yields:
+𝑛=
+
+1
+𝜅−1
+1−
+𝜅𝜂𝑝
+
+91
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Appendix C – Deduction of equation for the
+static volumetric flow rate at impeller exit
+The exit flow coefficient is defined by Equation 43 as:
+𝜑3 =
+
+𝑉̇3
+𝜋𝑑𝑏2 𝑈
+
+Multiplying by the denominator gives:
+𝜑3 𝜋𝑑𝑏2 𝑈 = 𝑉̇3
+And switching sides finally yields:
+𝑉̇3 = 𝜑3 𝜋𝑑𝑏2 𝑈
+
+92
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Appendix D – Deduction of equation for the
+inlet volume flow
+A general equation for calculating the ratio of static volumetric flow rate at impeller exit to
+total volumetric flow rate at inlet is given by Equation 48:
+𝑉̇3 𝑇3 𝑝1 𝑍3
+=
+𝑇1 𝑝3 𝑍1
+𝑉1̇
+Inverting the fractions:
+𝑉1̇
+𝑇1 𝑝3 𝑍1
+=
+̇𝑉3 𝑇3 𝑝1 𝑍3
+Lastly, multiplying by the static volume flow:
+𝑉1̇ = 𝑉̇3
+
+𝑇1 𝑝3 𝑍1
+𝑇3 𝑝1 𝑍3
+
+93
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Appendix E – Deduction of equation for the
+compressibility and the ratio of specific heats
+The compressibility can be solved from the relation below. [26, p. A18]
+𝑝𝑉𝑚 = 𝑍𝑅𝑇
+Rearranging:
+𝑍=
+
+𝑝𝑉𝑚
+𝑅𝑇
+
+For κ and Cp, the two equations below are given. [26, p. A19]
+𝜅=
+
+𝐶𝑝
+𝐶𝑉
+
+𝐶𝑝 = 𝐶𝑉 + 𝑅
+Rearranging:
+𝐶𝑉 = 𝐶𝑝 − 𝑅
+Combining:
+𝜅=
+
+𝐶𝑝
+𝐶𝑝 − 𝑅
+
+94
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Appendix F – Deduction of equation for direct
+conversion of the polytropic head
+The expressions for conversion of polytropic head to dimensionless head coefficient and for
+the conversion of the head coefficient to polytropic head as given by Equations 39 and 41:
+𝜓=
+
+2𝐻𝑝
+𝑈2
+
+𝐻𝑝,𝑛𝑒𝑤 = 𝜓
+
+2
+𝑈𝑛𝑒𝑤
+2
+
+Inserting the equation for the head coefficient into the equation of polytropic head:
+𝐻𝑝,𝑛𝑒𝑤 =
+
+2
+2𝐻𝑝 𝑈𝑛𝑒𝑤
+𝑈2 2
+
+The expression for U, as given by Equation 38:
+𝑈 = 𝜋𝑑𝜔
+Inserting U into the polytropic head equation:
+𝐻𝑝,𝑛𝑒𝑤 =
+
+2𝐻𝑝 (𝜋𝑑𝜔𝑛𝑒𝑤 )2
+(𝜋𝑑𝜔 )2
+2
+
+Trimming the equation:
+𝐻𝑝,𝑛𝑒𝑤 = 𝐻𝑝
+
+(𝜋𝑑𝜔𝑛𝑒𝑤 )2
+(𝜋𝑑𝜔 )2
+
+Moving the numerator and denominator into the same parenthesis:
+
+𝐻𝑝,𝑛𝑒𝑤 = 𝐻𝑝 (
+
+𝜋𝑑𝜔𝑛𝑒𝑤 2
+)
+𝜋𝑑𝜔
+
+And after one final trimming of constants:
+𝜔𝑛𝑒𝑤 2
+𝐻𝑝,𝑛𝑒𝑤 = 𝐻𝑝 (
+)
+𝜔
+Note, that this is essentially one of the fan laws.
+
+95
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Appendix G – Deduction of equation for
+direct conversion of the inlet volume flow
+Expression for exit flow coefficient as given by Equation 43:
+𝜑3 =
+
+𝑉̇3
+𝜋𝑑𝑏2 𝑈
+
+An equation for the static volumetric flow at impeller exit is given below. [45, p. 38]
+𝑉̇3 = 𝑉1̇
+
+𝑍3 𝑇3 𝑝1
+𝑝3 𝑍1 𝑇1
+
+Temperature ratio can be calculated according to the expression below. [25, p. 4]
+𝑇3
+𝑝3 𝑚
+=( )
+𝑇1
+𝑝1
+The outlet pressure from Appendix A:
+(
+
+𝑝3 = 𝑝1 ×
+
+𝑛−1
+)
+𝑛
+
+𝐻𝑝
++1
+√ 𝑅
+𝑛
+𝑍𝑎𝑣𝑔 𝑇1 (
+)
+𝑀𝑊
+𝑛−1
+
+From Appendix B:
+𝑛−1 𝑘−1
+=
+𝑛
+𝑘𝜂𝑝
+and thus
+𝑘𝜂𝑝
+𝑛
+=
+𝑛−1 𝑘−1
+Substituting the terms containing n in the equation for outlet pressure:
+(
+
+𝑝3 = 𝑝1 ×
+
+𝑘−1
+)
+𝑘𝜂𝑝
+
+𝐻𝑝
+
+√ 𝑅
+𝑘𝜂𝑝
+𝑀𝑊 𝑍𝑎𝑣𝑔 𝑇1 (𝑘 − 1)
+
+96
+
++1
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Inserting expression for outlet pressure in that for temperature ratio:
+(
+
+𝑝1 ×
+
+𝑚
+
+𝑘−1
+)
+𝑘𝜂𝑝
+
+𝐻𝑝
+
+𝑘𝜂𝑝
+√ 𝑅
+𝑍
+𝑇
+(
+)
+𝑎𝑣𝑔
+1
+𝑀𝑊
+𝑘−1
+
+𝑇3
+=
+𝑇1
+
++1
+
+𝑝1
+(
+
+)
+
+Trimming:
+𝑚
+
+𝑇3
+=
+𝑇1
+
+(
+
+𝑘−1
+)
+𝑘𝜂𝑝
+
+𝐻𝑝
++1
+√ 𝑅
+𝑘𝜂𝑝
+𝑀𝑊 𝑍𝑎𝑣𝑔 𝑇1 (𝑘 − 1)
+
+(
+
+)
+
+Substituting the temperature ratio in the static volume flow equation:
+𝑚
+
+𝑉̇3 = 𝑉1̇
+
+𝑍3 𝑝1
+𝑝3 𝑍1
+
+(
+
+𝑘−1
+)
+𝑘𝜂𝑝
+
+𝐻𝑝
+
+√ 𝑅
+𝑘𝜂𝑝
+𝑀𝑊 𝑍𝑎𝑣𝑔 𝑇1 (𝑘 − 1)
+
+(
+
++1
+)
+
+Substituting the remaining outlet pressure:
+𝑚
+
+3𝑝3
+
+𝑉̇3 = 𝑉1̇
+𝑍1 𝑝1 ×
+
+𝑘−1
+(
+)
+𝑘𝜂𝑝
+
+(
+
+𝐻𝑝
+
+𝑘𝜂𝑝
+√ 𝑅
+𝑀𝑊 𝑍𝑎𝑣𝑔 𝑇1 (𝑘 − 1)
+
++1
+
+(
+
+𝑘−1
+)
+𝑘𝜂𝑝
+
+𝐻𝑝
++1
+√ 𝑅
+𝑘𝜂𝑝
+𝑍
+𝑇
+(
+)
+𝑀𝑊 𝑎𝑣𝑔 1 𝑘 − 1
+
+Trimming the inlet pressure:
+𝑚
+(
+
+𝑉̇3 = 𝑉1̇
+
+𝑍3 (
+𝑍1
+
+𝑘−1
+)
+𝑘𝜂𝑝
+
+𝐻𝑝
+
+𝑘𝜂𝑝
+√ 𝑅
+𝑀𝑊 𝑍𝑎𝑣𝑔 𝑇1 (𝑘 − 1)
+𝑘−1
+(
+)
+𝑘𝜂𝑝
+
++1
+)
+
+𝐻𝑝
++1
+𝑘𝜂𝑝
+√ 𝑅
+𝑍
+𝑇
+(
+)
+𝑀𝑊 𝑎𝑣𝑔 1 𝑘 − 1
+
+97
+
+)
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Merging the numerator and denominator:
+𝑚−1
+
+𝑉̇3 = 𝑉1̇
+
+𝑍3
+𝑍1
+
+(
+
+(
+
+𝑘−1
+)
+𝑘𝜂𝑝
+
+𝐻𝑝
++1
+√ 𝑅
+𝑘𝜂𝑝
+𝑀𝑊 𝑍𝑎𝑣𝑔 𝑇1 (𝑘 − 1)
+
+)
+
+Moving the root to the exponent:
+𝑘𝜂𝑝 (𝑚−1)
+𝑘−1
+
+𝑉̇3 = 𝑉1̇
+
+𝐻𝑝
+𝑍3
++ 1)
+(
+𝑘𝜂𝑝
+𝑍1
+𝑅
+𝑍𝑎𝑣𝑔 𝑇1 (
+)
+𝑀𝑊
+𝑘−1
+
+Inserting the static outlet volume to the exit flow coefficient:
+𝑘𝜂𝑝 (𝑚−1)
+𝑘−1
+
+𝑍
+𝑉1̇ 𝑍3 (
+1
+
+𝜑3 =
+
+𝐻𝑝
+𝑘𝜂𝑝
+𝑅
+𝑍
+𝑇
+(
+)
+𝑎𝑣𝑔
+1
+𝑀𝑊
+𝑘−1
+𝜋𝑑𝑏2 𝑢2
+
++ 1)
+
+Inserting the expression for U from Appendix F:
+𝑘𝜂𝑝 (𝑚−1)
+𝑘−1
+
+𝑍
+𝑉1̇ 𝑍3 (
+1
+
+𝜑3 =
+
+𝐻𝑝
+𝑘𝜂𝑝
+𝑅
+𝑍𝑎𝑣𝑔 𝑇1 (
+)
+𝑀𝑊
+𝑘−1
+𝜋𝑑𝑏2 𝜋𝑑𝑁
+
++ 1)
+
+Trimming:
+𝑍
+𝑉1̇ 𝑍3
+𝐻𝑝
+𝜑3 = 2 2 1 (
++ 1)
+𝑘𝜂𝑝
+𝜋 𝑑 𝑏2 𝑁 𝑅
+𝑍
+𝑇
+(
+)
+𝑀𝑊 𝑎𝑣𝑔 1 𝑘 − 1
+
+𝑘𝜂𝑝 (𝑚−1)
+𝑘−1
+
+Then the equations for converting back to volume flow remain. From Appendix D, the
+equation for the new inlet volume:
+̇
+𝑉1,𝑛𝑒𝑤
+= 𝑉̇3,𝑛𝑒𝑤
+
+𝑇1,𝑛𝑒𝑤 𝑃3,𝑛𝑒𝑤 𝑍1,𝑛𝑒𝑤
+𝑇3,𝑛𝑒𝑤 𝑃1,𝑛𝑒𝑤 𝑍3,𝑛𝑒𝑤
+
+98
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Inserting the expression for 𝑉̇3 from Appendix C:
+𝑇1,𝑛𝑒𝑤 𝑃3,𝑛𝑒𝑤 𝑍1,𝑛𝑒𝑤
+𝑇3,𝑛𝑒𝑤 𝑃1,𝑛𝑒𝑤 𝑍3,𝑛𝑒𝑤
+
+̇
+𝑉1,𝑛𝑒𝑤
+= 𝜑3 𝜋𝑑𝑏2 𝑈𝑛𝑒𝑤
+
+From the previously presented equation for the temperature ratio follows that
+𝑇1,𝑛𝑒𝑤
+1
+=
+𝑚𝑛𝑒𝑤
+𝑝
+𝑇3,𝑛𝑒𝑤
+( 3,𝑛𝑒𝑤 )
+𝑝1,𝑛𝑒𝑤
+̇
+Inserting this into the equation for 𝑉1,𝑛𝑒𝑤
+:
+𝑉̇𝑖𝑛,𝑛𝑒𝑤 = 𝜑3 𝜋𝑑𝑏2 𝑈𝑛𝑒𝑤
+
+1
+𝑚𝑛𝑒𝑤
+
+𝑝
+(𝑝3,𝑛𝑒𝑤 )
+
+𝑝3,𝑛𝑒𝑤 𝑍1,𝑛𝑒𝑤
+𝑝1,𝑛𝑒𝑤 𝑍3,𝑛𝑒𝑤
+
+1,𝑛𝑒𝑤
+
+The pressure ratios can be simplified:
+1−𝑚𝑛𝑒𝑤
+
+̇
+𝑉1,𝑛𝑒𝑤
+= 𝜑3 𝜋𝑑𝑏2 𝑈𝑛𝑒𝑤 (
+
+𝑝3,𝑛𝑒𝑤
+)
+𝑝1,𝑛𝑒𝑤
+
+𝑍1,𝑛𝑒𝑤
+𝑍3,𝑛𝑒𝑤
+
+Inserting the previous expression for the outlet pressure and simplifying:
+1−𝑚𝑛𝑒𝑤
+(
+
+𝑉̇𝑖𝑛,𝑛𝑒𝑤 = 𝜑3 𝜋𝑑𝑏2 𝑈𝑛𝑒𝑤
+
+𝑘𝑛𝑒𝑤−1 )
+𝑘𝑛𝑒𝑤 𝜂𝑝,𝑛𝑒𝑤
+
+√
+(
+
+𝐻𝑝,𝑛𝑒𝑤
+𝑘𝑛𝑒𝑤 𝜂𝑝,𝑛𝑒𝑤
+𝑅
+𝑍
+𝑇
+(
+)
+𝑀𝑊𝑛𝑒𝑤 𝑎𝑣𝑔,𝑛𝑒𝑤 1,𝑛𝑒𝑤 𝑘𝑛𝑒𝑤 − 1
+
+𝑍1,𝑛𝑒𝑤
+𝑍3,𝑛𝑒𝑤
+
++1
+)
+
+Substituting the exit flow coefficient with the previously derived expression yields:
+𝑍3
+1𝑍
+1
+̇
+𝑉1,𝑛𝑒𝑤
+=
+2
+𝜋2𝑑 𝑏2𝑁
+𝑉̇
+
+𝑘𝜂𝑝(𝑚−1)
+𝑘−1
+
+𝐻𝑝
++1
+𝑅 𝑍 𝑇 ( 𝑘𝜂𝑝 )
+𝑎𝑣𝑔 1
+𝑀𝑊
+𝑘
+−
+1
+(
+)
+
+1−𝑚𝑛𝑒𝑤
+
+(
+
+𝜋𝑑𝑏2 𝑈𝑛𝑒𝑤
+
+𝑘𝑛𝑒𝑤 −1
+)
+𝑘𝑛𝑒𝑤 𝜂𝑝,𝑛𝑒𝑤
+
+√
+(
+
+𝐻𝑝,𝑛𝑒𝑤
+𝑘𝑛𝑒𝑤 𝜂𝑝,𝑛𝑒𝑤
+𝑅
+(
+)
+𝑀𝑊𝑛𝑒𝑤 𝑍𝑎𝑣𝑔,𝑛𝑒𝑤 𝑇1,𝑛𝑒𝑤 𝑘𝑛𝑒𝑤 − 1
+
++1
+
+𝑍1,𝑛𝑒𝑤
+𝑍3,𝑛𝑒𝑤
+
+)
+
+Inserting expression for Unew from Appendix F and trimming:
+
+̇
+𝑉1,𝑛𝑒𝑤
+=
+
+𝐻𝑝
+𝑉1̇ 𝑁𝑛𝑒𝑤 𝑍3 𝑍1,𝑛𝑒𝑤
+(
++ 1)
+𝑘𝜂𝑝
+𝜋𝑑𝑁𝑍1 𝑍3,𝑛𝑒𝑤
+𝑅
+𝑍 𝑇 (
+)
+𝑀𝑊 𝑎𝑣𝑔 1 𝑘 − 1
+
+𝑘𝜂𝑝 (𝑚−1)
+𝑘−1
+
+𝑘𝑛𝑒𝑤 𝜂𝑝,𝑛𝑒𝑤 (1−𝑚𝑛𝑒𝑤 )
+𝑘𝑛𝑒𝑤 −1
+
+(
+
+𝐻𝑝,𝑛𝑒𝑤
++ 1)
+𝑘𝑛𝑒𝑤 𝜂𝑝,𝑛𝑒𝑤
+𝑅
+𝑍
+𝑇
+(
+)
+𝑀𝑊𝑛𝑒𝑤 𝑎𝑣𝑔,𝑛𝑒𝑤 1,𝑛𝑒𝑤 𝑘𝑛𝑒𝑤 − 1
+
+Finally, inserting the expression for the new polytropic head from Appendix F yields:
+
+̇
+𝑉𝑖𝑛,𝑛𝑒𝑤
+
+𝐻𝑝
+𝑉1̇ 𝑁𝑛𝑒𝑤 𝑍3 𝑍1,𝑛𝑒𝑤
+=
+(
++ 1)
+𝑘𝜂𝑝
+𝜋𝑑𝑁𝑍1 𝑍3,𝑛𝑒𝑤
+𝑅
+𝑍 𝑇 (
+)
+𝑀𝑊 𝑎𝑣𝑔 1 𝑘 − 1
+
+𝑘𝜂𝑝 (𝑚−1)
+𝑘−1
+
+𝑁𝑛𝑒𝑤 2
+)
+𝑁
+(
++ 1)
+𝑘𝑛𝑒𝑤 𝜂𝑝,𝑛𝑒𝑤
+𝑅
+𝑍
+𝑇
+(
+)
+𝑀𝑊𝑛𝑒𝑤 𝑎𝑣𝑔,𝑛𝑒𝑤 1,𝑛𝑒𝑤 𝑘𝑛𝑒𝑤 − 1
+
+99
+
+𝐻𝑝 (
+
+𝑘𝑛𝑒𝑤 𝜂𝑝,𝑛𝑒𝑤 (1−𝑚𝑛𝑒𝑤 )
+𝑘𝑛𝑒𝑤 −1
+
+Improved modeling of rotary momentum mass transport equipment
+
+Appendix H – Performance maps of
+compressors A, B and C
+
+Figure 55.Scaled performance map of compressor A.
+
+Figure 56. Scaled performance map of compressor B.
+
+100
+
+Fredrik Nyholm
+
+Improved modeling of rotary momentum mass transport equipment
+
+Figure 57. Scaled performance map of compressor C.
+
+101
+
+Fredrik Nyholm
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Appendix I – Dimensionless inlet flow
+coefficient performance maps of compressors
+A and B
+
+Figure 58. Dimensionless performance map based on the inlet flow coefficient of compressor A.
+
+Figure 59. Inlet flow coefficient performance map of compressor B.
+
+102
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Appendix J – Predicted performance curves of
+compressor A
+
+Figure 60. Scaled predicted performance map of compressor A. Predictions are based on the inlet flow
+coefficient curve of the rated case.
+
+Figure 61. Scaled predicted performance map of compressor A. Predictions are based on the exit flow
+coefficient curve of the rated case.
+
+103
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 62. A comparison of the scaled manufacturer performance curve and the predictions of the inlet
+and exit flow coefficient curves for the normal case. The predictions are based on the dimensionless
+curves of the rated case.
+
+Figure 63. A comparison of the scaled manufacturer performance curve and the predictions of the inlet
+and exit flow coefficient curves for the rated case.
+
+Figure 64. A comparison of the scaled manufacturer performance curve and the predictions of the inlet
+and exit flow coefficient curves for the heavy gas case.
+
+104
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 65. A comparison of the scaled manufacturer performance curve and the predictions of the inlet
+and exit flow coefficient curves for the startup gas case.
+
+Figure 66. A comparison of the scaled manufacturer performance curve and the predictions of the inlet
+and exit flow coefficient curves for the light gas case.
+
+105
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Appendix K – Predicted performance curves
+of compressor B
+
+Figure 67. Scaled predicted performance map of compressor B. Predictions are based on the inlet flow
+coefficient curve of the rated case.
+
+Figure 68. Scaled predicted performance map of compressor B. Predictions are based on the exit flow
+coefficient curve of the rated case.
+
+106
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 69. A comparison of the scaled manufacturer performance curve and the predictions of the inlet
+and exit flow coefficient curves for the normal case.
+
+Figure 70. A comparison of the scaled manufacturer performance curve and the predictions of the inlet
+and exit flow coefficient curves for the heavy gas case.
+
+Figure 71. A comparison of the scaled manufacturer performance curve and the predictions of the inlet
+and exit flow coefficient curves for the high temperature case.
+
+107
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 72. A comparison of the scaled manufacturer performance curve and the predictions of the inlet
+and exit flow coefficient curves for the rated case.
+
+Figure 73. A comparison of the scaled manufacturer performance curve and the predictions of the inlet
+and exit flow coefficient curves for the startup case.
+
+108
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Appendix L – Predicted performance curves
+of compressor C
+
+Figure 74. Scaled predicted performance map of compressor C. Predictions are based on the exit flow
+coefficient curve of the rated case.
+
+Figure 75. A comparison of the scaled manufacturer performance curve and the prediction of the exit
+flow coefficient curve for the rated case.
+
+109
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 76. A comparison of the scaled manufacturer performance curve and the prediction of the exit
+flow coefficient curve for the SOR case.
+
+Figure 77. A comparison of the scaled manufacturer performance curve and the prediction of the exit
+flow coefficient curve for the EOR case.
+
+Figure 78. A comparison of the scaled manufacturer performance curve and the prediction of the exit
+flow coefficient curve for the initial circulation case.
+
+110
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 79. A comparison of the scaled manufacturer performance curve and the prediction of the exit
+flow coefficient curve for the circulation and heatup 1 case.
+
+Figure 80. A comparison of the scaled manufacturer performance curve and the prediction of the exit
+flow coefficient curve for the circulation and heatup 2 case.
+
+Figure 81. A comparison of the scaled manufacturer performance curve and the prediction of the exit
+flow coefficient curve for the circulation and heatup 3 case.
+
+111
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 82. A comparison of the scaled manufacturer performance curve and the prediction of the exit
+flow coefficient curve for the circulation and heatup 4 case.
+
+Figure 83. A comparison of the scaled manufacturer performance curve and the prediction of the exit
+flow coefficient curve for the presulfiding 1 case.
+
+Figure 84. A comparison of the scaled manufacturer performance curve and the prediction of the exit
+flow coefficient curve for the presulfiding 2 case.
+
+112
+
+Improved modeling of rotary momentum mass transport equipment
+
+Fredrik Nyholm
+
+Figure 85. A comparison of the scaled manufacturer performance curve and the prediction of the exit
+flow coefficient curve for the high molar weight case.
+
+Figure 86. A comparison of the scaled manufacturer performance curve and the prediction of the exit
+flow coefficient curve for the emergency cutback case.
+
+113
+
+Improved modeling of rotary momentum mass transport equipment
+
+Appendix M – Process data
+
+Figure 87. Pressure process data of the shutdown case.
+
+Figure 88. Temperature process data of the shutdown case.
+
+114
+
+Fredrik Nyholm
+
+Improved modeling of rotary momentum mass transport equipment
+
+Figure 89. Composition process data of the shutdown case.
+
+Figure 90. Pressure process data of the normal operation case.
+
+Figure 91. Temperature process data of the normal operation case.
+
+115
+
+Fredrik Nyholm
+
+Improved modeling of rotary momentum mass transport equipment
+
+Figure 92. Composition process data of the normal operation case.
+
+Figure 93. Pressure process data of the startup case.
+
+Figure 94. Temperature process data of the startup case.
+
+116
+
+Fredrik Nyholm
+
+Improved modeling of rotary momentum mass transport equipment
+
+Figure 95. Composition process data of the startup case.
+
+117
+
+Fredrik Nyholm
+
+

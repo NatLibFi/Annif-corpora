@@ -1,0 +1,4450 @@
+ÅBO AKADEMI UNIVERSITY
+FACULTY OF SCIENCE AND ENGINEERING
+
+Control of the particle size distribution of a cement grinding
+circuit
+Master’s Thesis
+by
+Joonatan Julin
+
+September 2021
+Carried out at the Laboratory of Process
+and Systems Engineering at Åbo
+Akademi University under the
+supervision of prof. Ron Zevenhoven.
+
+ii
+
+Title of the thesis: Control of the particle size distribution of a cement grinding circuit
+
+Author:
+
+Julin, Joonatan
+
+Thesis supervisor:
+
+Professor Ron Zevenhoven
+Laboratory of Process and Systems Engineering
+Faculty of Science and Engineering
+Åbo Akademi University, Åbo, Finland
+MSc (Tech) Micaela Westén
+Quality Development Manager
+Finnsementti
+Parainen, Finland
+
+Keywords
+
+Particle size distribution, PSD, stepwise regression, cement
+production
+
+Preface
+
+iii
+
+Abstract
+For the past decades, the Blaine value has been the predominant characteristic when
+controlling the process parameters of a cement grinding circuit. The Blaine method
+measures the permeability of the cement, and therefore, describes the fineness of the
+cement. This thesis investigated how the particle size distribution (PSD) could be
+implemented as input data to the process control in a closed grinding circuit. This thesis
+consists of sets of experiments exploring the effects of process parameters on the PSD
+of the product.
+A series of experiments were conducted to study how process parameter changes
+affected the particle size distribution of the product. The results from the first and the
+second sets of experiments showed that the PSD of the cement changed only by small
+margins when the Blaine value was kept constant. Several linear regression models
+were developed to understand the effect size of process parameter changes on PSD
+characteristics of the product.
+The third set of experiments was conducted to study the effects of the separator speed
+and separator airflow on the product's PSD without maintaining a constant Blaine value.
+Changes to separator speeds and separator airflow significantly affected the PSD of the
+product. The process parameter changes did not have a linear effect on PSD
+characteristics. Thus, future research should explore the non-linear behavior of process
+parameters on the PSD of the product.
+
+Abbreviations and nomenclature
+
+Abbreviations
+DIA
+
+Dynamic Image Analysis
+
+CF
+
+Circulation Factor
+
+CL
+
+Circulation Load
+
+GEC
+
+Grade Efficiency Curve
+
+GGS
+
+Gates-Gaudin-Schaumann
+
+LD
+
+Laser Diffraction
+
+PC
+
+Portland Cement
+
+PCC
+
+Portland Cement Clinker
+
+PSD
+
+Particle Size Distribution
+
+RRSB
+
+Rosin-Rammler-Sperling-Bennet
+
+iv
+
+Table of contents
+
+v
+
+Table of Contents
+
+1
+
+Introduction ............................................................................................................... 1
+
+2
+
+Theory ....................................................................................................................... 3
+2.1
+
+Cement production ............................................................................................. 3
+
+2.2
+
+Particle Size Distribution ................................................................................... 4
+
+2.2.1
+2.3
+
+Cement characteristics ....................................................................................... 7
+
+2.3.1
+
+Clinker and its ingredients .......................................................................... 9
+
+2.3.2
+
+Other cement ingredients .......................................................................... 11
+
+2.3.3
+
+Blaine ........................................................................................................ 12
+
+2.3.4
+
+Sieve Analysis........................................................................................... 13
+
+2.3.5
+
+Laser Diffraction ....................................................................................... 13
+
+2.3.6
+
+Dynamic Image Analysis .......................................................................... 13
+
+2.3.7
+
+Ball mill .................................................................................................... 15
+
+2.3.8
+
+Separator / classifier.................................................................................. 16
+
+2.3.9
+
+Airflow and feed impact on the PSD ........................................................ 23
+
+2.3.10
+
+Material flow in the system affects PSD .................................................. 23
+
+2.4
+
+Literature overview of air separator modeling in the cement industry ............ 23
+
+2.4.1
+3
+
+Rosin-Rammler-Sperling-Bennett .............................................................. 5
+
+Computational Fluid Dynamics ................................................................ 24
+
+Experiment series I: On-site testing and data collection......................................... 26
+3.1
+
+Sample collection ............................................................................................. 26
+
+3.2
+
+Analysis methods ............................................................................................. 27
+
+3.3
+
+Results from parameter change test. ................................................................ 27
+
+3.4
+
+Analysis of results ............................................................................................ 33
+
+3.5
+
+Sources of error ................................................................................................ 35
+
+3.6
+
+Experiment series II: Process parameter experiment with statistical analysis . 35
+
+3.6.1
+
+Factorial experiment results ...................................................................... 36
+
+3.7
+
+Stepwisefit regression ...................................................................................... 38
+
+3.8
+
+Stepwise regression results .............................................................................. 39
+
+3.9
+
+Experiment series III ........................................................................................ 45
+
+3.10 Experiment III results and discussion .............................................................. 49
+
+Table of contents
+4
+
+5
+
+vi
+
+Results and discussion ............................................................................................ 55
+4.1
+
+Experimental conclusions ................................................................................ 56
+
+4.2
+
+Stepwise, - and 2k regression conclusions........................................................ 57
+
+4.3
+
+Recommendations on PSD control .................................................................. 58
+
+4.4
+
+Further research and improvements ................................................................. 61
+
+Conclusions............................................................................................................. 62
+
+Svensk sammanfattning .................................................................................................. 64
+6
+
+References ............................................................................................................... 67
+
+7
+
+Appendices.............................................................................................................. 70
+7.1
+
+Appendix A 2k-factorial design ........................................................................ 70
+
+7.2
+
+Appendix II Regression Matlab code ............................................................... 73
+
+1
+
+1 Introduction
+For decades, the cement industry has used the Blaine value, a mean of the specific area
+for particles (m2/kg), to control the cement grinding process. The Blaine value is a wellestablished permeability parameter that gives an average number for a sample that does
+not necessarily describe cement quality in the same manner as a Particle Size
+Distribution (PSD) curve. Although the Blaine value analysis is an established method
+for cement, there are a few significant limitations. For example, the Blaine value can be
+identical for two entirely different cement samples with different performance
+characteristics because the Blaine value is merely a mean value. Another limitation of
+Blaine analysis is that the accuracy declines with a large fraction of fine particles. The
+measurement technology is often manual and, therefore, difficult to incorporate into an
+autonomous system.
+As cement performance is related to the composition and the general distribution of the
+particle sizes, it is essential to analyze these properties to fully determine the cement
+quality at an early stage. With the particle analyzer Camsizer, which produces dynamic
+image analysis (DIA), Finnsementti can produce new continuous data sets and
+accurately describe the cement quality. We may better understand the cement sample
+quality by characterizing different factors of interest from the PSD curve, which is not
+possible for the Blaine method. For example, from a PSD curve, one can attain
+information about the fraction of the fine particles in a cement sample, which is
+impossible by solely analyzing the Blaine value.
+Generally, Portland Cement (PC) should have between 50-70% of its particles between
+the size interval from 2 and 32 microns in order to have desired attributes (Blasco).
+Also, small particles are good for early setting times, while big particles give longer
+(28-day) setting times, predicted from the PSD curve. However, an excess number of
+fine particles 3 µm or smaller may result in the cement curing exothermically, rupturing
+the final product. Factors such as these are easily monitorable with analysis methods
+that consider a particle distribution, which the Blaine method does not.
+
+2
+The use of DIAs for the steering of the process could enhance the cement quality and
+simultaneously keep drift conditions stable. By monitoring factors from a PSD curve,
+for example, the slope of the curve ‘n’ and the particle size after 50% of the material has
+passed ‘d50’ and adjusting process parameters based on the factors from the PSD curve,
+the final product should be more consistent. By analyzing the correlation between the
+DIA and cement quality parameters, a process can be optimized to manufacture good
+cement quality. If useful and consistent correlations are found, which can be
+implemented into the process control, an opportunity to automize the production further
+arises. By continuously analyzing the cement quality with DIA, a process can be
+adapted to minor changes during operation.
+This project aims to have process-specific recommendations on producing consistent
+and high-quality cement based on the desired PSD curve for said cement.
+This thesis will examine the usage of analysis methods for the steering of the cement
+grinding process, which could improve the overall quality by making the cement a more
+consistent, reproducible product. This may be accomplished by adjusting process
+parameters, e.g., separator RPMs and feed air, with the help of data from DIAs to make
+consistent and high-quality cement.
+
+3
+
+2 Theory
+2.1 Cement production
+Cement is a hydraulic binder used in the construction industry for strong and stable
+bonds with additive aggregates, e.g., sand, gravel, and crushed stone. Cement consists
+mainly of Portland Cement Clinker (PCC), consisting of limestone, clay constituents,
+silica sands, and iron oxide substances. Some modern cement types do not consist
+mainly of PCC, for example, some CEM III types. Cement classification will be
+discussed later in this thesis.
+Clinker ingredients are ground to form a raw meal homogenized in a silo and preheated
+in cyclones, eventually burned in a clinker kiln. High calorific fuels are used in a clinker
+kiln to maintain a high temperature in the kiln. At Finnsementti Parainen, typical fuels
+are coal, asphaltene, and alternative fuels, i.e., rubber and recycled alternative fuels. The
+raw meal is in direct contact with the flame in the clinker kiln, and therefore, the clinker
+is affected by the fuel types used. In preheating, the raw meal goes through a series of
+cyclones heating up as the raw meal is fed into the clinker kiln. At 900 ℃, the raw meal
+starts to calcinate, i.e., CO2 is released from the intermediate product. In the rotating
+clinker kiln, temperatures rise to 1450 ℃, and clinker balls form. The clinker is quickly
+cooled, which leads to microcracks within alite crystals that are beneficial in the cement
+grinding process. Rapid cooling of the clinker is also necessary for the clinker to obtain
+good hydraulic properties.
+Grinding of clinker and other additives, e.g., blast furnace slag, fly ash, limestone, and
+gypsum, occurs in a vertical ball mill to make cement. All feed components have unique
+grindability traits and affect the PSD of the cement. Generally, harder clinkers result in
+higher circulation loads (Belhaj m.fl. 2016). After the grinding mill, the classifier
+separates particles according to their sizes. Airflow and the ratio between separator feed
+and air are two crucial parameters that affect the PSD of cement. The bag filter
+minimizes emissions after the separator. Pressure losses may occur in bag filters, which
+affect the PSD of cement directly. Cement is finally transported to silos, from where it
+will be loaded to bulk transport vessels (boats or trucks).
+
+4
+
+2.2 Particle Size Distribution
+Particle size distribution (PSD) describes the relative sizes of particles in a powder. The
+PSD of cement is often plotted according to either the Gates-Gaudin-Schaumann (GGS)
+or the Rosin-Rammler-Sperling-Bennet (RRSB) mathematical formulas as given below.
+These methods highlight different size fractions that are of great importance to cement’s
+chemical and mechanical structure. Different PSD profiles give varying early and late
+strength development characteristics. The PSD profile also affects the capillary porosity
+percolation, diffusivity, heat transfer, exothermic reactions, microstructure, and
+shrinkage (Celik 2009).
+
+Figure 1 Cumulative PSD curve for separator flows (Finnsementti 2021)
+
+The correlation between PSD characteristics and cement strength has been researched to
+some degree. The strength of cement is influenced mainly by particles between the size
+of 3 to 32 µm, and particles over 60 microns have practically no other function than a
+“filing” factor for the cement. Celik notes that the PSD curve should contain over 65%
+of its particles between 3 and 32 µm and around 10% under 3 µm (Celik 2009). Due to
+differences in the measurement techniques, the Blaine value may differ from case to
+case. For example, specific cement particle areas were obtained using laser diffraction
+and permeability tests (Ferraris & Garboczi 2013).
+
+5
+
+Celik also concludes that the late strength of cement is affected the most by particles in
+the 16 to 24 µm fraction, where smaller particles are mainly affected by the early
+strengths of the cement (Celik 2009). Overgrinding is not desirable for cement due to
+extra energy costs and because finer types of cement produce more heat (by drying
+faster) when solidifying, which can cause cracks in the final product. However, if the
+product is not ground enough and too coarse, the final product has a prolonged
+solidification period and may fail to sufficiently reach a sufficient strength.
+The factor ‘n’ in a PSD defines the steepness or the spread of the function. The curve’s
+steepness is related to how uniformly the particle sizes are divided and related to the
+cement's characteristics. A wide PSD curve increases the packing density of the cement
+as small particles get into the pore structure created by larger particles, leading to a
+reduced water demand. If the uniformity factor is close to 1, the PSD curve is very narrow,
+which enhances the hydration reaction rate. Kuhlman et al. argue that if the particle size
+distribution within the 15-32 µm interval is the same for two sets of cement, the longterm strength will be roughly the same as this range influences the long-term strength the
+most (Kuhlmann m.fl. 1985).
+Kuhlmann et al. also studied the Blaine value, uniformity factor, and position parameter
+effects on cement hydration. They concluded that the same hydration rates could be
+achieved for cement with high Blaine and wide PSD curves with low Blaine and narrow
+PSD curves. The increase of strength in types of cement with narrow uniformity factor is
+due to a proportional increase of hydrated fine particles. If the Blaine value can be
+lowered, some energy-saving measures may be implemented, as the grinding is not as
+extensive.
+
+2.2.1 Rosin-Rammler-Sperling-Bennett
+
+The Rosin-Rammler-Sperling-Bennett (RRSB) distribution method is a mathematical
+expression widely used in the cement industry to characterize cement and other fine
+
+6
+materials to make PSD curves. With the coefficients from the RRSB method, it is
+possible to implement quality control measures for the manufacturing process.
+RRSB is useful for grinding operations involving a wide range of particle sizes(Jess &
+Wasserscheid 2020). The RRSB equation may be written as:
+
+𝑅=𝑒
+
+−(
+
+𝑛
+𝑑
+)
+𝑑𝑚𝑒𝑎𝑛
+
+(1)
+
+where R is the mass fraction, 𝑑𝑚𝑒𝑎𝑛 is the mean particle size when R=1/e=0.368 and n
+is the spread measurement for the function (Allen 1997).
+The equation can be rearranged to its more common form:
+1
+
+log (log (𝑅)) = 𝑛 𝑙𝑜𝑔 (𝑑
+
+𝑑
+
+𝑚𝑒𝑎𝑛
+
+) + log(log(𝑒))
+
+(2)
+
+or:
+1
+𝑑
+)
+ln (ln ( )) = 𝑛 𝑙𝑛 (
+𝑅
+𝑑𝑚𝑒𝑎𝑛
+
+(3)
+
+1
+
+The parameter n is the slope of a straight line when log (log (𝑅)) is plotted against
+𝑛 𝑙𝑜𝑔 (𝑑
+
+𝑑
+
+𝑚𝑒𝑎𝑛
+
+). According to Jess & Wasserscheid, an “ideal” RRSB function is shown
+
+in Figure 2 with a straight one-to-one line.
+
+7
+
+Figure 2 Example of an ideal particles size distribution curve according to the RRSB function for n=1,3: (a) Eq.1 and
+(b) Eq.2
+
+Only a few studies have been made comparing RRSB and lognormal distributions for
+cementitious materials. The RRSB method produces more fitting errors for non-grinded
+materials in PSD curves compared with the lognormal method. Therefore, a lognormal
+distribution method may be a more reliable to develop PSD curves than the RRSB
+method, especially if the sample has large ratios of non-grinded materials such as blast
+furnace slag or fly ash (Gao m.fl. 2018).
+At Finnsementti Parainen, the Dynamic Image Analysis (DIA) tool Camsizer is used.
+The Camsizer utilizes RRSB curves to produce Gaussian distributions as PSDs. DIA is
+discussed in more detail later in this thesis.
+
+2.3 Cement characteristics
+There are many cement sorts, each sort with unique characteristics designed for specific
+tasks. Cement sorts are characterized according to the EN197-1 standard in Europe.
+Table 1 lists the differences in cement according to EN197-1.
+
+8
+Table 1 Common types of cement characterized according to the EN 197-1 standard (British Standards Institution
+2011)
+
+The cement type in focus for this thesis is a CEM II/A-LL 42,5 R (Rapid). The
+production feed for Rapid is 87-89% clinker, 5-6% gypsum, 4-6% limestone, and
+additives such as filter dust (bypass) and grinding aids. The relatively large amounts of
+
+9
+clinker in Rapid production means that the clinker properties have a significant effect on
+grindability and, ultimately, the PSD of the product.
+
+2.3.1 Clinker and its ingredients
+
+Cement is a mixture of ingredients, which can be noted in Table 1 above. The main
+ingredient for cement is clinker. Clinker is formed in a rotating kiln where it sinters to
+roughly spherical shapes with diameters between 0.5 and 5 cm. Limestone containing
+silica, alumina, and iron oxides is the main ingredient for clinker. The intermediate
+product mainly consists of alites, belites, aluminates, ferrites, and free CaO, among
+other things (Ferrari m.fl. 2012). A simplified version of clinker burning in a cement
+kiln is demonstrated in the stoichiometry below.
+𝐶𝑎𝑙𝑐𝑖𝑛𝑎𝑡𝑖𝑜𝑛 (𝑎𝑡 860 ℃):
+𝐶𝑎𝐶𝑂3 → 𝐶𝑎𝑂 + 𝐶𝑂2
+𝐵𝑒𝑙𝑖𝑡𝑒 𝑓𝑜𝑟𝑚𝑎𝑡𝑖𝑜𝑛 (𝑎𝑡 1100 ℃):
+2𝐶𝑎𝑂 + 𝑆𝑖𝑂2 → 2𝐶𝑎𝑂 · 𝑆𝑖𝑂2
+𝐶𝑎𝑙𝑐𝑖𝑢𝑚 − 𝑎𝑙𝑢𝑚𝑖𝑛𝑎𝑡𝑒 𝑓𝑜𝑟𝑚𝑎𝑡𝑖𝑜𝑛 (𝑎𝑡 1100 ℃):
+3𝐶𝑎𝑂 + 𝐴𝑙2 𝑂3 → 3𝐶𝑎𝑂 · 𝐴𝑙2 𝑂3
+𝐶𝑎𝑙𝑐𝑖𝑢𝑚 − 𝑎𝑙𝑢𝑚𝑖𝑛𝑜𝑓𝑒𝑟𝑟𝑖𝑡𝑒 𝑓𝑜𝑟𝑚𝑎𝑡𝑖𝑜𝑛 (𝑎𝑡 1100 ℃):
+4𝐶𝑎𝑂 + 𝐴𝑙2 𝑂3 + 𝐹𝑒2 𝑂3 → 4𝐶𝑎𝑂 · 𝐴𝑙2 𝑂3 · 𝐹𝑒2 𝑂3
+𝐴𝑙𝑖𝑡𝑒 𝑓𝑜𝑟𝑚𝑎𝑡𝑖𝑜𝑛 (𝑎𝑡 1400 ℃):
+𝐶𝑎𝑂 + 2𝐶𝑎𝑂2 · 𝑆𝑖𝑂2 → 3𝐶𝑎𝑂 · 𝑆𝑖𝑂2
+Tricalcium silicate, alite, or C3S, is a main ingredient of clinker. Alite is directly
+correlated with early strengths for cement due to its large fraction of Ca, which
+increases reactivity. Alite contains a large number of micro-cracks which improves the
+grindability. Micro-cracks are formed when the clinker is rapidly cooled (Ravaszová &
+Dvorak 2018). When Odigure studied the alite particle size optical photography, it was
+
+10
+found that the alite crystal size was predominately between 20 and 30 µm when clinker
+was burned at 1380 ℃. When clinker was burned at 1420 ℃, alite started recrystallizing
+to larger alite crystals (Odigure 1999).
+Belite mainly consists of dicalcium silicate and contributes to the late strength of cement
+due to its low reactivity. Belite is more difficult to grind than alite, especially if belite is
+clustered in the clinker. The grindability of the clinker impacts the PSD of the ground
+material, especially for cement types that contain large ratios of clinker (Maki m.fl.
+1993). The amount of alite and belite in clinker affects the total energy cost of cement
+grinding.
+Calcium-aluminate, also known as C3A, provides early high heat generation in cement.
+C3A is primarily formed of calcium oxides from limestone and secondarily from other
+aluminum sources such as bauxite. The hydration of cement is enhanced if the particle
+size of C3A is small, i.e., less than 10 µm, and its PSD curve narrow due to increased
+contact between particles and water (Liu m.fl. 2019). C3A has a crucial role in
+developing good conditions in the kiln during clinker production by transforming it into
+an intermediate melt.
+Calcium aluminoferrite, ferrite or C4AF, does not directly contribute to cement
+properties but functions as an intermediate melt product to obtain sufficient conditions
+in the kiln for cement production. Ferrite is a dark-colored mineral and contributes to
+the color of the cement. Like belite, ferrite has poor grindability properties due to high
+mechanical strength in the mineral. However, research shows that ferrite may influence
+microcrack fixation clinker surface, which improves clinker grindability (Odigure
+1999).
+Alite, belite, calcium-aluminate, ferrite, and other clinker minerals have different
+physical characteristics and have significant differences in grindability, which should be
+noted when producing cement. The initial grindability of the clinker is mainly
+influenced by the porosity of the clinker. The effect of porosity on grindability gradually
+lessens over the grinding process, and during intermediate grinding, the alite content is
+the predominant factor for grindability. Aluminate and aluminoferrite content affect the
+final grindability of clinker (Tavares m.fl. 2009).
+
+11
+Process steering using PSD values benefit when standard deviations are minimized in
+clinker production i.e. when clinker quality and structure of minerals are consistent over
+time. In reality, there will always be deviations in clinker quality which affects the
+grinding process of cement and the PSD characteristics of cement. The relative amounts
+of clinker minerals on a typical clinker are given in Table 2.
+Table 2 A typical clinker composition at Finnsementti Parainen
+
+Mineral
+
+%
+
+Alite
+
+66.3
+
+Belite
+
+11.7
+
+Calcium-aluminate
+
+9.3
+
+Ferrite
+
+7.0
+
+Other minerals
+
+5.7
+
+2.3.2 Other cement ingredients
+
+For Rapid production, around 12% of the total feed is composed of other minerals than
+those that make up the clinker. The most significant non-clinker ingredient is gypsum
+which is just above 6% of the total feed. For multi-component cement, the grindability
+of components affects the PSD of the cement. Components that are easily grindable
+contribute to types of cement with a wide PSD curve. For example, types of cement
+with fly ash or limestone generally have wider PSD curves than cement types
+containing trass, as fly ash and limestone are generally softer minerals and, therefore,
+more grindable (Opoczky 1996).
+The primary purpose of gypsum is to slow down cement's hydration rate and allow
+longer setting times after water is added to the cement. PCCs with gypsum tend to have
+higher strengths than non-gypsum types of cement due to their high amounts of SO3,
+which is crucial for high-strength PCCs. When gypsum is ground, it turns into
+hemihydrate gypsum where approximately three-quarters of the water in the original
+hydrated gypsum is evaporated (Öksüzoğlu & Uçurum 2016). Gypsum is a soft and
+easily grindable mineral that also reduces particle agglomeration.
+
+12
+
+Limestone is used as an inert filler which enhances the compressive strength, water
+demand, and workability for multi-component types of cement (Vuk m.fl. 2001).
+Limestone is a soft mineral compared with clinker, which improves its grindability and,
+therefore, its pulverization.
+Grinding aids are used to minimize particle agglomeration by reducing electrostatic
+forces in cement particles. Grinding aids do not directly impact the PSD of the cement
+due to the small amount added. However, its effects on the Tromp curve and separator
+efficiency (both to be discussed later in this thesis) impact the cement production, and
+ultimately, the PSD of the product.
+
+2.3.3 Blaine
+The Blaine value measures the specific area of a powder and relates to the fineness of
+the powder. Blaine is expressed as cm2/g or m2/kg, where a higher Blaine number
+correlates with a powder with more surface area, i.e., smaller particles (Tsakalakis &
+Stamboltzis 2008). The operating principle of the Blaine value is based on the
+proportionality between a level of fineness (or the specific area) and the permeability of
+the testbed. During the test, airflow through a cement bed is measured with vacuum and
+atmospheric pressure on the other side. The surface area is calculated with the KozenyCarman approximation theory, which assumes spherical shapes for the cement particles
+(Ferraris & Garboczi 2013).
+Generally, it is assumed that the Blaine index correlates with physical characteristics of
+the cement, such as rheology, setting time, and fluid strength. However, due to the
+Blaine index being a mean parameter of the specific area of the particles, the Blaine
+index cannot describe a whole PSD curve. Therefore, cement characteristics cannot be
+fully defined by the Blaine value alone. The Blaine analysis method does not consider
+the actual shape of cement particles but assumes spherical particles. The assumption of
+spherical particles is, however, common for many analysis methods in the cement
+industry. Blaine also does not reflect a particle's specific area, as there are dead zones on
+the particle surface due to nonturbulent airflow leading to no airflow at the surface. The
+actual specific area being larger than the Blaine value has consequences when
+
+13
+predicting the quality of hydration (Ferraris & Garboczi 2013). The fineness of cement
+is influenced by the fresh feed material feed, separator speed, and the airflow in the
+separator (Schneider m.fl. 2011a). At Finnsementti, the Blaine analysis method is
+conducted according to the ASTM C204 standard, the most common method in the
+cement industry.
+
+2.3.4 Sieve Analysis
+The sieve residue analysis measures the fraction of particles above a specific size that
+stays on a wire mesh. Sieve residue analysis is not a standard analysis method in largescale production environments due to it being expensive and requiring much time. Sieve
+analysis is also relatively easy to replace with laser diffraction or dynamic image
+analysis, as the same information is easily obtained from a PSD curve (Ferraris &
+Garboczi 2013).
+2.3.5 Laser Diffraction
+Laser diffraction works based on the principle of Fraunhofer diffraction theory, which
+states the proportionality of the particle size and the intensity of light scattering when
+light hits the particle. Laser diffraction (LD) measurements can be conducted either in a
+liquid (wet-LD) or a gas (dry-LD). A key benefit of LD analysis is a PSD curve, which
+the Blaine method or sieve analysis does not produce. However, LD assumes that
+particles are spherical, which is not the case for cement particles, although commonly
+assumed (Bowen m.fl. 2016).
+
+2.3.6 Dynamic Image Analysis
+
+At Finnsementti Parainen, PSD curves are produced using the Camsizer X2 by having a
+flow of particles passing a camera system. The advantage of having a dynamic system
+compared with a static system is the reliability of the result as the number of particles is
+much larger. Camsizer X2 has two cameras where the top camera analyzes big particles
+and the bottom camera small particles. The cement sample is fed into a vibrating chute,
+distributing the sample evenly into the Camsizer X2. The sample falls through the field
+of view, where both cameras analyze the particles used to form a PSD of the sample.
+
+14
+Finally, the particles are automatically discarded by a vacuum cleaner. The data
+collected from the Camsizer X2 are collected into MS-XLS, see Figure 3, which can
+subsequently be used to develop a PSD of the sample.
+
+Figure 3 Demonstration of the data of a cement sample analyzed with the Camsizer X2
+
+The measuring range for the Camsizer X2 is between 0.8 µm and 8 mm, which covers
+well the particles size range for PCC. The basic functioning principle for the Camsizer
+X2 is given in Figure 4.
+
+15
+
+Figure 4 Camsizer operating principle: Dual camera where the blue camera analyzes large particles and the red
+camera analyzes the tiny particles (Microtrack 2021)
+
+Camsizer X2 measurement parameters:
+•
+
+x – particle size (µm)
+
+•
+
+Q3 (%) - a volume-based fraction of the sample.
+
+•
+
+d’ - x value (on the horizontal axis of PSD plot) at when RRSB line reaches
+0.632.
+
+•
+
+n - slope of the RRSB line
+
+•
+
+various particle shape values
+
+2.3.7 Ball mill
+
+A ball mill is used for grinding raw materials and reject feed from the separator. The
+ball mill is divided into two chambers which are separated by a diaphragm. In the first
+chamber, the grinding of coarse material is conducted by a cataract motion of the balls,
+i.e., the rotating mill lifts the balls, and the impact of the fall crushes the feed material.
+
+16
+In the second chamber, a cascade motion of the balls grinds the material, mainly as a
+shear force. Generally, the ball diameter in the first chamber is 60-90 mm, and in the
+second chamber, 40-50 mm and 17-30 mm. Smaller balls grind the material to a finer
+product but use proportionally more energy. Cement grinding constitutes roughly 30%
+of the total energy demand in cement production, highlighting the need for optimized
+griding practices (Tsakalakis & Stamboltzis 2008).
+The temperature in the mill should be uniform. Suppose the temperature is too low in
+the mill. In that case, the moisture of the raw materials may cause problems in the
+diaphragm. However, too high temperatures cause de-watering in the gypsum, which
+lowers the cement quality. A suitable temperature for the outlet feed is 120 °C. Also, the
+airflow through the mill should be kept constant as it removes moisture, cools the
+process, and, to some degree, transports the material forward. A too high airflow may
+lead to insufficient grinding of the material.
+2.3.8 Separator / classifier
+At Finnsementti, a third-generation dynamic separator is used to separate particles from
+the mill outlet in a closed milling system. The material feed to the separator is fed from
+the top to a rotating distribution plate. The material is dispersed by circulating air and
+forms a cylindrical distribution in the classifying zone. The material is forced between
+guide vanes and a rotating cage. The drag force pulls the material towards the rotating
+cage, and the centrifugal force pushes the material back towards the guiding vanes. The
+difference in particle sizes allows the small particles to penetrate the rotating cage and
+be further transported as a product. The coarse particles are bounced back by the
+rotating cage and guided into vanes and from there back to the grinding circuit. In
+Figure 5, the forces that affect the feed and the basic operating principle are
+demonstrated.
+
+17
+
+Figure 5 Separating forces affecting the particle in the separation zone (Belhaj m.fl. 2016)
+
+The separation process is affected by:
+•
+
+The spin rotor blades' position, number of spin rotor blades, distributor plate
+speed, and material leaks affect operating parameters and technical
+specifications.
+
+•
+
+The PSD and the humidity of the infeed material, density, and feed rate affect
+the Separator feed.
+
+•
+
+Feed air is affected by temperature, humidity, feed rate, viscosity, and density
+(Belhaj m.fl. 2016).
+
+In a top-feed third-generation separator, the material is subjected to centrifugal force
+(Fc), drag force (Fd), and gravity (Fg):
+3
+𝑉2
+𝐹𝑐 = 𝜋 ∙ 𝑟𝑝3 ∙ 𝜌𝑝 ∙
+4
+𝑟
+
+𝐹𝑑 = 𝐶𝐷 ∙ 𝜌 ∙ 𝜋 ∙ 𝑟𝑝2 ∙
+
+𝑉𝑎2
+𝑎
+
+(4)
+
+(5)
+
+18
+
+𝜋𝑟𝑝3
+𝐹𝑔 = 𝑚(𝜌 − 𝜌𝑎𝑖𝑟 )𝑔 =
+(𝜌𝑝 − 𝜌𝑎𝑖𝑟 )𝑔
+6
+
+(6)
+
+(Altun m.fl. 2016)
+
+Table 3 Parameters for equations 4 to 6
+
+rp
+
+m
+
+Particle radius
+
+ρp
+
+kg/m3
+
+Particle density
+
+V
+
+m/s
+
+Peripheral velocity of the rotor
+
+r
+
+m
+
+Rotor radius
+
+cD
+
+-
+
+Drag coefficient
+
+ρair
+
+kg/m3
+
+Gas density
+
+Va
+
+m/s
+
+Air velocity
+
+m
+
+kg
+
+Particle mass
+
+g
+
+m/s2
+
+Gravitational constant
+
+From equations 1-3, one can notice that the difference in the forces is dictated mainly by
+the particle diameter, i.e., particle size (Toprak & Benzer 2019).
+The coarse particles are returned to the mill as a reject feed to be further ground, while
+the fine particles continue to the product silos via a bag filter. At Finnsementti Parainen,
+bag filters are used for separating particles from the outgoing air.
+Separators are used in grinding processes to enhance the effectiveness of the process
+and to save energy.
+2.3.8.1 Tromp curve
+
+The Tromp curve is used to measure the effectiveness of a separator. This method is
+standard throughout the cement industry, which is beneficial for comparing efficiency
+results. The Tromp curve describes different size fractions in the coarse stream of the
+
+19
+separator. The grade efficiency curve (GEC) describes the size fraction in the fine
+stream.
+Figure 6 compares a typical Tromp curve to an ideal step function. The bypass point is
+the lowest in the Tromp curve and, therefore, indicates which size fraction is most
+efficiently separated. Generally, the left side of the bypass point gives higher values
+than the actual bypass point. The phenomenon is known as a fish-hook. Fish-hooks
+occur due to the agglomeration of small particles caused by electrostatic charges in the
+second compartment of the ball mill. Small particles that become charged tend to stick
+to each other and form momentarily large clumps or stick to large particles and end up
+in the return feed (Belhaj m.fl. 2016). Therefore, a less controlled separation is obtained
+for very small particles. Material with low fluidity correlates with a larger fish-hook in
+classifiers (Altun m.fl. 2016). The electrostatic charges can be reduced with additives in
+the milling process, which enhances the effectivity of the separator (Toprak & Benzer
+2019).
+
+Figure 6 Demonstration of an ideal separator (Belhaj m.fl. 2016)
+
+The sharpness factor, k, measures the steepness of the Tromp curve and is calculated
+according to:
+𝐷
+
+𝑘 = 𝐷75
+25
+
+(7)
+
+20
+where D25 and D75 are the particle sizes for which 25% and 75% of the product mass
+fraction have passed.
+An ideal separator would assume the sharpness value to k = 1 and bypass = 0. In the
+ideal case, all particles larger than the cut size would flow back to the mill, and the
+particles smaller than the cut size would be obtained as a product.
+The Tromp curve and the GEC can be calculated according to:
+
+𝑇𝑟𝑜𝑚𝑝 𝑐𝑢𝑟𝑣𝑒 =
+
+𝑓2𝑖
+𝑓1𝑖
+
+𝑓 −𝑓
+
+∙ 𝑓1𝑖 −𝑓3𝑖
+2𝑖
+
+(8)
+
+3𝑖
+
+𝑓3𝑖 𝑓1𝑖 − 𝑓2𝑖
+∙
+𝑓1𝑖 𝑓3𝑖 − 𝑓2𝑖
+
+𝐺𝐸𝐶 =
+
+(9)
+
+Critical parameters for the Tromp curve are:
+•
+
+Cut size, X50 is the particle size for which 50% of the material passes. The
+cut size is directly proportional to the airflow rate to separator wheel speed
+(Altun m.fl. 2016).
+
+•
+
+Sharpness, k, is the measurement of steepness between 25% and 75% of the
+material.
+
+•
+
+The minimum indicates the bypass or short circuit in the curve. The bypass
+demonstrates which size fraction is most efficiently separated.
+
+At a steady-state process, the mass balance is:
+𝐵1 = 𝐵2 + 𝐵3
+
+(10)
+
+B1 is the separator feed mass flow, B2 is the coarse mass flow or the separator return,
+and B3 is the fine mass flow or the product. Figure 7 demonstrates mass flows B1, B2,
+and B3. The equation can be further developed to:
+
+21
+(11)
+
+𝐵1 𝑓1𝑖 = 𝐵2 𝑓2𝑖 + 𝐵3 𝑓3𝑖
+
+where 𝑓1𝑖 , 𝑓2𝑖 , 𝑎𝑛𝑑 𝑓3𝑖 describe a portion of the material in the i-th fraction size of B1,
+B2, and B3 feeds. For material feeds, the index i is 0-1 µm, 1-2 µm, 2-3 µm, etc.
+The fractional value for a specific particle size can be calculated according to:
+
+𝑇𝑟𝑜𝑚𝑝 (𝑖) =
+
+𝐵2 𝑓2𝑖
+𝐵1 𝑓1𝑖
+
+(12)
+
+Figure 7 Grinding flows, Julin 2021.
+
+The circulation factor CF and the circulation flow CL describe the ratio between material
+flows in the cement grinding system. These are valuable parameters for the optimization
+of the grinding system. A too low circulation factor may indicate that the system is not
+optimized correctly. A high circulation factor indicates that the feed rate is too high and
+that the separation in the dynamic separator is poor. The circulation CF and the
+circulation flow CL are calculated according to:
+
+𝐶𝐹 =
+
+𝐵1 𝐵0 + 𝐵2
+=
+𝐵3
+𝐵0
+
+(12)
+
+𝐶𝐿 =
+
+𝐵2 𝐵2
+=
+𝐵3 𝐵0
+
+(13)
+
+22
+2.3.8.2 Other separator efficiency measurements
+
+The imperfection factor, I, is a guiding estimate of the separator efficiency and is
+calculated according to:
+
+𝐼=
+
+𝑑75 − 𝑑25
+2 ∙ 𝑑50
+
+(14)
+
+Factors d75, d50, d25 are the particle sizes for 75%, 50%, and 25% of the Tromp curve yaxis. The classification of the separator quality using the imperfection factor is
+demonstrated in Table 4.
+
+Table 4 Classification of separator quality using the imperfection factor I
+
+I < 0.2
+
+0.4 < I < 0.6
+
+Excellent separator
+
+Poor separator
+
+0.2 < I < 0.3
+
+0.6 < I < 0.7
+
+Good separator
+
+Bad separator
+
+0.3 < I <0.4
+
+0.7 > I
+
+Normal separator
+
+Execrable separator
+
+Suppose a, f, and r are specific fineness for separator feed mill discharge, the fine
+fraction of the product, and the coarse fraction of the back-feed material. In that case,
+respectively, the separator efficiency can be calculated:
+
+η=
+
+𝑎−𝑟 𝑓
+∙ ∙ 100%
+𝑓−𝑟 𝑎
+
+(15)
+
+The separator efficiency equation does not describe the proportion of fine particles in
+the return feed and is, for this reason, not as helpful as a Tromp curve analysis (Belhaj
+m.fl. 2016). It is essential to have an effective separation process to save energy and to
+increase the production rate. Separator performance affects the PSD of cement directly
+and must therefore be considered in cement production control.
+
+23
+2.3.9 Airflow and feed impact on the PSD
+Filter fan power is used at almost maximum capacity at Finnsementti Parainen and can
+not be increased much. An increase in airflow will increase the drag force, Fd, which
+increases the cut size of the separation.
+When adjusting separator settings, one should maintain the centrifugal particle
+acceleration required for separation and minimize the pressure drop. A finer cut size
+will be achieved by keeping the distribution plate rotational speed constant and adding
+more countervanes to the distribution plate. Also, by reducing the gap between
+countervanes, the cut size will be reduced.
+For rotational cage classifiers, which are the most common variants in modern cement
+grinding plants, high volumes of separating air will contribute to a higher acceleration
+for particles towards the cage. As small particles are accelerated more than large
+particles, the probability of a small particle passing through the cage is higher.
+Too high loads in the separator will reduce the separation quality, i.e., the sharpness of
+the cut will be broader, and the fraction of bypass will increase in the return feed. Poor
+comminution in the mill will increase the circulation factor and, consequently, the load
+in the separator.
+
+2.3.10 Material flow in the system affects PSD
+The elevator effect should not be the main steer parameter as the whole system will
+struggle to maintain a steady state. Separator settings should be investigated at the
+separator inlet and outlet to compare the static pressure differences when different ratios
+of air and material reach the separator.
+
+2.4 Literature overview of air separator modeling in the cement
+industry
+The Discrete Element Method (DEM) is a computationally intensive method of
+simulating many small particles. DEM has been used to simulating conditions inside air
+separators. However, due to the method being computationally intensive and time-
+
+24
+consuming, DEM is generally not used to predict PSD but rather to demonstrate the
+effect of parameters in the separation process (Irannezhad m.fl. 2009).
+2.4.1 Computational Fluid Dynamics
+Computational fluid dynamic, CFD, is a tool for modeling multiphase flows. CFD
+models may be used to predict particle trajectories and thereby predict separation
+efficiency. In the last decade, CFD modeling has become more popular for constructing
+models for dynamic separators.
+Guizani et al. were among the first to publish about CFD modeling a third-generation
+dynamic separator. They created a model that predicts the cut-size, d50, using a
+stochastic Lagrangian discrete phase model (DPM). However, the DPM did not describe
+the fish-hook effect accurately due to the model not considering electrostatic forces
+between the particles or interactions between particles. Guizani et al. also concluded
+that bubble-type vortexes, as shown in Figure 8, influence the selectivity in a separator.
+Identifying bubble-vortexes could improve separation efficiency and ultimately aid to
+develop a PSD controlled system (Guizani m.fl. 2014).
+
+Figure 8 Example of bubble-type vortexes in a dynamic separator (Guizani m.fl. 2014)
+
+Another study conducted by Guizani et al. studied the effect of the rotor speed on flow
+characteristics and separation performance using the Reynolds Stress Model (RSM).
+Guizani et al. found that increased rotor speed in a Sepol third-generation separator
+
+25
+increases the pressure drop in the separator (R. Guizani m.fl. 2014). CFD studies are
+generally designed explicitly for unique cases, and, therefore, a unique CFD model
+should be considered by Finnsementti Parainen to fully understand flow patterns in the
+separators.
+Empirical models typically describe the process at a steady state by determining
+empirical relationships in the process, for example, the Tromp curve. Empirical models
+require sampling data for validation in a simulation. Irannezhad et al. showed that an air
+separator simulator based on the Whiten function could optimize the Tromp curve
+parameters or simulate PSD and flow rates of the fine and coarse streams (Irannezhad
+m.fl. 2009).
+
+26
+
+3 Experiment series I: On-site testing and data collection
+For this thesis, the effect on PSD and Tromp curves when altering feed rate and the
+airflow to the separator was studied while maintaining the Blaine value constant. The
+changes to parameters were divided into two days, 22.2.2021 and 23.2.2021. A
+reference sample from the separator product stream was collected 22.2.2021 before any
+changes to process parameters were made. The reference sample is, therefore, a
+reflection of the process at a balanced and normal condition. After process parameter
+changes had been made and the process appeared steady, samples of the separator feed,
+separator reject, and the product were taken. Demonstrated in Figure 9 are the collection
+points for the separator samples. A large sample, about 30 kg of the product, was
+collected for strength and concrete tests.
+
+Figure 9 Sample collection points Julin (2021)
+
+Cement grinding involves many variables, such as moisture content, clinker quality,
+ambient temperatures. It was essential to minimize any process fluctuations to attain
+reliable data. Parameter fluctuations were minimized by using a high-quality clinker
+from one source (a clinker silo) and collecting the samples as soon as the process was
+steady to minimize unnecessary time delays. However, due to the complex nature of the
+process, the number of variables, and relatively few samples, the findings of this
+experiment must not be considered statistically significant but as guidance for future
+research.
+
+3.1 Sample collection
+On the first day of testing, the power of the filter fan was changed from 260 kW to 200
+kW and, therefore, separator airflow was reduced. Samples were collected when the
+
+27
+process was stable at 260 kW, 230 kW, and 200 kW fan powers. The samples for 230
+kW were taken twice as the first set of samples was not at a steady state due to the
+circulation factor increasing momentarily. The second set of 230 kW samples was taken
+30 minutes after the first set as the process was at a steady state.
+By changing the elevator power from 16 kW to 11.5 kW, the total feed to the separator
+was reduced from 143 t/h to 93 t/h. Unfortunately, there was no measurement system
+for airflow, so a precise reduction of the air to feed flow is unknown. However, data on
+fresh feed, elevator power, chamber one and two fill degree, temperatures, filter fan
+power, filter pressure difference, and electricity consumption per ton cement produced
+were available.
+
+3.2 Analysis methods
+Particle size distribution curves were developed by dynamic image analysis using the
+Camsizer at Finnsementti Parainen. Also, strength analysis and the Blaine value were
+established, and CO2 and SO3 fractions were determined from the product feed at
+Finnsementti Parainen. The strength (MPa) analysis determined the strength after 1, 2,
+7, and 28 days.
+Concrete tests were conducted by Contesta Oy, who carried out strength measurements
+for various concrete recipes and workability measurements.
+
+3.3 Results from parameter change test.
+Key PSD parameters and the Blaine value from the experiments during 22-23.2.2021
+are listed in Table 5. Calculations for the RRSB parameters are defined earlier in this
+thesis. Unfortunately, the exact time of collecting the reference sample was not
+recorded. The process parameter values for the reference sample are the mean value of
+the process for three hours from when the reference sample was taken. The reference
+sample was only collected from the product stream. Therefore, only a PSD curve for the
+product stream can be developed but not a Tromp curve.
+
+28
+Table 5 Results from the experiment 22-23.3.2021
+
+Parameter change
+
+PSD characteristics
+
+RRSB
+
+Separator
+
+Elevator
+
+Particle
+
+Particle
+
+Particle
+
+d’ = 63.2%
+
+filter fan
+
+power
+
+size at Q3 =
+
+size at Q3 =
+
+size at Q3 =
+
+cumulative
+
+10%
+
+50%
+
+90%
+
+passing
+
+µm
+
+µm
+
+µm
+
+µm
+
+power
+
+kW
+
+kW
+
+Blaine
+n
+
+-
+
+-
+
+m2/kg
+
+1.59
+
+461
+
+22.2.2021 – Reference sample approximates
+250
+
+14.2
+
+4.84
+
+15.29
+
+34.67
+
+20.33
+
+22.2.2021 - Elevator power changes
+250,2
+
+15.9
+
+5.04
+
+15.85
+
+34.15
+
+20.43
+
+1.651
+
+465
+
+249,8
+
+13.3
+
+5.07
+
+15.9
+
+34.31
+
+21.48
+
+1.784
+
+463
+
+249,8
+
+11.3
+
+4.78
+
+16.11
+
+35.4
+
+20.84
+
+1.612
+
+484
+
+23.2.2021 – Separator fan filter power changes
+260
+
+14.7
+
+4.87
+
+15.61
+
+34.59
+
+21.74
+
+1.749
+
+446
+
+230*
+
+14.7
+
+4.88
+
+15.61
+
+33.94
+
+19.99
+
+1.609
+
+481
+
+228,9
+
+14.8
+
+4.72
+
+14.97
+
+32.24
+
+20.01
+
+1.771
+
+472
+
+200,1
+
+15.3
+
+4.87
+
+15.82
+
+34.2
+
+21.46
+
+1.776
+
+475
+
+*Results from a process that was not at a steady state.
+
+The PSD curves for the cement are demonstrated in Figures 10-a and 10-b. The
+differences between the PSD curves are minor, and any definitive conclusions cannot be
+made. More apparent differences in cement characteristics can be observed in Figures
+11-a and 11-b, which portray the fraction size distribution density of the samples.
+
+29
+
+120
+
+Particle size distribution for cement
+Filter fan power adjustments
+
+Cumulative mass fraction (%)
+
+100
+
+80
+
+60
+200kW
+
+40
+
+230kW (1)
+230kW (2)
+
+20
+
+260kW
+Reference
+
+0
+1
+
+10 Particle size (µm)
+
+100
+
+Figure 10-a: Particle distribution for cements with variable filter fan powers
+
+120
+
+Cumulative mass fraction (%)
+
+100
+
+Particle size distribution for cement
+Elevator power adjustments
+
+80
+
+60
+
+11.5kW
+13kW
+
+40
+
+16kW
+
+20
+
+Reference
+0
+1
+
+10 Particle size (µm)
+
+Figure 10-b: Particle distribution for cements with variable elevator powers
+
+100
+
+30
+6
+
+Distribution density
+Filter fan power adjustments
+
+5
+
+4
+
+Distribution density q3
+
+200kW
+3
+
+260kW
+230kW (1)
+
+2
+
+230kW (2)
+Reference
+
+1
+
+0
+0
+
+2
+
+4
+
+6
+
+8 10 12 14 16 18 20 22 24 26 28 30 34 38 43 49 54 60 70 80 90 100
+
+Particle size (µm)
+Figure 11-a Distribution density for cement with various filter fan powers
+6
+
+Distribution density
+Elevator power adjustments
+
+5
+
+Distribution density q3
+
+4
+11.5kW
+
+3
+
+13kW
+16kW
+
+2
+
+Reference
+
+1
+
+0
+0
+
+2
+
+4
+
+6
+
+8 10 12 14 16 18 20 22 24 26 28 30 34 38 43 49 54 60 70 80 90 100
+
+Particle size fraction (µm)
+Figure 11-b Distribution density for cement with various elevator powers
+
+31
+Tromp curve characteristics from the experiment conducted on 22-23.2.2021 are
+summarized in Table 6.
+
+Table 6 Parameter change effects on Tromp curve.
+
+Parameter change
+Separator
+
+Elevator
+
+filter fan
+
+power
+
+power
+
+kW
+
+kW
+
+Tromp curve
+Sharpness
+
+X50
+
+Bypass
+
+'k'
+-
+
+µm
+
+%
+
+Blaine
+Imperfection Separator
+
+-
+
+factor
+
+speed
+
+-
+
+rpm
+
+m2/kg
+
+22.2.2021 - Elevator power changes
+250.2
+
+15.9
+
+0.375
+
+21.3
+
+23.2
+
+0.474
+
+261
+
+465
+
+249.8
+
+13.3
+
+0.411
+
+23.1
+
+22.6
+
+0.418
+
+267
+
+463
+
+249.8
+
+11.3
+
+0.5
+
+29.0
+
+12.5
+
+0.406
+
+268
+
+484
+
+23.2.2021 – Separator filter fan power changes
+260
+
+14.7
+
+0.454
+
+23.5
+
+20.6
+
+0.383
+
+258
+
+446
+
+230*
+
+14.7
+
+0.377
+
+22.7
+
+22.2
+
+0.441
+
+259
+
+481
+
+228,9
+
+14.8
+
+0.375
+
+20.6
+
+25.7
+
+0.495
+
+252
+
+472
+
+200,1
+
+15.3
+
+0.316
+
+22.6
+
+26.3
+
+0.502
+
+222
+
+475
+
+*Results from a process that was not at a steady state.
+
+The Tromp curves, demonstrated in Figures 12-a and 12-b, were constructed with PSD
+data from separator feed, reject, and product flows when the parameter changes
+influenced said flows, i.e., changes to filter fan power and elevator power.
+
+32
+
+260kW
+
+TROMP-curve
+C7 Rapid
+22.2.2021 - Fan power changes
+
+230kW_1
+230kW_2
+200kW
+
+100
+90
+80
+
+Tromp value (%)
+
+70
+60
+50
+40
+30
+20
+10
+0
+0.1
+
+1
+
+10
+Particle size (µm)
+
+100
+
+1000
+
+Figure 12-a Tromp curves for varying fan powers.
+
+16kW
+13kW
+11.5kW
+
+TROMP-curve
+C7 Rapid
+23.2.2021 - Elevator power changes
+
+100
+90
+80
+
+Tromp calue (%)
+
+70
+60
+50
+40
+30
+20
+10
+0
+0.1
+
+1.0
+
+10.0
+Particle size (µm)
+
+100.0
+
+Figure 12-b Tromp curves for varying elevator powers.
+
+1000.0
+
+33
+
+3.4 Analysis of results
+The differences in PSD curves are marginal, which can be observed in Figures 10-a and
+10-b. However, increased differences between the reference sample and the adjusted
+filter fan power samples can be observed. For particles over 30 µm, a difference
+between the reference sample, the adjusted 11.5 and 13 kW filter fan power samples,
+and the rest of the sample size fraction can be observed. The PSD curves for all samples
+with differing filter fan powers and the first elevator power sample (16 kW) have
+virtually no particles over 40 µm. However, the reference sample, the 13 kW, and the
+11.5 kW elevator power samples show very similar PSD curves, even for particle sizes
+between 30 and 40 µm.
+Table 5 shows that when the elevator power was 13.3 kW, the product had the highest
+‘n’ value, i.e., it has the narrowest PSD curve. Again, the differences in the PSD curves
+are marginal below 30 µm particle size.
+In Table 6, one can notice that when the feed to the separator was at its lowest, i.e.,
+when the separator power was 11.3 kW, the separator bypass value was at its lowest.
+The lowest bypass is achieved when the circulation factor decreases, and therefore, the
+total feed to both the mill and the separator is low. The reduced amount of material in
+the separator leads to an increased separator cut size (X50) and a decreased bypass point
+(M. Boulvin m.fl. 2003). This phenomenon can be observed in Table 6, where the X50
+and bypass values for the lowest elevator power (11.3 kW) are outliers. Also, in Figure
+12-b, the Tromp curve is shifted to the right for the lowest elevator power, i.e., it has a
+higher cut-point than its counterparts and a lower bypass point. The size fraction
+distribution density in Figure 11-a shows that the sample has the lowest size fractions in
+the particle size range between 7 and 22 µm compared with other test results.
+The 11.3 kW sample also shows similar results when comparing the X10, X50, and X90
+values in Table 5, which would indicate that the 11.3 kW sample has the widest
+distribution of particles. The 11.3 kW sample has the highest Blaine value, which
+highlights the problem with the Blaine value, i.e., high Blaine values do not necessarily
+imply that the sample contains a higher amount of specific fine fraction size than a
+
+34
+sample with lower Blaine. When the Blaine value is compared with its corresponding
+PSD values in Table 5, particle size after 10%, 50%, 63.2%, and 90% shows no
+correlation with the Blaine value. The Blaine value has a 21 m2/kg (4.5%) difference
+between the maximum and minimum Blaine of the elevator power samples and a 29
+m2/kg (6.5%) difference for the filter fan power samples.
+No significant differences in cement strengths can be found from the experimental
+results. The highest strengths are found in samples with the highest SO3 fractions,
+consistent with the literature. Cement strengths, CO2,- and SO3 fractions for each
+sample are given in Table 7.
+Table 7 Cement strengths for different process parameters
+
+Parameter change
+
+Cement strengths
+
+Fractions of CO2
+and SO3
+
+Separator
+
+Elevator
+
+filter fan
+
+power
+
+One day
+
+Two days
+
+Seven days
+
+28 days
+
+CO2
+
+SO3
+
+MPa
+
+MPa
+
+MPa
+
+MPa
+
+%
+
+%
+
+2.34
+
+3.58
+
+power
+
+kW
+
+kW
+
+22.2.2021 – Reference sample approximates
+250
+
+14.2
+
+23
+
+38.3
+
+47.3
+
+56.1
+
+22.2.2021 - Elevator power changes
+250,2
+
+15.9
+
+23.7
+
+40.5
+
+49.7
+
+57.3
+
+2.38
+
+3.57
+
+249,8
+
+13.3
+
+23.3
+
+37.3
+
+47.1
+
+55.4
+
+2.28
+
+3.57
+
+249,8
+
+11.3
+
+23.6
+
+40.7
+
+47.2
+
+57.5
+
+2.30
+
+3.89
+
+23.2.2021 – Separator fan filter power changes
+260
+
+14.7
+
+22.7
+
+37.6
+
+46.0
+
+54.8
+
+2.20
+
+3.45
+
+230*
+
+14.7
+
+25.2
+
+39.8
+
+47.9
+
+56.2
+
+2.42
+
+3.64
+
+228,9
+
+14.8
+
+25.3
+
+40.4
+
+48.3
+
+57.2
+
+2.44
+
+3.60
+
+200,1
+
+15.3
+
+24.9
+
+40.3
+
+49.0
+
+57.7
+
+2.40
+
+3.94
+
+35
+
+3.5 Sources of error
+One sample per parameter change was collected at all eight sampling points. The
+sample was accumulated over an approximately 2-3 minute time period, leading to a
+sample that may not represent the whole production. The cement milling did not
+maintain a steady state, and fluctuations in the circulation factor occurred. Therefore,
+when adjusting the filter fan power, two samples were collected and analyzed.
+An unintended consequence of rapid parameter changes to the process resulted in
+significant differences in the Blaine value.
+
+3.6 Experiment series II: Process parameter experiment with statistical
+analysis
+The second set of experiments was conducted to investigate whether it is possible to
+attain statistically significant differences in PSD characteristics for cement while
+maintaining the Blaine value at a 450 m2/kg target range. A 2k factorial design was
+chosen to investigate the effect of material feed and airflow in the separator on PSD
+characteristics.
+A 2k factorial design experiment is used in statistics to determine different variables’
+relevance. By limiting the independent factors (process parameters) to high and low
+values, one can observe their effects on dependent factors, e.g., PSD characteristics,
+using statistical methods. Different dependent variables are obtained when independent
+variables are systematically tested for every possible combination, as demonstrated in
+Table 8.
+Table 8 Order of trials for the factorial design experiment
+
+Day 1
+
+Day 2
+
+Separator
+
+Elevator power Separator
+
+Elevator power
+
+power (kW)
+
+(kW)
+
+power (kW)
+
+(kW)
+
+Test 1
+
+260 kW
+
+17 kW
+
+200 kW
+
+11 kW
+
+Test 2
+
+260 kW
+
+11 kW
+
+200 kW
+
+17 kW
+
+36
+For the high independent values, 260 kW for the filter fan and 17 kW for the elevator
+were selected, and for the separate low values, 200 kW and 11 kW were chosen,
+respectively. Dependent variables of interest were the n and d’ values of the RRSB
+distribution and the particle sizes after 10%, 50%, and 90% of the volume-based
+cumulative distribution, i.e., Q3(µm). Also, PSD distributions were plotted and
+compared using Microsoft Excel worksheets.
+3.6.1 Factorial experiment results
+The results from the experiment are analyzed with statistical models according to 2k
+factorial design methods. The experiment consisted of two factors, k, is the elevator
+power and the filter fan power. Thus, the significance of the effects of elevator power,
+filter fan power, and their interaction on dependent variables can be analyzed. The
+results from the experiment are given in Table 9 below.
+Table 9 Specific p-values for independent variables and their interactions.
+
+p-value when α = 0.05
+Elevator power
+
+Filter fan power
+
+Elevator power x
+separator power
+
+n
+
+0.3200
+
+0.2295
+
+0.2370
+
+d’
+
+0.008113
+
+0.6475
+
+0.1739
+
+x(µm) at Q3 = 10%
+
+0.8834
+
+0.4708
+
+0.04807
+
+x(µm) at Q3 = 50%
+
+0.01133
+
+0.9290
+
+0.1034
+
+x (µm) at Q3 =
+
+0.0003450
+
+0.2725
+
+0.1591
+
+90%
+When the p-value is greater than α, we cannot reject the null hypothesis, i.e., the
+independent variable does not affect the dependent variable. The independent factor
+does not significantly affect the dependent value at a 95% confidence interval.
+However, if the p-value is less than α, we can conclude a statistically significant
+relationship between the independent and dependent variables. In Table 8, we can see
+three statistically significant relationships between the independent and dependent
+variables.
+
+37
+
+6
+
+Mean particle size distribution comparison for different
+process parameters
+
+Distribution density, q3 [%]
+
+5
+
+4
+Reference
+200/17
+200/11
+260/17
+260/11
+
+3
+
+2
+
+1
+
+0
+1
+
+3
+
+5
+
+7
+
+9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49 51 53 55
+
+Particle size fraction (µm)
+Figure 13 Mean PSD comparison for different process parameters
+
+When the elevator is at 17 kW, the results show a more significant portion of particles in
+a size range of 13-21 µm.
+
+%
+
+Cumulative PSD curve for the experiment
+
+100
+90
+80
+70
+60
+
+260/11
+260/17
+200/11
+200/17
+Reference
+
+50
+40
+30
+20
+10
+0
+1
+Figure 14 Cumulative PSD curves for five samples
+
+10
+
+100
+
+38
+
+3.7 Stepwisefit regression
+Data collected from regular production was analyzed using stepwise regression.
+Stepwise regression intends to find and select significant independent variables for a
+regression model. Stepwise regression does not generally yield high R2 values due to the
+suppression of independent variables that are non-correlated or correlate very little with
+the dependent variable (Lewis 2007).
+A standardization of independent variables was conducted to ensure that the
+independent variables were comparable when making the regression model. Ten
+independent variables for the regression model were chosen based on the literature and
+expertise available. Multicollinearity, e.g., the correlation between independent
+variables, was considered when choosing the independent variables.
+In RStoolbox, the command rsstandrard returns the design matrix, i.e., dependent
+variables, as columns where the mean equals zero and variance is equal to one. The
+standardized regression coefficient is demonstrated in the equation below:
+𝑆𝑥𝑗
+𝑏𝑗,𝑠𝑡𝑑 = 𝑏𝑗 ( )
+𝑆𝑦
+where 𝑆𝑦 and 𝑆𝑥𝑗 are standard deviations for a dependent variable and the corresponding
+independent variable j. Furthermore, 𝑏𝑗 is the independent value for the corresponding
+dependent value at j and 𝑏𝑗,𝑠𝑡𝑑 is the standardized value corresponding to 𝑏𝑗 .
+R2 is a proportional value that compares the variance of dependent variables that are
+predicted from independent variables. R2 is defined according to equation 19:
+
+2
+𝑆𝑢𝑚 𝑜𝑓 𝑆𝑞𝑢𝑎𝑟𝑒𝑠 𝑟𝑒𝑔𝑟𝑒𝑠𝑠𝑖𝑜𝑛: 𝑆𝑆𝑅 = ∑(𝑦̂𝑖 − 𝑦̅)
+𝑖
+
+(16)
+
+2
+𝑆𝑢𝑚 𝑜𝑓 𝑆𝑞𝑢𝑎𝑟𝑒𝑠 𝑒𝑟𝑟𝑜𝑟: 𝑆𝑆𝐸 = ∑( 𝑦𝑖 − 𝑦̂)
+𝑖
+
+(17)
+
+2
+𝑆𝑢𝑚 𝑜𝑓 𝑆𝑞𝑢𝑎𝑟𝑒𝑠 𝑡𝑜𝑡𝑎𝑙: 𝑆𝑆𝑇 = 𝑆𝑆𝑅 + 𝑆𝑆𝐸 = ∑( 𝑦𝑖 − 𝑦̅)
+𝑖
+
+(18)
+
+39
+
+𝑅2 =
+
+𝑆𝑆𝑅
+𝑆𝑆𝑇
+
+(19)
+
+where SSR is the variance in the predictions for a model, i.e., the regression line and
+SST are the total variances. The terms ȳi, ŷi, and yi are the mean value of y, the predicted
+value, and the actual value, respectively. For all R2 calculations using predictor
+variables, the ordinary least-squares regression (OLS) is used.
+The value psig determines if the null-hypothesis for significance testing of independent
+variables is correct. The null hypothesis, H0, is that an independent variable does not
+affect the dependent variable within the significance interval.
+If psig < α, then the null-hypothesis is rejected. The value for pLOF describes how well
+the data fit the theoretical model.
+Rstoolbox provides psig and pLOF for independent variables and R2 for the model. The
+model was tested using process data from Finnsementti Parainen between 14.2.2020 and
+4.5.2021. A total of 642 data points was used for the development of the regression
+model. Each process data point, e.g., independent variables, is an average of one hour of
+process data to the corresponding dependent variable. Half of the data was used as
+predictor data and the other half as validation data. The predictor data was used to
+develop and plot predicted values compared with actual dependent variable data points.
+
+3.8 Stepwise regression results
+Results from the stepwise regression are demonstrated in Table 10. The significant
+independent variables (α < 0.05) are colored green or red depending on their positive or
+negative impact on the dependent variables. A green-colored cell has a positive impact
+on the dependent variable and, therefore, an increased positive independent variable
+leads to an increased value to the dependent variable. Interestingly, the elevator power
+and the fill level in the first chamber do not significantly affect any dependent variables.
+The elevator power determines the feed rate to the separator. It is a crucial process
+parameter that affects the separation efficiency of the separator, which can be observed
+in Figure 12-b comparing Tromp curves for three different elevator powers. For elevator
+
+40
+power data collected for stepwise regression between 14.2.020 and 4.5.2021, the
+elevator power did not alter significantly and remained close to 15 kW most days. The
+largely uniform elevator power may have reduced the significance of elevator power in
+the regression models and thus excluding it from the models. The fill level in the first
+mill chamber does not show significance in any regression model and, therefore, does
+not appear to significantly affect the product's PSD. However, it is essential to maintain
+optimum fill levels in both chambers to ensure an excellent grinding efficiency in the
+mill.
+The sizes of the effect of the significant independent variables are the values in the cells
+observed in Table 10. A linear theoretical regression model can be constructed using the
+Bi values. B0 is a constant base value for the theoretical model for the dependent
+variable. B1-10 are constant values for the independent variables related to their specific
+regression equations. The empirical model, y, contains only significant independent
+variables and compares the equation against actual results. The value x is the value of
+the independent variable in the theoretical and empirical models. Epsilon, ε, is an error
+term for the theoretical,- and empirical models.
+
+41
+Table 10 Significant independent variables for the regression model.
+
+Fresh
+
+B0
+24-32
+
+Sep.
+
+Fill
+
+Filter
+
+Pressure
+
+Gypsum
+
+Bypass
+
+feed
+
+speed
+
+level
+
+fan
+
+after
+
+(% of
+
+(% of
+
+(t/h)
+
+(rpm)
+
+chamber
+
+power
+
+sep (-
+
+the
+
+the
+
+2 (%)
+
+(kW)
+
+mbar)
+
+feed)
+
+feed)
+
+B6
+
+B7
+
+B8
+
+B9
+
+B10
+
+B1
+
+CF
+
+B2
+
+B3
+
+14.13
+
+-0.55
+
+-0.32
+
+22.62
+
+0.50
+
+0.028
+
+39.42
+
+1.58
+
+0.12
+
+-0.21
+
+-0.26
+
+µm (%)
+16-24
+
+0.012
+
+-0.05
+
+-0.12
+
+-0.048
+
+0.46
+
+-0.26
+
+-0.15
+
+µm (%)
+3-16
+
+0.58
+
+µm (%)
+0-3 µm
+
+1.42
+
+0.0054
+
+-0.093
+
+(%)
+3-32
+
+77.42
+
+1.36
+
+0.11
+
+-0.095
+
+18.51
+
+-1.51
+
+-0.12
+
+0.090
+
+-0.56
+
+µm (%)
+
+>32
+
+-0.15
+
+0.61
+
+µm
+(%)
+Q3 at
+
+5.99
+
+-
+
+10%
+
+0.0038
+
+-
+
+0.0070
+
+0.034
+
+0.0025
+
+(µm)
+d’
+
+10.46 0.081
+
+16-32
+
+35.19
+
+-0.039
+
+0.052
+-
+
+µm
+
+0.83
+-0.39
+
+-0.34
+
+0.49
+
+0.61
+
+0.036
+
+(%)
+0-16
+µm
+
+42.42
+
+1.63
+
+0.12
+
+0.053
+
+(%)
+n
+
+No significant independent variables within a 95% confidence interval
+
+Blaine No significant independent variables within a 95% confidence interval
+The linear theoretic model based on the regression analysis is as follows:
+
+𝑦 = 𝐵0 + 𝐵1 𝑥1 + 𝐵2 𝑥2 + 𝐵3 𝑥3 + 𝐵4 𝑥4 + 𝐵5 𝑥5 + 𝐵6 𝑥6 + 𝐵7 𝑥7 + 𝐵8 𝑥8 + 𝐵9 𝑥9 + 𝐵10 𝑥10 + 𝜀
+
+(20)
+
+42
+The empirical model only includes significant independent variables. For example, the empirical
+model for the dependent variable, the fraction of particles between 3 and 32 µm, can be written
+as:
+
+𝑦̂ = 𝐵0 + 𝐵2 𝑥2 + 𝐵3 𝑥3 + 𝐵7 𝑥7 + 𝐵9 𝑥9 + 𝜀
+
+(21)
+
+When the terms from Table 10 are added, the empirical model for the fraction size of
+particles between 3 and 32 µm is:
+𝑦̂ = 77.24 + 1.36𝑥2 + 0.11𝑥3 − 0.095𝑥7 − 0.56𝑥9 + 𝜀
+
+(22)
+
+When values for the independent variables, i.e., circulation factor, separator speed, filter
+fan power, and gypsum feed, are chosen, the linear empirical model will predict the
+dependent variable, i.e., the fraction size of particles between 3 and 32 µm. The model's
+accuracy was tested using one-half of the collected cement grinding data, i.e.,
+dependent,- and independent variables. The rest of the data was then used to verify the
+model. The coefficient of determination, R2, was calculated for all theoretical models.
+The results are demonstrated in Table 11.
+Table 11 Coefficient of determination for the theoretical regression models
+
+At alpha = 0.05 R2
+
+psig
+
+plof
+
+Significant factors
+
+24-32 µm (%)
+
+0.2848
+
+0
+
+0.01735
+
+3,8,10,2
+
+16-24 µm (%)
+
+0.3080
+
+0
+
+0
+
+7,3,2,10,8,9,6
+
+3-16 µm (%)
+
+0.4064
+
+0
+
+0.01767
+
+3,10,8,2,7
+
+0-3 µm (%)
+
+0.02034
+
+0.04137
+
+0.9300
+
+6,3
+
+3-32 µm (%)
+
+0.5884
+
+0
+
+0.5610
+
+3,7,2,9
+
+>32 µm (%)
+
+0.5785
+
+0
+
+0
+
+3,7,2,9,8
+
+Q3 at 10%
+
+0.1020
+
+1.071 x 10-6
+
+0.9590
+
+3,6,10,8
+
+d’ (µm)
+
+0.1704
+
+8.677 x 10-10
+
+0.7755
+
+9,7,3,1
+
+16-32
+
+0.074
+
+0.00024
+
+0.30
+
+8,10,7
+
+0-16 µm (%)
+
+0.39
+
+0
+
+0.0225
+
+3,10,8,2,7
+
+n
+
+0.05668
+
+0.4143
+
+0.5384
+
+9,3
+
+Blaine
+
+0.0001
+
+0.8670
+
+0.5531
+
+9,10
+
+(µm)
+
+43
+
+The R2 values are the highest for theoretical models explaining various particles, i.e., the
+fraction of particles between 3 and 32 µm and particles over 32 µm. The models for
+these two dependent variables show an R2 of roughly 58%. R2 for the empirical models
+could be improved by adding independent variables that affect dependent variables or
+include non-linear variables.
+The dependent value of the fraction of particles between 16 and 32 µm shows a poor R2
+value of 0.074. The plotted predictions compared with the values show that the
+empirical model almost consistently underestimates the dependent variable, i.e., the
+fraction of particles between 16 and 32 µm. The models' undervaluation can be
+observed in Figure 15. The empirical model poorly predicts outlier results, especially if
+the actual values were drastically lower than the average, e.g., low real values between
+test numbers 125 and 200. The undervaluation suggests that the model needs additional
+independent variables or that non-linear terms should be added to explain better which
+independent variables affect the outcome, i.e., the fraction of 16 to 32 µm particles.
+
+Figure 15 Predicted vs. real values for particles in the 16-32 µm size range
+
+The highest R2 for any dependent value is for the fraction sizes between 3 and 32 µm,
+which is 0.5884. The empirical model equation 21 is tested in Figure 16. The empirical
+model for particle sizes between 3 and 32 µm shows a greater accuracy when predicting
+
+44
+the dependent variable than the prediction of size fraction of 16 to 32 µm, hence the
+better R2 value.
+The data collected for the stepwise regression are observed data, which usually produce
+lower R2 values than regression models based on experimental data. Experimental data
+are produced by a specific test method, i.e., data produced during an experiment. In
+contrast, observed data are produced during continuous production and, therefore,
+contain more irregularities than experimental data. The collection of the cement samples
+measuring the PSD occurred every four hours during production. As different workers
+manually collected the samples at non-specific times, error in the sampling process is
+possible. Although the Camsizer X2 requires a small amount of manual work,
+deviations may occur in the analysis of the samples as different workers operate the
+Camsizer X2. Generally, regression models with dependent variables containing a larger
+fraction of particles, i.e., 3-32 µm, 0-16 µm, and 16-32 µm, show higher R2 values,
+suggesting that small fractions cannot be accurately predicted with regression models.
+The independent variables, i.e., what may be derived from the process data, are the
+mean value of a one-hour period of process data before collecting the cement sample.
+The accuracy of the regression model could benefit if the process data compared to the
+cement samples were a mean value of a shorter period. Depending on the process
+parameter change, approximately 10 to 20 minutes is needed for a process parameter
+change to influence the product from the cement grinding system. The R2 of the
+regression models may be lowered due to the process data points being an average value
+from a relatively long period, i.e., two hours. Thus, significant process parameter
+changes may have occurred before collecting the cement sample.
+Although the R2 value is relatively low for many empirical models, the p-value is lower
+than 0.05 for every modeled parameter except for the n and the Blaine value models.
+The low p-values, i.e., p-values > 0.05, suggest that the overall regression is significant
+and that the predictors affect the dependent variables. These findings are stochastic and
+should only be used as guidance when applying the results to control the process.
+The inability to find statistically significant empirical models for predicting the Blaine
+value highlights the difficulty of predicting Blaine values using process parameters. The
+
+45
+unpredictability of using the Blaine value as the only dependent variable in process
+control may lead to increased standard deviations in cement quality. As regression
+models cannot explain the Blaine value.
+
+Figure 16 Predicted vs. real values for particles in the 3-32 µm size range
+
+3.9 Experiment series III
+The third experiment on 12-13.8.2021 was conducted to investigate the effects of
+separator speed (rpm) and the filter fan power (kW) on the PSD curve. For four filter
+fan power settings, three separator speeds were studied. Table 12 lists the order of
+measurements for the experiment.
+Table 12 Experiment III
+
+Test 1
+
+12.8.2021
+Filter fan
+Separator
+power (kW)
+speed (rpm)
+250
+275
+255
+235
+260
+275
+255
+235
+
+13.8.2021
+Filter fan
+Separator
+power (kW)
+speed (rpm)
+240
+275
+255
+235
+230
+275
+255
+235
+
+46
+Unfortunately, an unpredicted process stop prevented cement sample collection when
+the filter fan power was 260 kW. PSD curves from the experiment are shown in Figures
+10 to 15.
+
+Particle size distribution for cement:
+Filter fan power at 250 kW
+
+120
+
+Cumulative mass fraction (%)
+
+100
+80
+60
+Refrence
+sample
+250/275
+
+40
+
+250/255
+20
+
+250/235
+
+0
+1
+
+Particle size (µm)
+
+10
+
+100
+
+Figure 9 PSD curves for differing separator speeds at 250 kW filter fan power
+
+Particle size distribution for cement:
+Filter fan power at 240 kW
+
+120
+
+Cumulative mass fraction (%)
+
+100
+80
+60
+Refrence
+sample
+240/255
+
+40
+
+240/235
+
+20
+
+240/275
+
+0
+1
+
+Particle size (µm)
+
+10
+
+Figure 10 PSD curves for differing separator speeds at 240 kW filter fan power
+
+100
+
+47
+Particle size distribution for cement:
+Filter fan power at 230 kW
+
+120
+
+Cumulative mass fraction (%)
+
+100
+80
+60
+Refrence sample
+40
+
+230/235
+230/255
+
+20
+
+230/275
+0
+1
+
+Particle size (µm)
+
+10
+
+100
+
+Figure 11 PSD curves for differing separator speeds at 230 kW filter fan power
+
+6
+
+Distribution density:
+Filter fan power at 250 kW
+
+5
+
+4
+Refrence
+sample
+
+2
+
+1
+
+Distribution density q3
+
+250/275
+3
+
+250/255
+250/235
+
+0
+0
+
+2
+
+4
+
+6
+
+8 10 12 14 16 18 20 22 24 26 28 30 34 38 43 49 54 60 70 80 90 100
+
+Particle size fraction (µm)
+
+Figure 12 Fractional PSD for differing separator speeds at 250 kW filter fan power
+
+48
+6
+
+Distribution density:
+Filter fan power at 240 kW
+
+5
+
+4
+Refrence
+sample
+
+2
+
+1
+
+240/275
+
+Distribution density q3
+
+3
+
+240/255
+240/235
+
+0
+0
+
+2
+
+4
+
+6
+
+8 10 12 14 16 18 20 22 24 26 28 30 34 38 43 49 54 60 70 80 90 100
+
+Particle size fraction (µm)
+
+Figure 13 Fractional PSD for differing separator speeds at 240 kW filter fan power
+
+6
+
+Distribution density:
+Filter fan power at 230 kW
+
+5
+
+4
+
+2
+
+1
+
+Distribution density q3
+
+3
+
+Refrence
+sample
+230/235
+230/255
+230/275
+
+0
+0
+
+2
+
+4
+
+6
+
+8 10 12 14 16 18 20 22 24 26 28 30 34 38 43 49 54 60 70 80 90 100
+
+Particle size fraction (µm)
+
+Figure 14 Fractional PSD for differing separator speeds at 230 kW filter fan power
+
+49
+
+3.10 Experiment III results and discussion
+Figures 13-15 show an increased fraction of particles between 3 and 15 µm for all three
+filter fan power levels when the separator speed was 275 rpm. When the separator speed
+was 235 rpm, an increased amount of particles over the size of 28 µm can be observed
+for all filter fan powers.
+Table 13 PSD and RRSB values from experiment III
+
+Parameter change
+
+PSD characteristics
+
+Separator
+
+Separator
+
+Particle
+
+Particle
+
+Particle
+
+filter fan
+
+speed
+
+size at Q3
+
+size at Q3
+
+size at Q3
+
+of
+
+of
+
+= 10%
+
+= 50%
+
+= 90%
+
+particles
+
+particles
+
+between
+
+between
+
+3-32 µm
+
+3-16 µm
+
+(%)
+
+85.35
+
+power
+
+kW
+
+rpm
+
+µm
+
+µm
+
+Fraction
+
+µm
+
+Fraction
+
+n
+
+d’
+
+(%)
+
+-
+
+µm
+
+48.10
+
+1.738
+
+21.02
+
+Reference samples
+250.6
+
+260
+
+5.30
+
+15.93
+
+33.97
+
+Experiment samples: Filter fan (250 kW)
+249.5
+
+275
+
+4.98
+
+14.79
+
+32.14
+
+87.22
+
+51.51
+
+1.616
+
+19.02
+
+249.1
+
+255
+
+5.39
+
+16.44
+
+35.48
+
+83.30
+
+46.54
+
+1.562
+
+20.55
+
+248.7
+
+235
+
+5.34
+
+16.91
+
+37.51
+
+80.55
+
+45.02
+
+1.547
+
+21.77
+
+Experiment samples: Filter fan (240 kW)
+237.2
+
+275
+
+5.04
+
+15.04
+
+32.74
+
+86.63
+
+50.83
+
+1.599
+
+19.46
+
+239.5
+
+255
+
+5.16
+
+15.79
+
+34.70
+
+84.30
+
+48.34
+
+1.727
+
+21.32
+
+237.7
+
+235
+
+5.23
+
+16.61
+
+36.19
+
+81.97
+
+45.76
+
+1.747
+
+22.38
+
+Experiment samples: Filter fan (230 kW)
+229.6
+
+275
+
+4.84
+
+14.32
+
+31.22
+
+88.07
+
+52.93
+
+1.591
+
+18.38
+
+231.2
+
+255
+
+5.10
+
+15.40
+
+33.74
+
+85.52
+
+49.59
+
+1.578
+
+19.84
+
+229.8
+
+235
+
+5.31
+
+16.87
+
+36.78
+
+81.62
+
+45.06
+
+1.800
+
+23.14
+
+50
+
+Table 13 lists PSD values from experiment series III. It can be observed that the
+steepness, n, varies for all separator speeds at a given filter fan power. However, the
+steepness was more consistent when the separator speed was high, i.e., 275 rpm.
+Table 13 also lists the fraction sizes of particles between 3 and 32 µm. One can observe
+that the fraction size of particles between 3 and 32 µm increases for higher separator
+speeds. A separator speed increase of 40 rpm increased the fraction of particles between
+3 and 32 µm by 6.67%, 4.66% and, 6.45% for filter fan power levels at 250 kW, 240
+kW, and, 230 kW respectively.
+When the separator speed was 255 rpm, one could also observe a gradual increase of
+particles between 3 and 32 µm when filter fan power was reduced from 250 kW to 230
+kW. A decrease of 10 kW led to approximately one percent increase of particles in the 3
+to 32 µm fraction.
+In Figures 16 and 17, the effect of separator speed on PSD is shown. Same separator
+speeds have the same color in the graphs to highlight PSD differences for all three
+separator speeds. One can observe that the PSD curves do not vary much for the lowest
+separator speed setting, i.e., 235 rpm. The same phenomenon can be observed in Table
+13, which lists similar particle sizes at 10%, 50%, and 90% of the cumulative volume
+flow. A 40 rpm decrease in separator speed increases the particle size of d’ by one µm
+for every 14.5 rpm, 13.7 rpm, and 8.40 rpm for filter fan powers at 250 kW, 240 kW,
+and 230 kW, respectively. According to the regression model, a 25.6 rpm decrease in
+the separator speed results in a one µm increase in particle size at d’.
+A gradual increase in particles size at d’ for varying filter fan powers was only recorded
+when the separator speed was 235 rpm. The particle size at d’ was increased when filter
+fan power was at 240 kW and the separator speed was 255 rpm and 275 rpm. Therefore,
+how the filter fan power affects d’ should be investigated more to verify if it is a process
+variable used to control the PSD of the product.
+Figures 16 and 17 show that the PSD curves are very similar when the separator speed
+is 235 rpm. This would suggest that the airflow does not remarkably influence the PSD
+
+51
+at low separator speeds, i.e., 235 rpm. At 235 rpm, the classification of particles bigger
+than 24 µm is greater than for the two faster separator speeds, i.e., 255 rpm and 275
+rpm. Therefore, the fraction of particles between 3 and 32 µm is smaller when the
+separator speed is 235 rpm, as shown in Table 13.
+
+Particle size distribution for cement:
+All samples
+
+120
+
+100
+
+Cumulative mass fraction (%)
+
+Refrence sample
+
+80
+
+250/275
+250/255
+250/235
+
+60
+
+240/255
+240/235
+
+40
+
+240/275
+230/235
+230/255
+
+20
+
+230/275
+
+0
+1
+
+10 Particle size (µm)
+
+100
+
+Figure 15 The effects of the separator speeds on PSD curves: Yellow curves are for separator speeds at 275 rpm,
+green curves are at 255 rpm, black curves are at 235 rpm, and red is the reference sample (260 rpm).
+
+52
+6
+
+Distribution density
+All samples
+
+Distribution density q3
+
+5
+
+4
+
+3
+
+2
+
+1
+
+0
+0
+
+2
+
+4
+
+6
+
+8 10 12 14 16 18 20 22 24 26 28 30 34 38 43 49 54 60 70 80 90 100
+(µm)
+
+Figure 16 The effects of separator speed on fractional PSD curves: Yellow curves are for separator speeds at 275
+rpm, green curves are at 255 rpm, black curves are at 235 rpm, and red is the reference sample (260 rpm).
+
+Changes in the separator speed influence the differences in PSD more than changes in
+the filter fan power. Especially when the separator speed was 235 rpm, no remarkable
+differences can be noticed for varying filter fan powers, as shown in Figure 17.
+However, clear differences in PSD curves can be observed when the separator speeds
+were increased to 255 rpm, and 275 rpm. Figure 18 shows that the filter fan power
+affected particles' fractions between 5 and 20 µm when the separator speed was 255 rpm
+or 275 rpm. Notably, the separator speed and the filter fan power influenced the fraction
+of particles in the 6 to 10 µm size class, demonstrated in Figure 18. One can observe
+that an increased separator speed increases the size fraction of particles between 6 and
+10 µm and that when the filter fan power is lowered, the fraction of particles between 6
+and 10 µm is also increased.
+
+53
+6
+
+Distribution density
+Filter fan power at 240 kW and 250 kW
+
+5
+
+3
+
+2
+
+1
+
+Distribution density q3
+
+4
+250/275
+
+250/255
+
+240/275
+
+240/255
+
+230/255
+
+230/275
+
+0
+0
+
+2
+
+4
+
+6
+
+8
+
+10 12 14 16 18 20 22 24 26 28 30 34 38 43 49 54 60 70 80 90 100
+Particle size fraction (µm)
+
+Figure 17 Filter fan power effect on fine particles for separator speeds at 255 rpm and 275 rpm
+
+The effect of separator speed and filter fan power on particles between 3 and 32 µm is
+similar to the stepwise regression model. The stepwise regression predicts that a nine
+rpm separator speed increase results in a one percent increase in particles between 3 and
+32 µm. As previously stated, a 40 rpm increase in separator speed increased the fraction
+of particles between 3 and 32 µm by 6.67%, 4.66% and, 6.45% for filter fan powers at
+250 kW, 240 kW, and, 230 kW respectively. The regression model predicts a 4.44%
+increase in particles between 3 and 32 µm for a 40 rpm separator speed increase.
+The regression model also predicts a one percent decrease for particles between 3 and
+32 µm for every 10.5 kW increase in filter fan power. The fraction of particles between
+3 and 32 µm declined by one percent for every 23.4 kW, 8.06 kW, and 17.6 kW change
+in filter fan power when the separator speed was 275 rpm, 255 rpm, and 235 rpm,
+respectively.
+The regression model for the fraction of particles between 3 and 16 µm predicts a one
+percent increase for every 8.33 rpm increase in separator speed. Based on the
+experiment, the fraction size of particles between 3 and 16 µm increased one percent for
+every 6.16 rpm, 7.90 rpm, and 5.08 rpm increase for when filter fan power was 250 kW,
+240 kW, and 230 kW, respectively.
+
+54
+The effects of process parameter changes are summarized in Table 14. The fraction of
+particles between 3 and 16 µm is affected more by process parameter changes than the
+fraction of particles between 16 and 32 µm.
+Table 14 Separator speed and filter fan power effects on PSD characteristics
+
+Change I
+
+Change II
+
+Separator speed Filter fan power
+
+PSD parameter change
+3-32 µm (%)
+
+3-16 µm (%)
+
+16-32 µm (%)
+
+d’ (µm)
+
+change
+
+level
+
+Separator speed
+
+250 kW
+
+6.67
+
+6.49
+
+0.18
+
+-2.06
+
+increase from
+
+240 kW
+
+4.66
+
+5.07
+
+-0.41
+
+-2.92
+
+235 to 275 rpm
+
+230 kW
+
+6.45
+
+7.87
+
+-1.42
+
+-4.76
+
+3-32 µm (%)
+
+3-16 µm (%)
+
+16-32 µm (%)
+
+d’ (µm)
+
+Filter fan power Separator speed
+change
+
+level
+
+Filter fan power
+
+275
+
+-0.85
+
+-1.42
+
+0.57
+
+0.64
+
+increase from
+
+255
+
+-2.22
+
+-3.05
+
+0.2
+
+0.71
+
+230 kW to 250
+
+235
+
+-1.07
+
+-0.04
+
+-1.03
+
+-1.37
+
+kW
+
+55
+
+4 Results and discussion
+Findings from data analysis, experiments, and the literature review contribute to an indepth understanding of variables that affect the separation in the grinding system. Due
+to the dynamic nature of cement grinding systems, any findings and solutions should be
+considered unique to that system and cement sort. Similar analysis methods can be used
+for other grinding circuits. However, expertise should be utilized during the process to
+obtain results that can be implemented.
+The PSD of cement affects the cement properties, for example, strength properties,
+setting times, heat release, capillary porosity, diffusivity, chemical shrinkage, internal
+relative humidity, and autogenous shrinkage (Bentz m.fl. 1999). For this thesis, the
+production of cement with PSDs that enhance cement strength has been the focus.
+Particles between the size range of 3 and 32 µm affect the strength development the
+most. Particles over 60 µm do not affect cement strength properties in a significant way.
+Fine particles contribute to early strengths, and coarse particles affect the late strength
+of cement. Celik et al. showed that with a lower Blaine value with greater homogeneity,
+late strengths improved, i.e., the uniformity factor, n, affect cement strengths due to a
+more uniform cement having a decreased average particle size compared to non-uniform
+cement (Schneider m.fl. 2011b) (Celik 2009).
+The main factors affecting the PSD of cement are the separator design characteristics,
+separator speed, and the airflow in the separator. Separator efficiency, e.g., the Tromp
+curve or the GEC, influences the fine stream of cement and, therefore, the PSD of the
+product. If the feed rate to the separator increases, the material per unit of air in the
+separator increases, leading to an increased portion of fine particles in the coarse flow
+(Belhaj m.fl. 2016).
+Cement production with the desired PSD curve requires an understanding of the whole
+cement grinding circuit. As the dynamic separator system is affected by various
+parameters and variables, PSD-controlled cement grinding must consider which process
+parameters are feasible to control the process with. An increased separator feed
+
+56
+decreases the separation efficiency leading to a higher circulation factor. A high
+circulation factor may reduce the grinding efficiency in the cement mill, leading to high
+energy usage and unpredictable material flows in the cement grinding mill. Consistent
+cement quality cannot be achieved if the separator feed is unstable and, therefore,
+keeping the grinding process at a steady-state should be a priority. The process
+parameter changes need to be minor in order to avoid significant deviations in the
+process.
+
+4.1 Experimental conclusions
+Plotted PSDs from experiments conducted between 22 and 23.2.2021 (experiment I)
+and between 14 and 15.4.2021 (experiment II) show only minor differences in the
+cement samples' PSD curves. However, differences in Tromp curves were found when
+studying the Tromp curves for cement samples collected during the first of three process
+parameter experiments. The bypass point was lowered when airflow in the separator
+increased and when the separator feed was decreased, thus improving the separation in
+the dynamic classifier. As the airflow and the separator feed mainly affect the separator
+efficiency and not the PSD of the product, these process parameters should be
+considered as secondary process parameters used to control the cement grinding
+process. However, Figures 11-a and 11-b suggest more significant deviations in the PSD
+are obtained by adjusting the elevator power rather than the airflow in the separator. No
+significant differences in cement strengths could be observed for the cement samples.
+Experiment III was conducted to characterize the effect of process parameters on
+cement PSD and verify the accuracy of regression models. The results indicate that
+regression models can be used to understand better which process parameters affect the
+PSD of the product. However, with current data sampling methods and linear regression
+models, a model that gives R2 values that reach 0.90 is difficult.
+
+57
+
+4.2 Stepwise, - and 2k regression conclusions
+The inability to make definite conclusions based on plotted PSDs suggested that a
+numerical approach to study PSDs was necessary. Fractions of specific cement particle
+size classes were studied using stepwise regression models. The stepwise regression
+models show which process parameters are significant for a specific PSD fraction.
+At least two dependent variables, i.e., PSD variables, should be chosen to control the
+grinding process to ensure better quality consistency than a product using the Blaine
+value as the control measure. Regression models for dependent variables that show
+sufficient R2, psig, and pLOF values as independent variables could be the basis for
+selecting which dependent variables are chosen to control the grinding system. The pLOF
+value is the probability of observing a test statistic as more extreme than that observed if
+the null hypothesis, i.e., the regression model is true.
+Small pLOF values (pLOF > 0.05) indicate a lack-of-fit, i.e., the regression model is not
+acceptable. Suggested fractions to consider are the fraction of particles between 3 and
+32 µm and particle size after 63.2% (d’) of the product has passed. The regression
+models for the two dependent variables show adequate pLOF values (pLOF > 0.05),
+indicating that the terms in the models fit the data.
+The empirical model for the fraction of particles between 3 and 32 µm:
+𝑦̂ = 77.42 + 1.36𝑥2 + 0.11𝑥3 − 0.095𝑥7 − 0.56𝑥9 + 𝜀
+
+(23)
+
+The empirical model the particle size at d’ (63.2% of passing):
+𝑦̂ = 10.46 + 0.081𝑥1 − 0.039𝑥3 + 0.052𝑥7 + 0.83𝑥9 + 𝜀
+
+(24)
+
+The empirical model the particles over 32 µm:
+𝑦̂ = 18.51 − 1.51𝑥2 − 0.12𝑥3 + 0.0.90𝑥7 − 0.15𝑥8 + 0.61𝑥9 + 𝜀
+
+(25)
+
+Experiment III showed that the regression model for predicting the fraction size of 3 to
+32 µm is accurate for three separator speeds at 275 rpm, 255 rpm, and 235 rpm when
+the filter fan power was 240 kW. Changes in filter fan powers showed that the
+
+58
+regression model only was adequate when the separator speed was 255 rpm. When
+comparing experiment III results to the regression model, the regression model
+overestimates the effect of the separator speed on d’. Changes in responses are not linear
+even if the changes in the predictors are, as is demonstrated in Table 13. The
+nonlinearity of the responses highlights the need for in situ testing to learn the effect of
+process parameters on the product.
+
+4.3 Recommendations on PSD control
+The relative standard deviation for the Blaine value was 3.59% between 15.2.2020 and
+4.5.2021. The fraction of particles between 3 and 32 µm has a relative standard
+deviation of 2.05% in the same period, suggesting that cement grinding control using
+the Blaine value affects the size fraction of particles between 3 and 32 µm. Significant
+variations in relative standard deviation occur for particle size fractions under 3 µm
+(12.3%) and over 32 µm (14.2%). By minimizing the relative standard deviations for the
+fraction size under 3 µm and over 32 µm, the product would be of more consistent
+quality. The amount of particles over 32 µm is controlled via separator speed and filter
+fan power as shown in equation 25 and demonstrated in experiment III.
+Based on the empirical models (equations 23 and 24), Table 15 of ranked process
+parameters used to control cement grinding was made. Process parameters used to
+control the process are divided into primary and secondary parameters. Primary process
+parameters should control the process after the periodical cement sample is collected
+and analyzed during normal production. Secondary process parameters should be
+changed based on long-term changes in the production and not as a direct consequence
+of ordinary cement samples.
+
+59
+Table 15 Ranked process parameters for controlling the cement grinding circuit
+
+Order of importance
+
+Process parameter
+
+Regression term
+
+Primary process parameters
+1st
+
+Separator speed
+
+X3
+
+2nd
+
+Filter fan power
+
+X7
+
+Secondary process parameters
+3rd
+
+Elevator power
+
+X4
+
+4th
+
+Fresh feed fraction
+
+X1
+
+5th
+
+Gypsum feed fraction
+
+X9
+
+The most important process parameter to control the PSD of the product is the separator
+rotor speed, which is an independent variable in equations 23 and 24. The effect of
+separator rotor speed on the variables (fraction size between 3 and 32 µm and particle
+size after 63.2%) should be individually determined for every unique grinding circuit. It
+is known from experience that an increase of 4 to 8 rpm to separator speed requires
+approximately a 10 kW increase of filter fan power to maintain the same Blaine value.
+Based on experiment series I, the required separator rpm for different elevator powers
+and filter fan powers were found. The interaction between separator rpm and filter fan
+power is of primary interest as the two process parameters are primary process
+parameters. Table 13 lists PSD values and Blaine values for specific filter fan powers
+with constant elevator power. The results suggest that for the lowest filter fan power
+(200 kW), the separator speed could be dropped by 30 rpm and still maintain a similar
+Blaine value. A similar comparison between filter fan power at 260 kW and 230 kW
+shows that the separator speed difference is only six rpm. However, the Blaine value is
+much lower for the 260 kW sample despite having similar PSD values as the other
+samples. Thus, these PSD characteristics cannot explain the low Blaine value for the
+specific sample.
+
+60
+Table 16 PSD and Blaine values for different filter fan powers and separator speeds
+
+Parameter change
+
+PSD characteristics
+
+Blaine
+
+Separator
+
+Elevator
+
+Particle size
+
+Particle
+
+Particle size
+
+Fraction of
+
+filter fan
+
+power
+
+at Q3 = 10%
+
+size at Q3
+
+at Q3 = 90%
+
+particles
+
+power
+
+= 50%
+
+between 3 and
+
+Separator
+
+-
+
+speed
+
+32 µm
+
+kW
+
+kW
+
+µm
+
+µm
+
+µm
+
+%
+
+rpm
+
+m2/kg
+
+23.2.2021 – Separator filter fan power changes
+260
+
+14.7
+
+4.87
+
+15.61
+
+34.59
+
+83.67
+
+258
+
+446
+
+230*
+
+14.7
+
+4.88
+
+15.61
+
+33.94
+
+84.42
+
+259
+
+481
+
+228,9
+
+14.8
+
+4.72
+
+14.97
+
+32.24
+
+86.12
+
+252
+
+472
+
+200,1
+
+15.3
+
+4.87
+
+15.82
+
+34.2
+
+83.85
+
+222
+
+475
+
+*Results from a process that was not at a steady state.
+
+The filter fan power affects the separation efficiency in the separator. For cement mill 7
+at Finnsementti Parainen, the filter fan power during the production of Rapid is
+approximately 250 kW. The maximum power output for the filter fan is 260 kW,
+therefore, only a moderate increase in filter fan power is possible. However, it is
+unknown how an increase in filter fan power affects the airflow in the separator or the
+pressure after the separator.
+The elevator power is not a statistically significant process parameter in any of the
+regression models. However, it is well known that the separator feed affects the
+separation efficiency, and therefore, the circulation factor (CF). CF is a significant
+variable in empirical models shown in equations 23 and 24. As previously mentioned,
+the changes in elevator power should be minimal to ensure stable conditions in the
+separator.
+The fresh feed mass fraction and the gypsum feed mass fraction should not be used to
+control the product's PSD. The fresh feed to cement mill seven is approximately 40 tons
+per hour, which is deemed the ideal feed rate for the cement mill. Changes to the feed
+rate based on cement samples gathered every two hours could destabilize the production
+in the grinding circuit and significantly reduce the grinding efficiency of the mill. Minor
+changes to the targeted feed rate, i.e., increase or decrease the feed rate by one ton per
+
+61
+hour, could optimize the separation efficiency in the separator. Based on the stepwise
+regression models, the feed rate to the grinding circuit does not appear to affect PSD
+characteristics.
+
+4.4 Further research and improvements
+Further research should be conducted to fully understand the effects of process
+parameters on the cement's PSD and improve the product. Also, improvements to the
+grinding circuit have been proposed to aid the system's control with PSD.
+1. In order to understand fluid dynamics in the separator, a CFD simulation could
+be done. A detailed CFD model would identify flow patterns in the separator for
+specific airflows. Different filter fan powers on the airflow before and after the
+separator could assist when developing a CFD model.
+2. To enhance specific cement properties, i.e., cement strength or workability,
+cement with varying PSDs but the same chemical ratios should be investigated
+to discover the effect of PSD on the particular properties. When an ideal PSD is
+established, the cement grinding process can be altered to produce a product
+based on the ideal PSD.
+3. Automatic sample collectors would lead to more precise process data for each
+cement sample and, therefore, improve the usefulness of the data. Furthermore,
+as on-line testing of PSD characteristics of cement is possible, continuous
+monitoring of the product feed is possible. Continuous PSD testing (on-line
+testing) connected with process control could reduce the standard deviations of
+PSD values in the product. Automatic sample collectors are common in the
+industry.
+4. On-line testing and PSD results could minimize the fluctuations in the process.
+Constant PSD testing connected with process steering could reduce the standard
+deviations of PSDs in the product. There are new applications on the market
+that use laser diffraction for real-time product screening for instant PSD
+analysis.
+5. Research and trials about control theory with several PSD parameters
+functioning as feedback to control a dynamic system, i.e., the cement grinding
+circuit.
+
+62
+
+5 Conclusions
+Experiments series I and II do not show significant differences in PSD curves when the
+separator feed and the filter fan power are changed, and the Blaine value is kept at a
+target value. This suggests that a steady Blaine value does not influence the PSD of the
+product significantly. The product's highest relative standard deviations are found at the
+low and the high end of the particle size spectrum, i.e., particles smaller than 3 µm and
+larger than 32 µm. Several PSD parameters for the product should be controlled to
+ensure consistent cement quality. The fraction size of particles between 3 and 32 µm,
+fraction size of particles over 32 µm, and d’ are three PSD parameters that would
+improve the consistency of the quality if the standard deviations were minimized.
+Changes to process parameters affect PSD values in different degrees. In this thesis, the
+size effect of process parameters has been studied both with statistical analysis and in
+situ testing.
+Stepwise regression models show which process parameters affect PSD values. The
+primary process parameter is the separator speed which affects every size class of the
+product. The secondary process variable to control PSD variables is the airflow in the
+separator, which is controlled with adjustments to filter fan power. Experiment III
+studied separator speed and filter fan power changes to understand how these
+parameters affect PSD values. Experiment III showed that for average filter fan power,
+i.e., 250 kW, a separator speed reduction of 40 rpm reduced the fraction of particles
+between 3 and 32 µm by 6.67%. For varying filter fan powers at near-normal separator
+speeds, i.e., 255 rpm, a reduction of 20 kW increased the fraction of particles between 3
+and 32 µm by 4.97%. The reduction was not linear, though, which must be
+acknowledged when implementing the results to the automated control system. Other
+process parameters should not be used as control measures in the grinding system to
+avoid unstable cement flows, i.e., separator feed, product flow, and separator reject.
+The automated control system of the grinding system should be based on experiments
+and regression analysis results. The automated control system for the grinding circuit
+makes changes to process parameters based on the two previous results from cement
+sampling. In the current system, the automated system changes the separator speed
+
+63
+based on the two latest Blaine values. An automated control system based on PSD
+parameters requires updates to the script of the automated control system. Each PSD
+parameter, e.g., the fraction of particles between 3 and 32 µm, fraction of particles over
+32 µm, and d’, require an individual control model to keep the system at the desired
+state. The control model for the fraction size of particles between 3 and 32 µm should
+be prioritized as it is an essential PSD parameter for cement. Secondary PSD
+parameters, i.e., the fraction of particles over 32 µm and d’ should be controlled with
+less significance than the primary PSD parameter. Practical applications of the control
+theory in the cement grinding system are not in scope of this thesis and should be
+investigated further to ensure process control of a dynamic system with various PSD
+parameters as feedback.
+Using PSD as the control measure instead of the Blaine value creates possibilities to
+reduce standard deviations of the product. The transition to PSD-controlled cement
+grinding also opens new opportunities for on-line control of the grinding circuit. Active
+control of the system would reduce the time between the product sampling and the
+control measure drastically. However, an active control system would require a
+significant investment that requires extensive preparations and planning.
+
+64
+
+Svensk sammanfattning
+Styrning av cementets partikelstorleksfördelning i en kvarnkrets
+Inom cementindustrin har mätningen av den specifika ytan varit ett vanligt sätt att mäta
+kvaliteten på produkten. Blainemetoden mäter ett värde för luftpermabiliteten i cementet
+som betecknas m2/kg. Cementets specifika yta är ett värde som beskriver cementet som
+en helhet. Partikelstorleksfördelningskurvan för cementet beskriver diversiteten för
+partikelstorleksordningen. Många av cementets egenskaper påverkas av
+partikelstorleken. Små partiklar (0–8 µm) påverkar mest den tidiga (1 dygn och 7 dygn)
+hållbarheten medan stora partiklar (8-32 µm) påverkar mera hållfastheten efter 28 dygn.
+Cementpartiklar över 32 µm hydreras inte totalt och bidrar därmed inte till hållfastheten
+i samma skala som partiklar under 32 µm (Zhang & Napier-Munn 1995). Hållfastheten
+kan öka då den specifika ytan ökar eftersom cementpartiklarna i medeltal är mindre,
+speciellt då andelen partiklar över 32 µm minskar. Om produkten har för stor andel små
+partiklar påverkas torkningstiden, cementets värmeavgivning och porositeten (Bentz
+m.fl. 1999). Om produkten mals för fin ökar också energikostnaderna eftersom
+cementmalningen är en mycket energikrävande process.
+Jag utförde mitt diplomarbete för Finnsementti i Pargas. Diplomarbetes mål var att
+undersöka hur processparametrar påverkar cementets partikelstorleksfördelning och hur
+dessa parametrar kunde användas för att styra kvarnkretsen.
+För att producera cement av jämn kvalitet undersöktes hur malningsprocessens
+processparametrar påverkade produktens partikelstorleksfördelningskurva. För att
+undersöka processparametrarnas påverkan på partikelfördelningen av cement gjordes tre
+provkörningar. I den första provkörningen undersöktes hur luftmängden och matningen
+i separatorn påverkade produktens partikelfördelning. Även separatorns verkningsgrad
+undersöktes genom att jämföra skillnaderna mellan inmatningen, returmatningen och
+produkten i separatorsystemet. I den första provkörningen justerades luftmängden och
+matningen till separatorn samtidigt som produktens specifika yta bibehölls jämn för alla
+prov med ändringar i separatorhastigheten. Skillnaderna i partikelfördelnings-kurvorna
+var små för alla prov vilket tyder på att en produkt med samma specifika yta har
+liknande partikelfördelningskurva. När matningen till separatorn var som minst hade
+produkten den största andelen av små partiklar, det vill säga partiklar under 5 µm, vilket
+
+65
+också påverkade produktens specifika yta (484 m2/kg). Luftmängden i separatorn
+påverkade separatorns verkningsgrad men inte produktens partikelfördelning.
+Trompkurvorna från provkörningen visade att separeringen var bäst när luftmängden i
+separatorn var maximerad.
+För att undersöka hur luftflödet och separatormatningen påverkade partikelfördelningen
+genomfördes provkörning II, där höga och låga processinställningar jämfördes med
+varandra. Filterfläktens effekt var antingen 260 kW eller 200 kW och elevatorns effekt
+var antingen 17 kW eller 11 kW. Som på provkörning I, styrdes produktens specifika
+yta med justeringar i varvtalet. Proven från provkörning II hade små skillnader i
+produktens specifika ytor. Skillnaderna i partikelfördelningarna skedde när
+elevatoreffekten justerades. Då elevatoreffekten var 17 kW hade proven en högre andel
+av partiklar mellan 11 och 24 µm medan när effekten var 11 kW var andelen partiklar
+över 25 µm högre. Ändringar i fläkteffekten visade inga stora skillnader i
+partikelfördelningen.
+En tredje provkörning utfördes för att undersöka fläkteffektens och
+separatorhastighetens inverkan på produktens partikelfördelning utan att hålla jämn
+specifik yta. Provkörning III visade i vilken skala separatorhastigheten och luftmängden
+i separatorn påverkar olika andelar av partikelfördelningen. När separatorns fläkteffekt
+var 250 kW och separatorhastigheten minskades med 40 varv/min minskade andelen av
+partiklar mellan 3 och 32 µm med 6,67%. När separatorhastigheten var 255 varv/min
+och separatorns fläkteffekt minskades med 20 kW, blev andelen av partiklar mellan 3
+och 32 µm 4,97% större. Skillnaderna i andelen av partiklar mellan 3 och 32 µm var
+inte linjära vilket visas i tabell 14. Alla tre provkörningar visade hur processparametrar
+påverkar viktiga delar av partikelfördelningen, som till exempel andelen partiklar
+mellan 3 och 32 µm, andelen partiklar över 32 µm och partikelstorleken efter att 63,2%
+av provet har passerat siktresten. När man kan styra processen för att tillverka en önskad
+partikelfördelningskurva kan man producera cement av jämn kvalitet och minska
+standardavvikelserna i produktens partikelstorleksandelar. De relativa
+standardavvikelserna är speciellt höga för partiklar under 3 µm (12,3%) och över 32 µm
+(14,2%). Om man jämför dessa med den relativa standardavvikelsen för den specifika
+ytan (3,6%) kan man konstatera att produktens kvalitet blir jämnare om andelen
+partiklar under 3 µm och över 32 µm kan produceras med mindre avkastningar.
+
+66
+
+En regressionsanalys gjordes av processdata och korresponderande partikelfördelningsdata av produkten. Processdata samlades in mellan 14.2.2021 och 4.5.2021.
+Regressionsanalysen visade vilka processparametrar som signifikant påverkar
+produktens partikelfördelning. Resultaten från regressionsanalysen är sammanfattad i
+tabell 11. Regressionsanalysen visar vilka processparametrar påverkar
+partikelfördelningen och i vilken grad dessa processparametrar påverkar
+partikelfördelningen. När resultaten från provkörning III och regressionsanalysen
+jämförs kan man se att resultaten, dvs förändringarna i partikelstorleksfördelningen,
+visar minst avvikelser med varandra när provkörning III 12-13.8.2021 var nära vanliga
+processparametrar. Processparametrarna som påverkar partikelstorleksfördelningen
+mest är separatorhastigheten, fläkteffekten och cirkulationsfaktorn (vilket korrelerar
+med separatormatningen). De empiriska modellerna som byggdes på basis av
+regressionen visade relativt låga R2-värden. Högsta R2-värdet är för modellen som
+beskriver andelen partiklar mellan 3 och 32 µm (58,8%). Låga R2 kan förknippas med
+att bara linjära termer användes i modellerna och att provtagningen inte skedde vid en
+exakt tidpunkt, och därmed beskriver processdata produktens partikelfördelning dåligt.
+Provkörningarna I, II och III visade att stora förändringar i separatormatningen kunde
+orsaka problem med att hålla cirkulationsfaktorn jämn, vilket gör separatormatningen
+till en dålig processparameter att styra produktens partikelfördelning med.
+Provkörningarna konkretiserade även hur separatorns luftmängd och hastighet
+påverkade produkten. Det kan rekommenderas att produktens partikelfördelning styrs
+huvudsakligen genom justeringar i separatorhastigheten och filterfläktens effekt. För att
+minimera relativa standardavvikelser bör standardavvikelserna för partiklar under 3 µm
+och över 32 µm i produkten minimeras. Kvarnkretsen styrs i dagens läge med
+produktens specifika yta. Automationen som styr kvarnkretsen bör ändras så att flera
+variabler från cementprov styr processen. Förändringar i automationen kräver mera
+undersökning och behandlades inte i detta arbete.
+
+67
+
+6 References
+Allen T (1997). Particle size measurement. I . Chapman & Hall, London, 83-84.
+Altun O, Toprak A, Benzer H och Darilmaz O (2016). Multi component modelling of
+an air classifier. Minerals Engineering 93:50-56.
+doi:https://doi.org/10.1016/j.mineng.2016.04.014.https://www.sciencedirect.com/sc
+ience/article/pii/S0892687516301066.
+Belhaj T, Higazy MG, Gaafer AM och ELMogy B (2016). Improvement of Productivity
+Using Tromp Curve Measurement for Cement Separator Processing Technology.
+Scientific Journal of October 6 University :35-44.
+https://www.researchgate.net/publication/333699394_Improvement_of_Productivit
+y_Using_Tromp_Curve_Measurement_for_Cement_Separator_Processing_Techno
+logy.
+Bentz DP, Garboczi EJ, Haecker CJ och Jensen OM (1999). Effects of cement particle
+size distribution on performance properties of Portland cement-based materials.
+Cement and Concrete Research 29:1663-1671. doi:https://doi.org/10.1016/S00088846(99)001635.https://www.sciencedirect.com/science/article/pii/S0008884699001635.
+Borkowski JJ (2015). Two-Level (2
+k
+) Factorial Designs. https://math.montana.edu/jobo/st541/sec4a.pdf (24.5. 2021).
+Bowen P, Kazemi-Kamyad Hadi, Mantellato Sara och Palacios Marta (2016). A
+Practical Guide to Microstructural Analysis of Cementitious Materials. CRC Press,
+446-458.
+British Standards Institution ( (2011). BS EN 197-1:2011 .
+Celik IB (2009). The effects of particle size distribution and surface area upon cement
+strength development. Powder Technology 188:272-276.
+doi:https://doi.org/10.1016/j.powtec.2008.05.007.http://www.sciencedirect.com/sci
+ence/article/pii/S0032591008003252.
+Ferrari L, Kaufmann J, Winnefeld F och Plank J (2012). Reaction of clinker surfaces
+investigated with atomic force microscopy. Construction and Building Materials
+35:92-96.
+doi:https://doi.org/10.1016/j.conbuildmat.2012.02.089.https://www.sciencedirect.co
+m/science/article/pii/S0950061812001687.
+Ferraris C ochGarboczi E (2013). Identifying Improved Standardized Tests for
+Measuring Cement Particle Size and Surface Area. Transportation Research
+Record 2342:10-16. doi:10.3141/2342-02.https://doi.org/10.3141/2342-02.
+Gao P, Zhang TS, Wei JX och Yu QJ (2018). Evaluation of RRSB distribution and
+lognormal distribution for describing the particle size distribution of graded
+cementitious materials. Powder Technology 331:137-145.
+doi:https://doi.org/10.1016/j.powtec.2018.01.079.https://www.sciencedirect.com/sci
+ence/article/pii/S0032591018301001.
+
+68
+Guizani R, Mokni I, Mhiri H och Bournot P (2014). CFD modeling and analysis of the
+fish-hook effect on the rotor separator's efficiency. Powder Technology 264:149157.
+doi:https://doi.org/10.1016/j.powtec.2014.05.020.https://www.sciencedirect.com/sci
+ence/article/pii/S0032591014004653.
+Irannezhad M, Rashidi S och Farzanegan A (2009). Computer simulation of particle
+size classification in air separators.
+Jess och Wasserscheid (2020). Chemical Technology: From Principles to Products.
+John Wiley & Sons, New Jersey, USA, 163-165.
+Kuhlmann, K Ellerbrock, och H-G Sprung (1985). PARTICLE SIZE DISTRIBUTION
+AND PROPERTIES OF CEMENT. PART I: STRENGTH OF PORTLAND
+CEMENT. ZKG International Cement-Lime-Gypsum, Edition B 38:169-178.
+Kuhuri AI ochMukhopadhyay S (2010). Response surface methodology. WIREs
+COMPUTATIONAL STATISTICS :128-149.
+Lewis M (2007). Stepwise versus hierarchical regression: Pros and cons. .
+Liu K, Chen A, Shang X, Chen L, Zheng L, Gao S, Zhou Y, Wang Q och Ye G (2019).
+The impact of mechanical grinding on calcium aluminate cement hydration at
+30 °C. Ceramics International 45:14121-14125.
+doi:https://doi.org/10.1016/j.ceramint.2019.04.112.https://www.sciencedirect.com/s
+cience/article/pii/S027288421930937X.
+M. Boulvin, A. V. Wouwer, R. Lepore, C. Renotte och M. Remy (2003). Modeling and
+control of cement grinding processes, , 715-725. doi 10.1109/TCST.2003.816406.
+Maki I, Ito S, Tanioka T, Ohno Y och Fukuda K (1993). Clinker grindability and
+textures of alite and belite. Cement and Concrete Research 23:1078-1084.
+doi:https://doi.org/10.1016/0008-8846(93)901678.https://www.sciencedirect.com/science/article/pii/0008884693901678.
+Microtrack M (2021). PARTICLE SIZE AND SHAPE ANALYZER
+CAMSIZER® X2. https://www.microtrac.com/products/particle-size-shapeanalysis/dynamic-image-analysis/camsizer-x2/ (5.7.7 2021).
+Odigure JO (1999). Grindability of cement clinker from raw mix containing metallic
+particles. Cement and Concrete Research 29:303-307.
+doi:https://doi.org/10.1016/S0008-8846(98)001756.https://www.sciencedirect.com/science/article/pii/S0008884698001756.
+Öksüzoğlu B ochUçurum M (2016). An experimental study on the ultra-fine grinding of
+gypsum ore in a dry ball mill. Powder Technology 291:186-192.
+doi:https://doi.org/10.1016/j.powtec.2015.12.027.https://www.sciencedirect.com/sci
+ence/article/pii/S0032591015302394.
+Opoczky L (1996). Grinding technical questions of producing composite cement.
+International Journal of Mineral Processing 44-45:395-404.
+doi:https://doi.org/10.1016/0301-7516(95)000461.https://www.sciencedirect.com/science/article/pii/0301751695000461.
+
+69
+R. Guizani, H. Mhiri och P. Bournot (2014). CFD study of the effect of rotation speed
+on dynamic air separator flow characteristics and pressure drop. I: 2014 5th
+International Renewable Energy Congress (IREC): - 2014 5th International
+Renewable Energy Congress (IREC). , 1-6. doi: 10.1109/IREC.2014.6826939.
+Ravaszová S & Dvorak K (2018). Impact of the grinding process on the granulometric
+properties of triclinic alite. IOP Conference Series: Materials Science and
+Engineering. IOP Publishing, , 012044.
+Schneider M, Romer M, Tschudin M och Bolio H (2011a). Sustainable cement
+production—present and future. Cement and Concrete Research 41:642-650.
+doi:https://doi.org/10.1016/j.cemconres.2011.03.019.https://www.sciencedirect.com
+/science/article/pii/S0008884611000950.
+Schneider M, Romer M, Tschudin M och Bolio H (2011b). Sustainable cement
+production—present and future. Cement and Concrete Research 41:642-650.
+doi:https://doi.org/10.1016/j.cemconres.2011.03.019.https://www.sciencedirect.com
+/science/article/pii/S0008884611000950.
+Tavares LM, Cerqueira MC och Iess J (2009). Analysis of the grinding behaviour of
+various Portland cement clinkers. ZKG International :95-103.
+https://www.researchgate.net/journal/ZKG-INTERNATIONAL-0949-0205.
+Toprak NA ochBenzer AH (2019). Effects of grinding aids on model parameters of a
+cement ball mill and an air classifier. Powder Technology 344:706-718.
+doi:https://doi.org/10.1016/j.powtec.2018.12.039.https://www.sciencedirect.com/sci
+ence/article/pii/S0032591018310714.
+Tsakalakis KG ochStamboltzis GA (2008). Correlation of the Blaine value and the d80
+size of the cement particle size distribution. ZKG international 61:60.
+Vuk T, Tinta V, Gabrovšek R och Kaučič V (2001). The effects of limestone addition,
+clinker type and fineness on properties of Portland cement. Cement and Concrete
+Research 31:135-139. doi:https://doi.org/10.1016/S0008-8846(00)004270.https://www.sciencedirect.com/science/article/pii/S0008884600004270.
+Zhang YM ochNapier-Munn TJ (1995). Effects of particle size distribution, surface area
+and chemical composition on Portland cement strength. Powder Technology
+83:245-252. doi:https://doi.org/10.1016/0032-5910(94)02964P.https://www.sciencedirect.com/science/article/pii/003259109402964P.
+
+70
+
+7 Appendices
+
+7.1 Appendix A 2k-factorial design
+In a 2k-factorial design, each independent variable is measured at two levels: high and
+low. These levels are often coded as binary values of 1 and -1, where 1 depicts the high
+value and -1 the low value. Every combination is tested once in the design matrix X,
+consisting of 1s and -1s. The number of runs, n, is equal to 2k, where k is the number of
+independent variables. For example, a 2k design matrix with three independent variables
+has a 3×8 design matrix, which is demonstrated below (Kuhuri & Mukhopadhyay
+2010).
+−1 − 1 − 1
+−1 − 1 − 1
+−1 − 1 − 1
+−1 − 1 − 1
+𝑋=
+A 3×8 design matrix X
+−1 − 1 − 1
+−1 − 1 − 1
+−1 − 1 − 1
+[−1 − 1 − 1]
+The average effect sum of squares, mean square, f-value, and p-value and the effect of
+an independent variable were analyzed from the results.
+Average effect size is calculated according to:
+
+𝐴𝑒𝑓𝑓𝑒𝑐𝑡 =
+
+1
+[𝑎𝑏 + 𝑎 − 𝑏 − (1)]
+2𝑛
+
+(23)
+
+𝐵𝑒𝑓𝑓𝑒𝑐𝑡 =
+
+1
+[𝑎𝑏 − 𝑎 + 𝑏 − (1)]
+2𝑛
+
+(24)
+
+𝐴𝐵𝑒𝑓𝑓𝑒𝑐𝑡 =
+
+𝑎𝑏 − 𝑎 − 𝑏 + (1)
+2𝑛
+
+(25)
+
+71
+
+Sum of Squares:
+
+𝑆𝑆𝐴 =
+
+[𝑎𝑏 + 𝑎 − 𝑏 − (1)]2
+4𝑛
+
+(26)
+
+𝑆𝑆𝐵 =
+
+[𝑎𝑏 − 𝑎 + 𝑏 − (1)]2
+4𝑛
+
+(27)
+
+𝑆𝑆𝐴𝐵 =
+
+[𝑎𝑏 − 𝑎 − 𝑏 − (1)]2
+4𝑛
+
+(28)
+
+Where A and B are the independent factors and a, b, ab, and (1) are sums of replicate
+runs. An example of these factors is demonstrated in Table 12 with data from the 2kfactorial experiment.
+
+Table 17 results of an experimental factorial run with d’ as a dependent variable.
+
+A
+
+B
+
+AB
+
+Replicate sample results (d’)
+
+Total
+
++
+
++
+
++
+
+19.18
+
+21.15
+
+17.59
+
+ab = 63.23
+
+-
+
++
+
+-
+
+21.96
+
+21.02
+
+21.61
+
+b = 60.55
+
++
+
+-
+
+-
+
+20.16
+
+19.63
+
+20.76
+
+a = 64.59
+
+-
+
+-
+
++
+
+19.9
+
+21.63
+
+21.7
+
+(1) = 57.92
+
+The mean square (MSi) for every factor is equal to the sum of the same factor of squares
+due to the degrees of freedom being one (1) in a 2k-factorial design.
+
+72
+
+Analysis of variance table for 22 factorial design is demonstrated in Table 13 below:
+Table 18 Variance for a 22 factorial design
+
+Source of
+
+Sum of
+
+Degrees of
+
+Mean
+
+variation
+
+Squares
+
+freedom
+
+square
+
+A
+
+SSA
+
+1
+
+MSA
+
+B
+
+SSB
+
+1
+
+MSB
+
+AB
+
+SSAB
+
+1
+
+MSAB
+
+Error
+
+SSE
+
+N-3
+
+MSE
+
+Total
+
+SST
+
+N-1
+
+F0
+
+where
+
+S𝑆𝑇 (Sum of Squares Total) = ∑
+
+𝑖,𝑗,𝑘
+
+𝑛
+𝑦𝑖,𝑗,𝑘
+−
+
+𝑦2 …
+4𝑛
+
+(29)
+
+and
+𝑆𝑆𝐸 = 𝑆𝑆𝑇 − 𝑆𝑆𝐴 −𝑆𝑆𝐵 − 𝑆𝑆𝐴𝐵
+
+(30)
+
+The least square estimates are related to estimating effect sizes according to:
+𝑎𝑏 + 𝑎 + 𝑏 + (1)
+4𝑛
+
+(31)
+
+𝑏1 =
+
+𝐴
+𝑎𝑏 + 𝑎 − 𝑏 − (1)
+=
+2
+4𝑛
+
+(32)
+
+𝑏2 =
+
+𝐵
+𝑎𝑏 + 𝑏 − 𝑎 − (1)
+=
+2
+4𝑛
+
+(33)
+
+𝑏0 = 𝑦̅ =
+
+𝑏12 =
+
+𝐴𝐵
+𝑎𝑏 + 𝑎 − 𝑏 − (1)
+=
+2
+4𝑛
+
+(34)
+
+73
+
+where b0, b1, b2, and b12 are the least square estimates utilized in regression equations
+(Borkowski 2015).
+The equations are demonstrated below as equations xx-xx.
+
+𝐸𝑓𝑓𝑒𝑐𝑡 𝑠𝑖𝑧𝑒 ∶ 𝑓 =
+
+𝜎𝑚
+𝜎
+
+where 𝜎̂ is the standard deviation of values in a cell and p-value.
+
+7.2 Appendix II Regression Matlab code
+
+(35)
+
+

@@ -1,0 +1,1656 @@
+Abstract
+Åbo Akademi University
+Master's Degree Programme in Biomedical Imaging
+Faculty of Science and Engineering
+DOROTEJA BEDNJANEC:
+
+Targeted Sequence Delivery
+Platform with ROS- Response for
+the Treatment of Osteoarthritis
+
+Master’s thesis, 55 pp.
+Faculty of Science and Engineering
+May, 2021
+
+Arthritis is a common problem affecting elderly people today. One specific form of
+arthritis is osteoarthritis, caused by lubrication deficiency at the joint surface. Due to
+genetics, aging, stress factors, or accidents, the cartilage layer breaks down causing
+inflammation of the joint. When no cartilage surrounds the bone, neighboring bones
+scratch each other and cause pain. To prevent and slow down those events, nanomedicine
+has become a popular field of study and research. The main objective of this research was
+to develop targeted drug delivery method for treating osteoarthritis using, small nano- and
+micro- compositions. Another important objective was to find a way for the composition
+with the lubricated surface, to target damaged tissue. The core of the built nanoparticle was
+Cerium oxide (CeO2), surrounded by a mesoporous silica nanoparticle (MSN) shell. Using
+microfluidics, the drug Agomir874 was loaded within core-shell nanoparticles, and then
+surrounded by the PEO-b-PFMA microparticles. The polymer contained collagen IgG2,
+for antibody-antigen binding to improve the elasticity of the joint. Finally, the drug 5-ASA
+was inserted within polymer in order to reduce inflammation in the damaged tissue. As the
+PEO-b-PFMA particles were diluted, the right solvent was needed to be found in order for
+the polymer particles to stay stable. In the future, with the help of different imaging
+techniques, it will be possible to determine how much drug is loaded within the particle
+and whether the drug loading of the particles is successful.
+
+KEYWORDS: Cartilage, Chip, Drug delivery, Nanoparticle, Microfluidic device,
+Polymer
+
+ABBREVIATIONS
+AgNO3
+
+Nitric acid
+
+Au NR’s
+
+Gold Nanorods
+
+Ce(NO3)3 Cerium Nitrate
+CeO2 NP
+
+Cerium Oxide nanoparticle
+
+CH2Cl2
+
+Dichloromethane
+
+cm3/g
+
+Centimeter cubed per gram
+
+CTAB
+
+Cetyl trimethylammonium bromide
+
+ECM
+
+Etracellular matrix
+
+Etax
+
+Ethanol
+
+g
+
+gram
+
+HAuCl4
+
+Chloroauric acid
+
+HC6H7O6 Ascorbic acid
+HCl
+
+Hydrochloric acid
+
+mol
+
+mole
+
+nmol
+
+nanomol
+
+mg
+
+milligram
+
+mg/mL
+
+milligrams per milliliter
+
+mL
+
+milliliter
+
+mL/h
+
+milliliter per hour
+
+mmol
+
+mili mols per liter
+
+MSN
+
+Mesoporius silica nanoparticle
+
+NaBH4
+
+Sodium Borohydride
+
+NIR
+
+near-infrared
+
+nm
+
+nanometer
+
+nm2
+
+square nanometer
+
+OA
+
+OsteoarthritisF
+
+PEO
+
+Poly (ethylene oxide)
+
+PEO-b-PFMA
+PH
+
+Potential of Hydrogen
+
+Pluronic F127
+copolymer
+
+Poly(ethylene oxide)-b-poly(furfuryl methacrylate)
+
+poly(ethylene oxide)-poly(propylene oxide)-poly(ethylene oxide) triblock
+
+ROS
+
+reactive oxygen species
+
+RPM
+
+revolutions per minute
+
+SEM
+
+scanning electron microscope
+
+TEM
+
+transmission electron microscope
+
+TEOS
+
+Tetraethyl orthosilicate
+
+μL
+
+microliters
+
+5-ASA
+
+5-aminosaliclic acid
+
+o
+
+Celsius
+
+C
+
+Contents
+1
+
+INTRODUCTION ...................................................................................................................... 1
+
+2
+
+LITERATURE REVIEW ........................................................................................................... 3
+2.1
+
+Background and Significance ............................................................................................. 3
+
+2.2
+
+Osteoarthritis (OA) ............................................................................................................ 4
+
+2.3
+
+Cartilage............................................................................................................................. 5
+
+2.4
+
+Mesoporous silica nanoparticles (MSN) ............................................................................ 6
+
+2.5
+
+Core-shell particles ............................................................................................................ 8
+
+2.6
+
+Drug delivery...................................................................................................................... 9
+
+2.7
+
+5-aminosalicylic acid ....................................................................................................... 10
+
+2.8
+
+Gold nanorods .................................................................................................................. 11
+
+2.9
+
+Polymer coating of the particles ...................................................................................... 12
+
+2.10
+
+Microfluidic Device .......................................................................................................... 13
+
+3
+
+HYPOTHESIS AND AIMS ..................................................................................................... 17
+
+4
+
+MATERIALS AND METHODS ............................................................................................. 19
+4.1
+
+Construction of the microfluidic chip ............................................................................... 19
+
+4.2 Synthesis of cerium oxide nanoparticles .............................................................................. 21
+4.3 Synthesis of cerium oxide within MSN ................................................................................... 22
+4.4 Extraction of synthesized Cerium Oxide within MSN ............................................................ 22
+4.5 Synthesis of PEO-b-PFMA ..................................................................................................... 23
+4.6 Optimization for PEO-b-PFMA microparticle formation ...................................................... 24
+4.7 Optimization for coating CeO2 within MSN with PEO-b-PFMA ........................................... 25
+4.8 Optimization for adding 5-ASA drug to the mixture .............................................................. 26
+4.9 The synthesis of the gold nanorods ........................................................................................ 26
+4.10 Optimization for creating final microparticles..................................................................... 27
+4.11
+
+Microscopy ....................................................................................................................... 28
+
+4.12
+
+Image analyses ................................................................................................................. 29
+
+5
+
+RESULTS................................................................................................................................. 37
+
+6
+
+DISCUSSION .......................................................................................................................... 46
+
+7
+
+CONCLUSION ........................................................................................................................ 49
+
+8
+
+ACKNOWLEDGES ................................................................................................................. 50
+
+9
+
+REFERENCES ......................................................................................................................... 51
+
+1 INTRODUCTION
+Osteoarthritis is a common condition impacting millions of people worldwide
+(Wittenauer et al., 2013). This occurs when there is a lubrication deficiency of the joint
+surface, causing cartilage breakdown which leads to pain and movement limitation at the
+joint. As science has progressed, nanomedicine has become a popular field of research, as
+it provides the potential for new ways to treat and prevent diseases such as osteoarthritis.
+This can be done by using micro- and nano-composites to develop targeted drug delivery
+methods. This project focused on developing a specific drug delivery system at the
+nanoscopic scale for treating osteoarthritis.
+Each micro- and nano- composites were chosen for the specific task, and to be able to
+perform as unity, without damaging the living cells and to reduce the pain and
+inflammation for the treatment of osteoarthritis. Figure 1 explains the building blocks of
+the composites in the project, as well as their geometric location.
+
+Figure 1. This is a brief overview of the drug delivery system designed for this project. The first drug,
+Agomir874, is inserted to the CeO2 within MSN nanoparticles, which are comprised of CeO2 core and MSN
+shell. These CeO2 within MSN nanoparticles were then coated with PEO-b-PFMA microparticles, known
+
+1
+
+also as the polymer, for lubrication. Within this polymer, Au nanorods and 5-ASA drug were inserted.
+Collagen IgG2 was attached to the CeO2 within the MSN nanoparticles, to bind with collagen from the joints
+(Created with BioRender.com).
+
+Cerium oxide nanoparticles (CeO2 NP`s) were the core of the particle, surrounded with
+the mesoporous silica shell (MSN). The CeO2 core was chosen in order to reduce the
+inflammation, while the MSN shell due to regeneration and easy manipulated surface
+(Hosseini and Mozafari, 2020). Within core and shell, the drug Agomir874 was loaded.
+This specific drug was chosen due to possibility to mimic miRNA function to regulate
+gene expression of wanted genes. Agomir874 was a perfect candidate because of the good
+stability and the possibility to penetrate the cell membrane barriers to reach the target
+(Catalanotto et al., 2016).
+The nanocomposites were coated within the Poly (ethylene oxide)-b-poly (furfuryl
+methacrylate) (PEO-b-PFMA) microparticles. This polymer makes the surface of the drug
+delivery particle smooth and lubricated, to prevent tissue damage. The PEO-b-PFMA
+responds to the reactive oxygen species (ROS), found in inflamed joint part, to make
+targeting possible. Finally, it releases the drug with near-infrared light exposure (Salma et
+al., 2018).
+Within the PEO-b-PFMA microparticles, collagen IgG2 was attached to the surface of
+the CeO2 coated with the MSN nanoparticles to form antibody-antigen binding to the main
+component in the cartilage, collagen II to improve elasticity of the joint.
+Beside CeO2 within MSN found within PEO-b-PFMA microparticles, there was
+another component coated, 5-aminosalicylic acid (5-ASA). This drug is usually used to
+treat inflammatory diseases and healing the damaged tissue. It is chemically related to
+aspirin and it stimulates different nuclear receptors which are responsible for control of the
+inflammation and cell development (Perrotta et al., 2015).
+For the photothermal responsive imaging purposes, gold nanorods (Au nanorods), were
+coated within polymer as well. Au nanorods have good biocompatibility, low toxicity, and
+controllable surface chemical properties (Haine and Niidome, 2017). The photothermal
+effect of the nanorods plays an important role in information recording.
+As described above, the particles built supposed to have mentioned functions and the
+exact position within polymer.
+
+2
+
+2 LITERATURE REVIEW
+2.1 Background and Significance
+Osteoarthritis (OA), also called a joint disease, is a common problem today associated
+with aging. OA is a type of disease that affects joint cartilage, causing neighboring bones
+to rub simultaneously. This result in inflammation of joint and surrounded tissue, which
+causes pain, stiffness, and difficulties performing any kind of movement (Loscalzo, 2011).
+This chronic disease can affect all joints, ranging from the smaller ones, such as joints in
+fingers, to the bigger ones, such as hip and spine joints. OA mostly occurs in the older
+population, but due to trauma, injury, diabetes, obesity, or genetic predisposition, it can
+also affect younger patients (Blagojevic et al., 2010). While OA is more common in
+women, around 15% of all adults over 60 years of age carry some level of the disease. The
+United Nations, predicted around 130 million people will deteriorate from OA in next 30
+years (WHO, 2013).
+To prevent and reduce the symptoms of OA, medications and surgeries are necessary.
+It is possible to reduce the symptoms by exercising if the OA is showing light symptoms if
+movement in the joint is not limited or painful (Hunter and Eckstein, 2009). However, as
+age increases, exercise often becomes limited, and the only treatment options are
+medications or surgery. For this reason, OA remains a common topic of different research
+projects. If the patient seeks medical help for limited and painful movements, it will be
+examined with an MRI scan and X-ray, however, it can still be difficult to distinguish
+weather a patient has the disease or not. If the specialist determines that the patient has the
+disease, then the patient can be treated with medications to prevent the pain, but if the case
+is more critical, surgery is needed. While, there are options available to reduce the
+symptoms, there is still no product that can completely cure or prevent OA (Grässel and
+Muschter, 2020).
+In order to advance the monitoring of the OA and improve treatment options, the
+development of medications to reverse the progression of the disease will be necessary.
+The following project was planned, and this specific design was selected because of the
+intra-articular drug delivery proven to be the most useful from the previous research. But,
+for the system to be therapeutic, the efficiency of the drug delivery system is crucial. Due
+
+3
+
+to that reason, for this therapy, synthesis of a complicated system is necessary (Singh and
+Lillard, 2009).
+
+2.2 Osteoarthritis (OA)
+The most frequent form of arthritis is osteoarthritis (OA). It is a joint disease affecting
+around 250 million people in the world (Mora et al., 2018b). This disease mainly affects
+the elderly; however it can affect young people as well, due to certain preexisting
+conditions, such as obesity and diabetes. Other stress factors causing OA are shock factors
+due to injury, continuing to perform everyday activities before the recovery of the injury,
+etc. Due to an increase in obesity and diabetes cases in the world, the number of
+osteoarthritis cases rises simultaneously, and the number will continue to rise in the future
+(Wittenauer et al., 2013).
+Joints are comprised of many parts including cartilage, bones, ligaments, and a
+synovial membrane. When there is not enough lubrication in the joint, the movement of the
+joint becomes limited and painful, which are the signs of OA.
+OA can be divided into two groups based on the cause; non-traumatic (primary), and
+traumatic (secondary). It is proven today that OA is caused by factors such as
+inflammation, trauma, biochemical reactions, and mechanical forces. In the early stage of
+the disease, as cartilage is not capable of producing pain or inflammation, pain comes from
+changes in the non-cartilage part of the joint. As the disease proceeds, the cartilage is
+affected, as well as the entire joint, and changes occur in the form of bone remodeling,
+muscle dystrophy, and other adverse effects shown in the figure 2 (Mora et al., 2018a).
+As the disease progresses, the inflammation can be divided into chronic and low-grade
+inflammation. In the early stages of the disease, the aggression of inflammatory cells into
+synovium, known as synovitis, is found. Then, synovial fluid inflammatory mediators are
+established, such as plasma proteins, leukotrienes, cytokines, growth factors, nitric oxide,
+and complement components. All of these factors result in cartilage breakdown and
+collagen demolition (Mora et al., 2018a).
+Another factor involved in the progression of OA are white blood cells. In the animal
+models, it was proven that macrophages were connected with the process of forming the
+OA (Mora et al., 2018a) . Certain molecules released as part of a protective mechanism
+during the extracellular matrix (ECM) division are acknowledged by the inherent immune
+cells, leading to tissue demolition.
+4
+
+With various factors contributing to the progression of OA, it is important to find a
+suitable, non-surgical treatment of the disease. Despite OA being one of the most studied
+diseases in research, it still does not have the most effective treatment. The therapy for
+early-stage OA is exercise, which is recommended by the medical expertise. Exercise helps
+to delay the disease progression, but it does not cure or reverse it (Mora et al., 2018a).
+
+Figure 2. Changes occurring in form of bone remodeling , as progression of OA. Figure shows a healthy
+knee joint to the left, and a knee joint with osteoarthritis to the right, where loss of cartilage is present
+(Created with BioRender.com)
+
+2.3 Cartilage
+To treat OA, it is important to understand the biology and functions of cartilage first.
+There are different types of cartilage in the human body; elastic, hyaline, and
+fibrocartilaginous cartilage (Naumann et al., 2002). The differentiation comes from their
+molecular structure.
+The primary form of cartilage is hyaline cartilage. As part of the hyaline cartilage
+group, articular cartilage is divided into four zones; the superficial, transitional, radial, and
+calcified zones. In the calcified zone, cartilage is in a coalition with a bone. These zones
+differentiate by the organization of the collagen network, as well as in the amount and type
+of proteoglycans (Mora et al., 2018a).
+5
+
+Type II collagen is the main compound of healthy articular cartilage. The main
+proteoglycan present in the cartilage is aggrecan, but some other proteoglycans present in
+cartilage include syndecans, glypican, decorin, and biglycan (Wittenauer et al., 2013).
+Endochondral ossification is a process of creating a bone tissue with the presence of
+cartilage. It occurs during development and bone healing. This process occurs during
+development of the articular cartilage, and takes place through four steps (Mackie et al.,
+2008). The first step includes chondrogenesis differentiation and mesenchymal
+condensations, where mesenchymal chondroprogenitor cells separate into chondrocytes
+and the chondroitin tissues. Then, the differentiation of chondrocytes and hypertrophy
+occurs. This differentiation is essential in cartilage formation. It plays an important role
+after the cartilage is replaced by the bone, where chondrocytes continue to separate. The
+final two steps are mineralization of the matrix and formation of bone (Umlauf et al.,
+2010).
+During bone formation, blood vessels occupy the cartilage, starting from the
+perichondrium. Hypertrophic chondrocytes start to mineralize the extracellular matrix of
+the perichondrum. The development of the definitive bone matrix is possible with the help
+of mineralizing osteoblasts and osteoclasts that move into the remodeling cartilage
+(Umlauf et al., 2010).
+Specific development roles of the cartilage are still poorly understood. However,
+endochondral ossification and chondrocyte differentiation play the main role in have been
+mostly studied cartilage development. The connection between osteoarthritis and cartilage
+development has been studied, as it is believed that similar processes are involved at the
+beginning and progression of the OA (Mackie et al., 2008).
+
+2.4 Mesoporous silica nanoparticles (MSN)
+Particles varying in size between 10 nm and 1000 nm are called nanoparticles. They
+can be used as drug carriers, where they are loaded with drugs or antigens and release them
+at specific location under specific conditions. They are perfect for drug delivery because
+they control release of the drug to the targeted area. NPs, are often coated with a polymer,
+to improve the delivery and reduce side effects (Mohanraj and Chen, 2006).
+The most commonly used nanoparticle is mesoporous silica nanoparticle (MSN). In the
+last decade, MSN gained attention for its possibility to adjust and control its chemical and
+6
+
+physical properties. As it contains hundreds of empty channels, MSN appears to have
+porous surface. As shown in figure 3, MSN has a high surface area and suitable porevolume ratio, making it a perfect candidate for drug delivery. A drug can be easily
+encapsulated in the nanoparticle, while the size of the particle is strictly controlled. MSN
+contains silanol (Si-OH) in high amounts on its surface, which allows MSN to attract
+different polar molecules. This ability is important because the attracted polar molecules
+can change surface properties of MSN and its application in drug delivery (Douroumis et
+al., 2013).
+Particle size and distribution are important characteristics in drug delivery
+compositions. The goal is to control the nanoparticle properties and drug release to achieve
+better results. An important factor for controlling drug release is pore size. The pore size
+controls the absorption of molecules in MSN matrix by selectively loading drug molecules,
+which precisely shows the amount of the drug released. The pore size can vary from 2-10
+nm and can be adjusted by changing the surface chain length (Al-snafi, 2014). As the MSN
+pore size is uniform and adjustable, this allows for molecules of various sizes to be
+absorbed. The release and drug loading kinetics of different pore sizes showed the impact
+of the pore sizes on drug release. For an example, different pH- sensitive gatekeepers were
+able to release the drug only in the targeted site, not affecting the healthy cells, where
+smaller molecules of MSN were able to stay longer in the blood circulation, and transfer
+faster comparing to larger molecules. (Douroumis et al., 2013).
+The pore surface of MSN controls the dosage of the drug within MSN matrix. Surface
+area plays a critical role in drug delivery; larger surface areas, lead to higher drug
+absorption within the matrix of MSN. By modifying the surface of MSN it is possible to
+increase or decrease the surface area, thereby adjusting the drug dosage and release (Jafari
+et al., 2019).
+The pore volume on the surface of MSN controls drug loading. The volume varies
+from 0.9 cm3/g to 2/0 cm3/g. High drug amounts absorbed into the MSN matrix indicate a
+larger pore volume. There are interactions with drug molecules and the pore surface as
+well as molecules within MSN matrix. Connections within molecules can be weak and
+lead to guest molecules to enter the matrix, which could lead to unwanted molecules within
+MSN, taking the space for the wanted drug loading. To prevent the guest molecules from
+
+7
+
+entering, it is important to control the pore volume to indicate the drug amount absorbed
+(Douroumis et al., 2013).
+Nanoparticles are prepared from various materials, such as proteins or polymers. It is
+important to use non-toxic materials when developing drug delivery systems. MSN has
+been proven to be very biocompatible and non-toxic in humans (Douroumis et al., 2013).
+The preparation of MSN depends on desired size, delivery of the drug, surface
+characteristics, and biodegradability. MSN is a stable nanoparticle, with excellent thermal
+and chemical properties. Both the inside and outside of the particle are easily controlled to
+fit necessary expectations for the desired drug (Zhou et al., 2018).
+Monitoring drug release from MSN systems is done with the help of fluorescein dyes,
+such as fluorescein, Texas red, and rhodamine B. These guest molecules control the gateopening trigger which decides when and how much drug will be released to living cells
+(Douroumis et al., 2013).
+
+Figure 3. Mesoporous silica used in cancer therapy applications, gene delivery, and to deliver poorly soluble
+drugs due to its high surface area and suitable pore-volume ratio (Created with BioRender.com).
+
+2.5 Core-shell particles
+The particles used for drug delivery were core-shell systems, also known as core-shell
+composites. These systems are made of a core and a shell, each built from different
+materials with varying functions, depending on the loaded drug (Galogahi et al., 2020).
+8
+
+The reason core-shell composites are widely used in drug delivery systems is due to
+their potential in different fields such as bioimaging, controlled drug release, tissue
+engineering, and different disease treatments. This versatility among different fields made
+core-shell particles a highly-researched topic over past decades (He et al., 2015).
+A common material used for composition shell is MSN. This is due to their high
+surface area, controllable diameter of pores, uniform mesoporosity, biocompatibility,
+surface friction, ability to control core size, and its thickness. These features allow
+researchers to build desired composites and fill them with a desired drug. For the drugloaded particle to be released in the system, there must be stimuli which will activate the
+drug release. MSN has many different possibilities to open nanopores, such as temperature,
+PH, enzymes, light, redox activation and competitive binding, in order to let the drug
+molecules in the targeted cells (He et al., 2015).
+The synthesis of the core-shell system is usually done through a multiple-step process,
+where the core is synthesized first, followed by the shell. The process depends on the
+morphology and materials used. The goal of these core-shell systems is to produce a stable
+particle with biocompatible properties (Hayes et al., 2014).
+A good core composite of core-shell system is cerium oxide nanoparticle (CeO2)
+surrounded by MSN, as was used in this project as the drug delivery system. The synthesis
+is a two-step process, as described above. The CeO2 is widely used as a therapeutic agent
+in reducing the inflammation and in treatment for oxidative stress-associated chronic
+diseases. It is nontoxic to living cells, with the capability to disable many reactive oxygen
+species (ROS) correlated with causing different diseases (Cooper et al., 2014).
+
+2.6 Drug delivery
+Drug delivery is the process of transporting and releasing a drug to a targeted tissue or
+organ by nanoparticles. The drug release is performed under controllable conditions,
+meaning that the drug needs to be released at a certain point in time under specific
+conditions (Peppas and Narasimhan, 2014). If the drug release is premature or delayed, it
+can cause problems in disease treatment. Every drug delivery particle needs to have a
+controllable point, where it does not release the drug in order to protect healthy cells, in
+order to target only diseased cells. If the drug release would be rapid and constant in the
+body, this would lead to dangerous consequences (Cooper et al., 2014).
+9
+
+When the drug-loaded particles are in the body, messengers are helping to deliver them
+to the targeted cells. In order to reach targeted cells, chemical and physical properties of
+the drug delivery systems need to be satisfied. As described already, nanoparticles provide
+many adjustable parameters, and the structure can be designed for optimal drug
+encapsulation, such as, the size and polymer coating for the nanoparticle. The
+nanoparticles in the project were built under specific procedures, as they had to be uniform
+and of a certain size (He et al., 2015).
+Particle size is one of the most important factors in a drug delivery system. The
+nanoparticle size can affect the distribution of the drug within nanoparticles, affecting the
+efficiency of the drug (De Jong and Borm, 2008). Antibodies bind to any foreign molecule
+and build the immune system. Using smaller nanoparticles decreases the chances of them
+to bind to antibodies in the blood, meaning smaller nanoparticles have a higher chance to
+deliver the drug to the wanted area without unnecessary interference. Tissue uptake of the
+nanoparticles is higher as the size of nanoparticles is smaller (Han, 2016). Another
+important factor affecting the biological properties of the nanoparticles is their shape. The
+uniform shape of nanoparticles increases the binding probability, drug delivery, and cell
+uptake due to greater prevalence in the blood stream and the body. Therefore, using
+smaller nanoparticles with a uniform the shape lead to more successful results (Cooper et
+al., 2014).
+
+2.7 5-aminosalicylic acid
+The drug tested in this experiment is 5-ASA, and it is thought to be anti-inflammatory
+because it reduces inflammation in the damaged tissue at the metabolic level (Xu et al.,
+2004). It is attracted to ROS, which are present in inflamed joint, therefore it is expected to
+target the OA site and reduce inflammation.
+5-ASA has low solubility in the water and, when inserted in the blood circulation, will
+not dissolve until it reaches the targeted cells. In the occurrence of OA, the number of ROS
+is increased in the inflamed joint area. Knowing this, it is possible to conclude that 5-ASA,
+anti-inflammatory drug, would target the affected joint area, due to increased number of
+ROS (Askelof and Helander, 1992).
+In recent years, there have been new 5-ASA drug discoveries, with improved
+pharmacodynamic and pharmacokinetic properties for the treatment of different diseases.
+Chemical and physical properties of the 5-ASA structure include low solubility in water,
+10
+
+and the physical structure is determined by the temperature, meaning that the drug would
+not dissolve in the blood, and would not be spread all over the healthy cells, just the
+targeted area, under certain temperature (Abdu Allah and A El Shorbagi, 2016).
+If the 5-ASA drug is inserted in the body by itself, it creates instable environment by
+having low solubility in unwanted area affecting the healthy cells as well (El-Dairi and
+House, 2019). Due to these circumstances, scientists are focused on minimizing the
+solubility rate of the 5-ASA drug and extending the absorption time causing no harm to the
+body, maintaining the high drug concentration. The tested drug satisfies mentioned
+conditions, if it is a part of the microparticle carrier system. When it is encapsulated within
+molecule, 5-ASA stays longer in the blood, does not damage healthy cells, and creates
+stable environment.
+Due to the lack of the solubility of 5-ASA, patients need to take high doses to fulfill the
+effect of the drug. Due to those high doses, patients face many reactions and side effects,
+such as vomiting, fever, headache and even eating disorders. To resolve complications,
+biocompatible drug carriers are used for targeted drug delivery to control the release and
+minimize side effects (Abdu Allah and A El Shorbagi, 2016).
+In the project, 5-ASA was added to the micro compositions made of CeO2 core and
+MSN shell, coated with a PEO-b-PFMA. By using nanoparticles loaded with the drug, it
+was expected that the drug would go to the targeted area and release 5-ASA drug without
+any harm to the healthy tissue, with minimal side effects (Abdu Allah and A El Shorbagi,
+2016).
+
+2.8 Gold nanorods
+Gold nanorods are new, promising gold nanoparticles for drug delivery systems. Due
+to their strong absorption in near-infrared (NIR) light region, gold nanorods have strong
+photothermal effects, as well properties such as reduced photobleaching effect, making
+them widely used for bioimaging applications. The reactivity of particles could be
+improved by controlling the optical properties, size, and shape of gold nanorods. With
+these properties, it is of great interest to construct a drug release system where the release
+can be controlled with this metal (Huang et al., 2009).
+Gold nanorods play an important role in drug delivery and in targeting desired tissue
+area due to their nano-scale. Gold nanorods can be absorbed by visible NIR depending on
+their shape and size, and have high surface area, making them ideal nanocarriers (Arvizo et
+11
+
+al., 2010). The desired size enables targeting wanted region of interest, as well as
+possibility of longer lifetime for imaging. Due to those properties, they are used in
+photothermal responsive therapy, and as a bioimaging agent. It is possible to locate
+nanorods in the complex areas in the body, such tissue parts containing different cell types,
+so they are an ideal candidate for the targeted drug delivery (Huang et al., 2009).
+The gold nanorods constructed in this project were polymer-coated. The function of
+polymer was to act as a drug reservoir, where the drug was not prematurely released, or it
+was released at the minimum level. Another reason of polymer coating was to smoothen
+the surface of the particle so it would not damage tissues (Haine and Niidome, 2017).
+
+2.9 Polymer coating of the particles
+The rapid development of nanotechnology and its use in drug delivery is widely
+applicable and can be adjusted as needed to fit different project aims. The high surface
+area, surface energy, and the small size of the particles, lead to a need of adaption with
+the specific chemical and physical properties. The properties such as the lubricated
+surface, biocompatibility, and ability to bind to targeted molecules, in order to fit the
+project goals. Coating nanoparticles for drug- delivery systems with the thin, but
+functional polymer needs to be performed to control the drug release (Liechty et al.,
+2010). Polymer thickness can affect the drug release by preventing the drug to exit the
+microparticle system if it is too thick. A suitable polymer is needed to fit experimental
+needs, such as control of how much and when a drug will be released. Polymer coating
+of nano- and micro- particles can be challenging due to the size of particles (Wang et
+al., 2004).
+The polymer of interest in coating of particles in the project was poly (ethylene
+oxide)-b-poly (furfuryl methacrylate) (PEO-b-PFMA). This exact polymer has an
+advantage of controlled drug release, not affecting the tissue. The lubricated smooth
+surface does not damage the living cells. Controllable physical and chemical properties
+of PEO-b-PFMA allow researchers to get the wanted results in the relatively short time
+period. Using microfluidics in droplet production of polymer, allow the control of the
+polymer synthesis under live time microscopy.
+The main benefit of PEO-b-PFMA as a part of drug delivery system is that effect
+on a healthy tissue is minimal. Because of NIR light, the control of the light-responsive
+12
+
+drug release is possible. That way the amount of the drug released is controlled, and
+there is no excessive amount of drug released which can damage the tissue. NIR is less
+damaging for the tissue, so frequently used for in vivo therapy. Usually gold nanorods
+are encapsulated with PEO-b-PFMA polymer, which represents photothermal agents
+and trigger the drug release (Salma et al., 2018).
+The challenge to coat particles is their small nano- and micro- size. By using
+microfluidics, opens different possibilities (Mazetyte‐Stasinskiene and Köhler, 2020).
+The needed modification of the particle surface, by polymer coating, allows researchers
+to try different methods. Finding suitable method can be a time consuming, but once
+the perfect method is decided, the process of encapsulation is fast. This new way of
+controlling physical and chemical properties of the surface for the targeted drug
+delivery system, is getting more accepting in the future research in drug delivery.
+
+2.10
+
+Microfluidic Device
+
+The combination of different fields such as chemistry, biochemistry, biology, physics,
+nanotechnology and biotechnology represents one of the most common areas associated
+with the drug delivery and pharmacokinetics which is called microfluidics. It is closely
+related to optofluidics because of constant uses of optics and imaging devices to
+manipulate fluids on nano- and micro- scale (Zhao et al., 2020).
+Microfluidics allows possibility of developing complicated experiments under live
+microscopy on a chip. The benefit of using microfluidics is that the smaller amount of
+chemicals is needed to perform the experiment, which makes them more affordable. By
+using smaller amount of chemicals, the experiment process is shorter, which is one of the
+most important criterion in drug delivery.
+The microfluidic device enables the precise handling of a liquid with the help of
+miniaturized capillary networks. The platform contains PHD ULTRATM Syringe pumps
+shown in figure 4. The platform controls the number of chemicals used by push-pull
+controls. One pump contains two racks, one for the inner and one for the outer fluid
+inserted in the syringes. Under the high pressure, desired nanoparticles can be loaded with
+a drug.
+Finding different pump speeds for the inner and outer syringe is the only tricky part of
+using the microfluidic pumps. Usually, the outer syringe uses a higher speed, around 30-40
+13
+
+mL/hour. The inner syringe containing nanoparticles uses a slower releasing speed, around
+2-5 mL/hour. Deciding what speed to use is important, because it defines droplet size and
+how nanoparticles will be loaded with the drug. It is important to try different pump speeds
+and then image the final drug-loaded nanoparticles using TEM. If the product size and
+appearance are satisfactory, it means the pump speed was set correctly (Beebe et al., 2002).
+
+Figure 4. Representation of the microfluidic device, containing two pumps for pumping fluids inside the
+chip, and a high-speed camera microscope for observing droplet progress. (Created with BioRender.com)
+
+The experiment is taking place inside the chip. The design of the chip can be
+constructed in the laboratory by the researcher depending on the wanted final results.
+Every experiment requires a specific kind of a chip. There is another possibility to
+purchase different kinds of chips from some companies, but it is costly. All chips have an
+expiration date, after certain amount of experiments preformed, they get damaged. It is
+necessary to replace them so the final results are not affected.
+Before constructing the chip, it is important to consider some effects to obtain the
+wanted results, and to predict how the chip workflow should behave, therefore the
+understanding of physics is required. The important effects that should be taken under
+consideration are surface to volume ratio, tension, fluidic resistance, diffusion, and the
+most important, laminar flow (Beebe et al., 2002).
+Using microfluidic pumps to push fluids inside the chip applying force direct fluids
+flow to be almost always laminar. Laminar flow represented in the figure 5a, shows the
+state in which fluids flow is not considered random, flows in parallel layers with no
+14
+
+disruption between them. To mix two or more fluids, diffusion is necessary. Laminar flow
+gives the possibility to create flows that maintain the wanted formation allowing the
+production of droplets inside solution. By using microfluidics, it is possible to control the
+speed of the fluids, the size of the droplets and their properties (Jokinen, 2017).
+
+5a
+
+5b
+
+Figure 5a Laminar flow in a capillary, which is one of the most important effects in the microfluidic system.
+(Created with BioRender.com)
+Figure 5b Turbulent flow with high momentum convection (Created with BioRender.com)
+
+To control if the droplets are similar size, as well as what amount of inner and outer
+fluid to use during the syringe injection and mixing, a high-speed digital microscope is
+used. Image 1 was taken with the Meros High-Speed Digital Microscope, designed for
+microfluidics and used for observing droplets during high-speed droplet production (Snp
+and Reagent). High-resolution imaging is possible with the advantage of the short exposure
+time. It is possible to connect the microscope to the computer screen to make images or
+videos of the droplet formation. The use of the microfluidic platform enables control of the
+droplet size, even distribution, and the speed of mixing inner and outer fluid.
+
+15
+
+Image 1. Droplet formation inside microchip visible from the live time microscope.
+
+Taking into consideration all physics concepts previously mentioned, it is possible
+to construct the laboratory on the chip and manipulate fluid flows on microscale levels.
+Microfluidic systems bring significant meaning for the use of bioparticles in clinical
+diagnostics where time is essential (Zhao et al., 2020).
+The Microfluidic system is closely related to optical imaging. The importance of
+live microscopy is significant and gives the possibility to track the droplet making
+progress, as well as constant monitoring during experiments. The combination of live optic
+images and microfluidic machine gives a low-cost solution (Zhang et al., 2011).
+
+16
+
+3 HYPOTHESIS AND AIMS
+The process of drug delivery gained a lot of interest in the last decade, as new research
+opened the door for new possibilities and information on this topic. Drug delivery is the
+procedure of transporting and releasing a drug to a targeted area. This can be done using
+nanoparticles, which have also gained interest in the scientific research field, as
+nanoparticles have controllable properties and allow for easy modification. Drug delivery
+systems made of nanoparticles, allow researchers to perform drug release under specific
+conditions. Drug systems can be modified to target a desired area, without damaging
+surrounding healthy cells.
+While drug systems composed of nanoparticles offer many benefits, there are
+limitations to synthesize them. Limitations could be that syntheses are time consuming and
+produced particles may fuse, which is leading to a need for optimizing the synthesis
+process. Another limitation includes optimizing the amount of the drug used. It is
+necessary to find the right drug-to-nanoparticle ratio. If there is too much or too little drug
+in the nanoparticle, the drug will not be beneficial for the treatment. A suitable and
+functional polymer that does not interfere with nanoparticles must be found, to protect
+surrounding healthy cells when delivering the drug to the targeted area. These often timeconsuming challenges must be addressed and optimized in order to develop a functional
+drug delivery system.
+One way to begin optimizing the synthesis of drug delivery systems includes using
+microfluidic systems as a drug loading systems. Using such system allows for easy
+manipulation of fluids used during the synthesis on nano- and micro- scale. Building drug
+delivery systems using a microfluidics system is done by using a small chip, where two
+fluids are pumped inside with different pump speeds, producing droplets. By using
+microfluidic system, smaller amounts of chemicals are needed, making experiments more
+affordable. Using live microscopy makes it possible to control the droplet production in the
+chip. Microfluidics allows for a bulk production of nano- and micro- particles, making the
+process time efficient.
+The same microfluidics method is also used to load desired drug into the CeO2 within
+MSN nanoparticles. By manipulating the pump speeds for the different fluids, it is possible
+to load the drug to make the functional drug carriers.
+17
+
+The final step producing a drug delivery system is to coat the synthesized nanoparticles
+with the suitable polymer. Loaded nanoparticles can be added to desired polymer pallet
+with the pipette.
+The aim of the study was to optimize drug delivery systems to deliver the drug to treat
+OA by controlling chemical and physical properties of microparticles. By optimizing
+different amounts of the inserted drug, the thickness of the polymer and the size of the
+CeO2 within MSN nanoparticles, it was hypothesized that this would make an ideal
+nanoparticle drug delivery system. In the future research, built microparticles can be tested
+in vivo to monitor how the drug works, and how fast delivering the drug to sites of OA will
+lead to decrease the inflammation.
+
+18
+
+4 MATERIALS AND METHODS
+4.1 Construction of the microfluidic chip
+Drug development with the microfluidic technology has rapidly expanded in recent
+years. The microfluidic chips provide a new understanding of drug research, making
+experiments more affordable and less time consuming. The possibility of constructing the
+chip for usage in the droplet production, gives the chance to control all the factors needed
+for the successful experiment (Cui and Wang, 2019).
+To conduct drug encapsulation within nano- and micro- particles, the application of
+microfluidic chips is necessary. The microfluidic chip is built using set guidelines,
+depending on the function of the drug delivery system. The chips used for the study
+contain glass borosilicate capillaries, through which fluids flow. The inner thinner
+capillary, with the diameter of 1.1 mm, is inserted in the thicker capillary, with the
+diameter 1.56 mm. The difference between diameters provides wanted capacity for the
+mixture of fluids. The difference between capillary sizes is also important for controlling
+the fluid droplet size and flow inside the chip.
+The chip production was performed in the laboratory inside hood to prevent external
+agents from interfere with work, as shown in image 2. The equipment for constructing the
+chip included glass capillaries, black sandpaper, diamond cutter, Devcon 5 Minute Epoxy
+glue hardener, a PN-30 Magnetic Glass Microelectrode Horizontal Needle Puller, syringe
+cups, tweezers, and a gas torch flame gun.
+
+19
+
+Image 2. The chip production area inside the hood with all necessary equipment to prevent external agents
+from interfering with work.
+
+The inner capillary was separated with a PN-30 Magnetic Glass Microelectrode
+Horizontal Needle Puller (Narishige, Tokyo, Japan). This device is capable of separating
+glass capillaries in two parts using a heat source and a magnetic puller, separating the inner
+capillary into two smaller conoidal parts. The separation was possible due to the heater
+which uses platinum plate to heat the glass. The magnetic puller, using the electromagnetic
+force, pulled the glass capillary in the opposite direction. The glass capillary was separated
+at the exact point where the heating was performed (One Digital Drive, 2018). One of the
+capillary parts was then used to shape the droplet size. To do this, the capillary was gently
+scraped with the black sandpaper at the conoidal end to create an opening. The scraping
+was monitored using a light microscope. This opening formed the droplets within the chip.
+The thicker outer capillary is longer than the inner capillary. Metal tubes are
+inserted and glued in the outer capillary at the glass surface using the Devcon 5 Minute
+Epoxy glue hardener to hold the tubes in on the glass surface and prevent the leakage of
+the fluids. For the glue to harden, 24 hour drying was necessary. The outer capillary was
+then cut and glued at certain places to prevent mixing of the fluids. Figure 6 shows these
+cut openings at two places. The first opening was cut at the outer glass capillary, right after
+the metal tube. The function of this opening was to prevent the backflow of the fluids after
+mixing inside the chip. The second opening was cut within the syringe tip in the middle of
+the chip. Its function was to open up the passage for the outer fluid to be delivered within
+the chip. Both openings were glued to prevent the fluid spillage and to keep the capillaries
+on the glass surface.
+
+20
+
+Figure 6. Replica of the chip used in the project (Created with BioRender.com). The chip contains two
+openings, two metal tubes, inner and outer capillaries, and the syringe tip. Openings are pointed with arrows
+and glued to the glass surface. First opening is placed right after metal tube in order to prevent leakage of
+fluids within the chip. The second opening is placed under the syringe tip and acts as the passage for the
+outer fluid to enter the chip.
+
+4.2 Synthesis of cerium oxide nanoparticles
+We used CeO2 NPs in the experiment as the drug carrier for targeted drug delivery.
+CeO2 NPs were produced as the core of the nanoparticle, with Mesoporous silica
+nanoparticles (MSN NPs) as the shell. The drug was loaded between the CeO2 core and
+MSN NP shell.
+The mixture process of CeO2 NPs was divided into two steps: Precipitation and
+Aging. To perform the following protocol, the method by Jixiang Wang 2019 (Jixiang
+Wang, 2019) was used.
+For the precipitation process, 4.3 g of Ce(NO3)3 crystals (MERC, Darmstadt,
+Germany ) were dissolved in 50 mL of MiliQ water, which was previously dissolved in a
+100 mL round bottom flask. The solution was placed in an oil tub, warmed to 70 °C and
+stirred at 500 RPM. During stirring, 3M ammonium hydroxide at a pH of 7.5 was prepared
+21
+
+by mixing 14.569 mL of ammonia solution with 10.405 mL of MiliQ water. To fix the pH
+of the prepared solution to 8.6, the following procedure was performed. Ammonium
+hydroxide 6 M solution was prepared by adding 1.239 mL of ammonia solution to 1.761
+mL of MiliQ water, and the final product PH was 8.8. The final product was incubated for
+20 hours at room temperature, and a white precipitate was formed. Next, it was necessary
+to perform three centrifuges, 10 minutes each at 8,000 RPM and 21°C. The solution was
+placed in the 50 mL Falcon tubes. After the first centrifuge, water was thrown away, and
+replaced with 99% ethanol for the next two centrifuges. After the final centrifuge, the
+product was dispersed in the MiliQ water, and stored in a 50 mL plastic tube.
+
+4.3 Synthesis of cerium oxide within MSN
+The MSN shell was synthesized following the production of the CeO2 core. In a
+100 mL round bottom flask, 125 μL of CeO2 core was added, followed by 2.5 mL of MiliQ
+water. The mixture was held in a sonification bath for a couple of seconds, then vortexed.
+Mix 1 was prepared by adding 4.3 mL of MiliQ water with 2.9 mL of absolute ethanol, and
+40 μL of ammonia. The previously prepared CeO2 core solution was mixed with the mix 1
+to form mix 2. The solution was placed in the sonification bath for 30 minutes and was
+vortexed occasionally. Mix 3 was prepared by adding 40 mg of CTAB in 660 μL of MiliQ
+water and 300 μL of absolute ethanol. Mix 3 was combined with mix 2 The final mixture
+was placed in the sonification bath for another 30 minutes. During the five minutes of
+sonification, 80 μL of TEOS was added. The mixture was stirred overnight at the speed of
+450 RPM, and then stored in a plastic tube.
+
+4.4 Extraction of synthesized Cerium Oxide within MSN
+To extract the CeO2 NPs, the previously prepared solution described above was
+placed in centrifuge tubes. The tubes were centrifuged three times for 10 minutes, at a
+speed of 12,000 RPM and 22 °C temperature. Before each centrifuge, the product was
+dispersed in the absolute ethanol (Etax, 99%), and placed in a sonification bath for six
+minutes, and vortex for four minutes. After the final centrifuge, the product was dispersed
+in 10 mL of absolute ethanol, and then analyzed under TEM. The size and appearance
+were recorded (Jixiang Wang, 2019).
+
+22
+
+4.5 Synthesis of PEO-b-PFMA
+To lubricate the surface of the drug delivery system, poly (ethylene oxide)-b-poly
+(furfuryl methacrylate) (PEO-b-PFMA) was used. Preparation of the macroinitiator began
+with the mixing a 0.915 g (7.5 mmol) sample of Dimethylaminopyridine (DMAP) in a
+previously mixed 0.505 g (5.0 mmol) of Triethanolamine (TEA) and 20 mL of dry
+methylene dichloride (CH2Cl2) in a 100 mL flask. The mixed solution was move into a 250
+mL three-neck round-bottom flask. The middle neck of the flask was connected to
+condenser, the right neck to a gas inlet/outlet, and the left neck was used for a dropping
+funnel opening. After placing a magnetic stirrer in the flask, the temperature was set to
+0oC. After cooling the solution, 2.875 g (12.5 mmol) of α-bromoisobutyryl bromide
+previously mixed in 20 mL of CH2Cl2 was added. Then next step was to form a yellow
+dispersion by adding 25 g (5 mmol) of Poly (ethylene oxide) (PEO) in 100 mL of dry
+CH2Cl2 dropwise during the time period of 1 hour. Dry nitrogen gas was connected to the
+right inlet/outlet gas neck of the flask, and light stirring was performed. Afterwards, the
+temperature was slowly raised to 21oC. The stirring was continued for 18 hours, then, the
+solution was filtered using filter paper. During filtration, half of the solvent evaporated,
+while other half of the product was mixed in cold diethyl ether. Suspension of the product
+in absolute ethanol was then performed. The solution was stored at the room temperature
+for at least 12 hours in order to recrystallize the product, as shown in image 3. The final
+product was filtered using the filter paper, and then washed again in cold diethyl ether. The
+final product was then dried in a vacuum overnight (Sun et al., 2005).
+
+23
+
+Image 3. The white subtract which was collected after the microfluidic process of preparing PEO-b-PFMA
+macroinitiator.
+
+4.6 Optimization for PEO-b-PFMA microparticle formation
+The previously- prepared PEO-b-PFMA macroinitiator was mixed with the 8%
+
+Ethyal acetate in order to be used as the inner fluid for the microfluidics. To dilute the
+percentage of the 99.5% Ethyal acetate, it was necessary to mix 8 mL of the solution with
+the 92 mL of MiliQ water.
+The next step was to optimize how much PEO-b-PFMA is needed for the formation
+of the particles after microfluidics. This part of the project was challenging due to many
+tests of different concentrations to form droplets, then microparticles. This was the first
+step of three for creating the final inner fluid to form drug delivery microparticles. The
+difficulty in optimization includes the many different possible combinations which should
+be tested to choose the most suitable one. The loading process is the same with all different
+concentration tries, with the fluid being inserted into the syringe and attached to the PHD
+Ultra Advanced Programmable Syringe Pump. When the pump was activated, it pushed
+the fluid into the chip, where droplets containing polymer particles are formed. The pump
+was easily manipulated to adjust the desired speed. The final product was collected inside
+small glass flask. Image 4 shows the microfluidic device set up in the laboratory.
+
+Image 4. The microfluidic platform for droplet production. The platform is made of two pumps, MEROS
+live microscope, and the computer screen.
+
+24
+
+The previously-prepared PEO-b-PFMA macroinitiator and 8% Ethyal acetate mix
+was inserted in the 5 mL Becton Dickinson Plastipak syringe for inner fluid. The outer
+fluid used was 1% Pluronic F127 diluted in the MiliQ water. To prepare the 1% solution, 1
+g of Pluronic F127 was diluted in the 100 mL of MiliQ water. The second Becton
+Dickinson Plastipak 30 mL syringe was connected to the pump as well. It was possible to
+adjust the flow rate of each syringe. Finding the functional speed was the critical point in
+the polymer synthesis. Different settings allow setting the speed for the inner fluid in
+μL/hr, while the outer fluid setting could be μL/min. This volume per time scale setting
+allowed setting up different purpose speeds, which was significant, but time consuming in
+the optimization.
+The goal for this part of the optimization was to figure out which fluid flow speed
+to use in order to form appropriately-sized droplets containing PEO-b-PFMA polymer. The
+recommended speed for the inner fluid was 2 mL/h, and for the outer fluid 40 mL/h. This
+speed was the starting point of the optimization. The droplet formation was observed using
+live microscopy, as described above.
+When the droplets were formed and collected in the glass flask, this flask was
+carefully covered with the foil and placed under the hood to avoid the external influences
+as they were left overnight to become more stable. SEM was used to study the surface of
+the particles in order to determine whether the particles were not dissolved, and to decide if
+the microfluidic experiment was successful. TEM was also available for the imaging of the
+particles, where the size was measured, and different sections of the particles were
+scanned.
+
+4.7 Optimization for coating CeO2 within MSN with PEO-b-PFMA
+When the desired particle size was obtained, the product was prepared for the
+coating of the previously prepared CeO2 nanoparticles. The process was performed by
+adding the CeO2 pellet with the pipette to the polymer. The process needed to be performed
+carefully, with gentle mixing, so the polymer particles would not end up fusing together.
+This previously mentioned process presents the second step in the three-step
+procedure, following with the adding the 5-ASA drug. Before adding the drug, it is
+necessary to check with the SEM and TEM, in order to see if the polymer coating was
+successful.
+25
+
+4.8 Optimization for adding 5-ASA drug to the mixture
+The last step in the development of the drug delivery system would have been
+adding 5-ASA drug to the mixture of CeO2 and PEO-b-PFMA. The project was stopped as
+unforeseen circumstances did not allow enough time to optimize the polymer particle
+development.
+
+4.9 The synthesis of the gold nanorods
+Gold nanorods were built following the protocols from a guide (Scarabelli et al.,
+2015). The procedure used from the guide consisted of two parts: preparing the seed at
+CTAB for single-crystal Au preparation, and the growth of Au NRs.
+First, however, CTAB (MERC, Darmstadt, Germany) was prepared as a stock
+solution. In a 100 mL round bottom flask, 50 mL of MiliQ water was added. The flask was
+put in the heated water bath and the temperature was set to 30 °C for CTAB to be
+dissolved. Following this, 1.82 g of 0.1 mol CTAB was added and steered. When the color
+of the solution turned completely clear, the solution was ready to be used and able to be
+stored for longer periods. Synthesis of a single crystal gold nanorod was performed in a
+steering water tub at a temperature between 27- 30 °C. A new 50 mL round bottom flask
+was put in the water tub with the temperature set on 30 °C. After placing the stirring
+magnet in the flask, 4.7 mL of the CTAB solution was added.
+Next, solution prepared was a mixture of 16.98 mg of Chloroauric acid (HAuCl4)
+(China, check) in one mL of MiliQ water. The mixture was added to CTAB solution. After
+the solution became yellow, 25 μL was added to the CTAB solution. The mixture was
+stirred slowly for 5 minutes. During the stirring time, 10 nmol Sodium Borohydride
+(NaBH4) (MERC, Darmstadt, Germany) stock solution was freshly prepared by adding 7.6
+mg to 20 mL of MiliQ water, where the 300 μL was rapidly injected in the previously
+prepared mix under vigorous steering with a speed of 1200 RPM. After 20 seconds, the
+steering speed was decreased to 400 RPM, and the solution was stirred until the solution
+became light brown. The product was stored in a temperature between 27 - 30 °C to
+prevent CTAB crystallization.
+The next step, described as the growth process was to synthesize single-crystal Au NR’s.
+First, a stock solution of 1 M Hydrochloric acid (HCl) was prepared by mixing 10 mL of
+37% HCl (MERC, Darmstadt, Germany) with 110 mL of MiliQ water. A round bottom
+26
+
+flask of 50 mL was placed in the water tub with the temperature set on 30 °C, and 190 μL
+of HCl was added. After gentle stirring, 100 μL of HAuCl4, prepared as described above,
+and 10 mL of CTAB were added to the flask. The solution was gently stirred for 5 minutes.
+During this time, 10 nmol Nitric Acid (AgNO3) solution was prepared. AgNO3 solution
+needed to be freshly prepared by adding 17 mg to 10 mL MiliQ water. Next, 120 μL of
+Nitric Acid was added to the solution and lightly stirred. The final stock solution prepared
+was 100 mM Ascorbic acid (HC6H7O6), which was done by adding 176 mg of HC6H7O6 to
+10 mL MiliQ water. By adding 100 μL to the mixture, the cloudy solution became clear.
+The final step in preparing Au NRs was to add 24 μL of seeds at the CTAB,
+prepared previously, strongly stir for a couple of seconds and then left to rest for two hours
+in the water tub at 30oC. The final product became dark purple and was ready to be
+checked under TEM (Scarabelli et al., 2015).
+
+4.10 Optimization for creating final microparticles
+Final optimization was simplified in order to speed up the process. The original
+plan was to build microcomposites containing core-shell nanoparticles CeO2 at MSN, 5ASA drug, gold nanorods, all coated with the PEO-b-PFMA. The simplified version was
+decided to remove the gold nanorods, to reduce the time of the project.
+In this new case, microfluidics would be necessary to build the final
+microcomposites. For the inner fluid, CeO2 at MSN and 5-ASA with the PEO-b-PFMA
+would be all put together in Ethyal acetate. The inner fluid plastic syringe of 5 mL would
+be inserted in the pump system. The outer fluid would be 1% F127 mixed in the MiliQ.
+The outer fluid mixture supposed to make droplets stable enough to form microparticles.
+The outer fluid would be inserted into the 30 mL plastic syringe, and connected to the
+pump system. The fluids would be connected to the microfluidic chip used in the formation
+of the particles in the previous experiments. The speed of the inner fluid would be between
+2 to 5 mL/h, while the outer fluid pump speed would be around 40 mL/h. The droplet
+production would be monitored with the live time light microscope, where images would
+be taken. The final product would be examined with TEM, and microparticles would be
+analyzed.
+
+27
+
+4.11 Microscopy
+To obtain wanted results, and to check if prepared particles are wanted size, shape, and
+composition, imaging using Transmission electron microscope (TEM) and Scanning
+electron Microscope (SEM) is necessary. Microscope usage was present in every part of
+the project. Simple light microscope was used during the chip production, and Live Time
+microscope was used during droplets production.
+To check the size and composition of the particles TEM was used, as shown in the
+image 5. This microscope works based on an electron beam, which is fired through a
+sample. Due to contact between electrons and atoms, it is possible to get a clear image of
+the structure. Electron microscopy samples were imaged in the Electron Microscopy
+Laboratory. The microscope located there was JEM-1400 Plus. It is a high contrast
+microscope with high resolution imaging capable of detecting nano-size particles. This
+microscope was specifically used for imaging CeO2 nanoparticles, due to their nano- size.
+The microscope contains high- resolution sCMOS camera (“Matataki Flash”) which
+captures images with low noise, which helps in image analyzes afterwards (Goodhew,
+2011).
+To monitor the production of the droplets, Meros High-Speed Digital Microscope
+designed for microfluidics, was used. It is a simple light microscope connected to the
+computer screen, imaging the live time. With this microscope, it was possible to monitor
+the crucial part of the experiment, which was droplet formation. A simple light microscope
+was used in chip production. It was possible to see if the glass capillary separation was
+successful, following the gap shape and size after using black sand paper.
+After synthesis of the polymer, High-Resolution FE-SEM was used (Image 6). The
+model was Apreo FE-SEM + ED, Field-Emission Scanning Electron Microscope (FESEM) with EDS, CL and STEM capabilities. The main purpose of using the microscope
+was to observe if the surface of the polymer was synthesized correct. Main parts of the
+SEM are the electron gun, condensed lens, objective lens and scanning coil. An electron
+probe is produced by the objective lens in order to adjust its diameter. Electron beam is
+produced in the electron gun. A scanning coil scans the electron probe. Specimen and
+entire optical system is kept at vacuum (Weiss, 1983).
+
+28
+
+Image 5. The TEM microscope used for the imaging of final particles. The microscope is located in the
+Biocity on the 3rd floor.
+
+Image 6. The SEM microscope located in the Faculty of Science and Engineering building.
+
+4.12 Image analyses
+The final and the most important step of the research is image analyzes. For the
+scientific analyzes, Fiji program was used. An image processing package is extended
+program offered by the ImageJ. The program offers different options to work with TEM
+and SEM images, to calculate and give the data needed in order to present results.
+
+29
+
+To analyze the image, it is important to prepare it in such a way that the end results
+are trustworthy. It is necessary to try different methods and use different functions in the
+ImageJ to set the most useful protocol in image analyzes. If the area of interest in the
+image is not visible to be analyzed, the part of interest can be isolated without destroying
+the result. One of the settings used was thresholding. It allows changing image pixels, in
+the other words, converts images from color to black and white. This simplified analysis
+helps to focus on a wanted part of the image, removing the part we are not interested in
+using as result. The program contains the option of adjusting the threshold automatically,
+which simplifies the process (Ferreira & Rasband, 2012).
+After adjusting the threshold, another possible function for the final analyze of the
+image could be creating masks. This function is used when the area of the interest of the
+image is over or under saturated, meaning that the image is converted to black and white
+based on the previous automatic threshold, where white and black in the histogram is
+presented by numbers, white as 0 and black as 255. If the image is oversaturated, function
+erode may be used, but in order to extend the wanted pixel, option dilate could be used.
+Another common and useful function is the ImageJ program is Watershed, which splits
+overlapping objects in the image. This option is useful if two nanoparticles in the TEM
+image are overlapping, and we want to analyze only single one.
+To perform numerical analyses of the data, particle analyzes extracts wanted
+objects from selected section and analyzes them individually. It is possible to measure
+entire area of the interest. In that case, it is important that the image is converted to 8-bit,
+with the maximum values of 255, and minimum of 0. The useful filter which was used in
+the image analyzes was Gaussian blur, which removed the unwanted noise of the image
+(Ferreira and Rasband, 2012).
+
+30
+
+dark background), 6. Select Convert to Mask, 7. Select the Watershed, 8. Analyze particles
+by the outline in pixels. The process is shown from images 7a to 7f.
+In the final analyzes of the particles, the measurement was given in pixels (px). One
+px corresponds to 264583.3 nm (calculated by 2021 JustinTOOLs.COM). The scale bar
+presented in the image was given in nm and by simple calculation it was possible to
+convert the area from px to nm. Another option was to set the scale bar on each image to
+wanted size, in this case to nm. Then results of area were given in nm2 or results of length
+were given in nm. This image analysis protocol could be used with the multiple SEM and
+TEM images. There are some adjustments needed in different steps depending on the
+image, and wanted end results.
+This particular protocol was useful in analyzing TEM images where the area of
+interest was bigger and particles were overlapping. In the case of smaller area of interest,
+where the focus was on single particle, or just few of them, there was no need of certain
+steps. For an example, the watershed is not necessary, because the particles were not
+overlapping; the interest was just in the size and the structure of the particle. The useful
+step to add in that case would be Gaussian filter, to enhance the boundary of particles of
+interest. Gaussian filter focuses on edge pixels and corner pixels, rather than pixels inside
+the image, removing noise while keeping the edges of an object relatively sharp.
+When analyzing particles, objects are measured and counted in threshold images.
+Firstly the image is scanned, and if the object is found, the system outlines it by using
+selected tool, and then measures it. After measurement, the object becomes invisible, so
+the measurement can be performed on the next object. With this simplified procedure, and
+different protocol methods, it is easy to achieve wanted results, as shown in image 8
+(Ferreira and Rasband, 2012).
+
+34
+
+Image 8. The example of a single particle area measurement. By using this function, it is possible to
+measure the overall area of the particle, and then subtract the core of the particle, to know the thickness of the
+shell.
+
+When using different protocol methods, there should always be the focus on the
+end result. Just a small adjustment can cause the difference in the image analyzes, and
+produce untrustworthy results.
+
+Image 9. The example of the shell thickness measurement procedure in ImageJ program. The area of interest
+is selected on the left side image, then the single particle is outlined to give the area in the table.
+
+The procedure for analyzing the thickness of the shell for the CeO2 Np`s within
+MSN is shown in the image 9. Selected area of interest was duplicated, and then the area of
+the core was measured, following with the area of the entire particle. The area of the core
+35
+
+was substituted from the area of entire NP, to get the area of the shell for the shell
+thickness calculation.
+
+36
+
+5
+
+RESULTS
+CeO2 nanoparticles encapsulated with MSN were evaluated. Their composition and
+
+morphology were studied using TEM microscopy. Using ImageJ software, the
+nanoparticles in the TEM images were counted and their size was calculated, with the
+results showing the nanoparticles were uniform size (Image 10a). The measurement scale
+was adjusted to the desired scale before every image analysis, usually in nanometers. The
+final area of different particles was given in squared nanometers (nm2) (Image 10b). It was
+possible to calculate the diameter of a single particle using the formula 1 for the area of a
+circle:
+A=r2π
+
+Image 10a An example of how to calculate the size of a single particle of CeO2 from the TEM image using
+ImageJ program. Desired particles are outlined and areas are measured in nm. The arrow points the particle
+area in the table, where each outlined particle contains the number corresponding the number in the table.
+The table in the right corner shows results of areas of selected particles.
+
+As seen in Image 10a, image analysis was done using ImageJ in the following
+procedure: the particles are counted and outlined, then areas are calculated in the result
+table section in the right corner as shown with the arrow. This area was calculated using
+only particles with the uniform round shape. As an example, the area for the particle
+number 33 was calculated to be 27966.8 nm2. The diameter was calculated from the
+formula 1, and was 94.4 nm.
+
+37
+
+Image 10b The calculated area of 458 nanoparticles present at the TEM image using ImageJ. Every particle
+is counted with the final area calculation in nm2.
+
+From the processed TEM image presenting CeO2 within MSN NP`s, there were
+458 particles counted, numbered and outlined. The data window listed the area (in nm2) for
+each particle. A summary of the particle count was transferred and saved in the Excel
+sheet. In the image, the average area was counted only from selected uniform round shape
+particles, and results are shown in the table 1.
+Average area of CeO2 within MSN in nm2
+
+Standard deviation in nm2
+
+30806.7
+
+25901.5
+
+Table 1. Final results of the average area of 458 CeO 2 within MSN nanoparticles in nm2 and standard
+deviaton of the same results.
+
+The average area of the CeO2 at MSN nanoparticles from the image was calculated
+to be 30806.7 nm2 + 25901.5 (n=458). From the formula 1, the average radius value for the
+CeO2 at MSN nanoparticles was calculated to be 99.03 nm.
+The TEM images showed a clear separation of a core and a shell part of the single
+nanoparticle. In the ImageJ program, it was possible to calculate the shell thickens for the
+each CeO2 at the MSN nanoparticle. The scale bar was set to nm and gave the length of
+each particle as shown with an arrow in the image 10c.
+
+38
+
+a)
+
+b)
+
+Image 10c Scale bar measurements for each particle (a), giving the length of the entire particle, as well as
+the shell of each particle (b). The length of the shell is subtracted from the length of the entire particle, giving
+the shell thickness length.
+
+After the scale bar was set up to nm, the length of the entire particle was measured,
+followed by the length of core of the particle. The core length was distinguishable as it was
+visibly darker. The TEM images suggested a complete encapsulation of the core of
+nanoparticles. By subtracting the length of the length entire particle from the length of the
+core, the shell thickness was calculated. This procedure was repeated with 31 particles,
+then the mean value + 12.3 (n=31) was calculated (Table 2).
+
+Average shell thickness
+
+Number of particles
+
+Standard deviation of average shell
+
+in nm
+
+tested
+
+thickness
+
+69.2
+
+31
+
+12.3
+
+Table 2. The average result of the shell thickness for the CeO 2 at MSN nanoparticles. The core length was
+manually subtracted from the core+shell length for each nanoparticle. The result is given in nm calculated
+from 31 nanoparticles.
+
+Figure 7 shows the average value for the shell thickness for 31 different
+nanoparticles used, and the result for the average shell thickness was 69.2 nm + 12.3
+(n=31).
+
+39
+
+Figure 7. Chart presentation of the shell thickness of different 31 CeO2 within MSN nanoparticles.
+
+The average nanoparticle radius and average length of the shell thickness were
+measured in nm. The average core diameter length in nm was calculated by subtracting
+average shell thickness length from the average core diameter (radius multiplied by 2). If
+the average radius is 98.9 nm, then the diameter is 197.7 nm. When the average shell
+thickness length of 69.2 nm is subtracted, the core average diameter length is 128.5 nm
+(Figure 8).
+
+Figure 8. The chart comparing average length of the entire CeO2 at MSN nanoparticle, average shell
+thickness, and Average core length of the 31 built particles.
+
+40
+
+The SEM images of the PEO-b-PFMA were analyzed in the ImageJ program
+(Image 11 a-f). Due to polymer dissolution, the only possible results were made from the
+assumption that little “craters” were particles, which got dissolved because of their position
+and shape in image 11e. The diameters of the craters were calculated manfully in the
+ImageJ program (Image 12 ).
+
+a
+
+d
+
+b
+
+e
+
+c
+
+f
+
+Image 11. Different dissolved PEO-b-PFMA. All images show PEO-b-PFMA synthesized using the same
+procedure.
+
+41
+
+Image 12. The SEM image of the PEO-b-PFMA polymer, where the diameter (length) of craters (particles)
+was measured. The results are presented in the table.
+
+Image 13. The expected results of the PEO-b-PFMA particles. Microparticles supposed to be uniform size
+and shape. The measure scale was set up to 50 μm. It was possible to calculate the average area and length
+from the table with results.
+
+SEM image analysis of the PEO-b-PFMA polymer was done using ImageJ. The
+final SEM images of the surface of the polymer showed that the particles fused together
+and were diluted because particles were not formed. The selected image 12 is showing
+little craters which are showing diluted particles. These craters have uniform shape, that’s
+why it is assumed that they present single particle. The length of each crater was measured
+to calculate average size of the craters, as well as to try to validate whether the length of
+the craters matched the desired polymer length. The image measure scale was set to 50 μm.
+The results are shown in Image 13. The results were saved in the Excel sheet where the
+average length was calculated in μm. The average length was 1.9 μm + 0.52 μm (n=102),
+while the average area was 0.15 μm + 0.04 μm (n=102) (Table 3a). To validate whether
+these craters were indeed the dissolved polymer particles, the crater areas and lengths were
+compared to the expected areas and lengths of the polymer.
+Average length in μm
+1.8
+
+Average area in μm
+0.15
+42
+
+Table 3a. The table shows the calculations for the average area and length of the craters.
+
+Average length in μm
+
+Average area in μm
+
+32.9
+
+27.14
+
+Table 3b. The expected results for the average area and length for the expected PEO-b-PFMA particles.
+
+The average length is 32.9 μm +1.2 μm (n=22), while the average area is 27.14 μm
++ 0.97 μm (n=22).
+
+Figure 9. Two graphs, one with average length in μm for the expected and prepared PEO-b-PFMA, and
+another one for the average area in μm for the expected and prepared PEO-b-PFMA microparticles.
+
+To confirm the assumption that craters are actually PEO-b-PFMA particles, t-Test
+for the length of the particles was necessary. Table 4 gives results of two-sample assuming
+equal variance t-Test.
+
+Observations
+
+Mean
+
+102
+
+1.9
+
+22
+
+32.9
+
+P(T<=t) two tail
+
+2E-153
+
+Table 4. t-Test for length of PEO-b-PFMA. The number of particles prepared and analyzed was 102, where
+the number of the expected particles analyzed was 22.
+
+43
+
+While gold nanorods were not used in the project due to simplification, they were
+still synthesized. TEM images were used to determine the average length of nanorods. The
+desired size was planned to be between 100 and 200 nm, with the uniform appearance. The
+gold nanorods are shown with an arrow in the image 13a.
+
+Image 13a. TEM images of gold nanorods built in the project procedure described in the synthesis of the
+Gold Nanorods.
+
+Image 13b. Length measured of longitudinal part of the gold nanorods in Fiji program. The scale was set for
+200 nm. In the table, different lengths are seen.
+
+44
+
+Average length in nm
+157.65
+
+Standard Deviation in nm
+34.9
+
+Table 5. Table with the calculation of the average length of the gold nanorods in nm. The length was
+compared between 8 nanorods, where the standard deviation was 34.87 nm
+
+The project was stopped with the production of the PEO-b-PFMA microparticles
+necessary for the coating of all nanocomposites and required drugs. In the future research,
+the appropriate solvent is needed in order to avoid the dissolution and fusion of the
+polymer, following the coating of the nanocomposites and acquired drugs using
+microfluidics. Imaging of the microparticles after microfluidics is needed. Firstly, the
+imaging with the drug encapsulated within polymer, then, without the drug. With this
+technique, it is possible to test how much drug is needed in order for the targeted drug
+delivery system to be efficient.
+
+45
+
+6
+
+DISCUSSION
+The main focus of this project was to produce and test a drug delivery system to
+
+arthritic joints using lubricated microcompositions. The goal in the future is to treat
+osteoarthritis without surgical intervention. CeO2 within MSN were perfect candidates of
+interest for the study because of their antioxidant properties and biocompatibility.
+The two most important parameters regarding biocompatibility were size and
+surface of the particles. The core size was controlled to be from 50 nm, up to 300 nm,
+which was suitable for the endocytosis by the living cells. With the shell surrounding the
+core, the size was expected to be larger. The average diameter of the nanoparticles was
+around 197.7 nm + 25901 nm2 (n=458). While this average was around the goal size of
+200 nm, the high standard deviation is a limitation, which could be caused by overlapping
+nanoparticles, as the ImageJ program maybe did not recognize multiple particles, and
+counted them as one, or possible human error.
+Given the core-shell ratios calculated in the Results section, the assumption would
+be that the drug delivery system would have ability to arrive to targeted area at the certain
+time and release the drug in appropriate doses. Though this could not be done due to
+halting the project, another way to test the shell thickness would be by imaging the drug
+loaded particle, then imaging particles without the drug. This step is necessary in order to
+test if the corresponding shell thickness would release the adequate amount of drug needed
+for the treatment. If the drug is not released in desired amount, then the thickness is not
+meeting the goal and probably should be thinner.
+In the process of the drug delivery, proper lubrication of microparticles was also an
+important factor to consider, as it is needed to protect the healthy tissue. In order for CeO2
+within MSN nanoparticles to have a lubricating effect, they were supposed to be coated in
+PEO-b-PFMA coating. This specific polymer coating was chosen as it has shown to have
+capability in drug delivery systems, as well as easy drug loading using microfluidics. As
+the drug delivery systems are under development and have a promising future, it is
+important to develop a biocompatible system. The goal was for the PEO-b-PFMA to
+release the drug under exposure of near-infrared light (NIR) with minimal or no damage to
+the body. Comparing the results from the figure 9, it is noticeable that the crater average
+area and the length average area are much smaller than the average area and length of the
+expected PEO-b-PFMA coating microparticles. The difference was assumed to be due to
+46
+
+dissolving PEO-b-PFMA microparticles. The assumption was that craters appeared on the
+areas where the particles used to obtain before the dissolving process. As the t-test showed
+significant difference in the crater and polymer sizes, this assumption was not correct. The
+craters could have occurred naturally as the polymer may not have been stable in storage
+conditions between the formation and the imaging. Additionally, the polymer imaged
+could have changed in composition. As there was no other way to prove whether the
+polymer was indeed the PEO-b-PFMA, there is also the chance that the polymer formed
+was different and therefore was not seen as the expected microparticles when imaged.
+Further tests will be needed to validate whether the craters observed are presenting
+particles and the proper polymer.
+The project was stopped with the production of the polymer, because the polymer
+particles were not forming, they were diluted and fused together. There were difficulties in
+finding the appropriate storage solvent while finalizing the last step with the polymer
+coating of the particles. The SEM images 11a-11f are the proof that the polymer built
+nanoparticles were dissolved. This could have been due to one of the storage solvents.
+Another time-consuming step was finding the right optimization for forming the droplets
+of the PEO-b-PFMA coating. By trying many different methods, the appropriate
+optimization was not found.
+Gold nanorods were prepared, as they contain suitable optical properties and have
+successful applications in the diagnosis of osteoarthritis and its treatment. The length of the
+particles was around 157.6 nm, between the desired length. They are widely used, with
+applications in thermal therapy, bioimaging, and drug delivery, which made them a perfect
+candidate in this project. But, to simplify the project, built gold nanorods were not used.
+Given the unforeseen circumstances due to the coronavirus pandemic, the project
+was adjusted and simplified, so the drug was not used. It is still of interest to use this drug
+in future research in order to increase the bone formation and to use miRNA874 as a
+therapeutic intervention for osteoarthritis.
+Furthermore, collagen IgG2 was not introduced to the microcompositions built for
+the drug delivery, as it was originally planned. The goal for the future research would be to
+attach collagen IgG2 to CeO2 within MSN nanoparticles to form an antibody-antigen
+binding to collagen type II in joints and joint fluids. The major role of collagen IgG2 would
+be to reduce symptoms of osteoarthritis by stimulating collagen production in joints.
+47
+
+The 5-ASA drug supposed to be inserted within PEO-b-PFMA microparticles. This
+step would conclude the experiment building particles. Because the polymer could not be
+formed, the drug was not added. In the future experiments, when adding 5-ASA, it is
+important to consider several things. Firstly, it is important to test and decide how much
+drug is necessary in single CeO2 particle. Secondly, it is necessary to decide the percentage
+of the drug in the final system. It is always good to start with the higher amount of the
+drug, and lower it down in the case it is needed. If there is not an exact amount of the drug
+in the microparticles, the drug delivery system would not be functional. The TEM imaging
+is necessary before and after the drug insertion to decide if the experiment was successful.
+Once the project is finalized, it could be tested in animals. If successful, the next
+step would be clinical studies.
+
+48
+
+7 CONCLUSION
+Due to the unforeseen halting of the experiment, much of the proposed project was
+not completed. Despite this, the physical appearance of CeO2 within MSN seems
+promising. The particles were of uniform size, however, the high standard deviation value
+within the particle size requires further investigation to determine whether the
+nanoparticles fit the initial desired criteria for the drug delivery system.
+The biggest challenge in the project was connected with the synthesis of the PEOb-PFMA coating. Once the optimization for forming droplets was done, the droplets would
+dissolve within 24 hours of formation. Further research must be done to determine optimal
+storage solutions in order to keep the droplets stable so that they may be used to finalize
+the drug delivery system.
+As the project was halted, the hypothesis remains that this drug delivery system,
+with the chosen drugs, can be developed with the hopes of one day being used clinically
+and helping millions of people suffering from osteoarthritis.
+
+49
+
+8 ACKNOWLEDGES
+I would like to thank Associate Prof. Hongbo Zhang, as well his entire Precision
+Nanomedicine and Diagnostics laboratory team. Also, I would like to thank PhD. Jixiang
+Wang for supervision at the beginning of the thesis project. Thanks to Prof. Sergey
+Filippov for the useful advices. Special thanks to my Biomedical Imaging program
+supervisors Diana Toivola and Joanna Pylvänäinen, as well as other BIMA professors and
+classmates.
+
+50
+
+9 REFERENCES
+Abdu Allah, H.H., and A.N. A El Shorbagi. 2016. 5-Aminosalyclic Acid (5-ASA): A
+Unique Anti-Inflammatory Salicylate. Med. Chem. (Los. Angeles). 06.
+doi:10.4172/2161-0444.1000361.
+Al-snafi, A.E. 2014. International Journal for Pharmaceutical Research Scholars ( IJPRS ).
+671–677.
+Arvizo, R., R. Bhattacharya, and P. Mukherjee. 2010. Gold nanoparticles: Opportunities
+and challenges in nanomedicine. Expert Opin. Drug Deliv. 7:753–763.
+doi:10.1517/17425241003777010.
+Askelof, E., and S. Helander. 1992. Mechanism of action of 5-arninosalicylic acid.
+1992:151–165.
+Beebe, D.J., G.A. Mensing, and G.M. Walker. 2002. Physics and applications of
+microfluidics in biology. Annu. Rev. Biomed. Eng. 4:261–286.
+doi:10.1146/annurev.bioeng.4.112601.125916.
+Blagojevic, M., C. Jinks, A. Jeffery, and K.P. Jordan. 2010. Risk factors for onset of
+osteoarthritis of the knee in older adults: a systematic review and meta-analysis.
+Osteoarthr. Cartil. 18:24–33. doi:10.1016/j.joca.2009.08.010.
+Catalanotto, C., C. Cogoni, and G. Zardo. 2016. MicroRNA in control of gene expression:
+An overview of nuclear functions. Int. J. Mol. Sci. 17. doi:10.3390/ijms17101712.
+Cooper, D.L., C.M. Conder, and S. Harirforoosh. 2014. Nanoparticles in drug delivery:
+Mechanism of action, formulation and clinical application towards reduction in drugassociated nephrotoxicity. Expert Opin. Drug Deliv. 11:1661–1680.
+doi:10.1517/17425247.2014.938046.
+Cui, P., and S. Wang. 2019. Application of microfluidic chip technology in pharmaceutical
+analysis: A review. J. Pharm. Anal. 9:238–247. doi:10.1016/j.jpha.2018.12.001.
+Douroumis, D., I. Onyesom, M. Maniruzzaman, and J. Mitchell. 2013. Mesoporous silica
+nanoparticles in nanotechnology. Crit. Rev. Biotechnol. 33:229–245.
+doi:10.3109/07388551.2012.685860.
+El-Dairi, M., and R.J. House. 2019. Optic nerve hypoplasia. Handb. Pediatr. Retin. OCT
+Eye-Brain Connect. 285–287. doi:10.1016/B978-0-323-60984-5.00062-7.
+Ferreira, T., and W. Rasband. 2012. ImageJ User Guide User Guide ImageJ. Image J user
+Guid. 1.46r. doi:10.1038/nmeth.2019.
+51
+
+Galogahi, F.M., Y. Zhu, H. An, and N.T. Nguyen. 2020. Core-shell microparticles:
+Generation approaches and applications. J. Sci. Adv. Mater. Devices. 5:417–435.
+doi:10.1016/j.jsamd.2020.09.001.
+Goodhew, P.J. 2011. General Introduction to Transmission Electron Microscopy TEM.
+Aberration-Corrected Anal. Transm. Electron Microsc. 1–19.
+doi:10.1002/9781119978848.ch1.
+Grässel, S., and D. Muschter. 2020. Recent advances in the treatment of osteoarthritis [
+version 1 ; peer review : 3 approved ]. F1000Research. 9:1–17.
+Haine, A.T., and T. Niidome. 2017. Gold nanorods as nanodevices for bioimaging,
+photothermal therapeutics, and drug delivery. Chem. Pharm. Bull. 65:625–628.
+doi:10.1248/cpb.c17-00102.
+Han, H. 2016. Nnm-11-673.Pdf. 11:673–692.
+Hayes, R., A. Ahmed, T. Edge, and H. Zhang. 2014. Core-shell particles: Preparation,
+fundamentals and applications in high performance liquid chromatography. J.
+Chromatogr. A. 1357:36–52. doi:10.1016/j.chroma.2014.05.010.
+He, D., S. Wang, L. Lei, Z. Hou, P. Shang, X. He, and H. Nie. 2015. Core-shell particles
+for controllable release of drug. Chem. Eng. Sci. 125:108–120.
+doi:10.1016/j.ces.2014.08.007.
+Hosseini, M., and M. Mozafari. 2020. Cerium oxide nanoparticles: Recent advances in
+tissue engineerings. Materials (Basel). 13:1–46. doi:10.3390/ma13143072.
+Huang, X., S. Neretina, and M.A. El-Sayed. 2009. Gold nanorods: From synthesis and
+properties to biological and biomedical applications. Adv. Mater. 21:4880–4910.
+doi:10.1002/adma.200802789.
+Hunter, D.J., and F. Eckstein. 2009. Exercise and osteoarthritis. J. Anat. 214:197–207.
+doi:10.1111/j.1469-7580.2008.01013.x.
+Jafari, S., H. Derakhshankhah, L. Alaei, A. Fattahi, B.S. Varnamkhasti, and A.A. Saboury.
+2019. Mesoporous silica nanoparticles for therapeutic/diagnostic applications.
+Biomed. Pharmacother. 109:1100–1111. doi:10.1016/j.biopha.2018.10.167.
+Jixiang Wang. 2019. Core&Core-shell PROTOCOL.
+Jokinen, V. 2017. MT-0.6081 Microfluidics and BioMEMS, Basics, Laminar flow, shear
+and flow profiles. 11–15.
+De Jong, W.H., and P.J.A. Borm. 2008. Drug delivery and nanoparticles: Applications and
+52
+
+hazards. Int. J. Nanomedicine. 3:133–149. doi:10.2147/ijn.s596.
+Liechty, W.B., D.R. Kryscio, B. V. Slaughter, and N.A. Peppas. 2010. Polymers for drug
+delivery systems. Annu. Rev. Chem. Biomol. Eng. 1:149–173. doi:10.1146/annurevchembioeng-073009-100847.
+Loscalzo, D.E.H.R.C.J. 2011. 基因的改变NIH Public Access. Bone. 23:1–7.
+doi:10.1002/art.34453.Osteoarthritis.
+Mackie, E.J., Y.A. Ahmed, L. Tatarczuch, K.S. Chen, and M. Mirams. 2008.
+Endochondral ossification: How cartilage is converted into bone in the developing
+skeleton. Int. J. Biochem. Cell Biol. 40:46–62. doi:10.1016/j.biocel.2007.06.009.
+Mazetyte‐Stasinskiene, R., and J.M. Köhler. 2020. Sensor micro and nanoparticles for
+microfluidic application. Appl. Sci. 10:1–37. doi:10.3390/app10238353.
+Mohanraj, V.J., and Y. Chen. 2006. Nanoparticles-A Review. 5. 561–573 pp.
+Mora, J.C., R. Przkora, and Y. Cruz-Almeida. 2018a. Knee osteoarthritis: Pathophysiology
+and current treatment modalities. J. Pain Res. 11:2189–2196.
+doi:10.2147/JPR.S154002.
+Mora, J.C., R. Przkora, and Y. Cruz-Almeida. 2018b. Knee osteoarthritis: pathophysiology
+and current treatment modalities. J. Pain Res. Volume 11:2189–2196.
+doi:10.2147/JPR.S154002.
+Naumann, A., J.E. Dennis, A. Awadallah, D.A. Carrino, J.M. Mansour, E. Kastenbauer,
+and A.I. Caplan. 2002. Immunochemical and mechanical characterization of cartilage
+subtypes in rabbit. J. Histochem. Cytochem. 50:1049–1058.
+doi:10.1177/002215540205000807.
+One Digital Drive. 2018. P-30. 11.
+Peppas, N.A., and B. Narasimhan. 2014. Mathematical models in drug delivery: How
+modeling has shaped the way we design new drug delivery systems. J. Control.
+Release. doi:10.1016/j.jconrel.2014.06.041.
+Perrotta, C., P. Pellegrino, E. Moroni, C. De Palma, D. Cervia, P. Danelli, and E. Clementi.
+2015. Five-aminosalicylic acid: An update for the reappraisal of an old drug.
+Gastroenterol. Res. Pract. 2015. doi:10.1155/2015/456895.
+Salma, S.A., M.P. Patil, D.W. Kim, C.M.Q. Le, B.H. Ahn, G. Do Kim, and K.T. Lim.
+2018. Near-infrared light-responsive, diselenide containing core-cross-linked micelles
+prepared by the Diels-Alder click reaction for photocontrollable drug release
+53
+
+application. Polym. Chem. 9:4813–4823. doi:10.1039/c8py00961a.
+Scarabelli, L., A. Sánchez-Iglesias, J. Pérez-Juste, and L.M. Liz-Marzán. 2015. A “Tips
+and Tricks” Practical Guide to the Synthesis of Gold Nanorods. J. Phys. Chem. Lett.
+6:4270–4279. doi:10.1021/acs.jpclett.5b02123.
+Singh, R., and J.W. Lillard. 2009. Nanoparticle-based targeted drug delivery. Exp. Mol.
+Pathol. 86:215–223. doi:10.1016/j.yexmp.2008.12.004.
+Snp, A., and C. Reagent. High Speed Digital Isolator. 1–2.
+Sun, X., H. Zhang, L. Zhang, X. Wang, and Q.F. Zhou. 2005. Synthesis of amphiphilic
+poly(ethylene oxide)-b-poly(methyl methacrylate) diblock copolymers via atom
+transfer radical polymerization utilizing halide exchange technique. Polym. J. 37:102–
+108. doi:10.1295/polymj.37.102.
+Umlauf, D., S. Frank, T. Pap, and J. Bertrand. 2010. Cartilage biology, pathology, and
+repair. Cell. Mol. Life Sci. 67:4197–4211. doi:10.1007/s00018-010-0498-0.
+Wang, Y., R.N. Dave, and R. Pfeffer. 2004. Polymer coating/encapsulation of
+nanoparticles using a supercritical anti-solvent process. J. Supercrit. Fluids. 28:85–
+99. doi:10.1016/S0896-8446(03)00011-1.
+Weiss, A.D. 1983. Scanning Electron Microscopes. Semicond. Int. 6:90–94.
+doi:10.1016/s0026-0576(03)90123-1.
+Wittenauer, R., L. Smith, and K. Aden. 2013. Priority Medicines for Europe and the World
+" A Public Health Approach to Innovation " Update on 2004 Background Paper
+Background Paper 6 . 12 Osteoarthritis. 1–31.
+World Health Organization. 2013. Essential medicines and health products - Priority
+diseases and reasons for inclusion - Osteoarthritis. World Heal. Organ. 12:6–8.
+Xu, C.T., S.Y. Meng, and B.R. Pan. 2004. Drug therapy for ulcerative colitis. World J.
+Gastroenterol. 10:2311–2317. doi:10.3748/wjg.v10.i16.2311.
+Zhang, D., L. Men, and Q. Chen. 2011. Microfabrication and applications of optomicrofluidic sensors. Sensors. 11:5360–5382. doi:10.3390/s110505360.
+Zhao, Q., D. Yuan, J. Zhang, and W. Li. 2020. A review of secondary flow in inertial
+microfluidics. Micromachines. 11:1–23. doi:10.3390/MI11050461.
+Zhou, Y., G. Quan, Q. Wu, X. Zhang, B. Niu, B. Wu, Y. Huang, X. Pan, and C. Wu. 2018.
+Mesoporous silica nanoparticles for drug and gene delivery. Acta Pharm. Sin. B.
+8:165–177. doi:10.1016/j.apsb.2018.01.007.
+54
+
+55
+
+

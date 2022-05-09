@@ -1,0 +1,4226 @@
+Anton Kiukkonen
+
+Covid-19, Indicators, and the Stock Market
+- An Assessment of Indicators’ performance in relation to the
+
+Stock Market during Covid-19
+
+Master’s Thesis in Information Systems
+Supervisor: D.Sc. Markku Heikkilä
+Faculty of Social Sciences, Business and
+Economics
+Åbo Akademi University
+Turku 2021
+
+ÅBO AKADEMI UNIVERSITY – Faculty of Social Sciences, Business and
+Economics
+Abstract for Master’s thesis
+Subject: Information Systems Science
+Writer: Anton Kiukkonen
+Title: Covid-19, Indicators, and the Stock Market – An Assessment of Indicators’
+performance in relation to the Stock Market during Covid-19
+Supervisor: D.Sc. Markku Heikkilä
+Abstract:
+Market participants can use economic and financial indicators to predict and
+follow changes in the stock market. However, Covid-19 has caused uncertainty in
+the economy and financial markets since its spread. Additionally, the U.S.
+economy entered a recession in February 2020, and the stock market crashed in
+March 2020. During volatile times, reliable indicators are necessary for assisting
+market participants’ decision-making. Therefore, it is important to assess the
+indicators’ performance. Previous studies have provided information on indicators
+that are of reliable use. However, the findings from previous studies vary,
+depending on the characteristics of the economic situation.
+The main aim of this study was to determine how indicators have been affected by
+Covid-19 and how well they have performed in relation to the stock market.
+Another aim was to assess if the indicators display information, that is, leading,
+coincident, or lagging in relation to the stock market indices. Furthermore, similar
+indicators were compared, and factors affecting the indicators during Covid-19
+were described.
+For the purpose of this study, nine indicators and two stock market indices were
+included. The indicators were assigned into the categories: macroeconomic,
+survey-based, and business cycle. Their performance was analyzed in relation to
+the development of the U.S. stock market indices S&P 500 index and DJIA.
+Monthly data with the time period of January 2019 to January 2020 were analyzed.
+Statistical analyzes, such as correlation, correlation significances, crosscorrelation, simple linear regression, and multiple linear regression, were
+performed to assess the indicators and their relationship with the stock indices.
+The results showed that the stock market indices were leading the indicators.
+Hence, the results imply that indicators could not be reliably used in forecasting
+the development of the stock indices during the period from January 2019 to
+January 2021. Furthermore, the indicators were also affected directly and
+indirectly by regulations and lockdowns the U.S. government ordered to combat
+Covid-19.
+
+Keywords: stock market, Covid-19, economic indicators, stock market crash,
+macroeconomic indicators, survey-based indicators, business cycle, recession
+Date: 2021-06-11
+Number of pages: 85
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Table of Contents
+1 Introduction ............................................................................................................... 1
+1.1 Background ........................................................................................................ 2
+1.2 Problem Discussion ............................................................................................ 3
+1.3 Aims ................................................................................................................... 5
+1.4 Methodology ...................................................................................................... 5
+1.5 Delimitations ...................................................................................................... 6
+1.6 Structure of the Study ......................................................................................... 7
+2 Theories and Literature Review ................................................................................ 9
+2.1 A Short Introduction to Business Cycles ......................................................... 10
+2.1.1 The Stock Market and the Business Cycle ................................................ 10
+2.2 Stock Market Theories and Asset Pricing Models ........................................... 11
+2.2.1 The Efficient Market Hypothesis ............................................................... 12
+2.2.2 The Random Walk Hypothesis .................................................................. 12
+2.2.3 The Capital Asset Pricing Model ............................................................... 13
+2.2.3.1 Consumption-based Asset Pricing Model ........................................... 14
+2.2.3.2 Production-based Asset Pricing Model ............................................... 15
+2.2.4 Arbitrage Pricing Theory – Multifactor model .......................................... 15
+2.3 Indicators .......................................................................................................... 16
+2.3.1 Macroeconomic indicators ......................................................................... 17
+2.3.1.1 The Producer Price Index .................................................................... 18
+2.3.1.2 The Consumer Price Index .................................................................. 19
+2.3.1.3 The Industrial Production Index ......................................................... 19
+2.3.2 Business Cycle Indicators .......................................................................... 20
+2.3.2.1 The Composite Leading Indicator ....................................................... 21
+2.3.3 Survey-based Indicators ............................................................................. 22
+2.3.3.1 The Purchasing Managers’ Index........................................................ 22
+2.3.3.2 The Consumer Sentiment Index .......................................................... 24
+3 Methodology ....................................................................................................... 26
+3.1 Research Method and Design ........................................................................... 26
+3.2 Data, Time period, and Data sources ............................................................... 27
+3.3 Variables ........................................................................................................... 28
+3.3.1 Independent Variables ............................................................................... 28
+3.3.1.1 Survey-based Indicators ...................................................................... 28
+i
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+3.3.1.2 Macroeconomic Indicators .................................................................. 29
+3.3.1.3 Business Cycle Indicator ..................................................................... 29
+3.3.2 Dependent Variables .................................................................................. 29
+3.4 Data pre-processing .......................................................................................... 30
+3.5 Correlation ........................................................................................................ 32
+3.6 Cross-correlation .............................................................................................. 32
+3.7 Regression Models ........................................................................................... 33
+3.9 R and R Packages ............................................................................................. 34
+3.10 Validity and Threats ....................................................................................... 34
+4 Empirical findings ................................................................................................... 39
+4.1 Indicators’ Correlations with the Stock Indices ............................................... 39
+4.2 The Indicators’ Correlation and Correlation Significance ............................... 41
+4.3 Cross-correlations ............................................................................................. 42
+4.4 Simple Linear Regressions and Lagged Simple Linear Regressions ............... 45
+4.5 Multiple Linear Regressions ............................................................................ 49
+5 Discussion ............................................................................................................... 53
+5.1 Discussion: Results........................................................................................... 55
+5.1.1 Survey-based Indicators ............................................................................. 55
+5.1.2 Macroeconomic Indicators ........................................................................ 60
+5.1.3 Business Cycle Indicator- CLI ...................................................................... 64
+5.2 Limitations........................................................................................................ 66
+6. Conclusion ............................................................................................................. 68
+6.1 Future Research ................................................................................................ 70
+Swedish Summary - Svensk Sammanfattning ........................................................... 72
+REFERENCES........................................................................................................... 77
+
+ii
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Tables
+Table 1 Indicators .................................................................................................................... 8
+Table 2 Indicators and their sources ...................................................................................... 25
+Table 3 Indicators, stock indices and the data pre-processing operations ............................. 31
+Table 4 Indicators' correlations with the stock indices .......................................................... 39
+Table 5 Indicators’ correlation and correlation significance.................................................. 41
+Table 6 Cross-correlations with the indicators and the DJIA ................................................ 43
+Table 7 Cross-correlation with the indicators and the S&P 500 index .................................. 44
+Table 8 Simple linear regressions with the indicators as independent variables and the DJIA
+as the dependent variable ....................................................................................................... 45
+Table 9 Simple Linear regressions with the indicators as independent variables and the S&P
+500 index as the dependent variable ...................................................................................... 46
+Table 10 Simple linear regression with lagged independent variables and the DJIA as the
+dependent variable ................................................................................................................. 47
+Table 11 Simple linear regression with lagged independent variables and the S&P 500 index
+as the dependent variable ....................................................................................................... 48
+Table 12 Multiple linear regression with the S&P 500 index as the dependent variable ...... 49
+Table 13 Multiple linear regression with the DJIA as the dependent variable ...................... 50
+Table 14 Multiple linear regression with lagged independent variables and the DJIA as the
+dependent variable ................................................................................................................. 50
+Table 15 Multiple linear regression with lagged independent variables and the S&P 500
+index as the dependent variable ............................................................................................. 51
+
+Charts
+Chart 1 The stock indices before and after data pre-processing. ........................................... 36
+Chart 2 The macroeconomic indicators, the CSI, and the CLI before and after data preprocessing. ............................................................................................................................. 37
+Chart 3 The PMIs before and after data pre-processing. ....................................................... 38
+Chart 4 The development of the stock indices. ...................................................................... 54
+Chart 5 The development of the PMIs. .................................................................................. 58
+Chart 6 The development of the CSI. .................................................................................... 60
+Chart 7 The development of the macroeconomic indicators. ................................................ 64
+Chart 8 The development of the CLI. .................................................................................... 66
+
+iii
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Abbreviations
+PMI - Purchasing Managers’ Index
+CLI - Composite Leading Indicator
+CPI - Consumer Price Index
+PPI - Producer Price Index
+CSI - Consumer Sentiment Index
+S&P 500 index - Standard and Poors’ 500 index
+DJIA - Dow Jones Industrial Average
+APT - Asset pricing theory
+CAPM - Capital asset pricing model
+ISM - Institute for Supply Managers
+BLS - Bureau of Labor Statistics
+NBER - National Bureau of Economic Research
+
+iv
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+1 Introduction
+The Covid-19 pandemic has caused economic instability in financial markets. The
+pandemic is responsible for increasing uncertainty in stock market prices due to
+changes in price volatility. The most noticeable repercussion that materialized at the
+beginning of 2020 was the stock market crash in March (Mazur et al., 2021). The
+sudden nature of the pandemic, as well as the regulations governments have
+implemented to combat it, further exacerbated the uncertainty on the stock market.
+The National Bureau of Economic Research (NBER) declared that the most recent
+peak in the U.S. business cycle occurred in February 2020, meaning that the U.S.
+economy entered a recession (NBER, n.d.). Research indicates that the stock market
+and the state of the business cycle are connected (Perez-Quiros &Timmermann,
+2007; Naes et al., 2011; Franz, 2010). In general, an expanding business cycle leads
+to an increase in stock market prices. In contrast, a contracting business cycle leads
+to a decrease in stock market prices. Additionally, stock market fluctuations can
+anticipate the state of the business cycle (Franz, 2010). That is, a rise in stock market
+prices can anticipate an expansion of the business cycle, and a fall in the stock
+market prices can anticipate a contraction of the business cycle. In other words, the
+stock market prices fluctuate and mimic the movement of the business cycle, and the
+business cycle, in turn, can be anticipated by the fluctuations of the stock market.
+The abovementioned fluctuations in the stock market are called bull (i.e., an increase
+in prices) and bear (i.e., a decrease in prices) markets.
+The state of the business cycle can be examined by observing different economic
+indicators. When predicting business cycle turning points, organizations and
+investors use leading economic indicators that show in advance how the business
+cycle will turn. The use of economic indicators in relation to the business cycle is
+usually focused on observing economic development from a macroeconomic
+perspective, concentrating on a country’s gross domestic product (GDP) (Zarnowitz,
+1991).
+Participants in the stock market attempt to use all the available information in
+anticipating the fluctuations of the stock market. As with examining the business
+1
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+cycle, economic and financial indicators in relation to the stock market can be used.
+The indicators provide information that shows past, current, and future fluctuations
+of the stock market. The uncertainty that the Covid-19 pandemic has caused to the
+stock market has further raised the importance of accurate indicators. Especially the
+indicators’ predictive abilities and how they should be interpreted have come into
+question.
+Due to the unexpected nature of the Covid-19 pandemic and the ongoing uncertainty
+it has led to, market participants in the stock market need to find alternative ways to
+gain the correct information as to how to participate in the stock market. Indicators
+have been used for the purpose of gaining insight into how the stock market
+develops. In this thesis, macroeconomic indicators, survey-based indicators, and
+business cycle indicators are grouped under the term indicators.
+
+1.1 Background
+Indicators are used to gain more information about the stock market and business
+cycles in general. Hence, the reliability of the indicators and how they can be used
+are important for market participants and decision-makers. Among the earliest
+research in using indicators in an attempt to predict the business cycle is that done by
+Mitchell and Burns (1946;1961). The authors argued that by observing indicators
+that are constructed in different ways and measure different economic activity, one
+would obtain a clearer and broader picture of the business cycle. This, in turn, could
+help in forecasting recessions and increased economic activity. Further, individual
+indicators have performed non-consistently during different recessions (Stock &
+Watson, 2003). Stock and Watson (2003) observed how indicators performed during
+the 2001 recession and concluded that the performance of the indicators was
+different from previous recessions. For instance, consumer confidence and building
+permits decreased, both before and during the 1990 recession, but they did not
+decrease before the 2001 recession. Stock and Watson (2003) argued that the reasons
+for this could be that the U.S. economy has made fundamental changes. Where
+international trade has increased, financial markets have developed, and the increase
+of technology in industries has made the underlying conditions different. Similar to
+
+2
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+the 2001 recession, the decline in the stock market prices at the beginning of 2020
+was a forecaster of the recession.
+NBER, which announces the dates of the US business cycles’ turning points,
+declared that the most recent peak occurred in February 2020 (NBER, n.d.). The
+recession, with an onset in 2020, has continued into 2021, started with the stock
+market crash in March 2020. The stock market crash was soon stabilized, but the
+actions that different authorities put into place, mainly quarantines and regulations
+for business activity to lessen the burden of the virus, led to outcomes that affected
+employment and spending. The virus has further affected economic activity, most
+notably in the tourism industry and later many other industries, through the downturn
+in consumer activity (Congressional Budget Office Reports, 2020).
+Schoenfield (2020) studied how the Covid-19 pandemic affected the financial
+markets by examining the S&P 500 companies. He observed how individual firms
+and industries were affected. According to him, the pandemic led to approximately
+95% of the S&P 500 companies decreasing in value during the three first months of
+2020, however, mainly during the crash of March. According to Schoenfield (2020),
+the most affected firms were those in the following areas: energy, clothing,
+restaurants and hotels, transportation, cars, machinery, and railroads. On a more
+general note, Schoenfield (2020) observed that the pandemic influences the financial
+markets, including changes in unemployment, the value of bonds, commodities, and
+currencies. Concerning the S&P 500 companies, most decreased in value.
+The effects of the stock market crash and the implications of how the pandemic
+continues to affect the economy and economic development have not yet been fully
+comprehended. This underlines the need for the present thesis.
+
+1.2 Problem Discussion
+Previous research shows mixed results in how different indicators have performed.
+Varying results are dependent on indicators’ performance during different stages of
+the business cycle. Additionally, the same can be observed when measuring
+indicators’ performance in relation to stock market development. The attempt to gain
+
+3
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+a broader and more consistent view of economic development led to the construction
+of composite indicators (OECD, 2021). Composite indicators attempt to construct a
+clearer picture of economic development by combining variables representing
+different economic aspects. Nevertheless, the consensus is that using many indicators
+measuring different aspects of economic development provides the most precise
+picture. Hence, I decided to include numerous indicators in my study.
+The stock market crash in March 2020 was a rapid external shock, affecting the
+valuation of stock market prices and eventually leading to a fast but somewhat shortlived stock market crash. The stock market crash occurred during the beginning of
+the recession, with heavy price fluctuations. Previous research has examined how
+indicators have functioned before recessions and how they have perceived stock
+market crashes, but the results concerning this are mixed (Stock & Watson, 2003).
+How well indicators have measured economic development before and after stock
+market crashes also depends on the studied indicators.
+A more globalized economy might have contributed to the uncertainty in how well
+the indicators measure economic and stock market development. Most of the
+companies listed on significant stock market indices act in many different economies
+and economic spheres. This is causing some parts of the companies’ economic
+activities not to be perceived by indicators measuring only the U.S. economy. The
+possibility of being affected by economic shocks outside the U.S. economic sphere
+can influence the stock market price of the affected company listed on the U.S.
+economic indices.
+The indicators’ performance in relation to the stock market during Covid-19 may
+have also been affected by factors related to government regulations made to combat
+the pandemic. For instance, business regulations may have affected indicators’
+performance in managing reliably to measure economic activity in relation to the
+stock market. This could have further increased the uncertainty of the indicators’
+performance during Covid-19.
+The stock market in relation to indicators has usually been studied by concentrating
+on either stock market returns or stock market prices. The prices and returns have
+represented the stock market in these studies. Additionally, how the indicators can
+explain and predict stock market development has considered how the indicators can
+4
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+be used in relation to stock market prices or returns. This study will include previous
+literature from both of the former and the latter viewpoints to gain a comprehensive
+picture of the relationship between the indicators and the stock market.
+
+1.3 Aims
+The main aim of this study was to research how the selected indicators can explain
+the variation of the stock market indices’ values and how they have been affected by
+the Covid-19 pandemic. For this purpose, nine indicators and two stock market
+indexes were included in the present study. Further, the second aim was to observe if
+the indicators display information, that is, leading, coincident, or lagging in relation
+to the stock market indices. The third aim of the study was to determine whether the
+use of a single indicator or multiple indicators better explains the development of the
+stock market indices. Further, observe how the indicators have performed compared
+to other similar indicators. An additional aim was to ascertain how the indicators
+could be used in forecasting the stock market indices. Lastly, how well and
+accurately can the indicators measuring monthly data be used in achieving the aims
+of the study. All the included indicators measure the development of the U.S.
+economy.
+Due to previous research has not come to a consensus on the relationship between
+the stock market and the indicators, no hypotheses were constructed in the present
+study. Instead, research aims were formed, which explain what the present study is
+attempting to achieve.
+
+1.4 Methodology
+The author of this study wanted to know how the indicators have been affected by
+the external shock that the Covid-19 pandemic caused the stock market. Therefore,
+the indicators were tested as to whether they have been functioning properly and
+giving a correct picture. In other words, the indicators’ reliability and measurements
+were analyzed. Conducting these analyses is of practical value, as the findings could
+be used by decision-makers and private participants in the stock market.
+5
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+To be able to determine how the indicators had measured economic activity in
+relation to the stock market both before and during the Covid-19 pandemic, data
+from the years 2019-2021 were included. The data from the time period before the
+onset of the pandemic were compared against the data gathered during the pandemic
+to understand the differences in the indicators’ measurements.
+The indicators have been assigned into three categories, determined by the economic
+activity they measure and how they measure it. The categories are the following:
+Survey-based indicators; that include the Purchasing Managers’ indices (PMI) and
+the Consumer Sentiment Index (CSI), Macroeconomic indicators; that includes the
+Industrial Production Index (IPI), Producer Price Index (PPI), and the Consumer
+Price Index (CPI), and to the Business cycle, that includes the OECD Composite
+Leading Indicator (CLI).
+To examine whether the indicators have a positive relationship with the stock
+indices, correlations and cross-correlations were performed. Further, correlations and
+correlation significances among indicators were performed. Additionally, various
+regression analyses were conducted to observe if there were linear relationships with
+the indicators and stock indices. Firstly, simple linear regression analyses of the
+stock market indices against each indicator were performed. Secondly, simple linear
+regressions with lagged values for the indicators were conducted. Thirdly, multiple
+regression analyses were performed with the indicators that showed the lowest
+correlations and lowest correlation significance values. Finally, multiple regression
+analyses with lagged values for the indicators were conducted.
+
+1.5 Delimitations
+This study focuses on how indicators can measure stock market development and on
+the indicators‘ predictive abilities in relation to the stock market. For this reason,
+nine indicators and two stock market indices were included. The two stock market
+indices, the S&P 500 index and the DJIA, were chosen for the vast number of listed
+companies on the indices. The S&P 500 index was included since the 500 largest
+publicly traded companies are included in the index (Standard & Poors’ 500 index
+factsheet, n.d.). The DJIA was included due to the listed companies are of the 30
+6
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+largest in the U.S (Dow Jones Industrial Average factsheet, n.d.). The nine indicators
+were chosen based on widespread use by market participants and an extensive
+amount of previous research.
+Previous research focuses primarily on how indicators have measured the
+development of the U.S. economy and stock markets, but research that encompasses
+other countries’ stock markets was also included in the current study. Many of these
+countries have developed economies and stock markets that have similarities with the
+U.S. stock market. Furthermore, the timeframe for the data in the study was from
+January 2019 to January 2021.
+
+1.6 Structure of the Study
+The study is divided into six sections. The first section includes the introduction and
+background to the topic, the description of the problem, the delimitations of the
+study, and the aims of the study. The second section contains the theoretical
+foundation of the study and literature on how the indicators have performed in earlier
+studies. The third section contains the methodology of the present study. Different
+analytical methods are explained, and how the analyses are conducted will be
+discussed. The fourth section contains the results of the analysis. The results of the
+study will be presented and concurrently shortly discussed. In the fifth section, the
+results are further discussed and compared to the findings of previous literature. The
+discussion is divided according to the categories of the indicators. Limitations of the
+current research are also presented. In the sixth section, concluding remarks and
+suggestions for future research are made.
+
+7
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Table 1 Indicators
+Category
+
+View
+
+Indicator
+
+Survey-based
+
+Manufacturing
+
+ISM Manufacturing PMI
+
+(Business Cycle)
+Service
+
+ISM Non-Manufacturing PMI
+
+(Business Cycle)
+Manufacturing and
+Service
+
+Chicago PMI
+
+(Business Cycle)
+Manufacturing
+
+IHS Markit PMI
+
+(Business Cycle)
+Sentiment
+(Consumption)
+Macroeconomic
+
+Inflation
+
+The University of Michigan’s
+consumer sentiment index
+Consumer Price Index
+
+(Consumption)
+Inflation
+
+Producer Price Index
+
+(Production)
+
+Business Cycle
+
+Production
+
+Industrial Production Index
+
+Business Cycle
+
+OECD CLI
+
+8
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+2 Theories and Literature Review
+The objective of this section is to present the theories of the topics relevant to this
+study. That is the presentation of how and why the business cycle fluctuates, its
+connection to the stock market, and theories related to what determines the
+development and the returns of the stock market. Later, the indicators and results
+from earlier studies will be presented.
+The theories, directly and indirectly, relate to how the indicators function and how
+they can be used in understanding the stock market. Some indicators, such as
+business cycle indicators, are more directly based on theories related to how the
+business cycle fluctuates. However, the fluctuations of the business cycle and the
+fluctuations of the stock market share commonalities, creating the possibility of
+using the indicators in relation to the stock market. Indicators, such as
+macroeconomic indicators, are explained as factors affecting the stock market, being
+a part of stock market pricing theories attempting to explain the variation of stock
+market development and returns. The indicators, the methods they are constructed
+and how they measure economic activity, and, in turn, how the economic activity
+affects the stock market, are varying. Therefore, to understand the context of the
+present study and the indicators, relevant theoretical concepts are presented.
+The first part of this section can be described as an introduction, presenting the
+theoretical foundation of how the stock market and business cycle functions and the
+indicators’ use in relation to them. The latter part, in turn, can be described as a
+literature review, in which the indicators included in the study are presented and
+results how they have been researched in relation to the stock market are described.
+This section begins with a short introduction to business cycles, followed by the
+presentation of linkages between the stock market and business cycles. Furthermore,
+the stock market and theories related to it are described to understand what factors
+influence the development of the stock market. The section ends with the
+presentation of the indicators included in the present study and how they have
+performed in previous studies in relation to the stock market.
+
+9
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+2.1 A Short Introduction to Business Cycles
+Business cycles show the aggregate movement of economic activity. The economic
+activity can be classified into different turning points, peaks, and troughs, which
+show the highest and lowest points of the economy (Zarnowitz, 1991). A business
+cycle is characterized by recessions and expansions, which occur between the peaks
+and troughs. Hence, the expansions and recessions lead to each respective turning
+point of the business cycle. Recessions are periods when economic activity declines
+for a more extended period, whereas expansions are the contrary (Zarnowitz, 1991).
+The movement of the business cycle is a difference between the actual GDP and the
+potential GDP (Eklund, 2013). When the actual GDP is above the potential GDP, the
+economy is in an expansion. When the actual GDP is below the potential GDP, the
+economy is in a recession (Eklund, 2013). Reasons for recessions could be caused by
+external disruptions and negative outlooks for the future, and the Covid-19 pandemic
+has fulfilled both abovementioned claims.
+Some indicators attempt to predict the fluctuations of the business cycle. These
+indicators are more commonly referred to as business cycle indicators. A well-known
+business cycle indicator is the OECD Composite Leading Indicator (CLI).
+
+2.1.1 The Stock Market and the Business Cycle
+Research has demonstrated a connection between the stock market and business
+cycles. A part of the current study has concentrated on analyzing the connection
+between the stock market and the turning points of the business cycle.
+A general notion is that when the economic activity increases, the stock market
+prices increase due to increased economic output. When economic activity decreases,
+the stock market prices decrease. The linkages between the stock market and the
+business cycle have been observed from different viewpoints, through volatility, by
+Perez-Quiros and Timmermann (2007), Raunig and Scharler (2010), and Hamilton
+(1996), to name a few. Researchers observing volatility as the source of the
+connection between the stock market and business cycles deem that a higher level of
+10
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+volatility leads to a higher level of uncertainty regarding the economic activity.
+Higher levels of uncertainty, in turn, lower consumption and investing, which causes
+the business cycle to turn, and the economy affected.
+A second researched link between the stock market and the business cycle is stock
+market liquidity. The decline of liquidity in the stock market decreases the number of
+participants in the stock market. Additionally, stock market liquidity has shown to
+decrease before the business cycle has started a turning point for recessions (Naes et
+al., 2010).
+The stock market has even been shown to be used to predict business cycles (Franz,
+2010). The stock index, S&P 500 index, used in Franz’s (2010) study could be
+applied in forecasting business cycle turning points. Estrella’s and Mishkin’s (1998)
+findings are in line with Franz’s (2010) findings. They studied how financial
+indicators can be used in the prediction of U.S. recessions. One of the variables that
+they included in their study was stock market prices. The results from the study
+conducted by Estrella and Mishkin (1998) indicated that the stock market prices can
+function as a leading indicator in the prediction of recessions by one to three
+quarters. The connections between the stock market and business cycles can illustrate
+why they often fluctuate in tandem and why a stock market crash often precedes a
+recession.
+
+2.2 Stock Market Theories and Asset Pricing Models
+Stock market theories attempt to state what determines the stock market prices and
+returns. The efficient market hypothesis and random walk hypothesis, which explain
+how the prices and returns can be determined through how the markets and the assets
+themselves function, are presented. In addition, theories that explain what factors
+affect the stock market returns through asset pricing theories, such as the capital asset
+pricing model and multifactor model of the arbitrage pricing theory, are presented.
+
+11
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+2.2.1 The Efficient Market Hypothesis
+The efficient market hypothesis states that all the information of the financial assets,
+including the stocks in the stock market, is reflected in the asset’s price. The efficient
+market includes all the information of the assets, and this information is ready to be
+used by market participants (Malkiel, 2003).
+In an efficient market, the stock market contains all the information that influences
+the stock price. Further, when the information is incorporated in the stock price, there
+is no major difference in the stock’s actual and intrinsic value (Fama, 1995). This, in
+turn, means that there are no undervalued stocks in the efficient market theory. All
+the information is always available for all the market participants, and this
+information is random, then the stock prices at a random time are only affected by
+the information available at that time (Malkiel, 2003).
+Malkiel (2003) states that the efficient market receives critique by not taking
+behavioral and psychological aspects of the markets into consideration. For instance,
+the behavior of some market participants is sometimes irrational, and other market
+participants can benefit from this. Malkiel (2003) argues that this implies that stock
+prices and returns partially predictable. The efficient market hypothesis can therefore
+be said to explain the development of stock market prices partly.
+
+2.2.2 The Random Walk Hypothesis
+The random walk hypothesis states the opposite of the efficient market hypothesis,
+which is that the price of a stock is random (Fama, 1995). The historical values that
+the stock market has had in the past have no connection with today’s value and
+cannot be used in the prediction of future stock market values (Fama, 1995). In the
+hypothesis, the actual value for an asset is ‘randomly walking’ from the intrinsic
+value.
+Fama (1995) argues that the random walk hypothesis can explain the changes in the
+intrinsic and actual values of an asset. Changes in the intrinsic value cause underand over-adjustment of the asset’s actual value, and it takes time for the changes of
+12
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+the intrinsic value to be reflected in the actual value. In addition, there is a time lag
+that is independent of interference for the actual values to adjust to intrinsic values
+(Fama, 1995). The change in the actual values may occur before the change has
+occurred in the intrinsic value or afterward, reflecting the random nature of how the
+values change.
+Fama (1995) argues that the random walk hypothesis may not be entirely correct but
+that there is some truth to the hypothesis. The price movements of the asset may not
+be fully independent or dependent on historical price movements. The degree to how
+dependent future price movements are on historical price movements defines the
+possibility to predict future stock market prices.
+
+2.2.3 The Capital Asset Pricing Model
+The relationship between the expected return and risk of a stock is described in the
+capital asset pricing model (Perold, 2004). The expected return is influenced by the
+time value of money (the risk-free rate) and the market premium (Perold, 2004). The
+market premium is the return of the market subtracted by the risk-free rate. How
+much a market participant is willing to take more risk is represented by a risk
+measure (beta), which compares the stock returns to the market and market premium.
+The model states that diversification of the assets in a portfolio lowers the risk of the
+portfolio, but there is still a correlation between the risks associated with the assets
+(Perold, 2004). This means that there still are some levels of risks in the portfolio that
+cannot be eliminated from the portfolio, which is represented by the beta. Therefore,
+diversification of the portfolio cannot eliminate all the risks (Perold, 2004). The
+objective then becomes to choose the level of expected return and risk from the
+portfolio. The formula for the CAPM is the following:
+Es = Rf+βi (Em−Rf)
+
+(2.1)
+
+Where:
+Es= expected return of an asset,
+Rf = risk-free rate,
+
+13
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Βi= beta of the asset,
+Em= expected return of the market portfolio,
+(Em−Rf)= market risk premium
+The model has many variations that consider different economic factors. There is a
+variation of the CAPM that takes foreign-exchange risk into account (e.g.,
+international CAPM) (Dumas, 1994). CAPM and its extensions can further consider
+other variables affecting asset prices, such as the state of the business cycle. A model
+where the beta changes according to the business fluctuations is called the
+conditional CAPM (Dumas, 1994).
+The CAPM and the behavior of stock markets have been attempted to explain by
+using business cycle indicators (Dumas, 1994). More specifically, economic activity
+and stock market return. Dumas (1994) tested different capital asset pricing models,
+such as the international and conditional international CAPMs. He concluded that
+specific nonfinancial business cycle indicators could help predict stock market
+returns and explain the behavior of the stock market. Dumas (1994) used the
+indicators to help in determining if the conditional CAPMs functioned adequately,
+that is if the indicators could explain the behavior of the stock market through the
+conditional CAPMs. The author concluded that the international conditional CAPM
+did function, which proved the relationship between the business cycle indicators and
+stock market returns.
+Two popular variations of the CAPM are the production-based asset pricing model
+and the consumption-based capital asset model. These models will be shortly
+presented next.
+
+2.2.3.1 Consumption-based Asset Pricing Model
+The consumption-based asset pricing model differs from the CAPM by replacing the
+market risk with a consumption risk that affects the expected return of assets (Chen,
+2003). The risk is associated with how owning an asset increases or decreases the
+uncertainty in consumption. When a market participant has invested in a risky asset,
+the market participant’s consumption may negatively turn because the market
+14
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+participant’s total wealth may be negatively affected by the risky asset (Chen, 2003).
+The model has a consumption beta that measures a consumption growth risk (Chen,
+2003). According to Cochrane (1991), in the consumption-based asset pricing model,
+stock market returns and consumer decisions affecting the marginal rates of
+substitution are connected by a utility function. The utility function is based on the
+results of the consumers’ decisions for an intertemporal consumption demand
+(Cochrane, 1991).
+
+2.2.3.2 Production-based Asset Pricing Model
+Production-based asset pricing models attempt to link asset returns to production
+variables (Cochrane, 1991). In addition, there is a relationship between returns of the
+stock market and production-based variables. This relationship can be studied
+through the production-based asset pricing model. Cochrane (1991) states that
+variables affecting production are linked to asset returns. In the production-based
+asset pricing model, the decisions made by companies on their production and
+investment affect the marginal rates of transformation, which are tied together with
+asset returns by a production function (Cochrane, 1991). The production function is
+based on the producer’s decisions for intertemporal investment demand (Cochrane,
+1991).
+
+2.2.4 Arbitrage Pricing Theory – Multifactor model
+The multifactor model of the arbitrage pricing theory connects macroeconomic
+variables with stock market returns (Priestley, 1996). In the model, stock returns are
+influenced by economic variables, such as unanticipated changes in risk premiums,
+changes in the expected level of industrial production, unanticipated inflation, and
+unanticipated changes in the shape of the interest rates’ term structure (Ross, 1976).
+In the multifactor model, the asset’s return is affected by the asset’s expected return
+and different macroeconomic variables that can increase or decrease the risk of the
+asset (Priestley, 1996). According to the model, asset prices are not always correctly
+
+15
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+priced, leading to opportunities for arbitrage. In the model, one can include multiple
+macroeconomic variables that affect the risk and return of different assets. Further,
+macroeconomic variables bring systematic risk and risk premiums (Priestley, 1996).
+Additionally, the market participants are expected to diversify their portfolios based
+on risks. The expected return of an asset is a linear function of the risk of the asset
+relative to factors, such as macroeconomic variables (Ross, 1976). Next, the formula
+of the multifactor model is presented:
+
+Ri = Af+ (Bi1*L1) + (Bi2*L2)+…+Bn*Ln
+
+(2.2)
+
+Where:
+Af = risk-free rate of return of the asset,
+Ln = risk premium for the factor,
+Bn = sensitivity of the asset in relation to a specific factor,
+Ri = expected return of the asset
+
+2.3 Indicators
+The indicators included in the present study are assigned into three categories:
+survey-based, macroeconomic, and the business cycle. The indicators differ in the
+underlying methods, how they are constructed, and by what they measure. The only
+‘pure’ business cycle indicator in this study is the OECD CLI. The PMIs are partly
+business cycle indicators due to them measuring contractions and expansions in
+relation to economic sectors. However, they also measure expectations and overall
+sentiment in these economic sectors. Additionally, they are constructed by surveys
+and ‘soft’ data, which is why they are grouped in the survey-based category.
+Composite indicators can be used for gaining an understanding of stock market
+fluctuations. Additionally, depending on what variables they cover, they can be
+argued to provide a more comprehensive picture of stock market fluctuations than
+using single economic indicators. Furthermore, composite indicators can eliminate
+irregularities that single indicators produce (Ficthner et al., 2007)). Composite
+
+16
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+indicators can be constructed by many variables such as financial and economic
+variables or by grouping together different questions, such as it is done by the PMIs.
+
+2.3.1 Macroeconomic indicators
+Macroeconomic indicators are used in discovering and determining the stock market
+fluctuations, price changes, and stock market returns. Chen (2009) observed how
+macroeconomic variables are used to predict the U.S. bear stock market in the S&P
+500 stock market index. The best performing variables that the author used in the
+prediction of bear markets were the variable yield curve spreads and the variable
+inflation rates. Chen (2009) also argues that using macroeconomic variables in the
+prediction of bear markets surpasses the performance of predicting stock returns with
+macroeconomic variables.
+Chen et al. (1986) studied different macroeconomic variables and how they affect
+expected stock returns in asset pricing. The macroeconomic variables that affected
+expected stock returns the most were industrial production, changes in the yield
+curve, and risk premium. Furthermore, during volatile times unexpected inflation and
+changes in expected inflation were significant in determining expected stock returns
+(Chen et al., 1986). Furthermore, the variables had a more significant effect on the
+expected returns than the New York Stock Exchange index.
+Rapach et al. (2005) studied how macroeconomic variables can help in predicting
+stock market returns in 12 different countries. They included macroeconomic
+variables, such as the inflation rate, money stocks, interest rates, term spreads,
+industrial production, and unemployment rate. Of all the included macroeconomic
+variables, the predictive ability of interest rates performed best in all the observed
+countries. However, the authors concluded that stock returns are difficult to predict
+since speculation and other factors constitute most stock returns, and the predictable
+part of stock returns is negligible.
+The results of what variables affect the stock market the most are conflicting.
+Frequently studied variables are, for instance, money supply, industrial production
+and manufacturing, interest rates, unemployment, and inflation. The results from
+17
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+previous studies vary depending on the researched country and how developed the
+country’s economy is. Moreover, many macroeconomic variables affect each other,
+and historical changes in the variables can be used in predicting the current values of
+the variables (Serfling & Miljkovic, 2011).
+Indicators that measure macroeconomic factors present information about the stock
+market when lagged. Celebi and Hönig (2019) observed how lagged indicators in the
+German economy present information on the DAX30 stock index development. The
+study was divided into three periods: a pre-crisis period, a post-crisis period, and a
+crisis period, where some ECB countries were under economic duress. During the
+crisis period, the lagged indicators impacted the companies listed on the DAX30
+more than they did during the pre-and post-crisis periods (Celebi & Hönig, 2019).
+
+2.3.1.1 The Producer Price Index
+The Producer Price Index (PPI) measures price movements in domestic production
+(BLS, n.d.c). The PPI is published monthly by the Bureau of Labor Statistics (BLS).
+The PPI has been observed to both affect the stock market returns and to have an
+effect on how the stock market develops (Flannery & Protopapadakis, 2002; Sirucek,
+2012). An increase in the PPI shows an increase in inflation, affecting the level of
+returns of the market portfolio (Flannery & Protopapadakis, 2002). Sirucek (2012)
+studied how macroeconomic variables affect the development of the S&P 500 index
+and the development of the DJIA index. Sirucek (2012) concluded that the PPI had a
+negative impact on the development of the stock indices. Additionally, the
+relationship between the development of the DJIA index and the PPI was more
+significant than the relationship between the PPI and the development of the S&P
+500 index.
+Macroeconomic news and information influence the stock market, foreign exchange,
+and the U.S. bond market (Suk Joong et al., 2004). Information and news related to
+the PPI and the Consumer Price Index (CPI) influence how the U.S. stock market
+develops (Suk Joong et al., 2004). The authors discovered that a significant positive
+effect in mean stock market returns emerged when the PPI and CPI were lower than
+previously expected. In comparison, negative inflation news resulted in minor stock
+18
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+market returns. In addition, Suk Joong et al. (2004) concluded that the stock market
+returns are affected predominantly by news related to price levels and inflation, while
+the stock market, foreign exchange, and the bonds market are affected by
+information and news explicitly related to the PPI.
+
+2.3.1.2 The Consumer Price Index
+The Consumer Price Index (CPI) measures the change in prices of goods and
+services that are paid by the consumer (BLS, n.d.a). The CPI is published by the BLS
+monthly. Flannery and Protopapadakis (2002) concluded that the CPI functions as a
+risk factor to stock market returns. The relationship between the CPI and the stock
+market is similar to the relationship between the PPI and the stock market. An
+increase in either the PPI or the CPI shows an increase in inflation, affecting the
+market portfolios’ returns.
+Hamid et al. (2006) researched the price transmission between the following
+variables: CPI, PPI, S&P 500 index, and DJIA. The price transmission varied
+through three different time periods, 1926-1945, 1946-1972, and 1972-2003. The
+authors concluded that during the most recent time period (i.e., 1972-2003), the CPI
+and the PPI did not significantly affect the DJIA and S&P 500 index. The DJIA and
+the S&P 500 index did not affect the PPI or the CPI.
+Serfling and Miljkovic (2011) researched the relationships among macroeconomic
+variables and the S&P 500 index. The relationship between the S&P 500 index and
+the CPI was influenced when one of the variables changed (Serfling & Miljkovic,
+2011). The authors concluded that historical changes in the money supply, S&P 500
+index, industrial production index, and the CPI could predict changes in the S&P 500
+index. In addition, historical changes in interest rates, the S&P 500 index, dividend
+yield, CPI, and the money supply can be used in predicting changes in the CPI
+(Serfling & Milkovic, 2011).
+
+2.3.1.3 The Industrial Production Index
+The Industrial Production Index (IPI) is an indicator in the U.S. measuring the actual
+output from manufacturing, gas and electric utilities, and mining (Federal Reserve,
+19
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+n.d.). It is published monthly by the Board of Governors of the Federal Reserve
+System. The index reports changes in production, and an increase in the index, in
+turn, shows growth in the manufacturing industries.
+The IPI is extensively studied in relation to general economic development and the
+stock market. Sirucek (2012) observed a statistically significant relationship between
+the DJIA and the IPI. Indication on how industrial production affects stock market
+development was presented in the study conducted by Humpe and Macmillan (2007).
+In their study, they researched how macroeconomic variables affect stock market
+development in the U.S. and Japan. Their results indicated that the U.S. and Japanese
+stock markets were positively affected by industrial production. Further, interest
+rates and inflation negatively influenced the U.S. stock market, and the money
+supply negatively influenced the Japanese stock market.
+Industrial production has also been studied in relation to developing countries.
+Rahman et al. (2009) studied how selected macroeconomic variables affect the stock
+market prices in the Malaysian stock exchange. The results from the study indicated
+that of the selected variables, industrial production strongly affected the development
+of stock market prices.
+The IPI, together with other macroeconomic variables, and their historical values,
+can be used in predicting the stock market. Historical values of the IPI, interest rates,
+the money supply, CPI, and the S&P 500 index can be used in predicting current
+changes of the S&P 500 index (Serfling & Miljkovic, 2011). Even historical values
+of the S&P 500 index, interest rates, and the IPI can be used in predicting changes in
+the IPI.
+
+2.3.2 Business Cycle Indicators
+Business cycle indicators attempt to anticipate the economy’s fluctuations. These
+indicators are often constructed by different variables attempting to forecast
+economic activity. Additionally, they can be used to forecast the peaks and troughs
+of the business cycle. The business cycle indicator included in this study is the
+OECD CLI.
+20
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+2.3.2.1 The Composite Leading Indicator
+The CLI is made by the OECD for most of the OECD countries. The CLI is used to
+predict turning points in the business cycle (OECD, 2021). The CLI’s components
+are short-term economic indicators in the form of time series. The components of the
+CLI are leading indicators of the GDP (OECD, 2021). The composition of variables
+in the CLI depends on the country that its business cycles it measures. The choosing
+of the variables depends on certain criteria (Fichtner et al., 2009). The component
+must have an economic reason for the leading relationship with GDP. The
+component may cause business cycle fluctuations or measure economic activity at
+certain stages of the business cycle (for instance, early housing starts) (Fichtner et al.,
+2009). The component must lead the GDP, and the data must be timely. The number
+of components (5 to 11) in the CLI are country-specific (Fichtner et al., 2009).
+Additionally, the components of the CLI are weighted and make the CLI a diffusion
+index (OECD, 2021). The components of the U.S. CLI are the following: Weekly
+hours worked: manufacturing, Manufacturing-Industrial confidence indicators,
+Spread of interest rates, Consumer confidence indicator, Work started for dwellings,
+Net new orders-durable goods, and the share prices of the NYSE Composite (OECD
+CLI Turning Points of Reference Series and Component Series, 2021).
+The CLI has been studied in relation to the stock market during different business
+cycle phases (Dzikevičius & Vetrov, 2011). The composition of different asset
+portfolios’ risk and return are affected by how the assets are weighted in the portfolio
+and how they account for the fluctuations of the business cycle. If the business cycle
+fluctuations are considered while choosing the assets into the portfolio, it is possible
+to maintain the risk and return at levels chosen by the market participant
+(Dzikevičius & Vetrov, 2011). Additionally, the stage of the business cycle affects
+the stock market. In the recovery and expansion stage, the stocks are rising in value
+and they are affected favorably, while the stocks are affected negatively by the
+shrinking of the business cycle (Dzikevičius & Vetrov, 2011). Furthermore,
+reallocation of stocks in portfolios during recessions can help in keeping the risk at a
+manageable level (Dzikevičius & Vetrov, 2011).
+Celebi & Hönig (2019) studied how different variables affect the German stock
+index DAX30 index. The OECD CLI for the German economy was one of the
+21
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+variables the authors included in the study. Celebi and Hönig (2019) concluded that
+by conducting an OLS regression with a maximum of four lags, the variables
+influenced the DAX30 index returns. Further, the German OECD CLI was measured
+to have a positive relationship with the development of the DAX 30 index. The
+relationship was observed to be the strongest when the OECD CLI was numbered
+with three lags in the OLS regression.
+
+2.3.3 Survey-based Indicators
+The survey-based indicators use ‘soft’ data in gauging the opinions of their
+respondents. The indicators are constructed by surveys directed to participants in the
+manufacturing and service sectors (i.e., the PMIs) and to consumers (i.e., the
+Consumer Sentiment Index). The surveys ask how the economy is currently and how
+the respondents think that it will be in the future.
+
+2.3.3.1 The Purchasing Managers’ Index
+The PMIs are survey-based indicators that measure trends in manufacturing and
+service sectors, and they are sent to the companies’ executives that operate in the
+sectors (ISM n.d.a; IHS Markit, 2017). The surveys ask the executives if they think
+that the economic activity in the sectors is shrinking, continue to stay the same, or is
+expanding (ISM, n.d.a). The PMIs deliver information about the current economic
+situation and the future expectations that the executives have related to the industry
+in which the companies they work in operate. The first PMIs were surveys presented
+to companies operating in the manufacturing sector, and later PMIs have been
+developed for companies operating in the services sector as well. The most notable
+PMIs are developed by Markit Economics and by the Institute for Supply
+Management (ISM).
+The PMIs values range from 0 to 100. The values between 0 and 49 state that the
+economic activity in the sector is shrinking. The value 50 means that economic
+
+22
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+activity in the sector remains the same, and a value above 50 means that the
+economic activity is expanding in the sector (ISM, n.d.).
+The PMIs are diffusion indices, with questions that are equally weighted in the index
+(ISM, n.d.a; IHS Markit, 2017). The areas that the questions cover depends on if the
+survey is directed to the manufacturing or service sector. The questions in the
+manufacturing PMIs are intended to specifically cover manufacturing-related areas,
+such as questions regarding employment, inventories, backorders, and supplier new
+deliveries (ISM n.d.a; IHS Markit, 2017). The questions in the service PMIs are
+related to the business activity, new orders, supplier deliveries, and employment
+(ISM, n.d.b).
+The formula for the PMIs follows a general diffusion index:
+PMI = (P1 *1) + (P2* 0.5) + (P3*0)
+P1 in the formula represents the percentage of executives that report expansion, P2
+represents the percentage of executives that have reported that the economic activity
+remains the same, and P3 represents the percentage of executives that have reported
+that the economic activity is shrinking. The number 1, 0.5, and 0 respectively stands
+for expansion, the economic activity remaining the same, and for the shrinking of the
+economic activity.
+Previous studies examining the relationship between the stock market and PMIs have
+shown varying results. Dovolil (2016) studied the relationship and the predictive
+power of different economic indicators, including the PMI, in relation to the S&P
+500 stock index. Dovolil (2016) observed that the PMI was lagging the S&P 500
+index by one month. Johnson and Watson (2011) observed a statistically significant
+relationship between the manufacturing PMI published by the ISM and certain stock
+market returns. The PMIs forecasting ability has been demonstrated in relation to
+economic indices and the U.S. industrial economy (Jeon & Ji-Hong, 2017). Jeon and
+Ji-Hong (2017) demonstrated that the PMI has a positive relationship with the PPI
+and IPI in the U.S., that is, a change in the PMI often precedes a change in the PPI
+and IPI.
+Hu et al. (2017) analyzed how variables affect the S&P 500 index futures. They
+asked 13 experts which variables market participants follow to determine when they
+23
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+invest. One of the variables that the experts suggested that the market participants
+follow was the ISM manufacturing PMI. Hu et al. (2017) further analyzed how the
+variables affect the S&P 500 index futures and other futures. They concluded that
+market participants observe the ISM manufacturing PMI when investing in the S&P
+500 index futures. The ISM manufacturing PMI has also affected the fluctuation of
+S&P 500 index futures and DJIA index futures, but other variables (e.g., US dollar
+index, interest rates) in the study had stronger explanatory power in the prediction of
+the rate of return of S&P 500 index futures (Hu et al. 2017).
+In the current study, the ISM Manufacturing and Non-Manufacturing PMIs, IHS
+Markit Manufacturing PMI, and the Chicago PMI are included. The PMIs are
+included in the present study to answer the aim; to observe how similar indicators
+have performed before and during the pandemic. The PMIs will give regional
+(Chicago PMI) and national (all the other PMIs) perspectives to the current study.
+
+2.3.3.2 The Consumer Sentiment Index
+The Consumer Sentiment Index (CSI) measures consumer-related activities through
+a survey, and it describes consumer behavior and their expectations of the economy
+(Curtin, 2002). The index is survey-based, and it is published monthly. The idea
+behind studying the CSI in relation to the stock market development derives from
+that the consumers, with their spending and confidence, affect the economy and
+stock evaluation.
+Otoo (1999) examined the relationship between the fluctuations of stock prices and
+the Consumer Confidence Index. Otoo observed that when companies increase in
+equity values, then consumer confidence increase. In addition, Otoo (1999) noted
+that consumers use the fluctuations of the stock market as an indicator of future
+economic development.
+The relationship between the stock market and consumer sentiment can be divided
+into a long and short relationship depending on the timeframe. The long relationship
+between the stock market and consumer sentiment has been observed to be almost
+non-existent (Christ & Bremmer, 2003). However, there is a short relationship in
+24
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+which the stock market affects consumer confidence. Christ and Bremmer (2003)
+propose in turn that expected changes in consumer sentiment are reflected in the
+stock market prices.
+Charoenrook (2006) observed how consumer sentiment affects stock returns over the
+periods 1979-2000 and 1955-2000. The research observed that the consumer
+sentiment index could be used in the prediction of stock returns. Charoenrook (2006)
+concludes that the changes in consumer sentiment work best as a predictor for excess
+stock market returns at a timeframe of one month and at a timeframe of one year.
+
+Table 2 Indicators and their sources
+Category
+Survey-based
+indicators
+
+View
+
+Indicator
+
+Publisher and Source
+
+Manufacturing
+
+ISM Manufacturing PMI
+
+Institute for Supply
+Managers /
+
+(Business Cycle)
+
+tradingeconomics.com
+Service
+
+ISM Non-Manufacturing
+PMI
+
+Institute for Supply
+Managers /
+
+(Business cycle)
+tradingeconomics.com
+Manufacturing and
+Service
+
+Chicago PMI
+
+Institute for Supply
+Managers - Chicago
+
+IHS Markit PMI
+
+IHS Markit /
+
+(Business Cycle)
+Manufacturing
+(Business Cycle)
+The University of Michigan’s
+Consumer Sentiment Index
+
+The University of
+Michigan
+
+Consumer Price Index
+
+Bureau of Labor
+Statistics
+
+Producer Price Index
+
+Bureau of Labor
+Statistics
+
+Production
+
+Industrial Production Index
+
+Board of Governors of
+the Federal Reserve
+System
+
+Business Cycle
+
+Composite Leading Indicator
+
+OECD
+
+Sentiment
+(Consumption)
+Macroeconomic
+
+tradingeconomics.com
+
+Inflation
+(Consumption)
+Inflation
+(Production)
+
+Business cycle
+
+25
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+3 Methodology
+This section begins with the presentation of the research method and design of the
+present study. Further, the information about the data, variables and, how the data is
+transformed before analyzed in the study are presented. The section follows with the
+presentation of the different analytical methods in the study. It concludes by
+presenting the validity of the research method and threats to validity.
+
+3.1 Research Method and Design
+There are three general research methods identified by Creswell and Creswell (2018,
+pp. 41): quantitative, qualitative, and mixed research methods. According to
+Creswell and Creswell (2018), quantitative research tests measurable variables by
+examining their relationships. In addition, quantitative methods include statistical
+analyses and interpretations. Quantitative research methods usually examine
+relationships between different variables and attempt to understand the associations
+or the causality between them (Creswell & Creswell, 2018 pp. 206). Furthermore, in
+quantitative methods, the independent and dependent variables must be identified to
+describe the relationship between the variables (Creswell & Creswell, 2018 pp.206).
+Creswell and Creswell (2018 pp. 49) identify that research methods include different
+research designs that provide an outline, which states the procedures of the different
+research methods. The different research methods can use many specific research
+designs. Three standard research designs are descriptive, exploratory, and casual
+designs (Cooper & Schindler, 2011). Exploratory design can be used when the
+problem does not have a clear definition, and there are no clearly defined hypotheses
+(Cooper & Schindler, 2011 pp.129). One of the main objectives of the descriptive
+research design is to discover associations among variables (Cooper & Schindler,
+2011 pp. 134-135). The research methodology in the present study follows a
+quantitative research method with a part descriptive and part exploratory design.
+
+26
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+3.2 Data, Time period, and Data sources
+The including of the indicators for the present study are based on few criteria. The
+indicators must be researched in relation to stock market development. The
+indicators’ data must be publicly available, either from the original sources or from
+third-party sources. Additionally, reputable institutions and organizations must
+publish the indicators. Furthermore, the indicators must measure some economic
+aspect of the U.S. economy.
+The two stock market indices are the study’s dependent variables, while the
+indicators are the independent variables. The time period of the data is from January
+2019 to January 2021. The time period is chosen to notice if Covid-19 has caused
+observable short-term changes in the indicators’ performance before and after the
+stock market crash in March 2020.
+The indicator and stock market data are gathered from publicly available sources.
+The CPI and PPI data are gathered from the Bureau of Labor Statistics (BLS, n.d.b;
+BLS, n.d.d). The IPI data is gathered from Board of Governors of the Federal
+Reserve System (Board of Governors of the Federal Reserve System, n.d.). The
+Chicago PMI data is gathered from the Institute for Supply Managers - Chicago
+chapter (Institute for Supply Managers- Chicago n.d.). The OECD CLI data is
+gathered from the OECD (OECD, 2021). The ISM Manufacturing PMI and the ISM
+Non-Manufacturing PMI data are collected from the Institute of Supply Chain
+Management (ISM, n.d.a; ISM, n.d.b) and from the indicator website
+tradingeconomics.com (United States ISM Purchasing Managers’ Index, n.d.; United
+States ISM Non-Manufacturing PMI, n.d.). The IHS Markit PMI data is gathered
+from the IHS Markit website and from the indicator website tradingeconomics.com
+(IHS Markit US Manufacturing Purchasing Managers’ Index, n.d.). The University
+of Michigan’s CSI data is gathered from the University of Michigan (University of
+Michigan, n.d.). Both stock indices are gathered from finance.yahoo.com (Dow
+Jones Industrial Average (2 February 2021); S&P 500 index (2 February 2021).
+
+27
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+3.3 Variables
+3.3.1 Independent Variables
+3.3.1.1 Survey-based Indicators
+The ISM Manufacturing PMI is an indicator that is published monthly by the
+Institute for Supply Chain Managers. It is an indicator based on a survey directed to
+purchasing managers in manufacturing companies. The survey is a composite
+indicator divided into five sections. The sections are the following: employment,
+production, inventories, new orders, and supplier deliveries (ISM, n.d.a).
+The ISM Non-Manufacturing PMI is an indicator published monthly based on a
+survey directed to the purchasing managers in non-manufacturing companies (service
+sector). The ISM Non-Manufacturing PMI is a composite index with four sections:
+business activity, new orders, supplier deliveries, and employment (ISM, n.d.b).
+The IHS Markit Manufacturing PMI is an indicator based on a survey directed to
+purchasing managers in manufacturing firms. The survey is divided into five
+differently weighted sections: output, employment, delivery times, new orders, and
+stocks of purchases. New orders and the questioned companies differ from the ISM
+manufacturing PMI (IHS Markit, 2017).
+The Chicago PMI measures the economic activity of manufacturing and service
+industries around Chicago. It is an indicator based on a survey sent to purchasing
+managers in manufacturing and service companies in the Chicago area. It is a
+composite index with equally weighted parts. The survey is divided into new orders,
+production, order backlogs, supplier delivery, and employment (Institute for Supply
+Managers- Chicago, n.d.).
+The CSI is published monthly by The University of Michigan, and it is a surveybased indicator. The survey consists of five questions asked to consumers regarding
+how they perceive their financial situation, how it is expected to change during the
+next year, how business conditions are expected to change during the next year and
+the next five years. Furthermore, when is it a preferable time to spend much money
+(University of Michigan, Surveys of Consumers n.d.).
+28
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+3.3.1.2 Macroeconomic Indicators
+The CPI measures the price difference of consumer products and services over time.
+The CPI used in the study is the consumer price index for all urban consumers with
+all items in American cities on average (BLS, n.d.a).
+The PPI measures the changes in product prices of U.S. domestic production over
+time. The PPI included in the current study is the producer price index of final
+demand on all industries (BLS, n.d.c).
+The IPI is a monthly published indicator in the U.S. It measures the output from
+manufacturing, gas and electric utilities, and mining. The index reports changes in
+the production and growth in the index show growth in manufacturing industries
+(Federal Reserve, n.d.).
+
+3.3.1.3 Business Cycle Indicator
+The OECD (CLI) is used to predict turning points in the business cycle). It is
+constructed by more minor economic and financial components, which can function
+as leading variables for the GDP. The OECD publishes composite leading indicators
+for almost all OECD member countries (OECD, 2021).
+
+3.3.2 Dependent Variables
+The stock market is represented by the price-weighted Dow Jones Industrial Average
+(DJIA) stock index and the value-weighted Standard & Poors’ 500 stock index
+(S&P500 index). The S&P 500 index includes 500 companies covering almost all
+market capitalization in the U.S. (Standard & Poors’ 500 index factsheet, n.d.). The
+DJIA, in turn, covers 30 multinational companies that act in all industries except
+transportation and utilities (The Dow Jones Industrial Average factsheet, n.d.).
+
+29
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+3.4 Data pre-processing
+Before the analyses can be conducted in the present study, the indicators’ data and
+the stock indices’ data must be transformed. The indicators are transformed based on
+their index type (See Table 3). Depending on the indicator, different transformations
+are conducted. Additionally, indicators that are volume indices have different base
+periods. Therefore, the base periods must be transformed so that they show accurate
+measurements for the time period of the present study. Further, these indicators’ base
+periods are calculated to the base periods of January 2019. The new base period for
+the volume indices will be calculated by the following formula:
+
+New Index Value = (Old Index Value/ New Base Value of Index) X 100
+
+(3.1)
+
+Furthermore, the stock indices’ data must be transformed. The data is composed of
+the stock indices’ daily closing prices. Further, the stock indices’ closing prices are
+published daily, while all the indicators included in the current study are published
+monthly. The stock indices’ data is transformed instead of the indicators’ data, due to
+that daily data is easier to transform to monthly data. Therefore, the stock indices’
+daily closing prices are transformed by calculating the arithmetic mean of the daily
+closing prices for each month of the time period of the current study. This makes the
+indicators and the stock indices comparable in analyses.
+Depending on the index type, further data transformation is done. The natural
+logarithm is used to stabilize the variance (Shumway & Stoffer, 2011 pp.63).
+ln x
+
+(3.2)
+
+Logarithmic transformation is conducted to both stock indices and the following
+indicators: PPI, CPI, IPI, and the CSI. The PMIs and the OECD CLI are diffusion
+indices, where the change between two index values is already measured. Further,
+another technique that is used to transform the data to exhibit stationarity is first
+differencing.
+Y(i) = X(i)-X(i-1)
+
+(3.3)
+30
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+First differencing is performed to all the indicators and to the two stock market
+indices. Differencing is usually used to exclude the non-stationary behavior time
+series exhibit (Shumway & Stoffer, 2011 pp.62). Log transformation (for chosen
+variables) and differencing (for all variables) help in making the indicators and stock
+market indices stationary and prepared for further analysis.
+
+Table 3 Indicators, stock indices and the data pre-processing operations
+Category
+Stock market
+
+Stock index & Indicator
+
+Index type
+
+Operation
+
+S&P 500 index
+
+Volume Index
+
+Natural logarithm
+
+index
+
+First difference
+DJIA
+
+Volume index
+
+Natural logarithm
+First difference
+
+Survey-based
+indicators
+
+Macroeconomic
+
+ISM Manufacturing
+PMI
+
+Diffusion index
+
+First difference
+
+ISM nonmanufacturing PMI
+
+Diffusion index
+
+First difference
+
+Chicago PMI
+
+Diffusion index
+
+First difference
+
+IHS Markit PMI
+
+Diffusion index
+
+The University of
+Michigan’s consumer
+sentiment index
+
+Volume index
+
+Consumer Price Index
+
+Volume index
+
+Natural logarithm
+First difference
+Natural logarithm
+First difference
+
+Producer Price Index
+
+Volume index
+
+Natural logarithm
+First difference
+
+Business cycle
+
+Industrial Production
+Index
+
+Volume index
+
+OECD CLI
+
+Diffusion index
+
+Natural logarithm
+First difference
+First difference
+
+31
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+3.5 Correlation
+Correlations are conducted to measure how the stock indices move in relation to the
+indicators. Correlation presents the strength of the association between two variables,
+but it does not show the strength of causation nor if the variables are affected by
+some other factors. In this study, the Pearson correlation method is used. The
+Pearson correlation method measures the correlation between the values of -1 and 1
+(Nettleton, 2014). The value of 0 informs of no correlation. The value of -1 informs a
+perfect negative correlation in which the two variables move in opposite directions.
+The value of 1 informs a perfect positive correlation in which two variables move in
+the same direction. Correlation informs of the linear relationship between the
+variables (Nettleton, 2014). The relationship between the stock indices and the
+indicators shall be observed first by using correlation and then cross-correlation
+Correlation and the correlation significance will also be tested between the independent
+variables of the study. The independent variables that have the lowest correlation and
+correlation significance among themselves will be used later in multiple linear regression
+analysis. High correlation values between independent variables indicate that a change in
+one of the independent variables may cause a change in another independent variable. This
+will cause the regression model to contain flaws which will reduce the precision of the
+model.
+
+3.6 Cross-correlation
+Cross-correlation measures similarities in two time series, and it is used to map lagand lead relationships between the time series (Shumway & Stoffer, 2011 pp.26).
+The leading Xt-1 and lagging Xt+1 relationship are expressed in correlations between
+the two time series with values between -1 and 1. Cross-correlation is used in gaining
+information at which time the two time series correlate the most. The relationship
+between the indicators and the stock indices will be further analyzed by crosscorrelation. This will show how and in what way the indicators can be used in the
+prediction of the stock market indices. The strongest correlation and at what time this
+
+32
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+occurs will be measured, and the indicators’ ability to serve as leading, coincident, or
+lagging indicators will be further observed.
+
+3.7 Regression Models
+Four different regression models will be conducted in the analysis. Firstly, a simple
+linear regression model to observe the level of significance a single independent
+variable has on the dependent variables. Secondly, a simple linear regression model
+that uses lagged values. The lagged values will be obtained from the crosscorrelation analysis. The lagged variables that have the highest correlation values
+will be used in the lagged simple linear regression model. The indicators that will be
+chosen for the multiple linear regression will be chosen by the results from the
+correlation and correlation significance test between the independent variables. The
+indicators that correlate the least and have the smallest correlation significance levels
+with each other will be chosen for the multiple linear regression model.
+The simple linear regression shows the relationship between the dependent variable
+and a single independent variable. The Yi is the predicted dependent variable value,
+Xi is the independent variable, β1 is the slope of the line, β0 is the intercept, and the ϵ
+is the error estimate (Shumway & Stoffer, 2011 pp.48).
+Yi=β0+β1Xi+ ϵ
+
+(3.4)
+
+Multiple linear regressions will be conducted with the coincident correlation values
+of the indicators and with lagged values. The lagged values will be taken from the
+cross-correlation analysis. The Yi is the dependent variable, Xi are the independent
+variables, β0 is the intercept, each dependent variables slope coefficient βp, and ϵ is
+the error term (Shumway & Stoffer, 2011 pp.48).
+Yi=β0+ β1Xi1 +β2Xi2+...+βpXip+ϵ
+
+(3.5)
+
+The simple linear regression models measure how single variables affect the
+variation in the stock indices, while the multiple regression models measure how
+many independent variables can measure the variation of the stock indices’ values.
+
+33
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+3.9 R and R Packages
+The analysis of the data was performed using the software R (R Core Team, 2020). A
+combination of the R software’s base operations and operations from other packages
+was performed throughout the analysis of the data. Operations from the package
+dplyr were performed to the collected data, so that the indicators and stock market
+indices were comparable (Wickham et al., 2020) (see section Data pre-processing).
+For the visualizations of the indicators and stock market indices’ data the package
+ggplot2 was used (Wickham, 2016). For the correlations and regression models, the
+analyses were performed mainly by operation from the base package of R. However,
+operations from the package dynlm were also performed for the regressions (Zeiles,
+2019).
+
+3.10 Validity and Threats
+Validity in research determines how accurately the researched concept or construct is
+measured (Heale & Twycross, 2015). The aspects regarding the validity of research
+depend on what type of research is performed (Roe & Just, 2009). For instance, the
+validity is affected if the research is performed as quantitative or qualitative research
+and if the research is conducted as experiments or surveys. That is, the research
+approach and structure affect the validity.
+Validity can be categorized in many ways. For the present study and for quantitative
+and qualitative studies in general, external and internal validity are aspects of validity
+that influence the research method. According to Roe and Just (2009), internal
+validity concerns that the correlations in a study are of causal nature. This implies
+that the independent variables can be proven to influence the dependent variables.
+External validity, in turn, concerns that the results from the study can be generalized
+outside the study to other studies, people, and concepts. Furthermore, validity can be
+divided into subtypes, such as criterion validity, construct validity, content validity,
+and face validity (Taherdoost, 2016). Criterion validity can further be divided into
+predictive validity, concurrent validity, and postdictive validity. Similarly, construct
+
+34
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+validity can be further divided into discriminant validity and convergent validity
+(Taherdoost, 2016).
+Heale and Twycross (2015) argue that content validity, construct validity, criterion
+validity, and their subtypes affect quantitative research. Content validity can be
+described as the extent to which an instrument in a study accurately measures all the
+content in relation to a variable. Construct validity can be described as the extent to
+which an instrument measures the variable. Criterion validity refers to how the
+instrument correlates with other instruments that measure the same variable, that is,
+how related they are (Heale & Twycross, 2015).
+Internal- and external validity is affected by threats (Jenkins-Smith et al., 2017). For
+instance, the variables included in a study may or may not affect and explain the
+phenomena that are researched. Correlation may be discovered with variables in a
+study, but not causation. There can be other factors that affect the researched
+phenomena that are not included in the study, and these factors could be determined
+afterward to be of major importance. All this can be described to be threats that
+affect the external- and internal validity of the study. Jenkins-Smith et al. (2017)
+present regular threats to the external- and internal validity. Threats for internal
+validity can be categorized into these different categories: History; unexpected
+events that occur during the experiment can affect the researched subject or
+dependent variable. Maturation: Changes that can affect the dependent variable or
+participants in a study, such as aging. Selection bias: to reduce selection bias in a
+study, randomization of the participants can be performed. Experimental mortality:
+Participants can cancel their participation in a study. Statistical regression: extreme
+scores in regression models can move towards the mean. Instrumentation: The
+measurement process is changed, or it is unreliable. Testing: pre-test results can
+influence the results in a test (Jenkins-Smith et al., 2017).
+Threats for external validity are described as following by Jenkins-Smith et al.
+(2017): Testing; Pre-testing or other tests and measurement can affect similar tests
+and measurements. Experimental setting: The participants may be affected by the
+setting and not act normally because of it, making the results untransferable from the
+experiment. Sample representation: The sample may reflect the population poorly,
+undermining the possibility to generalize the results. Interaction of selection bias and
+35
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+experimental treatment: selection bias in the choice of participants in a study can lead
+them to be sensitive to the experiment, altering the results of a study. Interaction with
+testing: The participants can be influenced by a test in a study affecting the results of
+another test, which, in turn, can influence the generalization of the test (JenkinsSmith et al., 2017).
+
+Chart 1 The stock indices before and after data pre-processing.
+
+36
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Chart 2 The macroeconomic indicators, the CSI, and the CLI before and after data preprocessing.
+
+37
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Chart 3 The PMIs before and after data pre-processing.
+
+38
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+4 Empirical findings
+The empirical findings of the study are presented according to the performed
+analytical method. The findings are briefly discussed and compared in this section. A
+deeper analysis and discussion of the results are performed in the fifth section of the
+present study. This section begins with presenting the results from the correlation of
+the indicators with the stock indices. It continues by presenting the results from the
+indicators’ correlation and correlation significance test and by the cross-correlations.
+The results from the regression models are presented last.
+
+4.1 Indicators’ Correlations with the Stock Indices
+Table 4 presents the nine indicators’ correlations with the two stock market indices.
+Each indicator is correlated individually with the two stock market indices.
+
+Table 4 Indicators' correlations with the stock indices
+
+S&P 500 Index
+
+DJIA
+
+ISM Manufacturing PMI .175
+
+.194
+
+ISM Non-Manufacturing .259
+
+.292
+
+PMI
+IHS Markit PMI .233
+Chicago PMI -.039
+
+273
+-.029
+
+PPI .164
+
+.154
+
+CPI .289
+
+.291
+
+IPI .260
+
+.284
+
+39
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+CSI .333
+
+.376
+
+CLI .292
+
+The indicators with the highest correlation with the S&P 500 index are the CSI, the
+CLI, and the CPI. Interestingly, the highest positive correlations are with indicators
+belonging to different categories. Furthermore, all the macroeconomic indicators
+show positive correlations with the S&P 500 index, while the survey-based
+indicators show more variation in their correlation values. The CSI has the highest
+positive correlation, followed by the ISM Non-Manufacturing PMI, the IHS Markit
+PMI, and the ISM Manufacturing PMI. The Chicago PMI shows a low negative
+correlation with the S&P 500 index.
+The CSI has the highest positive correlation with the DJIA, followed by the CLI and
+the ISM Non-Manufacturing PMI. Furthermore, all the macroeconomic indicators
+show a positive correlation with the DJIA, whereas the PPI has the lowest
+correlation. There is more variation in the correlation values of the survey-based
+indicators and the DJIA. The CSI has the highest positive correlation, followed by
+the ISM Non-Manufacturing PMI, the IHS Markit PMI, ISM Manufacturing PMI,
+and the Chicago PMI.
+The indicators’ correlations with the DJIA present similar results as the indicators’
+correlations with the S&P 500 index. The similar results can be explained by the
+almost identical development of the stock market indices during the timeframe of
+2019 to 2021.
+The indicator that displays the lowest correlation values with the stock market
+indices is the Chicago PMI. Further, the Chicago PMI displays slightly negative
+correlation values with the stock market indices. It can be explained by that the
+Chicago PMI measures regional companies’ economic activities, which do not reflect
+the national companies’ economic activities listed on the DJIA and S&P 500 index.
+Interestingly, the indicator that has the highest positive correlation with both stock
+market indices is the CSI. The CSI describes consumer behavior and their
+expectations of the economy (Curtin, 2002), and the consumers’ expectations have
+40
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+been negatively affected by Covid-19. Furthermore, this could explain the high
+positive correlation the CSI has with the stock indices, especially by connecting the
+stock market crash and fallen consumer sentiment.
+
+4.2 The Indicators’ Correlation and Correlation Significance
+Table 5 displays the indicators’ correlations and correlation significances. The
+correlation and correlation significance analysis of the indicators will decide which
+indicators will be included as the independent variables in the multiple linear
+regression models. Furthermore, the exclusion of indicators that display too high
+correlation and correlation significance from the multiple linear regression models
+will make the models more precise.
+The indicators that display the highest correlation with other indicators are the CLI,
+the IPI, and the IHS Markit PMI. These three indicators will be excluded from the
+multiple linear regression models. Additionally, many other indicators display high
+correlation significances, which would affect the precision of the multiple linear
+regression models. Therefore, other indicators that will be excluded from the
+multiple linear regression models are the ISM Manufacturing PMI, ISM NonManufacturing PMI, and the CPI. The exclusion of these indicators will minimize the
+multicollinearity in the multiple linear regression models. The indicators that are
+excluded from the multiple regression models belong to the different indicator
+categories.
+
+Table 5 Indicators’ correlation and correlation significance
+Independent
+variables
+
+Chicago PMI
+CLI
+IHS Markit PMI
+
+Chicago
+PMI
+
+CLI
+
+IHS
+Markit
+PMI
+
+CPI
+
+ISM
+NonManu.
+PMI
+
+IPI
+
+PPI
+
+CSI
+
+ISM
+Manu.
+PMI
+
+1
+
+.51*
+
+.35
+
+.36
+
+.54**
+
+.55*
+*
+
+.26
+
+.26
+
+.23
+
+.51*
+
+1
+
+.90****
+
+.68**
+*
+
+.78****
+
+.97*
+***
+
+.61**
+
+.69**
+*
+
+.73****
+
+.35
+
+.90**
+**
+
+1
+
+.57**
+
+.78****
+
+.89*
+***
+
+.51*
+
+.62**
+
+.77****
+
+41
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+.36
+
+.68**
+*
+
+.57**
+
+1
+
+.57**
+
+.71*
+***
+
+.72**
+**
+
+.60**
+
+.51*
+
+ISM Non-Manu.
+PMI
+
+.54**
+
+.78**
+**
+
+.78****
+
+.57**
+
+1
+
+.79*
+***
+
+.48*
+
+.59**
+
+.69***
+
+IPI
+
+.55**
+
+.97**
+**
+
+.90****
+
+.71**
+**
+
+.79****
+
+1
+
+.59**
+
+.68**
+*
+
+.77***
+
+PPI
+
+.26
+
+.61**
+
+.51*
+
+.72**
+**
+
+.48*
+
+.59*
+*
+
+1
+
+.41*
+
+.41*
+
+CSI
+
+.26
+
+.69**
+*
+
+.62**
+
+.60**
+
+.59**
+
+.68*
+**
+
+.41*
+
+1
+
+.62**
+
+ISM Manu. PMI
+
+.23
+
+.73**
+**
+
+.77****
+
+.51*
+
+.69***
+
+.75*
+***
+
+.41*
+
+.62**
+
+1
+
+CPI
+
+Signif. codes:
+p ≤ .0001 ‘****’ p ≤.001 ‘***’ p≤ .01 ‘**’ p ≤ .05 ‘*’
+
+The indicators that will be included in the multiple linear regression models are the
+CSI, the PPI, and the Chicago PMI. Furthermore, these indicators will be assigned as
+the independent variables in the multiple linear regression models. Interestingly, two
+indicators belonging to the survey-based category and one to macroeconomic will be
+included in the multiple linear regression models. The indicators’ correlation and
+correlation significance test display that the CSI, the PPI, and the Chicago PMI are
+not as likely to be affected by changes in other indicators as indicators with high
+correlation and correlation significance.
+
+4.3 Cross-correlations
+Table 6 presents the cross-correlations between the indicators and the DJIA. The
+lagging months are shown under positive lags, and the leading months are shown
+under the negative lags. The bolded values are the highest positive correlations.
+
+42
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Table 6 Cross-correlations with the indicators and the DJIA
+
+4
+
+3
+
+2
+
+1
+
+0
+
+-1
+
+-2
+
+-3
+
+-4
+
+-.033
+
+-.619
+
+.039
+
+.571
+
+.194
+
+.063
+
+-.222
+
+.017
+
+-.025
+
+-.115
+
+-.576
+
+-.142
+
+.688
+
+.292
+
+-.080
+
+-.066
+
+-.120
+
+-.055
+
+-.093
+
+-.546
+
+-.043
+
+.706
+
+.273
+
+.047
+
+-.056
+
+.020
+
+-.205
+
+-.471
+
+-.056
+
+.179
+
+.588
+
+-.029
+
+-.119
+
+.149
+
+-.134
+
+-.028
+
+PPI
+
+-.146
+
+-.110
+
+.001
+
+.664
+
+.154
+
+.206
+
+-.295
+
+.016
+
+.042
+
+CPI
+
+-.305
+
+-.230
+
+.262
+
+.707
+
+.291
+
+-.230
+
+-.281
+
+.083
+
+.089
+
+IPI
+
+-.247
+
+-.368
+
+.087
+
+.862
+
+.284
+
+-.040
+
+-.143
+
+-.055
+
+-.148
+
+CSI
+
+.158
+
+-.186
+
+.011
+
+.656
+
+.376
+
+- .159
+
+-.106
+
+-.195
+
+-.118
+
+CLI
+
+-.262
+
+-.292
+
+-.081
+
+.858
+
+.305
+
+.008
+
+-.166
+
+-.032
+
+-.115
+
+ISM M.
+PMI
+ISM Non-M.
+PMI
+IHS Markit
+PMI
+Chicago
+PMI
+
+The indicators in Table 6 display the highest correlation values under +1 positive lag
+with the DJIA. In other words, the indicators are lagging the DJIA with one month.
+The indicators that have the highest positive correlation under the +1 lag are the IPI,
+the CLI, and the CPI. Additionally, due to that, the highest positive correlation values
+are under the +1 lag, the indicators display almost no leading abilities in relation to
+the DJIA. However, some minor positive correlation values between the DJIA and
+the indicators during leading months can be observed. Notably, the PPI with a
+positive correlation value of 20% under the leading lag of -1. However, the
+correlation values under the leading months are too minor to affect the development
+of the DJIA.
+
+43
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Table 7 Cross-correlation with the indicators and the S&P 500 index
+
+4
+
+3
+
+2
+
+1
+
+0
+
+-1
+
+-2
+
+-3
+
+-4
+
+ISM M. PMI
+
+-.048
+
+-.605
+
+.057
+
+.585
+
+.175
+
+.067
+
+-.193
+
+-.037
+
+-.017
+
+ISM Non-M.
+
+-.114
+
+-.593
+
+-.130
+
+.716
+
+.260
+
+-.082
+
+-.033
+
+-.155
+
+-.080
+
+IHS Markit PMI
+
+-.082
+
+-.542
+
+-.062
+
+.737
+
+.233
+
+.034
+
+-.023
+
+-.041
+
+-.211
+
+Chicago PMI
+
+-.464
+
+-.075
+
+.219
+
+.574
+
+-.038
+
+-.124
+
+.153
+
+-.142
+
+-.056
+
+PPI
+
+-.192
+
+-.089
+
+-.010
+
+.660
+
+.164
+
+.181
+
+-.287
+
+-.030
+
+.035
+
+CPI
+
+-.323
+
+-.228
+
+.266
+
+.719
+
+.289
+
+-.232
+
+-.288
+
+.041
+
+.058
+
+IPI
+
+-.252
+
+-.366
+
+.082
+
+.862
+
+.260
+
+-.069
+
+-.124
+
+-.107
+
+-.171
+
+CSI
+
+.148
+
+-.228
+
+.021
+
+.665
+
+.333
+
+-.178
+
+-.077
+
+-.228
+
+-.141
+
+CLI
+
+-.264
+
+-.286
+
+-.087
+
+.866
+
+.292
+
+-.033
+
+-.137
+
+-.080
+
+-.142
+
+PMI
+
+From Table 7 can be observed that the indicators’ highest positive correlations are
+under the +1 lagging month. Further, the indicators that have the highest positive
+correlations are the CLI, the IPI, and the IHS Markit PMI.
+The cross-correlations between the indicators and the DJIA (see Table 6), and the
+cross-correlations between the indicators and the S&P 500 index (see Table 7)
+display similarities. In both analyses, the highest positive correlations are under the
++1 lag. Furthermore, this implies that the indicators are lagging the stock market
+indices by one month. Additionally, almost no leading abilities can be observed for
+the indicators, and the correlations that can be observed under the leading lags are
+too minor to affect the development of the S&P 500 index and the DJIA.
+
+44
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+4.4 Simple Linear Regression and Lagged Simple Linear
+Regression
+The intention of the simple linear regression models is to determine how significant
+the effect the indicators have in relation to the S&P 500 index and the DJIA. Firstly,
+the results from simple linear regression models are presented. Secondly, the lags
+with the highest positive correlation values from the cross-correlations are included
+for the indicators in simple linear regression models with lagged variables. The
+purpose of performing simple linear regressions with lagged values is to observe if
+the lagged values generate a better fit for the model.
+Table 8 displays the simple linear regressions between the nine indicators and the
+DJIA.
+Table 8 Simple linear regressions with the indicators as independent variables and the DJIA
+as the dependent variable
+
+p-value
+
+F-stat
+
+R2
+
+Adjusted R2
+
+.412
+
+.365
+
+.857
+
+.037
+
+-.006
+
+.403
+
+.167
+
+2.05
+
+.085
+
+.043
+
+IHS Markit PMI
+
+.426
+
+.198
+
+1.77
+
+.074
+
+.032
+
+Chicago PMI
+
+.403
+
+.168
+
+.019
+
+.000
+
+-.045
+
+PPI
+
+.549
+
+.472
+
+.536
+
+.024
+
+-.021
+
+CPI
+
+.952
+
+.168
+
+2.03
+
+.085
+
+.043
+
+IPI
+
+.363
+
+.179
+
+1.93
+
+.080
+
+.039
+
+CSI
+
+.289
+
+.070.
+
+3.62
+
+.141
+
+.102
+
+CLI
+
+.377
+
+.147
+
+2.255
+
+.093
+
+.052
+
+Independent
+variable
+ISM Manufacturing
+
+Intercept pvalue
+
+PMI
+ISM NonManufacturing PMI
+
+Signif. codes:
+p ≤.0001 ‘***’ p ≤ .001 ‘**’p ≤ .01 ‘*’p ≤ .05 ‘.’
+
+45
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Performing the simple linear regression with coincident times for the independent
+and dependent variables displays mostly nonsignificant values with one exception.
+The exception being the CSI, with a p-value of p <.05. The CSI also has the highest
+explanatory power of 14% (10% adjusted multiple R2). However, from the results
+can be observed that the indicators do not explain the variation of the DJIA when
+using coincident times for the indicators.
+Table 9 Simple Linear regressions with the indicators as independent variables and the S&P
+500 index as the dependent variable
+
+Independent
+variable
+ISM Manufacturing
+
+Intercept p-
+
+p-value
+
+F-stat
+
+R2
+
+Adjusted
+R2
+
+value
+.181
+
+.413
+
+.697
+
+.031
+
+-.013
+
+.173
+
+.221
+
+1.59
+
+.067
+
+.025
+
+IHS Markit PMI
+
+.185
+
+.274
+
+1.26
+
+.054
+
+.011
+
+Chicago PMI
+
+.177
+
+.858
+
+.033
+
+.002
+
+-.044
+
+PPI
+
+.275
+
+.444
+
+.609
+
+.027
+
+-.017
+
+CPI
+
+.585
+
+.171
+
+2.01
+
+.084
+
+.042
+
+IPI
+
+.154
+
+.220
+
+1.60
+
+.068
+
+.025
+
+CSI
+
+.120
+
+.112
+
+2.74
+
+.111
+
+.070
+
+CLI
+
+.158
+
+.166
+
+2.05
+
+.085
+
+.044
+
+PMI
+ISM NonManufacturing PMI
+
+Signif. codes:
+
+p ≤.0001 ‘***’ p ≤ .001 ‘**’p ≤ .01 ‘*’p ≤ .05 ‘.’
+
+The results of the simple linear regression with the indicators and the S&P 500 index
+as the dependent variable are displayed in Table 9. The results are similar to the
+
+46
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+simple linear regression with the DJIA as the dependent variable (see Table 8). All
+the indicators have a nonsignificant effect on the S&P 500 index.
+Performing the simple linear regressions with coincident times for the independent
+variables shows nonsignificant effects on the development of the DJIA and the
+development of the S&P 500 index. In conclusion, using coincident times for the
+indicators is unreliable in explaining the development of the values of the S&P 500
+index and the DJIA.
+
+Table 10 Simple linear regression with lagged independent variables and the DJIA as the
+dependent variable
+
+Independent variable
+
+Intercept p-
+
+p-value
+
+F-stat
+
+R2
+
+Adjusted R2
+
+value
+ISM Manufacturing
+
+.4720
+
+.0036 **
+
+10.67
+
+.3370
+
+.3054
+
+.2745
+
+.0002 ***
+
+19.85
+
+.4859
+
+.4614
+
+IHS Markit PMI
+
+.4634
+
+.0001 ***
+
+21.66
+
+.5077
+
+.4842
+
+Chicago PMI
+
+.3324
+
+.0020**
+
+12.39
+
+.3710
+
+.3410
+
+PPI
+
+.9150
+
+.0005***
+
+16.78
+
+.4442
+
+.4177
+
+CPI
+
+.2236
+
+.0001***
+
+22.79
+
+.5204
+
+.4976
+
+IPI
+
+.0957
+
+.0001***
+
+61.6
+
+.7458
+
+.7337
+
+CSI
+
+.1550
+
+.0005 ***
+
+16.29
+
+.4368
+
+.4100
+
+CLI
+
+.1420
+
+.0001***
+
+59.31
+
+.7385
+
+.7261
+
+PMI
+ISM NonManufacturing PMI
+
+Signif. codes:
+p ≤. .0001 ‘***’ p ≤ .001 ‘**’ p ≤ .01 ‘*’ p ≤ .05 ‘.’
+
+Performing the simple linear regression with lagged independent variables (t+1)
+shows that all the indicators have a significant effect on the development of the
+DJIA. The CLI, the IPI, the CSI, the CPI, the PPI, the IHS Markit PMI, and ISM
+47
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Non-Manufacturing PMI show very strong significances (p ≤ .0001). The ISM
+Manufacturing PMI and the Chicago PMI show a strong significance (p ≤ .001). In
+conclusion, the indicators’ explanatory power is stronger when lagged, than when
+using coincident times.
+Table 11 Simple linear regression with lagged independent variables and the S&P 500 index
+as the dependent variable
+
+p-value
+
+F-stat
+
+R2
+
+Adjusted R2
+
+.1820
+
+.0027 **
+
+11.5
+
+.3538
+
+.323
+
+.0680
+
+.0001 ***
+
+23.32
+
+.5262
+
+.5037
+
+IHS Markit PMI
+
+.1380
+
+.0001 ***
+
+25.92
+
+.5524
+
+.5311
+
+Chicago PMI
+
+.1197
+
+.0028 **
+
+11.46
+
+.3530
+
+.3222
+
+PPI
+
+.5776
+
+.0005 ***
+
+16.43
+
+.4390
+
+.4123
+
+CPI
+
+.5280
+
+.0001 ***
+
+24.44
+
+.5379
+
+.5159
+
+IPI
+
+.0114 *
+
+.0001***
+
+61.57
+
+.7457
+
+.7336
+
+CSI
+
+.0399 *
+
+.0005 ***
+
+17.08
+
+.4485
+
+.4222
+
+CLI
+
+.0165*
+
+.0001 ***
+
+63.4
+
+.7512
+
+.7393
+
+Independent variable
+
+Intercept pvalue
+
+ISM Manufacturing
+PMI
+ISM NonManufacturing PMI
+
+Signif. codes:
+p ≤ .0001 ‘***’ p ≤ .001 ‘**’ p ≤ 0.01 ‘*’p ≤ 0.05 ‘.’
+
+The IPI, the CLI, the IHS Markit PMI, the CPI, the ISM Non-Manufacturing PMI,
+the CSI, and the PPI show very strong significance (p ≤ .0001). Further, the Chicago
+PMI and the ISM Manufacturing PMI show strong significances (p ≤ .001).
+Interesting changes can be perceived when simple linear regressions are conducted
+with lagged independent variables. All the indicators generate a better fit, show
+strong significances, and present higher R2. The cross-correlations (see Tables- 6 and
+48
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+7) showed that the indicators lagged by (t+1), and the results from the simple linear
+regression models with lagged independent variables effectively strengthened the
+notion that the indicators do lag the stock indices during January 2019 to January
+2020. In other words, the stock indices have fluctuated before the indicators, and the
+indicator values have moved afterward, showing that no leading abilities can be
+observed.
+
+4.5 Multiple Linear Regression
+Table 12 presents the multiple linear regression with the S&P 500 index as the
+dependent variable. The independent variables are chosen based on their correlation
+and correlation significance values (see Table 5).
+Table 12 Multiple linear regression with the S&P 500 index as the dependent variable
+Independent
+
+p-value
+
+Estimate
+
+Std.error
+
+T value
+
+Intercept
+
+.171
+
+.0168
+
+.0118
+
+1.419
+
+Chicago PMI
+
+.517
+
+-.0012
+
+.0018
+
+-.659
+
+PPI
+
+.803
+
+.6198
+
+2.447
+
+.253
+
+CSI
+
+.152
+
+.2836
+
+.1902
+
+1.491
+
+variables
+
+Signif. codes:
+p ≤ .0001 ‘***’ p ≤ .001 ‘**’p ≤ .01 ‘*’ p ≤ 0.05 ‘.’
+Dependent variable: S&P500 index
+
+p-value
+.4131
+
+F stat
+
+R2
+
+Adjusted R2
+
+1
+
+.1305
+
+5.509e-05
+
+The multiple linear regression model with the S&P 500 index as the dependent
+variable show no significant results. Furthermore, the indicators in the model cannot
+explain the variation of the S&P 500 index.
+
+49
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Table 13 Multiple linear regression with the DJIA as the dependent variable
+Independent
+
+p-value
+
+Estimate
+
+Std.error
+
+T value
+
+Intercept
+
+.3348
+
+.0122
+
+.0124
+
+.988
+
+Chicago PMI
+
+.5189
+
+-.0013
+
+.0019
+
+-.657
+
+PPI
+
+.9136
+
+.2813
+
+2.559
+
+.110
+
+CSI
+
+.0932.
+
+.3507
+
+.1989
+
+1.763
+
+variables
+
+Signif. codes:
+p ≤ .0001 ‘***’ p ≤ .001 ‘**’p ≤ .01 ‘*’ p ≤ 0.05 ‘.’
+Dependent variable: DJIA
+
+p-value
+
+F stat
+
+.3134
+
+1.264
+
+R2
+
+Adjusted R2
+.1594
+
+.0334
+
+The indicator that performs the best in the multiple linear regression model with the
+DJIA as the dependent variable is the CSI. The CSI displays a significant result,
+while the other indicators do not. This, however, do not explain the development of
+the DJIA.
+The simple linear regression models (see Tables- 8 and 9) and the multiple regression
+models (Tables- 12 and 13) display, that using coincidental times for the independent
+variables make the models unsuitable in describing the development of the stock
+indices. Therefore, the two following multiple linear regression models use the
+lagged values from the cross-correlations.
+Table 14 Multiple linear regression with lagged independent variables and the DJIA as the
+dependent variable
+Independent
+
+p-value
+
+Estimate
+
+Std.error
+
+T value
+
+.3802
+
+.0058
+
+.0065
+
+.898
+
+Chicago PMI
+
+.0015**
+
+.0039
+
+.0011
+
+3.712
+
+PPI
+
+.0029**
+
+4.558
+
+1.331
+
+3.424
+
+variables
+Intercept
+
+50
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+CSI
+
+.0034**
+
+.3464
+
+.1035
+
+3.345
+
+Signif. codes:
+p ≤ .0001 ‘***’ p ≤ .001 ‘**’p ≤ .01 ‘*’ p ≤ 0.05 ‘.’
+Dependent variable: DJIA
+
+p-value
+
+F stat
+
+R2
+
+Adjusted R2
+
+.0001***
+
+22.95
+
+.7837
+
+.7495
+
+Conducting the multiple linear regression with lagged independent variables shows
+that all the indicators in the model have a statistically significant effect. The
+explanatory power of the model is 78% (Adjusted R2 is .75). The independent
+variable with the highest significance level is the Chicago PMI, followed by the PPI
+and the CSI. The model indicates that changes in the indicators correlate with
+changes in the DJIA.
+Table 15 Multiple linear regression with lagged independent variables and the S&P 500
+index as the dependent variable
+Independent
+
+p-value
+
+Estimate
+
+Std.error
+
+T value
+
+.0748.
+
+.0118
+
+.0063
+
+1.885
+
+Chicago PMI
+
+.0024**
+
+.0035
+
+.0010
+
+3.492
+
+PPI
+
+.0037**
+
+4.222
+
+1.275
+
+3.312
+
+Consumer sentiment
+
+.0029**
+
+.3383
+
+.0992
+
+3.411
+
+variables
+Intercept
+
+Signif. codes:
+p ≤ .0001 ‘***’ p ≤ .001 ‘**’p ≤ .01 ‘*’ p ≤ 0.05 ‘.’
+Dependent variable: S&P 500 index
+
+p-value
+.0001***
+
+F stat
+
+R2
+
+Adjusted R2
+
+21.88
+
+.7755
+
+.7401
+
+The multiple linear regression model with the S&P 500 index as the dependent
+variable and the indicators as lagged variables displays significant results. The
+51
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Chicago PMI has the highest significance level, followed by the CSI and the PPI.
+The explanatory power of the model is circa 77% (Adjusted R2 is .74).
+The results from the multiple linear regression models with lagged independent
+variables display similarities. The models show an adjusted R2 nearing 75% (74%
+and 74.95%, respectively), and the indicators have similar p-values. The similarities
+can be mainly explained by the similar development of the stock indices during the
+time period of January 2019 to January 2021.
+The findings from the cross-correlation analyses imply that the indicators could not
+be used in predicting the stock indices’ values and that they have been lagging the
+stock indices. This notion has been enhanced by the results from the regression
+models and by the difference in the results when the regressions are performed with
+and without lagged variables. In conclusion, the analyses have shown that the
+indicators lag the stock market indices.
+
+52
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+5 Discussion
+The empirical findings are further analyzed and linked to the previously presented
+theories and studies in this section. The section starts by discussing factors associated
+with the stock market crash and factors that have affected the indicators. Further, the
+section continues in discussing the results of individual indicators according to which
+group they belong to.
+The Covid-19 pandemic caused a shock that continues to affect companies’
+economic activities and countries’ economies. The stock market was early to be
+affected, eventually leading to the stock market crash in March 2020. The reasons for
+the crash can be argued to be caused by many factors. The pandemic led to
+widespread uncertainty, and market participants started to expect the worst that could
+occur. Furthermore, the regulations and restrictions that governments implemented to
+combat the virus further increased the uncertainty. Additionally, the economic
+activities of companies were restricted, and the companies had to implement new
+policies to continue operating under new regulations. However, the regulations did
+not directly affect the stock market, but different economic factors associated with
+the indicators
+The stock market could have been affected by a decline in liquidity and large
+amounts of debt. The federal reserve started to provide more liquidity to the market
+to encourage participation in the financial markets (Cox, 2020). Additionally, stock
+market liquidity has shown to decrease before the business cycle has started a turning
+point for recessions (Naes et al., 2010). One may also argue that the assets may have
+also been too overvalued and in need of a correction.
+The S&P 500 index and DJIA return predictability and price volatility have been
+determined to be affected by a structural break during the onset of the pandemic
+(Hong et al., 2021). Hong et al. (2021) argued that the break occurred explicitly
+during the selling of stocks by members of the U.S. Senate before the stock market
+crash of March 2020. Additionally, after the break, the predictability of returns and
+price volatility increased. Hong et al. (2021) describe that the stock market crashed
+after the U.S. senate members sold their stocks, highlighting information asymmetry
+between market participants. The price volatility had a similar development as the
+53
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+stock market returns predictability. Furthermore, Hong et al. (2021) conclude that the
+stock market was affected by market inefficiency. In other words, the stock market
+lacked efficiency in respect to the lack of information the market participants had.
+Additionally, it can be argued that the stock market prices did not accurately reflect
+their intrinsic value, affecting the risks and returns for market participants, leading to
+implications to the risks and returns associated with asset pricing models.
+
+Chart 4 The development of the stock indices.
+
+The pandemic has had varying effects on the different indicators included in the
+current study. The effects depend mainly on what the indicators measure and how the
+outcome has been affected by the stock market, Covid 19, and regulations made to
+lessen the spread of Covid-19. Whether it is production, consumption, sentiment, or
+other measurable factors, the indicators have had one thing in common: the
+indicators’ values fell during the times of the stock market crash. However, the stock
+market crash may have only been an onset for recession, and other factors may have
+54
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+affected the indicators more than the crash itself. Government regulations made to
+combat the spread of Covid-19 have negatively affected different economic sectors
+and the economy. Walmsley et al. (2020) estimated that the mandatory closure of
+businesses has negatively affected the GDP and employment in the U.S., mainly due
+to the reduction of production and indirectly by a loss of demand in labor. This, in
+turn, has negatively affected other economic sectors. Furthermore, the consumer and
+consumer spending have been negatively affected by Covid-19. Income and wealth
+losses, a reduction in aggregate consumer spending, and negative outlooks on the
+future, especially regarding employment, have influenced the consumer negatively
+(Goibion et al., 2020). Additionally, del Rio-Chanona et al. (2020) describe that
+different industries have and will encounter supply and demand shocks during the
+Covid-19 pandemic. Industries, such as health and food and necessities, have had an
+increase in supply and demand, while industries such as hotel, restaurant, travel, and
+transportation have had a decrease in demand. Industries, such as mining,
+manufacturing, and service, have been more affected by changes in the supply (del
+Rio-Chanona et al., 2020).
+.
+
+5.1 Discussion: Results
+5.1.1 Survey-based Indicators
+The general objective of the PMIs is to observe and gauge how economic activity in
+different industries develops (ISM, n.d.a; ISM, n.d.b; IHS Markit, 2017). The
+questionnaires are sent to many companies operating in the manufacturing and
+service industries, covering many questions on different economic factors affecting
+the industry. Therefore, it can be argued that the PMIs could reflect companies’
+economic activities more clearly, than indicators that measure a single economic
+factor, such as inflation. However, this could also be interpreted the other way, that
+is, the PMIs could offer a too narrow view of the economy, especially to be able to
+effectively be used in the prediction of the development of the stock market indices.
+The PMIs in the current study have shown mixed results depending on the performed
+analytical method. The indicators’ correlations with the stock indices (Table 4)
+55
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+present mostly positive, but also negative correlations. The Chicago PMI displays
+negative correlations for both stock indices, while the other PMIs show positive
+correlations for both stock indices. The reason may be that the Chicago PMI
+measures economic activity in the Chicago area, in which the regional perspective is
+not large enough in reflecting the development of the S&P 500 index or the DJIA
+index.
+The cross-correlations (Tables -5 and 6) show similar findings for all the PMIs, that
+is, the highest correlation values emerge when the PMIs are lagged by one month.
+The PMIs’ cross-correlations are in line with the findings of Dovolil (2016). The
+indicators’ correlation and correlation significance (Table 7) display high correlation
+significance values for all the PMIs except for the Chicago PMI. The reason can be
+argued to be the same as in the findings of the indicators’ correlations with the stock
+indices. That is, the Chicago PMI measures economic activity in the Chicago area,
+and the regional view is too minor in comparison to indicators that measure
+aggregate economic factors of the whole country. The same reasoning can be applied
+to why the other PMIs have higher correlation significance values with other
+indicators. That is, they cover more companies operating nationally, which are
+therefore affected more by aggregate economic factors.
+Furthermore, the indicators’ correlation and correlations significance (Table.7) led to
+that all the PMIs, except the Chicago PMI, were excluded from the multiple linear
+regression models. It was somewhat excepted, due to that the PMIs have been
+observed to correlate with other indicators, such as the IPI and the PPI (Jeon & JiHong, 2017). Additionally, the PMIs positively correlated with each other and with
+other indicators, such as the CLI, clarifying that the PMIs are affected by the
+development of other indicators and that the PMIs also affect other indicators’
+development. In conclusion, the PMIs might fit better for analyzing other economic
+factors than the stock indices.
+Performing the simple linear regressions with coincidental times (Tables -8 and 9)
+did not show any meaningful results. However, the simple linear regressions with
+lagged independent variables (Tables -10 and 11) show significant results for all the
+PMIs. Previous studies have concluded that the PMIs significantly affect and have a
+positive relationship with the stock market through studying the effect the PMIs have
+56
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+on stock returns and stock market index futures (Johnson & Watson, 2011; Hu et al.,
+2017). In the current study, the relationship between the stock market and the PMIs
+has been further elaborated through the stock indices’ closing prices and the PMIs.
+However, in the current study, the relationship was only observed when the PMIs
+were lagged, which is in line with Dovolil’s (2016) research.
+The PMIs showed a slightly negative development in the indicator’s values during
+2019 (see Chart 5). This is contrary to the development of the two stock indices
+during 2019, which continued to rise throughout the year. The IHS Markit PMI and
+the ISM Non-Manufacturing PMI continued to remain above the level of 50 during
+the year, while the ISM Manufacturing PMI and the Chicago PMI fell below 50. The
+Chicago PMI had the largest fluctuations compared with other PMIs, while the IHS
+Markit PMI had the most neutral development hovering above 50. All the PMIs fell
+after the stock market crash and after the U.S. government implemented regulations.
+The values fell as low as 35, showing that the companies answering the survey had
+highly negative outlooks on the future. This continued for a few months, but the
+values rose quickly and had somewhat similar developments afterward during 2020.
+However, the ISM Non-Manufacturing PMI continued to stay around 55 after the
+stock market crash. The indicator values imply that the companies operating in the
+service sector had more negative outlooks on the future and may have been more
+affected by the regulations and restrictions. It can be argued that the PMIs
+developments are more in line with the recession than they are with the stock market
+crash, due to the values started already to fall during January and February of 2020,
+and the NBER stated that the U.S. economy entered a recession in February 2020
+(NBER, n.d.).
+
+57
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Chart 5 The development of the PMIs.
+
+58
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+The CSI shows positive correlations with the stock market indices (Table 4) and
+relatively high positive correlation and correlation significance values with the other
+indicators (Table 5). However, the correlations are minor enough for the CSI to be
+included in the multiple linear regression models. The cross-correlations (Tables -6
+and 7) show that the highest correlations are observed for the CSI when the indicator
+is lagged by one month (t+1).
+The CSI was the only indicator that showed a significant result in the simple linear
+regression with the DJIA as a dependent variable (Table 8). It also showed a minor
+significant effect on the DJIA in the multiple linear regression model (Table 13).
+However, the explanatory power of the model was still insignificant. The CSI
+showed significant results on the DJIA and S&P 500 index while lagged in both the
+simple linear regression models and the multiple linear regression models,
+solidifying that the indicator was lagging the stock indices in the current study.
+Christ and Bremmer (2003) argued that consumer sentiment and the stock market
+display a short-run relationship, in which consumer sentiment follows the
+fluctuations of the stock market. These similarities can be drawn with the current
+study; however, other factors have played a major role in the development of the
+CSI.
+Consumer sentiment fell during the stock market crash of March 2020, and it did not
+recover to the previous values before the crash, as many other indicators did. This
+can be linked with the negative expectations consumers had for their personal
+economy due to Covid-19. Consumers were not only affected by negative
+expectations on the future but by lockdowns, business closures, and loss in
+employment, eventually leading to a decrease in consumer spending (Goibion et al.,
+2020; Walmsley et al., 2020). Additionally, stock market crashes and negative
+economic news increase consumers’ uncertainty and decreases consumer’
+expectations (Van Dale et al., 2017).
+Many factors can be argued to affect consumer sentiment during Covid-19, one of
+them being the stock market crash. The stock market crash may have been one of the
+first factors to which consumers reacted, leading to the initial fall of consumer
+sentiment. This would be in line with Otoo’s (1999) observation that the consumer
+uses the stock market fluctuations as an indicator for future economic development.
+59
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+However, the difficulties faced by the U.S. economy and the difficulties related to
+the personal economies of consumers continued to be influenced during the
+pandemic, leading to low consumer sentiment values continuously, especially when
+the virus spread, affecting more people and more industries, leading to negative job
+prospects and uncertainty in the people’s future wellbeing.
+Interestingly, the CSI is the only indicator in the current study fully concentrating on
+the consumer, and it shows a drastic development during the Covid-19 pandemic.
+The consumer can be argued to be more affected by Covid-19 and government
+regulations than by the stock market crash. The argument is strengthened by that the
+indicator continued to report low values after the stock market indices had already
+risen.
+
+Chart 6 The development of the CSI.
+
+5.1.2 Macroeconomic Indicators
+The macroeconomic indicators included in the current study consisted of two
+indicators concentrating on inflation (CPI and PPI) and one on production (IPI). The
+discussion of the results of macroeconomic indicators is also performed by following
+this division.
+Macroeconomic indicators and their relationship and effect on the stock market have
+been extensively researched, through asset pricing theories and as individual
+variables affecting the stock market and stock returns. One of the often-researched
+60
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+macroeconomic indicators is industrial production (Rapach et al., 2005; Chen et al.,
+1986; Serfling &Miljkovic, 2011; Humpe & Macmillan, 2007). However, the use of
+either the CPI or PPI as variables measuring inflation is also common.
+The macroeconomic indicators included in the current study have shown positive
+correlations with the S&P 500 index and the DJIA (Table 4). It is somewhat
+unexpected that the PPI and CPI showed positive correlations with the stock indices,
+due to that in earlier studies, inflation has often negatively affected the stock market
+(Humpe & Macmillan, 2007; Flannery & Protopapadakis, 2002; Sirucek, 2012; Suk
+Joong et al., 2014). A rise in the indicators’ values have often led to that the stock
+returns and stock market valuation have fallen, due to that, inflation diminishes the
+purchasing power.
+The cross-correlations (Tables -6 and 7) show that both indicators are lagging the
+stock indices by one month (t+1). Interestingly, Serfling and Milkovic (2011)
+demonstrated that historical values of the CPI, together with other variables, could be
+used in predicting changes in the S&P 500 index. However, the results from the
+current study could not replicate the results of Serfling and Milkovic (2011). Another
+difference to the study made by Serfling & Miljkovic (2011) is that the CPI in the
+current study had too high correlation and correlation significance values with the
+other indicators, leading to it being excluded from the multiple linear regression
+models. However, the PPI was included in the multiple linear regression models,
+showing a significant effect on both stock indices when lagged. The results of the
+PPI and CPI in the current study are also different from the results of Sirucek’s
+(2012) study. In Sirucek’s (2012) study, the PPI had a more significant relationship
+with the DJIA than with the S&P 500 index when no such results were observed in
+the current study.
+In conclusion, the cross-correlations showed the highest correlation values at t+1,
+implying that the two indicators have lagging abilities. This was confirmed by the
+results from the simple linear regressions and from the results of the multiple linear
+regression models, showing that the indicators were unreliable to be used in the
+prediction of the stock market indices during the time period of January 2019 to
+January 2021.
+
+61
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Interestingly, the CPI and the PPI measured a decrease in values during the stock
+market crash of 2020 (see Chart 7). Furthermore, the values of the PPI fell more than
+the values of the CPI, followed by a sharp increase in the values. This implies that
+there was a larger change in the selling prices of producers than the change in prices
+paid by the consumers. The PPI values also rose faster and to higher levels than the
+CPI. Furthermore, the rise could be linked with short-term inflation. If the rise would
+continue, then long-term inflation could occur, which would eventually affect the
+stock market prices and returns of the market portfolio (Flannery & Protopapadakis,
+2002). The reasons for the fall of the PPI and CPI can be partly explained by
+government regulations and lockdowns. For instance, there was a reduction in
+demand for hotels and restaurants, and the hospitality industry, resulting in a fall in
+PPI values (Mendez-Carbajo, 2021). The rise of the values can be credited to the
+normalization of many industries that had been affected by Covid-19.
+Industrial production has been shown to influence stock market development, stock
+market prices, and stock returns (Sirucek, 2012; Humpe & Macmillan, 2002;
+Rahman et al., 2009; Rapach et al., 2005). In the current study, the IPI had shown to
+follow the development of the stock indices, in other words, the development of the
+IPI can be partly explained by the development of the stock indices. The crosscorrelations (see Tables- 6 and 7) show that the IPI had the highest positive
+correlation values with the S&P 500 index and the DJIA when lagged (t+1). In other
+words, the indicator values followed the stock indices by one month.
+The IPI was excluded from the multiple regression models due to it having high
+correlation significance values with almost all the other indicators. This was
+somewhat expected due to that industrial production has been demonstrated to be
+strongly linked with other macroeconomic indicators. Additionally, changes in other
+indicators have been described to be able to be used in predicting values of the IPI
+(Serfling & Miljkovic, 2011). The IPI is also strongly linked with the PMIs due to it
+measuring changes in the manufacturing industries.
+The notion that the IPI follows the stock indices by (t+1) was strengthened when it
+showed insignificant results in the simple linear regression models (see Tables -8 and
+9). Additionally, by showing significant results in the simple linear regressions with
+
+62
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+lagged indicators (Tables -10 and 11), concluded that the indicator has been lagging
+the development of the stock indices during Covid-19.
+The fall in the indicator values of the IPI during 2019 was short-lived (see Chart 7).
+The decrease in industrial output can be mainly argued to be caused by the
+lockdowns and business restrictions that started in the first quarter of 2020 (Dunford
+et al., 2020). However, the values of IPI rose rapidly after the lockdowns and
+regulations were implemented, showing a fast adaptation in manufacturing, mining
+and gas and electric utility companies to the changes the regulations had. In other
+words, the connection between the fall of the indicator values and the stock market
+crash can be argued to be negligible.
+
+63
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Chart 7 The development of the macroeconomic indicators.
+
+5.1.3 Business Cycle Indicator- CLI
+The OECD CLI’s objective is to measure and anticipate the turning points of the
+business cycle (OECD, 2021). The indicator measured the latest trough in the
+business cycle to have occurred in May 2020 (OECD CLI: Turning Points of
+64
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Refence Series and Component Series, 2021). The indicator shows positive
+correlations with the S&P 500 index and the DJIA index (see Table 4) and high
+correlation and correlation significance values with the other indicators (Table 5).
+The high correlations with other indicators can be explained by that the components
+of the CLI are related to the other indicators (for instance: manufacturing-industrial
+confidence, weekly hours worked in manufacturing, consumer confidence and share
+prices of the NYSE composite, OECD CLI: Turning Points of Reference Series and
+Component Series, 2021). High correlations were observed with the IPI the PMIs,
+which led to the exclusion of the CLI in the multiple regression models.
+The high correlations with other indicators can also be argued to be linked with the
+phase of the business cycle. An expansion in the business cycle is connected with
+economic growth, and a downturn in the business cycle is connected with shrinking
+economic activity (Zarnowitz, 1991). For instance, the high correlation with the IPI
+shows the connection between the growth in manufacturing industries and the
+business cycle.
+The CLI’s cross-correlations with the S&P 500 index and the DJIA (see Tables- 6
+and 7) show that it is lagging the stock indices with one month. Furthermore, the
+lagged CLI in the simple linear regression model shows a significant effect on the
+stock indices, when performing the simple linear regression with coincidental times
+show insignificant effects. The results are in line with the results from Celebi and
+Hönig (2019).
+Another connection with results from previous studies can be observed. Dzikevičius
+and Vetrov (2011) describe that the stage of the business cycle affects the stock
+market, and the risks and returns. Furthermore, the shrinking of the business cycle
+negatively affects the stock market. The NBER determined that the recent peak in the
+business cycle occurred in February 2020 (NBER, n.d.), in which afterward the
+business cycle started to shrink, reaching the trough in May 2020. The CLI started to
+report lower values in February 2020 (see Chart 8), showing some indication that the
+stock indices’ values might fall, but the stock market crash was short-lived, and the
+downturn for the whole economy lasted longer. One may argue that this made the
+indicator unreliable to be used in relation to predict the stock market development.
+
+65
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Chart 8 The development of the CLI.
+
+5.2 Limitations
+During the conduction of the current study, Covid-19 was still ongoing, and all the
+effects that it had on the stock market, indicators, and the economy were still
+unknown. Therefore, the current study was unachievable to describe all the factors
+that influenced the indicators and the stock market.
+This study was conducted using the time frame of January 2019 to January 2021. To
+observe and describe the full effects of Covid-19 had on the indicator’s performance
+in relation to the stock market, a longer time frame would have been preferable. This
+would have made the analyses more accurate in observing the effects of Covid-19
+and in assessing how well the indicators performed in relation to the stock market. A
+longer time frame would have also made it possible to divide the time frame into
+periods: before, during, and after Covid-19, making it possible to make comparisons
+on how well the indicators have performed.
+Additionally, analyzing monthly data instead of daily data has its own shortcomings
+when using a short time frame. All the changes in the stock market and indicators
+cannot be fully perceived. This, in turn, makes the findings from the analyses not as
+detailed as the possible findings from using daily data.
+It could be argued that more comparable indicators and stock market indices should
+have been used in the study. For instance, studying indicators that measure economic
+activity in certain industries and then choosing stock market companies that operate
+in these industries could have led to more reliable results. There are also other
+66
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+possible approaches that could have been used. The number of indicators could be
+argued to be too few to be able to research the phenomena from enough different
+perspectives. However, one factor fundamentally limiting the number of indicators
+was the limited access to the data for different indicators. Many indicators are
+published by private institutions, limiting the access without having certain
+credentials or by simply making the access to the indicator data cost.
+There are sophisticated analytical methods that could have better explained the
+relationship between the indicators and the stock market indices. Additionally,
+describing the effects of Covid-19 on the indicators and stock market indices. The
+analytical methods included in the study were of familiar use to the author and
+provided essential information about the relationships between the variables,
+ultimately leading to their use in the current study.
+
+67
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+6. Conclusion
+The main aim of the study was to understand how the indicators can explain the
+variation of the stock market indices’ values and how they have been affected by
+Covid-19. The time period for the data of the indicators ranged from January 2019 to
+January 2021. Nine indicators and two stock market indices were included in the
+study. The indicators were divided into different categories, determined by what and
+how they measure economic activity. Further, the indicators were compared by other
+similar ones. Additionally, the indicators were analyzed in relation to the stock
+market indices, that is, if they display leading, coincident, or lagging information in
+relation to the stock market indices.
+To understand the context of the present study, that is, how the stock market has
+developed during the pandemic, and how the indicators have been affected by Covid19, theory related to business cycles and the stock market was presented.
+Additionally, why, and how the business cycle fluctuates and how the stock market
+and business cycles are connected were described. Further, stock market
+development theories, such as the random walk hypothesis and efficient market
+hypothesis were presented. Furthermore, asset pricing models, such as the capital
+asset pricing model and its extensions and the arbitrage pricing theory were
+described. The indicators were also thoroughly described, and the results of previous
+research in which the indicators were studied in relation to the stock market were
+presented.
+The current study was conducted as a quantitative study with various analytical
+methods. However, before the analysis was conducted, minor data processing was
+performed, including logarithmic transformation and the first difference.
+Additionally, the performed data processing depended on the indicators’ index type.
+The analysis began by conducting correlations with the indicators and the stock
+market indices. This was followed by measuring the indicators’ correlation and
+correlation significance. In addition, cross-correlations with the indicators and the
+two stock market indices were performed. Following the correlation tests, simple
+linear regressions were conducted with the indicators as independent variables and
+the stock indices as dependent variables. Further, simple linear regressions that used
+the lagged values for the indicators from the cross-correlations were conducted.
+68
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Multiple linear regression analyses with the indicators with the lowest correlation
+and lowest correlation significance values with each other were conducted. Lastly,
+multiple linear regression analyses that used lagged values for the indicators were
+performed.
+The indicators’ correlations with the stock market indices were positive, except the
+correlations of the Chicago PMI. The indicators’ correlation and correlation
+significance resulted in six of the indicators being excluded from the multiple linear
+regressions. The indicators that were included for the multiple linear regressions
+were the following: CSI, PPI, and Chicago PMI.
+The results from the cross-correlations show that the indicators’ highest correlation
+values with the stock market indices occur when lagged by one month (t+1).
+Furthermore, performing simple linear regression analyses show insignificant results,
+except for the CSI when the DJIA was the dependent variable. However, performing
+the simple linear regressions with lagged independent variables showed significant
+results for all the indicators. Additionally, similar results were observed when
+performing the multiple linear regression analyses. That is, insignificant results when
+performing the multiple linear regressions with coincidental times for the indicators
+and stock indices, and significant results when performing the multiple linear
+regressions with lagged values for the indicators.
+The results from the analyses indicate that the indicators from January 2019 to
+January 2021 were lagging the stock market indices. In other words, the fluctuations
+of the stock market indices precede the movement of the indicators. From this can be
+concluded, that the indicators could not be reliably used to predict the stock market
+from January 2019 to January 2021 or the stock market crash of March 2020. In
+addition, the indicators’ values developed differently after the stock market crash,
+depending on how the measured activity had been affected by Covid-19. For
+indicators in the survey-based category, most of the PMIs returned to similar levels
+as before the stock market crash, while the CSI continued to stay on a lower level
+than before the crash. It can be argued that Covid-19 and government regulations
+have affected the consumer more than it has the manufacturing or service sectors,
+leading to a decrease in consumption. The macroeconomic indicators except for IPI,
+in turn, have risen above the previous levels before the stock market crash. The PPI
+69
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+and CPI have risen sharply, leading to concerns of short-term inflation. The
+possibility of long-term inflation was unknown during the making of this study. The
+business cycle indicator, OECD CLI, had started to report lower values after the
+business cycle peak of February 2020 (NBER, n.d.). However, the indicator was
+unable to predict the fluctuations of the stock market indices fully.
+In conclusion, the indicators could not reliably explain the developments of the stock
+indices during the time period of January 2019 to January 2021. Many factors,
+directly and indirectly, affected the development of the indicators and the stock
+indices, mainly effects of regulations the U.S. government implemented to combat
+Covid-19.
+The current study has made a preliminary description of the indicator’s performance
+during Covid-19. This study’s results could help in explaining what factors have
+affected the indicators, and how the indicators’ relationship with the stock market has
+developed during Covid-19. The findings of this study are essential in understanding
+how the indicators can be used by market participants in analyzing stock market
+development.
+
+6.1 Future Research
+The results from the current study and the results from earlier studies show that the
+indicators have performed varyingly depending on the country and time frame used
+in the studies. Furthermore, there are other factors that affect the indicators and the
+stock market. For instance, an economy that continues to change and globalize and
+rapidly developing technology that affects different economic sectors may ultimately
+lead to different results in future research. Therefore, concentrating on a single
+indicator by observing a longer time frame could be preferable. This way, all the
+factors affecting the indicator and the phenomena behind them could be thoroughly
+researched. Additionally, any changes in the indicator’s construction method could
+be observed.
+Regarding the current study, how well the indicators have performed in relation to
+the stock market during the Covid-19 pandemic is still unknown. The implications of
+70
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+what Covid-19 have had on the stock market and indicators can only be completely
+understood in the future when the pandemic is over.
+Future research could concentrate on researching fewer companies listed on the stock
+market or perform the research as a case study. Research could concentrate on
+companies that operate in a specific industry and select the corresponding indicators
+measuring economic activity in that industry. For instance, selecting to research a
+manufacturing company could narrow down the selection of indicators and show
+more concrete results. This would also make it easier to understand the reasons why
+and how the company’s stock market value fluctuates.
+
+71
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Swedish Summary - Svensk Sammanfattning
+Covid-19, Indikatorer och Aktiemarknaden – Utvärdering av Indikationer i
+förhållande till Aktiemarknaden under Coronapandemin
+
+Inledning
+Coronapandemin har orsakat mycket fluktuationer och osäkerhet på den amerikanska
+aktiemarknaden. En av de största följderna som pandemin fört med sig är kraschen
+av aktiemarknaden i mars 2020. Kraschen som blev en början för recession i USA
+(The National Bureau of Economic Research, n.d.).
+Aktörer på aktiemarknaden kan använda sig av olika redskap för att underlätta
+agerandet på aktiemarknaden. Redskapen stöder aktörerna i deras beslut om att delta
+i aktiemarknaden. Ekonomiska och finansiella indikatorer är exempel på den här
+typen av redskap. Indikatorerna kan vara till nytta för att försöka förutspå hur
+aktiemarknaden fluktuerar och hur värdet på aktiemarknadsindex utformas.
+Indikatorerna kan indelas i grupper beroende på typen av information de ger, till
+exempel om produktion och konsumtion, och det ändamål som de kan användas till.
+Indikatorerna visar information som kan användas för att förstå förfluten, aktuell och
+framtida utveckling av aktiemarknaden.
+Vilka indikatorer och hur bra de har mätt utvecklingen av aktiemarknaden har
+varierat under olika recessioner (Stock & Watson, 2003). Det finns även variation i
+hur väl indikatorerna har presterat under olika tidsperioder och i olika länder (Rapach
+et.al, 2005). Sammanfattningsvis kan det påstås att vissa indikatorer har varit
+inkonsekventa, medan andra har presterat bättre i flera studier. Ett exempel på detta
+är konsumentprisindexet. Konsumentprisindexet har både rapporteras ha en ickesignifikant effekt på S&P 500 indexet (Hamid et.al, 2006) och en signifikant effekt
+då den har studerats tillsammans med flera variabler (Serfling & Miljkovic, 2011).
+Charoenrook (2007) har kommit fram till att konsumentens sentimentindex (eng.
+Consumer sentiment index, egen översättning) kan användas till att förutspå
+aktiemarknadens avkastning (Charoenrook, 2003). Christ och Bremmer (2003)
+hävdar i sin tur att aktiemarknaden påverkade indikatorn, men att indikatorn i sig inte
+hade någon effekt på aktiemarknaden.
+
+72
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Industriproduktionsindexet verkar vara en av de indikatorer som har presterat bättre.
+Tidigare forskning tyder på att den påverkar aktiemarknaden signifikant (Humpe &
+Macmillan, 2007; Serfling & Miljokovic, 2011; Rahman et.al, 2009). Ytterligare har
+en del indikatorer också visats kunna förklara variationen i aktiemarknaden bättre då
+de har förvandlats till tidsförskjutna variabler (Celebi & Hönig, 2019).
+
+Syfte och ämnesmotivering
+Syftet med denna avhandling var att tydliggöra hur olika indikatorer kan användas
+för att förutspå aktiemarknaden. För detta ändamål har nio indikatorer valts. I
+avhandlingen inkluderades: OECD:s sammansatta ledande indikatorer (eng.
+Composite Leading Indicator, egen översättning), ISM produktionsinköparindex
+(eng. ISM Manufacturing PMI, egen översättning), ISM tjänsteinköparindex (eng.
+ISM Service PMI, egen översättning), IHS Markit inköparindex (eng. IHS Markit
+PMI), Chicago inköparindex (eng. Chicago PMI), producentprisindex,
+konsumentprisindex, konsumentens sentimentindex (eng. Consumer sentiment index,
+egen översättning) och industriproduktionsindex. Aktiemarknaden representerades av
+S&P 500 index och DJIA index.
+Huvudsyftet med avhandlingen var att undersöka hur indikatorerna fungerat under
+coronapandemin i relation till utvecklingen av den amerikanska aktiemarknaden och
+om de kan användas till att förutspå dess utveckling. Vidare var syftet att få
+förståelse för hur väl indikatorerna kan användas i olika sammansättningar, det vill
+säga om utvecklingen kunde förstås bättre genom att använda en eller flera
+indikatorer. Dessutom jämfördes liknande indikatorer med varandra för att se vilka
+av dem fungerar bäst.
+Orsaken till att studien utfördes var att utreda om indikatorerna kan användas av
+deltagare på aktiemarknaden och beslutsfattare i olika organisationer. Att kartlägga
+olika indikatorers prestationer i relation till aktiemarknadens utveckling är viktigt för
+att det hjälper aktörer på aktiemarknaden att avgöra vilka indikatorer det lönar sig
+följa och använda innan de fattar ett investeringsbeslut. Ytterligare är studien aktuell
+och ger värdefull information om coronapandemins effekter på ekonomin.
+
+73
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Metod och redogörelse för undersökningen
+Avhandlingen följer en kvantitativ forskningsmetod. Indikatorerna inkluderades i
+avhandlingen baserat på bland annat följande inklusionskriterier: de måste mäta
+amerikansk ekonomisk aktivitet, de måste vara publicerade av välkända institutioner
+eller organisationer och det måste finnas tidigare forskning om dem i relation till
+aktiemarknaden.
+För att besvara forskningsfrågorna begränsades datainsamlingen till tidsperioden från
+januari 2019 till januari 2021. Indikatorerna var oberoende variablerna i
+avhandlingen, medan aktiemarknadsindexen var beroende variablerna.
+D första analyserna som utfördes var korrelationer mellan aktieindexen och
+indikatorerna. Styrkan av associationerna mellan indikatorerna och aktieindexen
+prövades. Sedan analyserades korrelationer och signifikansen av korrelationerna
+bland indikatorerna. Korrelationerna och de signifikanta resultaten av dessa avgjorde
+vilka indikatorer som kunde användas i en senare multipel regression. För att förstå
+sambandet mellan indikatorerna och aktieindexen gjordes korskorrelationer.
+Korskorrelationerna i sin tur förklarar hur indikatorerna och indexen förhåller sig till
+varandra. Resultaten från korskorrelationerna användes senare i en enkel lineär
+regression och i en multipel regression där de oberoende variablerna var
+tidsförskjutna. Enkla lineära regressioner och enkla lineära regressioner med
+tidsförskjutna variabler gjordes med alla variabler. Multipla regressioner utfördes för
+att kartlägga relationen och signifikansen av indikatorerna och aktieindexen.
+Analyserna gjordes i programmet R(ref).
+
+Resultat
+Alla de indikatorer som inkluderats i denna avhandling förutom Chicago
+inköparindexet hade en positiv korrelation med S&P 500 indexet och DJIA indexet.
+Korrelationerna och korrelationssignifikanserna bland indikatorerna antydde att
+Chicago inköparindexet, konsumentens sentimentindex och producentprisindexet
+uppfyllde kraven för att inkluderas i de multipla regressionerna. Övriga indikatorer
+hade för starka korrelationer och korrelationssignifikanser för att multikollinearitet
+skulle ha kunnat uteslutas. Resultaten från korskorrelationerna för både DJIA indexet
+74
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+och S&P500 indexet visade att alla indikatorer släpar efter aktieindexen med en
+månad. Resultaten från de enkla lineära regressionerna var icke-signifikanta.
+Resultaten från de enkla lineära regressionerna med tidsförskjutna variabler var
+däremot signifikanta för varje indikator. Ytterligare var resultaten från den multipla
+regressionen icke-signifikanta. Resultaten från de multipla regressionerna med
+tidsförskjutna variabler var signifikanta för varje indikator.
+
+Diskussion och avslutning
+Avhandlingen fokuserade på ett aktuellt tema, det vill säga på att utvärdera hur väl
+indikatorerna fungerat under coronapandemin. Avhandlingen har gett en inblick i
+detta. Resultaten från tidigare forskning har kunnat konstatera att det finns mycket
+variation i hur indikatorerna har presterat. Resultaten från denna avhandling kan i
+stort sägas gå i linje med tidigare studiers resultat. Dock fanns det ett par undantag. I
+denna avhandling hade Industriproduktionsindexet endast en effekt på aktieindexen
+då indikatorn varit tidsförskjuten, medan tidigare forskning rapporterat att den alltid
+haft en signifikant effekt oberoende om den var tidsförskjuten eller inte (Humpe &
+Macmillan,2007; Serfling & Miljokovic, 2011; Rahman et.al, 2009). Resultaten för
+Producentprisindexet och Konsumentprisindexet påverkade aktiemarknadsindexen
+enbart då de var tidsförskjutna, vilket skiljer sig från vad tidigare forskning
+konstaterat (Hamid et.al, (2006).
+Det är värt att notera att det i denna studie uppstod signifikanta resultat för varje
+indikator då de var tidsförskjutna, vilket är i linje med resultaten av Celebi och Hönig
+(2019). Detta kunde tyda på att då man tidsförskjuter variabler ökar det
+signifikansen. Utgående från detta kan det konstateras att indikatorerna följer
+utvecklingen i aktiemarknaden och efter att förändringen i aktiemarknaden har skett
+förändras även värden i indikatorerna.
+Det finns faktorer som påverkar hur bra indikatorer går att använda i relation med
+aktiemarknadens utveckling, vilket även denna avhandling ger stöd för. Tidsperioden
+som man väljer för analyserna spelar en stor roll, ju längre tidsperiod desto tydligare
+svar kan man förvänta sig. Det finns dock också problem med att välja en alltför lång
+tidsperiod. Indikatorerna kan utvecklas och flera variabler kan läggas till i dem,
+vilket försvårar användningen av indikatorerna under en längre tidsperiod och kan
+75
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+även förändra dess prestation. Det bör även noteras att aktiemarknaden också
+förändrats under en längre tidsperiod och att varje recession kan orsaka förändringar
+i ekonomin, vilket kan påverka hur aktierna har presterat före och efter ekonomiska
+kriser. Dessutom utvecklas den globala ekonomin hela tiden. Multinationella företag
+verkar i olika länder och då ekonomiska kriser sker i ett land kan det antingen
+påverka andra länder eller inte. Ju mer ekonomin globaliseras desto mer globaliseras
+också enskilda länders aktiemarknader.
+Framtida undersökningar skulle kunna koncentrera sig på färre indikatorer och
+använda mera avancerade analysmodeller för att få tydligare svar. Uttömmande
+analyser om indikatorer och aktieindex skulle kunna vara något som kunde utföras i
+framtida studier. De inkonsekventa resultaten tyder på behovet av ytterligare
+forskning.
+
+76
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+REFERENCES
+
+Board of Governors of the Federal Reserve System (US) (n.d.). Industrial
+Production: Total Index (INDPRO).Federal Reserve Bank of St. Louis.
+Retrieved 15 January 2021 from: https://fred.stlouisfed.org/series/INDPRO
+Bureau of Labor Statistics (n.d.a). Consumer Price Index. Retrieved 21 January 2021
+from: https://www.bls.gov/cpi/
+Bureau of Labor Statistics (n.d.b). Consumer Price Index for All Urban Consumers:
+All Items in U.S. City Average. Retrieved 21 February 2021 from:
+https://data.bls.gov/cgi-bin/surveymost?cu
+Bureau of Labor Statistics (n.d.c). Producer Price Index. Retrieved 20 January 2021
+from: https://www.bls.gov/ppi/home.htm
+Bureau of Labor Statistics (n.d.d). Producer Price Index Total Manufacturing
+Industries. Retrieved 21 February 2021 from: https://data.bls.gov/cgibin/surveymost?pc
+Celebi, K., & Hönig, M. (2019). The Impact of Macroeconomic Factors on the
+German Stock Market: Evidence for the Crisis, Pre- and Post-Crisis
+Periods. Int. J. Financial Stud. 2019, 7, 18. https://doi.org/10.3390/ijfs702001
+Charoenrook, A. (2006). Does sentiment matter? Thammasat University, Department
+of Finance. Retrieved from:
+https://www.researchgate.net/publication/228760482_Does_sentiment_matter
+Chen, M. (2003). Risk and return: CAPM and CCAPM. The Quarterly Review of
+Economics and Finance 43(2), pp.369–393. doi:10.1016/S10629769(02)00125-4
+Chen, N., Roll, R., & Ross, S. A. (1986). Economic Forces and the Stock Market.
+Journal of Business, 1986, vol.59, no.3, pp.383-403, Published by: The
+University of Chicago Press
+
+77
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Chen, S.S. (2009). Predicting the Bear Stock Market: Macroeconomic Variables as
+Leading Indicators. Journal of Banking & Finance, 33(2), 211-223,
+DOI:10.1016/j.jbankfin.2008.07.013
+Christ, K. P., & Bremmer, D. S. (2003). The relationship between consumer
+sentiment and stock prices. 78. Annual Conference of the Western Economics
+Association International. Denver
+Cochrane, J. H. (1991). Production-Based Asset Pricing and the Link Between Stock
+Returns and Economic Fluctuations. The Journal of Finance, Vol.
+46(1),(March, 1991) pp. 209–237, doi: https://doi.org/10.2307/2328694
+Coibion, O., Gorodnichenko, Y., & Weber, M. (2020). Crisis: Lockdowns,
+Macroeconomic Expectations, and Consumer Spending. National Bureau of
+Economic Research, Working Paper:27141, DOI: 10.3386/w27141
+Congressional Budget Office Reports (2020). Interim Economic Projections for 2020
+and 2021. Retrieved 12 December 2020 from:
+https://www.cbo.gov/system/files/2020-05/56351-CBO-interimprojections.pdf
+Cooper, D. R., & Schindler, P. S. (2011). Chapter 6 Research Design: An Overview.
+Business Research Methods, pp 121-141, Twelfth edition. Published by: Mc
+Graw Hill / Irwin ISBN 978-0-07-352150-3
+Cox, J. (2020). The Fed’s corporate bond buying is stoking bubble fears. published
+22 June 2020, CNBC, Retrieved from:
+https://www.cnbc.com/2020/06/22/the-feds-corporate-bond-buying-isstoking-bubble-fears.html
+Creswell, J. W., & Creswell J. D. (2018). Research design: Qualitative, Quantitative,
+and Mixed Methods Approaches, Chapter 1 and Chapter 8 Fifth edition,
+Published by: Sage publications, ISBN 978-1-5063-8670-6
+Curtin, R. T. (2002). Surveys of Consumer: Theory, Methods, and Interpretation.
+NABE 44th Annual Meeting, Washington DC Retrieved 1 March 2021 from
+https://data.sca.isr.umich.edu/fetchdoc.php?docid=26396
+
+78
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+del Rio-Chanona, R. M., Mealy, P., Pichler, A., Lafond, F., & Farmer, J. D. (2020).
+Supply and demand shocks in the COVID-19 pandemic: an industry and
+occupation perspective. Oxford Review of Economic Policy, Volume 36,
+Issue Supplement_1, 2020, Pages S94–
+S137, https://doi.org/10.1093/oxrep/graa033
+Dovolil, A. (2016). THE USE OF ECONOMIC INDICATORS AS A TOOL FOR
+PREDICTING S&P 500 STOCK INDEX, ACC Journal 22(2):7-14
+DOI:10.15240/tul/004/2016-2-001
+Dow Jones Industrial Average (2 February 2021) Retrieved 2 February 2021 from:
+https://finance.yahoo.com/quote/%5EDJI/
+Dumas, B. (1994). A Test of the International CAPM using Business Cycle
+Indicators as Instrumental Variables, NBER, Working Paper No. w4657
+Dunford, D., Dale, B., Stylianou, N. Lowther, E., Ahmed, M., & de la Torre Arenas,
+I. (2020) Coronavirus: The world in lockdown in maps and charts (2020),
+BBC News, published 7 April 2020, Retrieved from:
+https://www.bbc.com/news/world-52103747
+Dzikevičius, A., & Vetrov, J. (2011). Stock Market Analysis through Business Cycle
+Approach, BUSINESS: THEORY AND PRACTICE, ISSN 1648-0627 print /
+ISSN 1822-4202 online
+Eklund, K. (2013). Konjunkturen och stabiliseringspolitik, Del 2 kapitel 12. Vår
+ekonomi, en introduktion till samhällsekonomin, Studentlitteratur (trettonde
+upplagan)
+Estrella, A., & Mishkin, F.S. (1998). Predicting U.S. Recessions: Financial Variables
+as Leading Indicators. The Review of Economics and Statistics, 80(1), 45-61
+Fama, E. F. (1995). Random Walks in Stock Market Prices. Financial Analysts
+Journal, January-February 1995 doi: https://doi.org/10.2469/faj.v51.n1.1861
+Federal Reserve (n.d.), Board of Governors of the Federal Reserve System, Industrial
+Production and Capacity Utilization -G.17, Retrieved 15 January 2021 from:
+https://www.federalreserve.gov/releases/g17/20201215/
+79
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Fichtner, F., Rüffer, R., & Schnatz, B. (2009). Leading indicators in a globalized
+world. Working paper series NO.1125/December 2009, European central
+bank.
+Flannery, M.J. & Protopapadakis, A. (2002). Macroeconomic Factors Do Influence
+Aggregate Stock Returns. The Review of Financial Studies. Oxford
+University Press, Oxford, 751-782
+Franz, L. W. (2010). Consistency of the stock market in anticipating economic
+cycles. Journal of business & Economic research, August 2010 volume 8,
+number 8
+Hamid, S. A., Thirunnavukkarasu, R., & Rajamanickam, M. (2006). Price
+transmission between Dow Jones Industrial Average, Standard & Poor 500
+Index, Producer Price Index and Consumer Price Index, Publisher: Southern
+New Hampshire University, working paper series
+Hamilton, J. D. & Lin, G. (1996). Stock market volatility and the business cycle.
+Journal of Applied Econometric forecasting, Vol.11, No.5 Special Issue:
+Econometric Forecasting (Sep.-Oct. 1996) pp.573-593, Wiley
+Heale, R., & Twycross, A. (2015). Validity and reliability in quantitative research.
+Evidence-based Nursing 18 (3):66-67 January 2015
+Hong, H., Bian, Z., & Lee, C. (2021). COVID-19 and instability of stock market
+performance: evidence from the U.S. Financial Innovation 7, Article
+number:12 (2021)
+Hu, J. W., Hu, Y., & Chia-Hua, A. T (2017). Multiple Criteria Decision Making and
+General Regression for Determining Influential Factors on S&P 500 Index
+Futures. Symmetry 2018, 10, 5; doi:10.3390/sym10010005
+Humpe, A., & Macmillan, P. (2007). Can macroeconomic variables explain long
+term stock market movements? A comparison of the US and Japan. CDMA
+working. Journal of finance, 2007. Issue 30. pp. 209-245
+IHS Markit (2017). An introduction to the PMI surveys. Retrieved 3 March 2021
+from: https://cdn.ihsmarkit.com/www/pdf/1218/IHS-Markit-PMIIntroduction.pdf
+80
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+IHS Markit US Manufacturing Purchasing Managers’ Index (n.d.). Retrieved 27
+January 2021 from: https://tradingeconomics.com/unitedstates/manufacturing-pmi
+Institute for Supply Managers -Chicago (n.d.). Chicago Purchasing Managers’ Index,
+Retrieved 17 February 2021 from: https://www.ismchicago.org/insidepages/reportsonbusiness/
+Institute for Supply Management (n.d.a) (ISM). Report on business, ISM
+Manufacturing PMI, Retrieved 21 May 2021 from:
+https://www.ismworld.org/supply-management-news-andreports/reports/ism-report-on-business/pmi/may/
+Institute for Supply Management (n.d.b) (ISM). Report on business, ISM NonManufacturing PMI (Service PMI), Retrieved 21 May 2021 from:
+https://www.ismworld.org/supply-management-news-andreports/reports/ism-report-on-business/services/may/
+Jenkins-Smith, H., Ripberger, J., Copeland, G., Nowlin, M., Hughes, T., Fister, A., &
+Wehde, W., Davis, J. (2017). Chapter 2.4 Threats to Validity. Quantitative
+Research Methods for Political Science, Public Policy and Public
+Administration:With Applications in R- 3rd Edition, University of Oklahoma,
+Jeon, Ji-Hong (2017). US Purchasing Managers Index and its impact on Korea and
+US. Journal of distribution science, Volume 15 issue 3 (2017) 17-25, doi:
+http://dx.doi.org/10.15722/jds.15.3.201703.17
+Johnson, M. A. & Watson, K. J. (2011). Can changes in the purchasing managers
+index foretell stock returns? An additional forward looking sentiment
+indicator, The journal of investing, winter 2011,20(4)p. 89-98
+Malkiel, B. G. (2003). The Efficient Market Hypothesis and Its Critics. Journal of
+Economic Perspectives, 17 (1): 59-82 doi: 10.1257/089533003321164958
+Mazur, M., Dang, M., & Vega, M. (2021). COVID-19 and the march 2020 stock
+market crash. Evidence from S&P1500. Finance research letters, 38, 101690.
+https://doi.org/10.1016/j.frl.2020.101690
+Mendez-Carbajo, D. (2021). Consumer Spending and the COVID-19 Pandemic.
+Economic Research Federal Reserve Bank Of St.Louis, Published January
+81
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+2021, Retrieved 20 May from:
+https://research.stlouisfed.org/publications/page1-econ/2021/01/04/consumerspending-and-the-covid-19-pandemic
+Mitchell, W. C., & Burns, A.F. (1946). Measuring Business Cycles. New York:
+NBER. ISBN: 0-87014-085-X
+Mitchell, W. C., & Burns, A. F. (1961). Statistical indicators of cyclical revivals,
+Business Cycle Indicators, Volume 1: pp.162–183, ISBN: 0-87014-093-0
+Naes, R., Skjeltorp, J. A., & Odegaard, B. A. (2011). Stock Market Liquidity and the
+Business Cycle, The Journal of Finance, Volume 66, Issue 1, p.139-176, doi:
+https://doi.org/10.1111/j.1540-6261.2010.01628.x
+National Bureau of Economic Research (n.d.) (NBER), Business cycle dating.
+Retrieved 3 January 2021 from: https://www.nber.org/research/businesscycle-dating
+Nettleton, D. (2014) Selection of Variables and Factor Derivation, Commercial Data
+Mining, Retrieved 24 February 2021 from:
+https://www.sciencedirect.com/topics/computer-science/pearson-correlation
+OECD (2021), Composite leading indicator (CLI). doi: 10.1787/4a174487-en
+Retrieved 3 March 2021 from: https://data.oecd.org/leadind/compositeleading-indicator-cli.htm
+OECD Composite Leading Indicators: Turning Points of Reference Series and
+Component Series, April 2021. Retrieved 24 April 2021 from:
+https://www.oecd.org/sdd/leading-indicators/CLI-components-and-turningpoints.pdf
+Otoo, M. W. (1999). Consumer Sentiment and the Stock Market. Finance and
+Economics Discussion Series (FEDS), Board of Governors of the Federal
+Reserve System
+Perez-Quiroz, G. & Timmermann, A. (2007). Variations in the mean and volatility of
+stock returns around turning points of the business cycle. In Quantitative
+Finance, Forecasting Volatility in the Financial Markets (Third Edition),
+Pages 333-350) doi: https://doi.org/10.1016/B978-075066942-9.50017-0.
+82
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Perold, A. F. (2004). The capital asset pricing model. Journal of Economic
+Perspectives, Volume 18, Number 3, Summer 2004, Pages 3–24
+Priestley, R. (1996). The arbitrage pricing theory, macroeconomic and financial
+factors, and expectations generating processes. Journal of Banking and
+Finance, Volume 20 (1996) pp. 869-890 doi: https://doi.org/10.1016/03784266(95)00035-6
+R Core Team (2020). R: A language and environment for statistical computing. R
+Foundation for Statistical Computing, Vienna, Austria. URL https://www.Rproject.org/
+Rahman, A. A., Sidek, N. Z. M., & Tafri, F. H. (2009). Macroeconomic determinants
+of Malaysian stock market. African journal of business management, vol.3,
+pp.95-106, March 2009
+Rapach, D. E., Wohar, M., & Rangvid, J. (2005). Macro variables and international
+stock return predictability. International Journal of Forecasting 21(1): 137166, DOI: 10.1016/j.ijforecast.2004.05.004
+Raunig, B. & Scharler, J. (2010). Stock Market Volatility and the Business Cycle.
+Monetary Policy & The Economy, Quarterly Review of Economic Policy,
+Oesterreichische Nationalbank (Austrian Central Bank), issue 2, pages 54-63.
+Roe, B. E., & Just, D. R. (2009). Internal and External Validity in Economics
+Research: Tradeoffs between Experiments, Field Experiments, Natural
+Experiments, and Field Data. American Journal of Agricultural Economics,
+Vol. 91, No. 5, Proceedings Issue (Dec., 2009), pp. 1266-1271 Published by:
+Oxford University Press on behalf of the Agricultural & Applied Economics
+Association
+Ross, S. A. (1976). The arbitrage theory of capital asset pricing. Journal of Economic
+Theory, Volume 13, Issue 3, December 1976, pp. 341-360 doi:
+https://doi.org/10.1016/0022-0531(76)90046-6
+Schoenfeld, J. (2020). The Invisible Risk: Pandemics and the Financial Markets.
+Tuck School of Business, Working Paper No. 3567249, doi:
+http://dx.doi.org/10.2139/ssrn.3567249
+83
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+Serfling, M. A. & Miljkovic, D. (2011). Time series analysis of the relationships
+among (macro) economic variables, the dividend yield and the price level of
+the S&P 500 Index. Applied Financial Economics 21(15):1117-1134, DOI:
+10.1080/09603107.2011.562167
+Shumway, R. H., & Stoffer, D.S. (2011). Time Series Analysis and Its Applications
+with R examples, Third edition, Springer New York Dordrecht Heidelberg
+London, DOI 10.1007/978-1-4419-7865-3
+Sirucek, M. (2012). Macroeconomic variables and stock market: US review. IJSMS
+International journal of computer science and management studies, ISSN
+(Online): 2231-5268
+S&P 500 index (2 February 2021). Retrieved 2 February 2021 from:
+https://finance.yahoo.com/quote/%5EDJI/
+Standard & Poors’ 500 index factsheet (n.d.). S&P Dow Jones Indices, Retrieved 5
+January 2021 from: https://www.spglobal.com/spdji/en/indices/equity/sp500/#overview
+Stock, J.H., & Watson, M.W. (2003). How Did Leading Indicators Forecasts Perform
+During the 2001 Recession?. Economic Quarterly - Federal Reserve Bank of
+Richmond, 89(3), 71-90
+Suk-joong, K., McKenzie, M. D., & Faff R. W. (2004). Macroeconomic News
+Announcements and the Role of Expectations: Evidence for US Bond, Stock
+and Foreign Exchange Markets. Journal of Multinational Financial
+management, 14-4, 217-32
+Taherdoost, H. (2016). Validity and Reliability of the Research Instrument; How to
+Test the Validation of a Questionnaire/Survey in a Research. SSRN Electronic
+Journal 5(3): 28-36, DOI:10.2139/ssrn.3205040
+The Dow Jones Industrial Average factsheet (n.d.). S&P Dow Jones Indices,
+Retrieved 5 January 2021 from:
+https://www.spglobal.com/spdji/en/indices/equity/dow-jones-industrialaverage/#overview
+
+84
+
+Anton Kiukkonen: Covid-19, Indicators, and the Stock Market
+
+United States ISM Purchasing Managers’ Index (PMI) (n.d.). Retrieved 13 February
+2021 from: https://tradingeconomics.com/united-states/business-confidence
+United States ISM Non-Manufacturing PMI (n.d.). Retrieved 13 February 2021 from
+https://tradingeconomics.com/united-states/non-manufacturing-pmi
+University of Michigan (n.d.). Surveys of Consumers, Consumer Sentiment Index,
+Retrieved 7 March 2021 from: https://data.sca.isr.umich.edu/dataarchive/mine.php
+Van Dale, A., De Vreese, C. H., & AlbÆk, E. (2017). Mediated Uncertainty: The
+negative impact of uncertainty in economic news on consumer confidence.
+Public Opinion Quarterly, Volume 81, Issue 1, 1 March 2017, Pages 111130, https://doi.org/10.1093/poq/nfw039
+Walmsley, T. L., Rose, A., & Wei, D. (2020). Impacts on the U.S. macroeconomy of
+mandatory business closures in response to the COVID-19 Pandemic.
+Applied Economics Letters 2020, Routledge, Taylor & Francis Group doi:
+https://doi.org/10.1080/13504851.2020.1809626
+Wickham, H. (2016). ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag
+New York, 2016.
+Wickham, H., François, R., Henry, L., & Müller, K. (2020). dplyr: A Grammar of
+Data Manipulation. R package version 1.0.2. https://CRAN.Rproject.org/package=dplyr
+Zarnowitz, V. (1991). What is a business cycle? NBER WORKING PAPERS SERIES
+No. 3863, National Bureau of economic research
+Zeileis, A. (2019). dynlm: Dynamic Linear Regression_. R packageversion 0.3-6,
+<URL: https://CRAN.R-project.org/package=dynlm>.
+
+85
+
+

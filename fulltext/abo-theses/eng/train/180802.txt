@@ -1,0 +1,4067 @@
+Lipase catalyzed chemo-enzymatic epoxidation of fatty
+acids using ultrasound as a process intensification
+method
+Master’s Thesis in Chemical and Process Engineering
+
+Pontus Lindroos
+
+Laboratory of Industrial Chemistry and Reaction Engineering
+Faculty of Science and Engineering
+Åbo Akademi University
+Turku/Åbo, Finland, 2021
+
+Title of the thesis:
+
+Lipase catalyzed chemo-enzymatic epoxidation
+of fatty acids using ultrasound as a process
+intensification method
+
+Author:
+
+Pontus Lindroos
+
+Thesis supervisor:
+
+Academy Professor Tapio Salmi
+Laboratory of Industrial Chemistry and
+Reaction Engineering
+Faculty of Science and Engineering
+Åbo Akademi University, Turku/Åbo, Finland
+
+Thesis advisor:
+
+Doctor of Technology Adriana Freites Aguilera
+Laboratory of Industrial Chemistry and
+Reaction Engineering
+Faculty of Science and Engineering
+Åbo Akademi University, Turku/Åbo, Finland
+
+Keywords:
+
+Chemo-enzymatic
+
+epoxidation,
+
+oleic
+
+acid,
+
+immobilized lipase, process intensification,
+ultrasound irradiation, kinetic modelling
+
+Pontus Lindroos
+
+Abstract
+
+ii
+
+_________________________________________________________________________________________________________________________________________
+
+Abstract
+The recent trend in switching from fossil to renewable sources in the production of
+essential chemicals has revealed novel methods within the concept of green chemistry.
+This work focuses on the epoxidation of oleic acid with a chemo-enzymatic approach
+using immobilized lipase as catalyst. Different hydrogen peroxide versus fatty acid
+ratios, temperatures and stirring rates were evaluated. Acoustic irradiation was
+implemented for reaction intensification and different ultrasound amplitudes were
+studied.
+The experimental results show that almost complete conversions of the double bonds
+in oleic acid are achievable in an isothermal batch reactor, with low concentrations of
+ring-opening byproducts produced. Ultrasound irradiation is used for enhancing the
+reaction rate, reaching high conversions in four hours of reaction time. Novozym®
+435 reveals to be a working and durable catalyst for fatty acid epoxidation. The catalyst
+preserves its activity and selectivity well, which was confirmed by catalyst recovery
+experiments conducted both in a conventional batch reactor and in a sonochemical
+reactor in the presence of ultrasound. However, SEM images revealed that the
+cavitation caused by ultrasound has an impact on the catalyst morphology.
+Different mathematical models for the reaction kinetics were developed and evaluated
+by parameter estimation using non-linear regression analysis. Statistical data for the
+mechanisms were evaluated and the best performing model was chosen with the
+chemical knowledge in mind. All the models and their estimated parameter values
+showed a good fit to the experimental data.
+
+Pontus Lindroos
+
+Preface
+
+iii
+
+_________________________________________________________________________________________________________________________________________
+
+Preface
+This thesis was carried out at the Laboratory of Industrial Chemistry and Reaction
+Engineering of Åbo Akademi University. I am pleased that I was offered the
+opportunity to join this excellent, international group of scientists.
+Firstly, I would like to extend my deepest gratitude to my supervisor Academy
+Professor Tapio Salmi for offering me the thesis opportunity in this interesting research
+project. His advice, inspiration, and passion for science had a large positive influence
+on my motivation for this project. I would also like to extend my thanks to my thesis
+advisor D.Sc. Adriana Freites Aguilera for her continuous and extremely valuable
+support throughout the whole process.
+Furthermore, I wish to thank Laboratory Manager D.Sc. Kari Eränen and Doctoral
+student Wander Pérez-Sena for their practical guidance in the laboratory. For the
+analytical methods of SEM, I would like to thank SEM operator Linus Silvander for
+the assistance. A sincere thanks also to NMR operator Ph.D. Jani Rahkila for
+conducting the NMR analysis.
+I would also like to thank all the members of the Laboratory of Industrial Chemistry
+and Reaction Engineering at Åbo Akademi University for making the time at the
+laboratory so enjoyable and memorable. Thanks to all the fellow students as well as
+the student associations Kemistklubben and the Student Union of Åbo Akademi
+University for all the valuable and unforgettable experiences throughout the studies.
+Finally, I would like to thank my partner, my family, and my friends for their
+continuous support.
+
+Pontus Lindroos
+Helsinki, 7th April 2021
+
+Pontus Lindroos
+
+Abbreviations and nomenclature
+
+iv
+
+_________________________________________________________________________________________________________________________________________
+
+Abbreviations and nomenclature
+Cat
+
+Catalyst
+
+CTO
+
+Crude Tall Oil
+
+HP
+
+Hydrogen peroxide
+
+N/A
+
+Not available
+
+NMR
+
+Nuclear magnetic resonance spectroscopy
+
+OA
+
+Oleic acid
+
+RBR
+
+Rotating Bed Reactor
+
+RCO
+
+Relative conversion to oxirane (%)
+
+RCU
+
+Relative conversion of double bonds (%)
+
+ROP
+
+Ring-opening reaction
+
+SEM
+
+Scanning electron microscopy
+
+TOFA
+
+Tall Oil Fatty Acid
+
+US
+
+Ultrasound
+
+Pontus Lindroos
+
+Abbreviations and nomenclature
+
+v
+
+_________________________________________________________________________________________________________________________________________
+
+A
+
+Mass transfer area
+
+c*
+
+Concentration of vacant surface sites
+
+ci
+
+Concentration
+
+IV0
+
+Initial iodine value
+
+IVexp
+
+Experimental iodine value
+
+k’
+
+Merged rate constant
+
+KDi
+
+Distribution coefficient
+
+Ki
+
+Equilibrium constant
+
+ki
+
+Rate constant
+
+m
+
+Mass
+
+mcat
+
+Catalyst mass
+
+MM
+
+Molar mass (g/mol)
+
+nai
+
+Amount of substance in aqueous phase
+
+Ni
+
+Molar flux
+
+noi
+
+Amount of substance in organic phase
+
+OOexp
+
+Experimentally determined oxirane oxygen (mol/100 g oil)
+
+OOth
+
+Theoretical maximum oxirane oxygen content (mol/100 g oil)
+
+Q
+
+Objective function
+
+ri
+
+Generation rate
+
+si,texp
+
+Experimentally obtained state value
+
+sit
+
+Computed state value
+
+t
+
+Time
+
+U/g
+
+Enzyme activity by mass
+
+V
+
+Volume
+
+w/v
+
+Weight by volume
+
+wt%
+
+Weight percent
+
+α
+
+Phase ratio
+
+ρ
+
+Density
+
+Pontus Lindroos
+
+Table of Contents
+
+vi
+
+_________________________________________________________________________________________________________________________________________
+
+Table of Contents
+Abstract ........................................................................................................................ ii
+Preface ......................................................................................................................... iii
+Abbreviations and nomenclature................................................................................. iv
+1.
+
+Introduction .......................................................................................................... 1
+
+1.1.
+
+1.1.1.
+
+Prileschajew epoxidation ....................................................................... 2
+
+1.1.2.
+
+Chemo-enzymatic epoxidation............................................................... 3
+
+1.2.
+
+Rotating Bed Technology ...................................................................... 6
+
+1.2.2.
+
+Ultrasound irradiation ............................................................................ 7
+
+Scope ............................................................................................................. 8
+
+Experimental ........................................................................................................ 9
+2.1.
+
+Chemicals utilized ......................................................................................... 9
+
+2.2.
+
+Experimental setup ...................................................................................... 10
+
+2.2.1.
+
+Reactor setup ........................................................................................ 10
+
+2.2.2.
+
+Experimental matrix ............................................................................. 11
+
+2.2.3.
+
+Experimental procedure ....................................................................... 13
+
+2.3.
+
+3.
+
+Process intensification in epoxidation of fatty acids ..................................... 6
+
+1.2.1.
+
+1.3.
+2.
+
+Epoxidation of vegetable oils ........................................................................ 2
+
+Analytical procedures and methods ............................................................ 14
+
+2.3.1.
+
+Aqueous phase analysis – Hydrogen peroxide content ........................ 14
+
+2.3.2.
+
+Organic phase analysis – Iodine value ................................................. 15
+
+2.3.3.
+
+Organic phase analysis – Oxirane number ........................................... 15
+
+2.3.4.
+
+Nuclear Magnetic Resonance spectroscopy (NMR) ............................ 16
+
+2.3.5.
+
+Scanning Electron Microscopy (SEM) ................................................ 16
+
+Results and discussion ....................................................................................... 17
+3.1.
+
+SpinChem® Rotating Bed Reactor ............................................................. 17
+
+Pontus Lindroos
+
+Table of Contents
+
+vii
+
+_________________________________________________________________________________________________________________________________________
+
+3.2.
+
+4.
+
+Determination of optimal reaction parameters ............................................ 18
+
+3.2.1.
+
+Influence of hydrogen peroxide ........................................................... 18
+
+3.2.2.
+
+Influence of ultrasound ........................................................................ 21
+
+3.2.3.
+
+Influence of temperature ...................................................................... 23
+
+3.2.4.
+
+Influence of stirring speed .................................................................... 24
+
+3.3.
+
+Lipase reusability in conventional and sonochemical reactors ................... 26
+
+3.4.
+
+Chemical composition of products – NMR analysis ................................... 28
+
+3.5.
+
+Catalyst durability – SEM analysis ............................................................. 30
+
+3.6.
+
+Kinetic modelling ........................................................................................ 32
+
+3.6.1.
+
+Reaction stoichiometry......................................................................... 32
+
+3.6.2.
+
+Epoxidation mechanisms and rate equations ....................................... 34
+
+3.6.3.
+
+Component mass balances ................................................................... 43
+
+3.6.4.
+
+Parameter estimation ............................................................................ 45
+
+Conclusions ........................................................................................................ 52
+
+Svensk sammanfattning – Swedish summary ............................................................ 54
+References .................................................................................................................. 58
+Appendices ................................................................................................................. 64
+Appendix I.............................................................................................................. 64
+Appendix II ............................................................................................................ 67
+
+Pontus Lindroos
+
+Introduction
+
+1
+
+_________________________________________________________________________________________________________________________________________
+
+1. Introduction
+The world is currently facing a megatrend of climate change, bringing us a variety of
+challenges in developing novel sustainable solutions. The need for switching from
+fossil-based raw materials to renewables has led to discovering new techniques for
+producing the demanded products in the world. Non-edible plant oils are an option for
+the production of epoxidized oils, used as chemical intermediates for production of
+important products as biolubricants [1], plasticizers [2], biobased rigid foams [3], nonisocyanate polyurethanes [4], among others.
+The market for oleochemical fatty acids and their derivatives has been growing in
+recent years, and the growth is projected to continue during the next few years [5]. The
+source of vegetable fatty acids can be e.g. soybean, palm, rapeseed, sunflower, linseed,
+and cottonseed [6]. In Northern Europe, Tall Oil Fatty Acids (TOFA) are a large and
+sustainable source of fatty acids. Tall oil is mainly obtained as a side product in pulping
+of softwood, such as pine and spruce, but also from hardwood such as birch [7], [8].
+Current major players in the valorization of tall oil are Forchem, UPM Biofuels, Sun
+Pine and Kraton Chemical. Major investments in the field of Crude Tall Oil (CTO)
+refining are recently announced by Fintoil in Finland and Mainstream Pine Products
+in USA.
+This study focuses on the chemo-enzymatic epoxidation of unsaturated fatty acids
+originated from renewable, plant-based resources. Oleic acid as a model molecule for
+fatty acids is used as feedstock for the epoxidation in this study. Moreover, in previous
+studies they have used other fatty acids and raw vegetable oils for the chemoenzymatic epoxidation, such as tall oil [9], linoleic acid [10], soybean oil [11]–[13],
+sunflower oil [14], linseed oil [15], among others. The epoxidation reaction is
+catalyzed by the immobilized lipase Candida Antarctica lipase B on an acrylic resin
+support (Novozym® 435), meaning that the reaction can be carried out in mild reaction
+conditions with no need of an additional carboxylic acid in the reaction mixture. In
+this chemo-enzymatic epoxidation, only the fatty acid, an oxidant and immobilized
+lipase are needed for transforming the double bond of the fatty acid into an epoxy
+group [16].
+
+Pontus Lindroos
+
+Introduction
+
+2
+
+_________________________________________________________________________________________________________________________________________
+
+1.1. Epoxidation of vegetable oils
+1.1.1. Prileschajew epoxidation
+Epoxidized vegetable oils have a great potential to replace traditional fossil-based
+products since they are biodegradable, renewable, and non-toxic options. For the time
+being, the most common method used in industrial scale for producing epoxidized
+vegetable oil is the Prileschajew epoxidation. This method comprises a reaction
+between the unsaturated fatty acid and a peroxy acid, the latter being generated in situ
+in a homogenous system with a carboxylic acid and hydrogen peroxide. Hydrogen
+peroxide supports the perhydrolysis of carboxylic acid in the aqueous phase, forming
+the percarboxylic acid for the Prileschajew epoxidation between the double bond in
+fatty acid and the peroxy acid in the organic phase [17]–[19]. The reaction mechanism
+is described in Figure 1.
+
+Figure 1 - The reaction mechanism for a Prileschajew epoxidation between oleic acid and acetic acid
+
+Pontus Lindroos
+
+Introduction
+
+3
+
+_________________________________________________________________________________________________________________________________________
+
+Traditionally, strong inorganic acids such as sulfuric acid and hydrogen chloride have
+been used for an effective in situ generation of peroxy acids [20]. Subsequent studies
+have led to using weaker carboxylic acids such as acetic acid, as well as strong acid
+heterogeneous catalysts. These methods lead to a more environmentally friendly
+technology for the perhydrolysis step in fatty acid epoxidation. Using different kinds
+of acidic ion-exchange catalysts for promoting the perhydrolysis reaction in the
+Prileschajew epoxidation has been studied and is beneficial compared to using a pure
+homogenous acidic system [21], [22]. Despite being both an economical and
+environmentally friendly method, the epoxides produced by this Prileschajew
+epoxidation method are sensitive to ring-opening by nucleophiles present in the system
+and, therefore, the selectivity is limited [23].
+
+1.1.2. Chemo-enzymatic epoxidation
+The recent trend has switched the focus towards an enzymatic approach to epoxidation
+thanks to its possibilities to work in mild reaction environments by forming peroxy
+acids in situ directly from fatty acids with hydrogen peroxide as the oxidant. The
+concept of converting carboxylic acids and hydrogen peroxide to the corresponding
+peroxy acid assisted by immobilized lipases was introduced by Björkling et al. [24].
+This was followed by Warwel and Rüsch gen. Klaas when they presented the concept
+of an in situ chemo-enzymatic ‘self’-epoxidation of unsaturated fatty acids, using
+hydrogen peroxide and catalyzed by an immobilized lipase Candida Antarctica lipase
+B (Novozym® 435) [16], [25]. In this process, the fatty acid undergoes first a
+perhydrolysis step, forming together with hydrogen peroxide and lipase the needed
+peroxy acids. The fatty acid reacts with the peroxy acid and forms an epoxide and a
+fatty acid as product, supporting on the mechanism of Prileschajew epoxidation. This
+method consists of a liquid-liquid-solid system with hydrogen peroxide in the aqueous
+phase and the organic phase consisting of vegetable oil [11]. Figure 2 shows the
+reaction scheme of the described reaction steps for the chemo-enzymatic ‘self’epoxidation.
+
+Pontus Lindroos
+
+Introduction
+
+4
+
+_________________________________________________________________________________________________________________________________________
+
+Figure 2 – The reaction scheme of chemo-enzymatic ‘self’-epoxidation of oleic acid
+
+A scenario of peroleic acid functioning as a nucleophile for another peroleic acid, thus
+creating an epoxidized peroleic acid as a byproduct, is worth considering in the
+reaction mechanism. However, due to small concentrations of peroleic acid in the
+reaction system, the volume of epoxidized peroleic acid produced is presumably
+smaller compared to epoxidized oleic acid [26].
+Compared to chemical epoxidation, this chemo-enzymatic method is advantageous
+thanks to its low temperature conditions, higher selectivity and conversion rates [9].
+The lipase has been shown to be reusable in several consecutive experiments using
+this method [12], [16], being an important part of making this method economically
+viable. Additionally, compared to the conventional Prileschajew method, this chemoenzymatic epoxidation forms a low amount of undesired ring-opened byproducts,
+making this method highly selective [16].
+
+Pontus Lindroos
+
+Introduction
+
+5
+
+_________________________________________________________________________________________________________________________________________
+
+The reaction temperature is usually a key factor for increasing reaction rates and
+conversions. It has been reported that the activity of immobilized lipase is impacted in
+temperatures exceeding 60 °C in an environment containing hydrogen peroxide and
+water. However, the activity is well preserved in systems without hydrogen peroxide
+and only water in the same temperature. This means that high concentrations of
+hydrogen peroxide in temperatures of 60 °C or above can have a significant damaging
+impact on lipase, thus leading to inefficiency [27].
+In multiple studies, toluene is added as a nonpolar solvent to preserve the high levels
+of activity in the enzyme, protecting it from making contact with the hydrogen
+peroxide. This leads to an eventual increase in yield and keeps the catalyst reusable for
+multiple experiments [11], [12]. The use of solvents in the epoxidation reaction should,
+however, be carefully evaluated with the concept of green chemistry in mind [28]. The
+recent research studies have shown promising results for a solvent-free chemoenzymatic epoxidation, making the process more environmentally friendly and less
+harmful for human health [13], [29]. The solvent polarity is, however, a governing
+factor for keeping the lipase activity. Water, which tends to suppress the catalytic
+activity, acts as a natural solvent for lipase. Therefore, the amount of water should not
+reach too high levels in order to preserve the efficiency of the catalyst [30].
+
+Pontus Lindroos
+
+Introduction
+
+6
+
+_________________________________________________________________________________________________________________________________________
+
+1.2. Process intensification in epoxidation of fatty acids
+The progression towards greener and safer solutions for producing chemicals has
+introduced a concept called process intensification to the list of novel technologies.
+Different forms of reaction intensification methods can be used, e.g. more efficient
+mixing and novel heating technologies. Applying an alternative form of energy to the
+reaction system can lead to cleaner, smaller, safer and more energy-efficient solutions
+for maximizing the yields [31]. Recent studies have shown favorable results for
+epoxidation using a combination of microwave irradiation and new forms of stirring
+devices, called Rotating Bed Reactors, in the epoxidation of fatty acids [32].
+
+1.2.1. Rotating Bed Technology
+When working with liquid-liquid systems where the reaction takes place in an
+emulsion, increasing the efficiency of the mass transfer between the two phases is key.
+A rotating bed reactor Spinchem® RBR is used in this study, where the packed catalyst
+bed is placed inside the stirring element, which aims to minimize the mass transfer
+limitations with a centrifugal liquid flow through the catalyst bed. The recovery of a
+solid catalyst from a liquid medium after the reaction can be a cumbersome procedure.
+By using the RBR technology, the catalyst is immobilized in the device, hence the
+separation process is made simpler without a need for filtration [21], [33], [34]. Figure
+3 shows a schematic picture of the structure of the Spinchem® RBR device.
+
+Figure 3 - A schematic view of the structure of the SpinChem RBR device and the centrifugal liquid flow [21]
+
+Pontus Lindroos
+
+Introduction
+
+7
+
+_________________________________________________________________________________________________________________________________________
+
+1.2.2. Ultrasound irradiation
+Ultrasound technology combined with conventional heating is an available option in
+the field of process intensification. Frequencies from 20 kHz to 10 MHz can be used
+in the ultrasound sonic spectrum. In contrast to using microwaves as a process
+intensification method, the ultrasound requires a physical medium for its application.
+Ultrasound in chemical reactions, also called sonochemistry, has its benefits in the
+form of cavitation caused by the ultrasonic waves. Small cavitation bubbles are
+created, growing in several cycles of compression and expansion until they eventually
+collapse rapidly. Consequently, high pressure and temperature peaks are generated
+locally with overall ambient conditions in the reactor. Free radicals can be formed in
+this collapse of the bubble, potentially leading to an increase in conversion in
+ultrasound suitable reactions [12], [31], [35]–[37]. Figure 4 shows a schematic
+overview of the cavitation phenomenon.
+
+Figure 4 - A schematic overview of the cavitation phenomenon [36]
+
+In liquid-liquid systems, ultrasound creates very fine emulsions causing an increase of
+the total reaction area between phases. This phenomenon is beneficial for increasing
+the mass transfer in the process. Furthermore, ultrasound potentially has an impact on
+the reaction kinetics by increasing the reaction rates [36]–[38]. The application of
+ultrasounds in lipase-catalyzed systems has previously shown to increase the
+efficiency of the enzymatic reaction without a significant decrease in the catalyst
+
+Pontus Lindroos
+
+Introduction
+
+8
+
+_________________________________________________________________________________________________________________________________________
+
+stability. Also, morphological and structural changes of lipase can be caused by
+ultrasonic irradiation, leading to an increase in the surface area of the catalyst.
+Additionally, it has previously been shown that ultrasound has a beneficial effect on
+lipase activity when using ionic liquids as solvents, although, the stability is somewhat
+lower [30], [39], [40].
+
+1.3. Scope
+The purpose of this work was to study the chemo-enzymatic epoxidation of fatty acids
+with an immobilized lipase catalyst (Novozym® 435) in a batch reactor system. Oleic
+acid was used as a model molecule for fatty acids and the initial molar ratios of
+hydrogen peroxide versus fatty acid were optimized. Ultrasound as a process
+intensification method was introduced and studied further. The work consisted of the
+following tasks:
+
+-
+
+Optimization of the molar ratio of unsaturated fatty acid to hydrogen peroxide
+in silent mode at different reaction times
+
+-
+
+Introduction to sonochemical reactors using ultrasound irradiation, comparing
+different ultrasound amplitudes and their impact on the reaction rate and
+reactant conversion
+
+-
+
+Investigation on the influence of the temperature and the stirring speed in the
+chemo-enzymatic epoxidation conducted under ultrasound irradiation
+
+-
+
+Study of the possibilities for reusing the catalyst in several consecutive
+experiments in both conventional and sonochemical reactor environments
+
+-
+
+Development of a mathematical model for the reaction in a conventional
+reactor environment, including simulation and parameter estimation for the
+description of the reaction kinetics
+
+Pontus Lindroos
+
+Experimental
+
+9
+
+_________________________________________________________________________________________________________________________________________
+
+2. Experimental
+2.1. Chemicals utilized
+A list of the chemicals and the manufacturers used for this project are provided in
+Table 1 below.
+
+Table 1 - List of chemicals utilized for the reaction and analysis
+
+Chemical
+
+Purity
+
+Manufacturer
+
+Oleic Acid
+
+90%
+
+Sigma-Aldrich
+
+Lipase acrylic resin (Novozym 435)
+
+≥5.000 U/g
+
+Sigma-Aldrich
+
+Hydrogen peroxide
+
+>30% w/v
+
+Fischer Scientific
+
+Tetraethylammonium bromide
+
+98%
+
+Sigma-Aldrich
+
+Perchloric acid (in anhydrous acetic acid)
+
+0.1 M
+
+VWR chemicals
+
+Potassium iodide
+
+N/A
+
+Merck KGaA
+
+Sodium thiosulfate solution
+
+0.1 M
+
+Honeywell Fluka™
+
+Hanus solution
+
+N/A
+
+Merck KGaA
+
+Chloroform
+
+≥99.8%
+
+Honeywell Riedel-de Haën™
+
+Ammonium cerium sulfate solution
+
+0.1 M
+
+Honeywell Fluka™
+
+Acetic acid
+
+≥99.8%
+
+Sigma-Aldrich
+
+Ferroin indicator
+
+N/A
+
+VWR chemicals
+
+Toluene
+
+≥99.9%
+
+Honeywell Riedel-de Haën™
+
+Sulfuric acid
+
+95-97%
+
+Sigma-Aldrich
+
+Starch
+
+N/A
+
+Merck KGaA
+
+Pontus Lindroos
+
+Experimental
+
+10
+
+_________________________________________________________________________________________________________________________________________
+
+2.2. Experimental setup
+2.2.1. Reactor setup
+All experiments were performed in a 250 ml isothermal batch glass reactor vessel
+surrounded by a thermostatic jacket (Lenz®). The jacket was filled with a mixture of
+ethylene glycol which was heated by a circulation bath assisted by a conventional heat
+exchanger. The reactor was equipped with a reflux condenser for preventing the
+evaporation of the volatile compounds in the reaction mixture during the reaction
+process.
+The formation of an emulsion during the reaction was made by stirring with a rotating
+bed reactor system (SpinChem® RBR) placed inside the reactor vessel (Figure 5). The
+RBR consisted of four rotating catalyst bed chambers, where the solid catalyst could
+be placed, which enabled the use of immobilized solid catalyst without any need of
+separation of the catalyst from the reaction mixture. In this setup, the reaction system
+undergoes a centrifugal effect, pushing the inner parts of the mixture to the outer parts
+of the reactor [33]. The SpinChem® device was used with the catalyst inside and
+outside the chambers. The ultrasound experiments were conducted with an ultrasound
+horn (microtip, Fischerbrand®) inserted in the glass reactor. Different amplitudes of
+the ultrasound microtip, 30%, 60% and 90%, with a frequency of 20 kHz were used
+during the experiments. The temperature was continuously recorded during the
+experiments by the software Picolog® connected to a thermocouple that was protected
+by Teflon and inserted in the reactor. A 10 ml syringe was used for withdrawing
+samples. Images of the reactor equipment can be found in Appendix I.
+
+Pontus Lindroos
+
+Experimental
+
+11
+
+_________________________________________________________________________________________________________________________________________
+
+Figure 5 - Scheme of the reactor setup
+
+2.2.2. Experimental matrix
+The experiments were performed in seven different experimental sets, three sets
+conducted in the absence of ultrasound and four sets with ultrasound. To obtain an
+understanding of the optimal molar ratio of unsaturated fatty acid versus hydrogen
+peroxide, the epoxidation process was at first optimized under silent conditions
+without using ultrasound as process intensification method. With the optimal oleic acid
+to hydrogen peroxide ratio determined in silent mode with the first seven experiments,
+the same conditions were used in experiments assisted with ultrasound. In the
+experimental sets with ultrasound, the amplitude of ultrasound, temperature and
+stirring rate was adjusted to find maximal conversions and reaction rates. The
+experiments and their reaction conditions are listed in Table 2.
+
+Pontus Lindroos
+
+Experimental
+
+12
+
+_________________________________________________________________________________________________________________________________________
+
+Table 2 - Experimental matrix
+
+Experiment
+
+Ultrasound
+
+Catalyst
+
+OA:HP
+
+Temperature
+
+Time
+
+Stirring
+
+number
+
+amplitude
+
+load
+
+ratio
+
+(˚C)
+
+(h)
+
+speed
+
+(%)
+
+(%)
+
+(mol:mol)
+
+-
+
+7.00
+
+1:1.5
+
+1
+
+Remark
+
+(rpm)
+50
+
+6
+
+1000
+
+SpinChem
+used
+
+2
+
+-
+
+7.00
+
+1:1.5
+
+50
+
+6
+
+1000
+
+3
+
+-
+
+7.00
+
+1:1
+
+50
+
+6
+
+1000
+
+H2O2
+
+4
+
+-
+
+7.00
+
+1:2
+
+50
+
+6
+
+1000
+
+amount
+
+5
+
+-
+
+7.00
+
+1:1.75
+
+50
+
+6
+
+1000
+
+testing
+
+6
+
+-
+
+7.00
+
+1:2
+
+50
+
+12
+
+1000
+
+7
+
+-
+
+7.00
+
+1:1.5
+
+50
+
+12
+
+1000
+
+8
+
+0
+
+7.00
+
+1:2
+
+50
+
+8
+
+1000
+
+Testing
+
+9
+
+30
+
+7.00
+
+1:2
+
+50
+
+8
+
+1000
+
+US
+
+10
+
+60
+
+7.00
+
+1:2
+
+50
+
+8
+
+1000
+
+amplitude
+
+11
+
+90
+
+7.00
+
+1:2
+
+50
+
+8
+
+1000
+
+12
+
+90
+
+7.00
+
+1:2
+
+30
+
+8
+
+1000
+
+Testing
+
+13
+
+90
+
+7.00
+
+1:1.75
+
+45
+
+8
+
+1000
+
+temperature
+
+14
+
+90
+
+7.00
+
+1:2
+
+60
+
+8
+
+1000
+
+15
+
+90
+
+7.00
+
+1:2
+
+60
+
+8
+
+500
+
+Testing
+
+16
+
+90
+
+7.00
+
+1:2
+
+60
+
+8
+
+750
+
+stirring
+speed
+
+17
+
+-
+
+7.00
+
+1:1.5
+
+50
+
+8
+
+750
+
+Lipase
+
+18
+
+-
+
+7.00
+
+1:1.5
+
+50
+
+8
+
+750
+
+reusability
+
+19
+
+-
+
+7.00
+
+1:1.5
+
+50
+
+8
+
+750
+
+-silent
+
+20
+
+90
+
+7.00
+
+1:1.75
+
+50
+
+8
+
+750
+
+Lipase
+
+21
+
+90
+
+7.00
+
+1:1.75
+
+50
+
+8
+
+750
+
+reusabilty -
+
+22
+
+90
+
+7.00
+
+1:1.75
+
+50
+
+8
+
+750
+
+ultrasound
+
+Pontus Lindroos
+
+Experimental
+
+13
+
+_________________________________________________________________________________________________________________________________________
+
+2.2.3. Experimental procedure
+All the experiments were performed in batch mode. The oleic acid, lipase (Novozym
+435), hydrogen peroxide and water were measured up in separate Erlenmeyer flasks
+or glass beakers covered with paraffin film. For the experiments where the
+SpinChem® was used as a rotating catalyst bed, the catalyst was distributed evenly in
+the four different chambers and the lipase filled device was placed in the reactor before
+adding any reactants. In the other cases, the catalyst was weighed in a beaker with the
+same procedure as the reactants and the SpinChem® was inserted empty, working only
+as a stirrer.
+Oleic acid, water and lipase were added into the reactor and the stirring device was
+switched on with the desired speed to create the emulsion. After the reactor reached
+the desired temperature of the experiment, hydrogen peroxide was added dropwise
+during about one-minute time, in order to prevent both an impact on the stability of
+lipase and an undesired rapid exothermic reaction, where a temperature peak is created.
+The time-point when hydrogen peroxide was added into the mixture was considered
+as the start of the reaction. When conducting an ultrasound experiment, the ultrasound
+horn was turned on after all the reagents were added and the operating cycle of the
+device was 1 minute ON and 1 minute OFF throughout the experiment.
+After the reaction was stopped, the stirring was shut down and the emulsion was left
+for 10 minutes to spontaneously separate in two phases. The aqueous phase was
+carefully withdrawn from the reactor through a drain, and toluene was added to the
+remaining organic phase in order to handle it more easily. The catalyst was recovered
+by a vacuum filter and further washed with toluene to clean possible remaining
+products on the enzyme. After air drying the catalyst in a fume hood for 12 hours, it
+was used for the next reaction when the reusability of the lipase was studied.
+
+Pontus Lindroos
+
+Experimental
+
+14
+
+_________________________________________________________________________________________________________________________________________
+
+2.3. Analytical procedures and methods
+The sampling was done mainly every hour except for the 8-hour and 12-hour
+experiments where also two-hour intervals were used in the later part of the reaction.
+The samples with a volume of 5 ml were withdrawn with a syringe through a Teflon®coated sampling tube. The sample was left in the sampling syringe for a few minutes
+to separate in two phases before placing in two sample bottles for analysis: one bottle
+for the aqueous phase and one for the organic phase. Both bottles were placed in a
+centrifuge for two minutes, in order to separate the solid catalyst particles from the
+samples. The aqueous phase was analyzed immediately to prevent any decomposition
+of hydrogen peroxide. The organic phase was transferred to an oven at 60 ˚C, ensuring
+a homogeneous sample and preventing any solidification. Two different analyses were
+carried out for the organic phase, one directly after sampling, another after being stored
+12-72 hours in the freezer. Images of the titrimetric analysis equipment is found in
+Appendix I.
+
+2.3.1. Aqueous phase analysis – Hydrogen peroxide content
+The aqueous phase samples were analyzed within 30 minutes after withdrawal. The
+concentration of hydrogen peroxide was analyzed by the Greenspan and MacKellar
+method [41]. This was done by measuring 0.1 g of sample in an Erlenmeyer flask,
+diluted in 50 ml of 10% sulfuric acid and adding three drops of ferroin indicator. Then
+1-2 ice cubes were added in the flask to decrease the temperature below 10 ˚C for the
+titration of the solution with ammonium cerium sulfate. The solution was titrated under
+stirring from orange color to transparent. The amount of hydrogen peroxide in the
+aqueous phase was calculated as follows:
+𝑤𝑡 % 𝐻2 𝑂2 =
+
+[ ]𝑐𝑒𝑟𝑖𝑢𝑚 𝑉𝑐𝑒𝑟𝑖𝑢𝑚 𝑀𝐻2 𝑂2 ∗100
+2∗𝑚𝑠𝑎𝑚𝑝𝑙𝑒
+
+(1)
+
+Pontus Lindroos
+
+Experimental
+
+15
+
+_________________________________________________________________________________________________________________________________________
+
+2.3.2. Organic phase analysis – Iodine value
+The iodine value describes the number of double bonds in a sample, expressed as
+grams of iodine reacted in 100 g of oil. The analysis was conducted by applying the
+Hanus method [42]. For this analysis, 0.1 g of organic phase was measured up in an
+Erlenmeyer flask, dissolved in 20 ml of chloroform and 20 ml of Hanus solution
+(iodine bromide in acetic acid). The flask was left for one hour in a dark place for the
+iodine to completely react with the double bonds in the sample. After one hour, 20 ml
+of 10% potassium iodide solution were added to let the remaining iodine bromide
+react, and 100 ml of water was added to clean the walls of the flask. A small amount
+of starch indicator was added, and the whole mixture was titrated under stirring with a
+0.1 M sodium thiosulphate solution until the solution turned transparent. The volume
+of titrator solution spent for analyzing the sample was used for calculating the iodine
+value:
+𝐼𝑉 =
+
+[ ]𝑁𝑎2 𝑆2 𝑂3 ∗(𝑉𝐵𝑙𝑎𝑛𝑘 −𝑉𝑠𝑎𝑚𝑝𝑙𝑒 )∗𝑀𝑀𝐼 ∗100
+𝑚𝑠𝑎𝑚𝑝𝑙𝑒
+
+(2)
+
+This can be transformed into relative conversion of double bonds (RCU) as follows:
+𝐼𝑉0 −𝐼𝑉𝑒𝑥
+) ∗ 100
+𝐼𝑉0
+
+%𝑅𝐶𝑈 = 100 − (
+
+(3)
+
+where 𝐼𝑉0 is the initial iodine value of the organic sample and 𝐼𝑉𝑒𝑥 the iodine value for
+the particular experiment.
+
+2.3.3. Organic phase analysis – Oxirane number
+Jay’s method was used to determine the amount of oxirane groups (epoxy groups) in
+the organic phase [43]. In the analysis, 0.1 g of organic phase sample were dissolved
+in 10 ml of chloroform and 10 ml of 20 wt% tetraethyl ammonium chloride (TEAB)
+dissolved in acetic acid. The mixture was titrated with 0.1 M perchloric acid in acetic
+acid using an automatic potentiometric titrator (799 GPT Titrino, Metrohm, recorded
+with the software tiamo™). The conversion to epoxy groups can be expressed as the
+relative conversion to oxirane (RCO) calculated from,
+𝑂𝑂
+
+%𝑅𝐶𝑂 = 𝑂𝑂𝑒𝑥 ∗ 100
+𝑡ℎ
+
+(4)
+
+Pontus Lindroos
+
+Experimental
+
+16
+
+_________________________________________________________________________________________________________________________________________
+
+where 𝑂𝑂𝑒𝑥 is the experimentally determined content of oxirane oxygen, and 𝑂𝑂𝑡ℎ the
+theoretical maximum oxirane content in 100 g of oil. The theoretical maximum 𝑂𝑂𝑡ℎ
+was calculated from:
+𝑂𝑂𝑡ℎ = (
+
+𝐼𝑉0
+⁄2𝑀𝑀
+𝑖
+)
+𝐼𝑉0
+100+( ⁄2𝑀𝑀 )∗𝑀𝑀0
+𝑖
+
+∗ 𝑀𝑀0 ∗ 100
+
+(5)
+
+where 𝑀𝑀𝑖 is the atomic mass of iodine, and 𝑀𝑀𝑂 the atomic mass of oxygen.
+
+2.3.4. Nuclear Magnetic Resonance spectroscopy (NMR)
+For the analysis of products in the organic phase, a Bruker AVANCE III spectrometer
+operating at 500.10 MHz (1H) equipped with a BB/1H SmartProbe was used. All
+samples were dissolved in deuterated methanol-d4 and the spectra were recorded at 25
+°C.
+
+2.3.5. Scanning Electron Microscopy (SEM)
+Scanning Electron Microscopy (SEM) was used for studying the morphology of the
+catalyst, with a particular focus on the cavitational effects of ultrasound on the catalyst
+material. The equipment used was of model Zeiss Leo Gemini 1530. The images were
+taken at 30x, 100x, 250x and 1000x.
+
+Pontus Lindroos
+
+Results and discussion
+
+17
+
+_________________________________________________________________________________________________________________________________________
+
+3. Results and discussion
+3.1. SpinChem® Rotating Bed Reactor
+All experiments except one were conducted by adding the catalyst to the reaction
+mixture. Using the SpinChem® RBR as a rotating catalyst bed device turned out to be
+insufficient due to accessibility problems, hypothetically caused by the high viscosity
+of oleic acid and the relatively high amount of immobilized lipase packed in the device.
+As shown in Figure 6, parts of the catalyst bed remained dry and consequently the
+efficiency of the enzymatic catalysis in this system was strongly suppressed.
+Regardless of this, the SpinChem® RBR showed to be an efficient stirrer when the
+catalyst was added directly in the mixture. One hypothesis for the good efficiency is
+that the immobilized lipase is preserved better when using SpinChem® RBR as a
+stirrer instead of traditional agitators, that can have a grinding effect on the catalyst
+[34].
+
+Figure 6 – Novozym® 435 in the SpinChem® RBR after using as a rotating catalyst bed
+
+Pontus Lindroos
+
+Results and discussion
+
+18
+
+_________________________________________________________________________________________________________________________________________
+
+3.2. Determination of optimal reaction parameters
+3.2.1. Influence of hydrogen peroxide
+The influence of different hydrogen peroxide molar ratio versus unsaturated fatty acid
+ratio was studied extensively. Molar ratios (oleic acid to hydrogen peroxide, later
+OA:HP) of 1:1, 1:1.5, 1:1.75 and 1:2 were studied. All the experiments in this section
+were conducted with a hydrogen peroxide solution of 30% w/v without the assistance
+of ultrasound. A catalyst load of 7% w/w with respect to the oleic acid mass was used
+at 50 ˚C, 1000 rpm with the SpinChem® RBR. The durations of the experiments were
+6 and 12 hours.
+
+Relative Conversion to Oxirane (% RCO)
+
+100
+OA:HP 1:1,5 Spinchem
+OA:HP 1:1,5
+OA:HP 1:1
+OA:HP 1:2
+OA:HP 1:1,75
+
+90
+80
+70
+60
+50
+40
+30
+20
+10
+0
+0
+
+50
+
+100
+
+150
+
+200
+
+250
+
+300
+
+350
+
+Time (min)
+
+Figure 7 - Relative conversion to oxirane (RCO) for different OA:HP
+molar ratios during 6 hours in silent mode
+
+400
+
+Pontus Lindroos
+
+Results and discussion
+
+19
+
+Relative Conversion of C=C (% RCU)
+
+_________________________________________________________________________________________________________________________________________
+
+OA:HP 1:1,5 Spinchem
+OA:HP 1:1,5
+OA:HP 1:1
+OA:HP 1:2
+OA:HP 1:1,75
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+0
+
+50
+
+100
+
+150
+
+200
+
+250
+
+300
+
+350
+
+400
+
+Time (min)
+
+Figure 8 - Relative conversion of double bonds (RCU) for different OA:HP
+molar ratios during 6 hours in silent mode
+
+Figure 7 and Figure 8 show that the highest conversions to epoxide were reached more
+rapidly with higher ratios of hydrogen peroxide, the RCO of 81 % was reached after 4
+hours in the experiment with OA:HP 1:2 ratio. A consistent decrease in the reaction
+rate can be seen with the experiments closer to equimolar levels of hydrogen peroxide
+versus unsaturated fatty acid. However, by comparing Figure 9 with Figure 7, a ratio
+of OA:HP 1:1.5 reached slightly higher levels of epoxide after 8 hours with equivalent
+reaction conditions. A remarkable fact is also that even at the lowest OA:HP ratio, 1:1,
+the reaction rate is on steady levels still after 6 hours (Figure 7), meaning that higher
+yields are possible to reach by increasing the reaction time. Considering both economic
+and environmental aspects, optimizing the process with a lower amount of hydrogen
+peroxide is a good consideration since feasible levels of epoxide yield can still be
+reached.
+
+Pontus Lindroos
+
+Results and discussion
+
+20
+
+_________________________________________________________________________________________________________________________________________
+
+For the Prileschajew epoxidation method used in industrial-scale processes, sidereactions in the form of ring-opening are observed [8], [21], [23]. In this work, using
+a chemo-enzymatic epoxidation method, there is a quantitative difference between the
+measured values of epoxy groups and the converted double bonds in the fatty acid.
+This indicates the formation of ring-opening products (Figure 9). The presence of ringopening products was further studied with NMR analyses, which are discussed in
+
+OA:HP 1:2 12h
+OA:HP 1:1,5 12h
+OA:HP 1:2 12h
+OA:HP 1:1,5 12h
+
+100
+
+100
+
+80
+
+80
+
+60
+
+60
+
+40
+
+40
+
+20
+
+20
+
+0
+0
+
+100
+
+200
+
+300
+
+400
+
+500
+
+600
+
+700
+
+Relative Conversion of C=C (% RCU)
+
+Relative Conversion to Oxirane (% RCO)
+
+section 3.4.
+
+0
+800
+
+Time (min)
+
+Figure 9 - Relative conversion to oxirane (RCO) and double bonds (RCU)
+for different OA:HP molar ratios during 12 hours in silent mode
+
+Törnvall et al. reported that high amounts of hydrogen peroxide in temperatures above
+20 ˚C impair the activity of lipase, hence lower conversions are obtained [27].
+However, in this work, no major decrease of the catalyst activity was detected when
+higher ratios of hydrogen peroxide were used. Since a relatively low concentration of
+30 % w/w hydrogen peroxide solution was used in all the experiments, the catalyst
+activity might not have been influenced by hydrogen peroxide. For further
+investigation on the impact of hydrogen peroxide on the lipase catalyst, higher
+concentrations of hydrogen peroxide could be tested at equivalent reaction conditions.
+
+Pontus Lindroos
+
+Results and discussion
+
+21
+
+_________________________________________________________________________________________________________________________________________
+
+3.2.2. Influence of ultrasound
+One of the main goals for this work was to study the influence of acoustic cavitation
+in the form of ultrasound irradiation. The ultrasound probe was operated at a frequency
+of 20 kHz at different amplitudes of 30%, 60% and 90%, with a power output of 22
+W, 28 W and 34 W, respectively. For keeping the isothermal conditions in the system,
+a duty cycle of 50% was used, meaning that the ultrasound probe was switched on for
+one minute, whereafter the probe was switched off for one minute. At a catalyst load
+of 7 wt%, a fatty acid to hydrogen peroxide ratio of 1:2, 50 ⁰C and a stirring speed of
+1000 rpm were utilized.
+Four experiments with identical reaction conditions, but with varying amplitudes of
+30%, 60% and 90% were conducted in this set. A reference experiment was performed
+with the ultrasound probe in the reactor in the absence of ultrasound. As depicted in
+Figure 10, the results show clear indications of a positive effect on the reaction rates
+
+OA:HP 1:2 US 0%
+OA:HP 1:2 US 30%
+OA:HP 1:2 US 60%
+OA:HP 1:2 US 90%
+OA:HP 1:2 US 0%
+OA:HP 1:2 US 30%
+OA:HP 1:2 US 60%
+OA:HP 1:2 US 90%
+
+100
+
+80
+
+100
+
+80
+
+60
+
+60
+
+40
+
+40
+
+20
+
+20
+
+0
+
+0
+0
+
+100
+
+200
+
+300
+
+400
+
+500
+
+Time (min)
+
+Figure 10 - Relative conversion to oxirane (RCO) and double bonds (RCU)
+for different ultrasound amplitudes during 8 hours
+
+Relative Conversion of C=C (% RCU)
+
+Relative Conversion to Oxirane (% RCO)
+
+compared to the experiments in silent conditions.
+
+Pontus Lindroos
+
+Results and discussion
+
+22
+
+_________________________________________________________________________________________________________________________________________
+
+As reported by Bhalerao et al., a continuous increase in the reaction rate can be
+observed by increasing the input power of ultrasounds [12]. A similar effect was
+confirmed by the experiments in this study, since an amplitude of 90% resulted in the
+highest RCO levels, at 84% after three hours. Considering the financial aspects in the
+use of ultrasound equipment, the results of RCO 80% after three hours with 60%
+amplitude can be considered as competitive as the results obtained with 90%
+amplitude.
+Although ultrasound is increasing the reaction rates, no major differences in eventual
+conversions were observed in comparison to the experiments in silent mode.
+Furthermore, the oxirane number seems to be decreasing by prolonging the reaction
+time, which indicates that the concentration of ring-opening products is increasing with
+time when applying ultrasound irradiation for intensifying the reaction process. Hence,
+the total reaction time should be shortened to 4-5 hours to minimize the concentrations
+of ring-opening products.
+As previously mentioned, ultrasound irradiation promotes the formation of an
+emulsion between the organic and the aqueous phase, thus contributing to an efficient
+biphasic mass transfer. This was observed when withdrawing the samples, since a
+spontaneous phase separation was difficult to achieve without using a centrifuge. The
+observation of this phenomenon was diminished with time (Figure 11), which
+indicates that the emulsion is more stable when high amounts of unreacted fatty acid
+are present and not when epoxidized fatty acid is formed. This phenomenon caused
+unreliability issues in the analysis of the first samples of each experiment using
+ultrasound irradiation. Therefore, the iodine value, thus also the RCU value of the first
+sample, was corrected to the theoretical iodine value of oleic acid.
+
+Figure 11 - Two sample bottles from an ultrasound experiment withdrawn
+after one and two hours of reaction time, accordingly
+
+Pontus Lindroos
+
+Results and discussion
+
+23
+
+_________________________________________________________________________________________________________________________________________
+
+3.2.3. Influence of temperature
+The reaction temperature for the sonochemical reactor was optimized by studying four
+different temperatures: 30 °C, 45 °C, 50 °C and 60 °C with a 1:2 fatty acid-to-hydrogen
+peroxide ratio using 90% ultrasound amplitude and 1000 rpm. Two of these
+experiments with lower temperatures (30 °C and 45 °C) were discontinued before the
+estimated reaction time of 8 hours due to product solidification on the glass walls of
+the reactor. This phenomenon caused severe mass transfer limitations (Figure 12), and
+it was likewise experienced in experiments performed with linoleic acid [10].
+
+Figure 12 - An image of the solidification in the discontinued experiment at 30 °C.
+Picture taken from above of the batch reactor
+
+Figure 13 shows that the best reaction conditions were found at 60 °C, where the
+highest RCO values of 86% were reached. Although 60 °C seems to be the optimal
+temperature, similar levels of RCO were reached at 50 °C and this temperature can be
+considered for preserving the enzymatic activity when the catalyst is being reused in
+several consecutive experiments [10], [27].
+
+Pontus Lindroos
+
+Results and discussion
+
+24
+
+OA:HP 1:2 US 90% 50°C
+OA:HP 1:2 US 90 % 30°C
+OA:HP 1:2 US 90% 60°C
+OA:HP 1:2 US 30% 45°C
+OA:HP 1:2 US 90% 50°C
+OA:HP 1:2 US 90 % 30°C
+OA:HP 1:2 US 90% 60°C
+OA:HP 1:2 US 30% 45°C
+
+100
+
+80
+
+100
+
+80
+
+60
+
+60
+
+40
+
+40
+
+20
+
+20
+
+Relative Conversion of C=C (% RCU)
+
+Relative Conversion to Oxirane (% RCO)
+
+_________________________________________________________________________________________________________________________________________
+
+0
+
+0
+0
+
+100
+
+300
+
+200
+
+400
+
+500
+
+Time (min)
+
+Figure 13 - Relative conversion of oxirane (RCO) and double bonds (RCU)
+for experiments in different temperatures with ultrasound
+
+3.2.4. Influence of stirring speed
+Stirring speed has an impact on the emulsion formation, hence on the mass transfer
+between the aqueous and organic phase. A stirring rate of 1000 rpm was chosen as the
+initial speed for the experiments, thus avoiding any mass transfer limitations that using
+the SpinChem® device could bring. Given the low efficiency of using SpinChem® for
+immobilizing the catalyst, a variation in stirring rate was implemented, since the device
+was only used as a stirrer with a centrifugal effect.
+The stirring speed has to be high enough to create an emulsion and, accordingly, the
+stirring speeds were set to 500 rpm, 750 rpm and 1000 rpm in order to homogenize the
+liquid mixture well [19]. Previous studies have stated that a high stirring speed can
+result in a destruction of the immobilized lipase and, therefore, lower conversions in
+oxirane number have been obtained [11], [12]. As depicted in Figure 14 and, in
+contrary to the previous statements, a high stirring speed of 1000 rpm was appropriate
+for this system. One hypothesis is that the filter around the SpinChem® device is
+
+Pontus Lindroos
+
+Results and discussion
+
+25
+
+_________________________________________________________________________________________________________________________________________
+
+protecting the immobilized lipase from being harmed by a grinding effect of the
+agitator (See schematic figure of SpinChem® RBR, Figure 3). However, even if high
+stirring rates were efficient, a lower speed seems to be more efficient for obtaining
+high values of conversion. A speed of 750 rpm is the most favorable one in terms of
+high conversions with a top RCO value of almost complete conversion. The results at
+500 rpm and 1000 rpm led to comparably similar values in the reaction rate and
+conversion. As a conclusion, the reaction parameters of OA:HP ratio of 1:2, ultrasound
+amplitude of 90%, 60 °C and 750 rpm is the most favorable option of all the
+
+US 90% 60°C 1000 rpm
+US 90% 60°C 500 rpm
+US 90% 60°C 750 rpm
+US 90% 60°C 1000 rpm
+US 90% 60°C 500 rpm
+US 90% 60°C 750 rpm
+
+100
+
+100
+
+80
+
+80
+
+60
+
+60
+
+40
+
+40
+
+20
+
+20
+
+0
+
+0
+0
+
+100
+
+200
+
+300
+
+400
+
+500
+
+Time (min)
+Figure 14 - Relative conversion of oxirane (RCO) and double bonds (RCU)
+for experiments using different stirring speeds with ultrasound
+
+Relative Conversion of C=C (% RCU)
+
+Relative Conversion to Oxirane (% RCO)
+
+experiments conducted with a fresh catalyst.
+
+Pontus Lindroos
+
+Results and discussion
+
+26
+
+_________________________________________________________________________________________________________________________________________
+
+3.3. Lipase reusability in conventional and sonochemical reactors
+The reusability of immobilized lipase is crucial for the economic viability of this
+process. The concept of catalyst recycling for this system was first practiced by
+Warwel and Rüsch gen. Klaas [16] using toluene as a solvent, continued by OrellanaCoca et al. [29] in a solvent-free medium, and by Bhalerao et al. [12] with toluene as
+the solvent, intensified by acoustic irradiation. The purpose of this work was to test
+the reusability in a solvent-free medium both in the absence and presence of
+ultrasound.
+As previously mentioned, slightly lower amounts of hydrogen peroxide and a lower
+temperature were used in order to preserve the activity of the catalyst. Hence, the
+reaction conditions were set at 50 °C with a stirring speed of 750 rpm. The fatty acidto-hydrogen peroxide molar ratios were set to 1:1.5 for experiments conducted in the
+absence of ultrasound, and to 1:1.75 for experiments in the presence of ultrasound. For
+a proper view on the ultrasound impact on the catalyst activity, the full power of 90%
+ultrasound amplitude was used. The catalyst was recovered after each experiment and
+reused in the next experiment. In order to reach equal levels of the catalyst load, new
+catalyst was added to the used one. The reusability levels for each experiment are
+described in Table 3.
+Table 3 - Reaction parameters for the experiments studying lipase reusability in silent mode and with ultrasound
+
+Reaction conditions
+
+Used catalyst (%)
+
+OA:HP 1:1.5 50 °C 750 rpm 1:st experiment
+
+0
+
+OA:HP 1:1.5 50 °C 750 rpm 2:nd experiment
+
+59.3
+
+OA:HP 1:1.5 50 °C 750 rpm 3:rd experiment
+
+79.7
+
+OA:HP 1:1.75 50 °C US 90% 750 rpm 1:st experiment
+
+0
+
+OA:HP 1:1.75 50 °C US 90% 750 rpm 2:nd experiment
+
+67.8
+
+OA:HP 1:1.75 50 °C US 90% 750 rpm 3:rd experiment
+
+47.5
+
+The experimental data in Figure 15 and Figure 16 show that, as an addition to the clear
+rate enhancing effect of ultrasound, the catalyst reusability is preserved for at least
+three consecutive experiments under the these reaction conditions. The ultrasound
+experiments reached almost full conversion to epoxides, while the silent experiments
+resulted in lower values of RCO.
+
+Pontus Lindroos
+
+Results and discussion
+
+27
+
+_________________________________________________________________________________________________________________________________________
+
+Relative Conversion to Oxirane (% RCO)
+
+0
+
+100
+
+200
+
+300
+
+400
+
+500
+
+200
+
+300
+
+400
+
+500
+
+Silent 1:st exp
+Silent 2:nd exp
+Silent 3:rd exp
+US 90% 1:st exp
+US 90% 2:nd exp
+US 90% 3:rd exp
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+0
+
+100
+
+Time (min)
+
+Relative Conversion of C=C (% RCU)
+
+Figure 15 - Relative conversion to oxirane (RCO) for the reusability experiments in silent mode and ultrasound.
+The reaction conditions were OA:HP 1:1,5, 50 ⁰C and 750 rpm for silent experiments, and OA:HP 1:1,75, 50 ⁰C
+and 750 rpm for ultrasound experiments
+
+Silent 1:st exp
+Silent 2:nd exp
+Silent 3:rd exp
+US 90% 1:st exp
+US 90% 2:nd exp
+US 90% 3:rd exp
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+0
+
+100
+
+200
+
+300
+
+400
+
+500
+
+Time (min)
+
+Figure 16 - Relative conversion of double bonds (RCU) for the reusability experiments in silent mode
+and with ultrasound. The reaction conditions were OA:HP 1:1,5, 50 ⁰C and 750 rpm for silent experiments,
+and OA:HP 1:1,75, 50 ⁰C and 750 rpm for ultrasound experiments
+
+Pontus Lindroos
+
+Results and discussion
+
+28
+
+_________________________________________________________________________________________________________________________________________
+
+3.4. Chemical composition of products – NMR analysis
+Nuclear Magnetic Resonance spectroscopy (NMR) was used to analyze the chemical
+composition of products obtained in silent mode, with ultrasound, and for the catalyst
+reusability experiments. The analyzed experiments were the molar ratio OA:HP 1:2 in
+silent mode and stirring at 1000 rpm (Table 2, experiment 8), OA:HP 1:2 with the
+ultrasound amplitude 90% and stirring at 500 rpm (Table 2, experiment 15) and
+OA:HP 1:1.75 with the ultrasound amplitude 90% using reused catalyst and with
+stirring at 750 rpm (Table 2, experiment 22). Two samples per each experiment, one
+after 4 hours and another one after 8 hours of reaction time, were analyzed. The
+complete 1H spectra for all the analyzed samples can be found in Figure 17.
+
+Figure 17 – NMR 1H spectra with the characterized chemical shifts for all the analyzed samples
+
+Pontus Lindroos
+
+Results and discussion
+
+29
+
+_________________________________________________________________________________________________________________________________________
+
+One major discovery from these spectra is that after four hours of reaction time, only
+for the experiment in silent mode and for the catalyst reusability experiment, some
+signs of unreacted double bonds from the fatty acid can be detected. After eight hours
+of reaction time, no remaining double bonds can be seen in the spectra. This implies
+that the conversion for all the experiments was complete.
+Small amounts of ring-opening products in the form of diols and esters can be found
+in every analyzed sample, but larger peaks are found in the samples after 8 hours of
+reaction time. An analysis of the NMR spectra provides a result of ester-hydroxyls to
+diols ratio 1:0.4, thus, esters are the dominating ring-opening products. This means
+that the carboxylic groups are mainly the nucleophiles causing the ring-opening
+reactions, and not water. According to the NMR spectra, the largest amount of ringopening products was found in the sample from the silent experiment, measuring about
+10% of the products.
+In the Prileschajew epoxidation, the system is operating in an acidic environment due
+to an addition of carboxylic acid, hence the probability for protonation of the oxirane
+ring is high. According to the provided spectra in Figure 17, a lower amount of ringopening products was formed in this chemo-enzymatic epoxidation compared to a
+classical Prileschajew epoxidation [8]. The reason for this might be that lower amounts
+of possible nucleophiles is available in a system without carboxylic acid added, and
+only water and the carboxylic group in the fatty acid can be seen as nucleophiles
+leading to ring-opening of the epoxy group.
+Minor peaks of a component consisting of a phenyl group attached by an alkyl chain
+is discovered from the experiment using reused catalyst and ultrasound. This is
+possibly caused by toluene that is used as a solvent for cleaning the catalyst before
+reuse. It is, however, a very small peak of approximately 0.07% of the whole sample
+concentration. It could be interesting to further study the impact of combining reused
+catalyst and ultrasound irradiation by reusing the catalyst in several consecutive
+experiments.
+
+Pontus Lindroos
+
+Results and discussion
+
+30
+
+_________________________________________________________________________________________________________________________________________
+
+3.5. Catalyst durability – SEM analysis
+The morphology of the immobilized lipase was studied with Scanning Electron
+Microscopy (SEM). Fresh catalyst as well as reused catalyst originating from
+experiments both in silent mode and ultrasound were studied. The SEM images from
+a fresh catalyst (Figure 18) and a catalyst used in silent mode (Figure 19) show that
+the shape of Novozym® 435 is preserved well during the experiments conducted in
+silent mode. However, the catalyst lost its beauty after three consecutive uses with
+ultrasound due to the cavitation phenomena, impacting the catalyst surface (Figure
+20). It is remarkable that the catalyst is keeping its activity despite the destruction of
+the catalyst shape. One hypothesis for the good preservation of the activity is that the
+catalyst surface area increases as a result of the destruction of the surface, hence
+enabling an easier access to the available active sites. For getting a better
+understanding about the catalyst performance, further analysis with a nitrogen
+adsorption analyzing method could be performed. This would give one a more precise
+understanding on the changes in the specific area of the catalyst. A complete set of
+SEM images from all reusability experiments can be found in Appendix II.
+
+Figure 18 - SEM images (30x, 100x, 250x and 1000x size from left to right, accordingly)
+of unused immobilized lipase
+
+Pontus Lindroos
+
+Results and discussion
+
+31
+
+_________________________________________________________________________________________________________________________________________
+
+Figure 19 - SEM images (30x, 100x, 250x, and 1000x size from left to right, accordingly)
+of immobilized lipase after three consecutive uses in silent mode
+
+Figure 20 - SEM images (30x, 100x, 250x, and 1000x size from left to right, accordingly)
+of immobilized lipase after three consecutive uses with ultrasound irradiation
+
+Pontus Lindroos
+
+Results and discussion
+
+32
+
+_________________________________________________________________________________________________________________________________________
+
+3.6. Kinetic modelling
+3.6.1. Reaction stoichiometry
+A kinetic model for the chemo-enzymatic self-epoxidation of fatty acids has earlier
+been presented by Yadav et al. [26], which can be considered as a simplified version
+of the reaction mechanism proposed by Warvel et al. [25]. The model by Yadav et al.
+assumes that the formation of peroleic acid after the perhydrolysis process is briefly
+lasting, hence there is no accumulation of peroleic acid in the system. Therefore, an
+assumption of direct epoxidation between oleic acid and hydrogen peroxide catalyzed
+by lipase has been made in one of the proposed kinetic models in this work. The
+molecular mechanism proposed by Warvel et al. makes no such assumption and,
+therefore, the formation of peroleic acid is an aspect that has as well been taken into
+consideration. The molecules considered in this work are represented in Figure 21.
+
+Figure 21 – Molecules in the reaction mechanisms
+
+Pontus Lindroos
+
+Results and discussion
+
+33
+
+_________________________________________________________________________________________________________________________________________
+
+Two different hypotheses of the rate determining stoichiometric steps have been
+formed, one with peroleic acid and one without it.
+
+Alternative 1:
+𝐴+𝐻 → 𝐵+𝑊
+
+(I)
+
+𝐵+𝐴 →𝑅+𝐴
+
+(II)
+
+𝐵+𝐵 →𝑆+𝐴
+
+(III)
+
+The second alternative for the stoichiometry is assuming a direct epoxidation of oleic
+acid (A) and hydrogen peroxide (H) and, thus, no peroleic acid (B) is formed.
+Consequently, no epoxidized peroleic acid (S) is formed in this version.
+
+Alternative 2:
+𝐴+𝐻 → 𝑅+𝑊
+
+(IV)
+
+Both options for the stoichiometry can be extended to obtain a better overview on the
+reaction steps. A typical way to do this is by dividing the steps into adsorption,
+bimolecular surface reactions, and desorption steps. Here, the catalyst surface site (*)
+is included in the mechanisms.
+
+Pontus Lindroos
+
+Results and discussion
+
+34
+
+_________________________________________________________________________________________________________________________________________
+
+3.6.2. Epoxidation mechanisms and rate equations
+Different options for the epoxidation mechanisms should be considered in the
+modelling work. Four different competing models are described and evaluated, using
+the previously described alternatives for the overall stoichiometry.
+
+Model 1
+In this model, the concept of using the Langmuir-Hinshelwood mechanism in
+heterogeneous catalysis is used. Here all the molecules adsorbed on the catalyst surface
+react, eventually creating the product. The assumption that all components are
+adsorbed only to one active catalyst site each is used. These assumptions give the
+following detailed mechanism:
+Table 4 - The reaction steps in model 1
+
+Reaction steps
+𝐴+∗⇌𝐴∗
+Adsorption
+
+𝐵+∗⇌𝐵∗
+H+∗⇌H∗
+W∗⇌W+∗
+
+Bimolecular reactions
+(Surface reaction)
+Desorption
+
+𝐴 ∗ + 𝐻 ∗ → 𝐵 ∗ + 𝑊 ∗ (I)
+𝐴 ∗ + 𝐵 ∗ → 𝑅 ∗ +𝐴 ∗ (II)
+𝐵 ∗ +𝐵 ∗ → 𝑆 ∗ +𝐴 ∗ (III)
+𝑅∗⇌𝑅+∗
+𝑆∗⇌𝑆+∗
+
+The overall reactions result in
+𝐴+𝐻 → 𝐵+𝑊
+
+(I)
+
+𝐵+𝐴 →𝑅+𝐴
+
+(II)
+
+𝐵+𝐵 →𝑆+𝐴
+
+(III)
+
+Pontus Lindroos
+
+Results and discussion
+
+35
+
+_________________________________________________________________________________________________________________________________________
+
+In this model, the adsorption and desorption steps can be interpreted as rapid reactions
+reaching quasi-equilibria, being rapid compared to the time-demanding and
+irreversible bimolecular steps. The generation rates rI, rII and rIII for the overall
+reaction steps can be described as
+
+rI = k I c A * c H *
+
+(6)
+
+rII = k II c A * c B *
+
+(7)
+
+rIII = k III c B *2
+
+(8)
+
+The equilibrium constant of the adsorption and desorption quasi-equilibria steps can
+be expressed as
+
+Ki =
+
+ci *
+ci c *
+
+(9)
+
+and this expression can be rearranged to
+𝑐𝑖∗ = 𝐾𝑖 𝑐𝑖 𝑐 ∗
+
+(10)
+
+where ci* represents the concentrations for all molecules adsorbed on an active catalyst
+site. Adding the concentration of vacant surface sites c* brings us to a total
+concentration of catalyst surface sites c0,
+c * + c j * = c0
+
+(11)
+
+Thus, the following equations can be used for calculating the concentration of vacant
+sites c* and for the concentration of adsorbed molecules on catalyst cj*, respectively
+
+c* =
+
+c0
+1+  K jc j
+
+ci * =
+
+K i ci c 0
+1+  K jc j
+
+(12)
+
+(13)
+
+Inserting these into the rate equations (6)-(8) gives the following rate equations
+
+Pontus Lindroos
+
+Results and discussion
+
+36
+
+_________________________________________________________________________________________________________________________________________
+
+k K K c c c
+rI = I A H A H 20
+(1 +  K j c j )
+
+2
+
+k K K c c c
+rII = II A B A B 20
+(1 +  K j c j )
+
+2
+
+2
+
+2
+
+(14)
+
+2
+
+k III K B c B c0
+(1 +  K j c j ) 2
+
+rIII =
+
+(15)
+
+(16)
+
+The adsorption equilibrium constants Ki and the rate constants ki are merged to a
+constant k’i, hence the following compact forms of the rate expressions can be used,
+2
+
+rI =
+
+k '1 c A c H c0
+(1 +  K j c j ) 2
+
+(17)
+
+2
+
+k ' 2 c A c B c0
+rII =
+(1 +  K j c j ) 2
+2
+
+(18)
+
+2
+
+k '3 c B c0
+rIII =
+(1 +  K j c j ) 2
+
+(19)
+
+where
+
+K
+
+j
+
+c j = K A c A + K B c B + K R c R + K S c S + K H c H + K W cW
+
+(20)
+
+for j = A, B, R, S and H. An assumption of significantly lower equilibrium constants
+of R, S, B, H, and W compared to A leads us to a useful approximation
+∑ 𝐾𝑗 𝑐𝑗 = 𝐾𝐴 𝑐𝐴
+
+(21)
+
+In previous sections, the existence of ring-opening products were proven by the
+titriometrically obtained results, and later confirmed by the NMR analysis. In order to
+obtain a realistic description of the reaction kinetics and to improve the model fit to
+experimental data, the rate of ring-opening has to be included in the model.
+Bimolecular reactions were assumed for the ring-opening reactions.
+𝑟𝑅𝑂𝑃𝑖 = −𝑘𝑅𝑂𝑃 𝑐𝐴 𝑐𝑖
+for i= R and S.
+
+(22)
+
+Pontus Lindroos
+
+Results and discussion
+
+37
+
+_________________________________________________________________________________________________________________________________________
+
+The component generation rates are then calculated by
+
+rA = −rI + rIII − rROPR − rROPS
+
+(23)
+
+rB = rI − rII − 2rIII
+
+(24)
+
+rR = rII − rROPR
+
+(25)
+
+rS = rIII − rROPS
+
+(26)
+
+rH = −rI
+
+(27)
+
+rW = rI
+
+(28)
+
+Model 2
+The underlying theory behind this model is based on the assumption that no peroleic
+acid is accumulated, as presented previously by Yadav et al. [26]. Here an active
+complex is formed between oleic acid (A), hydrogen peroxide (H) and the immobilized
+lipase (*). The adsorption of water (W) and hydrogen peroxide (H) was neglected. All
+reaction steps are presented in .
+Table 5 - The reaction steps in model 2
+
+Reaction steps
+Adsorption
+
+𝐴+∗⇌𝐴∗
+
+Bimolecular reactions
+
+𝐴 ∗ + 𝐻 → 𝐴𝐻 ∗
+
+(Active complex)
+
+𝐴𝐻 ∗ → 𝑅 ∗ +𝑊
+
+Desorption
+
+𝑅∗⇌𝑅+∗
+
+Here the overall reaction is
+𝐴+𝐻 ⇌ 𝑅+𝑊
+
+(IV)
+
+The step where the active complex is reacting is regarded as the rate-determining step,
+thus the other steps can be seen as rapid ones in the comparison. Therefore, the rate
+expression becomes
+
+r = kc AH *
+
+(29)
+
+Pontus Lindroos
+
+Results and discussion
+
+38
+
+_________________________________________________________________________________________________________________________________________
+
+The equilibria of the adsorbed molecules are defined as
+
+KA =
+
+cA *
+c Ac *
+
+(30)
+
+KR =
+
+cR *
+cR c *
+
+(31)
+
+K AH =
+
+c AH *
+c A * cH
+
+(32)
+
+and the total concentration on the catalyst surface can be expressed by
+
+c A * +c AH * +c R * +c* = c0
+
+(33)
+
+By using the expressions for calculating the vacant surface sites and the total
+concentration of the absorbed molecules on catalyst surface, the following rate
+expression is formed,
+
+r=
+
+kK A K AH c A c H c0
+1 + K A c A + K A K AH c A c H + K R c R
+
+(34)
+
+with the compact version formed similarly as in Model 1
+
+r=
+
+k ' c A c H c0
+1 + K A c A + K A K ' AH c A c H + K R c R
+
+(35)
+
+The component generation rates, including the rates of ring-opening are
+𝑟𝐴 = −𝑟 − 𝑟𝑅𝑂𝑃𝑅
+
+(36)
+
+𝑟𝑅 = 𝑟 − 𝑟𝑅𝑂𝑃𝑅
+
+(37)
+
+rH = −r
+
+(38)
+
+rW = r
+
+(39)
+
+where the rate for ring-opening is obtained from
+
+rROPi = −kc A ci
+for i= R
+
+(40)
+
+Pontus Lindroos
+
+Results and discussion
+
+39
+
+_________________________________________________________________________________________________________________________________________
+
+Model 3
+This model is a combination of the two previously presented models. Here the theory
+relies on the hypothesis that peroleic acid (B) is formed through a reaction of an active
+complex between oleic acid (A), hydrogen peroxide (H) and lipase (*). This peroleic
+acid (B) reacts further with oleic acid (A) and peroleic acid (B), creating epoxidized
+oleic acid and epoxidized peroleic acid. The mechanism of this model is presented in
+.
+Table 6 - The reaction steps in model 3
+
+Reaction steps
+Adsorption
+
+𝐴+∗⇌𝐴∗
+𝐴 ∗ + 𝐻 ⇌ 𝐴𝐻 ∗
+
+Bimolecular reactions
+
+𝐴𝐻 ∗ → 𝐵 ∗ +𝑊
+
+and active complex
+
+𝐴 ∗ +𝐵 ∗ → 𝑅 ∗ +𝐴 ∗
+𝐵 ∗ +𝐵 ∗ → 𝑆 ∗ +𝐴 ∗
+𝐵 ∗ ⇌ 𝐵 +∗
+
+Desorption
+
+𝑅∗⇌𝑅+∗
+𝑆∗⇌𝑆+∗
+
+The overall reactions for the rate determining steps are analogously
+𝐴+𝐻 → 𝐵+𝑊
+
+(I)
+
+𝐵+𝐴 →𝑅+𝐴
+
+(II)
+
+𝐵+𝐵 →𝑆+𝐴
+
+(III)
+
+the rate equations being
+
+rI = k I c AH *
+
+(41)
+
+rII = k II c A * c B *
+
+(42)
+
+rIII = k III c B *2
+
+(43)
+
+Pontus Lindroos
+
+Results and discussion
+
+40
+
+_________________________________________________________________________________________________________________________________________
+
+while the equilibrium constant of the adsorbed molecules i= A, B, R and S is
+
+Ki =
+
+ci *
+ci c *
+
+(44)
+
+and equally for the complex AH*
+
+K AH =
+
+c AH *
+cH c A *
+
+(45)
+
+The total balance of concentration on catalyst surface is expressed by
+
+c A * +c AH * +c B * +c R * +cS * +c* = c0
+
+(46)
+
+The concentration of vacant catalyst sites can be expressed by the following equation,
+
+c* =
+
+c0
+1 +  K j c j + K A K AH c A c H
+
+(47)
+
+finally resulting in the compressed forms of rate equations for the rate determining
+reactions
+
+r1 =
+
+k '1 c A c H c0
+1 +  K j c j + Kc A c H
+
+(48)
+
+2
+
+k ' 2 c A c B c0
+r2 =
+(1 +  K j c j + Kc A c H ) 2
+2
+
+(49)
+
+2
+
+k '3 c B c0
+r3 =
+(1 +  K j c j + Kc A c H ) 2
+
+(50)
+
+and the denominator comprises the following expressions
+
+K
+
+j
+
+c j = K Ac A + K B cB + K R cR
+
+(51)
+
+and
+𝐾 = 𝐾𝐴 𝐾𝐴𝐻
+
+(52)
+
+Pontus Lindroos
+
+Results and discussion
+
+41
+
+_________________________________________________________________________________________________________________________________________
+
+The component generation rates can be calculated from
+
+rA = −rI + rIII − rROPR − rROPS
+
+(53)
+
+rB = rI − rII − 2rIII
+
+(54)
+
+rR = rII − rROPR
+
+(55)
+
+rS = rIII − rROPS
+
+(56)
+
+rH = −rI
+
+(57)
+
+rW = rI
+
+(58)
+
+The rate for ring-opening rROPi is obtained analogously as in model 1.
+
+Model 4
+An assumption of the adsorption of oleic acid (A) and hydrogen peroxide (H) on the
+catalyst surface (*) is applied in this model. The product (R) is formed through an
+active complex that is formed on the catalyst surface, hence no peroleic acid (B) is
+formed. The hypothetical mechanism comprises the following steps listed in Table 7.
+Table 7 - The reaction steps in model 4
+
+Reaction steps
+Adsorption
+Bimolecular reaction
+Desorption
+
+𝐴+∗⇌𝐴∗
+𝐻+∗⇌𝐻∗
+𝐴 ∗ + 𝐻 ∗ → 𝑅 ∗ +𝑊 ∗
+𝑅∗⇌𝑅+∗
+𝑊∗⇌𝑊+∗
+
+The overall reaction is
+𝐴+𝐻 → 𝑅+𝑊
+
+(59)
+
+The rate expression is defined by
+
+r = kc A * c H *
+
+(60)
+
+Pontus Lindroos
+
+Results and discussion
+
+42
+
+_________________________________________________________________________________________________________________________________________
+
+and the total balance for the adsorbed components is
+
+c A * +c H * +c R * +cW * +c* = c0
+
+(61)
+
+leading to the compressed form of the rate equation,
+2
+
+r=
+
+k ' c A c H c0
+(1 +  K j c j ) 2
+
+(62)
+
+where the term in the denominator is defined by the following terms,
+
+K
+
+j
+
+c j = K A c A + K H c H + K R c R + K W cW
+
+(63)
+
+Assuming that the adsorption of hydrogen peroxide, epoxide and water is low, an
+optimized expression would be,
+∑ 𝐾𝑗 𝑐𝑗 = 𝐾𝐴 𝑐𝐴
+
+(64)
+
+The rate equations for components are,
+𝑟𝐴 = −𝑟 − 𝑟𝑅𝑂𝑃𝑅
+
+(65)
+
+𝑟𝑅 = 𝑟 − 𝑟𝑅𝑂𝑃𝑅
+
+(66)
+
+rH = −r
+
+(67)
+
+rW = r
+
+(68)
+
+The rate equation for the ring-opening rROPR is obtained analogously as in model 2.
+
+Pontus Lindroos
+
+Results and discussion
+
+43
+
+_________________________________________________________________________________________________________________________________________
+
+3.6.3. Component mass balances
+As previously mentioned, the interfacial mass transfer between the aqueous and the
+organic phase is one of the key steps for this liquid-liquid-solid system. It can be
+assumed that the actual epoxidation reaction takes place in the organic phase, while
+the formation of peroleic acid through perhydrolysis takes place in the aqueous phase
+[44]. Therefore, the mass balances are divided into two parts according to the reaction
+phase.
+The mass balance of hydrogen peroxide and water in the aqueous phase is described
+as
+
+0 = Ni A +
+
+dnai
+dt
+
+(69)
+
+for i= H, W. Analogously, the expression for the organic phase mass transfer
+
+N i A + ri mcat =
+
+dnoi
+dt
+
+(70)
+
+where A is the interfacial area between the aqueous and organic phases and mcat is the
+mass of the catalyst. By assuming that the interfacial mass transfer is rapid compared
+to the reactions in both phases, these two phase-dependent mass transfer differential
+equations can be combined to,
+
+ri mcat =
+
+dnai dnoi
++
+dt
+dt
+
+(71)
+
+The change in volume in both phases is assumed to be negligible. Hence, the phasespecific mass balances can be expressed as follows,
+
+dnai
+dc
+= Va ai
+dt
+dt
+
+(72)
+
+dnoi
+dc
+= Vo oi
+dt
+dt
+
+(73)
+
+Consequently, a total mass balance can be written as
+𝑉𝑎
+
+𝑑𝑐𝑎𝑖
+𝑑𝑡
+
+𝑑𝑐
+
+𝑜𝑖
++ 𝑉𝑜 𝐾 𝑑𝑡
+= 𝑟𝑖 𝑚𝑐𝑎𝑡
+𝑖
+
+(74)
+
+where KDi is the distribution coefficient of a component i = H, W between the
+phases, defined by
+
+Pontus Lindroos
+
+Results and discussion
+
+44
+
+_________________________________________________________________________________________________________________________________________
+
+𝐾𝐷𝑖 =
+
+𝑐𝑎𝑖
+
+(75)
+
+𝑐𝑜𝑖
+
+For this liquid-liquid-catalyst three phase reactor, the catalyst bulk density is defined
+as
+𝜌𝑐 =
+
+𝑚𝑐𝑎𝑡
+
+(76)
+
+𝑉0
+
+This is introduced into the mass balance (74), finally resulting in
+
+dcai
+ri  c
+=
+dt Va / Vo + 1 / K i
+
+(77)
+
+Additionally, the ratio for volume distribution between phases is introduced,
+
+=
+
+𝑉𝑎
+Va
+⁄𝑉
+0
+=
+Va + Vo 𝑉𝑎⁄𝑉 +1
+
+(78)
+
+0
+
+𝑉𝑎
+𝑉𝑜
+
+𝛼
+
+= 1−𝛼
+
+(79)
+
+Inserting this expression in equation (77), it leads us to
+
+dcai
+(1 −  )ri  c
+=
+dt  + (1 −  ) / K i
+
+(80)
+
+An analogous approach can be used for the organic phase concentration,
+
+dcoi (1 −  )ri  c
+=
+dt K i + 1 − 
+
+(81)
+
+Equations (80) and (81) are created for components that exist in both phases (i= H,
+W), while the components that only exist in the organic phase (i= A, B, R and S) follow
+the model,
+
+dcoi
+= ri  c
+dt
+
+(82)
+
+By this, we have a complete series of differential equations for the reactor modelling.
+
+Pontus Lindroos
+
+Results and discussion
+
+45
+
+_________________________________________________________________________________________________________________________________________
+
+3.6.4. Parameter estimation
+The parameter estimation for the mathematical model is based on the titrimetric
+analysis results consisting of the following parts: oxirane number for determining the
+amount of epoxy groups, iodine value for the remaining, unreacted double bonds, and
+hydrogen peroxide concentration. The analysis results, which are previously presented
+and discussed in this work, are divided into three different states for optimizing the
+reaction parameters as shown below.
+Organic phase:
+
+s1 = c A + c B
+
+(83)
+
+s2 = cR + cS
+
+(84)
+
+Aqueous phase:
+(85)
+
+s 3 = c aH
+
+The parameter estimation is executed by minimizing the objective function Q,
+consisting of the sum of squares between the experimental data si,exp and the estimated
+values sit,
+Q=
+
+ (s
+
+i ,t exp
+
+− sit ) 2
+
+(86)
+
+In order to reach optimal parameters for fitting the model to experimental data, a series
+of repeated parameter estimations was carried out using the function lsqcurvefit with
+a Levenberg-Marquardt algorithm [45] in the MATLAB 2019b software. The
+parameter estimation was performed simultaneously while using the function ode45,
+which is implementing the 4th order Runge-Kutta method for a numerical solution of
+systems of ordinary differential equations [46], [47].
+The estimated unknown parameters in models 1 and 3 were the rate constants k’1 and
+k’2, and kROP, the adsorption equilibrium constants KA and KH, and the distribution
+coefficient KDH. The rate constant k’3 for the rate equation r3 was neglected due to
+parameter values close to zero. In model 2, the rate constants k’ and kROP, the
+adsorption equilibrium constants KA, KAH, and the distribution coefficient KDi were
+
+Pontus Lindroos
+
+Results and discussion
+
+46
+
+_________________________________________________________________________________________________________________________________________
+
+estimated. Model 4 was optimized to a four-parameter model, implying that only k’,
+kROP, KA and KDH were estimated. The adsorption equilibrium constants KB, KR, KW,
+and KS were not considered in any parameter estimations due to a predominant
+adsorption of A over the rest of the components. Detected outliers in the experimental
+data were corrected by interpolation for reaching a better fit of the computed data by
+the model. Table 8 show the estimated parameters and the statistical errors and results
+for the estimations.
+
+Table 8 - Estimated rate and equilibrium constants for Model 1
+
+Parameter
+
+Std. Error
+
+Relative Std. Error (%)
+
+Parameter/Std. Error
+
+k'1
+
+0.105E-01
+
+0.310E-02
+
+29.9
+
+3.3
+
+k'2
+
+0.259E-01
+
+0.790E-02
+
+30.3
+
+3.3
+
+kROP
+
+0.607E-03
+
+0.659E-03
+
+108.5
+
+0.9
+
+KA
+
+0.362E00
+
+0.120E00
+
+33.2
+
+3.0
+
+KDH
+
+0.654E00
+
+0.100E00
+
+15.3
+
+6.5
+
+Table 9 - Estimated rate and equilibrium constants for Model 2
+
+Parameter
+
+Std. Error
+
+Relative Std. Error (%)
+
+Parameter/Std. Error
+
+k'
+
+0.418E-01
+
+0.493E-01
+
+117.8
+
+0.8
+
+kROP
+
+0.100E-02
+
+0.172E-03
+
+17.0
+
+5.9
+
+KA
+
+0.587E+01
+
+0.771E+01
+
+131.4
+
+0.8
+
+KAH
+
+0.138E00
+
+0.146E00
+
+105.8
+
+0.9
+
+KDH
+
+0.471E00
+
+0.550E-01
+
+11.7
+
+8.6
+
+Table 10 - Estimated rate and equilibrium constants for Model 3
+
+Parameter
+
+Std. Error
+
+Relative Std. Error (%)
+
+Parameter/Std. Error
+
+k'1
+
+0.119E-01
+
+0.660E-02
+
+55.5
+
+1.8
+
+k'2
+
+0.400E+04
+
+0.610E+04
+
+152.6
+
+0.7
+
+kROP
+
+0.276E-04
+
+0.434E-05
+
+15.7
+
+6.4
+
+KA
+
+0.787E00
+
+0.581E00
+
+73.9
+
+1.4
+
+KDH
+
+0.335E00
+
+0.522E-01
+
+15.6
+
+6.4
+
+Pontus Lindroos
+
+Results and discussion
+
+47
+
+_________________________________________________________________________________________________________________________________________
+
+Table 11 Estimated rate and equilibrium constants for Model 4
+
+Parameter
+
+Std. Error
+
+Relative Std. Error (%)
+
+Parameter/Std. Error
+
+k'
+
+0.160E-01
+
+0.580E-02
+
+36.4
+
+2.7
+
+kROP
+
+0.100E-02
+
+0.181E-03
+
+17.8
+
+5.6
+
+KA
+
+0.692E00
+
+0.223E00
+
+32.2
+
+3.1
+
+KDH
+
+0.476E00
+
+0.557E-01
+
+11.7
+
+8.5
+
+Table 12 - Statistical results for the models
+
+Residual sum of squares
+Model 1
+
+9.36
+
+Model 2
+
+8.32
+
+Model 3
+
+8.32
+
+Model 4
+
+8.48
+
+The best model is determined by comparing the accuracy of estimated parameters
+(Table 8-Table 11) and the estimated fit to the experimental data (Figure 22-Figure
+25). Model 4 shows the best parameter estimation for the reproduction of the
+experimental data with relative standard errors below 40% for all estimated
+parameters. However, considering the low concentrations of the ring-opening products
+that are formed in the reaction, Model 1 shows nearly as good signs of accuracy as
+Model 4, despite a broad confidence interval for kROP. When taking the molecular
+aspects into consideration, it is likely that the formation of peroleic acid is needed for
+a spontaneous epoxidation reaction, as in the case for the Prileschajew epoxidation.
+Thus, models 1 and 3 are the most probable mechanisms for this chemo-enzymatic
+epoxidation, model 1 being the most accurate one.
+The statistical results in Table 12 show, however, that the difference in the residual
+sum of squares between all four competing models is very small, thus, the fit of all
+models can be considered similar. Another observation is that the perhydrolysis step
+rI seems to be remarkably slower than the epoxidation step rII. Thus, it can be
+concluded that the perhydrolysis step is rate determining in this chemo-enzymatic
+epoxidation of fatty acids. This observation is analogous with previous studies of the
+classical Prileschajew epoxidation method [22], [48].
+
+Pontus Lindroos
+
+Results and discussion
+
+48
+
+_________________________________________________________________________________________________________________________________________
+
+Figure 22 - Model 1 fitted to experimental data with OA:HP ratios of 1:1, 1:1.5, 1.75, and 1:2 in 50 C, stirring
+1000 rpm conducted in silent mode. Lines: computed values, circles: experimental data. Blue: Oleic acid, Green:
+Hydrogen peroxide, Red: Epoxide
+
+Pontus Lindroos
+
+Results and discussion
+
+49
+
+_________________________________________________________________________________________________________________________________________
+
+Figure 23 - Model 2 fitted to experimental data with OA:HP ratios of 1:1, 1.5, 1.75, and 1:2 in 50 C, stirring
+1000 rpm conducted in silent mode. Lines: computed values, circles: experimental data. Blue: Oleic acid, Green:
+Hydrogen peroxide, Red: Epoxide
+
+Pontus Lindroos
+
+Results and discussion
+
+50
+
+_________________________________________________________________________________________________________________________________________
+
+Figure 24 - Model 3 fitted to experimental data with OA:HP ratios of 1:1, 1:1.5. 1.75, and 1:2 in 50 C, stirring
+1000 rpm conducted in silent mode. Lines: computed values, circles: experimental data. Blue: Oleic acid, Green:
+Hydrogen peroxide, Red: Epoxide
+
+Pontus Lindroos
+
+Results and discussion
+
+51
+
+_________________________________________________________________________________________________________________________________________
+
+Figure 25 - Model 4 fitted to experimental data with OA:HP ratios of 1:1, 1:1.5. 1.75, and 1:2 in 50 C, stirring
+1000 rpm conducted in silent mode. Lines: computed values, circles: experimental data. Blue: Oleic acid, Green:
+Hydrogen peroxide, Red: Epoxide
+
+Pontus Lindroos
+
+Conclusions
+
+52
+
+_________________________________________________________________________________________________________________________________________
+
+4. Conclusions
+Epoxidation of oleic acid with the enzymatic approach using immobilized lipase as
+catalyst was successfully performed in this work. The results of the experiments
+showed that very high conversions of the double bonds in oleic acid are achievable by
+this method.
+The original plan was to conduct the experiments using the SpinChem® RBR as a
+rotating catalyst bed, yet the conversions did not reach feasible levels. This was
+possibly caused by the high viscosity of oleic acid that impaired the mass transfer from
+the liquid to the catalyst. However, using the same device as a stirrer delivered
+promising results, thus leading to a conclusion that using SpinChem as an empty
+stirring device is sufficient for this purpose.
+The concentrations of hydrogen peroxide has an impact on the conversions,
+particularly in silent systems where an OA:HP molar ratio of 1:2 provided the highest
+reaction rates, but also 1:1.5 reached similar conversion levels on a longer 12-hour
+time perspective. Ultrasound irradiation improved the epoxidation rate by facilitating
+the formation of a fine emulsion, that presumably enhanced the interfacial mass
+transfer. This led to an increase in the reaction rate of the perhydrolysis step where
+peroleic acid is formed from oleic acid and hydrogen peroxide. A top conversion value
+was reached after three hours of reaction with 90% amplitude of the ultrasound horn,
+and NMR analysis confirmed that there were no double bonds left after four hours of
+reaction. Furthermore, the concentration of epoxy groups was decreasing after four
+hours, and an accumulation of ring-opening products, predominantly consisting of
+esters, can be observed at longer reaction times. Hence, the reaction in the presence of
+ultrasound should be ended after four to five hours of reaction time to obtain the
+highest values of the desired product.
+A temperature range of 30-60 ˚C was screened without larger differences in the
+reaction rate or conversion. Nevertheless, the solidification of epoxide led to
+operational issues in lower temperatures of 30 ˚C and 45 ˚C. Consequently, the
+temperatures 50 ˚C and 60 ˚C were used to keep the organic phase workable. Stirring
+rates of 500, 750 and 1000 rpm were compared, with analogous results in reaction rate
+and conversion.
+
+Pontus Lindroos
+
+Conclusions
+
+53
+
+_________________________________________________________________________________________________________________________________________
+
+The catalyst reusability is a main issue for the economic viability of using Novozym®
+435 as a catalyst for the epoxidation of unsaturated fatty acids. A series of three
+successive experiments of reusing catalyst was performed in both silent and ultrasound
+modes. The results were promising, showing low signs of deactivation in both modes.
+However, the SEM images revealed that the catalyst morphology had been
+substantially impacted by the acoustic cavitation caused by ultrasound irradiation. It
+cannot either be disregarded that the catalyst reusability experiments were only partly
+conducted with reused catalyst, thus, the good results are potentially influenced by the
+fresh catalyst added to each reusability experiment. It would be desirable to study the
+reusability using only reused catalyst in order to obtain completely reliable results.
+Four different reaction mechanisms for mathematical modelling were proposed, all of
+them reaching a good enough fit to describe the experimental data. However, the
+mechanisms including the perhydrolysis step gave the best representation of data. Also
+considering the already existing theory for lipase catalyzed chemo-enzymatic
+epoxidation, the perhydrolysis step is needed for the epoxidation reaction between
+oleic and peroleic acid. Nevertheless, the models without the perhydrolysis step
+showed also good fit and low parameter standard errors due to the simplicity of the
+models.
+In conclusion, the chemo-enzymatic approach to epoxidation of unsaturated fatty acids
+assisted by ultrasound irradiation showed promising results. However, previous
+studies have indicated that a rapid addition of hydrogen peroxide can cause catalyst
+deactivation, therefore, a semibatch process where hydrogen peroxide is added during
+a longer time-period could be studied in the future. Experiments where a simple
+alkene, such as octane, dodecane or an ester of oleic acid without a carboxylic group,
+is exposed by hydrogen peroxide could give further answers whether a direct
+epoxidation of double bonds is possible to obtain without the perhydrolysis step.
+Additionally, analysis on the existence of peroleic acid during a typical chemoenzymatic epoxidation experiment would presumably determine whether the reaction
+mechanism goes through the percarboxylic acid route or not.
+
+Pontus Lindroos
+
+Svensk sammanfattning - Swedish summary
+
+54
+
+_________________________________________________________________________________________________________________________________________
+
+Svensk sammanfattning – Swedish summary
+Lipaskatalyserad kemisk-enzymatisk epoxidering av fettsyror med hjälp av
+ultraljud som en processintensifieringsmetod
+
+Klimatförändringen har fört med sig nya utmaningar i att övergå från traditionella
+fossilt baserade naturresurser till förnybara resurser. Epoxidering av omättade,
+växtbaserade fettsyror är en metod som kan föra oss vidare mot en hållbar process
+inom kemikalietillverkning. Dessa epoxiderade oljor kan användas i produktionen av
+kemikalier som bland annat smörjmedel, mjukgörare i polymera produkter samt
+biobaserad och icke-isocyanatbaserad polyuretan. Omättade växtbaserade fettsyror
+härstammar vanligtvis från olika förnybara resurser som sojabönan, palm, raps,
+solrosfrön, linfrön och bomullsfrön. I Nordeuropa är tallolja, vilket är en biprodukt
+från sulfatprocessen i skogsindustrin, en stor hållbar råvara för vidareförädling till
+viktiga intermediära molekyler inom produktionen av förnybara kemikalier.
+Detta arbete fokuserar på kemisk-enzymatisk epoxidering av oljesyra som en
+modellmolekyl, katalyserat av immobiliserat lipas. I motsats till den traditionella
+Prileschajews epoxideringsreaktionen av dubbelbindningar behövs ingen tillsatt
+karboxylsyra för att möjliggöra processen. Endast fettsyra, en oxidant som till exempel
+väteperoxid samt immobiliserat lipas behövs för att producera epoxiderade oljor enligt
+denna enzymatiska metod. Processförloppet sker i två steg: perhydrolys av fettsyrans
+karboxylgrupp till perfettsyra med hjälp av immobiliserat lipas, efterföljt av kemisk
+epoxidering av fettsyrans dubbelbindning med perfettsyran som nukleofil. Detta sker
+i
+
+ett
+
+trefassystem
+
+där
+
+perhydrolysen
+
+sker
+
+i
+
+vattenfasen
+
+och
+
+själva
+
+epoxideringsreaktionen mellan fettsyra och perfettsyra sker i den organiska fasen. Den
+intermediära massöverföringen mellan faserna möjliggörs genom att en gynnsam
+reaktionsomgivning bestående av en emulsion skapas.
+Reaktionen intensifieras med hjälp av ultraljud vilket har en höjande effekt på
+reaktionshastigheten. Det intensifierande fenomenet grundar sig på akustisk
+kavitation, vilket innebär att små gasbubblor först skapas av ultraljud som växer större
+i systemet genom kompression och expansion. Detta leder slutligen till en snabb
+kollaps av bubblorna varefter lokala punkter med höga tryck och temperaturer skapas.
+
+Pontus Lindroos
+
+Svensk sammanfattning - Swedish summary
+
+55
+
+_________________________________________________________________________________________________________________________________________
+
+Fenomenet gör att massöverföringen mellan reaktionsfaserna intensifieras då en mer
+stabil emulsion skapas jämfört med en emulsion som skapas produceras enbart med
+omrörning i reaktorn.
+En isotermisk satsreaktor med en roterande katalysatorbädd SpinChem® RBR samt
+ultraljudsanläggning insatt i reaktorn användes i samtliga experiment. Oljesyra och
+väteperoxid användes som reaktanter, och immobiliserat lipas (Novozym® 435)
+användes som katalysator. Reaktionskinetiken analyserades med titrimetriska metoder
+där icke-reagerade kvarstående fettsyra som reaktant (jodtalet, eng. Iodine value, enligt
+Hanus metod), koncentrationen epoxiderad fettsyra som produkt (oxiransyretalet, eng.
+Oxirane oxygen value, enligt Jays metod) samt koncentrationen väteperoxid (enligt
+Greenspan och MacKellars metod) analyserades under hela reaktionsförloppet i varje
+experiment. En ytterligare analys av den kemiska sammansättningen gjordes med
+kärnmagnetisk
+spectroscopy,
+
+resonansspektroskopi
+NMR)
+
+och
+
+(eng.
+
+katalysatorytans
+
+Nuclear
+
+Magnetic
+
+morfologi
+
+Resonance
+
+studerades
+
+med
+
+svepelektronmikroskopi (eng. Scanning Electron Microscopy, SEM).
+Användningen av olika koncentrationsförhållanden väteperoxid och fettsyra
+studerades i kinetiska experiment utan ultraljud. I dessa experiment visade
+koncentrationsförhållandet mellan oljesyra och väteperoxid på 1:2 vara det mest
+effektiva med toppvärden i utbyte efter fyra timmars reaktion då både
+reaktionshastigheten och utbytet utvärderades.
+Ultraljudets inverkan på reaktionens omsättning och produktselektivitet studerades
+genom att använda olika amplituder på 30 %, 60 % och 90 % med en frekvens på 20
+kHz. Dessa experiment påvisade att den akustiska kavitationen orsakat av ultraljud har
+en klar positiv påverkan på reaktionshastigheten. Experimentet utfört med 90 %
+amplitud nådde sin topp i utbyte efter tre timmars reaktionstid. Dock kunde det inte
+observeras en märkbar skillnad i slutligt utbyte mellan epoxideringsreaktionen som
+utfördes i tysta förhållanden och de experiment som utfördes i närvaro av ultraljud.
+Reaktionstemperaturens betydelse i ultraljudsförhållanden studerades. Tidigare
+studier har indikerat att katalysatorns stabilitet kan påverkas av temperaturer som
+överstiger 50 ⁰C samt av höga omrörningshastigheter. Temperaturens skadliga
+påverkan på enzymstabiliteten kunde inte påvisas i högre grad av de experiment som
+utfördes i detta arbete då experimentet i 60 ⁰C nådde de bästa resultaten i
+
+Pontus Lindroos
+
+Svensk sammanfattning - Swedish summary
+
+56
+
+_________________________________________________________________________________________________________________________________________
+
+reaktionshastighet och utbyte. Låga temperaturer på 45 ⁰C och 30 ⁰C ledde till att
+produkten övergick i fast fas före reaktionsförloppets planerade slut. Därmed kan det
+konstateras att lägre temperaturer kan orsaka begränsningar i massöverföringen mellan
+vattenfasen och organiska fasen i reaktionssystemet.
+Tidigare studier har påvisat att höga omrörningshastigheter även kan påverka lipasens
+stabilitet, vilket kan leda till lägre reaktionshastigheter och utbyten. Med härledning
+till detta studerades olika hastigheter på 500 rpm, 750 rpm och 1000 rpm, varav 750
+rpm visade sig vara den mest effektiva. Dock kunde det konstateras att en hög
+omrörningshastighet inte påverkar stabiliteten. Detta kan hypotetiskt vara på grund av
+användandet av SpinChem® RBR vars filter omkring omrörarbladen kan anses ge ett
+skydd för katalysatorns struktur.
+Återanvändningen av katalysatorn är en väsentlig fråga för de ekonomiska aspekterna
+i att använda Novozym® 435 som immobiserad katalysator för epoxidering av
+omättade fettsyror. Detta studerades genom tre efterföljande experiment med
+återanvänd katalysator i både tysta förhållanden och ultraljudsförhållanden. Dessa
+experiment gav goda resultat med endast en liten minskning i reaktionshastigheten.
+SEM bilder av katalysatorn i experimenten som studerade återanvändbarheten av
+katalysatorn i ultraljudsförhållanden visade att katalysatorns yta förstördes av den
+akustiska kavitationen. Detta påverkade trots allt inte katalysatorns kemiska aktivitet.
+Den kemiska sammansättningen av produkterna som erhölls i tysta förhållanden,
+ultraljudsförhållanden och från katalysatorns återanvändningsexperiment efter fyra
+och åtta timmars reaktionstid analyserades med 1H-NMR. Resultaten visade att det
+inte finns resterande omättad fettsyra kvar i ett enda analyserat prov efter åtta timmars
+reaktionstid, vilket tyder på att ett fullständigt produktutbyte hade uppnåtts. Dock
+kunde ringöppningsbiprodukter hittas, bestående främst av estrar och en mindre
+mängd dioler. Dessa hade förmodligen bildats genom att fettsyrans karboxylgrupp
+samt vatten hade agerat som nukleofiler i processen. Andelen biprodukter var ändå
+relativt liten, i experimentet utfört i tysta förhållanden var andelen störst av alla
+analyserade experiment med en mängd på ungefär 10 %.
+
+Pontus Lindroos
+
+Svensk sammanfattning - Swedish summary
+
+57
+
+_________________________________________________________________________________________________________________________________________
+
+Fyra olika matematiska modeller för reaktionskinetiken skapades samt estimering av
+kinetiska och termodynamiska parametrar utfördes för att anpassa beräknade data med
+experimentella data under tysta förhållanden. Statistiskt kunde endast smärre
+skillnader ses mellan de olika modellerna, men kännedomen om de möjliga
+reaktionsmekanismerna gjorde en mekanism som inkluderar perfettsyra till den mest
+sannolika modellen.
+Kemisk-enzymatisk epoxidering av omättande fettsyror med hjälp av immobiliserat
+lipas som katalysator visade lovande resultat både i experiment med ultraljud och utan
+ultraljud. Användningen av ultraljud visade sig vara gynnsamt med tanke på
+reaktionssystemets effektivitet. Katalysatorn visade sig vara återanvändbar i både tysta
+och ultraljudsförhållanden. I framtiden kunde det vara intressant att forska hur
+användandet av en halvkontinuerlig reaktor med en långsammare tillsättning av
+väteperoxid påverkar lipasens aktivitet och därmed även reaktionshastigheten och
+produktselektiviteten. Ett experiment där en enkel alken utan en karboxylsyragrupp
+såsom okten, dodeken eller oljesyrans ester skulle utsättas av väteperoxid med målet
+att epoxidera dubbelbindningen kunde ge svar huruvida epoxideringen kan ske genom
+en reaktionsmekanism som inte kräver persyra. Dessutom kunde existensen av
+peroljesyra i den kemisk-enzymatiska epoxideringsmekanismen bevisas genom
+titrimetisk analys under experimentets gång.
+
+Pontus Lindroos
+
+References
+
+58
+
+_________________________________________________________________________________________________________________________________________
+
+References
+[1] T. M. Panchal, A. Patel, D. D. Chauhan, M. Thomas, and J. V. Patel, “A
+methodological review on bio-lubricants from vegetable oil based resources,”
+Renew. Sustain. Energy Rev., vol. 70, pp. 65–70, Apr. 2017, doi:
+10.1016/j.rser.2016.11.105.
+[2] L. H. Gan, K. S. Ooi, S. H. Goh, L. M. Gan, and Y. C. Leong, “Epoxidized esters
+of palm olein as plasticizers for poly(vinyl chloride),” Eur. Polym. J., vol. 31, no.
+8, pp. 719–724, Aug. 1995, doi: 10.1016/0014-3057(95)00031-3.
+[3] A. Abolins, R. Pomilovskis, E. Vanags, I. Mierina, S. Michalowski, A.
+Fridrihsone, and M. Kirpluks, “Impact of Different Epoxidation Approaches of
+Tall Oil Fatty Acids on Rigid Polyurethane Foam Thermal Insulation,” Materials,
+vol. 14, no. 4, p. 894, Feb. 2021, doi: 10.3390/ma14040894.
+[4] W. Y. Pérez-Sena, X. Cai, N. Kebir, L. Vernières-Hassimi, C. Serra, T. Salmi,
+and S. Leveneur, “Aminolysis of cyclic-carbonate vegetable oils as a nonisocyanate route for the synthesis of polyurethane: A kinetic and thermal study,”
+Chem. Eng. J., vol. 346, pp. 271–280, Aug. 2018, doi: 10.1016/j.cej.2018.04.028.
+[5] BCC research LLC, “Oleochemical Fatty Acids: Global Markets to 2023,”
+CHM062E, Jan. 2019. Accessed: Feb. 25, 2021. [Online]. Available:
+https://academic.bccresearch.com/market-research/chemicals/oleochemicalfatty-acids-global-markets.html.
+[6] S. M. Danov, O. A. Kazantsev, A. L. Esipovich, A. S. Belousov, A. E. Rogozhin,
+and E. A. Kanakov, “Recent advances in the field of selective epoxidation of
+vegetable oils and their derivatives: a review and perspective,” Catal. Sci.
+Technol., vol. 7, no. 17, pp. 3659–3675, 2017, doi: 10.1039/C7CY00988G.
+[7] V. Aryan and A. Kraft, “The crude tall oil value chain: Global availability and
+the influence of regional energy policies,” J. Clean. Prod., vol. 280, p. 124616,
+Jan. 2021, doi: 10.1016/j.jclepro.2020.124616.
+[8] A. F. Aguilera, J. Rahkila, J. Hemming, M. Nurmi, G. Torres, T. Razat, P.
+Tolvanen, K. Eränen, S. Leveneur, and T. Salmi, “Epoxidation of Tall Oil
+Catalyzed by an Ion Exchange Resin under Conventional Heating and
+Microwave Irradiation,” Ind. Eng. Chem. Res., vol. 59, no. 22, pp. 10397–10406,
+Jun. 2020, doi: 10.1021/acs.iecr.0c01288.
+
+Pontus Lindroos
+
+References
+
+59
+
+_________________________________________________________________________________________________________________________________________
+
+[9] M. Kirpluks, E. Vanags, A. Abolins, A. Fridrihsone, and U. Cabulis, “Chemoenzymatic oxidation of tall oil fatty acids as a precursor for further polyol
+production,” J. Clean. Prod., vol. 215, pp. 390–398, Apr. 2019, doi:
+10.1016/j.jclepro.2018.12.323.
+[10] C. Orellana-Coca, S. Camocho, D. Adlercreutz, B. Mattiasson, and R. Hatti-Kaul,
+“Chemo-enzymatic epoxidation of linoleic acid: Parameters influencing the
+reaction,” Eur. J. Lipid Sci. Technol., vol. 107, no. 12, pp. 864–870, Dec. 2005,
+doi: 10.1002/ejlt.200500253.
+[11] T. Vlcek and Z. S. Petrovic, “Optimization of the Chemoenzymatic Epoxidation
+of Soybean Oil,” J. Am. Oil Chem. Soc., vol. 83, pp. 247–252, Mar. 2006.
+[12] M. S. Bhalerao, V. M. Kulkarni, and A. V. Patwardhan, “Ultrasound-assisted
+chemoenzymatic epoxidation of soybean oil by using lipase as biocatalyst,”
+Ultrason. - Sonochemistry, vol. 40, pp. 912–920, Jan. 2017, doi:
+10.1016/j.ultsonch.2017.08.042.
+[13] X. Zhang, J. Burchell, and N. S. Mosier, “Enzymatic Epoxidation of High Oleic
+Soybean Oil,” ACS Sustain. Chem. Eng., vol. 6, no. 7, pp. 8578–8583, Jul. 2018,
+doi: 10.1021/acssuschemeng.8b00884.
+[14] R. de C. S. Schneider, L. R. S. Lara, T. B. Bitencourt, M. da G. Nascimento, and
+M. R. dos S. Nunes, “Chemo-enzymatic epoxidation of sunflower oil methyl
+esters,” J. Braz. Chem. Soc., vol. 20, no. 8, pp. 1473–1477, 2009, doi:
+10.1590/S0103-50532009000800013.
+[15] I. Hilker, D. Bothe, J. Prüss, and H.-J. Warnecke, “Chemo-enzymatic epoxidation
+of unsaturated plant oils,” Chem. Eng. Sci., vol. 56, no. 2, pp. 427–432, Jan. 2001,
+doi: 10.1016/S0009-2509(00)00245-1.
+[16] S. Warwel and M. Rüsch gen. Klaas, “Chemo-enzymatic epoxidation of
+unsaturated carboxylic acids,” J. Mol. Catal. B Enzym., vol. 1, no. 1, pp. 29–35,
+Dec. 1995, doi: 10.1016/1381-1177(95)00004-6.
+[17] N. Prileschajew, “Oxydation ungesättiger Verbindungen mittels organischer
+Superoxyde,” Berichte Dtsch. Chem. Ges., vol. 42, no. 4, pp. 4811–4815, Dec.
+1909, doi: 10.1002/cber.190904204100.
+[18] S. Leveneur, A. Ledoux, L. Estel, B. Taouk, and T. Salmi, “Epoxidation of
+vegetable oils under microwave irradiation,” Chem. Eng. Res. Des., vol. 92, no.
+8, pp. 1495–1502, Aug. 2014, doi: 10.1016/j.cherd.2014.04.010.
+
+Pontus Lindroos
+
+References
+
+60
+
+_________________________________________________________________________________________________________________________________________
+
+[19] A. F. Aguilera, P. Tolvanen, K. Eränen, S. Leveneur, and T. Salmi, “Epoxidation
+of oleic acid under conventional heating and microwave radiation,” Chem. Eng.
+Process., vol. 102, pp. 70-87, 2016, doi:10.1016/j.cep.2016.01.011
+[20] S. Dinda, A. V. Patwardhan, V. V. Goud, and N. C. Pradhan, “Epoxidation of
+cottonseed oil by aqueous hydrogen peroxide catalysed by liquid inorganic
+acids,” Bioresour. Technol., vol. 99, no. 9, pp. 3737–3744, Jun. 2008, doi:
+10.1016/j.biortech.2007.07.015.
+[21] A. F. Aguilera, P. Tolvanen, A. Oger, K. Eränen, S. Leveneur, J. P. Mikkola, and
+T. Salmi, “Screening of ion exchange resin catalysts for epoxidation of oleic acid
+under the influence of conventional and microwave heating,” J Chem Technol
+Biotechnol, vol. 94, pp. 3020-3031 , Jul. 2019, doi: 10.1002/jctb.6112.
+[22] A. F. Aguilera, P. Tolvanen, S. Heredia, M. G. Muñoz, T. Samson, A. Oger, A.
+Verove, K. Eränen, S. Leveneur, J. P. Mikkola, and T. Salmi, “Epoxidation of
+Fatty Acids and Vegetable Oils Assisted by Microwaves Catalyzed by a Cation
+Exchange Resin,” Ind. Eng. Chem. Res., vol. 57, no. 11, pp. 3876–3886, Mar.
+2018, doi: 10.1021/acs.iecr.7b05293.
+[23] X. Cai, J. L. Zheng, A. F. Aguilera, L. Vernièrez-Hassimi, P. Tolvanen, T. Salmi,
+S. Leveneur, “Influence of ring-opening reactions on the kinetics of cottonseed
+oil epoxidation,” Int. J. Chem. Kinet., vol. 50, no. 10, pp. 726–741, Oct. 2018,
+doi: 10.1002/kin.21208.
+[24] F. Björkling, S. E. Godtfredsen, O. Kirk, “Lipase-mediated formation of
+peroxycarboxylic acids used in catalytic epoxidation of alkenes,” J. Chem. Soc.
+Chem. Commun., vol. 19, pp. 1301-1303, 1990, doi: 10.1039/C39900001301.
+[25] M. Rüsch gen. Klaas and S. Warwel, “Complete and partial epoxidation of plant
+oils by lipase-catalyzed perhydrolysis,” Ind. Crops Prod., vol. 9, no. 2, pp. 125–
+132, Jan. 1999, doi: 10.1016/S0926-6690(98)00023-5.
+[26] G. D. Yadav and K. Manjula Devi, “A kinetic model for the enzyme-catalyzed
+self-epoxidation of oleic acid,” J. Am. Oil Chem. Soc., vol. 78, no. 4, pp. 347–
+351, Apr. 2001, doi: 10.1007/s11746-001-0267-2.
+[27] U. Törnvall, C. Orellana-Coca, R. Hatti-Kaul, and D. Adlercreutz, “Stability of
+immobilized Candida antarctica lipase B during chemo-enzymatic epoxidation
+of fatty acids,” Enzyme Microb. Technol., vol. 40, no. 3, pp. 447–451, Feb. 2007,
+doi: 10.1016/j.enzmictec.2006.07.019.
+
+Pontus Lindroos
+
+References
+
+61
+
+_________________________________________________________________________________________________________________________________________
+
+[28] P. Anastas and N. Eghbali, “Green Chemistry: Principles and Practice,” Chem
+Soc Rev, vol. 39, no. 1, pp. 301–312, 2010, doi: 10.1039/B918763B.
+[29] C. Orellana-Coca, U. Törnvall, D. Adlercreutz, B. Mattiasson, and R. Hatti-Kaul,
+“Chemo-enzymatic epoxidation of oleic acid and methyl oleate in solvent-free
+medium,” Biocatal. Biotransformation, vol. 23, no. 6, pp. 431–437, Jan. 2005,
+doi: 10.1080/10242420500389488.
+[30] C. Aouf, E. Durand, J. Lecomte, M. Figueroa-Espinoza, E. Dubreucq, H.
+Fulcrand, and P. Villeneuve, “The use of lipases as biocatalysts for the
+epoxidation of fatty acids and phenolic compounds,” Green Chem, vol. 16, no. 4,
+pp. 1740–1754, 2014, doi: 10.1039/C3GC42143K.
+[31] A. F. Aguilera, P. Tolvanen, V. S. Herrera, J.-N. Tourvielle, S. Leveneur, and T.
+Salmi, “Reaction intensification by microwave and ultrasound techniques in
+chemical multiphase systems,” in Process Synthesis and Process Intensification:
+Methodological Approaches, Walter de Gruyter GmbH & Co KG, 2017, pp. 111–
+142.
+[32] A. F. Aguilera, “Epoxidation of vegetable oils : process intensification for
+biomass conversion,” Doctoral Thesis, Åbo Akademi University, Turku, Finland,
+2020.
+[33] H. Mallin, J. Muschiol, E. Byström, and U. T. Bornscheuer, “Efficient
+Biocatalysis with Immobilized Enzymes or Encapsulated Whole Cell
+Microorganism by Using the SpinChem Reactor System,” ChemCatChem, vol.
+5, no. 12, pp. 3529–3532, Dec. 2013, doi: 10.1002/cctc.201300599.
+[34] S. Pithani, S. Karlsson, H. Emtenäs, and C. T. Öberg, “Using Spinchem Rotating
+Bed Reactor Technology for Immobilized Enzymatic Reactions: A Case Study,”
+Org. Process Res. Dev., vol. 23, no. 9, pp. 1926–1931, Sep. 2019, doi:
+10.1021/acs.oprd.9b00240.
+[35] K. S. Suslick, “The Chemical Effects of Ultrasound,” Sci. Am., vol. 260, no. 2,
+pp. 80–86, Feb. 1989, doi: 10.1038/scientificamerican0289-80.
+[36] P. R. Gogate, S. Mujumdar, and A. B. Pandit, “Large-scale sonochemical reactors
+for process intensification: design and experimental validation,” J. Chem.
+Technol. Biotechnol., vol. 78, no. 6, pp. 685–693, Jun. 2003, doi:
+10.1002/jctb.697.
+
+Pontus Lindroos
+
+References
+
+62
+
+_________________________________________________________________________________________________________________________________________
+
+[37] I. Gonçalves, C. Silva, and A. Cavaco-Paulo, “Ultrasound enhanced laccase
+applications,” Green Chem., vol. 17, no. 3, pp. 1362–1374, 2015, doi:
+10.1039/C4GC02221A.
+[38] L. H. Thompson and L. K. Doraiswamy, “Sonochemistry: Science and
+Engineering,” Ind. Eng. Chem. Res., vol. 38, no. 4, pp. 1215–1249, Apr. 1999,
+doi: 10.1021/ie9804172.
+[39] S. H. Lee, H. M. Nguyen, Y.-M. Koo, and S. H. Ha, “Ultrasound-enhanced lipase
+activity in the synthesis of sugar ester using ionic liquids,” Process Biochem., p.
+4, 2008.
+[40] L. A. Lerin, R. A. Loss, D. Remonatto, M. C. Zenevicz, M. Balen, V. O. Netto,
+J. L. Ninow, C. M. Trentin, and J. V. de Oliveira, “A review on lipase-catalyzed
+reactions in ultrasound-assisted systems,” Bioprocess Biosyst. Eng., vol. 37, no.
+12, pp. 2381–2394, Dec. 2014, doi: 10.1007/s00449-014-1222-5.
+[41] F. P. Greenspan and D. G. MacKellar, “Analysis of Aliphatic Per Acids,” Anal.
+Chem., vol. 20, no. 11, pp. 1061–1063, 1948.
+[42] C. Paquot, “Determination of the Iodine Value (I.V.),” in Standard Methods for
+the Analysis of Oils, Fats and Derivatives, Elsevier, 1979, pp. 66–70.
+[43] R. R. Jay, “Direct Titration of Epoxy Compounds and Aziridines.,” Anal. Chem.,
+vol. 36, no. 3, pp. 667–668, 1964, doi: 10.1021/ac60209a037.
+[44] W. Y. Pérez-Sena, T. Salmi, L. Estel, and S. Leveneur, “Thermal risk assessment
+for the epoxidation of linseed oil by classical Prisleschajew epoxidation and by
+direct epoxidation by H2O2 on alumina,” J. Therm. Anal. Calorim., vol. 140, no.
+2, pp. 673–684, Apr. 2020, doi: 10.1007/s10973-019-08894-2.
+[45] D. Marquardt, “An Algorithm for Least-Squares Estimation of Nonlinear
+Parameters,” J. Soc. Ind. Appl. Math., vol. 11, no. 2, pp. 431–441, 1963, doi:
+10.1137/0111030.
+[46] J. Vojtesek, “Numerical Solution of Ordinary Differential Equations Using
+Mathematical Software,” in Modern Trends and Techniques in Computer
+Science. Advances in Intelligent Systems and Computing, Springer, Cham, May.
+2014, pp. 213–226, doi: 10.1007/978-3-319-06740-7_19.
+[47] J. R. Dormand and P. J. Prince, “A family of embedded Runge-Kutta formulae,”
+J. Comput. Appl. Math., vol. 6, no. 1, pp. 19–26, Mar. 1980, doi: 10.1016/0771050X(80)90013-3.
+
+Pontus Lindroos
+
+References
+
+63
+
+_________________________________________________________________________________________________________________________________________
+
+[48] A. F. Aguilera, P. Tolvanen, K. Eränen, J. Wärnå, S. Leveneur, T. Marchant, and
+T. Salmi, “Kinetic modelling of Prileschajew epoxidation of oleic acid under
+conventional heating and microwave irradiation,” Chem. Eng. Sci., vol. 199, pp.
+426-438, May. 2019, doi: 10.1016/j.ces.2019.01.035.
+
+Te
+
+Pontus Lindroos
+
+Appendices
+
+64
+
+_________________________________________________________________________________________________________________________________________
+
+Appendices
+Appendix I
+
+Figure Appendix I 1 - Analysis equipment for iodine value titrations with sodium thiosulphate
+
+Figure Appendix I 2 - Analysis equipment for oxirane number titrations with perchloric acid
+
+Pontus Lindroos
+
+Appendices
+
+65
+
+_________________________________________________________________________________________________________________________________________
+
+Figure Appendix I 3 - Analysis equipment for hydrogen peroxide titrations with ammonium cerium sulfate
+
+Figure Appendix I 4 - Image of the isothermal batch reactor system with the ultrasound probe in use
+
+Pontus Lindroos
+
+Appendices
+
+66
+
+_________________________________________________________________________________________________________________________________________
+
+Figure Appendix I 4 – Image of the ultrasound horn equipment
+
+Pontus Lindroos
+
+Appendices
+
+67
+
+_________________________________________________________________________________________________________________________________________
+
+Appendix II
+
+Figure Appendix II 1 - SEM images (30x, 100x, 250x, and 1000x size from left to right, accordingly)
+from unused immobilized lipase Novozym 435
+
+Pontus Lindroos
+
+Appendices
+
+68
+
+_________________________________________________________________________________________________________________________________________
+
+Figure Appendix II 2 - SEM images (30x, 100x, 250x, and 1000x size from left to right, accordingly)
+from immobilized lipase Novozym 435 used once in silent modei
+
+Pontus Lindroos
+
+Appendices
+
+69
+
+_________________________________________________________________________________________________________________________________________
+
+Figure Appendix II 3 - SEM images (30x, 100x, 250x, and 1000x size from left to right, accordingly)
+from immobilized lipase Novozym 435 used twice in silent mode
+
+Pontus Lindroos
+
+Appendices
+
+70
+
+_________________________________________________________________________________________________________________________________________
+
+Figure Appendix II 4 - SEM images (30x, 100x, 250x, and 1000x size from left to right, accordingly)
+from immobilized lipase Novozym 435 after three consecutive uses in silent mode
+
+Pontus Lindroos
+
+Appendices
+
+71
+
+_________________________________________________________________________________________________________________________________________
+
+Figure Appendix II 5 - SEM images (30x, 100x, 250x, and 1000x size from left to right, accordingly)
+from immobilized lipase Novozym 435 after one use with ultrasound irradiation
+
+Pontus Lindroos
+
+Appendices
+
+72
+
+_________________________________________________________________________________________________________________________________________
+
+Figure Appendix II 6 - SEM images (30x, 100x, 250x, and 1000x size from left to right, accordingly)
+from immobilized lipase Novozym 435 after two consecutive uses with ultrasound irradiation
+
+Pontus Lindroos
+
+Appendices
+
+73
+
+_________________________________________________________________________________________________________________________________________
+
+Figure Appendix II 7 - SEM images (30x, 100x, 250x, and 1000x size from left to right, accordingly)
+from immobilized lipase Novozym 435 after three consecutive uses with ultrasound irradiation
+
+

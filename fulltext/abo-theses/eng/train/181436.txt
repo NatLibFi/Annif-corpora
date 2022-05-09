@@ -1,0 +1,1032 @@
+DESIGNING A ROTATORY DEVICE FOR DEVELOPMENT OF 3D SUPERRESOLUTION TOMOGRAPHIC STED MICROSCOPY
+
+Thalla Divyendu Goud
+Email: tdivyend@abo.fi
+
+Master’s thesis
+Faculty of Science and Engineering
+July 2017
+Master’s degree programme in Biomedical Imaging
+Instrumentation
+Credits: ECTS
+Supervisors:
+1: Sami Koho
+2: Takahiro Deguchi
+
+Passed:
+Grade:
+i
+
+ABSTRACT
+ÅBO AKADEMI UNIVERSITY
+Faculty of Natural Science and Engineering
+THALLA DIVYENDU GOUD
+Development of a rotatory device for development of 3D super resolution tomographic
+STED microscopy
+
+Master´s thesis
+Instrumentation
+July 2017
+
+In this master thesis, multiple angle 3D tomographic STED microscopy technique was developed
+to implement 3D super resolution imaging to thicker samples. Firstly, a rotating stage was designed
+and manufactured to be incorporated in the STED microscope setup. This rotator can hold
+biological samples ranging from single cell to cell clusters in a micro glass capillary of 50 μm inner
+diameter. Glass capillary was attached to the rotator such that it gives the user flexibility to rotate
+the sample in 360 degrees and acquire images of the sample using the super resolution STED
+microscope.
+Vimentin cytoskeletal protein in BHK-21 and K562 cells was imaged using this technique.
+Primarily using BHK-21 cells we showed the precision of our rotating setup which achieved STED
+imaging of same single cell in multiple angles. By using K562 cell cluster we demonstrated that our
+technique could take 3D tomographic images of thick samples which was previously restricted due
+to working distance limitation of the objective.
+This technique opens up the possibilities of applying 3D super resolution STED.
+microscopy to thick tissues for example tumours can be imaged.
+
+Keywords: STED, tomographic microscopy, vimentin, axial resolution
+
+ii
+
+TABLE OF CONTENTS
+ABBREVIATIONS.................................................................................................................... 1
+1. REVIEW OF THE LITERATURE ............................................................................................. 2
+1.1 OPTICAL RESOLUTION AND DIFFRACTION LIMIT ........................................................................... 2
+1.2 STIMULATED EMISSION DEPLETION (STED) MICROSCOPY ............................................................. 3
+1.3 SUPER RESOLUTION TECHNIQUES TO IMPROVE AXIAL RESOLUTION .................................................. 6
+1.3.1 MULTI-ANGLE VIEW RECONSTRUCTION ......................................................................................... 7
+1.4 TOMOGRAPHIC RECONSTRUCTION ........................................................................................... 9
+1.5 VIMENTIN .........................................................................................................................10
+2. AIM ..................................................................................................................................12
+3. MATERIALS AND METHODS..............................................................................................13
+3.1 INSTRUMENTATION .............................................................................................................13
+3.1.1 MICRO CAPILLARY ................................................................................................................... 13
+3.1.2 ROTATORY DEVICE .................................................................................................................. 13
+3.1.3 MICROSCOPE SETUP................................................................................................................ 14
+3.2 CELL CULTURE AND SAMPLE PREPARATION...............................................................................15
+3.2.1 BHK21 VIMENTIN IMMUNOSTAINING PROTOCOL ......................................................................... 15
+3.2.2 K562 VIMENTIN IMMUNOSTAINING PROTOCOL............................................................................ 16
+3.3 MIPLIB ............................................................................................................................17
+3.4 MULTIPLE ANGLE TOMOGRAPHIC STED MICROSCOPY PROTOCOL.................................................18
+3.4.1 IMAGE ACQUSITION................................................................................................................. 18
+3.4.2 REGISTRATION & FUSION ......................................................................................................... 21
+4.RESULTS ............................................................................................................................23
+4.1 INSTRUMENT SETUP USING FLUORESCENT BEADS........................................................................23
+4.2 BHK 21 CELLS IMAGING AND TECHNICAL ACHIEVEMENT ..............................................................25
+4.3 K562 CELLS IMAGING AND TECHNICAL ACHIEVEMENT .................................................................28
+5. DISCUSSION .....................................................................................................................31
+6. CONCLUSION....................................................................................................................34
+7. ACKNOWLEDGEMENTS ....................................................................................................36
+9. REFERENCES .....................................................................................................................38
+
+iii
+
+ABBREVIATIONS
+
+2D
+
+Two Dimensional
+
+3D
+
+Three Dimensional
+
+CAD
+
+Computer-aided design
+
+CUDA
+
+Compute unified device architecture
+
+GPU
+
+Graphics processing unit
+
+ID
+
+Inner diameter
+
+iPALM
+
+Interferometric photoactivated localization microscopy
+
+NA
+
+Numerical aperture
+
+OD
+
+Outer diameter
+
+PFA
+
+Paraformaldehyde
+
+PBS
+
+Phosphate buffer saline
+
+RESOLFT
+
+Reversible saturable optical fluorescence transitions
+
+STED
+
+Stimulated emission depletion
+
+MIPLIB
+
+Microscopy image processing library
+
+1
+
+1. REVIEW OF THE LITERATURE
+Far-field fluorescence microscopy plays a vital role in unravelling complex cellular
+structures due to its non-invasive approach, which helps in study and research of various
+biological problems and further in solving crucial medical conditions. While imaging sub
+cellular structures, resolution is one of the most significant parameters for any optical
+microscopy setup. The resolution of an optical microscope is defined as the ability to
+distinguish between two objects which are apart by a very small distance. Vast
+advancements have taken place during the evolution of microscopes from the initial single
+lens to the present generation compound lens microscopes to enhance the image quality.
+But limits in optical resolution of microscope caused by the diffraction of light still restrict
+the usage of advanced microscopy techniques. In the year 1873, Abbe derived a
+mathematical formula to calculate the maximum resolution of any given optical imaging
+system. According to Abbe the best possible resolution for any optical microscope is 200
+nm. This means that any two objects that are closer than 200 nm in distance cannot be
+resolved as two separate entities by any optical microscope. For over a period of 100
+years this was believed to be the best possible resolution.
+However, in past few decades, super-resolution microscopy techniques have surpassed
+this diffraction barrier and resolved the constraint of limited resolution, stimulated
+emission depletion (STED) microscopy technique being the first one to do so. This
+technique uses a donut shaped depletion laser to enhance the resolution in all lateral
+directions (XY direction). Even though most of the super resolution techniques enhanced
+the resolution, improvement in axial resolution (Z direction) has not been achieved
+compared to that of lateral direction. The present study aims to improve the axial
+resolution by using a three dimensional (3D) tomographic super resolution STED
+microscopy technique. The basics of 3D super- resolution microscopy as well as
+approaches for enhancing the resolution in axial direction in are reviewed here.
+
+1.1 Optical resolution and diffraction limit
+Resolution is defined as the ability of the optical system to differentiate between two
+distinct points on a sample as distinctive entities. Ernst Karl Abbe was the first to
+determine the resolution limit of a microscope, which further explained the concept of
+diffraction limits(Abbe, 1873).
+2
+
+Abbe’s equation for calculating diffraction limit in XY direction is:
+d= λ/2 n sinα
+
+Where λ is wavelength of the light used to illuminate the sample and n sinα is the
+numerical aperture of the objective used to observe the sample.
+Equation for calculating diffraction limit in Z direction is:
+d= 2 λη/ (n sinα)2
+η = refractive index of mounting medium
+As the resolution is dependent on wavelength and numerical aperture of the objective,
+objective, the only possibilities to enhance the resolution are to alter the optical setup by
+using a light with a shorter wavelength and a medium with high refractive index, or an
+objective with high NA. By considering all the factors mentioned above, the practically
+achievable maximum resolution of an optical microscope in XY direction was 1/3rd of
+wavelength of light. Also, the axial resolution is 3 times inferior compared to lateral. And
+this was considered to be the best possible resolution for a period of over 100 years until
+Hell and Wichmann demonstrated stimulated emission depletion (STED) microscopy
+technique in 1994.
+
+1.2 Stimulated Emission Depletion (STED) microscopy
+
+Figure 1: Jablonski diagram illustrating the principle for STED microscopy. Adapted
+from (Hell, Stefan W., 2003).
+
+3
+
+In a normal fluorescence microscope setup, fluorophores get excited to S1 (bright state)
+from S0 (dark state) state by a laser beam. After vibrational relaxation, the molecule
+undergoes spontaneous emission while it is returning back to S0 from S1 state. However,
+in the case of STED microscopy, a second laser beam of higher wavelength known as
+STED beam is used to illuminate the excited molecules such that it switches of the excited
+fluorophores via stimulated emission (Figure 1).
+
+Figure 2: Scheme of a STED microscope setup modified from (Klar, Jakobs, Dyba, Egner,
+& Hell, 2000a). A donut shaped depletion laser (red) overlaps excitation laser(green)
+simultaneously while scanning the sample. Molecules at the center of the STED beam
+undergo spontaneous emission, such that the effective fluorescence spot on the sample is
+below diffraction limit.
+
+4
+
+Here, the doughnut shaped depletion laser is superimposed simultaneously on the
+excitation beam, which allows the molecules to undergo stimulated emission (Figure 2).
+Thus, the molecules which are at the centre of the depletion laser undergo spontaneous
+emission. The area in the sample undergoing spontaneous emission is reduced such that
+the effective fluorescence spot is far below the diffraction limit, which generates a super
+resolution image. The resolution of STED microscopy is calculated by the equation below
+(Willig, Keller, Bossi, & Hell, 2006) :
+dsted = λ/2 NAÖ(1 + I/Isat)
+where λ is the wavelength of light, NA is numerical aperture of the objective, I is the
+intensity of STED laser and Isat is saturation intensity of the fluorescent dye.
+STED microscopy implements reversible saturable optical fluorescence transitions
+(RESOLFT) concept. RESOLFT is based on a controlled switching mechanism of
+fluorescent molecules between dark and bright states in diffraction limited area (Hell, S.
+W., 2003) (Hell, Stefan W., 2004). By utilizing the low illumination intensities, it
+facilitates live cell imaging using super-resolution microscopy techniques (Chmyrov et
+al., 2013).
+
+Figure 3: Elongated of beam in the axial direction of STED microscopy.
+
+5
+
+In any optical microscopy setup, axial resolution is compromised compared to the lateral
+resolution due the elongation (Chmyrov et al., 2013). This even applies in the case of
+STED microscopy (Figure 3). To overcome this, a three-dimensional imaging approach
+in STED was incorporated because of the conventional microscopy space constraints.
+
+1.3 Super resolution techniques to improve axial resolution
+In order to increase the axial resolution, one approach would be to acquire additional data
+from the sample. This can be done by imaging the sample from opposite directions.
+Application of STED imaging in super resolution was first implemented by using a
+second laser which quenches the excited fluorophore at the focal spot (Klar, Jakobs,
+Dyba, Egner, & Hell, 2000b). Axial resolution attained using this method was about 90110 nm which was in the same range as lateral resolution. It’s the effectiveness in
+biological imaging was uncertain.
+Another STED technique which improved the resolution along the optic axis and lateral
+plane was achieved by incorporating beam splitters: one for splitting STED power among
+the two-phase plates and other for combining. 125 nm axial resolution was achieved by
+this technique (Harke, Ullal, Keller, & Hell, 2008). The drawback with this technique is
+that it results in reduction of beam intensity due to beam splitting. Due to this image
+quality is compromised. To overcome this, the laser power must be drastically increased,
+which leads to restrictions in biological specimen imaging.
+isoSTED was one of the first techniques to practically implement super resolution in all
+directions for imaging biological samples and attained 40 nm resolution. STED imaging
+of sub-wavelength-sized organelles was achieved (Schmidt et al., 2008). This is based on
+4pi-STED technique, where they combined lateral and axial excitation beams using a
+dichroic mirror in 4pi-STED setup of two opposing objective lenses. They optimised the
+image using iterative refinement in image deconvolution (Dyba & Hell, 2002).
+
+The best-known technique to improve axial resolution was achieved in iPALM
+(interferometric photoactivable localization microscopy) by incorporating three optical
+detection paths based on fluorophore position. By using this technique 15nm resolution
+was achieved in axial direction (Shtengel et al., 2009a). But such technique requires
+6
+
+sophisticated optical setup, and they rely on interferometry. A minute disturbance in the
+optical setup could compromise the image quality. These techniques could only be
+applied for imaging thin sections of biological samples and have limitations for using
+thick samples.
+1.3.1 Multi-angle view reconstruction
+Acquiring images from multiple angles gives more information about the specimen;
+processing this data to generate a high-resolution image lays the foundation for multiple
+angle view reconstruction in microscopy. With the change in observation angle, sharpens
+the image; eventually, enhancing the superior lateral resolution in the axial direction.
+Initially, multiple views were compared to extract the concealed information of the
+specimen (Skaer & Whytock, 1975). But later, this information was used to generate a
+3D image through a process called tomography (Shaw, Agard, Hiraoka, & Sedat, 1989).
+Multiple angle imaging can be performed by two methods: either by changing the axis of
+imaging or by rotating the sample itself. The simplest of these two is changing the axis
+of imaging where z-stack tomography can be achieved by scanning the complete sample
+in different views (Figure 4a).
+
+Figure 4: Tomographic microscopy. (a) 3D Z-stack image is acquired from different
+angles in Z-stack tomography. (b) Single slice image is acquired from multiple angles in
+7
+
+microrotation tomography resulting in overall increase in details of the sample.
+(Modified from (Lizundia et al., 2005)(D. Laksameethanasan, S. S. Brandt, & P.
+Engelhardt, 2006) )
+
+This method can be implemented by using a simple mirror to change the angle of imaging.
+Inception of this method in 3D STED microscopy was done by Takahiro et al. 2014. They
+presented an approach of observing a sample at two optical angles, which can attain 3D
+diffraction-unlimited resolution using atomic force microscope (AFM) as a micro
+reflector to deflect the STED beams (Figure 5). Images were recorded by placing a
+micromirror at an oblique angle to the main optical axis on top of the sample. Thus, by
+utilizing super lateral resolution they could resolve details along the axial direction of the
+main optical axis of the microscope. 80nm distant structures in biological sample were
+resolved using this technique (Deguchi, Koho, Näreoja, & Hänninen, 2014).
+
+Figure 5: Tomographic STED setup using a mirror where the sample is imaged at two
+angles. The first angle is acquired using normal a microscope and the second angle is
+acquired using a mirror at an angle q. (Modified from (Deguchi et al., 2014) ).
+
+8
+
+Even though the axial resolution was improved using the mirror STED technique, there
+are certain restrictions. It acquires images of the sample from only two angles, which
+gives only partial information of the sample for 3D reconstruction. Also, this technique
+cannot be applied to thicker biological samples due the limitation in the working distance
+of the objective. So, to overcome these limitations we propose 3D tomographic STED
+technique which is based on the microrotation approach (Figure 4b). The microrotation
+approach in single cells was first demonstrated to achieve 3D high resolution image of Blymphocytes (Lizundia et al., 2005). This technique gives us the ability to access the data
+of samples from multiple angles as the samples are being rotated during image
+acquisition. In this study we use a similar technique to acquire multiple angle images of
+cells in STED microscopy setup using a rotator.
+
+1.4 Tomographic reconstruction
+Image registration and image fusion are the 2 dimensions of axial tomographic
+reconstruction. Image reconstruction involves aligning a moving image and a fixed
+reference image with the help of spatial transformation.
+Previous studies used manual methods for registration purposes while the later ones
+adopted more practical applications. However, algorithmically iterative adjustments are
+set to quantify the alignment of 2 views obtained by the spatial transformation as
+mentioned above. To mention a few from the literature so far, cross correlation came to
+be one of the pure registration methods for image reconstruction(Heintzmann, Kreth, &
+Cremer, 2000). In another study, registration method was used by mean squared
+difference functions (Remmele et al., 2011) . But these methods posed to be difficult with
+larger images. Another group used fluorescent nanobeads for image alignment in order
+to address the larger image complexity (Preibisch, Saalfeld, Schindelin, & Tomancak,
+2010). All though, this method has its advantage of using deformable spatial
+transformations, it is not without a disadvantage where these beads are to be removed at
+the end from the final image. Fusion method, pixel by pixel arithmetic method and fusion
+by selecting high amplitudes were few of the methods of registration and subsequently
+they had their own alignment errors which could not handle the axial haze and leading
+the image to be blurry (Swoger, Verveer, Greger, Huisken, & Stelzer, 2007).
+
+9
+
+In the field of STED microscopy data reconstruction, S.Koho et al. developed a software
+(SuperTomo) to reconstruct a 3D tomograms from multiple angle data sets of sample in
+STED microscopy. By using this technique 3 to 4 times improvement in the axial
+resolution is achieved when compared to normal angle STED image (KOHO, S.,
+DEGUCHI, & HÄNNINEN, 2015). This reconstruction method is aimed to work with
+real biological STED super resolution images, it uses a modified algorithm based on
+Richardson-Lucy iterative deconvolution algorithm. This method was successfully
+implemented in the mirror STED technique and high-resolution 3D STED images were
+realised. In the current study we will be using microscope image processing library
+(MIPLIB) where data from more number angles angle image data can used to reconstruct
+the final high-resolution image.
+
+1.5 Vimentin
+In order to achieve the multiple angle 3D tomographic image of a biological specimen
+using the rotation stage we would like to image vimentin cytoskeletal protein in both
+suspended and adherent cells.
+Vimentin is a type III intermediate filament which is expressed in mesenchymal cells of
+various organisms. It supports organelle positioning inside the cytoplasm and provides
+mechanical strength. Further, along with other intermediate filaments, it offers basis for
+maintain cell shape, tissue architecture and stability (Ivaska, J., Pallari, Nevo, & Eriksson,
+2007). It interacts with many other proteins, due to this ability of vimentin, it plays vital
+role in cell migration, signaling and adhesion (Ivaska et al., 2007). Vimentin can be found
+close to nucleus, mitochondria, and endoplasmic reticulum (Katsumoto, Mitsushima, &
+Kurimura, 1990) .
+
+10
+
+Figure 6: Graphical representation of vimentin inside cytoplasm of a cell.
+
+Vimentin is primarily expressed in endothelial, hematopoietic and mesenchymal cells.
+Vimentin expression is elevated under many conditions such as injury and regeneration
+(Cheng & Eriksson, 2017). It is also overexpressed during epithelial to mesenchymal
+transition (EMT) in cancer cells (Ivaska, Johanna, 2011; Satelli & Li, 2011). Vimentin
+interacts with various signaling molecules to influence cell migration. (Chernoivanenko,
+Minin, & Minin, 2013; Chung, Rotty, & Coulombe, 2013). It strengthens adhesion by
+interacting with cellular extracellular matrix (ECM) sites (Bhattacharya et al., 2009;
+Burgstaller, Gregor, Winter, & Wiche, 2010) . Vimentin is also shown to be involved in
+cell motality via cytoskeleton controlled mechanosensing (Burgstaller et al., 2010;
+Gregor et al., 2014). Vimentin can be found in extremely dynamic adhesion structures of
+cells such as filopodia, lamellipodia and podosomes which can affect directional motility
+(Calle, Burns, Thrasher, & Jones, 2006; Helfand et al., 2011).
+
+11
+
+2. AIM
+
+I.
+
+To design and develop a rotating device which can be used to acquire images
+of samples in multiple axis to improve the axial resolution in STED
+microscopy.
+
+II.
+
+To enable the super-resolution imaging with very large samples, up to twice
+the working distance of the microscope objective.
+
+12
+
+3. MATERIALS AND METHODS
+3.1 Instrumentation
+3.1.1 Micro capillary
+Hollow round micro capillaries made of borosilicate glass (VitroCom's Vitrotubes) with
+an outer diameter (OD) of 80 microns and an inner diameter (ID) of 50 microns were
+used to hold the sample. The selection of the micro glass capillary is made in accordance
+with the field of view and working distance of the STED microscope objective. By using
+the round capillary, the specimen can be visualised in multiple angles for STED imaging.
+3.1.2 Rotatory device
+A rotating device setup was designed in CAD software (Sketch Up) and manufactured
+using the facilities of University of Turku workshop. The device holds a micro rotator to
+which the micro glass capillary with specimen (Figure 7) will be attached. This rotating
+device setup was designed in order to fit in the sample holding stage of STED microscope.
+Thus, by using the micro rotation stage the sample can be rotated in 360 degrees to acquire
+multiple angle images of the specimen.
+
+Figure 7: CAD Design of the rotating device setup.
+
+13
+
+3.1.3 Microscope Setup
+The capillary with the specimen is attached to the micro rotator using a small brass nozzle
+as shown in Figure 8. Then the complete rotatory device setup is placed on the microscope
+stage such that the capillary rests on the microscope objective with immersion on it
+(Figure 9). A cover glass is placed on top of the capillary to keep the capillary stable on
+the objective.
+
+Figure 8: Capillary with sample attached to the micro rotator.
+
+Figure 9: Rotation stage placed on the STED microscope.
+14
+
+The leica STED SP5 microscope was used to image the samples in multiple angles, with
+an oil immersion 100x objective lens (Leica STED NA 1.4). An excitation wavelength of
+635 nm and a depletion wavelength of 775 nm were used for imaging both BHK 21 and
+K 562 cells. Z stacks of the images were acquired in multiple angles with a step size of
+170 nm and 290 nm for BHK 21 and K562 cell samples respectively, at a scanning speed
+of 600 Hz with a line average of 8. The number of stacks varied as it depends on the
+orientation of the sample when it is rotated in multiple angles. All the images were
+acquired using Leica LAS software, which is commercially available with the Leica
+STED microscope.
+
+3.2 Cell Culture and Sample Preparation
+For demonstrating the multiple angle tomographic STED microscopy, baby hamster
+kidney fibroblasts BHK 21 (adherent) and human chronic myelogenous leukemia K562
+(suspension) cells were used accordingly.
+3.2.1 BHK21 vimentin immunostaining protocol
+BHK 21 cells were cultured using Dulbecco's Modified Eagle's medium (Sigma-Aldrich)
+and incubated. After two days the cells were split; some of the cell solution was taken
+into micro glass capillary and incubated for 6 hrs in 5% CO2 humidified atmosphere.
+During this course of time the cells get attached to the micro capillary tube as shown in
+Figure 10.
+
+Figure 10: Phase contrast microscopy image of BHK21 cells. (a) Cells taken into the
+capillary (b) Cells being attached to the capillary after incubation.
+
+15
+
+Even though the cells seemed to be attached to the inner wall of the capillary, they were
+leaking out of it when we tried staining them. Therefore, cells were attached on the
+surface of the micro capillary to avoid complex staining procedures. We changed our
+protocol such that after splitting the cells, some of the cell solution was transferred on the
+micro glass capillary and incubated for 6 hrs in 5% CO2 humidified atmosphere. Hence
+the cells were attached on top of the capillary surface.
+The capillary was taken and washed with 1x PBS (Phosphate-buffered saline) by pouring
+the solution on the capillary tube. Similarly, samples were fixed with ice cold acetone for
+7 min at -20°C and washed again with 1x PBS. Then the cells were blocked using 5%
+goat serum in PBS for 1hr at room temperature. Thereupon the cells were treated with
+primary antibody solution (V9 in 1% goat serum with PBS at 1:100 dilution) for 2hrs at
+room temperature followed by the washing step (2 times). Afterwards the cells were
+treated with secondary antibody solution (Abberior Star 635P in 1% goat serum with PBS
+at 1:200 dilution) for 1 hr at room temperature. Finally, the capillary was washed with 1x
+PBS (2 times) and mounted with Mowiol. The protocol was adopted and modified from
+Sami et al.(Koho, Fazeli, Eriksson, & Hänninen, 2016).
+
+3.2.2 K562 vimentin immunostaining protocol
+K562 cells were cultured using RPMI-1640 (Sigma-Aldrich) and incubated in 5% CO2
+humidified atmosphere. After a couple of days, the cells were divided, and the required
+amount of cell solution was taken into an Eppendorf tube. The following protocol was a
+combined and modified protocol of Wang cc et al.(Wang, Bajikar, Jamal, Atkins, &
+Janes, 2014) and Sami et al. (Koho et al., 2016).
+1) The Eppendorf tube was centrifuged at 800 rcf for 2 min and the solution was
+aspirated.
+2) Cells were washed with 1x PBS solution by resuspending the pellet with a pipette
+and again centrifuged to aspirate the washing solution (1x PBS).
+3) Cells were fixed with Acetone for 7min at -20° C and the tube was centrifuged to
+aspirate the solution.
+4) Step 2 was repeated.
+
+16
+
+5) Blocking was done using 5% goat serum and the tube was centrifuged to aspirate
+the solution.
+6) Primary antibody solution (V9 in 1% goat serum with PBS at 1:100 dilution) was
+added to the tube and cells were resuspended using a pipette. Incubation time was
+2hrs.
+7) Step 2 was repeated twice.
+8) Secondary antibody solution (Abberior Star 635P in 1% goat serum with PBS at
+1:200 dilution) was added to the tube and cells were resuspended using a pipette.
+Incubation time was 1 hr.
+9) Step 2 was repeated twice.
+10) Finally, Mowiol was added to the tube and cells were resuspended using a pipette.
+11) Mowiol containing the cells was taken into the capillary and kept overnight for
+solidification.
+
+3.3 MIPLIB
+Sami Koho developed SuperTomo image reconstruction software program which was
+used in the demonstration of Tomographic STED microscopy using 2 angles (KOHO,
+DEGUCHI, & HÄNNINEN, 2015) . It has now the potential to register and fuse images
+acquired in multiple angles. It is developed for Anaconda Python (Continuum analytics)
+distribution for utilizing numerous standard python packages and SimpleITK package has
+been incorporated instead of ITK. HDF5 file format has been adopted for working with
+large datasets acquired in multiple angles.
+Benjamin and Jan Huisken achieved real time multiview deconvolution in 3D by
+processing cross- sectional planes individually on a GPU. Further using a 2D PSF they
+approximated the full 3D PSF by neglecting one lateral component. So, using the super
+lateral resolution of an overlapping dataset they achieve better axial resolution. This
+method reduced the memory requirements and allowed to implement them multiview
+deconvolution on a GPU (Schmid & Huisken, 2015).
+Recently Sami Koho developed a microscope image processing library (MIPLIB) for
+image restoration, reconstruction and analysis of microscopy images(Sami, 2020) . This
+program has been used to achieve high resolution in two photon excitation laser scanning
+17
+
+microscopy technique (Koho, Sami V. et al., 2020). Fourier ring correlation has been
+implemented in this program which enables 2 times improved resolution (Koho, Sami et
+al., 2019).
+With all these advanced features, MIPLIB is being used for multiple angle tomographic
+image reconstruction to achieve improved axial resolution.
+
+3.4 Multiple Angle Tomographic STED Microscopy Protocol
+Our system holds a biological specimen inside a thin capillary tube which is rotatable
+over a 360 degree and this system is attached to a STED microscope to acquire images.
+After acquiring images of a sample over multiple angles of view, then very highresolution 3D image is produced by digital image reconstruction of the multi angle data
+volumes using MIPLIB software program.
+Stepwise protocol of multiple angle tomographic STED microscopy.
+1. Sample Preparation
+•
+
+Suspension cells: take cells in capillary after staining in Eppendorf
+
+•
+
+Adherent cells: staining inside capillary
+
+2. Image Acquisition
+•
+
+Multiple angle images
+
+3. Image reconstruction
+•
+
+Image registration
+
+•
+
+Image fusion
+
+3.4.1 Image acqusition
+The first step after preparing the sample is to fix the capillary to the micro rotator and
+place the rotating device setup on the sample holding stage of the microscope (Figure 11).
+Then z stacks of the fluroscent sample is acquired at multiple angles, 3 angles in this
+particular demonstration. Here the capillary with the sample is imaged at the normal
+position (Figure 12). Then the capillary is rotated 45 degrees and the same structure is
+imaged again (Figure 13). Simlary the same structure is imaged at 90 degrees by rotating
+the capillary (Figure 14). Thus, we have data sets of images taken in 3 different angles
+(0,45 and 90).
+18
+
+Figure 11: Roating device setup placed on microsocpe to acquire images in multiple
+angles.
+
+Figure 12: Demonstration of Tomographic STED Microscopy image acquisition at Angle
+0 (a) Capillary at angle 0 place on the objective (b) Cell inside the capillary (c) Acquiring
+the z stacks of fluorescent structure inside the cell (d) Completing the image acquisition.
+
+19
+
+Figure 13: Demonstration of Tomographic STED Microscopy image acquisition at Angle
+45 (a) Capillary being 45 degrees on the objective (b) Cell inside the capillary (c)
+Acquiring the z stacks of fluorescent structure inside the cell (d) Completing the image
+acquisition.
+
+Figure 14: Demonstration of Tomographic STED Microscopy image acquisition at Angle
+90 (a) Capillary being rotated 90 degrees on the objective (b) Cell inside the capillary
+20
+
+(c) Acquiring the z stacks of fluorescent structure inside the cell (d) Completing the image
+acquisition.
+
+3.4.2 Registration & Fusion
+After acquisition of z stacks of specimen in multiple angles, all the data sets have to be
+registered by taking the initial angle as reference (Angle 0 in this case). Therefore, image
+acquired at angle 0 acts as the reference and the images acquired at angles 45 and 90
+should be registered according to angle 0. In Figure 14c below we can observe that angle
+45 and 90 images have been aligned in the same position as images taken at angle 0.
+Image fusion is the final step in which the registered images of multiple angle images are
+fused to form a single 3D high-resolution image (Figure 15f). Multiple data sets which
+are acquired in different angles have information which may not be seen in a single view.
+Subsequently, by combining this data, the final fused image produces much more
+information and details about the specimen.
+
+Figure 15: Demonstration of multiple angle image registration in Tomographic STED
+Microscopy (a) Z stacks of the images acquired in multiple angles (0,45 and 90) (b) An
+image taken at angle 45 is being aligned to the image taken at angle 0 (c) An image taken
+at angle 90 is being aligned to the image taken at angle 0. (d) Registered Images of images
+21
+
+taken at multiple angle (45 and 90) (b) Registered image of image taken at angle 45 is
+being fused to the image taken at angle 0 (c) Registered Image of image taken at angle
+90 is being fused to the image taken at angle 0.
+
+22
+
+4. RESULTS
+Tomographic STED microscopy was realised by multiple angle image acquisition,
+registration and fusion of vimentin in BHK 21 and K562 cells respectively.
+
+4.1 Instrument setup using fluorescent beads
+Firstly, the instrument setup was checked using fluorescent beads of size 0.13 µm. Beads
+inside the capillary were imaged at multiple angles (Figure 16), registered (Figure 17)
+and fused (Figure 18) using Image J plugin.
+
+Figure 16: Beads imaged at multiple angles (0, 40, 160,200 and 320).
+23
+
+Figure 17: Multiple angle (0, 40, 160, 200 and 320) images registered with reference
+angle 0.
+
+Figure 18: Final fused image of beads taken in multiple angles.
+
+24
+
+4.2 BHK 21 cells imaging and technical achievement
+After sample preparation, the capillary tube with BHK 21 cells was kept overnight for
+solidification of the Mowiol. Due to the solidification, cells attached to the capillary
+surface stay stable while images are acquired in multiple angles by rotation of the
+capillary tube. Then the capillary tube with BHK 21 was attached to a rotating device and
+a well stained cell was chosen for imaging. Firstly, we took a z stack of the vimentin
+corresponding to the chosen cell at normal position (Angle 0) and then the capillary was
+rotated to 30, 50, 320 and 350 degrees to acquire the z stacks of the same cell in different
+views as shown in Figure 19.
+
+Figure 19: Maximum intensity projections of Vimentin in BHK 21 cell acquired at an
+angle 0 (a) angle 30 (b) angle 50 (c) angle 320 (d) and angle 350 (e) by rotating the
+capillary. Scale bar is 5μm.
+By observing the multiple angle images in axial direction (Figure 19), inclination of BHK
+cell in multiple directions along the Y axis can be noticed. The next step is image
+registration, where we took image acquired at angle 0 (Figure 19a) as reference image
+and performed multiple angle image registration on remaining images by using MIPLIB.
+25
+
+In the figure below, it can be observed that the images taken at angles 30,50,320 and 350
+are registered with the reference image taken at angle 0. In axial views of Figure 20, it
+can be seen that the alignment of the cell is traced back to the reference image position.
+This makes the image fusion task convenient. Lastly, we performed multiple angle image
+fusion on the registered images so that all images overlap, resulting a single highresolution image (Figure 21).
+
+Figure 20: Multiple colours red, green, blue, grey and cyan are assigned to the
+corresponding registered images of BHK 21 taken at angles 0(a), 30(b), 50(c), 320(d)
+and 350(e). Scale bar is 5 μm.
+
+26
+
+Figure 21: Fusion of the registered images (superimposition of a, b, c, d and e (Figure
+20)). Scale bar is 5 μm.
+
+Figure 22: Comparison of STED with 3D tomographic STED. (a) Normal STED image
+(b) Final image after image fusion taken using multiple angle tomographic STED. (c)
+zoomed area of XZ taken by normal STED (d) zoomed area of XZ taken by tomographic
+STED. Scale bar is 5 μm.
+27
+
+The first accomplishment in the present thesis was that we designed the rotator and
+integrated it into the STED microscope. We were able to acquire multiple angle images
+of the same cell with high precision. This can be seen in the case of adherent BHK 21
+cells. We successfully implemented multiple angle tomographic STED technique using
+BHK 21 cells as we can clearly see the resolved structures of vimentin filament in axial
+view (Figure 22d) achieved by multiple angle tomographic STED technique.
+
+4.3 K562 cells imaging and technical achievement
+The second aim of the thesis was to apply super resolution 3D STED imaging to thick
+samples. For this, we used cluster of K562 cells which, would fill the 50 μm capillary.
+
+Figure 23: Maximum intensity projections of Vimentin in BHK 21 cell acquired at an
+angle 0, 40, 80, 120, 160, 200, 240, 280 and 320 by rotating the capillary. Scale bar is
+20 μm.
+
+28
+
+Figure 24: Comparison of STED with 3D tomographic STED. (a) Normal STED image
+of K562 cell (b) Final image of K562 cell after image fusion of multiple angle
+tomographic STED. Scale bar is 20 μm. Arrows show the thickness of the sample.
+The sample preparation for K562 is different as they are suspension cells. After
+immunostaining, the cells were taken into the micro glass capillary along with Mowiol.
+Here, we successfully acquired the images of the K562 cell cluster at multiple angles as
+shown in the previous case of BHK-21. Similarly, tomographic reconstruction of multiple
+angles images was done, and a final resultant high resolution image was produced. From
+the Figure 24b it can be clearly observed that we achieved high resolution image of K562
+
+29
+
+cells cluster in axial direction. The vimentin structures are resolved and can be noticed in
+Figure 25b when compared to the conventional STED image of the sample cell.
+We could image the sample area up to 40 μm, which is the double the size of the sample
+which can be acquired by conventional STED technique due to limitations in working
+distance of the objective.
+
+Figure 25: Comparison of STED with 3D tomographic STED in the axial direction. (a)
+Normal STED image of K562 cell cluster (b) Final image of K562 cell cluster after image
+fusion of multiple angle tomographic STED. Scale bar is 20 μm. Arrows show the
+thickness of the sample.
+
+30
+
+5. DISCUSSION
+
+Tomographic STED microscopy research till date has given many desirable results along
+with several advantages. To name a few; flexible applicability manifested in custom build
+systems by iPALM and isoSTED is one-of-a-kind features, another is a micro mirror
+technique which is used without changing the optics and in terms of resolution a single
+objective lens efficiently provides isotropic pixel image.
+A recent observation compared to computational modelling has emphasized that- unlike
+the axial doughnut causing image distortion due to drifting refractive index in
+computational modelling, the tomographic STED microscopy uses lateral doughnut for
+enhancing resolution in all directions which leads to a near isotropic super resolution as
+in the case of a pulsed laser system (100nm 3D resolution) (Mark, Davis, Starosta, &
+Dunn, 2015) . Notable aspect of this system is it acquires super resolution information
+from multiple directions. This consequently leads to reduced photobleaching and heat
+buildup in the given sample. Techniques based on two objective lenses in 3D super
+resolution field provided improvement in the axial resolution, but these are sensitive and
+complex systems highly depended on interferometric illumination (Shtengel et al.,
+2009b). A simple change or disturbance in the refractive index could lead to distorted
+interference. Also, they were limited to single cell imaging due to limitation of working
+distance of the objective. Due to which these techniques have limited use in thick samples.
+Applying super resolution microscopy to thick samples was demonstrated using a widely
+used sectioning method in electron microscopy(Micheva & Smith, 2007) . By sectioning
+the sample into thin slices, imaging them and reconstructing them into a 3D image, they
+increased the axial resolution. This method was applied to samples as thick as 100 μm,
+but alignment of the sliced sections is challenging and could not completely represent the
+original sample. However, in our study, we were able to overcome this issue with our
+multiple angle tomographic STED technique, as it can image the samples as thick as 40
+μm exclusive of damaging the sample. This opens up new possibilities of 3D super
+resolution microscopy of thicker samples; for example, it can be applied to tumour
+imaging.
+
+31
+
+Compared to the previous literature where super resolution information can be worked
+upon from two views bottom and side (Tang, Akerboom, Vaziri, Looger, & Shank, 2010)
+or imaging in an angle using a mirror (Deguchi, Koho, Tuomas Näreoja, Juha Peltonen,
+& Pekka Hänninen, 2015), the present research aligns with approach of sample
+rotation(Heintzmann & Cremer, 2002). Our method uses multiple angle image
+acquisition for an enhanced resolution but with an advanced tomographic reconstruction
+method. This leads to acquiring more information of the sample when compared to 2 view
+methods where only partial information of the sample is acquired.
+In a recent study, a different approach of tomographic STED was implemented. In this
+technique, acquiring tomographic projections data from different directions yielded
+improved the resolution by 1.5 times compared to the conventional STED imaging.
+(Krüger, Keller-Findeisen, Geisler, & Egner, 2020). Even though it is called tomographic
+STED, it only aims to improve the resolution in a 2D image.
+In the current thesis we acquired super resolution images of vimentin cytoskeletal protein
+in both suspension and adherent cells in the course of implementation of our tomographic
+3D STED technique. The expression of vimentin is elevated in cancers. Vimentin IFs
+involvement in regeneration during wound healing could in turn mediate general
+functions (proliferation, migration and invasion) of cancer cells (Kidd, Shumaker, &
+Ridge, 2014). In this study we incorporated 3D super resolution imaging of vimentin
+cytoskeletal protein in samples as thick as 40 microns. This methodology could open up
+possibilities to image tumours at super resolution and it can be a potentially advantageous
+tool in cancer research.
+Although, our technique overcomes the challenges faced by previous 3D super resolution
+techniques in terms of sample thickness, there are certain limitations in implementing this
+technique in biological samples. As we acquire stacks of images in multiple angles, the
+biological specimen is subjected to the high-power STED laser for a long period. For
+instance, imaging the specimen in one angle takes around 15-20 min, which means it
+would take more than 4 hrs to acquire complete data sets for 8 different angles. During
+this period the sample is subjected to high power STED laser which would bleach the
+sample. To overcome this, laser intensity must be adjusted in some way to protect the
+sample while acquiring the data sets in the interest of the user.
+
+32
+
+Another crucial but complicated step during the image acquisition is rotating the sample.
+As we use a 100x objective to acquire every detail possible in the sample, the chance of
+missing the existing cell is higher while rotating the microcapillary. Also, there can be
+chances of misalignment of the capillary during rotation. This would need a lot of practice
+and patience to get used to the technique.
+
+33
+
+6. CONCLUSION
+In the current thesis, we designed a rotating stage which has shown to be effective in
+holding biological samples and can be rotated in multiple angles with high precision. We
+could hold a thin capillary measuring 50 microns in diameter in our rotator, which enables
+us to hold samples up to approx. 40 microns thick. We were able to rotate the sample
+precisely and acquire images without damaging the samples in 8 or more angles.
+Further, immunostaining procedures of both suspension cells and adherent cells have
+been adapted in such a way that florescence staining is not compromised.
+Using BHK-21 cells we show the practical implementation of multiple angle tomographic
+STED microscopy and by using K562 cell clusters we were able to apply super resolution
+microscopy to samples as thick as 40 microns. This also resulted in increased axial
+resolution for these samples. By acquiring z-stack images of sample from multiple angles,
+more information of the sample is captured, which resulted in the appropriate
+reconstruction of the final 3D super resolution image. This technique opens up a wide
+range of possibilities in 3D super resolution imaging of thick samples and can have
+potential application in the field of tumour research.
+There are certain complicated steps involved in sample preparation and image
+acquisition. These can be resolved by further improving the methodology. As the sample
+preparation inside the microcapillary deals with complexity, a microchip based staining
+chip can be designed to perform all the immunostaining steps inside it using microfluids
+(Figure 26). This could reduce the damage to the cells and retain a greater number of cells
+inside the capillary even after many washing steps.
+In the current instrumentation setup of tomographic STED, we used a manual rotator for
+rotating the sample during multiple angle image acquisition. Due to the manual
+interference, the alignment of the sample is affected and needs lot of practice to master
+the technique in order for the exciting cell to have the same position after rotation. To
+overcome this, we suggest integrating a piezo motor in the design for acquiring multiple
+images with high precision.
+
+34
+
+Figure 26: Concept representation of microfluidic chip for immunostaining inside the
+capillary.
+
+35
+
+7. ACKNOWLEDGEMENTS
+This thesis was done in the Laboratory of Biophysics, Institute of Biomedicine,
+University of Turku and Department of cell Biology, Åbo Akademi University. I would
+like to acknowledge the Master program in Biomedical Imaging for their support
+throughout the master study period.
+I would like to thank all the faculty of Biomedical Imaging Master program and
+coordinators Joanna Pylvänäinen, Petra Miikkulainen and Inga Pukonen for their support
+and encouragement. I also want to thank Diana Toivola for being my study mentor during
+my master study at Åbo Akademi. She has been very kind and supportive in finishing up
+my thesis.
+I would like to thank my supervisors Sami Koho and Takahiro Deguchi for giving this
+opportunity to work on this project and for helping me during the course of this thesis.
+Both of them have been motivating and backed me to work independently. They gave me
+freedom to implement my ideas during my project work. This thesis project has helped
+me to understand the basics of super resolution microscopy and master my practical skills
+in this field and laid a foundation for my future in the research career. Thus, their
+contribution in my future will be always remembered.
+I wish to thank Professor Pekka Hänninen and the lab members who gave me this
+opportunity to work in his labs and supported me with all the resources for the study. He
+has been a great mentor and teacher for courses in the Biomedical Imaging program.
+I would like to thank Professor John Ericksson and his lab members for playing a crucial
+role in my project. Prof John Ericksson allowed me to pursue internship in his lab where
+I gained most of my practical knowledge in biological sample preparation for this thesis.
+He has been the main motivation behind the 3D imaging of vimentin protein.
+I want to thank Arun Venu for teaching me cell culture techniques and guiding me
+throughout my work. This allowed me to implement 3D tomographic STED in cellular
+samples. I also want to thank Elnaz Fazeli and Elena Tcarenkova for helping me with
+imaging techniques. Both of them have provided a great atmosphere for working in the
+group and helped me solve many crucial issues during the course of my thesis work.
+36
+
+I want to thank all my friends Guru and Anil who have been a great support for me in
+Turku. Finally, I am grateful to my parents and family members back home who
+supported me at all times during this journey in my masters.
+
+37
+
+9. REFERENCES
+Abbe, E. (1873). Beiträge zur theorie des mikroskops und der mikroskopischen
+wahrnehmung. Archiv Für Mikroskopische Anatomie, 9(1), 413-468.
+doi:10.1007/BF02956173
+Bhattacharya, R., Gonzalez, A. M., DeBiase, P. J., Trejo, H. E., Goldman, R. D.,
+Flitney, F. W., & Jones, J. C. R. (2009). Recruitment of vimentin to the cell surface
+by β3 integrin and plectin mediates adhesion strength. Journal of Cell Science,
+122(9), 1390-1400. doi:10.1242/jcs.043042
+Burgstaller, G., Gregor, M., Winter, L., & Wiche, G. (2010). Keeping the vimentin
+network under control: Cell–Matrix adhesion–associated plectin 1f affects cell
+shape and polarity of fibroblasts. MBoC, 21(19), 3362-3375. doi:10.1091/mbc.e1002-0094
+Calle, Y., Burns, S., Thrasher, A. J., & Jones, G. E. (2006). The leukocyte podosome.
+European Journal of Cell Biology, 85(3), 151-157.
+doi:https://doi.org/10.1016/j.ejcb.2005.09.003
+Cheng, F., & Eriksson, J. E. (2017). Intermediate filaments and the regulation of cell
+motility during regeneration and wound healing. Cold Spring Harbor Perspectives
+in Biology, 9(9), a022046. doi: 10.1101/cshperspect.a022046.
+doi:10.1101/cshperspect.a022046 [doi]
+Chernoivanenko, I. S., Minin, A. A., & Minin, A. A. (2013). Role of vimentin in cell
+migration. Russian Journal of Developmental Biology, 44(3), 144-157.
+doi:10.1134/S1062360413030016
+
+38
+
+Chmyrov, A., Keller, J., Grotjohann, T., Ratz, M., d'Este, E., Jakobs, S., . . . Hell, S. W.
+(2013). Nanoscopy with more than 100,000 'doughnuts'. Nature Methods, 10, 737.
+Retrieved from https://doi.org/10.1038/nmeth.2556
+Chung, B., Rotty, J. D., & Coulombe, P. A. (2013). Networking galore: Intermediate
+filaments and cell migration. Current Opinion in Cell Biology, 25(5), 600-612.
+doi:https://doi.org/10.1016/j.ceb.2013.06.008
+D. Laksameethanasan, S. S. Brandt, & P. Engelhardt. (2006). A three-dimensional
+bayesian reconstruction method with the point spread function for micro-rotation
+sequences in wide-field microscopy. Paper presented at the - 3rd IEEE
+International Symposium on Biomedical Imaging: Nano to Macro, 2006. 12761279. doi:10.1109/ISBI.2006.1625158
+Deguchi, T., Koho, S. V., Tuomas Näreoja, Juha Peltonen, & Pekka Hänninen. (2015).
+Tomographic STED microscopy to study bone resorption. Paper presented at the ,
+9330 doi:10.1117/12.2079157 Retrieved from https://doi.org/10.1117/12.2079157
+Deguchi, T., Koho, S., Näreoja, T., & Hänninen, P. (2014). Axial super-resolution by
+mirror-reflected stimulated emission depletion microscopy. Optical Review, 21(3),
+389-394. doi:10.1007/s10043-014-0060-7
+Dyba, M., & Hell, S. W. (2002). Focal spots of size $\ensuremath{\lambda}/23$ open
+up far-field florescence microscopy at 33 nm axial resolution. Physical Review
+Letters, 88(16), 163901. doi:10.1103/PhysRevLett.88.163901
+Gregor, M., Osmanagic-Myers, S., Burgstaller, G., Wolfram, M., Fischer, I., Walko, G.,
+. . . Wiche, G. (2014). Mechanosensing through focal adhesion-anchored
+
+39
+
+intermediate filaments. The FASEB Journal, 28(2), 715-729.
+doi:https://doi.org/10.1096/fj.13-231829
+Harke, B., Ullal, C. K., Keller, J., & Hell, S. W. (2008). Three-dimensional nanoscopy
+of colloidal crystals. Nano Letters, 8(5), 1309-1313. doi:10.1021/nl073164n
+Heintzmann, R., & Cremer, C. (2002). Axial tomographic confocal fluorescence
+microscopy. Journal of Microscopy, 206(1), 7-23.
+doi:https://doi.org/10.1046/j.1365-2818.2002.01000.x
+Heintzmann, R., Kreth, G., & Cremer, C. (2000). Reconstruction of axial tomographic
+high resolution data from confocal fluorescence microscopy: A method for
+improving 3D FISH images. Analytical Cellular Pathology : The Journal of the
+European Society for Analytical Cellular Pathology, 20(1), 7-15. doi:459351 [pii]
+Helfand, B. T., Mendez, M. G., Murthy, S. N. P., Shumaker, D. K., Grin, B.,
+Mahammad, S., . . . Goldman, R. D. (2011). Vimentin organization modulates the
+formation of lamellipodia. MBoC, 22(8), 1274-1289. doi:10.1091/mbc.e10-080699
+Hell, S. W. (2003). Toward fluorescence nanoscopy. Nature Biotechnology, 21(11),
+1347-1355. doi:nbt895 [pii]
+Hell, S. W. (2003). Toward fluorescence nanoscopy. Nature Biotechnology, 21(11),
+1347-1355. doi:10.1038/nbt895
+Hell, S. W. (2004). Strategy for far-field optical imaging and writing without diffraction
+limit. Physics Letters A, 326(1), 140-145.
+doi:https://doi.org/10.1016/j.physleta.2004.03.082
+
+40
+
+Ivaska, J., Pallari, H. M., Nevo, J., & Eriksson, J. E. (2007). Novel functions of
+vimentin in cell adhesion, migration, and signaling. Experimental Cell Research,
+313(10), 2050-2062. doi:S0014-4827(07)00145-0 [pii]
+Ivaska, J. (2011). Vimentin. Null, 2(1), 51-53. doi:10.4161/sgtp.2.1.15114
+Katsumoto, T., Mitsushima, A., & Kurimura, T. (1990). The role of the vimentin
+intermediate filaments in rat 3Y1 cells elucidated by immunoelectron microscopy
+and computer-graphic reconstruction. Biology of the Cell, 68(2), 139-146.
+doi:https://doi.org/10.1016/0248-4900(90)90299-I
+Kidd, M. E., Shumaker, D. K., & Ridge, K. M. (2014). The role of vimentin
+intermediate filaments in the progression of lung cancer. American Journal of
+Respiratory Cell and Molecular Biology, 50(1), 1-6. doi:10.1165/rcmb.20130314TR [doi]
+Klar, T. A., Jakobs, S., Dyba, M., Egner, A., & Hell, S. W. (2000a). Fluorescence
+microscopy with diffraction resolution barrier broken by stimulated emission.
+Proceedings of the National Academy of Sciences, 97(15), 8206-8210.
+doi:10.1073/pnas.97.15.8206
+Klar, T. A., Jakobs, S., Dyba, M., Egner, A., & Hell, S. W. (2000b). Fluorescence
+microscopy with diffraction resolution barrier broken by stimulated emission.
+Proceedings of the National Academy of Sciences, 97(15), 8206-8210.
+doi:10.1073/pnas.97.15.8206
+KOHO, S., DEGUCHI, T., & HÄNNINEN, P. E. (2015). A software tool for
+tomographic axial superresolution in STED microscopy. Journal of Microscopy,
+260(2), 208-218. doi:10.1111/jmi.12287
+
+41
+
+Koho, S. V., Slenders, E., Tortarolo, G., Castello, M., Buttafava, M., Villa, F., . . .
+Vicidomini, G. (2020). Two-photon image-scanning microscopy with SPAD array
+and blind image reconstruction. Biomedical Optics Express, 11(6), 2905-2924.
+doi:10.1364/BOE.374398
+Koho, S., Tortarolo, G., Castello, M., Deguchi, T., Diaspro, A., & Vicidomini, G.
+(2019). Fourier ring correlation simplifies image restoration in fluorescence
+microscopy. Nature Communications, 10(1), 3103. doi:10.1038/s41467-01911024-z
+Krüger, J., Keller-Findeisen, J., Geisler, C., & Egner, A. (2020). Tomographic STED
+microscopy. Biomedical Optics Express, 11(6), 3139-3163.
+doi:10.1364/BOE.391787
+Lizundia, R., Sengmanivong, L., Guergnon, J., Müller, T., Schnelle, T., Langsley, G., &
+Shorte, S. L. (2005). Use of micro-rotation imaging to study JNK-mediated cell
+survival in theileria parva-infected B-lymphocytes. Parasitology, 130(Pt 6), 629635. doi:10.1017/s0031182004007097 [doi]
+Mark, A. E., Davis, M. A., Starosta, M. S., & Dunn, A. K. (2015). Computational
+modeling of STED microscopy through multiple biological cells under one- and
+two-photon excitation. Paper presented at the , 9330 doi:10.1117/12.2078345
+Retrieved from https://doi.org/10.1117/12.2078345
+Micheva, K. D., & Smith, S. J. (2007). Array tomography: A new tool for imaging the
+molecular architecture and ultrastructure of neural circuits. Neuron, 55(1), 25-36.
+doi:S0896-6273(07)00441-2 [pii]
+
+42
+
+Preibisch, S., Saalfeld, S., Schindelin, J., & Tomancak, P. (2010). Software for beadbased registration of selective plane illumination microscopy data. Nature Methods,
+7(6), 418-419. doi:10.1038/nmeth0610-418
+Remmele, S., Oehm, B., Staier, F., Eipel, H., Cremer, C., & Jürgen Hesser. (2011).
+Reconstruction of high-resolution fluorescence microscopy images based on axial
+tomography. Paper presented at the , 7962 doi:10.1117/12.878260 Retrieved from
+https://doi.org/10.1117/12.878260
+Sami. (2020). sakoho81/miplib: 2PE-ISM paper [computer software]. Zenodo:
+Satelli, A., & Li, S. (2011). Vimentin in cancer and its potential as a molecular target
+for cancer therapy. Cellular and Molecular Life Sciences, 68(18), 3033-3046.
+doi:10.1007/s00018-011-0735-1
+Schmid, B., & Huisken, J. (2015). Real-time multi-view deconvolution. Bioinformatics
+(Oxford, England), 31(20), 3398-3400. doi:10.1093/bioinformatics/btv387 [doi]
+Schmidt, R., Wurm, C. A., Jakobs, S., Engelhardt, J., Egner, A., & Hell, S. W. (2008).
+Spherical nanosized focal spot unravels the interior of cells. Nature Methods, 5(6),
+539-544. doi:10.1038/nmeth.1214
+Shaw, P. J., Agard, D. A., Hiraoka, Y., & Sedat, J. W. (1989). Tilted view
+reconstruction in optical microscopy. three-dimensional reconstruction of
+drosophila melanogaster embryo nuclei. Biophysical Journal, 55(1), 101-110.
+doi:10.1016/S0006-3495(89)82783-3
+Shtengel, G., Galbraith, J. A., Galbraith, C. G., Lippincott-Schwartz, J., Gillette, J. M.,
+Manley, S., . . . Hess, H. F. (2009a). Interferometric fluorescent super-resolution
+
+43
+
+microscopy resolves 3D cellular ultrastructure. Proceedings of the National
+Academy of Sciences, 106(9), 3125-3130. doi:10.1073/pnas.0813131106
+Shtengel, G., Galbraith, J. A., Galbraith, C. G., Lippincott-Schwartz, J., Gillette, J. M.,
+Manley, S., . . . Hess, H. F. (2009b). Interferometric fluorescent super-resolution
+microscopy resolves 3D cellular ultrastructure. Proceedings of the National
+Academy of Sciences, 106(9), 3125-3130. doi:10.1073/pnas.0813131106
+Skaer, R. J., & Whytock, S. (1975). Interpretation of the three-dimensional structure of
+living nuclei by specimen tilt. Journal of Cell Science, 19(1), 1-10. Retrieved from
+http://jcs.biologists.org/content/19/1/1.abstract
+Swoger, J., Verveer, P., Greger, K., Huisken, J., & Stelzer, E. H. (2007). Multi-view
+image fusion improves resolution in three-dimensional microscopy. Optics
+Express, 15(13), 8029-8042. doi:138504 [pii]
+Tang, J., Akerboom, J., Vaziri, A., Looger, L. L., & Shank, C. V. (2010). Near-isotropic
+3D optical nanoscopy with photon-limited chromophores. Proceedings of the
+National Academy of Sciences, 107(22), 10068-10073.
+doi:10.1073/pnas.1004899107
+Willig, K. I., Keller, J., Bossi, M., & Hell, S. W. (2006). STED microscopy resolves
+nanoparticle assemblies. New Journal of Physics, 8(6), 106. doi:10.1088/13672630/8/6/106
+
+44
+
+

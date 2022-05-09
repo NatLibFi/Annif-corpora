@@ -1,0 +1,2465 @@
+Modular calculation and optimization toolkit for power plant
+applications
+Matias Nyman
+
+Master’s Thesis in Process and Systems Engineering
+Supervisor: Frank Pettersson
+Faculty of Science and Engineering
+Åbo Akademi University
+31-Aug-2021
+
+Abstract
+Automation is an ever-increasing phenomenon in today’s world, almost exponentially
+so. If a task is expected to be repeated in a predictable and quantifiable way, it will at
+some point be subject to automation. Naturally, engineering is not exempt from this
+phenomenon, as a part of calculation and design work involves data collection and
+munging, trivial descriptive and explanatory tasks and so forth. This type of work
+generally fits the description of tasks subject to automation. This thesis work for Citec
+Oy Ab aims to reduce repetitive tasks associated with process and power plant
+engineering, while allowing for calculation and optimization of different power plant
+processes yielding higher overall efficiency, thereby reducing costs and emissions.
+This will be accomplished by providing a dependable well-documented calculation
+toolkit for the process engineering team at Citec. The toolkit will be constructed by
+introducing and further developing a comprehensive Python library named pcalcs. The
+library consists of methods for calculating a substantial number of common process
+engineering challenges and creating calculation reports automatically. The goal is to
+make a well-documented and robust calculation library with flexible interfaces. The
+missing functionality that is a core focal point of this thesis is the development of the
+hydraulic network solver capabilities needed to calculate the hydraulic steady state
+condition of large piping networks.
+Powerplant design can be conducted in a discrete modular fashion where systems
+functionally unrelated to each other can be designed separately. The calculation
+modules will be created in a similar modular fashion.
+
+1
+
+Acknowledgements
+Considerable gratitude is directed towards William Laurén for countless hours of help
+and guidance with programming in Python, as well as being the key driving force and
+enabling factor behind this thesis. I would also like to thank Tom Thorn and Frank
+Pettersson for process engineering guidance and administrative help. And finally, a
+big thanks’ to the Citec process engineering team for comments and process
+engineering expertise.
+
+2
+
+1 CONTENTS
+
+Abstract .................................................................................................................................... 1
+Acknowledgements .................................................................................................................. 2
+Symbols and abbreviations ...................................................................................................... 5
+2
+
+Introduction ...................................................................................................................... 7
+
+3
+
+Fundamental theory.......................................................................................................... 9
+
+4
+
+5
+
+3.1
+
+Power plant structure................................................................................................ 9
+
+3.2
+
+Pressure loss ............................................................................................................. 9
+
+3.3
+
+Determining fluid properties .................................................................................. 11
+
+3.4
+
+Prime movers ......................................................................................................... 14
+
+3.4.1
+
+Positive displacement pumps ......................................................................... 14
+
+3.4.2
+
+Centrifugal pumps .......................................................................................... 16
+
+Hydraulic network solver development ......................................................................... 19
+4.1
+
+Hardy Cross Method .............................................................................................. 22
+
+4.2
+
+Vertex-Loop Method.............................................................................................. 23
+
+4.3
+
+Global Gradient Algorithm .................................................................................... 26
+
+4.4
+
+Challenges in network solver creation ................................................................... 28
+
+4.5
+
+EPANET ................................................................................................................ 29
+
+4.5.1
+
+Extended period analysis................................................................................ 30
+
+4.5.2
+
+Hydraulic network logic control .................................................................... 31
+
+4.6
+
+Accounting for compressibility .............................................................................. 32
+
+4.7
+
+Network temperature distribution .......................................................................... 33
+
+Calculation library.......................................................................................................... 36
+5.1
+
+Physical quantity control ........................................................................................ 36
+
+5.2
+
+Python source code documentation ........................................................................ 36
+
+5.3
+
+Library structure ..................................................................................................... 37
+
+3
+
+5.4
+
+Graphical user interface ......................................................................................... 37
+
+5.5
+
+Testing and version control .................................................................................... 39
+
+6
+
+Automatic calculation report creation ............................................................................ 41
+6.1
+
+System specific report creation and structuring ..................................................... 41
+
+6.2
+
+Master project report creation ................................................................................ 47
+
+7
+
+Results ............................................................................................................................ 50
+7.1
+
+Fuel gas distribution ............................................................................................... 50
+
+7.1.1
+7.2
+
+Fuel gas distribution ....................................................................................... 52
+Lube oil system ...................................................................................................... 56
+
+7.2.1
+
+PRV operational pressure setting ................................................................... 60
+
+7.3
+
+Fuel oil distribution ................................................................................................ 69
+
+7.4
+
+Cooling water system ............................................................................................. 73
+
+7.4.1
+
+Cooling water system header sizing ............................................................... 76
+
+7.4.2
+
+Recirculation temperature simulation ............................................................ 78
+
+7.5
+
+Drainage systems ................................................................................................... 81
+
+7.6
+
+Instrument air system ............................................................................................. 82
+
+8
+
+Conclusion and future development............................................................................... 85
+
+9
+
+Svensk sammanfattning ................................................................................................. 86
+
+10
+
+References .................................................................................................................. 90
+
+4
+
+Symbols and abbreviations
+𝑄̇
+
+Volume flow
+
+𝑚̇
+
+Mass flow
+
+𝑝
+
+Pressure
+
+𝜌
+
+Density
+
+H
+
+Head
+
+∆𝑝
+
+Change in pressure
+
+P
+
+Power
+
+𝜂
+
+Efficiency
+
+ω
+
+Rotational frequency
+
+𝑐𝑝
+
+Specific heat capacity
+
+T
+
+Temperature
+
+𝑁𝑃𝑆𝐻𝑎
+
+Available net pressure suction head
+
+𝑁𝑃𝑆𝐻𝑟
+
+Required net pressure suction head
+
+𝑓𝐷
+
+Darcy friction factor
+
+L
+
+Length
+
+𝐷𝑖
+
+Inner pipe diameter
+
+𝑣
+
+Flow velocity
+
+𝐾
+
+Hydraulic resistance coefficient
+
+𝑉𝐿𝑀
+
+Vertex loop method
+
+𝐻𝐶𝑀
+
+Hardy cross method
+
+5
+
+𝐺𝐺𝐴
+
+Global gradient algorithm
+
+PRV
+
+Pressure regulating valve
+
+PSV
+
+Pressure sustaining valve
+
+PBV
+
+Pressure breaker valve
+
+FCV
+
+Flow control valve
+
+TCV
+
+Throttle control valve
+
+GPV
+
+General purpose valve
+
+PDA
+
+Pressure driven analysis
+
+DDA
+
+Demand driven analysis
+
+6
+
+2 Introduction
+The Python programming language was used as the primary platform for developing
+a tool capable of creating modularized calculation reports detailing plant engineering
+calculations. The Python programming language together with the scientific
+computing open-source community is well suited for this task. The extensive and welldocumented scientific and engineering libraries that are maintained by developers
+from both the professional industry and academia, provide a capable foundation used
+for this thesis. One key calculation capability requirement was the ability to solve the
+steady state of complex hydraulic networks. These networks are almost exclusively
+solved computationally due to the iterative or probabilistic nature of the algorithms
+developed for solving the hydraulic states of the circuit. [1]
+In this thesis work, an extended period analysis solver for hydraulic networks is
+implemented and further developed to suit the specific needs of Citec. The hydraulic
+network solver developed uses a modification and development of the EPANET 2.2
+solver, developed by the United States Environmental Protection Agency and open
+sourced under a MIT license. [2]
+In order to achieve accurate results in any hydraulic calculation, the fluid properties
+are of considerable importance. In this toolkit, fluid property calculation is automated
+with the Python interface to the CoolProp library and used as input for the hydraulic
+network calculations. For fluids that are not well defined or missing from the CoolProp
+library, the applicable industry standards are used. The common input parameters to
+define the fluid properties and state are temperature and pressure, but any of the
+available CoolProp inputs can be used.
+All calculations are performed and visualized in Jupyter Notebooks, while the code
+functionality is defined in modules (Python files), from which class and function
+definitions can be imported. This allows faster development of new calculation
+modules.
+The notebooks are first converted to LaTeX code and then to PDFs. The created
+calculation report modules are normally segmented into four main sections: theory,
+system overview, detailed results and conclusion. The theory section definitions
+
+7
+
+include but are not limited to: fluid properties, assumptions, pressure loss formulas and
+friction factor formulas depending on flow type. In the system overview section, all
+network data such as pipe length, size, roughness and minor losses are detailed for all
+pipes in the network, while the connections between vertices are detailed in tabular
+formats and block diagrams. This section can also include pump curves, tank volumes,
+control philosophies or other relevant input data. The detailed results section generates
+result data that is presented in tabular formats or in suitable visualizations such as line
+graphs, scatter graphs, heat maps or distribution graphs. In the conclusion section, the
+user can draw project specific conclusions based on the results obtained in the previous
+section. If applicable, some of the conclusions can be automatically generated from
+analysing the result data from the detailed results section.
+Furthermore, the reports are constructed to allow for editing of input variables, such
+as pipe lengths, sizes, inlet conditions to the networks and more. This allows for swiftly
+creating calculation reports in different design stages with updated input data.
+
+8
+
+3 Fundamental theory
+In this chapter, the most central underlying theory needed for the implementation of
+the calculation toolkit is presented. This mainly consists of thermodynamic, hydraulic
+and pneumatic theory. The theory presented in this section will be limited to common
+process technologies in the context of power plant engineering.
+
+3.1 Power plant structure
+Power plants have many different types of process structures, dependent on the core
+electricity-generating mechanism. Common process systems are for example process
+water cooling or heating networks, fuel distribution networks, instrument air networks,
+steam distribution systems and exhaust gas systems. These systems are set up to serve
+the needs of the core electricity-generating mechanism. Generally, the limitations and
+points of interest are among others delivery pressures to consumer vertices, pump
+sizing, actual flow rate, pipe sizing, flow velocities, pressure losses and piping network
+temperature distributions. These calculations need to be conducted for different design
+conditions and varying operating conditions to ensure the power plant is functional in
+the entire operating range.
+Steam distribution and cooling water systems are common in most power plants due
+to the utilization of the Rankine cycle for electricity generation. Instrument air systems
+are commonly used for electro-pneumatic valve actuation and utility purposes. In the
+case of some combustion power plants, fuel gas and fuel oil distribution systems are
+needed.
+
+3.2 Pressure loss
+Fluid flow in enclosed or open-channel pipes is always accompanied by a certain
+reduction in the static pressure of the fluid in the direction of the flow. This reduction
+is referred to as pressure loss and is caused by internal friction in the fluid due to
+viscous forces and turbulence also friction between the fluid and the wall.
+In its most fundamental form, the relationship between the pressure loss and flow rate
+can be described by equation 3.2.1.
+
+9
+
+∆p = k1 + k 2 𝑄̇ 2
+
+(3.2.1)
+
+where 𝑘1 is pressure loss independent of flow rate, such as height difference at pipe
+inlet and outlet. The 𝑘2 is the coefficient relating the volume flow to the pressure loss.
+This can also be a pressure increase in case the height difference is negative in respect
+to the flow direction. This equation is empirically determined and there are a couple
+of derivations that are used, of these the Darcy-Weisbach equation is most commonly
+used. Other derivations in common use are the Hazen-Williams equation, used
+exclusively for water networks and the Chézy-Manning equation, used for calculating
+pressure loss resulting from turbulent flow in open channels. The 2 last equations are
+commonly referred to as Reynolds independent, as they do not include the Reynolds
+number. [3] [4]
+To calculate hydraulic and pneumatic behaviours in process engineering scenarios, the
+most appropriate derivation is the expanded Darcy-Weisbach equation. This allows for
+minor losses in network elements such as valves, bends and orifices while also
+including pressure differences due to height differences between the pipe inlet and
+outlet.
+𝐿
+
+𝑣2
+
+∆𝑝 = 𝑔𝜌(ℎ1 −ℎ2 ) + (∑ 𝐾 + 𝑓𝐷 𝐷 ) 2𝑔
+𝑖
+
+(3.2.2)
+
+where 𝐾 is the resistance coefficient for a minor loss element and 𝑓𝐷 is the Darcy
+friction factor. The other formulas mentioned are also implemented through the
+EPANET solver if necessary.
+The friction factor 𝑓𝐷 is calculated based on the flow regime (as determined by the
+Reynolds number limits for internal flow in pipes). For laminar flow (Re < 2000), the
+64
+
+friction factor is calculated with 𝑓𝐷 = Re. For transitional flow (2000 < Re < 4000), a
+cubic interpolation of the Moody chart is used. For turbulent flow (Re > 4000) the
+Swamee and Jain approximation of the Colebrook-White equation is used. This value
+depends on the absolute roughness 𝜀 of the inner pipe wall. [2]
+
+10
+
+3.3
+
+Determining fluid properties
+
+Accurately determining fluid properties is a critical part of achieving accurate pressure
+loss calculations. For power plant applications, the number of different fluids can be
+vast.
+Where possible, the established CoolProp library has been used as a back-end. The
+CoolProp library is an open-source library that defines the thermophysical properties
+of many pure fluids and common mixtures. The core underlying equations in the
+CoolProp library, which determine the thermodynamic properties of fluids are the
+Helmholtz-energy-explicit equations of state, which are used in many similar high
+accuracy fluid software libraries [5]. Specifically, the CoolProp library was used for
+determining the properties of the following fluids:
+▪
+
+Air
+
+▪
+
+Water
+
+▪
+
+Water and Ethylene glycol mixtures at varying relative mass proportions
+
+▪
+
+Water and Propylene glycol mixtures at varying relative mass proportions
+
+▪
+
+Methane
+
+▪
+
+Natural gas from different sources
+
+▪
+
+Exhaust gas
+
+For power-plant applications, some of the required fluid properties are not available in
+the CoolProp library and must be implemented as custom solutions. Such fluids are
+for example: varying grades of fuel oils and lubrication oils. Both lube oils and fuel
+oils are long-chain hydrocarbons, and as such have viscosities that increase
+logarithmically with decreasing fluid temperature. [6]
+Lubrication oils are differentiated by their viscosity at different temperatures and the
+temperature's effect on the oil viscosity. The lube oil grades predominantly used in
+power plant applications due to their low costs and appropriate viscosities are
+monograde oils such as SAE30 and SAE40. The SAE oil classifications define the
+viscosity of the oil. SAE30 is defined according to [7], as having a kinematic viscosity
+between 9.3 cSt and 12.5 cSt at 100°C. Conversely, the SAE40 lube oil viscosity is
+defined according to [7] as having a kinematic viscosity between 12.5 cSt and 16.3 cSt
+at 100°C. For lubrication oils there are currently two separate ways of accurately
+
+11
+
+determining the viscosity in the entire operational temperature interval implemented
+in this toolkit. The first is using interpolated data of measurement values. The second
+is obtaining 2 reference sets of reference points for viscosity and temperature and then
+use the industry-standard formulas provided in [6] to extrapolate the data for any
+arbitrary temperature. The density of lubrication oils is defined by similar
+measurement data interpolation or alternatively according to the ASTM D1250
+standard [8]. Figure 1 shows the calculated viscosity and density of SAE30 and SAE40
+dependent on temperature.
+
+Figure 1: Lube oil viscosities and densities
+
+Fuel oil viscosity calculation provides the additional challenge of having hydraulic
+properties that are variable with their source. As such, project-specific measurement
+data is needed to establish fluid properties with reasonable accuracy. To accurately
+determine the fuel oils properties for the entire temperature range, two reference point
+sets for viscosity and temperature are needed. Standard [6] is also used for fuel oils
+
+12
+
+when extrapolating the data for any arbitrary temperature. In Figure 2 the fuel oil
+properties can be found for an example fuel with a viscosity of 15 cSt at 100°C.
+
+Figure 2: Example fuel oil viscosity and density
+
+The input for any given oil must be the 2 reference point sets needed for calculating
+the viscosity-temperature relationship according to [6]. The fuel oils most commonly
+used have one reference point defined according to the ISO8216 [9] or ASTM D396
+[10] standards. The ISO8216 standard defines the maximum viscosity of a certain fuel
+oil grade at a temperature of 50°C. The ASTM D396 standard gives the interval in
+which a fuel oil viscosity can be at 40°C for lighter fuel oil fractions and at 100°C for
+heavier fuel oil fractions. For any given grade, the upper limit will be used as the
+reference point as this will result in the worst-case viscosity at all temperatures when
+extrapolated with [6].
+
+13
+
+3.4 Prime movers
+In piping networks, prime movers (pumps, fans, compressors and similar machinery)
+are chosen based on a multitude of criteria. The most essential criteria are the network
+fluid properties, as these will impact the efficiency and overall viability of using any
+type of prime mover. The underlying theory describing how these devices function
+and how they impact the hydraulics of the network which they are part of is presented
+in this section.
+For compressible fluids i.e. gases, compressors or fans are usually chosen. The theory
+describing gas compression will not be detailed as it is not essential for this thesis. For
+liquids, the primary selection criteria are the kinematic viscosity and the density of the
+fluid. For low viscosity fluids, centrifugal pumps are the most common as the available
+pressure increase is not impacted by the viscosity of the fluid. The popularity of
+centrifugal pumps and well-understood affinity laws also contribute to their widespread use. For higher viscosity fluids, the most common choice of prime mover is
+some type of positive displacement pump, normally a screw pump or diaphragm pump.
+[11]
+Implementing positive displacement pumps into the environment of the hydraulic
+network solver presented some challenges, as they have a widely varying modeldependent behaviour and were not included in the solver back-end discussed in section
+4.5.
+3.4.1 Positive displacement pumps
+Positive displacement pumps work on the principle of trapping a fixed amount of fluid
+in the suction side and forcing the fluid to flow out to the discharge side of the pump.
+This mechanism results in ideal positive displacement pumps behaving as constant
+flow machines, i.e. providing a constant flow independent of pressure increase, at a
+constant rotational speed. In practice, the flow provided by the pump will decrease
+marginally when the pump is operating at higher pressure increases, due to internal
+leakage. Figure 3 shows an example construction of a single-rotor screw pump.
+
+14
+
+Figure 3: Screw pump adapted from [12]
+
+A crucial safety device for the operation of positive displacement pumps is the safety
+bypass valve which connects the pump discharge side to the suction side. The safety
+bypass valve is of type pressure regulating valve (PRV). This valve opens in case the
+pressure at the inlet side of the valve exceeds a set value. The flow provided by the
+pump will then normally be recirculated to the suction side or discharged to the
+atmosphere in case recirculation is undesirable. The pressure regulating valves used
+are commonly classified as pressure compensated and non-pressure compensated. The
+former type opens only in case the differential pressure across the inlet and outlet side
+of the valve exceeds the set value, the second type opens based on the valve inlet
+pressure regardless of the outlet side pressure (the valve inlet is connected to the
+discharge side of the pump). This distinction is important when considering simulation
+of positive displacement pumps in pressurized systems. [12] [13] [14]
+Simulating positive displacement pumps is often more challenging than centrifugal
+pumps since the safety valve opening and closing action is associated with a
+phenomenon known as pressure accumulation. This will cause the pressure to increase
+above the setpoint of the PRV after the valve has opened due to hydraulic resistance
+in the valve and the valve outlet piping. The hydraulic resistance in the valve will also
+vary depending on fluid properties and the valve position mechanism in sometimes
+unpredictable ways. The exact behaviour of the pressure accumulation is usually not
+provided by pump manufacturers in case that the pump has an internal PRV. Normally
+only a maximum pressure accumulation value is provided. If the pressure regulating
+valve is externally mounted, data from the valve manufacturers needs to be used. [14]
+
+15
+
+To be able to simulate the pressure accumulation of a screw pump, a screw pump
+object which has a customizable pressure accumulation curve was implemented to suit
+the needs of the specific calculation performed. The pressure accumulation behaviour
+is shown for an ideal screw pump in Figure 4 and is system and pump dependent.
+
+Figure 4: Example of pressure accumulation
+
+In order to calculate the pressure accumulation behaviour for all cases, a pump
+abstraction was programmatically implemented where the polynomial relationship
+between reduction in flow and pressure accumulation could be modified to suit the
+pump used. If no data is used and the recirculation piping has reasonably low hydraulic
+resistance, zero pressure accumulation will be the default assumption.
+3.4.2 Centrifugal pumps
+Centrifugal pumps operate as prime movers by converting rotational kinetic energy to
+hydrodynamic energy. The theory governing the modelling of these devices is detailed
+in extent in [11]. The structure of a centrifugal pump is shown in Figure 5.
+
+16
+
+Figure 5: Centrifugal pump [15]
+
+The centrifugal pump curve is calculated in accordance with equation 3.4.1, because
+the EPANET solver (detailed in section 4.5) is used as back-end.
+∆𝑝𝑖𝑗 = −𝜔2 (𝑝𝑚𝑎𝑥 − 𝑟(𝑄𝑖𝑗 /𝜔)𝑛 )
+
+(3.4.1)
+
+where 𝑝𝑚𝑎𝑥 is the shutoff pressure of the pump, while 𝑟 and 𝑛 are pump coefficients.
+𝑄𝑖𝑗 and ∆𝑝𝑖𝑗 are the flow rate and pressure drop between inlet i and outlet j. In case
+equation 3.4.1 has inadequate accuracy when transforming pump characteristics at
+different rotational frequencies, an external implementation of the standard affinity
+laws is also included in this toolkit.
+This type of formulation is needed to describe pump behaviour at different rotational
+speeds as there currently is no way of implementing the affinity laws detailed in [11]
+into the hydraulic network solving algorithms, without significantly affecting the
+solver algorithm convergence times. Equation 3.4.1 will always have a negative value
+as in the context of a network, as pumps are defined as edges with a negative pressure
+loss to flow rate relationship. Negative pressure loss is exactly analogous to the
+pressure increase shown in Figure 6. [13] [11] [2]
+
+17
+
+Figure 6: Centrifugal pump comparison
+
+In Figure 6, pump data from a real pump is compared to the results when fitting the
+data points to equation 3.4.1. The equation can be observed fitting the example pump
+data in Figure 6 to a satisfactory accuracy.
+
+18
+
+4 Hydraulic network solver development
+Piping networks are multiple pipes connected in series and parallel. Water distribution
+networks are common examples of piping networks. An example of a water
+distribution network is shown in Figure 7.
+
+Figure 7: Water distribution network
+
+These networks present more challenges than linear or simple parallel systems where
+calculating the flow distribution is less challenging. Normally piping networks also
+consist of pipes, valves, pumps, tanks, fittings, flanges, nozzles etc., which all provide
+their own sets of challenges in modelling properly in the context of the hydraulic
+network. In order to calculate the hydraulic steady state of the system, it is abstracted
+as a discrete graph. In graph theory, a discrete graph is defined as a set of objects
+having some form of relation to each other. Normally, a discrete graph is thought of
+as a set of vertices connected by edges. More specifically, the piping network needs to
+be defined as a connected discrete graph, meaning that sub-graphs of exactly one
+vertex are not allowed. [16]
+
+19
+
+The example network shown in Figure 8 is used to more easily demonstrate
+these definitions.
+
+Figure 8: Example network
+
+The most common categories used for distinguishing graphs are: directed graphs or
+undirected graphs and simple graphs or multigraphs. Directed graphs have vertices
+that contain an intrinsic direction to the connection between the vertices of the graph,
+while undirected graphs represent undirected connections between vertices. Simple
+graphs are commonly defined as graphs that only allow vertices to be connected by
+one edge. Conversely, multigraphs can have many vertices connecting vertices to each
+other, the definition normally also allows for edges connecting a vertex to itself. [16]
+For most methods of solving piping networks, the network is abstracted as a directed
+multigraph, i.e. vertices can be connected by multiple edges that have an associated
+direction. Pipes, valves and pumps are often abstracted as directed edges while
+junctions, tanks and reservoirs are abstracted as vertices. [2]
+One other central definition for most piping network solving methods are loops, which
+are a special case of paths. In graph theory, paths are defined as a sequence of edges
+and vertices joining two vertices. Loops are special cases of paths where the first vertex
+in the path is also the last vertex. It is important to note, even though the piping network
+
+20
+
+is abstracted as a directed multigraph. For the purpose of network solver creation, the
+loops must be undirected. [17]
+For the network in Figure 8, there are three undirected loops that can be identified as
+the following sets of vertices and edges:
+𝐿1 : {N1, N2, N4, N6, N5, N3}, {E1, E3, E7, E6, E5, E2}
+𝐿2 : {N1, N2, N4, N3}, {E1, E3, E4, E2}
+𝐿3 : {N3, N4, N6, N5}, {E4, E7, E6, E5}
+Most deterministic models of solving piping systems are developed formulations of
+Kirchhoff's 1st &2nd law. The added complexity arises from the pressure loss not being
+linear with respect to the flow rate, as the potential difference is to the current in the
+analogous simple electrical circuits. In most solvers, this is overcome by applying
+some derivation of the Newton-Rhapson method to each edge, which entails
+computing the pressure loss in the edge as well as the derivative of the pressure loss.
+This approach is applied in parallel to each edge in each loop to achieve iterative
+convergence to a solved state where pressure losses and flow rates are approximately
+constant over each iteration.
+What differentiates each method and their popularity in hydraulic solvers is how
+quickly the newton iterations are performed and the needed pre-processing to achieve
+executability of the algorithm and post-processing of network characteristics. In the
+following sections, the advantages and disadvantages of three methods are compared.
+These methods are: the Hardy Cross Method (HCM), the Vertex-Loop Method (VLM)
+and the Global Gradient Algorithm (GGA). The goal of this comparison is to obtain
+an overview of the evolution of these algorithms and why a specific algorithm is
+chosen for an application. Each algorithm is set up for the network in Figure 8.
+The VLM is an improved formulation of the HCM, where some of the pre- processing
+and post-processing is circumvented algebraically. However, the algorithms are
+separated by a classification where the VLM and the GGA are referred to as
+Simultaneous while the HCM is referred to as Local. [18] This is mainly due to the use
+of matrix implementations of the vertex and loop equations, causing each iteration to
+adjust the flow in all edges simultaneously. The main difference is the use of incidence
+21
+
+matrices and other modified topology matrices to define and solve the network. The
+classifications used are shown in Figure 9.
+
+Figure 9: Network solver algorithm classifications [18]
+
+4.1 Hardy Cross Method
+The HCM is the first iterative method developed for solving the hydraulic state of
+piping networks and is an adaptation of the moment distribution method also
+developed by Hardy Cross. [19] The method is an application of two fundamental
+principles, the first of which is the conservation of mass. For the vertices in the network,
+this is analogous to Kirchhoff's 1st law for electric circuits: the sum of all flows entering
+the vertex must be equal to the sum of all flows exiting the vertex. The second
+fundamental principle is the conservation of energy. For a loop in the piping network,
+this requires the sum of all pressure losses (accounting for the edge direction) around
+the loop to be equal to zero. [19] This, in turn, is analogous to Kirchhoff's 2nd law for
+electric circuits. The most outstanding advantages of the HCM are the simple
+mathematics and the clearly outlined solution procedure. The main disadvantages are
+the below detailed substantial pre-processing and post-processing related to
+algorithmically automating all the solution procedure steps listed below for any
+arbitrary hydraulic circuit.
+The following variable definitions are used for the HCM: 𝑄̇ is the flow rate of an edge,
+𝑛 is the flow exponent (the flow rate exponent in the pressure loss formula) and 𝑟 is
+the flow relation (all terms in the pressure loss formula that are not 𝑄̇ or 𝑛).
+Method procedure:
+
+22
+
+1. Determine initial flow state guess. This initial guess must satisfy the
+conservation of mass constraint such that the sum of all flows entering any
+vertex must be equal to the sum of all flows exiting the vertex.
+2. Find all closed loops in the system.
+3. Determine the pressure losses in pipes flowing in the clockwise and counterclockwise direction, accounting for the defined loop direction while using the
+chosen volume flow to pressure loss correlation.
+4. Calculate sum of pressure losses for all loops ∑ 𝑟𝑄 𝑛̇ by subtracting the
+pressure losses in the counter clockwise direction from the pressure losses in
+the clockwise direction.
+5. Find ∑ n𝑟𝑄̇ (𝑛−1) for each loop irrespective to the direction, this term is
+identical to the absolute value of the sum of the derivative of the pressure losses
+in the pipes in each loop.
+∑ 𝑟𝑄 𝑛̇
+
+6. The change in the flow in each pipe of the loop is equal to ∑ n𝑟𝑄̇(𝑛−1) .
+7. If the flow change term is negative it applies to the pipes in the clockwise
+direction, if the term is positive it applies to the pipes in the counter clockwise
+direction.
+8. Repeat using updated flows, starting from step 3, until the flow change is
+within the specified tolerance.
+The HCM does not require any specific relation between pressure loss and flow,
+although the Darcy-Weisbach equation is commonly used. The HCM was the first of
+its kind and is therefore mentioned here. However, many improvements to this method
+have been developed, and are therefore preferred for implementing in a hydraulic
+network solver.
+
+4.2 Vertex-Loop Method
+The first step in the VLM solution procedure is constructing vertex equations in
+accordance with Kirchhoff’s 1st law. These state that the sum of flows entering the
+vertex must be equal to the sum of flows exiting the vertex. For piping networks, some
+vertices are input vertices where the flow is entering the network and others are output
+vertices where the flow is exiting the network. Assuming the network does not have
+storage ability, the input must also be equal to the output. The vertex equations can be
+
+23
+
+represented in matrix form. The matrix is the equivalent of an incidence matrix for a
+directed graph in graph theory. This matrix will be modified so that one row
+(representing the connections for one vertex) is removed in order to achieve linear
+independency among the vertex equations, in this example vertex N6 is omitted. [20]
+These examples showcase some of the formulations needed to solve the example
+network in Figure 8.
+−1 −1 0
+0
+0
+0
+0
+1
+0 −1 0
+0
+0
+0
+𝑁 = 0
+1
+0 −1 −1 0
+0
+0
+0
+1
+1
+0 −1 0
+[0
+0
+0
+0
+1
+0 −1]
+
+𝑁1
+𝑁2
+𝑁3
+𝑁4
+𝑁5
+
+When starting the calculation procedure, the initial guess of flow rates in all edges
+must satisfy the conservation of mass in every vertex in the network. As the solution
+procedure is iterated, the sum of the pressure loss in all loops approaches zero. This,
+in turn, means that Kirchhoff's 2nd law must be satisfied within the required tolerance
+when the solution is obtained. The 𝐿 matrix defines the edge directions for each loop.
+1
+𝐿 = [
+0
+
+1 −1 −1 0
+0 0
+1 1
+
+0
+0
+𝐿2
+]
+−1 −1 𝐿3
+
+The next step is defining the V matrix. This matrix is a column matrix where the first
+terms are the inflows to the vertices in the loop amount of vertex except for the omitted
+node, in this case node N6.
+−|𝑄̇𝑁1 |
+|𝑄̇𝑁2 |
+𝑉 =
+
+|𝑄̇𝑁3 |
+|𝑄̇𝑁4 |
+|𝑄̇𝑁5 |
+𝐿2
+[ 𝐿3 ]
+
+where 𝑄̇𝑁𝑥 is the inlet or outlet flow rate from the network in that vertex 𝑁𝑥. Sign -1
+denotes inlet of fluid to the network and sign +1 denotes outlet of fluid from the
+network. In case there is no outlet the 𝑄̇𝑁𝑥 term will be zero. 𝐿2 and 𝐿3 are defined
+according to the L matrix with the following equations:
+
+24
+
+𝐿2 = − ∑ ∆𝑝𝑒 ∀𝑒 ∈ 𝑆𝐿2 + ∑ sgn(𝑒)∆𝑝𝑒 |∆𝑝𝑒′ | ∀ 𝑒 ∈ 𝑆𝐿2
+
+(4.2.1)
+
+𝐿3 = − ∑ ∆𝑝𝑒 ∀𝑒 ∈ 𝑆𝐿3 + ∑ sgn(𝑒)∆𝑝𝑒 |∆𝑝𝑒′ | ∀ 𝑒 ∈ 𝑆𝐿3
+
+(4.2.2)
+
+The 𝑆𝐿2 and 𝑆𝐿3 are the sets of edges that belong to that specific loop, while 𝑒 denotes
+an edge and sgn(𝑒) denotes the direction of the edge compared to the loop direction.
+The sgn(𝑒)∆𝑝𝑒 term is the pressure loss in edge e (accounting for direction), while
+∆𝑝𝑒′ is the first order derivative of the pressure loss in edge e. [17]
+The last matrix that needs to be constructed is the NL matrix, this matrix must have
+the same number of rows as the previously defined V matrix, the columns in this matrix
+represent the edges between vertices. This matrix is constructed from the vertex matrix
+and the loop matrix, where the first rows consist of the vertex matrix and the last rows
+are the loop matrix where each term is multiplied by the absolute value of the
+derivative of the pressure loss function at the previously defined flow in that edge. For
+the example network in Figure 8, the NL matrix is defined as:
+−1
+1
+0
+0
+𝑁𝐿 =
+0
+′ |
+1 ∙ |∆𝑝𝑒1
+0
+[
+
+−1
+0
+0
+−1
+1
+0
+0
+1
+0
+0
+′ |
+′ |
+1 ∙ |∆𝑝𝑒2
+−1 ∙ |∆𝑝𝑒3
+0
+0
+
+0
+0
+0
+0
+0
+0
+−1
+−1
+0
+1
+0
+−1
+0
+1
+0
+′ |
+−1 ∙ |∆𝑝𝑒4
+0
+0
+′ |
+′ |
+′ |
+1 ∙ |∆𝑝𝑒4
+1 ∙ |∆𝑝𝑒5
+−1 ∙ |∆𝑝𝑒6
+
+0
+0
+0
+0
+−1
+0
+′ |]
+−1 ∙ |∆𝑝𝑒7
+
+Finally, the new vector of flows for all the edges in the system are calculated according
+to equation 6.2.3.
+𝑄̇𝑛+1 = 𝑁𝐿−1 × 𝑉
+
+(4.2.3)
+
+In case some of the flows in the resulting vector are negative, this means that the flow
+in that edge will be reversed in respect to the previously assumed flow direction. The
+calculated flows in the result vector are used in the next iteration to initiate the solution
+procedure again. This procedure is then repeated until the stopping criteria are met.
+Usually the stopping criterion will be the satisfaction of Kirchhoff's 2nd law at the
+required tolerance. The disadvantages of the Vertex-Loop method include the critical
+pre-processing stage where the correct loops are identified. [21] [20]
+
+25
+
+The number of loops needs to be:
+L = E − V−1
+
+(4.2.6)
+
+where 𝐿 is the number of loops, 𝐸 is the number of edges and 𝑉 is the number of
+vertices.
+However, selecting loops to exclude from the calculation is not trivial. The loop that
+is excluded cannot contain any edges or vertices that are not included in at least one of
+the included loops. I.e. the complete set of all edges and all vertices in the network
+must be possible to construct only from the vertices and loops included in the circuit.
+One additional post processing stage is algorithmically calculating the pressures in
+each node based on the starting node pressure and the calculated pressure drops in each
+node.
+
+4.3 Global Gradient Algorithm
+The GGA is a popular foundation of commercial and open-source hydraulic network
+solving software. The GGA that will be used was developed by Enzio Todini and
+bypasses some of the problems associated with hydraulic network algorithms. [17]
+The hydraulic network solving procedure for the GGA starts with categorizing vertices
+in the network as known-pressure and unknown-pressure vertices. The knownpressure vertices are either input or output flow rates to or from the network.
+Unknown-pressure vertices are arbitrary connections or junctions in the network
+where a solution is of interest. All vertices are connected by edges with initially
+unknown flow rates.
+The vector of nodal inlet/outlet demands 𝑞 (1 by p) is defined by equation 4.3.1 while
+the vector of network pressure losses in each edge ℎ𝐿 is defined by equation 4.3.2.
+Where 𝐴 is the network incidence matrix (𝑛 by 𝑝), and F is the vector of flowrates in
+all edges (1 by p). The variable n is the number of unknown pressure nodes while p is
+the number of edges in the network.
+𝑞 = 𝐴𝐹
+
+(4.3.1)
+
+ℎ𝐿 = 𝑅𝐹 2
+
+(4.3.2)
+
+26
+
+R is the diagonal pipe resistance matrix where each individual element 𝑟𝑖𝑗 is defined
+according to equation 4.3.3.
+0
+𝑟𝑖𝑗 = {
+
+𝛼1,𝑖 |𝐹𝑖 | + 𝛼2,𝑖 |𝐹𝑖 | −
+
+↔𝑖 ≠𝑗
+𝑎𝑖 +𝑏𝑖 |𝐹𝑖 |𝑐𝑖
+|𝐹𝑖 |
+
+↔𝑖=𝑗
+
+(4.3.3)
+
+where 𝛼1,𝑖 is the major pressure loss coefficient, 𝛼2,𝑖 is the minor pressure loss
+coefficient and 𝑎𝑖 , 𝑏𝑖 and 𝑐𝑖 are the pump coefficients.
+The energy equation will take the form:
+𝑅𝐹 + 𝐴𝑇 𝐻 = −𝐵𝐻𝑓
+
+(4.3.4)
+
+where 𝐻𝑓 is the vector of vertex pressures in all k known head vertices (k by 1) and 𝐻
+is the vector of vertex pressures in all n unknown head vertices (n by 1). Lastly, B is
+a topology matrix describing the connections of the k known head vertices to the rest
+of the network.
+Equation 4.3.1 and 4.3.4 can then be combined as in equation 4.3.5 describing the
+entire network.
+[
+
+0
+𝐴𝑇
+
+𝑞
+𝐴 𝐻
+] [ ] = [−𝐵𝐻 ]
+𝑓
+𝑅 𝐹
+
+(4.3.5)
+
+Equation 4.3.5 can be reshaped to solve for the nodal pressure estimations in the next
+iteration in equation 4.3.6 and the edge flowrates in equation 4.3.7
+𝐻 𝑖+1 = −[𝐴𝑀−1 𝑅 −1 𝐴𝑇 ]−1 {𝐴𝑀−1 [𝐹 −1 + 𝑅 −1 𝐵𝐻𝑓 ] + [𝑞 − 𝐴𝐹 𝑖 ]}
+
+(4.3.6)
+
+𝐹 𝑖+1 = [𝐼 − 𝑀−1 ]𝐹 𝑖 − 𝑀−1 𝑅 −1 [𝐴𝑇 𝐻 𝑖+1 + 𝐵𝐻𝑓 ]
+
+(4.3.7)
+
+where I is the identity matrix (p by p) and M is the identity matrix (p by p) where each
+element is the flow exponent for the pressure loss formula used (this number is 2 for
+the Darcy–Weisbach equation). Convergence has been reached when 𝐹 𝑖+1 ≈ 𝐹 𝑖 and
+𝐻 𝑖+1 ≈ 𝐻 𝑖 within the specified tolerance. A full derivation of the GGA is provided in
+[22].
+There are numerous advantages of the GGA. Fast convergence due to the superior
+speed at which the Newton iterations are performed is a desirable property often
+27
+
+mentioned. The most interesting advantage however is that it is not needed to have an
+initial solution which satisfies the mass balance equations for all vertices in the
+network, as opposed to the VLM or the HCM which both require an initial solution
+which satisfies the vertex mass balances. This advantage enables easier
+implementation of extended period analysis solver capabilities. Extended period
+analysis is detailed further in section 4.5. The most notable disadvantage is the
+increased complexity of the mathematical formulations as compared to the HCM and
+VLM. [2] [22]
+
+4.4 Challenges in network solver creation
+The main challenges in creating a circuit solver programmatically arise not from
+implementing the solver algorithm itself, but from the required pre-processing of the
+piping network structure. One of the main challenges in using the network-solving
+algorithms based on the balancing of loops, is the identification of the correct number
+of minimal loops for matrix-based algorithms such as the VLM. For very large
+networks there can be a substantial number of loops that consist of edges and vertices
+that can be composed by other loops. As such, including the loop in the calculation is
+unnecessary and for very large networks it can have a negative impact on solution
+times. For some algorithms, for example, the VLM, the addition of unnecessary loops
+will also turn the matrix into a non-square matrix, and thereby non-invertible. As a
+result, VLM will not be executable or alternatively, diverge as Moore-Penrose inverses
+are not guaranteed to provide convergence. [21] [16] [18]
+The usual approach to minimal loop extraction is some variant of Depth-First Search
+(DFS) or Breadth-First Search (BFS) coupled with a heuristic that stores vertex
+connections and identifies loops. Another challenge is loop initialization, for the
+presented Hardy-Cross method and Vertex-Loop method, the initial flows in the
+network must for all vertices satisfy the conservation of mass constraint. This can
+cause problems as the initialization of flows in edges belonging to loops will be
+initialized many times, and the flows are not guaranteed to satisfy the conservation of
+mass for all dependent loops as the flow in the independent loop is initialized. This
+problem requires robust heuristics for initializing flows that are quite cumbersome to
+develop. [17] [16] [23]
+
+28
+
+4.5 EPANET
+The EPANET solver uses the GGA for solving the hydraulic steady state. However, a
+lot of useful auxiliary formulations are used to add functionality to the solver.
+For closing pipes in the network, the EPANET solver applies a linear pressure loss
+formula where a high hydraulic resistance value is applied to the pipe in question.
+∆𝑝𝑖 = 𝑅ℎ𝑖𝑔ℎ 𝐹𝑖
+
+(4.5.1)
+
+Fully open valves are modelled in the same fashion where a very low linear pressure
+loss formula where a high hydraulic resistance value is applied to the pipe in question.
+∆𝑝𝑖 = 𝑅𝑙𝑜𝑤 𝐹𝑖
+
+(4.5.2)
+
+When a pipe is open, the minor loss caused by the valve will still occur. The default
+values for 𝑅𝑙𝑜𝑤 and 𝑅ℎ𝑖𝑔ℎ are 10−6 and 108 .
+The following types of valves are also implemented in the EPANET solver. Pressure
+reducing valves (PRV), which act to limit the pressure in the downstream vertex of the
+valve to a specified setting 𝑃𝑠𝑒𝑡 . Pressure sustaining valves (PSV) which act to limit
+the pressure in the upstream vertex of the valve to a specified setting 𝑃𝑠𝑒𝑡 . Flow control
+valves (FCV), which limit the flow to the user specified flow setting 𝑄𝑠𝑒𝑡 through the
+valve by splitting the edge and imposing negative and positive nodal demands at the
+outlet and inlet vertices. Throttle control valves (TCV), which have a hydraulic
+resistance coefficient that is specified by the user. Pressure breaker valves (PBV),
+which specify a pressure loss across the valve which should occur regardless of flow.
+Finally, General purpose valves (GPV), which use a piecewise linear curve to relate
+pressure loss to flow rate, these are very useful for defining prime movers which have
+pressure increase to flow rate relations which are not implemented in EPANET, for
+example, positive displacement pumps. A curve can be defined for GPVs with a
+negative pressure loss to flow rate relation, which is exactly analogous to pressure
+increase to flow rate. The slight modifications to the matrices in the GGA that the
+valve implementations entail are detailed in [2].
+One other major advantage is the implementation of pressure-driven analysis as an
+alternative in EPANET 2.2. This type of network analysis entails a consumption flow
+
+29
+
+rate behaviour in the consumer vertices that is dependent on the pressure in the vertex.
+The alternative, demand-driven analysis assumes a flow demand that is independent
+of the pressure in the vertex. This can result in unrealistic network solutions where
+solutions with negative pressures are accepted as valid. When performing a pressuredriven network analysis, the demand for each vertex is calculated according to
+Wagner’s Equation:
+
+𝐷𝑖
+
+, 𝑝𝑖 ≥ 𝑃𝑓
+
+1
+𝑝𝑖 − 𝑃0 𝑒
+
+𝑞𝐷𝑖 = 𝐷𝑖 (
+𝑃
+{
+
+𝑓 −𝑃0
+
+0
+
+)
+
+, 𝑃0 < 𝑝𝑖 < 𝑃𝑓
+
+(4.5.3)
+
+, 𝑝𝑖 ≤ 𝑃0
+
+where 𝑞𝐷𝑖 is the actual flow demand in the node, 𝐷𝑖 is the full nodal demand when the
+pressure in the consumption node is greater than the maximum consumption pressure
+limit 𝑃𝑓 . 𝑃0 is the zero-consumption pressure limit and 𝑝𝑖 is the actual consumption
+node pressure. Finally, 𝑒 is the pressure exponent, which has a default value of 0.5.
+The pressure exponent in equation 4.5.3 models the exact relationship between vertex
+pressure and nodal demand. This is useful for calculating actual consumption
+behaviour for different types of consumers. [2]
+4.5.1 Extended period analysis
+Analyzing the behaviour of a hydraulic network over an extended time period is known
+as Extended Period Analysis (EPA). This is a pseudo-dynamic approximation of
+changes in the hydraulic state of the network. EPA analysis is mainly used to update
+the network state when known pressure vertices such as tanks have changing fluid
+levels due to in/outflow and thereby updating the static pressure in the tank.
+The volume contained in a known head vertex is determined according to
+𝑑𝑉𝑠
+𝑑𝑡
+
+= 𝑄𝑠
+
+(4.5.4)
+
+where 𝑉𝑠 is the liquid volume contained in the tank and 𝑄𝑠 is the flowrate to or from
+the tank vertex. In systems with vertically uniform tanks, where the fluid level
+
+30
+
+decreases linearly, the level and therefore the static pressure is updated according to
+the flow rate out of the tank with equation 4.5.5.
+𝑑ℎ𝑡+1 =
+
+𝑑𝑉
+𝐴𝑐
+
+(4.5.5)
+
+where ℎ𝑡 is the fluid level in the tank at timestep 𝑡, and 𝐴𝑐 is the cross-sectional area
+of the tank.
+In tanks or containers with vertically variable geometries, the updated tank volume is
+used to calculate the static pressure in the next timestep according to
+𝑃𝑠 = 𝐸𝑠 + 𝑌(𝑉𝑠 )
+
+(4.5.6)
+
+where 𝑃𝑠 is the static tank pressure, 𝐸𝑠 is the minimum static pressure in the tank and
+𝑌(𝑉𝑠 ) is a user defined function which details the relationship between volume and
+level. The 𝑌(𝑉𝑠 ) term allows the user to define tanks of variable geometries. These
+equations coupled with equation 4.3.6 & 4.3.7 are used to implement the network
+states at user specified time intervals of ∆𝑡. [2] [24]
+4.5.2 Hydraulic network logic control
+The implementation of timesteps with EPA detailed in chapter 4.5.1 allows for
+building conditional logic into the network, where rules closing pipes, opening valves,
+changing pump speeds, and so forth can be implemented based on user-defined rules.
+An example is provided below written in the .inp file syntax used by the EPANET
+solver.
+RULE X
+IF SYSTEM CLOCKTIME >= 6
+AND SYSTEM CLOCKTIME < 10
+AND TANK 1 LEVEL BELOW 15
+THEN PUMP 335 SPEED IS 0.9
+AND PIPE 58 STATUS IS OPEN
+AND NODE 23 STATUS IS OPEN
+
+This allows for calculating many networks with complex conditional automation and
+behaviours. For example: filling many tanks from one large storage tank if the fluid
+level is above the minimum level or varying pump speeds based on the pressure in
+some vertex. [2]
+
+31
+
+4.6 Accounting for compressibility
+The EPANET solver cannot handle compressible fluids as is, and this entails some
+challenges in accounting for compressibility with reasonable accuracy.
+Incompressible pressure loss calculations have built-in thermodynamic assumptions.
+In order to achieve incompressibility and thereby regarding the density of the fluid as
+constant, the system must be considered as adiabatic and isothermal, as temperature
+fluctuations will cause a varying fluid density and viscosity. Furthermore, liquids have
+densities that vary only marginally with the pressure of the liquid.
+For gases, however, the density will vary substantially with pressure. For pressure loss
+calculations in piping networks, this entails an increased volumetric flow rate in the
+direction of decreasing pressure due to the expansion of the gas. This will in turn
+increase the pressure loss in the system as the flow velocity increases.
+For systems with very low total pressure losses, this effect is negligible as the decrease
+in density is only marginal. The limit on the total network pressure losses dictating
+when accounting for compressibility is necessary to achieve the desired accuracy is
+dependent on how closely the gas behaves as an ideal gas. Standard practice limits for
+when compressibility needs to be accounted for vary between 5-20% total pressure
+loss. In case that the downstream pressure is not greater than approximately 40% of
+the inlet pressure in the pipe, the standard practice way of accounting for
+compressibility is to calculate fluid properties at the average of the incompressible
+pressure loss inlet and outlet conditions [13]. This enables an approach of
+approximating compressibility in piping networks that have bridges i.e. edges that if
+removed would separate the graph into two disconnected sub-graphs. The approach
+implemented is structured as follows.
+1. Identify bridges in the network
+2. Solve the network with an incompressible fluid.
+3. Identify network vertices where the pressure has dropped to a certain pressure
+limit 𝑃𝐿 , check if the edges leading out or in of the vertex are bridges.
+4. If either the vertices inlet or outlet edges are bridges, split the network into 2
+subnetworks. Calculate the pressure losses intended for use in the first network
+first, use the conditions at the outlet vertex to recalculate the fluid properties
+32
+
+for using when solving the second network. If the pressure loss in any vertex
+in the second network decreases more than the limit 𝑃𝐿 , split the sub-network
+further until the total pressure loss in the last sub-circuit no longer exceeds 𝑃𝐿 .
+5. If neither the vertices inlet nor outlet edges are bridges, go to a previous vertex
+in the topologically ordered network until a bridge is found and go to step 4. If
+no bridges are found connected to any of the previous vertices, raise an error.
+Each subnetwork will first be calculated as incompressible and then the solution will
+be iterated with fluid properties recalculated at the mean pressure in the subnetwork.
+Using this approach to approximate compressible pressure losses might require some
+trial and error, as the user-defined limit will determine the needed number of subnetworks. For very low limits, appropriate subnetworks might be impossible to locate,
+especially for very parallel or circular piping networks.
+
+4.7 Network temperature distribution
+Heating and cooling of fluid streams are an integral part of power plant process
+technology. To get an idea of the temperature in the circuit caused by heating and
+cooling, the water quality modeling capabilities of the EPANET 2.2 were modified to
+represent temperature distribution. The key capability used was the EPANET 2.2
+solvers capability to model a non-reactive tracer substance distribution throughout the
+network. Heat load source vertices and known head vertices are modelled as chemical
+mass booster vertices, where the mass of the chemical injection is taken to be exactly
+analogous to the temperature at an appropriate scaling factor. The disadvantage of
+using this method is the fluid properties are not impacted by the varying temperature.
+As such it is the users responsibility to determine a suitable mean temperature to be
+used for the fluid properties. If the temperature will impact the fluid properties
+drastically, as is the case for many longer-chain hydrocarbons, the network can be split
+after the heat load source and the fluid properties recalculated at the heat load vertex
+outlet temperature. The mass booster vertices can have negative or positive mass
+injections, modelling cooling or heating respectively.
+The normal approach to mixing at network junctions where pipes with different fluid
+temperatures join, is coupling mass and energy balances with known inflow conditions
+
+33
+
+to calculate the outflow condition. However, this approach is infeasible for some
+network types where a heat load is added to the circuit during recirculation. As with
+each timestep, the temperature will increase in case no regard is taken to model the
+behaviour of individual volume segments of fluid in the pipes, an example is provided
+in Figure 10.
+
+Figure 10: Recirculation in a vertex
+
+To solve this problem the Lagrangian transport algorithm for tracer concentration
+splits at junctions is used by the EPANET hydraulic network solver which is detailed
+in section 4.5. The Lagrangian transport algorithm found in Figure 11 uses a
+distribution model at junctions, which is based on the interaction between individual
+volume segments in the system, this will ensure that the concentration will not
+approach infinity when a tracer is added during recirculation. The timesteps at which
+the new concentration segment is added will be smaller than the timesteps used in
+Extended Period Analysis by the EPANET solver. [2]
+
+34
+
+Figure 11: Lagrangian transport algorithm [2]
+
+This formulation is central to the temperature calculations in the network as they will
+be implemented by adding an analogous concentration of a tracer substance to each
+starting vertex and heat load vertex in the network. The tracer substance does not
+impact the hydraulic properties of the specified fluid and is as such an exact analogy
+of how the temperature will distribute itself in the network. [2]
+
+35
+
+5 Calculation library
+The piping network solver developed in this thesis work is built-in a Python library
+capable of unit handling, result visualization, fluid property calculation, compressible
+fluid handling, network structure defining, report creation, and handling pumps & heat
+exchangers. The library is named Pcalcs. Result and input data visualizations are
+implemented by the Matplotlib and Seaborn libraries. Tensor manipulations, data
+formatting, and mathematical operations are performed with the Numpy, SciPy, and
+Pandas libraries.
+
+5.1 Physical quantity control
+For this toolkit, the Pint library was chosen [25] for implementing physical quantity
+handling and control of units. The Pint library enables the rigorous control of units, as
+each variable is converted to a data types that have 2 attributes, magnitude and
+dimensionality. The dimensionality represents the components of the unit, for example
+the unit feet/second and meter/minute both have the dimensionality length/time, and
+conversion of the magnitude in feet/second to meter/minute is thus possible. If the user
+tries to convert a unit to a dimensionality that is different from the source unit
+dimensionality, an error will be raised by the Pint library. This functionality
+automatically ensures that unit conversion will be robust. Normal arithmetic
+operations also have built-in automatic conversion, such that the resulting unit can then
+be converted to an appropriate unit.
+The Pint library also has built-in functionality that allows the user to define custom
+units for any dimensionality if needed. The Pint library also enables some dimensional
+analysis through inbuilt Buckingham Pi theorem calculation capabilities, if necessary.
+[25]
+
+5.2 Python source code documentation
+The network solver is built-in an existing Python library. The library was created as
+an internal development project at Citec to provide a collection of engineering
+calculation capabilities with intuitive and flexible interfaces. The Pcalcs code library
+is based on well-documented and established packages. Documentation of the key
+classes and functions in the code library is provided by documentation comments
+36
+
+which are written in reStructuredText (RST) [26] within each function and class. The
+RST documentation strings are then combined with general documentation text and
+converted
+
+to
+
+appropriately
+
+structured
+
+HTML
+
+documentation
+
+pages.
+
+The
+
+documentation home page can be found in Appendix A.
+
+5.3 Library structure
+The library is split into separate packages. Class and function implementations are
+split into modules which are separate .py-files based on subject. The central modules
+in the main package are:
+▪
+▪
+▪
+▪
+▪
+▪
+▪
+▪
+
+pcalcs main package
+pcalcs.circuit contains the network solver
+pcalcs.circuit.gui GUI for swiftly defining a piping network including all
+relevant metadata
+pcalcs.tests package which contains tests for the library
+pcalcs.medium contains fluids properties and fluid handling functions
+pcalcs.pumps contains pump curves and related functions
+pcalcs.heat contains heat transfer functions
+pcalcs.units contains functions and classes to handle units
+
+5.4 Graphical user interface
+The user can load an existing piping network from a .json file or create a new file with
+the option boxes in Figure 12.
+
+37
+
+Figure 12: Loading screen of the GUI
+
+The networks (Figure 13) are built and edited using the graphical user interface (GUI)
+application and stored as JSON files. It is also possible to generate JSON files from
+Excel inputs or a script.
+
+Figure 13: Example network in the GUI
+
+38
+
+Each vertex and edge have the following fields available:
+•
+•
+•
+•
+
+Width, Height: Defines the size of the vertices. These fields are not applicable
+for edges.
+Name
+Description: Text input that describes the vertex or edge for documentation
+purposes.
+Input: Text input that is parsed into the Properties table. The syntax
+is Key: value, where each key is on a new line. The keys are used to define
+inputs relating to the piping system.
+
+The GUI can also solve the circuit, define prime movers and export results.
+
+5.5 Testing and version control
+Version control for the entire toolkit and calculation modules is implemented with the
+Git version control system. The Pcalcs code base is located in a remote server. The
+convention for developing or maintaining the code base is making all changes on a wip
+(work in progress) branch. After work is completed (including developing new tests)
+the entire test sequence is run to ensure that every test will pass before committing
+changes and pushing to the remote server. Once changes are made and documented in
+commits, a pull request is issued to the dev branch. The dev branch is then merged into
+the master branch and published under a new version when the maintenance or
+development is completed.
+The calculation modules are located in another Git repository. The version control
+convention for the calculation modules is developing standard calculation report
+module templates in a system-modules branch. When initializing project work, a new
+branch will be created based on the system-modules branch. When work is completed
+in the project, the branch will be committed and pushed to the server for future
+reference.
+To ensure the correctness and accuracy of the calculations and dependable deployment
+of the solver to all end users adequate testing of the written code is needed. The Pytest
+library is used to create and structure test frameworks. The test suite was constructed
+mainly for the code produced for this thesis, and will not test any of the dependencies
+by default.
+
+39
+
+The most central aspect is to ensure correctness of the pressure loss calculations. The
+pressure loss was tested against an existing pressure loss template, a separate
+implementation using [27] and a completely from scratch implementation of a pressure
+loss calculation. All methods used the Swaimee Jain friction factor for a pipe with the
+internal diameter of 54.5 mm, a pipe roughness of 0.05 mm, and a length of 100 m.
+The test passed with an assertion that the pressure losses calculated by the EPANET
+implementation need to be within 1 % for all comparisons.
+The temperature distribution approximation was also tested by creating and solving a
+circuit with the specified heat load in a certain vertex and comparing the results to
+negative and positive heat loads at different flows and comparing these to an energy
+balance equation. Temperature distribution in mixing vertices with several inputs and
+outputs was also tested by solving a network comparing to manually calculated energy
+and mass balances. These tests pass with 0.01 % accuracy, the difference is assumed
+to be due to numerical inaccuracy.
+The custom implementation of a screw pump was also tested to ensure expected
+behaviour when operating in pressure compensated and non-pressure compensated
+mode.
+
+40
+
+6 Automatic calculation report creation
+The report creation is differentiated by the actual calculations and the visualisations
+presented in the reports.
+
+6.1 System specific report creation and structuring
+The reports detailing the calculation methods and results were created with the central
+design criterion of reusability. Calculation templates are created for what is perceived
+to be a standard design case. The standard design case consists of the network design
+and parameters which are most commonly available for each system.
+To simultaneously achieve flexibility and scalability, the calculation modules are
+created from Jupyter Notebooks. The notebooks are server-based open-source
+applications which among many other functions provide Python code execution
+capabilities, data visualization, Markdown and LaTeX typesetting. To convert the
+notebooks into pdfs with the desired appearance and functionality, LaTeX formatted
+documents are created with the MiKTeX distribution.
+Each module consists of text and calculation sections together with visualization of
+parameters of the calculation results. One central functionality which was
+implemented is the serialization of custom data types into the JSON format. In the case
+of modules that include calculation sections that yield results that influence automatic
+text generation in other notebooks, the resulting data must be shared with the other
+modules. The produced data types are serialized into JSON files which are then
+deserialized in the local variable space of the module in which the object is needed.
+The JSON files can be stored in the generated directory of each calculation module,
+found in Figure 14.
+To generate a calculation report from the calculation modules, each module is included
+in a master report notebook, where the structure and order of the final report is defined.
+The master report notebook also creates a table of contents for the report and a title
+page is generated as well. The report structure can be found in the tree structure
+observed in Figure 14.
+
+41
+
+Figure 14: Calculation report tree structure
+
+These tree structures also contain JSON, TEX and image files that are included in the
+report creation. The JSON files are used to read in more substantial data such as pump
+data, input variables or circuit properties (vertices, edges, connections and related
+metadata for example pipe lengths and sizes). The TEX files are LaTeX templates
+generated in the notebooks for the table of content generation, document typesetting
+purposes and title page structure generation. The system-specific calculation reports
+have a title page that includes the document metadata shown in Figure 15 and a table
+of contents can be found in Figure 16.
+
+42
+
+Figure 15: Example document metadata
+
+Figure 16: Example table of contents
+
+Depending on the particularities of the system, sections can be added if appropriate. In
+the Background and theory section the formatted equations, symbol definitions,
+default assumption parameters and underlying methods used are detailed for report
+reproducibility. The Medium properties details the equations, conventions, standards
+and sources used to determine fluid properties. When displaying or delivering any type
+of calculation report detailing pressure losses, temperature versus viscosity and density
+plots such as Figure 1 & Figure 2 are included.
+In the System Overview section, a high-level overview of the sub-systems to be
+calculated are given, together with a flow diagram of the specific system.
+
+43
+
+Figure 17 shows a simplified flow diagram of a lube oil system included in the System
+Overview section.
+
+Figure 17: System overview P&ID diagram
+
+In the following section Specific system parameters, a block diagram of the edges and
+vertices in the system is presented together with the input used for each edge and vertex,
+Figure 18 shows an example of the block diagram inputs used for an example circuit.
+The input data table for vertices and edges of the network in Figure 18 will not be
+included as these are found only in a tabular format of several hundred rows, to provide
+reproducibility in an actual calculation report.
+
+44
+
+Figure 18: Example piping network
+
+In the Calculation results section, the results are shown for the perceived area of
+interest, alternatively the entire results can be shown in a tabular format. In Figure 19
+the calculation results of the same example network in Figure 18 can be observed from
+a single figure where edge colors signify flowrate and vertex colors represent the
+pressures in vertices, the solution time for one timestep of this network was 1471 ms.
+Tabular results are used for results where exact values for each result parameter is
+available for each vertex and edge according to their respective colormaps. The
+
+45
+
+parameters include but are not limited to: velocity, pressure change, temperature
+change, flowrate and pressure.
+
+Figure 19: Example network result visualization
+
+The last section in the report is the Conclusion section, certain system specific
+conclusion texts can be automatically generated based on the relevant result data in the
+Calculation results section. Custom conclusion text is written by the user. It is also
+possible to include appendices with relevant information or used data-sheets.
+
+46
+
+6.2 Master project report creation
+The directories are structured to allow for all system-specific reports to be combined
+into a project report that includes all the system-specific calculation reports that are
+needed for the project. The heading structure in the project-specific reports can be
+offset to any degree specified by the author in the master notebook. Auxiliary
+information such as site layouts, project-level assumptions and weather data or
+customer specifications can be included at the beginning of this report.
+The minimum and maximum ambient design temperatures of the power plant location
+can be compared with historical temperature data to verify design temperatures or act
+as supporting information in key design decisions. The weather data are obtained from
+the Meteostat database through a python-based application programming interface
+(API). The Meteostat database consists of open data from many different sources
+detailed in [28].
+The site coordinates are provided to the API which will return the weighted average
+temperature data of multiple nearby weather stations for the specified time interval.
+For most databases, more than 20 years of data have been registered, which will
+include very extreme weather cases for referencing. Point data provide a more
+complete dataset over the specified time, as data from multiple stations are included.
+As mentioned, the data output is being interpolated based on the geographical distance
+between the different weather stations and the reference point provided in the database
+query, point data are also adjusted for differences in altitude. [28]
+The city of Christchurch, New Zealand (latitude: -43.531656, longitude: 172.630584)
+was randomly generated as an example site location. Three different weather stations
+found in Table 1 were available to use for data interpolation.
+
+47
+
+Table 1: Example site weather data
+
+Data
+
+93780
+
+93781
+
+name
+country
+region
+latitude
+longitude
+elevation
+
+Christchurch
+NZ
+CAN
+-43.4833
+172.55
+38
+Pacific/Aucklan
+d
+8642.05
+
+Christchurch Aerodrome Aws
+NZ
+CAN
+-43.4833
+172.5167
+37
+
+93773
+Timaru Aerodrome
+Aws
+NZ
+CA
+-44.3
+171.2333
+26
+
+Pacific/Auckland
+10991.87
+
+Pacific/Auckland
+141804.50
+
+timezone
+distance
+
+The elevation and distance between the site and weather station in Table 1 are provided
+in meters. The distance signifies the distance between the site and the weather station.
+The resulting daily minimum, average and maximum temperatures can be plotted
+against the design temperatures, as in Figure 20.
+The Meteostat database can also provide humidity data, ambient pressure and wind
+speeds for many site coordinates. This data can be useful for future development. [28]
+
+48
+
+Figure 20: Example site temperature variation
+
+49
+
+7 Results
+Some of the calculation modules are presented included in this section.
+Morphologically similar systems or systems that show confidential system design are
+omitted. Systems, where hydrocarbons are included, are normally calculated for an
+entire temperature interval, as these systems usually are extremely sensitive to
+temperature variations. Other systems are calculated for the minimum and maximum
+ambient temperatures.
+
+7.1 Fuel gas distribution
+Fuel gas distribution is a common system included in many combustion power plants
+using natural gas or alternatively biogas as fuel. Fuel gas is delivered to power plants
+commonly by pipeline and this is also one of the base assumptions underlying the fuel
+gas system report. The first part included in the calculation module is the incoming
+fuel gas pressure reduction to plant appropriate levels. This task is usually performed
+by a control valve which is controlled based on the outlet pressure. As the pressure of
+incoming fuel gas is reduced, a temperature decrease will occur due to the JouleThompson effect [1]. As the fuel gas to be used usually will need to be kept at
+appropriate temperatures, a temperature regulation system will need to be
+implemented. A simplified example system is shown in Figure 21.This report will
+assume a target temperature of 20 °C. As the enthalpy of the fuel gas after the pressure
+reduction station is fixed due to constant target temperature and pressure, calculating
+the cooling or heating need is done by the difference in the enthalpies of the incoming
+and outgoing gas.
+
+50
+
+Figure 21: Simplified gas pressure reduction system
+
+The results can be generated within the needed pressure and temperature interval by
+iterating the solution with appropriately chosen intervals for the inlet temperature and
+pressure. The visualization chosen was a heat map showcasing the bivariate data
+generated. The results for a constant fuel gas mass flow rate with an outlet temperature
+and pressure at 20 °C and 5 bar can be found in Figure 22. Negative values entail
+cooling and positive values entail heating.
+
+Figure 22: Inlet fuel gas heating demand
+
+51
+
+As the outlet flow rate, pressure and temperature are constant, the distribution within
+the plant is based on the outlet setpoints for the pressure and temperature of the
+pressure reduction.
+7.1.1 Fuel gas distribution
+The distribution of fuel gas to consumers around the plant is normally performed by
+splitting branches from the incoming fuel gas header, an example network is shown in
+Figure 23. The consumers are modelled to consume a set amount of fuel gas
+independent of the consumer inlet pressure. The results of the calculation are
+visualized by a network graph, if appropriate.
+
+Figure 23: Network structure
+
+The calculation results can be overviewed from Figure 24. The edge colors signify
+flowrates while vertex colors signify pressure.
+
+52
+
+Figure 24: Vertex pressure and flow rate
+
+A tabular format of the calculation results is always provided for non-trivial circuits as
+large amounts of relational data can be presented in this way. For large circuits that
+are morphologically symmetrical with regards to sizing, pipe lengths and minor losses,
+results are presented for only the key vertices and edges (usually the topologically
+sorted first and last vertices are included). Usually, the inlet pressure to the consumers
+is of interest, as such a separate table is generated detailing the consumer inlet pressure
+and the total pressure loss as compared to the pressure reduction outlet pressure. The
+table constructed for showing consumer inlet pressure can be found in Table 2.
+Table 2: Consumer inlet pressures
+
+53
+
+In fuel gas systems, a common limiter of pipe size dimensioning is the flow velocity.
+In this example a commonly used limit of 20 m/s is imposed on the network. In order
+to examine high flow velocities and thereby identify possible problem areas, the k:th
+percentile of flow velocities can be automatically shown in a separate table. The 80:th
+percentile of flow rates with the initial pipe sizes can be found in Table 3.
+Table 3: 80:th percentile of fuel gas flow velocities with initial pipe sizing
+
+The 20 m/s limit is exceeded in certain parts of the circuit. The pipe sizing is therefore
+updated to DN300 for the pipes exceeding the velocity limit. The updated results for
+the same edges can be found in Table 4. All the flow velocities are now below the
+upper bound of 20 m/s.
+Table 4: 80:th percentile of fuel gas flow velocities with updated pipe sizing
+
+All flow rates are now below the specified upper bound of 20 m/s. The updated inlet
+pressures and total pressure drop percentages are shown in Table 5.
+
+54
+
+Table 5: Updated consumer inlet pressures
+
+This type of result enables swift validation of flow velocities in the entire fuel gas
+distribution circuit.
+
+55
+
+7.2 Lube oil system
+Many power plant types using roto-machinery for power generation or auxiliary tasks
+need lube oil handling systems. The calculation module created here will assume that
+the lube oil handling system is composed of the following parts:
+▪
+
+Unloading to storage tank from delivery vehicle
+
+▪
+
+Distribution to final lube oil consumer units from storage tank
+
+▪
+
+Removal of lube oil from consumer units to used lube oil storage tank
+
+▪
+
+Loading of lube oil from used lube oil storage tank to removal vehicle
+
+The general structure of the example lube oil system can be found in Figure 25. As
+lube oil becomes more viscous at lower temperatures, positive displacement pumps
+are most commonly used in lube oil handling and pumping. As the viscosity increases
+with decreasing temperature the pressure loss in the discharge line will increase,
+depending on the hydraulic resistance in the discharge line, this can cause recirculation.
+The lube oil can be emptied from the lube oil consumer units while still significantly
+above the maximum ambient temperature, Figure 26 displays the results if the oil is
+allowed too cool to ambient temperature. The lube oil calculation is performed for
+each system at 1°C intervals between the minimum and maximum specified
+temperatures. If the pump specific 𝑁𝑃𝑆𝐻𝑟 data is available, the calculated 𝑁𝑃𝑆𝐻𝑎 for
+the pumps in each sub-system can be compared visually in Figure 27.
+
+56
+
+Figure 25: Example lube oil system
+
+The flow rates and filling times can be shown independently for each sub-system, an
+example from the same sub circuit can be found in Figure 26.
+
+57
+
+Figure 26: Flow rate and filling/emptying time versus lube oil temperature
+
+58
+
+To ensure that the 𝑁𝑃𝑆𝐻𝑎 is larger than the 𝑁𝑃𝑆𝐻𝑟 , the results can be shown for each
+sub-system as in Figure 27. At temperatures where the 𝑁𝑃𝑆𝐻𝑎 is smaller than the
+𝑁𝑃𝑆𝐻𝑟 operation of the pump is considered infeasible as this would cause damage to
+the pump. In this case, the 𝑁𝑃𝑆𝐻𝑟 is flow dependent and is shown for flow rates of 5
+m³/h and 10 m³/h.
+
+Figure 27: NPSH comparison
+
+59
+
+7.2.1 PRV operational pressure setting
+The operational pressure of the PRV is the pressure at which it will open, allowing
+fluid to be recirculated or expelled from the pipe, dependent on where the discharge
+side is connected.
+
+Figure 28: Pump PRV recirculation example
+
+The PRVs operational pressure setting plays a central role in ensuring a sufficient
+𝑁𝑃𝑆𝐻𝑟 and flow to all destination vertices. If the discharge piping has very high
+hydraulic resistance a higher operational pressure setting is needed for the PRV. As
+this will allow for a larger pressure loss from the pump discharge to the outlet of the
+piping. However, a higher PRV operational pressure can cause problems in ensuring
+sufficient 𝑁𝑃𝑆𝐻𝑎 . Due to allowing a higher flow in the system before the recirculation
+reduces the flow rate and therefore the pressure loss in the suction piping.
+The importance of the PRVs operational pressure setting is demonstrated by
+calculating the results of 2 different cases, one case where a transfer pump is used to
+pump lube oil to the first consumer (Figure 29) and another case where a transfer pump
+is used to pump lube oil to the last unit (Figure 30). For demonstration purposes a
+constant 𝑁𝑃𝑆𝐻𝑟 of 60 kPa(a) will be assumed for the pump model. Assuming a
+minimum temperature of 15 °C the PRV will first be adjusted such that the system can
+provide the maximum flow at temperatures above 15 °C.
+
+60
+
+Figure 29: Transfer from a lube oil tank to the first unit
+
+Figure 30: Transfer from a lube oil tank to the last unit
+
+At a PRV operational pressure setting of 500 kPa, the 𝑁𝑃𝑆𝐻𝑎 can be observed in
+Figure 31 to reach levels that are far below the specified 𝑁𝑃𝑆𝐻𝑟 . The flow rates
+dependence on the lube oil temperature can be observed in Figure 32. The system will
+allow for the nominal flow of 10 m³/h at lube oil temperatures above 6 °C for filling
+the first unit and 10°C for filling the last unit, whereas the 𝑁𝑃𝑆𝐻𝑎 exceeds 𝑁𝑃𝑆𝐻𝑟 at
+temperatures of 12 °C and above. As such pump operation is possible at temperatures
+of 12 °C and above.
+
+61
+
+Figure 31: NPSH available at a PRV setting of 500 kPa(a)
+
+62
+
+Figure 32: Flow and filling time at a PRV setting of 500 kPa(a)
+
+To ensure the 𝑁𝑃𝑆𝐻𝑎 will be sufficient for the entire temperature interval, the PRV
+operational pressure setting was adjusted to 300 kPa. The results can be observed in
+Figure 33 and Figure 34.
+
+63
+
+Figure 33: NPSH available at a PRV setting of 300 kPa(a)
+
+The 𝑁𝑃𝑆𝐻𝑎 is now within the allowed region, however the flow rate is reduced due
+to recirculation at temperatures below approximately 20 °C when pumping lube oil to
+the last consumer, and 17 °C when pumping lube oil to the first consumer. The flow
+and filling times dependency on the temperature can be found in Figure 34.
+
+64
+
+Figure 34: Flow and filling time at a PRV setting of 300 kPa
+
+The most common solution to this problem is increasing the pipe sizes in the system
+to reduce the pressure drops and therefore allow the nominal flow to be delivered for
+the entire temperature interval. In case pipe sizes are fixed due to external reasons, the
+pipe routing can be restructured according to Figure 35 and Figure 36. If possible, this
+is the preferred circuit structure as it reduces the difference in hydraulic resistance of
+the discharge piping when filling the first and last units.
+
+65
+
+Figure 35: Rerouted piping for last unit filling
+
+Figure 36: Rerouted piping for first unit filling
+
+The resulting flow rate, filling times and 𝑁𝑃𝑆𝐻𝑎 can be found in Figure 37 and Figure
+38. The PRV operational setting was adjusted to 325 kPa in order to achieve the desired
+results.
+
+66
+
+Figure 37: Restructured flow and filling times with a PRV setting of 325 kPa(a)
+
+The flow rate can be observed to remain nominal for temperatures above 15 °C in
+Figure 37. The 𝑁𝑃𝑆𝐻𝑎 can be found to be within the acceptable limits in Figure 38.
+
+67
+
+Figure 38: Restructured network NPSH with a PRV setting of 325 kPa(a)
+
+For networks that have fixed pipe sizes and cannot be restructured, a good solution is
+using a frequency converter to adjust the flow in the network based on the 𝑁𝑃𝑆𝐻𝑎 on
+the suction side of the pump.
+Another solution is using a heater to increase the lube oil temperature to decrease the
+lube oil viscosity and thereby lowering the pressure losses. This solution might be
+more expensive than using a frequency converter as there will be heating costs
+associated with this approach, it will however allow for the full nominal flow of the
+pump.
+
+68
+
+7.3 Fuel oil distribution
+The calculations for the fuel oil distribution system detail the actual flow rates for the
+network structure and the 𝑁𝑃𝑆𝐻𝑎 for all pumps included.
+The fuel types available for use in the calculation templates are:
+-
+
+LBF (Liquid Bio Fuel)
+
+-
+
+LFO (Light Fuel Oil)
+
+-
+
+HFO (Heavy Fuel Oil)
+
+-
+
+CRO (Crude Oil)
+
+The first parts of these systems consist of unloading pumps and one or more storage
+tanks. It is important to consider the inlet nozzle elevation in the calculations, to
+account for the needed static pressure increase. From the storage tanks, the fuel oil can
+be pumped directly to the consumers with a fuel oil distribution pump or with a transfer
+pump to an intermediate storage tank for treatment. The fuel oil calculation module
+section also includes a separator circulation section between two tanks that is added to
+the report in case a fuel oil separator is used.
+An example fuel oil system structure can be found in Figure 39. The control for
+sufficient 𝑁𝑃𝑆𝐻𝑟 for the transfer and unloading pumps is nearly identical to what is
+presented for the lube oil system in section 7.2, and will therefore be omitted from this
+section.
+Depending on the fuel oil viscosity, both positive displacement and centrifugal pumps
+can be used for fuel oil handling. This calculation module implementation uses screw
+pumps.
+The fuel oil distribution to consumers is in this calculation module performed with a
+VFD-controlled pump. The pump maintains the pressure at the discharge side of the
+pump to a specified setpoint below the shut-off head of the pump. The pump must also
+be capable of providing a flow above the maximum consumption for all consumers.
+The consumers are modelled with the pressure dependent analysis capability as having
+a minimum pressure at which they can accept a flow demand while having a required
+pressure at which they can accept the full flow demand.
+
+69
+
+Figure 39: Fuel oil system example P&ID
+
+70
+
+The inlet pressures at each consumer are distributed over an interval with the lowest
+inlet pressure at the consumer furthest away from the pump and the highest pressure
+at the consumer closest to the pump. An example network was created with 6
+consumers, and a distribution pump outlet set point pressure of 700 kPa. The required
+pressure is 600 kPa and the minimum pressure is 590 kPa. In Figure 40 an example
+distribution of inlet pressures at the consumers can be found for temperatures between
+5 ° and 40 °C.
+
+Figure 40: Consumer inlet pressure distribution
+
+For the distribution branch pipe sizing in Table 6 the flow provided to the last
+consumers will be impacted at the lowest ambient temperature of 5 °C.
+
+71
+
+Table 6: Consumer inlet results
+
+Possible solutions are increasing the pipe sizing or using a higher discharge pressure
+setpoint, to allow for a higher pressure drop while still maintaining the consumer inlet
+pressures above the required pressure. Table 7 shows the results when adjusting the
+discharge pressure setpoint to 800 kPa.
+Table 7: Consumer inlet results with adjusted discharge pressure setpoint
+
+The results when increasing the consumer specific pipe sizes from DN20 to DN25
+when maintaining the discharge pressure setpoint at 700 kPa can be found in Table 8.
+Table 8: Consumer inlet results with increased consumer specific pipe sizes
+
+72
+
+7.4 Cooling water system
+Cooling water systems are an integral part of many power plant types which require
+removal of excess heat. In cases where the heat is too low grade for power generation,
+radiators can be used to vent the thermal energy to the atmosphere. The cooling water
+calculation module features a cooling water system which extracts heat from heat
+exchangers and distributes the heated water to radiators, cooling towers or a central
+heat exchanger. An example system featuring radiators is shown in Figure 41.
+
+Figure 41: Example cooling water network
+
+The cooling water network has different operating states. The hydraulic resistance in
+the BYPASS2 and RECIRCULATION nodes can be adjusted to direct the flow in the
+network as desired. The head-flow functions of the prime movers used in the example
+cooling water network are shown in Figure 42.
+
+73
+
+Figure 42: Example cooling water network pump curves
+
+The operating points calculated at different resistance values in the BYPASS2 and
+RECIRCULATION nodes of the network can be found in Figure 41. The network was
+solved with hydraulic resistances at approximately 0, 50 and 100 % for both the
+BYPASS2 and RECIRCULATION vertices.
+
+74
+
+Figure 43: Operational points versus hydraulic resistance in key nodes
+
+The impact on the flow rates in key parts of the network are shown in Figure 44 for all
+the chosen combinations of hydraulic resistances in the BYPASS2 and
+RECIRCULATION vertices.
+
+75
+
+Figure 44: Cooling water network flow rates
+
+7.4.1 Cooling water system header sizing
+A common calculation need is sizing the header piping of cooling water distribution
+networks. In such applications, sizing of the cooling water header piping used for
+distributing the cooling water to the radiators can be used.
+
+Figure 45: Cooling water distribution network
+
+76
+
+The network in Figure 45 was constructed and solved with varying inlet pressure and
+header sizes to determine the total available flow rate. The outlet pressure was assumed
+to be constant at 200 kPa(a) while the network was solved with the inlet pressure in
+the interval 500-800 kPa(a).
+Calculating the system results with variable inlet conditions, allows for more accurate
+pipe size selection, as the network behaviour can be compared for all cases. The
+calculation results are shown in Figure 46.
+
+Figure 46: Cooling water flow rate results
+
+The most suitable pipe sizes can then be selected based on the results in Figure 46. To
+calculate these types of results, the inputs to the network solver algorithm needs to be
+iterated in nested for-loops, using updated input parameters. The worst-case time
+complexity for nested for loops is 𝑛𝑘 where k is the number of for-loops. This entails
+substantial calculation times when the number of variables in the calculation is large.
+The results in Figure 46 were calculated in 12.0 s.
+
+77
+
+7.4.2 Recirculation temperature simulation
+The example cooling water system in Figure 41 features recirculation. To demonstrate
+the temperature distribution simulation in the system, a simpler network featuring
+recirculation was implemented in Figure 47. This calculation is possible due to the
+theory presented in section 4.7.
+
+Figure 47: Example recirculation network
+
+The flow and pressure results in the network can be found in Figure 48 with the
+following key input parameters:
+▪
+
+HL - Heat load: 100 kW
+
+▪
+
+N6 - Consumes: 10 l/s
+
+▪
+
+IN - Pressure: 5 bar, Temperature: 40 °C
+
+▪
+
+PUMP - Constant pressure increase: 40 kPa
+
+78
+
+Figure 48: Recirculation network results
+
+The network was simulated with 100 timesteps of length 1 s. The temperature results
+can be found for each node in Figure 49. As can be observed in Figure 49 the
+temperatures in the network converge to steady state values. The stepwise behaviour
+of the temperature in the HL-INLET and HL-OUTLET nodes is caused by the volume
+segments of temperature which have circulated in the recirculation loop mixing with
+the inlet from the rest of the network.
+
+79
+
+Figure 49: Recirculation network node temperatures [°C]
+
+80
+
+7.5 Drainage systems
+Many power plant systems need to be drained for service. Such systems which utilize
+static pressure differences to remove fluid from a source to a destination are referred
+to as drainage systems. These systems are implemented according to the theory in
+section 4.5.1. Two tanks with variable vertical geometries and one cylindrical tank
+were constructed with the volume functions found in Figure 50. All tanks are drained
+by identical pipes to a vertex of identical pressure, the resulting draining volume flow
+rate as a function of time can be found in Figure 51.
+
+Figure 50: Example volume functions
+
+Figure 51: Drainage flow rates for all 100 m³ tanks
+
+81
+
+As is apparent from Figure 51 drainage times can be heavily dependent on the
+geometry of the vessel. One interesting test of the correctness of these calculations is
+summing up the flow rates for each timestep, which is equivalent to taking the integral
+of the volume flow as a function of time, which will yield the tank volume.
+
+7.6 Instrument air system
+Instrument air systems are used for example for control actuation, filter cleaning or
+utility purposes. This entails unpredictable instrument air consumption patterns, the
+consumers in similar systems are inactive most of the time and as such the systems are
+not normally dimensioned for all consumers to be active at once since this would be
+exceedingly improbable.
+Assuming a consumer can either be active or inactive with a fixed flowrate, entails that
+the number of operational states is the binary combinations of all consumers 2𝑛 . For a
+relatively small network of 25 consumers this entails 225 = 33554432 operational
+states. If allowing for multiple consumption rates the number of operational states will
+be even larger.
+Systems such as this are in the calculation modules performed on a case by case basis
+of interesting consumer activation combinations which result in the worst-case
+behaviour. In Figure 52, Figure 53, Figure 54 and Figure 55 different operational case
+results are shown for an instrument air system with 25 consumers. In these calculations,
+the flow consumption in some sections is deactivated or changed for different cases.
+
+82
+
+Figure 52: All consumers active
+
+Figure 53: Operational consumers in case one
+
+83
+
+Figure 54: Operational consumers in case two
+
+Figure 55: Operational consumers in case three
+
+84
+
+8 Conclusion and future development
+In toto, the calculation and visualization capabilities, calculation report creation and
+auxiliary calculation support functionalities of this toolkit are capable, well
+documented and robust. As such, this toolkit will serve as a robust foundation, upon
+which, process calculations and optimizations, which dictate process design in
+different stages of a project can be conducted. This will serve to provide insights in
+early design on piping morphology, equipment location, pipe sizing, pipe routing,
+pump selection, inline component selection, energy requirements, the time needed to
+conduct specific processes and more. Similarly, in later project stages where more
+accurate input parameters are available, validation and final design decisions can be
+based of the calculations provided by this toolkit.
+Currently, standard templates are developed for many key networks, which are
+commonly included in the design scope of Citec. These template projects can be used
+to generate project-specific calculation reports by modifying the network structures in
+the GUI presented in section 5.4 while providing the needed input data. To generate
+custom calculation reports, modification of the python code and autogenerated text
+fields is required.
+For future development of this toolkit, the calculation capabilities of the Pcalcs library
+could be expanded, more templates could be created for all common and often
+occurring piping network configurations in the design scope of Citec. In the context of
+hydraulic networks, economic optimization of pipe sizing could be a practical
+development direction. Where a non-linear cost function describing the operating costs
+of the prime movers in the network compared to the total procurement, installation and
+transportation cost of the pipe sizing selected for each pipe in the network could be
+optimized. The necessary boundary conditions could dictate minimal flow rates to all
+consumers, maximum flow velocities, maximum pressures in all nodes, and so forth.
+For this type of optimization to be possible, total initial cost functions need to be
+established for the piping and included instrumentation and inline assets, such as
+valves, filters and fittings.
+
+85
+
+9 Svensk sammanfattning
+Denna avhandling ämnar att utveckla ett robust, väldokumenterat och snabbt verktyg
+som ger användaren förmågan att utföra och presentera komplexa processtekniska
+beräkningar. Till kärnan av arbetet hör implementeringen av en hydraulisk kretslösare
+med tillräcklig funktionalitet för att analysera processtekniska förfaranden i alla
+behövliga system. Algoritmer som används för att lösa flödes -och trycktillstånd i
+komplexa hydrauliska nätverk är t.ex Hardy Cross metoden som var den första
+explicita metoden för att lösa ut hydrauliska jämviktstillstånd i rörnätverk. Hardy
+Cross metoden utvecklades 1936 och är därför ämnad för att utföras manuellt, därför
+finns det många delsteg som är väldigt arbetsamma att generalisera programmatiskt
+för ett hydrauliskt nätverk med en godtycklig morfologi. Som alternativ
+implementerades en metod av Wood & Charles här benämnd Vertex-Loop metoden.
+Vertex-Loop metoden är en utveckling av Hardy Cross metoden, med
+omformuleringar baserade på koncept från grafteori. I sammanfattning generaliseras
+nätverket som en specifik typ av graf, nätverkets egenskaper kan sedan generaliseras i
+matris format för alla noder och bågar i nätverket. Utvecklingen av en hydraulisk
+nätverkslösare i sig självt är ett väldigt omfattande arbete i beaktan på all
+programmatisk för -och efterbehandling associerad med att lösa fullständigt
+godtyckliga hydrauliska kretsar. Därför beslöts att vidareförädla EPANET-lösaren
+som distribueras med öppen källkod. [19] [20] [2]
+
+Figur 1: Olika typer av lösningsalgoritmer [18]
+
+86
+
+EPANET-lösaren baserar sig på en implementation av Global Gradient algoritmen,
+vilken är en vidareförädling av koncepten i Hardy Cross metoden. Global Gradient
+algoritmen har snabbare konvergens och är mera flexibel eftersom den undviker en del
+extern bearbetning av indata och utdata. [17]
+Behövliga funktioner byggdes vidare på EPANET-lösarens existerande funktionalitet.
+Uppskattningar av tryckfall i fluider med densitet som varierar beroende på tryck
+utförs med att beräkna icke-komprimerbart tryckfall i olika segment i nätverket. I
+noder där trycket sjunkit under en gräns delas nätverket i olika segment vars
+fluidegenskaper uppdateras i enlighet med trycket i noden. Detta kan enbart utföras för
+noder som skulle separera nätverket fullständigt i två eller flera icke-sammankopplade
+nätverk. [2]
+Olika typer av pumpar inkluderas i många rörnätverk. Den vanligaste typen av
+centrifugalpumpar finns färdigt inkluderade i EPANET. Strukturen av en
+centrifugalpump hittas i Figure 5. I EPANET-lösaren beskrivs flöde-tryckhöjnings
+förhållandet för en centrifugal pump med ekvationen:
+∆𝑝𝑖𝑗 = −𝜔2 (𝑝𝑚𝑎𝑥 − 𝑟(𝑄𝑖𝑗 /𝜔)𝑛 )
+
+(3.4.1)
+
+För att utföra tryckfallsberäkningarna med en noggrannhet som återspeglar
+verkligheten måste de fluidegenskaper som påverkar tryckfall etableras med en
+tillräcklig noggrannhet för hela temperatur-och tryckintervallen i vilka de används.
+Fluidegenskaper som påverkar tryckfall är huvudsakligen densitet och viskositet.
+CoolProp programbiblioteket har används för alla fluider som finns tillgängliga [5].
+Oljors hydrauliska egenskaper (som vanligen inte är lika väl definierade) har
+implementerats baserat på lämpliga standarder [10] [7] [6].
+I rörnätverket där fluider med högre viskositet används ersätts centrifugalpumpar
+vanligen av förträngningspumpar på grund av centrifugalpumparnas avtagande
+verkningsgrad vid högre viskositet. Gränsen för viskositeten vid vilken
+förträngningspumpar föredras över centrifugalpumpar beror på många faktorer som
+t.ex. temperatur intervall, impellerns och pumpväggarnas konstruktion. [29].
+Förträngningspumpar har ungefär samma flöde upp till en maximal tryckhöjning som
+pumpen åstadkommer. I praktiken kommer internt läckage att orsaka mindre flöde vid
+
+87
+
+högre tryckhöjningar. Eftersom många typer av förträngningspumpar har en maximal
+tryckhöjning som är mycket högre än designtrycket för pumpen, förses dessa med
+övertrycksventiler som öppnar när trycket på utloppssidan överskrider ett börvärde.
+Flödet recirkuleras vanligen till inlopps sidan. Dylika förfaranden associeras med
+tryckackumulering på utloppssidan av pumpen. Fenomenet modelleras enligt Figure 4.
+[14]
+Funktionaliteten av beräkningsverktyget utvecklas i ett existerande Python
+programbibliotek. Programbiblioteket har fått namnet Pcalcs och förser användaren
+med funktionalitet som automatiserad kontroll av fysikaliska storheter, autogenererad
+dokumentation, visualisering och konvertering av beräkningar till beräkningsrapporter.
+Programbiblioteket är utvecklat med avsikt att automatisera grovjobbet associerat med
+lösning av rörnätverk genom användningen av ett grafiskt användargränssnitt för att
+rita, definiera och lösa hydrauliska jämviktsförfaranden i nätverken. Lösning av
+nätverkens tillstånd kan också automatiseras för ändrade temperaturer, tryck,
+rörstorlekar m.m. i beräkningsrapporterna.
+Modulerade rapportstrukturer har utvecklats för många vanliga processer i kraftverk.
+Rapporterna utvecklas med skalbarhet som ett centralt designkriterium. Därför
+används Jupyter Notebooks som plattform till rapporterna. Jupyter Notebooks är
+applikationer som förser användaren med bland annat exekvering av Python-kod och
+visualisering samt textformatering. Jupyter Notebooks kan också konverteras till PDFformat för rapporter. Exempel på några standard-kretsar som har implementerats är:
+▪
+
+Naturgas distribution
+
+▪
+
+Lagring och distribution av smörjolja
+
+▪
+
+Lagring och distribution av olika bränsleoljor
+
+▪
+
+Kylvatten
+
+▪
+
+Distribution av instrumentluft
+
+▪
+
+Distribution av dricksvatten
+
+▪
+
+Startluft
+
+▪
+
+Förbränningsluft
+
+▪
+
+Avgassystem
+
+▪
+
+Distribution av kemikalier
+
+88
+
+Fördelen med den nuvarande rapportstrukturen är att rapporterna genereras på basen
+av indata som kan uppdateras på ett enda ställe i rapportstrukturen. Nya rapporter kan
+därefter genereras enkelt med uppdaterade resultat. Detta ger en möjlighet att leverera
+rapporter på basen av indata som finns tillgängligt under olika skeden av projekt. I
+startskeden när konceptuell design utförs kan rapporter skapas på basen av sunda
+antaganden och erfarenhet i liknande projekt tillsammans med det indata som finns
+tillgängligt. I senare design skeden var mera indata finns tillgängligt kan rapporter med
+större noggrannhet genereras.
+För utveckling i framtiden kan en ekonomisk-optimering av nätverkets rörstorlekar
+inkluderas i Pcalcs biblioteket vara av avsevärd användbarhet. En dylik optimering
+borde först beakta de totala anskaffnings-, transport- och installationskostnaderna vid
+konstruktionen av ett rörsegment i nätverket genom en fast kostnadsfunktion. Den
+andra delen av kostnadsfunktionen skulle bestå av driftskostnader som följer av
+pumparnas tryckökningar. Behövliga randvillkor kunde inkludera t.ex. en global gräns
+på nätverkets flödeshastigheter och gränser på tillåtet tryck i nätverkets inlopps- och
+utloppsnoder.
+
+89
+
+10 References
+
+[1] F. Reif, Fundamentals of statistical and thermal physics, Boston: New York, McGrawHill, 1965.
+[2] “EPANET,” EPA, 31 08 2020 . [Online]. Available: https://www.epa.gov/waterresearch/epanet. [Accessed 13 04 2021].
+[3] R. Manning, “"On the flow of Water in Open Channels and Pipes.",” Transactions
+Institute of Civil Engineers of Ireland, Vols. vol. 20, vol 24, pp. 161-209, 179-207, 1891,
+1895.
+[4] G. S. Williams and A. Hazen, Hydraulic tables: showing the loss of head due to the
+friction of water flowing in pipes, aqueducts, sewers, etc. and the discharge over weirs,
+New York: John Wiley and Sons, 1905.
+[5] J. W. S. Q. V. L. Ian H. Bell, “Pure and Pseudo-pure Fluid Thermophysical Property
+Evaluation and the Open-Source Thermophysical Property Library CoolProp,” Journal
+Industrial & Engineering Chemistry Research, vol. 53, pp. 2498-2508, 2014.
+[6] A. International, ASTM D341-20e1, West Conshohocken: ASTM International, 2020.
+[7] SAE, Engine Oil Viscosity Classification SAE J300, Warrendale, 2015.
+[8] A. International, ASTM D1250-19e1, West Conshohocken: ASTM International, 2019.
+[9] ISO 8216-1: Petroleum products — Fuels (class F) — Specifications of marine fuels,
+Vernier, Geneva: ISO, 2017.
+[10] ASTM D396-21, Standard Specification for Fuel Oils, West Conshohocken, PA: ASTM
+International, 2021.
+[11] R. H. &. G. D. W. PERRY, Perry's chemical engineers' handbook, New York: McGraw-Hill,
+2008.
+
+90
+
+[12] Y. H. S.-Y. J. C.-J. C. Mohammad Kilani, “Numerical simulation of flow in a screw-type
+blood pump,” Journal of Visualization, vol. 8, no. 1, pp. 33-40, 2005.
+[13] CRANE, CRANE Technical Paper 410 US: Flow of fluids through valves, pipes and
+fittings., STAMFORD, CT (USA): Crane Valves, 2018.
+[14] C. Matthews, A Quick Guide to Pressure Relief Valves (PRVs), WILEY, 2005.
+[15] S. V.-S. C. S. Jorge Parrondo, “Development of a predictive maintenance system for a
+centrifugal pump,” Journal of Quality in Maintenance Engineering, vol. 4, no. 3, pp. 198211, 1998.
+[16] V. K. Balakrishnan, Graph Theory, McGraw-Hill, 1997.
+[17] K. JHA, “AUTOMATIC MINIMAL LOOP EXTRACTION AND INITIALISATION FOR WATER
+PIPE NETWORK ANALYSIS,” International Journal of Simulation, vol. Vol. 8 , no. No 2 ,
+2007.
+[18] L. A. R. Ezio Todini, “Unified Framework for Deriving Simultaneous Equation,” JOURNAL
+OF HYDRAULIC ENGINEERING, pp. 511-526, 2013.
+[19] L. K. Eaton, "Hardy Cross and "The Moment Distribution Method", Retrieved April 10,
+2011..
+[20] H. N. A. U. L. Theory, “Don J. Wood, Carl O. A. Charles,” Journal of the Hydraulics
+Division, vol. Vol. 98, no. Issue 7, pp. Pg. 1157-1170, 1972.
+[21] P. P. Dejan Brkić, “An Efficient Iterative Method for Looped Pipe Network Hydraulics
+Free of Flow-Corrections,” Fluids, vol. 4, no. 2, p. 73;, 2019.
+[22] P. S. Todini E, “A gradient method for the solution of looped pipe networks,” System
+Analysis and Simulation, vol. 1, pp. pp. 1-20, 1988.
+[23] P. R. Bhave, Analysis of Flow in Water Distribution Networks, Lancaster, PA.: Technomic
+Publishing. , 1991.
+
+91
+
+[24] “Evaluation of the suitability of global gradient algorithm and inverse matrix method
+for steady-state analysis of water distribution systems.,” Omer Halisdemir University
+Journal of Engineering Sciences, vol. 7, no. 1, pp. 23-33, 2018.
+[25] H.
+
+E.
+
+Grecco,
+
+“Pint:
+
+makes
+
+units
+
+easy,”
+
+2021.
+
+[Online].
+
+Available:
+
+[Online].
+
+Available:
+
+https://github.com/hgrecco/pint.
+[26] D.
+
+Goodger,
+
+“reStructuredText,”
+
+24
+
+May
+
+2016.
+
+https://docutils.sourceforge.io/rst.html#try-it-online. [Accessed 29 Jul 2021].
+[27] C. Bell, “fluids: Fluid dynamics component of Chemical Engineering Design Library
+(ChEDL),” 2016. [Online]. Available: https://github.com/CalebBell/fluids.
+[28] “Meteostat
+
+Developers,”
+
+17
+
+06
+
+2021.
+
+[Online].
+
+Available:
+
+https://dev.meteostat.net/python/. [Accessed 21 Jun 2021].
+[29] A. T. Ippen, “The influence of viscosity on centrifugal pump performance, Trans. ASME,
+Vol. 68 (1946), pp. 823-848,” Bethlehem, PA, 1946.
+
+92
+
+Appendix A
+This appendix displays the documentation home page for the main Pcalcs code library,
+the circuit solver and other documentation are not shown for the sake of brevity.
+
+93
+
+94
+
+95
+
+96
+
+97
+
+

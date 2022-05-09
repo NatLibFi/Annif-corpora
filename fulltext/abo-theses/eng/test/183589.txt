@@ -1,0 +1,6206 @@
+ÅBO AKADEMI UNIVERSITY
+FACULTY OF SCIENCE AND ENGINEERING
+
+Proposal of a long-term water supply network to Honde Valley
+Ward 10
+Master’s Thesis
+by
+Jeremias Eriksson
+
+Carried out at the Laboratory of Process
+and Systems Engineering at Åbo
+Akademi
+University
+under
+the
+supervision of docent Frank Pettersson.
+January 2022
+
+Abstract
+
+ii
+
+Abstract
+Title of the thesis:
+
+Proposal of a long-term water supply network to Honde
+Valley Ward 10
+
+Author:
+
+Jeremias Eriksson
+
+Thesis supervisors:
+
+Docent Frank Pettersson
+Laboratory of Process and Systems Engineering
+Faculty of Science and Engineering
+Åbo Akademi University, Turku, Finland
+Linnéa Pauls
+Project manager
+Engineers without Borders SWE
+Johanna Alexson
+Project manager
+Engineers without Borders SWE
+Jacob Chikuhwa
+Local contact to Ward 10
+Fortune Development Center
+
+Date and place: 12.01.2022, Turku Finland
+
+Pages 98
+
+The thesis provides a technical framework of gravitationally fed water distribution
+systems in rural developing regions. The functionality of gravity-fed networks’ theory
+includes energy profiles in the network, pressures and head losses, and demand and
+supply patterns which are needed for the dimensioning of the components. The
+components included in network systems are reviewed and how to estimate their sizes is
+presented. Furthermore, basic water quality analyses with respective treatment methods
+for centralized systems are also reviewed.
+The theory is applied to a project proposal of a gravity-fed distribution system in Honde
+Valley Ward 10 in Zimbabwe. A group of students from InnoEnergy (KTH, UPC)
+
+Abstract
+
+iii
+
+conducted a field trip in 2017 to the area where multiple topics with potential for
+development were analyzed, whereas the priority was given to the improvement of the
+sanitation and water supply situation in Ward 10. The public pipeline built in 2003 is
+deteriorating and only few inhabitants have access to it. Consequently, unorganized selfmade haphazardous systems have been built for individual use. The goal of the thesis is
+to provide a technical basis for how to develop an improved public system in the area in
+order to controllably manage the water resources and provide a reliable water supply to
+the inhabitants.
+The area has been mapped remotely with an open-source software, QGIS, based on
+satellite pictures and interviews. The water sources have been surveyed with a
+topographical runoff simulation in QGIS and verified with local measurements,
+whereafter a new proposed distribution system has been drawn and dimensioned
+according to the presented theory using data provided by Zimbabwe National Water
+Authority (ZINWA) and Fortune Development Center (FDC). To verify the functionality
+of the network from a hydrological perspective the proposed system has been simulated
+on MIKE+ modelling software by DHI.
+The result from the simulations shows that Ward 10 is technically suitable for a gravityfed water distribution network, however, some approximations have been used that need
+further on-site data and verifications to be more accurate. Although the area is technically
+suitable, there are other aspects that need to be considered. For example analysis of the
+state of the current pipelines and an improved maintenance and management system for
+the water supply infrastructure need to be developed.
+
+Keywords:
+
+Water supply, gravity-fed distribution, water quality, potable
+water, water treatment, developing region
+
+Preface
+
+iv
+
+Preface
+This Master’s thesis is part of an Engineers Without Borders project to develop the water
+supply standards in Honde Valley Ward 10.
+I want to thank my office mates and friends who have brought an everyday joy to the
+lunch and coffee breaks in-between the workhours spent on this project. Special thanks
+to my thesis supervisors Frank, Linnéa and Johanna who have enthusiastically shown
+interest in the work and supported me throughout the project, and additionally a thank
+you to Jacob for providing valuable information to the project and showing great
+appreciation, which has helped me stay motivated. Final thanks to my brother, M.sc
+Geology and Mineralogy Mathias Eriksson, for doing the runoff simulation in QGIS and
+helped me get started with the mapping software.
+I hope the villagers of Ward 10 and successors to this project will find some use of the
+provided theory and parts of the proposal to further the development in Ward 10 Honde
+Valley.
+“He blir nou bra”
+Jeremias Eriksson
+Turku, 12th January 2022
+
+Abbreviations and nomenclature
+
+Abbreviations
+BPT
+
+Brake-Pressure Tank
+
+CDBP
+
+Chlorination Disinfectant By-Product
+
+CT
+
+Contact Time
+
+EC
+
+Electro Conductivity
+
+EWB
+
+Engineers Without Borders
+
+FDC
+
+Fortune Development Center
+
+HRT
+
+Hydraulic Retention Time
+
+HT
+
+Header Tank
+
+HW
+
+Hazen-Williams
+
+LIDAR
+
+Light Detection and Ranging
+
+mWG
+
+meter Water Gauges
+
+NTU
+
+Nephelometric Turbidity Units
+
+PN
+
+Nominal Pressure
+
+SODIS
+
+Solar Water Disinfection
+
+SSF
+
+Slow Sand Filter
+
+ST
+
+Storage Tank
+
+TDS
+
+Total Dissolved Solids
+
+TSS
+
+Total Suspended Solids
+
+TVC
+
+Total Viable Count
+
+ZINWA
+
+Zimbabwe National Water Authority
+
+v
+
+Abbreviations and nomenclature
+
+Simulation and system legends
+Code: AXabcYy
+AX
+
+Line ID
+OP – Old Pipeline (existing pipeline)
+L1 – Line 1 (existing pipeline)
+L2 – Line 2 (existing pipeline)
+L3 – Line 3 (existing pipeline)
+L4 – Line 4 (existing pipeline)
+L5 – Line 5
+L6 – Line 6
+L7 – Line 7
+L8 – Line 8
+L9 – Line 9
+
+abc
+
+Village where the component is located
+MaW – Matingo West of Mupenga River
+MaE – Matingo East of Mupenga River
+Chi – Chipunha
+Nya – Nyakabinga
+SG – Saruwaka Gowa
+Mut – Mutsaka
+Sam – Samaringa
+Bar – Baradza
+Ham – Hambira
+Ngw – Ngwende
+Mte – Mutetwa
+Man – Manyonho
+Nyb – Nyabadza
+Mts – Mutsamba
+
+Yy
+
+Number of node or pipe from starting point (1-13), or if the node is a
+reservoir it has the following ID:
+HT – Header tank
+PBT – Pressure breaker tank
+ST – Storage tank
+Intake – intake to the system
+
+Additional legends
+Code: AX(A/B)abcY(.Zo/Dummy)
+A/B
+
+Secondary main line (A or B)
+
+.Z
+
+Branch from main line (1-5)
+
+o
+
+Outlet node with set demand
+
+Dummy
+
+Theoretical demand node, which input equals the nearby tank’s output
+
+vi
+
+Table of contents
+
+vii
+
+Table of Contents
+
+1
+
+Introduction ............................................................................................................... 1
+
+2
+
+Theory of gravitationally assisted water distribution systems .................................. 3
+2.1
+
+Energy profiles ................................................................................................... 4
+
+2.1.1
+
+Static pressure ............................................................................................. 5
+
+2.1.2
+
+Dynamic pressure ....................................................................................... 6
+
+2.1.3
+
+Head losses ................................................................................................. 7
+
+2.1.4
+
+Secondary head losses ................................................................................ 7
+
+2.2
+
+Base demand ...................................................................................................... 8
+
+2.2.1
+2.3
+
+Water quality, analyses, and treatment ............................................................ 11
+
+2.3.1
+
+Common Water contaminants .................................................................. 11
+
+2.3.2
+
+Analysis methods in the field.................................................................... 16
+
+2.3.3
+
+Water treatment methods .......................................................................... 20
+
+2.4
+
+3
+
+Demand pattern ........................................................................................... 9
+
+Components of a gravity-fed distribution system ............................................ 27
+
+2.4.1
+
+Catchment ................................................................................................. 28
+
+2.4.2
+
+Header tank ............................................................................................... 32
+
+2.4.3
+
+Brake pressure tank ................................................................................... 32
+
+2.4.4
+
+Storage tank .............................................................................................. 33
+
+2.4.5
+
+Pipes .......................................................................................................... 36
+
+2.4.6
+
+Outlets ....................................................................................................... 38
+
+The water supply situation in Ward 10 ................................................................... 39
+3.1
+
+Problem description of the water supply system in Ward 10........................... 39
+
+3.2
+
+Mapping of the existing network and Ward 10 ................................................ 44
+
+3.3
+
+Water resources in the area .............................................................................. 47
+
+Table of contents
+4
+
+5
+
+viii
+
+Water supply proposition to Ward 10 ..................................................................... 51
+4.1
+
+Demand specifications ..................................................................................... 55
+
+4.2
+
+Catchments ....................................................................................................... 57
+
+4.3
+
+Pipe specifications ............................................................................................ 59
+
+4.4
+
+Water tank specifications ................................................................................. 62
+
+4.5
+
+Water treatment specifications ......................................................................... 65
+
+4.5.1
+
+Analysis .................................................................................................... 65
+
+4.5.2
+
+Primary step .............................................................................................. 65
+
+4.5.3
+
+Secondary step .......................................................................................... 67
+
+4.5.4
+
+Tertiary step .............................................................................................. 68
+
+4.6
+
+Financial aspect ................................................................................................ 70
+
+4.7
+
+Management ..................................................................................................... 72
+
+Results and discussion ............................................................................................ 73
+5.1
+
+Further necessary technical data ...................................................................... 76
+
+5.2
+
+MIKE+ WD simulation results and discussion ................................................ 77
+
+6
+
+Conclusions............................................................................................................. 79
+
+7
+
+Swedish summary – Svensk sammanfattning ......................................................... 80
+
+8
+
+References ............................................................................................................... 83
+
+9
+
+Appendices.............................................................................................................. 86
+9.1
+
+Appendix A, Base data for Ward 10 ................................................................ 86
+
+9.2
+
+Appendix B, Pressure profiles and pressures in pipelines ............................... 90
+
+1
+
+1 Introduction
+This project is part of a more extensive program to develop the living standards in Honde
+Valley Ward 10, Zimbabwe. In developing countries, sustainability may be suppressed
+by more urgent pressures of the control for the situation regarding economic survival or
+population growth, as well as a lack of understanding and education. Our common future
+by the Brundtland reports defined sustainable development as:
+"development that meets the needs of the present without compromising the ability of
+future generations to meet their own needs." However, solutions to environmental
+problems are not without cost and, thus, a choice between multiple options must be made
+with an understanding of basic economic principles. Hence, proposals such as this one
+must be reviewed with other possible options and their feasibility determined from the
+local end users’ perspective.
+In 2017, a survey was conducted by students from InnoEnergy (KTH and UPC) where
+multiple aspects of the living standards in the village were analyzed, where the focus was
+on the following topics:
+-
+
+water supply harmonization, purification, and sanitation
+
+-
+
+sustainable and clean energy access
+
+-
+
+roads and infrastructure improvement
+
+-
+
+agriculture
+
+-
+
+community services
+
+-
+
+ecotourism
+
+Water supply was prioritized as the first topic to improve. The sanitation standards are
+primitive and access to purified water is lacking. Currently, the purification of the water
+is done on an individual level in Ward 10 (Chikuhwa, 2021). Poor sanitary conditions
+with a combination of poor nutrition can have disastrous effects on the community when
+water-related diseases rapidly spread throughout the village (Tebbutt, 2002). Ward 10 is
+developing a "green belt" program where the water supply for irrigation is focused on.
+This will help the inhabitants provide a livelihood from exporting products from their
+agriculture. Therefore, water distribution in large quantities with relatively good quality
+is essential to improve. A reliable method is through a pipelined network with a
+centralized treatment.
+
+2
+A theoretical framework is presented in the thesis of how gravitationally distributed water
+systems work, i.e. how the pressure profiles and demand patterns determine the
+components’ dimensions of the system. The components are tanks, pipes and filters which
+are reviewed, and rough dimensioning of their sizes is presented. The presented theory is
+applied to the situation in Honde Valley Ward 10, with a goal to improve the water supply
+situation for the inhabitants. The situation of the area is reviewed based on the data
+provided by FDC, ZINWA and the previous report. Mapping of the village borders and
+water resources has been made with an open-source software, QGIS. The maps are
+imported to a hydraulic simulation software MIKE+ WD, to prove the proposed network's
+hydraulic functionality. Technical details and management plans need to be verified from
+on-site surveys at a later stage of the project.
+
+3
+
+2 Theory of gravitationally assisted water distribution
+systems
+A distribution network should be built where there is a concentrated population;
+otherwise, excessive pipe length must be laid out, and other means of collecting water
+might be more efficient. Two conditions must be met for a gravity distribution network
+to work. Firstly, the water quantity from the sources must be equal to or larger than the
+water demand. Secondly, at least a 1% slope from the water source or header tank to the
+end node of the system is needed for a gravity-fed distribution, i.e., the topographic energy
+profile. If these two conditions are met, then theoretically, a gravity-driven system can be
+built (Sampers, 2005).
+Some general aspects for distribution networks in developing countries need to be
+considered when designing the system. It needs to be relatively simple to construct. The
+elements should be able to be repaired with local technologies. If a system is built with
+imported parts, spare parts can be difficult to obtain and the whole network might be left
+malfunctioning or unused. Therefore, the components should be made of materials which
+can be obtained from the local markets. Using local resources also reduces the cost of
+construction, which is another crucial criterion (WHO, 2017).
+The whole system should be easily operated, maintained, and supervised without needing
+professional training or education. If a problem in the process line occurs, it should be
+able to be resolved by the locals to keep the process continuously running. In some areas
+where electricity is expensive, it could also be necessary to have a process that does not
+need electricity continuously. Sometimes the area lacks infrastructure or is otherwise
+inaccessible; therefore, minimal machinery should be required to construct the facilities,
+and no electricity to operate the system can be an essential aspect (WHO, 2017).
+
+4
+
+2.1 Energy profiles
+The topographic profile describes the energy balances in the system. It is a good custom
+to draw the profile for each line and include the line’s elements in the profile to obtain a
+summary of the line’s functionality. For the topographic survey, a LIDAR map can be
+used as a rough estimation. For a more detailed study of the elevation for the system, an
+on-site survey should be done with the use of a theodolite, or alternatively, an Abney level
+or clinometer in inaccessible areas (Sampers, 2005).
+Bernoulli’s equation (1) describes the energy principle in gravity-fed distribution
+systems: the energy at the beginning of the system equals the sum of the energy at the end
+of the system and the friction losses. It can be divided into three parts, the velocity in the
+1
+
+system (2 ∙ 𝜌 ∙ 𝑉 2 ), the elevation of the system (𝜌 ∙ 𝑔 ∙ ℎ) and the pressure in the system
+(𝑝), which should all equal a constant energy level (𝑄𝑐 ).
+1
+∙ 𝜌 ∙ 𝑉 2 + 𝜌 ∙ 𝑔 ∙ ℎ + 𝑝 = 𝑄𝑐
+2
+
+(1)
+
+The pressure in water-distribution systems is usually expressed in water columns as meter
+water gauges (mWG), i.e., the weight of the water above the considered point.
+1kg
+= 1 bar = 10 mWG
+cm2
+
+(2)
+
+5
+2.1.1 Static pressure
+Static pressure is the pressure profile of the water energy when all the outlets are closed,
+and the flow is zero. In simple systems, this should be the maximum pressure in the pipes,
+which determines the pressure limits and material choices for the pipes. The pressure load
+in closed pipes is regarded as the water column in meters between its upper point and the
+point of consideration. The static pressure (𝑝𝑠𝑡 ) can be described as equation 3, where (𝐻)
+is the elevation difference from the two measured points (Sampers, 2005).
+𝑝𝑠𝑡 (𝑚𝑊𝐺) = 𝐻(𝑚)
+
+(3)
+
+Figure 1, static pressure gradient
+Nominal pressure (PN) is the pressure the chosen pipes should withstand without rupture,
+which in a static-head profile is the same as the static pressure. Standardized sizes range
+from PN6 up to PN400.
+
+6
+2.1.2 Dynamic pressure
+The dynamic pressure is the pressure occurring when valves and taps are open, and a flow
+in the pipes is present due to head losses in the pipes when the water is moving (see
+chapter 2.1.3). The dynamic pressure (𝑝𝑑𝑦𝑛 ) is therefore described as the static
+piezometric level (𝐻) subtracted by the head losses (∆𝑝), as depicted in Figure 2 and
+equation 4.
+𝑝𝑑𝑦𝑛 = 𝐻 − ∆𝑝
+
+Figure 2, dynamic pressure gradients
+
+(4)
+
+7
+2.1.3 Head losses
+The linear head losses in a pipe depend on several things: the pipe diameter, the flow in
+the pipe, the length of the pipe, and the roughness of the pipe material. As a rule of thumb,
+a head loss coefficient of 1% corresponds to a loss of 1 mWG for a 100-meter-long pipe.
+For a more precise calculation, head loss formulas have been developed. The most used
+friction loss formula used in the US is the Hazen-Williams (see equation 5). It can only
+be used for water, not other liquids, and was initially developed for turbulent flows only
+(Sampers, 2005).
+
+𝐻𝐿 =
+
+4.727 ∙ 𝐿 ∙ 𝑄1.852
+𝐶 1.852 ∙ 𝑑 4.871
+
+(5)
+
+where 𝐿 is the pipe length, 𝑄 is the flow, 𝑑 is the inner diameter of the pipe, and 𝐶 is the
+resistance coefficient which varies depending on which pipe material is used, according
+to Table 1.
+Table 1, Hazen-Williams constants
+Pipe material
+
+HW coefficient, unitless (C)
+
+Cast iron
+
+130-140
+
+Concrete or concrete-lined 120-140
+Galvanized iron
+
+120
+
+Plastic
+
+140-150
+
+Steel
+
+140-150
+
+Vitrified clay
+
+110
+
+2.1.4 Secondary head losses
+Secondary head losses are the friction from when water runs through fittings, valves,
+junctions, etc. Secondary head losses are generally only about 10% of the linear head
+losses and are usually neglected in simple networks (Sampers, 2005).
+
+8
+
+2.2 Base demand
+The estimated lifetime of the network system should be around 10-30 years; therefore,
+population growth needs to be considered when designing the demand flow. Usually, a
+30-year anticipation of population growth gives a relatively good ratio between the cost
+and the result. Equation 6 can be used to estimate the population growth.
+𝑟 𝑡
+𝑃𝑓 = 𝑃0 ∙ (1 +
+)
+100
+
+(6)
+
+where 𝑃𝑓 is the future estimated population, 𝑃0 is the current population, 𝑟 is the local
+growth ratio, and 𝑡 is the time perspective. (Arnalich, 2020)
+The amount of water per capita needed is illustrated in figure 3. For a long-term solution
+of a pipelined water system, the demand per inhabitant should be at least 60-80 liters per
+capita per day of water in developing regions, whereas 5 − 10 l/m2 is used for crop
+(WHO, 2017).
+
+Figure 3, base demand chart (WHO, 2017)
+
+9
+2.2.1 Demand pattern
+The demand pattern tests the network’s worst-case scenario when water is used
+simultaneously in larger quantities during the day. A generic daily domestic pattern is
+pictured in Figure 4, where the demand is larger in the morning and afternoon, whereas it
+is lower during nighttime. The base demand is multiplied by the multiplier, which causes
+variations in the demand; therefore, to keep the average base demand accurate, the
+average value of the multiplier must be equal to one. The multiplier can, during peak
+hours, reach up to 2.5 times the average demand (Arnalich, 2020).
+
+2,5
+
+Multiplier
+
+2
+1,5
+1
+0,5
+0
+1 2 3 4 5 6 7 8 9 101112131415161718192021222324
+
+Time period (h)
+
+Figure 4, generic domestic water demand pattern, 24h
+A theoretical demand pattern where irrigation is included every third day is depicted in
+Figure 5. The multiplier can in this case reach five times the average base demand during
+irrigation hours.
+6
+
+Multiplier
+
+5
+4
+3
+2
+1
+
+1
+7
+13
+19
+25
+31
+37
+43
+49
+55
+61
+67
+73
+79
+85
+91
+97
+103
+109
+115
+121
+127
+133
+139
+
+0
+
+Time period (h)
+
+Figure 5, theoretical demand pattern with two irrigation cycles included, 72h
+
+10
+In addition to daily variations of the water demand, weekly and monthly water demand
+and supply variations occur as well. These can depend on cultural and seasonal changes
+and varies throughout regions. If no further survey of the weekly and monthly variations
+is done from the area, a generic multiplier of 1.4 can compensate for the changes.
+Unaccounted water uses such as leaks, unauthorized connections, and spilled water when
+filling containers is about 20% of the average demand; therefore, another multiplier of
+1.2 is added to the base demand.
+In a worst-case scenario, all the multipliers are added to the base demand simultaneously,
+which equals 4.2 times the base demand. Therefore, the system should be designed to
+sustain the worst-case scenario, where the design flow is the sum of all the taps opening
+simultaneously, which is the base demand multiplied by 4.2 (Arnalich, 2020).
+Preferably, surveys need to be done in the area of interest to find a suitable indicative
+demand and supply patterns. If no data are available, the presented generic numbers can
+be used.
+
+11
+
+2.3 Water quality, analyses, and treatment
+The purpose and end-use of the water determine whether treatment of the water is needed
+or not, i.e., if it is for drinking or irrigation. Treating irrigation water may be considered
+a waste of resources but, depending on the demand ratio of the drinking water and
+irrigation water and the total flow, the water qualities can be integrated into one system
+if it is economically more beneficial than building two separate systems. Therefore, if
+drinking water is included, treatment is a necessity for the network. Untreated water may
+also cause more wear to the system and clog the pipeline depending on the quality.
+Although water treatment is essential, large quantities of reasonably good quality water
+are preferable to an insufficient quantity of good quality water. An inadequate amount of
+water cannot ensure minimum hygiene levels, potentially leading to more acute health
+problems (Action contre la faim, 2008).
+In many developing countries lacking public distribution system, the cleaning and
+purification responsibility of raw water is left to the consumers themselves. Common
+domestic treatment methods are boiling the water to kill bacteria, filtrating the water
+through ceramic filters, or solar disinfection (SODIS) (Zinn, et al., 2018). Although these
+methods can be effective treatment methods to obtain drinkable water, it takes time from
+other activities, such as education and work, if people treat the water themselves. Also, it
+requires education and knowledge of the dangers of drinking untreated water for people
+to understand to purify the raw water themselves, which risks the spreading of waterborne diseases. Therefore, large-scale centralized water purification is a significant step
+to enable inhabitants focus on other tasks than water treatment and to meet the sustainable
+development goals such as “clean water and sanitation” as well as “decent work and
+economic growth” amongst others.
+The treatment in a centralized cleaning system is often done in multiple steps depending
+on the raw water quality. The water treatment method and number of steps required are
+based on the raw-water quality and catchment method (see section 2.4.1). Therefore, the
+intake raw-water quality must be analyzed before choosing a suitable method.
+2.3.1 Common Water contaminants
+The water source is either groundwater, surface water, or rainwater. Depending on the
+source and location of the water, the quality may vary. For instance, the type of soil and
+rock the water runs through significantly affects contaminants it may contain. Also,
+depending on the season when the flow and temperature varies may change the water
+
+12
+quality. In addition to the natural contaminants, human activities pollute the water, such
+as poor agricultural practices, dumping garbage, and open defecation (sswm, 2021).
+Water contaminants are divided into three qualities, chemical, biological and physical.
+-
+
+Chemical
+o Natural organic chemicals and materials
+o Toxic metals and solvents
+o Inorganic substances
+
+-
+
+Biological
+o Pathogens and microorganisms such as bacteria, viruses, protozoa, and
+worms
+
+-
+
+Physical
+o Suspended particles (turbidity), temperature, odor, color and taste
+
+The contaminants are furthermore often divided into primary and secondary
+contaminants. In general, the primary prioritized contaminants are biological pathogens
+and chemicals known to cause adverse health effects. Non-harmful contaminants that do
+not cause severe health effects but influence the smell, taste, color, and turbidity of the
+water or cause technical effects that can damage pipelines or appliances are secondary
+contaminants such as zinc iron particulate matter and humic material (WHO, 2017).
+The World Health Organization has complete lists summarized on most known
+contaminants, a few of the most common are summarized in Table 2.
+Table 2, overview of main pollutants (Action contre la faim, 2008)
+Pollution type
+
+Contaminant
+
+Origin
+
+Effect
+
+Chemical:
+Natural organic components
+
+Easily biodegradable organic
+matter, polluting if found in
+high concentrations
+
+Wastewater from domestic
+use
+Food and paper industries
+
+Chemical:
+Toxic
+
+Heavy metals, e.g., cadmium,
+lead, mercury…
+Solvents
+Pesticides
+Nutrients, such as nitrogen,
+potassium, and sodium.
+Necessary in small quantities
+but polluting if found in high
+concentrations
+
+Insecticides and weed killers
+Chemical and metal
+industries
+
+Increases the number of
+bacteria, which reduces
+oxygen levels in the water
+and causes organisms and
+fish to die of asphyxiation
+Carcinogenic
+Can cause various disorders
+and possibly death
+
+Domestic wastewater
+Agriculture, fertilizers
+Animal excreta
+
+Can cause vegetable
+overproduction leading to
+asphyxia of fish
+
+Biological
+
+Virus
+Bacteria
+
+Excreta
+
+Physical pollution
+
+Suspended particles
+
+Soil washing
+
+Transmission of diseases
+such as Cholera and
+Rotavirus
+Non-aesthetic
+
+Temperature
+
+Industry water cooling
+
+Asphyxiation of fish
+
+Radioactive elements
+
+Nuclear plant
+
+Disease and mutation of
+aquatic organisms
+
+Chemical:
+Nutritive substances
+
+𝑁𝑂2 blood disease provoking
+to
+babies and fetuses
+
+13
+2.3.1.1 Biological contaminants
+In rural areas, industries are quite limited and the primary source of biological pollution
+is contact with excrements which spread diseases. Excreta contain a high number of
+microorganisms, which are not visible to the naked eye. Water sources can easily be
+polluted in various ways, if they are not properly protected. Especially surface water
+sources need to be assumed to have been polluted and therefore require treatment. Table
+3 presents the most common diseases that can spread through poor water treatment and
+hygiene standards.
+Table 3, common diseases transmitted by excrements (WHO, 2017)
+Microorganism
+Virus
+
+Disease
+
+Symptoms
+
+Hepatitis A, E
+
+Jaundice (liver)
+
+Poliomyelitis
+
+Paralysis followed by aftereffects
+
+Typhoid
+
+Nervous
+
+and
+
+digestive
+
+disorders, fever
+Bacteria
+
+Shigella
+
+Diarrhea, vomiting
+
+Cholera
+
+Dysentery
+
+Amoebas
+
+Amoebiasis
+
+Diarrhea, vomiting
+
+Worms
+
+Worm infection
+
+Gastro-intestinal
+disturbances
+
+Water age is another essential quality to consider when distributing water through a
+pipeline system. Water stagnation and excessive water age can cause chlorine disinfection
+byproducts (CDBP) when the disinfectant concentration is not strong enough to control
+microorganisms. The water age is defined as the time it takes for the water to reach its
+consumers from the water source and is, therefore, influenced mainly by the distribution
+system’s flows and pipe lengths. Often in dead ends or large tanks, water becomes
+stagnant and degrades. Satellite chlorination can hinder microorganisms from forming
+(Ingeduld, 2017). An optimized pipeline with loop topologies can keep the water flowing
+in the pipes, decreasing the water age — more details in section 2.4.5 about pipeline
+layout designs.
+
+14
+2.3.1.2 Chemical contaminants
+Common natural chemicals found in East African waters are Calcium, Magnesium,
+Potassium, Sodium, Bicarbonate, Carbonates, Chloride, Nitrate, and Sulphate ions.
+Although water can contain many constituents, generally, only a few contaminants
+propose a health risk. Therefore, different parameters require different priorities for their
+management. Some propose direct health risks if found in large concentration, while
+others do not cause severe health effects but cause acceptance problems from the users
+due to bad odor or taste. Table 4 presents some general chemical contaminants that can
+cause health effects, and Table 5 presents chemical substances that can cause acceptance
+problems and wear to the distribution system (WHO, 2017).
+Table 4, primary chemical contaminants presenting a sanitary importance to the
+drinking water (WHO, 2017)
+Inorganic
+
+Maximum
+
+substance
+
+concentration
+
+Arsenic
+
+0.01 mg/l
+
+Fluoride
+
+1.5 mg/l
+
+Manganese
+
+0.5 mg/l
+
+Nitrites
+
+3 mg/l
+
+Nitrates
+
+50 mg/l
+
+Chlorine
+
+5 mg/l
+
+Origin
+
+Effect
+
+Industrial waste, Carcinogenic,
+soil and rocks
+cardiovascular,
+neurological and other
+conditions
+Rocks and soil, High concentrations and
+fish food,
+long-term exposure can
+manure,
+lead to dental and bone
+industrial
+fluorosis
+pollution
+Rocks and soil
+Toxic effect on nervous
+system, turbidity and
+taste
+Fertilization
+Harmful to infants, can
+from farms,
+cause blue baby
+nearby septic
+syndrome
+tanks.
+Soil, fertilizer,
+Harmful to infants, can
+organic
+cause blue baby
+substances
+syndrome
+Disinfection for Eye, nose, and stomach
+water tanks and discomfort. Odd taste.
+pipelines, the
+excess amount
+can cause
+symptoms
+
+15
+The physical appearance of the water can cause acceptance issues for the users, although
+the water is safe to drink. Therefore, the contaminants presented in table 6 are regarded
+as a secondary priority. The color of the water needs to be relatively clear, and the taste
+and odor should be neutral. Usually, a turbidity of lower than 5 NTU is acceptable for the
+color. Table 5 summarizes some chemical contaminants that can cause acceptance
+problems (WHO, 2017).
+Table 5, secondary chemicals causing acceptance problems and wear to the pipeline
+(WHO, 2017)
+Inorganic substance
+
+Maximum values
+
+Origin
+
+Effect
+
+Aluminum
+
+0.2 mg/l
+
+Bluish
+discoloration
+
+Ammonia
+
+1.5 mg/l
+
+Sulphur hydrogen
+
+0.05 mg/l
+
+Chloride
+Sodium
+Hardness (Calcium,
+Magnesium)
+
+250 mg/l
+250 mg/l <
+200 mg/l <
+
+Coagulants in
+water treatment,
+industries
+Wastewater,
+plants, excreta,
+organic materials
+Rocks, anaerobic
+organic substances
+Water-dissolved
+minerals.
+
+Phosphate
+
+No standard
+
+Potassium
+Sulphate
+
+No standard
+250 mg/l
+
+Iron
+
+0.3 mg/l
+
+Organic substance,
+detergent, manure
+Manure
+Rocks, soil,
+industries
+
+Common
+contamination
+from soil
+
+Taste and odor
+
+lethal by inhalation
+Taste problem
+Can cause clogs
+due to buildup of
+deposits.
+Detergents hard to
+use for dishes and
+clothes washing.
+
+Gastro-intestinal
+irritation, taste,
+aggressive to
+concrete
+Orange stains,
+metallic taste,
+bacteria feed on
+iron which can
+cause clogging
+
+16
+2.3.2 Analysis methods in the field
+Generally, water can be used for consumption if it has no taste, smell, or significant color
+within the user’s acceptance, nor should it have been in contact with excrements or near
+any other human activity, such as agricultural fields, industries, or garbage. Field
+measurements, such as EC, pH, turbidity, and TVC, can be conducted to overview the
+water quality; however, further laboratory analyses are recommended before determining
+treatment methods due to the numerous possible contaminants. Qualitative field
+observation of the water’s quality is presented in Table 6, however, note that pathogens
+are not visible to the naked eye (CAWST, 2009).
+Table 6, Qualitative observation of the water (CAWST, 2009)
+Observation
+
+Possible contaminant
+
+Foamy
+
+Detergents
+
+Black in color
+
+Manganese or bacterial growth
+
+Yellow, brown, or red
+
+Iron
+
+Yellow or dark brown
+
+Tannis and pigment from leaves and back
+
+White deposits or scale
+
+Hardness, dissolved metals
+
+Muddy, fishy, earthy, peaty odor
+
+Algae, bacteria, organic matter
+
+Rotten egg odor
+
+Hydrogen sulfide
+
+Chlorine odor
+
+Chlorine residual from the treatment
+process
+
+Bitter or metallic taste
+
+pH, zinc, copper
+
+17
+An electro conductivity (EC) meter is a good extensive analysis method to measure the
+water quality. Conductivity measures the capacity of the water-conducting current
+between two nodes, therefore indicating how much minerals and salts are present in the
+water (such as Ca+2 , Mg +2 , Na+ , K + , Mn+2 , Cu+2 , Zn+2 , Fe+3 , Cl− , SO−4 and NO−3). EC
+should be measured in 20-25 °C water to follow the standard values as conductivity
+increases with temperature. Conductivity is usually measured in micro-Siemens by
+centimeters but can also be measured in total dissolved solids (TDS) multiplied by 0.64.
+Table 7 describes different values acceptable drinkable standardized values (WHO,
+2017).
+Table 7, conductivity values (WHO, 2017)
+Values µS/cm
+
+Interpretation
+
+µS/cm < 50
+
+Low conductivity, unpolluted rainwater,
+water deprived of minerals, not
+recommended for consumption
+
+100 < µS/cm < 500
+
+Average conductivity. Water containing
+minerals, suitable for consumption
+
+500 < µS/cm < 1000
+
+High conductivity, rich in minerals,
+possible brackish taste but drinkable
+
+1000 < µS/cm
+
+Very high conductivity. Strong
+possibility of salinity and taste problems,
+not suitable for consumption.
+
+2000 = µS/cm
+
+Maximum limit for consumption and
+agriculture
+
+3000 = µS/cm
+
+Maximum limit for cattle
+
+18
+Total dissolved solids (TDS) or total suspended solids (TSS) measures the turbidity in the
+water, i.e., the transparency of the water. Suspended particles such as organic waste,
+organisms, clay, etc., can affect the color, taste and smell, and the health standards of the
+water. High turbidity can also stock filters, fill tanks and pipes with sand and mud, and
+damage valves and taps. If chlorination is used, even a low level of turbidity prevents
+chlorine from killing germs effectively, since micro-organisms can attach themselves to
+particles. Turbidity is measured in Nephelometric Turbidity Units (NTU); for drinking
+water, less than 5 NTU is recommended, ideally 0.1 NTU. It can easily be measured in
+the field with a turbidity tube meter or an electronic turbidity meter. Turbidity tends to be
+lower during the dry season and higher during the rainy season due to higher flows that
+stir up the surrounding in the wet season (Action contre la faim, 2008).
+Table 8, turbidity values (WHO, 2017)
+Values
+NTU < 5
+5 < NTU < 30
+50 < NTU
+
+200 < NTU
+
+Interpretation
+Clear and pure water to the naked eye
+Can be directly filtered and chlorinated
+Slightly colored
+Must be filtered before chlorination
+Colored
+Pre-treatment needed before chlorination,
+e.g. with a slow sand filter (SSF)
+Must be pre-treated before SSF e.g. with
+sedimentation and filtered before
+chlorination.
+
+19
+The acidity of the water can be measured on the field with colorimetry or a pH meter. A
+high pH value can cause a bitter taste, form deposits in the system, and reduce the
+effectiveness of chlorine disinfection. Low pH can corrode or dissolve metals, causing
+wear to the distribution system (Swenson & Baldwin, 1965). Table 9 shows the
+guideline values of suitable pH values for drinkable water.
+Table 9, pH values (WHO, 2017)
+Values
+pH < 5
+
+Interpretation
+Strong acidity
+Possible chemical pollution, rarely in
+natural waters
+Not drinkable
+Average acidity, not drinkable
+Low acidity, can be corrosive but
+drinkable
+Neutral, found naturally in limestone
+areas, drinkable
+Average alkalinity, drinkable
+Strong alkalinity, found in stagnant water
+with many plants, not drinkable
+
+5 < pH < 6.5
+6.5 < pH < 7
+7 < pH < 8
+8 < pH < 9
+9 < pH
+
+An effective way to analyze if excreta has polluted the water is by filtering the water
+sample through a membrane filtration (0.45 µm) to find thermotolerant bacteria. By
+incubating the filter in a warm and nutritious environment, visible colonies will form on
+the filter after 16-18 hours, if bacteria are present. About 90% of thermotolerant bacteria
+is Escherichia Coli (E. coli) which is resistant outside the body and can therefore be found
+in polluted waters, which indicates that excreta have contaminated the water. Therefore,
+other microorganisms from excrements can also be present. (Action contre la faim, 2008).
+For a more comprehensive biological analysis, the Total Viable Count (TVC) is tested in
+the laboratory to measure the overall number of bacteria.
+Table 10, excreta analysis (WHO, 2017)
+Type
+
+Values
+
+Interpretation
+
+Thermotolerant coliforms
+
+0 / 100 ml
+
+Fecal pollution indicator
+
+Fecal streptococcus
+
+No standard
+
+Fecal pollution indicator
+
+Total Coliforms
+
+0/100 ml in 95% of tests
+
+Indicator of the
+
+(TTC)
+
+treatment efficiency
+
+20
+The field analysis methods can give reasonable qualitative indications of which pollutants
+are present in the water; for further analyses laboratories are required to determine which
+specific chemical and biological pollutants are present, since each contamination requires
+its own analysis. Therefore, detailed analyses can be expensive, and only prioritized
+pollutants and potential elements found from the general field methods need to be
+analyzed.
+
+2.3.3 Water treatment methods
+The treatment methods required depends on the water quality analyses from the raw water
+source and the intake method (see section 2.4.1). Depending on the water quality results,
+suitable treatment methods can be selected.
+A centralized treatment system is often designed to remove several contaminants,
+chemicals, pathogens, and suspended solids; therefore, multiple steps are required to treat
+different qualities of the water. The primary step removes the largest physical particles
+and turbidity before entering further into the system. The secondary step removes most
+of the chemical substances and pathogens, and the tertiary step eliminates any remaining
+disease-causing pathogens and stops new ones from forming in the system. (sswm, 2021).
+The treatment methods should withstand various flows depending on the seasons (WHO,
+2017).
+
+2.3.3.1 Primary step
+If direct catchments are used, a physical filter is needed at the inlet to reduce the largest
+debris entering and stocking the pipeline system. Bar screens or racks with
+15-25 mm gaps remove the largest debris; however, they need to be cleaned regularly,
+especially during the rainy season.
+If the water is very turbid (>200 NTU), a sedimentation tank is needed before further
+treatment. Sedimentation is a physical treatment process where coarser suspended
+particles heavier than water are removed by settling them down to the bottom of a tank.
+There are many different types and shapes of sedimentation tanks, whereas the most
+preferred and widely used are rectangular shaped tanks with horizontal flow, partly
+because maintenance costs are low for this type. (Anupoju, 2021). Figure 6 depicts the
+principle of a sedimentation tank. The inlet zone allows uniform water dispersion into the
+tank’s entire cross-sectional area. The settling zone is where the particles settle through
+
+21
+the flowing water. Particles accumulate at the sludge zone, from which they need to be
+removed regularly. The outlet zone collects the clarified liquid uniformly from the crosssectional area.
+
+Figure 6, side view of a rectangular sedimentation basin, showing the four typical zones
+(Anupoju, 2021)
+The flow velocity of water must be reduced for the particles to settle down; the velocity
+at which the particles are settling is called settling velocity (𝑉𝑠 ). The settling velocity
+depends largely on the size of the particles and the relative density of the particles to the
+fluid. There are two settling types, discrete settling and flocculated settling, illustrated in
+Figure 7. Due to the larger flocculation size, they settle down more rapidly than discrete
+particles. If necessary, flocculants can be added to the fluid to flocculate discrete particles
+(Wisniewski, 2012).
+
+Figure 7, difference between discrete and flocculated settling, (Wisniewski, 2012)
+
+22
+Table 11 gives an overview of the usual settling velocity for respective particle sizes.
+Table 11, an overview of settling velocity of respective particle sizes (Pilgrim, 2001)
+Classification of
+Particle diameter (μm) d
+Settling velocity (m/s) Vs
+particle size
+Very coarse sand
+2000
+0.2
+Coarse sand
+1000
+0.1
+Medium sand
+500
+0.053
+Fine sand
+250
+0.026
+Very fine sand
+125
+0.011
+Coarse silt
+62
+0.0026
+Medium silt
+31
+0.0066
+Fine silt
+16
+0.0018
+Very fine silt
+8
+0.0004
+Clay
+4
+0.00011
+The time it takes for the particle to settle is called hydraulic retention time (HRT). The
+HRT can be calculated by dividing the height (ℎ) of the basin by the settling flow of the
+particle (𝑉𝑠 ), as described in equation 7.
+𝐻𝑅𝑇 =
+
+ℎ
+𝑉𝑠
+
+(7)
+
+Rough dimensions for the sedimentation tank can be calculated by multiplying the design
+flow (𝑄̇ ) with the retention time, as equation 8. The height (ℎ) of a sedimentation tank is
+typically between 2 and 3 meters, and the length (𝑙) is four times the width (𝑤), as
+equation 9. Preferably, the water flow velocity should be less than 0.005 m/s to avoid
+turbulence in the water which may disrupt the sedimentation process.
+𝑉 = 𝑄̇ ∙ 𝐻𝑅𝑇
+𝑉 = ℎ ∙ 𝑤 ∙ 𝑙 = ℎ ∙ 5𝑤
+
+(8)
+(9)
+
+To improve the efficiency of a sedimentation basin inclined plate settlers (IPS-design)
+can be added, reducing the area needed for the sedimentation process to occur. This design
+is suitable for hilly areas where the construction of large facilities might be challenging
+(Wisniewski, 2012).
+
+Figure 8, Sedimentation tank with an Inclined Plate Settler - design (Wisniewski, 2012)
+
+23
+2.3.3.2 Secondary step
+The secondary treatment step removes the bacteriological pathogens from the water,
+making it safe to drink. The secondary step can use slow sand filters as a treatment method
+or membrane filters, if the water is severely contaminated.
+Slow sand filters (SSF) use gravity to let water flow through a filter of sand (with an
+adequate particle diameter size of 0.15-0.3mm). On the top few centimeters, a layer on
+the sand forms a biological layer known as the "schmutzdecke," which allows the filter
+to remove turbidity and microorganisms from the water. A well-designed SSF can
+effectively remove biological pathogens and turbidity in a single step. The treated water
+is collected from underdrains at the bottom of the filter. The top sand layer accumulates
+solids and needs to be replaced periodically. The typical flow rate is usually between 0.1
+and 0.3 m3/h per square meter (WHO, 2017).
+SSFs are adequate for low turbidity water. If the water source has a high degree of
+turbidity (>200 NTU) or algae contamination it can cause the filter to clog rapidly, in
+which case pre-treatment of the water is needed, e.g., sedimentation (see section 2.3.3.1).
+SSFs are highly reliable, simple to construct, and have low lifecycle costs. The
+construction and maintenance only require basic skills, making this treatment method a
+promising filtration method in rural communities with reasonably good initial surface
+water source quality (sswm, 2021).
+
+Figure 9, illustration of an SSF construction (Huisman & Wood, 1974)
+
+24
+SSFs are very efficient for removing bacteria and viruses; with an efficiency ratio of 9099% removal rate, SSFs will seldom indicate microbial contamination present in the
+outlet. However, SSFs are not effective for removing most chemicals, as shown in Table
+12 (WHO, 2017).
+Table 12, an overview of SSF filtration efficiency (sswm, 2021)
+Effective filtration ratio
+
+Somewhat effective
+
+Not effective filtration ratio
+
+filtration ratio
+Bacteria
+
+Odor, taste
+
+Salts
+
+Protozoa
+
+Fe, Mn
+
+Fluoride
+
+Viruses
+
+Organic matter
+
+Trihalomethane (THM)
+
+Heavy metals (Zn, Cu, Cd, Arsenic
+
+Majority of chemicals
+
+Pb)
+Turbidity
+
+-
+
+-
+
+Disinfectants, such as chlorination, are usually added after the SSF to remove the
+remaining contaminants (see section 2.3.3.3), decreasing any activity for bacteria during
+the storage and distribution of the water. If chlorine is introduced, it must be added after
+the SSF not to interfere with the schmutszdecke (sswm, 2021).
+If the raw water contains contaminants that SSFs are ineffective for, membrane filters can
+be used, although these filters need more efficient pre-treatment than SSFs not to clog the
+filter. Membrane filtration uses a thin, porous sheet to separate contaminants from the
+water when a force is applied through the filter. The membrane process can remove
+bacteria, microorganisms, particulate material, micropollutants, natural organic material,
+and chemicals such as arsenic and fluoride. The membrane filtration can produce potable
+water from ground, surface, and seawater sources. However, it is expensive, and the
+membrane can be difficult to obtain in rural developing areas, also maintenance and
+service of the membrane filters require professional expertise which can be lacking in
+remote areas (sswm, 2021).
+Due to the importation of membrane filters to rural areas and continuous expert
+maintenance needed, membrane filters are not recommended to use in simple distribution
+systems and, thus, are not further presented in this context.
+
+25
+2.3.3.3 Tertiary step
+The tertiary step is a treatment within the distribution system that prevents
+recontamination and forming of microorganisms in the pipelines and water tanks,
+therefore ensuring the drinking water quality throughout the system.
+Chlorination effectively kills remaining pathogens and hinders algae, fungi, and bacterial
+growth in pipes and tanks. However, if chlorination is misused, by-products can form that
+are toxic and cause odor and taste problems to the drinking water (sswm, 2021).
+Different types of chlorine can be used which are in gaseous form, liquid form, or powder
+form. Chlorine in gaseous form is usually used in public systems due to higher
+concentrations; however, it can be dangerous if used by untrained personnel. Smaller
+systems or private households use chlorine in liquid or powder form.
+The presence of chlorine residuals in the water after treatment indicates that all oxidable
+substances in the water have been oxidized and, therefore, any biological activity
+disabled. By maintaining a low chlorine residual concentration assures a successful
+treatment; therefore, the concentration should be constantly measured throughout the
+distribution system to prevent recontamination in the pipelines and tanks. An ideal
+chlorine residual ratio is 0.2-0.5 mg/l. If biological contamination spreads in the system,
+shock chlorination can be needed with a 50 mg/l chlorine residual concentration.
+Otherwise, an excessive chlorination is corrosive to equipment and undesirable to
+consumers due to taste and smell (Oram, 2021).
+
+26
+The amount of disinfectant needed depends on the concentration of the chlorine type and
+the initial water quality. The time required for the disinfectant to react is called Contact
+time (CT). CT depends on the temperature, pH, and targeted microorganisms. It can
+roughly be estimated by a K-factor that is temperature and pH-dependent, whereafter it is
+divided by the targeted chlorine residual (Oram, 2021).
+Table 13, K-factor (Oram, 2021)
+Highest pH
+
+Water temperature for K factors
+>10 °C
+7 °C
+4
+5
+8
+10
+12
+15
+16
+30
+20
+25
+24
+30
+
+6.5
+7
+7.5
+8
+8.5
+9
+
+𝐶𝑇 =
+
+< 4 °C
+6
+12
+18
+24
+30
+36
+
+𝐾
+𝐶
+
+(10)
+
+CT is the contact time in minutes, K is the factor from Table 13, and C is the chlorine
+residual concentration, usually between 0.3 and 0.5 mg/l.
+Chlorination disinfection by-products (CDBPs) can be produced in the chlorination
+process (see Table 14) if the water contains natural organic matters such as fulvic and
+humic acids, usually found in tropical regions surface water sources. If the water is very
+turbid (>20 NTU), pathogens can attach to suspended particles, reducing the effectiveness
+of the chlorine treatment. For these reasons, the water should be pre-treated before
+chlorination is introduced unless the quality of the raw water can be ensured. Pretreatment also reduces the CT, increasing the effectiveness and reducing the amount
+needed (sswm, 2021).
+Table 14, Chlorination Disinfection By-Products
+Chlorination disinfection by-products
+Trihalomethanes (THMs)
+Haloacetic acids (HAAs),
+Chlorophenols
+Aldehydes, nitriles, chloramines
+
+Effect
+Carcinogenic, chronic exposure can cause
+liver and kidney damage
+Irritant, corrosive and destructive to
+membranes
+Cause taste and odor problems, toxic if
+found in higher concentrations
+Taste and odor
+
+27
+
+2.4 Components of a gravity-fed distribution system
+The components in a gravity-fed distribution system are illustrated in Figure 10. The
+water source and catchment may vary depending on the accessibility and circumstances,
+whether from a spring catchment, well, borehole, or surface water. The water source and
+its quality determine the treatment method required for the system. The first tank in the
+pipeline system is a header tank used as an initial flow buffer to the rest of the system. If
+treatment is required, it can also be used as a sedimentation tank and be combined with a
+slow sand filter. If the elevation difference is too significant and the pressure in the
+pipeline becomes substantial, break-pressure tanks can be installed as primitive
+substitutes to pressure-reducing valves to reduce the internal pressure to atmospheric
+pressure in the pipeline. Storage tanks are the largest components in the system and are
+used to secure a constant supply regardless of the demand and supply variations. The
+outlets distribute the water close to the consumers and need to follow certain criteria to
+be practical.
+
+Figure 10, component overview of a gravity-fed distribution system (Sampers, 2005)
+
+28
+2.4.1 Catchment
+There are generally three different ways of catching water to a distribution system. These
+are rainwater, surface water and groundwater.
+Rainwater can be harvested from rooftops and other large surfaces and is brought by
+gutters to a water reservoir. Rainwater is mainly a temporal and complementary way of
+collecting water. Whether it is in an area where it rains a lot or where it is dry and any
+means of collecting water is used, the method requires large storage volumes to be useful
+over longer time periods. During long storage periods, the water is easily exposed to
+contamination. It may also easily become polluted through the catchment process from
+rusty rooftops or animal excretes. Due to the lack of minerals, the water is acidic and
+corrosive towards metals (Action contre la faim, 2008).
+Surface water is an easily accessible resource to use and can be used in various ways.
+However, surface water is vulnerable to pollution and may dry out during the dry season.
+Direct river catchments need a screening of debris to hinder the largest particles to enter
+the pipeline. A simple way is to build rocks around the pipe which work as a rough filter
+as well as physical protection (see Figure 11). The intake should at least be more than 30
+cm under the surface to avoid floating particles, such as excrements and organic material
+and algae, to enter the pipeline. Nor should the intake be near the bottom due to risk of
+sedimented contaminants entering the intake. (Arnalich, 2020) Furthermore, the intake
+can be equipped with bar screens or racks with 15-25 mm gaps to filter out sediments. To
+reduce further contamination of the water the direct river intake should be placed
+upstream of all other activities, such as agricultures, industries and storm water outlets
+(Action contre la faim, 2008).
+
+Figure 11, direct river intake with rough screening filter (Arnalich, 2020)
+
+29
+To ensure sufficient flow from direct river intakes small dams can be built to increase the
+water depth. A dam also creates an area of the water at rest, allowing particles to sediment
+if it is large enough (see section 2.3.3.1). Dams should be carefully designed, as erosion
+can easily cause the dam to collapse; moreover, the dam should not flood the area when
+it is full. Figure 12 illustrates an example of a partially closed river dam. The walls and
+sides must be reinforced with stones and masonry as not to let them erode. The design of
+dams varies and depends largely on the specific area it is built on; preferably, it should be
+built on bedrock in narrow stretches where there is a significant change in the elevation
+(Arnalich, 2020).
+
+Figure 12, partially closed dam, top view (Arnalich, 2020)
+Indirect river catchments are the intake of choice from surface water sources due to them
+greatly reducing the need for subsequent treatment. Figure 13 illustrates the principle of
+the method. In a similar way as slow sand filters treat the water, the catchment pipe is
+buried at least one meter in layers of sand with a progressive reducing diameter starting
+from 10 mm gravel around the pipe, which significantly reduces the bacteriological
+contamination from the surface water. In gravitationally fed systems, the underlying pipe
+can be placed in parallel with the stream flow to increase the catchment area and supply
+(Arnalich, 2020).
+
+Figure 13, indirect river catchment, side view (Arnalich, 2020)
+
+30
+Water within three meters of the surface is considered surface water, below three meters
+is groundwater. Groundwater usually has the best quality but may be the most expensive
+option to utilize. It tends to have low bacteriological contamination due to the natural
+cleaning occurring through the flow through the ground. However, there may be a higher
+concentration of minerals in the water depending on the soil, which must be analyzed
+(Action contre la faim, 2008).
+Spring catchments in slopes work as great intakes for gravity-fed systems. The flow is
+generally more reliable and stable throughout the seasons than surface water sources. The
+spring catchment intakes are very simple and do not require advances materials to
+construct, as shown in Figure 14. The water source is protected from probable
+contamination with an impermeable layer of clay before the intake; additionally, the area
+can be fenced off to stop animals from entering the collection zone. The underground
+water flow is collected with a concrete wall and a collection bowl which is pressurized
+by the slope. If possible, a header tank can be combined with the intake (Arnalich, 2020).
+
+Figure 14, spring catchment (Arnalich, 2020)
+Artesian springs are natural wells containing groundwater where two impermeable layers
+of soil or rock have an opening in between, and the hydrostatic pressure of the
+underground river is positive in the opening. Artesian springs are very easy to utilize; a
+concrete box with a lid on can be built directly on top of the spring where the walls are
+sealed with the lowest impermeable layer, and the bottom is covered with gravel for the
+water to flow through. Usually pumping power is required if artesian springs are utilized
+in a larger distribution system (USGS, 2021).
+Wells and boreholes can be dug where there are known deeper groundwater sources,
+ranging for wells 3-30 meters deep for wells, respectively for boreholes up to 60 meters
+deep. The construction for wells and boreholes can be expensive, especially boreholes,
+
+31
+since drilling equipment is needed. The area around the intakes needs to be protected with
+impermeable layers as not to let contaminations soak through the soil. Both methods
+require pumping power to extract the water (Action contre la faim, 2008).
+A summary of the different catchment methods is provided in Table 15.
+Table 15, overview of catchment methods (Action contre la faim, 2008)
+Water resource
+
+Supply
+method
+
+Rainwater
+
+Rooftop
+harvesting
+
+Surface water
+
+Advantages
+-
+
+Direct
+intake
+
+-
+
+Indirect
+intake
+
+-
+
+Good quality if
+collected under
+good
+circumstances
+Rapid and easy to
+implement
+
+Clear water and
+good
+bacteriological
+quality
+
+Disadvantages
+-
+
+-
+
+Well
+
+-
+
+Clear water and
+good
+bacteriological
+quality
+
+-
+
+Groundwater, > 3 meters below
+the surface
+
+Borehole
+
+-
+
+Spring
+catchment
+
+-
+
+Clear water and
+good quality
+Deep water
+catchment
+
+-
+
+Clear water and
+good quality
+
+-
+
+-
+
+Complementary or
+temporary resource
+Can be easily polluted
+Lacking minerals
+Generally, requires a
+treatment unit due to
+high probability of
+fecal pollution
+Can be very turbid
+Low-lying position
+may cause
+insufficient pressure
+to the system
+Difficult to work in
+flooded areas
+Easily polluted if
+badly protected
+Requires lots of work
+to construct
+Requires pumping
+power
+Construction cost
+very high
+Requires pumping
+power
+Flow may not be
+sufficient
+
+Some catchments require pumping power to extract the water. If they are integrated into
+the distribution system, an electric pump is needed. The rough size of the pump is
+determined by calculating equation 11 (Engineering ToolBox, 2021):
+
+𝑃ℎ =
+
+𝑞∙𝑝
+3.6 ∙ 106
+
+(11)
+
+where 𝑃ℎ is the hydraulic power (kW), 𝑞 is the required demand flow (m3 /h) and 𝑝 is the
+pressure (Pa). To determine a more accurate and dynamic use of the pump the pump
+pressure curve and pipe curve should be considered, as well as the pipelines infrastructure,
+if there is a tank downstream that the pump need to smoothen out during peak demands.
+
+32
+2.4.2 Header tank
+The header tank is placed at the beginning of the pipeline and works as a buffer to the
+flow variations from the water source to stabilize the flow. Since the header tank is the
+first tank in the network after the intake, it also determines the static and dynamic
+piezometric lines for the rest of the line. It can also work as a primary treatment for the
+water and be dimensioned as a sedimentation basin. If further treatment is needed, the
+header tank should be combined with an SSF. See section 2.3.3.1 for dimensioning the
+header tank as a sedimentation tank and section 2.3.3.2 for dimensioning an SSF.
+2.4.3 Brake pressure tank
+A brake pressure tank (BPT) can be installed if the pressure in the network between the
+source or storage tank and the outlet exceeds 30 meters. The BPT reduces the pressure in
+the lines to atmospheric pressure. BPTs are more commonly used in developing regions
+as substitutes for pressure-reducing valves due to their simplicity and availability. There
+is no minimum size for a BPT, but generally, a volume of 1 − 2 m3 allows for less abrupt
+flow and, therefore, longer life expectancy of the float valve (Arnalich, 2020).
+
+Figure 15, brake pressure tank illustration (Arnalich, 2020)
+
+33
+2.4.4 Storage tank
+A storage tank is not necessarily needed if the maximum flow demand is smaller than the
+inflow from the water source. However, if a storage tank is needed, it needs to be carefully
+designed. A storage tank should preferably be located on a hill near the largest
+concentration of outlets and demands.
+A rough estimation of the required storage tank size can be calculated by the difference
+of the largest consecutive inflow during a selected period and the maximum outflow
+during the same time period, e.g., during a day. Preferably, the time period should also
+consider different seasons, if possible. The larger the timeframe, the better the estimation;
+however, a broader timeframe requires more data and research of the local area’s water
+behavior to estimate the pattern (see section 2.2.1Demand pattern) (Arnalich, 2020).
+An example of a dimension calculation is presented below. The water tank is fed with a
+constant supply of water, 1900 l/h. A base demand of 0.5 l/s is multiplied according to
+the pattern in Figure 4. The balance column calculates the difference for each hour by
+subtracting the demand from the supply. The water stock is the sum of its previous value
+added with the current balance value. The necessary water stock is the minimum volume
+of water per hour in the tank, i.e., the water stock added with its minimum value (Action
+contre la faim, 2008).
+
+34
+Table 16, storage tank example data
+Constant
+water
+supply
+Hour
+(l/h)
+1
+1900
+2
+1900
+3
+1900
+4
+1900
+5
+1900
+6
+1900
+7
+1900
+8
+1900
+9
+1900
+10
+1900
+11
+1900
+12
+1900
+13
+1900
+14
+1900
+15
+1900
+16
+1900
+17
+1900
+18
+1900
+19
+1900
+20
+1900
+21
+1900
+22
+1900
+23
+1900
+24
+1900
+TOTAL 45600
+
+Multiplier
+
+0.490296
+0.367722
+0.294178
+0.245148
+0.980592
+1.470889
+1.716037
+1.961185
+1.544433
+1.225741
+1.029622
+0.907048
+0.833504
+0.784474
+0.735444
+0.980592
+1.176711
+1.421859
+1.716037
+1.470889
+1.078652
+0.735444
+0.588355
+0.245148
+-
+
+Water
+demand
+(l/h)
+882.5
+661.9
+529.5
+441.3
+1765.1
+2647.6
+3088.9
+3530.1
+2779.9
+2206.3
+1853.3
+1632.7
+1500.3
+1412.1
+1323.8
+1765.1
+2118.1
+2559.3
+3088.9
+2647.6
+1941.6
+1323.8
+1059.0
+441.3
+43 200
+
+Balance
+(supplydemand)
+(l)
+1017.5
+1238.1
+1370.5
+1458.7
+134.9
+-747.6
+-1188.9
+-1630.1
+-879.9
+-306.3
+46.9
+267.3
+399.7
+487.9
+576.2
+134.9
+-218.1
+-659.3
+-1188.9
+-747.6
+-41.6
+576.2
+840.9
+1458.7
+-
+
+Water
+stock (l)
+1017.5
+2255.6
+3626.
+5084.8
+5219.7
+4472.1
+3283.3
+1653.1
+773.1
+466.8
+513.5
+780.8
+1180.5
+1668.4
+2244.6
+2379.6
+2161.5
+1502.2
+313.3
+-434.3
+-475.9
+100.3
+941.3
+2400.0
+-
+
+Necessary
+water
+stock (l)
+1493.4
+2731.5
+4101.9
+5560.7
+5695.6
+4948.0
+3759.1
+2129.0
+1249.0
+942.7
+989.4
+1256.7
+1656.4
+2144.3
+2720.5
+2855.5
+2637.4
+1978.0
+789.2
+41.6
+0
+576.2
+1417.2
+2875.9
+-
+
+The storage tank’s minimum capacity (𝑉𝑆𝑇𝑚𝑖𝑛 ) is found by subtracting the largest volume
+̇ ) in the water stock column with the smallest value (𝑉̇𝑚𝑖𝑛 ), the highlighted values
+(𝑉𝑚𝑎𝑥
+in Table 16.
+̇
+𝑉𝑆𝑇𝑚𝑖𝑛 = 𝑉𝑚𝑎𝑥
+− −𝑉̇𝑚𝑖𝑛
+𝑉𝑆𝑇𝑚𝑖𝑛 = 5219.7 𝑙 − −475.9𝑙 = 5695.6𝑙 ≈ 5.7𝑚3
+
+(12)
+
+35
+The largest water stock difference during the selected time frame is depicted in Figure 16,
+which gives the minimum variation of the water volume needed during a day.
+
+Storage tank
+6000
+
+Water stock (l)
+
+5000
+4000
+
+𝑉𝑆𝑇𝑚𝑖𝑛
+
+3000
+2000
+1000
+0
+-1000 0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30
+
+Timeframe (h)
+
+Figure 16, storage tank minimum variation volume during a day
+Since the supply is larger than the demand, there will be an overflow in the tank during
+the selected time period. Therefore, to preserve some of the overflows the daily supply
+(𝑉𝑡𝑜𝑡.𝑠𝑢𝑝 ) is subtracted from the average daily demand (𝑉𝑡𝑜𝑡.𝑑𝑒𝑚 ) to obtain the extra
+volume (𝑉𝑆𝑇𝑟𝑒𝑎𝑙 ) needed to hinder a daily overflow, as equation 13 (Action contre la faim,
+2008).
+𝑉𝑆𝑇𝑟𝑒𝑎𝑙 = 𝑉𝑆𝑇𝑚𝑖𝑛 + (𝑉𝑡𝑜𝑡.𝑠𝑢𝑝 − 𝑉𝑡𝑜𝑡.𝑑𝑒𝑚 )
+
+(13)
+
+𝑉𝑆𝑇𝑟𝑒𝑎𝑙 = 5.7 𝑚3 + (4.56 𝑚3 − 4.32 𝑚3 ) = 8.1 𝑚3
+This method of dimensioning works if the water supply and consumption are relatively
+the same. If the supply is lower than the demand, then an additional intake or an intake
+with a larger capacity is needed. Alternatively, if the difference in demand and supply is
+huge, then a more extended time period of the demand and supply pattern must be
+selected.
+
+36
+2.4.5 Pipes
+To determine the diameter (𝑑) size of the pipe the topographic profile is analyzed (see
+section 2.1) . The hydraulic gradient line needs to be above the one bar limit at all times.
+A larger pipe diameter lowers the liquid’s velocity (𝑣); respectively, a smaller diameter
+increases the velocity and therefore increases the resistance. The design flow (𝑄) is based
+on the worst-case scenario demand when dimensioning the pipe diameter, as equation 14.
+𝑄=
+
+𝑣
+(14)
+
+𝑑 2
+𝜋 ∙ (2)
+
+Decreasing the diameter increases the headloss and conversely, increasing the diameter
+decreases the headloss according to the Hazen-Williams formula (see section 2.1.3). If
+the headloss is larger than the elevation difference of the pipes’ end points, the dynamic
+pressure will be insufficient to transport water to the end point (see Figure 2). For
+economic reasons, it strives to find the smallest possible diameter for the pipe without
+breaking the hydrostatic rules; however, smaller than 63mm for network applications is
+not recommended (Arnalich, 2020).
+The maximum pressure in the network is the highest static pressure (see section 2.1.1)
+that is found in the pipeline, whereafter suitable pipe material and pipe tolerance are
+chosen.
+Table 17, pipe material and pressure examples (Action contre la faim, 2008)
+Pipe type
+
+Nominal Pressure (bar) Maximum pressure, 𝑝𝑆𝑡𝑎 , (mWG)
+6
+
+60 m
+
+10
+
+100 m
+
+16
+
+160 m
+
+Galvanized iron (GI) 16
+
+160 m
+
+25
+
+250 m
+
+PVC pr PE
+
+37
+The choice of the pipe route can be roughly estimated from maps and satellite images;
+however, the definitive route must be determined on-site with a local who knows the area
+well and takes into account the following aspects (WHO, 2017):
+-
+
+Minimize crossings, such as rivers and roads
+
+-
+
+Avoid rocky zones, as it is easier for trench digging
+
+-
+
+Prioritize accessible zones, e.g., avoid steep slopes, follow existing paths such as
+roads to ease construction
+
+-
+
+Land ownership and authorization
+
+Furthermore, the design of the layout and connections can be varied. Branch topologies
+are most common in gravity-fed systems; however, if one branch breaks, it compromises
+the whole distribution to the rest of the network. Another drawback is stagnation of the
+water, which can be a problem if the water is not constantly used in branched networks.
+Loop networks are more reliable, since water is distributed through several pipes to the
+nodes, but this method requires more pipes and is therefore also more expensive. The
+water circulates more in loop networks reducing the stagnation of the water. In a
+gravitationally fed system, the loop network would need additional pipes to work
+properly, as shown in Figure 17. Therefore, whether the advantages for a loop-topology
+in a gravitationally fed network are more beneficial than the cost to build it must be
+individually analyzed for each case (Sampers, 2005).
+
+Figure 17, pipeline topology designs
+
+38
+2.4.6 Outlets
+For practical purposes, the pressure in the outlets of the pipe should be between 1 bar and
+3 bar. Less than 1 bar is insufficient to distribute the water, and more than 3 bar can cause
+problems with opening the outlet valves; thus, when filling the buckets, large amounts of
+water will splash and go to waste.
+It is recommended to have at least one outlet within 250 meters or 4-30 minutes walking
+distance. Less than a four-minute walking distance might cause overuse by the closest
+households and, therefore, inequalities between locals. More than 30 minutes of walking
+distance will defeat the purpose of an easily accessible piped water network. Locals will
+find other solutions to provide water to themselves, especially if the network is designed
+to provide more than 50 liters per capita per day.
+It is essential for the system to be equally accessible for all users, or else illegal
+connections to private households may be constructed, which can disrupt the flow to the
+rest of the users. Satellite images can be used to locate the households if no other data is
+available (Arnalich, 2020).
+
+Figure 18, optimal distances between users and outlets (Arnalich, 2020)
+
+39
+
+3 The water supply situation in Ward 10
+3.1 Problem description of the water supply system in Ward 10
+According to the 2017 survey, 88% of the inhabitants on Ward 10 have complained that
+the water access is insufficient, whereas only 26% have access to water from the existing
+pipeline network, and the rest use wells or other means of collecting water. The average
+distance from a drinking source is 739 m, ranging from 3 m to 10 km. (Awais, et al., 2017)
+The current public water system was built in 2003 by Plan International in cooperation
+with ZINWA. The primary water source of the existing public system is the Mupenga
+River 1196m above sea level, which is relatively small and very dependent on the year’s
+season. During the dry season in the spring and autumn, the water flows partially
+underground, and the surface water is very shallow. During the rainy season in the winter
+(Dec-March), the water flows are strong (Awais, et al., 2017).
+By analyzing the existing system, a few fundamental technical problems have been found.
+It does not cover the whole area of Ward 10, nor is the single intake from the Mupenga
+River sufficient to meet the demand of the area that it covers. The measured flow of the
+Mupenga River in the dry season is 0.91 l/s, whereas the base demand that the area the
+network covers is 1.27 l/s for 80 liters per capita per day. Furthermore, the current water
+treatment system in Ward 10 lacks numerous aspects of treatment. It mainly relies on the
+consumer to treat the water by boiling it or using clay filters to remove pathogens from
+the water. Boiling the water can take from 30 minutes up to 60 minutes, and only 8% of
+the inhabitants treat their drinking water. Due to lack of knowledge and education, about
+90% of the inhabitants drink the water raw without treating it, even if the water has been
+polluted by derelict tanks with collapsed asbestos roofs (Chikuhwa, 2021), (Awais, et al.,
+2017).
+
+40
+Currently, the only treatment in the water supply system in Ward 10 consists of an underdimensioned physical filter and an insufficient natural sedimentation basin. The water
+source used in the system is the Mupenga River, a stream draining the rainwater from the
+mountain ranges. Before the intake of the water distribution system is a natural
+sedimentation basin. However, the sedimentation basin is too small to work as intended,
+so excess sediments and mud must be manually removed three times a week during the
+rainy season and once a week during the dry season, which causes troubles to the water
+system and maintenance. At the sedimentation basin are two intakes to the pipeline
+distribution system, a 90 mm pipe and a 110 mm pipe. Each has a physical filter that is
+poorly constructed; due to too large holes in the filter, numerous smaller objects can easily
+enter the pipelines. After 1.3 km from the intake are two pressure breaker tanks for the
+respective pipelines, which helps the sedimentation for some of the remaining suspended
+substances (Awais, et al., 2017).
+
+Figure 19, Raw water source at Mupenga River (Awais, et al., 2017)
+No in-depth water quality analysis has been made in Ward 10 other than a basic analysis
+presented in Table 18; it should be noted that no biological nor radiological contaminants
+have been checked during the analysis. Four samples from four different locations were
+taken and analyzed in 2017, one from a groundwater source, one from a borehole, one
+from a clinic’s water tank, and one from the Turumhu River. The samples results are
+compared to the WHO standards for potable water, and it can be noted that most of the
+samples are well within the range of the WHO threshold value, except the fluoride levels.
+
+41
+Table 18, water quality analysis in Ward 10
+Location
+
+Date
+
+pH
+
+Bicarbonate
+
+Conductivity
+
+Fluorides
+
+Nitrates
+
+Phosphorus
+
+Sulph
+
+HCO3
+
+(µS/cm)
+
+(mg/l)
+
+NO3
+
+PO4 (µg/l)
+
+ates
+
+(mg/l)
+
+SO42-
+
+(mg/l)
+
+(mg/l)
+WHO
+
+2017
+
+standards
+
+6.5-
+
+-
+
+< 400
+
+< 1.5
+
+< 50
+
+< 300
+
+< 500
+
+72.844
+
+156.7
+
+2.59
+
+n.d.
+
+68.314
+
+13.51
+
+8.5
+
+for
+potable
+water
+Ground
+
+04.04.
+
+water
+
+2017
+
+6.618
+
+0
+
+source
+(Patsime)
+Samaringa
+
+04.04.
+
+Primary
+
+2017
+
+6.808
+
+101.761
+
+232.0
+
+7.53
+
+n.d.
+
+11.037
+
+59.52
+0
+
+school
+(Borehole
+)
+Honde
+
+04.04.
+
+Mission
+
+2017
+
+9.028
+
+41.851
+
+64.4
+
+n.d.
+
+n.d.
+
+19.134
+
+n.d.
+
+8.869
+
+57.958
+
+101.6
+
+n.d.
+
+n.d.
+
+0.525
+
+n.d.
+
+Clinic
+(Tank)
+Turumhu
+
+04.04.
+
+river
+
+2017
+
+The high levels of fluoride may be due to the type of soil in the area the water absorbs.
+Using surface water as a water source to the system may decrease the fluoride levels in
+the drinking water; however, surface water is more exposed to bacteriological
+contamination. According to the World Health Organization, chemical standards can be
+seen as a secondary concern compared to bacterial contamination (WHO, 2017). The
+water in the area has been drunk for generations, and no excessive dental problems have
+been noted due to the high fluoride levels (Mukome, 2021).
+Due to the placement of the water intake and lack of nearby households and factories, it
+is assumed that only physical particulates and natural biological pathogens of various
+kinds are present in the open water source. No illnesses caused by heavy metals or
+radiations have been noticed. However, collapsed water tanks that are made of hazardous
+materials such as asbestos may pollute the distribution lines. In order to clear this issue,
+whether this is drinkable water, further testing needs to be done.
+
+42
+Some years after the construction of the pipeline system, it had a transfer of responsibility
+of the management and maintenance due to problems with the water bill payments, and
+the responsibility shifted from ZINWA to the local Samaringa community committee.
+After that, the water supply has been free of charge, and maintenance has been carried
+out by volunteers, whereafter it has been reported that it is leaking and water tanks are
+deteriorating; however, further data are lacking concerning what exact condition the
+pipeline is currently in.
+Due to lack of water availability from the public pipeline system and mismanagement,
+the inhabitants of Ward 10 have begun to make their own rudimentary dams with
+sandbags in nearby streams and collect water with a pipeline system of their own, as can
+be seen in Figure 20-22. These systems are disorganized and haphazardous, which makes
+the management of the water resources and availability more challenging, thus draining
+the rivers more than needed. Some private pipelines are not maintained and may be left
+to pollute the environment after serving their use (Chikuhwa, 2021).
+
+43
+
+Figure 20, Rudimentary dam built with sandbags (Chikuhwa, 2021)
+
+Figure 21, lack of management and maintenance leaves the condition of the individual
+pipelines to the respective users’ responsibility (Chikuhwa, 2021)
+
+Figure 22, A section of individual pipeline connections (Chikuhwa, 2021)
+
+44
+
+3.2 Mapping of the existing network and Ward 10
+Through interviews with locals, a digitalized representation of the existing public pipeline
+was drawn in 2017; however, the illustration (Figure 23) is not to scale nor georeferenced.
+
+Figure 23, digitalized version of the existing pipeline by Krysztof Dzialo and Leon
+Haupt (Awais, et al., 2017)
+An attempt to draw the existing network in scale with georeferences was made on QGIS
+to analyze the network’s functionalities. Some points have been confirmed and identified
+on the map from interviews with a local, Jacob Chikuhwa. A few tanks, such as the
+Samaringa tanks and the Honde clinic tank, have had coordinates set in the 2017 survey.
+The elevation points found in the digitalized picture have matched the interpreted map’s
+elevation (see Figure 24).
+The main pipes of line 2, line 4, and the old line have been assumed to follow certain
+infrastructures such as roads. Line 3 has been assumed to follow an elevation line around
+Hwahwazira mountain. Most of the outlets have been assumed to lead to clusters of
+households found from the satellite view.
+The village borders had to be defined to locate the households and their respective water
+demand. The borders have been determined from an interview with Jacob Chikuhwa in
+2021. To broadly confirm the village borders, each household has been located from the
+satellite view (Google, 2018), whereafter, the number of households found on the map
+has roughly matched the number of households per village provided by ZINWA.
+
+45
+Table 19, number of households comparison
+Village
+
+Ward 10
+
+Inhabitants
+
+Households
+
+Houses
+
+(ZINWA,
+
+(ZINWA,
+
+from satellite view
+
+December 2020)
+
+December 2020)
+
+3687
+
+1957
+
+2262
+
+816
+
+913
+
+Cluster 1 (Marked in 1634
+
+marked
+
+blue)
+Matingo
+
+889
+
+446
+
+444
+
+Nyakabinga
+
+322
+
+56
+
+97
+
+Chipunha
+
+163
+
+81
+
+87
+
+Saruwaka-Gowa
+
+260
+
+233
+
+286
+
+Cluster 2 (Marked in 686
+
+235
+
+335
+
+59
+
+90 (school district
+
+red)
+Samaringa
+
+159
+
+included)
+Mutsaka
+
+162
+
+57
+
+82
+
+Baradza
+
+174
+
+56
+
+97 (Business center
+included)
+
+Hambira
+
+191
+
+Cluster 3 (Marked in 630
+
+63
+
+67
+
+213
+
+390
+
+yellow)
+Ngwende
+
+(public
+
+buildings included)
+341
+
+113
+
+264
+business
+
+(churches,
+centers
+
+and other public
+buildings included)
+Mutetwa
+
+289
+
+100
+
+126
+
+Cluster 4 (Marked in 683
+
+693
+
+619
+
+green)
+Manyonho
+
+311
+
+234
+
+261
+
+Nyabadza
+
+153
+
+287
+
+214
+
+Mutsamba
+
+219
+
+172
+
+144
+
+46
+The lack of additional concrete geo-points on the pipeline system and village borders
+makes this not an entirely reliable, only indicative, map. Also, the elevation data used is
+a 30-meter LIDAR map (RCMRD, 2018) which has interpolated the in-between elevation
+values. To make a more precise system analysis, a more detailed survey needs to be done
+using on-site measurements regarding the height differences between the nodes and tanks
+and their exact location.
+
+Figure 24. georeferenced interpretation of the existing pipeline network and village
+borders, map drawn on QGIS
+
+47
+
+3.3 Water resources in the area
+In general, heavy rainfall produces high runoff and good groundwater recharge, especially
+in mountainous regions with low population densities (Tebbutt, 2002) and, therefore, the
+rivers and tributaries in Ward 10 could provide a sufficient supply. A rainfall-runoff
+simulation has been made in QGIS to find the largest rivers and tributaries, which could
+potentially be used as a water source to the distribution system in Ward 10.
+The simulation provides the size of the catchment area, which gives indicative
+measurements for the capacity of each river and its intake. In essence, the further down
+the stream an intake is placed, the larger the catchment area is, and the more reliable the
+river is to provide water to the system. However, the supply capacity must be balanced
+with the elevation of the intake for it to have sufficient pressure to the gravitationally fed
+distribution network.
+
+Figure 25, 3D-view of the rainfall catchment areas in Ward 10, QGIS simulation
+The simulation only considers the topology of the area and calculates the catchment area
+and runoff to each tributary; therefore, it is only indicative since the permeability of the
+soil and soil type has not been taken into account in the simulation. Also, only a resolution
+of 30 meters elevation LIDAR map is used, which has interpolated the elevation values
+between the registered elevation points. The simulation results show the location of the
+tributaries, which has thereafter been confirmed by matching with the satellite pictures
+and identified through interviews with Chikuhwa.
+
+48
+Figure 26 depicts a detailed map of the rivers and tributaries’ catchment areas. The red
+line divides the catchment area of Honde and Mupenga rivers, whereas the respective
+smaller tributaries consequently flow to these two larger rivers. The more black arrows
+that are pointed to a river, the stronger the rainfall-runoff is for the respective river. As
+can be noted, the larger the area these black arrows cover, the larger the flow of the river
+is.
+
+Figure 26, detailed representation of the rainfall-runoff simulation on QGIS of Ward 10
+The largest tributaries and rivers identified from the simulation have been measured with
+a simple on-site method to find their average flow. By measuring the width (𝑤) and depth
+(𝑑) of the river and timing (𝑡) how long it takes for a floating object to travel a certain
+distance (𝑙), the results of the flow (𝑉̇ ) for each river have been acquired, as seen in Table
+20. Each measurement has been done at three different locations of the respective river,
+whereafter an average result of the three measurements has been calculated. The
+measurements were done during the dry season in June 2021 by Jacob Chikuhwa.
+𝑉̇ =
+
+𝑤∙𝑑∙𝑙
+𝑡
+
+(15)
+
+49
+Table 20, Rivers and tributaries flow data
+River
+
+Measured flow in June
+
+Drainage basin area
+
+2021, (l/s)
+
+km2 (simulation)
+
+Mupenga River
+
+0.91
+
+52
+
+Turumhu Tributary
+
+0.63
+
+3.7
+
+Honde River
+
+1.28
+
+313
+
+Butukare Tributary
+
+0.49
+
+9
+
+Nyamarungu Tributary
+
+>0.49
+
+11
+
+Chiruzvi Tributary
+
+0.62
+
+6
+
+Mwauru Tributary
+
+0.69
+
+4.2
+
+Nyamaware Tributary
+
+0.59
+
+13.5
+
+Groundwater sources are usually preferred as intakes over surface water sources since the
+water quality is generally better in groundwater sources, especially regarding
+bacteriological contamination. A groundwater simulation has been done in the area to
+locate potential boreholes and spring catchments where the recharge rate is sufficient.
+However, the data for this simulation have been limited, and further analyzes are required
+to confirm the actual potential use of these wells. In Figure 27 and Table 21, one to three
+boreholes per village cluster have been located from the simulation, which could
+potentially be used as additional intakes to the distribution system (Thomas, 2021).
+
+Figure 27, potential wells in Ward 10 (Thomas, 2021)
+
+50
+Table 21, well recharge rate (Thomas, 2021)
+Well ID
+
+Recharge rate (m3 /day)
+
+Cluster 1, three wells
+
+51 516
+
+Cluster 2, Samaringa borehole 8414
+Cluster 3, two wells, (whereas 10 353
+the southern is Patsime water
+hole)
+Cluster 4, four wells
+
+19 887
+
+Locals already use two of the identified potential wells in the groundwater simulation: the
+Patsime water hole in village cluster 2, which is an artesian spring (see Figure 28) and the
+Samaringa borehole, which provides large quantities of water to the Samaringa village.
+
+Figure 28, locals fetching water from Patsime water hole (Chikuhwa, 2021)
+
+51
+
+4 Water supply proposition to Ward 10
+The locals do not rely on the current public pipeline. Therefore, they have built their own
+disorganized haphazardous systems to supply their respective needs for irrigation to
+support their livelihood and drinking. The proposition is to build a new reliable pipeline
+system to meet the water demand throughout Ward 10 with a public gravitationally fed
+distribution regulated and maintained under trained personnel.
+The three fundamental technical flaws of the old networks are, firstly, that the Mupenga
+River’s supply (0.91 l/s) is not sufficient to cover the area that the pipeline network covers
+(average base demand 1.27 l/s) and, secondly, that the pipeline does not cover all of Ward
+10, only some villages. Therefore, additional intakes to the existing network are needed,
+and an expansion of the pipeline system with more intakes to the remaining villages is
+needed. Thirdly, the old pipeline system and the self-built haphazardous systems do not
+have any functioning treatment and distribute raw water to the outlets, leaving the
+treatment responsibility to the user.
+The layout of the old network is fairly well planned out, as can be seen in Figure 31,
+where its outlets cover most of the inhabited area it is designed to cover. However, due
+to its unknown condition, it may need to be rebuilt or at least repaired. Therefore, the new
+proposition has only two proposed changes to the existing pipeline system: Firstly, an
+additional intake from Patsime water hole supplies water to Ngwende and Mutetwa with
+a pump to a storage tank on the nearby hill, whereafter it is gravitationally distributed to
+cluster 3. Secondly, to ensure sufficient water supply to Cluster 2, the Samaringa borehole
+is proposed to be connected to the system via line 2B. Therefore, the water supply from
+Mupenga River is sufficient when distributing water only to Manyonho village via line 3
+and cluster 2 via line 2 with the complementary borehole intake at Samaringa. Line 5 to
+9 are the new proposed distribution lines covering the rest of village clusters 1 and cluster
+4. Due to the area's topography, the proposed networks are not connected to each other
+but separate systems. Line 5 to line 7 supply most of village cluster 1, and line 8 and line
+9 supply water to Nyabadza and Mutsamba. A more detailed description of each line is
+presented in Table 22, and the lines are depicted in Figure 29.
+
+52
+
+Figure 29, proposed pipeline layout overview, red lines are the old system and green
+lines are the new proposed pipelines
+
+Table 22, detailed description of each line
+LINE
+
+Pipe layout description
+
+Old Pipeline
+
+The OP supplies Line 2 with water from Mupenga river via the large
+
+in Matingo
+
+storage tank. Along its way are some outlets in the west part of
+Matingo.
+
+Old Pipeline
+
+The OP supplies mainly Mutetwa village and Line 4 with water from
+
+in Ngwende
+
+Turumhu river, alternatively with pumping power from Patsime
+
+and Mutetwa
+
+water hole to a new storage tank on the nearby hill.
+
+LINE 1
+
+Line 1 runs in parallel with OP line in Matingo and supplies water to
+Line 3 from Mupenga river.
+
+LINE 2A/B
+
+Line 2 A and B follows a road from the large storage tank and
+supplies water to Mutsaka and the Samaringa school district,
+
+53
+whereafter it connects with Line 2. Line 2B is supplied with water
+from the Samaringa borehole to complement the supply.
+LINE 2
+
+Line 2 receives water from Line 2A and B and continues along the
+road through Baradza and Hambira where it supplies water.
+
+LINE 3
+
+Line 3 receives water from Line 1 and follows an elevation curve
+around Hwahwazira mountain from where it distributes water to
+Manyonho village.
+
+LINE 4
+
+Line 4 receives water from either Turumhu river or Patsime
+waterhole and distributes water to Ngwende village.
+
+LINE 5
+
+Line 5 Supplies water to Matingo village from Mwauru river. The
+line follows a road which is in parallel with the river, wherafter it
+crosses the Mwauru river and supplies water to a storage tank near
+the center of Matingo village. The line continues along a road and
+crosses Nyamaware river and Makute river until its end point in the
+Saruwaka Gowa storage tank.
+
+LINE 5.4
+
+Branch line 5.4 continues down the parallel road with Mwauru and
+supplies water to the inhabitants between Mwauru and Mupenga
+river.
+
+LINE 6A
+
+Line 6A shares its intake supply with Line 5 from Mwauru river. It
+crosses two rivers and distributes water to the western part of
+Nyakabinga and Chipunha. At the villages borders it follows a road
+that leads to Line 6.
+
+LINE 6A1
+
+Line 6A1 is a branch from Line 6A which distributes water to the
+households east of Mwauru.
+
+LINE 6B
+
+Line 6B receives water from Makute river, however if the supply is
+insufficient it can have an additional supply from Line 7B. The line
+distributes water to the eastern part of Nyakabinga and Chipunha
+following a road until it connects to Line 6.
+
+LINE 6
+
+Line 6 combines Line 6A and Line 6B. It follows a road and
+provides water to a storage tank on a hill which subsequently
+connects to line 5 and supplies water to Matingo.
+
+LINE 7
+
+Line 7 supplies water to Saruwaka- Gowa village from Chiruzvi
+river. It follows an elevation curve from Mutsago mountain and
+
+54
+continues along Nyamaponjo mountain to the end of the Saruwaka
+Gowa village.
+LINE 7A
+
+Line 7A follows the road beside Chiruzvi river in order to make
+construction easier. Line 7A supplies water to the inhabitants west of
+Chiruzvi in Saruwaka-Gowa.
+
+LINE 7B
+
+Line 7B follows an elevation curve from the Chiruzvi intake to
+supply additional water to Line 6B. Along its way are some outlets
+to the nearby inhabitants in Saruwaka Gowa.
+
+LINE 8
+
+Line 8 supplies water to Nyabadza from Butukare river. The storage
+tank in the village center may need pumping power to fill since
+Butukare river is at such a low elevation. The line follows the road
+throughout the village.
+
+LINE 9
+
+Line 9 provides water to Mutsamba from Nyamarungu river. The
+line follows the road west om Nyamarungu at a set elevation.
+
+LINE 9.1
+
+Line 9.1 is the link between Mutsamba village and Nyabadza and
+supplies additional water to the intermediate households before it
+connects to Line 8 via a storage tank.
+
+A simplified overview of the respective lines’ components is illustrated in Figure 30. The
+demand of the outlets and supply of the intakes for the respective line decide the
+dimensions and design flows for their respective components.
+
+Figure 30, line component overview
+
+55
+
+4.1 Demand specifications
+The overview map in Figure 31 shows the proposed outlets positions of the whole pipeline
+system, where the outlets are located in the middle of each green circle. The green circles
+have a radius of 250 meters which is the maximum distance between a household and an
+outlet. The pipeline system’s design aims to cover as large of an area as possible without
+breaking hydraulic rules, which is also how the number of outlets has been determined in
+Table 23.
+
+Figure 31, Pipelines distribution area and outlets locations
+The base demand is estimated from a 30-year perspective with a 1.48% population growth
+(The World Bank, 2021) for 80 liters of water per inhabitant per day. The worst-case
+scenario multiplies the base demand with a general factor of 4.2 to compensate for
+seasonal patterns and other unpredicted changes in the demand.
+
+56
+Table 23, water demands
+Cluster
+
+Village
+
+Inhabitants
+by
+ZINWA
+(2017)
+
+Predicted
+number of
+inhabitants
+in 30 years
+
+Base
+demand per
+village (80
+liters per
+capita per
+day)
+
+Number
+of
+outlets
+
+Base
+demand
+per
+outlet
+(l/s)
+
+Demand per
+outlet, with
+multiplier
+4.2 (l/s)
+
+1
+
+Matingo
+west
+Matingo
+east
+Chipunha
+Nyakabinga
+Saruwaka
+Gowa
+Mutsaka
+Samaringa
+Baradza
+Hambira
+Ngwende
+Mutetwa
+Manyonho
+Nyabadza
+Mutsamba
+
+195
+
+303
+
+1.28
+
+9
+
+0.02
+
+0.084
+
+690
+
+1072
+
+1.28
+
+15
+
+0.04
+
+0.168
+
+163
+322
+260
+
+253
+500
+404
+
+0.23
+0.46
+0.37
+
+4
+3
+14
+
+0.04
+0.15
+0.027
+
+0.168
+0.63
+0.1134
+
+162
+159
+174
+191
+341
+289
+311
+153
+219
+
+252
+247
+270
+297
+530
+449
+483
+237
+340
+
+0.23
+0.23
+0.25
+0.27
+0.49
+0.42
+0.45
+0.22
+0.32
+
+2
+5
+2
+2
+12
+11
+16
+6
+5
+
+0.117
+0.046
+0.13
+0.14
+0.04
+0.038
+0.028
+0.037
+0.063
+
+0.4914
+0.1932
+0.546
+0.588
+0.168
+0.1596
+0.1176
+0.1554
+0.2646
+
+2
+
+3
+4
+
+ZINWA provided the water irrigation storage demand for Ward 10, which is in total
+471600 m3 storage required per irrigation cycle, when 50 irrigation cycles for a period of
+six months average one irrigation cycle every 72h. Therefore, the average water supply
+needed for irrigation purposes to Ward 10 is 1.82 l/s. When divided by the predicted
+inhabitants, 5645, equals 28 liters per capita per day, whereas the remaining 52 liters per
+capita per day is for domestic use. Therefore, the 80 liters per capita per day demand is
+sufficient and applies the WHO standards according to Figure 3 where 50 liters per capita
+per day of potable water is provided for domestic use and 30 liters per capita per day for
+irrigation.
+No deeper analysis has been done regarding the demand and supply patterns in Ward 10.
+Therefore, the generic theoretical patterns, presented in section 2.2.1, are used as demand
+patterns, and constant values from the dry season are used for the supply pattern. This
+assumption may affect the dimensions of the system, especially the water tanks in section
+4.4.
+
+57
+
+4.2 Catchments
+Spring catchments are typically used for gravity-fed systems due to their consistent flow
+and good water quality. However, additional surveys of the groundwater flow need to be
+done to find more possible groundwater sources and spring catchments in Ward 10.
+Therefore, due to the provided data, surface water sources have been used as intakes to
+the proposed system; thus, water treatment is recommended.
+The proposed potential intakes to the system have had their supply capacity data measured
+during the dry season (see Table 24). Since the supply must be larger than the demand
+and the river flow data are measured once during the dry season when the flow is at its
+yearly minimum, multiple intakes are proposed to meet the supply and demand criteria.
+Fewer intakes could be used, and water could be stored throughout the dry season in larger
+storage tanks if more thorough surveys on the rivers’ seasonal variations are done.
+Another restricting criterion to the number of intakes to the system is the area’s
+topography. It is sought to provide the water gravitationally to the network, limiting the
+layout of the network and placement of the intakes, except for two wells, Patsime water
+hole, and Samaringa borehole, which require pumping power to be connected to the
+network.
+The exact location (see Figure 29) and capacity of each proposed intake needs to be
+further analyzed. If the supply from a river is insufficient at the proposed location, it can
+potentially be sufficient further down the river as the rainfalls catchment area increases
+further down the river, as seen in the simulation in section 3.3. However, the intake’s
+supply and elevation need to be balanced for the gravity-fed network to function.
+It is recommended to build the intakes from the rivers with indirect catchments, which
+would provide a better and safer quality of water to the distribution system, as stated in
+section 2.4.1.
+
+58
+Table 24, water supply and demand for the network
+Source / supply (avg. l/s)
+
+Distribution / total demand (avg. l/s)
+
+Mupenga river / 0.91
+
+Cluster 2, Manyonho, Matingo west /
+
+Samaringa borehole / 97 (recharge rate)
+
+1.62
+
+Patsime water hole / 120 (recharge rate)
+
+Cluster 3 / 0.9
+
+Chiruzvi / 0.62
+Makute / no data
+
+Total supply est. 2
+
+Cluster 1 (Matingo west not included) /
+2.17
+
+Mwauru / 0.69
+Butukare / 0.49
+
+Nyabadza / 0.22
+
+Nyamarungu / >0.49
+
+Mutsamba / 0.32
+
+Mupenga River supplies water to Cluster 2, Manyonho, and Matingo west. Due to the
+insufficient supply, cluster 2 can use the Samaringa borehole as an additional intake to
+line 2 via tank L2BSamST. The remaining needed supply has a base demand of 0.394 l/s,
+with a worst-case scenario multiplier 4.2 which gives 1.65 l/s. The estimated depth of the
+borehole is 30 meters. Required pumping power for the base demand is 0.12 kW,
+respectively 0.5 kW for a worst-case scenario demand. It is calculated with equation 11,
+from section 2.4.1.
+Cluster 3 is mainly supplied from the Patsime water hole, which has a base demand of
+0.74 l/s; worst-case scenario 3.1 l/s. The water needs to be pumped from the water well
+to the storage tank (OPL4NgwST), which has an elevation difference of 23 meters from
+the well to the hill, added with the storage tank’s water levels, gives an estimated elevation
+difference of 30 meters. To meet the required base demand 0.2 kW pumping power is
+needed, whereas the maximum pumping power required is 0.9 kW.
+Pump curves and pipe curves should be estimated for the pumps’ dynamic regulation and
+steering.
+
+59
+
+4.3 Pipe specifications
+The topographical profile and pressure profiles of the line sections between the tanks of
+each line are illustrated in the profile plots in Appendix B. Their locations are depicted in
+Figure 29.
+The design flow is the sum of the worst-case scenario demand for every outlet the
+respective pipe covers.
+Maximum pressure is the highest static pressure found in the pipeline (see 9.2 Appendix
+B, Pressure profiles and pressures in pipelines), whereafter a suitable standardized NP
+pipe is chosen. However, the pressure values in the simulation assume the tank's water
+level to equal the surface level, which in practice means that the tanks are empty, which
+therefore assumes a lower pressure in the system than the actual.
+The pipe lengths have been determined from the QGIS map.
+The pipe diameter is chosen by the design flow and the elevation difference between the
+end points for the respective line. The Hazen-Williams head losses have been subtracted
+from the elevation difference, whereafter a suitable diameter has been chosen, but not
+smaller than 63mm. The diameters have then been implemented to the simulation in
+MIKE+ to confirm the functionality of the hydraulic behavior in the system.
+Table 25, pipe data
+Lines and respective
+sections
+
+Old Pipeline, Mupenga to
+Ngwende
+- Mupenga intake to
+PBT
+- PBT to OPMutST
+- OPMutST to end
+- Branches
+Old Pipeline, Patsime to
+Mutetwa
+- Patsime intake to
+OPMteST
+- OPMteST to end
+- Branches
+LINE 1
+
+Design
+flow
+per
+section
+(l/s)
+
+Maximum Required Pipe length
+Pressure
+Pipe PN (m)
+in line
+(m)
+
+Pipe
+inner
+diameter
+(mm)
+
+4
+
+85
+
+100
+
+1262
+
+110
+
+4
+1.6
+-
+
+55
+60
+-
+
+64
+64
+64
+
+1526
+1507
+2157
+
+90
+90
+63
+
+1.6
+
+60
+
+64
+
+1207
+
+63
+
+1.6
+-
+
+60
+-
+
+64
+64
+
+1304
+2271
+
+63
+63
+
+60
+-
+
+Mupenga intake to
+L1MaWPBT
+L1MaWPBT to
+L3ManST
+Branches
+
+LINE 2A+B
+- From OPMutST to
+Line 2
+- Branches
+LINE 2
+- From Line 2AB to
+end
+- Branches
+LINE 3
+- L3ManST to end
+- Branches
+LINE 4
+- Patsime intake to
+end
+- Branches
+LINE 5
+- From intake to HT
+- From HT to ST
+- From ST to PBT
+- From PBT to ST
+- Branches
+LINE 5.4
+- From line 5 to end
+- Branches
+LINE 6A
+- From intake to line
+6
+- Branches
+LINE 6A1
+- From line 6A to end
+- Branches
+LINE 6B
+- From intake to line
+6
+- Branches
+LINE 6
+
+2
+
+80
+
+100
+
+1255
+
+90
+
+2
+
+170
+
+250
+
+4760
+
+75
+
+-
+
+-
+
+250
+
+600
+
+63
+
+4
+
+70
+
+100
+
+1556+1611 75
+
+-
+
+-
+
+100
+
+1591
+
+63
+
+2.5
+
+80
+
+100
+
+2610
+786
+
+63
+63
+
+4
+-
+
+70
+-
+
+100
+100
+
+2271
+2488
+
+63
+63
+
+1
+
+90
+
+100
+
+1965
+
+63
+
+-
+
+-
+
+100
+
+2033
+
+63
+
+3.5
+3.5
+1.3
+0.6
+-
+
+60
+85
+85
+55
+-
+
+64
+100
+100
+64
+100
+
+706
+1857
+1440
+1889
+1693
+
+90
+90
+75
+63
+63
+
+0.5
+-
+
+100
+-
+
+100
+100
+
+1261
+85
+
+63
+63
+
+2
+
+55
+
+64
+
+2486
+
+90
+
+-
+
+-
+
+64
+
+549
+
+63
+
+0.5
+-
+
+90
+-
+
+100
+100
+
+1031
+205
+
+63
+63
+
+0.7
+
+90
+
+100
+
+1479
+
+63
+
+-
+
+-
+
+100
+
+751
+
+63
+
+1
+
+95
+
+100
+
+867
+
+75
+
+61
+From line 6AB to
+ST
+- From ST to Line 5
+- Branches
+LINE 7
+- From intake to PBT
+- From PBT to ST
+- From ST to ST
+- Branches
+LINE 7A
+- From line 7 to PBT
+- From PBT to end
+- Branches
+LINE 7B
+- From HT to line 6B
+- Branches
+LINE 8
+- Intake to HT
+- HT to end
+- Branches
+LINE 9
+- From intake to PBT
+- From PBT to end
+- Branches
+LINE 9.1
+- From line 9 to ST
+- From ST to line 8
+- Branches
+-
+
+1
+-
+
+75
+-
+
+100
+100
+
+576
+888
+
+75
+63
+
+1
+0.6
+0.6
+-
+
+155
+70
+140
+-
+
+160
+100
+160
+160
+
+1240
+1756
+2470
+856
+
+90
+75
+63
+63
+
+0.5
+0.5
+-
+
+130
+45
+-
+
+160
+64
+-
+
+380
+1163
+456
+
+63
+63
+63
+
+2.6
+-
+
+35
+-
+
+40
+40
+
+2267
+52
+
+63
+63
+
+0.7
+0.5
+-
+
+35
+80
+-
+
+40
+100
+100
+
+1373
+1663
+568
+
+63
+63
+63
+
+1
+1
+-
+
+75
+30
+-
+
+100
+40
+100
+
+516
+1922
+226
+
+63
+63
+63
+
+1
+0.5
+-
+
+60
+30
+-
+
+64
+40
+64
+
+818
+932
+327
+
+63
+63
+63
+
+Total needed pipe length for the distribution system is 71.5 km, Table 26 summarizes the
+different pipe specifications required. An estimated average price of $80 per 100 meters
+of HDPE pipe equals a total pipe cost of $57 200.
+Table 26, total pipe material
+Ø 63mm
+PN40 6546m
+PN64 11685m
+PN100 24110m
+PN160 4162m
+PN250 600m
+
+Ø 75mm
+7806m
+4760m
+
+Ø 90mm
+6225m
+3112m
+1240m
+-
+
+Ø 110mm
+1262m
+-
+
+62
+
+4.4 Water tank specifications
+The respective water tank’s location is depicted in Figure 29.
+The header tanks’ sizes are dimensioned according to the sedimentation tanks calculation
+theories in section 2.3.3.1. Fine silt particles (𝑑 = 16 µm, 𝑉𝑠 = 0.0018 m/s) are assumed
+to settle with an HRT of 28 minutes.
+The storage tanks’ dimensions are based on the sum of the maximum inflow and
+maximum outflow of the largest variation for the selected time frame. The pattern used
+for the minimum daily domestic variation is the same as in Figure 4. The pattern used in
+the theoretical variation with two irrigation cycles is the same as Figure 5, which is a time
+frame of six days.
+BPT: s are all two cubic meters according to the theory in section 2.4.3.
+Most of the tanks are quite small, hence could the local plastic tanks be suitable for some
+as the ones in Figure 32. Larger tanks (>15 m3 ), BPT: s, and HT: s can be constructed
+with concrete or bricks, which would require further construction costs; however, the
+rough cost estimate for the larger tanks has interpolated the price value as to be similar to
+the plastic tanks. The costs are based on the sizes from Table 28.
+Table 27, locally available plastic tanks price tags from LAMASAT (Awais, et al., 2017)
+Cost ($) Size (m3 )
+260
+
+2
+
+440
+
+5
+
+720
+
+7.5
+
+1100
+
+10
+
+63
+Table 28, required water tank sizes
+Tank ID
+
+Existing tank
+volume
+(m3 )
+
+OPMaWBPT
+(calculated as a
+HT)
+OPMutST
+OPL4NgwST
+OPMteST
+L1MaWBPT
+(Calculated as a
+HT)
+L2ASamST
+L2BSamST
+L2BarST
+L2HamST
+L3ManST
+L3ManBrickST
+L4NgwST
+L5MaEHT
+L5MaEBPT4
+L5MaEST
+L5MaEBPT
+L57SGST
+L6ANya1.1BPT
+L6ANyaBPT
+L6BNyaHT
+L6BChiBPT
+L6MaEST
+L7SGHT
+L7SGBPT
+L7SGST
+L7ASGBPT
+L8NybHT
+L8NybST
+L9MtaHT
+L9MtaBPT
+L9MtaST1.1
+
+Theoretical
+variation of
+two irrigation
+cycles (m3 )
+
+Material cost
+($)
+
+16.3
+
+Minimum daily
+domestic use
+volume variation
+(avg. demand)
+(m3 )
+7
+
+7
+
+720
+
+372.6
+Derelict
+340
+16.3
+
+13
+12
+6
+3
+
+44
+35
+18
+3
+
+4400
+4400
+2200
+260
+
+168.65
+168.65
+33.2
+39.3
+227.5
+227.5
+153
+51.89
+(location
+unknown)
+250 (location
+unknown)
+-
+
+12
+6
+2
+2
+6
+2
+3.5
+3.5
+2
+3
+2
+2
+2
+2
+2
+2
+3
+4.3
+2
+2
+2
+2
+2
+
+37
+18
+6
+6
+18
+7
+11
+3.5
+10
+2
+2
+10
+4.3
+6
+2
+4
+
+4400
+2200
+720
+720
+2200
+720
+1100
+260
+260
+1100
+260
+260
+260
+260
+260
+260
+1100
+440
+260
+720
+260
+260
+440
+
+2
+
+2
+
+260
+
+2
+3
+
+11
+
+260
+1100
+
+64
+The obtained values in Table 28 of the water tanks’ variation of volumes must still be
+analyzed, since the demand patterns used are theoretical, and the weekly and seasonal
+variations have not been taken into account due to lack of data. In addition to the
+theoretical demand pattern, a seasonal supply pattern is needed to determine the need for
+storage throughout the seasons. The water supply used in this calculation is constant from
+the dry season (see Table 20).
+For the short-term variation demands, suitable sized tanks for the potable water system
+can be found locally, as shown in Figure 32.
+
+Figure 32, Water tanks from a local producer (Awais, et al., 2017)
+
+65
+
+4.5 Water treatment specifications
+The distribution network is dimensioned for 80 liters per capita per day, which combines
+domestic water use and irrigation demand into one network. Therefore, whether a
+centralized treatment for both water qualities with the determined design flow is
+economically beneficial needs to be surveyed. Alternatively, two parallel systems can be
+built for the respective water quality, but it doubles the material cost.
+However, water treatment is recommended for domestic water use due to the intakes
+being mainly from surface water. The proposed treatment setup is highly dependent on
+the raw water quality analysis; due to the lack of water quality analyses from the area, the
+proposed water treatment included all steps necessary in case of bad water source quality.
+The treatment methods may also vary between the intakes due to different local water
+qualities.
+4.5.1 Analysis
+Before selecting the intakes’ locations, the quality should be surveyed. Field method
+analyses such as EC, turbidity, pH, and biological contaminations can easily be tested for
+each intake if the equipment is procured, whereafter ZIMLABS in Harare have stock
+analyses for 60$ per sample, which test the presence of chemicals (Ca, Mg, Na, K, Mn,
+Cu, Zn, Fe, Cl, SO4, NO3), pH, EC, TDS, TH, Ecoli and TVC. Additionally, samples
+should be taken during different seasons, especially regarding the turbidity of the water,
+which can vary strongly between seasons.
+Continuous analysis is needed for the distribution system to ensure good quality and
+measure chlorine residuals to find suitable amounts of disinfections needed for the
+system.
+4.5.2 Primary step
+The catchment from the rivers can be constructed in different ways, the easiest of which
+is a dam with an inlet with a physical filter with 25mm holes in it. A preferable method
+is an indirect collection of the river water, as illustrated in Figure 13. This method would
+not necessarily require a sedimentation tank and possibly not a sand filter either,
+depending on the quality.
+From videos and pictures, the water sources in Ward 10 seem to have low turbidity;
+however, it is not taken for granted. If the turbidity of the raw water is >10 NTU, then
+pre-treatment is recommended before the secondary filtration step not to clog the sand
+filters. A sedimentation basin is relatively cheap and straightforward to build. In the
+
+66
+proposed system, the header tanks are designed to work as sedimentation tanks, since the
+header tanks are always the first tanks before any outlet in the system. The dimensions
+calculated in Table 29 have an HRT of 28 minutes for fine silt particles with a 0.0018 mm
+diameter to settle.
+Table 29, sedimentation tank dimensions
+Intake and header
+tank
+Mupenga river
+- OPMaWBPT
+- L1MaWBPT
+Mwauru
+- L5MaEHT
+Makute
+- L6BNyaHT
+Chiruzvi
+- L7SGHT
+Butukare
+- L8NybHT
+Nyamarungu
+- L9intake
+
+Design flow (l/s)
+
+Header tank size and dimensions
+h (m) x w (m) x l (m) = V (m3 )
+
+4
+2
+
+3 x 0.75 x 3 = 7
+3 x 0.5 x 2 = 3
+
+3.5
+
+3 x 0.7 x 3 = 6.3
+
+0.7, used 1 l/s due to
+small dimensions
+
+3 x 0.4 x 1.6 = 2
+
+2.6
+
+3 x 0.6 x 2.4 = 4.3
+
+0.7, used 1 l/s due to
+small dimensions
+
+3 x 0.4 x 1.6 = 2
+
+1
+
+3 x 0.4 x 1.6 = 2
+
+67
+4.5.3 Secondary step
+A slow sand filter can be combined with the header tank in the system to effectively treat
+the water before entering the distribution system. A slow sand filter can work as a single
+treatment step without pre sedimentation if the raw quality water is good, i.e.,>10 NTU
+and low concentration of chemicals. The dimensions for slow sand filters depend on the
+design flow for the respective line divided with 0.3 m3/h per square meter. The total
+needed filter size for the maximum design flow is shown in Table 30; however, the
+required size can be divided into several smaller parallel filters, enabling easier
+maintenance while keeping a continuous flow in the system.
+The construction costs for SSF: s can be estimated to $100-$300/m2 (sswm, 2021).
+Table 30, SSF dimensions
+Intake and header tank
+Mupenga river
+- OPMaWBPT
+- L1MaWBPT
+Patsime water hole*
+- OPL4NGWST
+Samaringa borehole*
+- L2BSamST
+Mwauru
+- L5MaEHT
+Makute
+- L6BNyaHT
+Chiruzvi
+- L7SGHT
+Butukare
+- L8NybHT
+Nyamarungu
+- L9intake
+
+Design flow (LPS) Filter size (m2 ) Cost ($), $100/m2
+4
+2
+
+48
+24
+
+4800
+2400
+
+1.6
+
+19.2
+
+1920
+
+1
+
+12
+
+1200
+
+3.5
+
+42
+
+4200
+
+0.7
+
+8.4
+
+840
+
+2.6
+
+31.2
+
+3120
+
+0.7
+
+8.4
+
+840
+
+1
+
+12
+
+1200
+
+The total cost for installing SSFs to the required square meters is $20,520.
+The Samaringa borehole and Patsime waterhole intakes may not necessarily need an SSF
+due to their natural groundwater quality. The necessity depends on the water quality
+analyses, although the EC analyses conducted in 2017 from the Samaringa borehole and
+Patsime water hole have a relatively high conductivity which might indicate high
+turbidity.
+
+68
+4.5.4 Tertiary step
+Chlorination is largely dependent on the water quality in the system. Without further
+water analyses, an estimation of the amount needed for respective tank can be calculated
+from Table 31. The chlorine residuals should be between 0.1 and 0.3 mg/l in the system,
+unless shock chlorination is needed, which leaves 50 mg/l chlorine residuals. The chlorine
+should sit in the system for 12-24 hours. Two different concentrations of disinfection are
+reviewed, liquid bleach and powdered calcium hypochlorite (Clean Water Systems,
+2017).
+Table 31, chlorination demand approximation (Clean Water Systems, 2017)
+Tank size (m3 )
+
+Shock chlorination, chlorine
+
+Routine chlorination, chlorine
+
+residual concentration 50 mg/l
+
+residual concentration 1 mg/l
+
+12.5% bleach
+
+65% powdered
+
+12.5% bleach
+
+65% powdered
+
+sodium
+
+calcium
+
+sodium
+
+calcium
+
+hypochlorite
+
+hypochlorite
+
+hypochlorite
+
+hypochlorite
+
+(liters)
+
+(liters)
+
+(liters)
+
+(liters)
+
+1.9
+
+1
+
+0.2
+
+0.04
+
+0.01
+
+3.8
+
+2
+
+0.35
+
+0.07
+
+0.02
+
+9.5
+
+4
+
+0.7
+
+0.2
+
+0.04
+
+19
+
+8
+
+1.5
+
+0.4
+
+0.1
+
+38
+
+15
+
+3
+
+0.7
+
+0.2
+
+The additional chlorine residual concentration 1 mg/l can compensate for the pipelines to
+make the final chlorine residual concentration 0.1-0.3 mg/l. Header tanks should not be
+chlorinated if they are combined with SSFs, however, in Table 32 they are included to
+assume the full water volume in the system to approximate the amount of disinfectant
+needed.
+
+69
+Table 32, chlorination demand for the proposed system
+Tank ID
+
+OPMaWBPT
+(calculated as a
+HT)
+OPMutST
+OPL4NgwST
+OPMteST
+L1MaWBPT
+L2ASamST
+L2BSamST
+L2BarST
+L2HamST
+L3ManST
+L3ManBrickST
+L4NgwST
+L5MaEHT
+L5MaEBPT4
+L5MaEST
+L5MaEBPT
+L57SGST
+L6ANya1.1BPT
+L6ANyaBPT
+L6BNyaHT
+L6BChiBPT
+L6MaEST
+L7SGHT
+L7SGBPT
+L7SGST
+L7ASGBPT
+L8NybHT
+L8NybST
+L9MtaHT
+L9MtaBPT
+L9MtaST1.1
+Total
+
+Theoretical
+tank size
+(m3 )
+
+Shock chlorination,
+chlorine residual
+concentration 50 mg/l
+
+Routine chlorination,
+chlorine residual
+concentration 1 mg/l
+
+12.5% bleach
+sodium
+hypochlorite
+(liters)
+
+65% powdered
+calcium
+hypochlorite
+(liters)
+
+12.5% bleach
+sodium
+hypochlorite
+(liters)
+
+65% powdered
+calcium
+hypochlorite
+(liters)
+
+7
+
+3
+
+0.5
+
+0.13
+
+0.03
+
+44
+35
+18
+3
+37
+18
+6
+6
+18
+7
+11
+3.5
+2
+10
+2
+2
+2
+2
+2
+2
+10
+4.3
+2
+6
+2
+2
+4
+2
+2
+11
+283 𝐦𝟑
+
+15
+15
+8
+2
+15
+8
+3
+3
+8
+3
+4
+2
+1
+4
+1
+1
+1
+1
+1
+1
+4
+2
+1
+3
+1
+1
+2
+1
+1
+4
+120 liters
+
+3
+3
+1.5
+0.35
+3
+1.5
+0.5
+0.5
+1.5
+0.5
+0.7
+0.35
+0.2
+0.7
+0.2
+0.2
+0.2
+0.2
+0.2
+0.2
+0.7
+0.35
+0.2
+0.5
+0.2
+0.2
+0.35
+0.2
+0.2
+0.7
+22.6 liters
+
+0.7
+0.7
+0.4
+0.07
+0.7
+0.4
+0.13
+0.13
+0.4
+0.13
+0.2
+0.07
+0.04
+0.2
+0.04
+0.04
+0.04
+0.04
+0.04
+0.04
+0.2
+0.07
+0.04
+0.13
+0.04
+0.04
+0.07
+0.04
+0.04
+0.2
+5.5 liters
+
+0.2
+0.2
+0.1
+0.01
+0.2
+0.1
+0.03
+0.03
+0.1
+0.03
+0.04
+0.02
+0.01
+0.04
+0.01
+0.01
+0.01
+0.01
+0.01
+0.01
+0.04
+0.02
+0.01
+0.03
+0.01
+0.01
+0.02
+0.01
+0.01
+0.04
+1.4 liters
+
+70
+
+4.6 Financial aspect
+The financial analyses present the concrete material costs for the proposed system and its
+estimated construction costs. Due to the proposal having several separate networks in
+different villages, these can be evaluated separately if other means of water supply are
+more suitable for the respective villages. Furthermore, it is assumed that the old network
+needs complete refurbishment. Hence, all the necessary equipment for the old system is
+included in the cost calculation. The prices for the respective components have been
+reviewed in chapter 4, except the valves and accessories which is an estimate.
+Table 33, material costs of pipelined system
+Component
+
+Old system,
+
+Cluster 1,
+
+Nyabadza,
+
+Total cost ($)
+
+OP, L1, L2,
+
+L5, L6, L7
+
+Mutsamba,
+
+L3, L4 ($)
+
+($)
+
+L8, L9 ($)
+
+Pipes
+
+27 808
+
+22 722
+
+6676
+
+57 206
+
+Tanks
+
+24 040
+
+5960
+
+2320
+
+32 320
+
+SSF
+
+10 320
+
+8160
+
+2040
+
+20 520
+
+Valves and accessories
+
+4500
+
+3500
+
+2000
+
+10 000
+
+Total material cost
+
+66 668
+
+40 342
+
+13 036
+
+120 036
+
+71
+The laying of the pipeline, such as excavation of the pipelines, sand bed protection
+around the pipes and installation of the pipes and valves, can be estimated with the
+following ratio (Table 34) (Arnalich, 2020):
+Table 34, total project estimate cost
+Ratio
+
+Old system,
+
+Cluster 1,
+
+Nyabadza,
+
+Total pipeline
+
+OP, L1, L2,
+
+L5, L6, L7
+
+Mutsamba,
+
+costs ($)
+
+L3, L4 ($)
+
+($)
+
+L8, L9 ($)
+
+32 308
+
+26 222
+
+8676
+
+67 206
+
+27 820.78
+
+22 580.06
+
+7471
+
+57 871.83
+
+protection) 16%
+
+14 359.11
+
+11 654.22
+
+3856
+
+29 869.33
+
+Valve boxes 11%
+
+9871.89
+
+8012.28
+
+2651
+
+20 535.17
+
+5384.67
+
+4370.33
+
+1446
+
+11 201
+
+89 744.44
+
+72 838.89
+
+24 100
+
+186 683.3
+
+124 104.4
+
+86 958.89
+
+28 460
+
+239 523.3
+
+Pipes, valves and
+accessories 36%
+Excavation of
+pipes 31%
+Sand bed (pipe
+
+Pipe installation
+6%
+Total pipeline
+layout costs
+Total project cost
+(Pipeline layout +
+Tanks + SSFs)
+
+The estimated cost for the total project is about $240 000, maintenance and operation
+costs not included. The estimation has an accuracy of 50% and can, therefore, differentiate
+largely from the final costs.
+Donors can partially pay the initial costs, however, when the system is built, it needs a
+sustainable payment system to pay for maintenance and operation costs, which is
+dependent on the inhabitants of Ward 10 if they are willing to pay for their water or if
+they find other means to collect water better. A continuous payment system by the users
+needs to be developed. Therefore, further surveys are required regarding the economical
+aspect, how to pay for the initial costs and maintain a sustainable system operation.
+
+72
+
+4.7 Management
+Previously, the management and maintenance of the water system has been entirely done
+through volunteer work. A continuous payment fee would support a more sustainable
+management. The water committee should cooperate with local and national
+governments, state-owned utilities, possibly NGOs and donor agencies to start the project.
+(WHO, 2017) The system is designed to use locally available technologies that can be
+repaired and maintained by locals. A water committee with organized responsibilities will
+work more efficiently. A proposed set of responsibilities was set in the report in 2017
+(Awais, et al., 2017):
+-
+
+Coordination with the authorities and other departments
+
+-
+
+Routine maintenance and inspections of the water systems
+o Routinized water analyses, especially CDBPs and pathogen analyses
+o Routinized cleaning and disinfection
+
+-
+
+Resolving of eventual issues and repairs for users
+o Technical skills required
+
+-
+
+Collecting of service fees
+
+-
+
+Reporting of information to users
+
+More detailed management positions are required to operate and maintain the network.
+
+73
+
+5 Results and discussion
+The topography in Ward 10, combined with the rich water sources in the area, allows for
+a gravitationally driven water distribution system to be applied in the area. However, due
+to the topography of the terrain and nature of gravity-fed systems, one network only
+cannot be constructed to supply the whole of Ward 10 but must be divided into several
+separate smaller systems. For example, Line 8 and 9 supply water only to Nyabadza and
+Mutsamaba and is not being connected to the larger networks due to the large mountains
+between the systems. Additionally, lines 5 to 7 supply water to the majority of village
+cluster 1. Therefore, each of the systems can be reviewed individually, whether the
+population and water demand are large enough for a pipeline network to be constructed
+and the inhabitants are willing to pay to use a pipelined distribution system or there are
+other means of collecting water more suitable to the smaller villages. The decision must
+be made by the end users themselves through surveys, whereas the thesis provides the
+technical basis of the pipeline construction.
+Before building a new system, the reasons for the old system’s deterioration should be
+analyzed; otherwise there is a great risk of a new system sharing the same fate. According
+to the 2017 report, the biggest reason for the deterioration was payment failure, which led
+to mismanagement and ultimately caused the system’s decay. The management system
+needs to be clearly setup and properly organized before the system is built. A continuous
+payment system needs to be settled as well to maintain and operate the network when the
+system is in place and the donors are out of the picture.
+The project’s success criteria are analyzed with a risk analysis (Table 35) and SWOT
+analysis (Table 36). The analyses are based on the previous report from 2017 but with a
+perspective from a gravitationally fed system rather than a general water supply
+harmonization. The risk analysis reviews potential risks and how to prevent or handle
+certain risks, were they to occur. The preventive measures reduce the possibility of the
+risks, and the containment measures reduce the impact if the potential risk occurs.
+
+74
+Table 35, risk analysis (Awais, et al., 2017)
+Index
+
+Probability
+
+Impact
+
+1
+
+Rare
+
+Insignificant
+
+2
+
+Unlikely
+
+Minor
+
+3
+
+Possible
+
+Moderate
+
+4
+
+Likely
+
+Major
+
+5
+
+Almost certain
+
+Catastrophic
+
+Potential risk
+Lack of interest
+
+Probability Impact Risk Preventive
+5
+
+4
+
+20
+
+Containment
+
+measures
+
+measures
+
+Suitable pricing
+
+Provide reassured
+
+of usage
+
+safe drinking
+
+towards
+
+water
+
+payment system
+Lack of interest
+
+5
+
+3
+
+15
+
+in installing
+
+Education of
+
+Continuous water
+
+potential hazards
+
+analyses
+
+Routine
+
+Supply of extra
+
+maintenance and
+
+components
+
+treatment
+facilities
+Breaking of a
+
+2
+
+4
+
+8
+
+pipe
+
+inspection
+Unequal
+
+3
+
+4
+
+12
+
+accessibility
+
+Include end-users On-site
+in planning and
+
+measurements
+
+conduct more
+
+and surveys
+
+detailed planning
+Lack of
+
+3
+
+4
+
+12
+
+maintenance
+
+Payment and
+
+Organize and
+
+management
+
+coordinate the
+team
+
+Insufficient
+water supply
+
+4
+
+5
+
+20
+
+Additional
+
+Educate water
+
+intakes or larger
+
+use and irrigation
+
+storage tanks
+
+styles
+
+according to
+demand and
+supply patterns
+
+75
+The SWOT analysis summarizes the strengths, weaknesses, opportunities, and threats
+graphically if a gravitationally fed distribution system were to be implemented to Ward
+10. The analysis can help determine future decisions of the project.
+Table 36, SWOT-analysis (Awais, et al., 2017)
+Strengths
+•
+
+Simple technology
+
+•
+
+Locally available resources
+
+•
+
+Possibility to reuse parts of the
+
+Weaknesses
+•
+
+confirmed
+•
+
+Management and financial aspects
+need further surveys
+
+old system
+•
+
+Technical Assumptions need to be
+
+Optimal terrain for gravity-fed
+system
+
+Opportunities
+•
+
+Partnerships with ZINWA and
+
+Threats
+•
+
+other authorities to manage the
+system
+•
+
+funders
+•
+
+The success of the project is
+dependent on the public opinion
+
+Possibility to provide jobs to
+locals
+
+Lack of interest from users and
+
+•
+
+Lack of management and
+maintenance
+
+•
+
+Overuse of water
+
+•
+
+No drainage of sullage
+
+76
+
+5.1 Further necessary technical data
+The thesis provides rough dimensions and designs for a distribution network. Due to the
+proposal being made remotely, approximations and estimates have been used. Therefore,
+on site measurements are still needed, and additional data of the demand and supply are
+required to make more precise calculations and dimensions.
+The demand and supply patterns are essential to dimensioning the systems components,
+especially sizes of the storage tanks. Too large water tanks are expensive to build, and
+unused water will stagnate, forming algae and CDBPs requiring unnecessary treatment.
+Contrarily, too small tanks will not meet the peak hour demands, and the users will be left
+without water. Further surveys need to be conducted of the water uses and habits in Ward
+10 as well as analyses of the irrigation cycles to find a matching demand pattern to the
+area. Furthermore, education of the water use could be provided, for example, it is
+unnecessary to water the crops in the middle of the day. Currently, only a theoretical
+demand pattern has been used, which may not correlate with the actual pattern in Ward
+10.
+Water supply patterns are also needed, especially if surface water sources are used due to
+their varying seasonal capacity. Currently, only one measurement of the supply capacity
+has been conveyed during the dry season, which compels a minimal constant supply value
+to the dimensions. The capacities of the water sources should be measured throughout the
+year to measure the flow rates’ difference to find a suitable supply pattern to the respective
+source. Due to only one supply measurement being available, multiple inlets are proposed
+to meet the supply and demand criterion. If a supply pattern is surveyed in the area over
+different seasons, suitable sized tanks can be dimensioned over longer time periods, which
+can reduce the number of intakes needed and, therefore, potentially also reducing the
+number of treatment facilities and maintenance required. The proposed intakes cannot
+guarantee a steady flow or supply, since the location is based on a topographical
+simulation only; they should be surveyed on site.
+Potential groundwater sources such as spring catchments should also be further analyzed
+in the area, since they tend to provide a more reliable flow of water even during droughts.
+Also, the groundwater quality is less prone to pollution exposure than surface water. The
+water quality from the basic analysis tests seems to prove good quality, but further
+laboratory analyses of the water quality need to be analyzed to prove whether chlorination
+is treatment enough or whether additional treatment methods are needed.
+
+77
+The layout of the pipeline is determined from satellite view and follows certain
+infrastructure, and the elevation is determined with a LIDAR map. The demand for public
+houses such as schools, health centers, and business centers has not been taken into
+consideration. Due to their unknown location an average demand has been assumed. To
+confirm the accessibility of the pipeline layout, site-specific demands and pressures of the
+proposed system should be surveyed on site, and the layout can therefore change
+radically.
+The next step in the project phase should be to conduct on site analyses of the water
+quality, intakes capacities and locations, pipelines layout, and water demands, as well as
+more details should be presented of the practical construction and installation of the
+components.
+
+5.2 MIKE+ WD simulation results and discussion
+MIKE+ Water Distribution is a commercial simulation program built on the demanddriven EPANET solver engine. The simulation on MIKE+ proved the theoretical
+functionality of the proposed system from a hydraulic perspective and, therefore,
+confirmed the dimensions of the pipes and capability of the demand flows.
+Some issues with the software emerged when building the simulation network that limited
+the application to the results of the proposal. Adding storage tanks to the system interrupts
+the mass balance of the network. The net inflows of the storage tank, i.e. the inflows
+subtracted with the outflows of the tanks, are added to the total outflow of the system.
+According to the simulation, the net inflow is more often positive than negative, which
+means that more water is entering the tank than exiting, even though the tanks are set not
+to overflow. This issue raises the total water supplied to the system, therefore disrupting
+the total systems mass balance. However, by inserting strict rules in the simple controls,
+the overflow issue can be partially resolved with the following commands:
+LINK 1 CLOSED IF NODE 2 ABOVE 20
+LINK 1 OPEN IF NODE 2 BELOW 19
+where LINK 1 is feeding water to NODE 2 which is a storage tank. These commands
+resolve the system’s mass balance problem but add another unrealistic behavior to the
+network. With an infinite water reservoir as the supply, the refilling of the tanks happens
+
+78
+instantly, which does not seem realistic in a gravity-pressurized system. Furthermore,
+when simulating larger networks with longer distribution lines and with multiple storage
+tanks, it causes sudden spikes in the total system’s supply which do not correlate with the
+respective storage tank’s refilling regarding volume and time step.
+To overcome the issues with the solver, storage tanks have not been used in the
+simulation. Infinite reservoirs with a dummy node matching the total demand for the
+network the respective tank covers have been used as substitutes for storage tanks. The
+reservoir and dummy nodes’ elevations are constant and equal to the surface elevation,
+which eliminates the dynamic water level which a realistic storage tank would have and,
+therefore, also assumes a constant minimal pressure in the succeeding pipelines. Due to
+the stiffness of the hard coded demand parameters set to each dummy node, no regulation
+or steering of the simulated network has been made. Only the hydraulic rules of the
+dimensions of the pipes were confirmed from the simulation results.
+An attempt to use a different solver was made, with MIKE+ Collection Systems that
+models water drainages, but it was discarded due to lacking substitutes for a distribution
+network's components.
+
+79
+
+6 Conclusions
+A technical framework of the functionality of a gravity-fed water distribution system was
+presented, where the theory of how pressure profiles and demand patterns determine the
+sizes and dimensions of the components in the system. Water quality, analyses, and
+treatment methods have been reviewed, as well as how they are included in a distribution
+system.
+The presented theory was applied to Ward 10 Honde Valley, a village surveyed by a
+delegation from KTH and UPC in 2017. In the survey, basic data were gathered and
+provided by ZINWA, and the problem description of the water supply situation was
+evaluated. The main problem has been a deteriorating public distribution system, which
+has made villagers construct their own haphazardous water supply systems. The goal is
+to provide a technical basis for a public water distribution system that is controllably
+managed and maintained by authorities and supplies sufficient water to the inhabitants.
+The area has been mapped with QGIS through satellite pictures, LIDAR, and interviews.
+Furthermore, the water sources were located by simulating a topographical simulation on
+QGIS to measure their sizes and potential uses to the distribution system. With this data
+and the data provided by the previous report as a basis, a hydrological simulation on
+MIKE+ WD has been done to verify the functionality of a possible distribution system to
+the area.
+The results prove that, technically, a distribution system could be constructed in Ward 10,
+and rough dimensions of the components and costs have been presented. However, some
+further data gathering from the area would be beneficial to make a more detailed
+estimation of the network and the dimensions of its components. Thus, analyses of the
+water quality, intake capacities and locations, pipelines layout, water supply and demand
+patterns should be surveyed, and more details of the practical construction and installation
+of the components is necessary in successful continuation of the project.
+Although, technically, Ward 10 suits a distribution system, many other aspects are vital
+to investigate. Is there a willingness to use the system compared to other means of
+collecting water that the area already uses, especially in the smaller villages where the
+demands are modest can the payment of a public system be too significant for the
+individual user? Clear management roles of a continuous operation for the system are
+vital for the system not to let it deteriorate, which requires continuous payment systems
+once the initial investment is done.
+
+80
+
+7 Swedish summary – Svensk sammanfattning
+Projektförslag för ett gravitationsdrivet vattendistributionssystem till Honde Valley
+Ward 10
+Detta examensarbete är en del av ett större utvecklingsprogram för Honde Valley Ward
+10, Zimbabwe. År 2017 utfördes en exkursion till byn där en delegation bestående av
+studenter från KTH och UPC identifierade utvecklingspotential inom flera områden.
+Områdena var följande:
+-
+
+vattendistribution, sanitet och rening
+
+-
+
+hållbar energitillgång
+
+-
+
+väg och infrastrukturförbättringar
+
+-
+
+jordbruk
+
+-
+
+samhällstjänster
+
+-
+
+ekoturism
+
+Vattendistributionen och reningen prioriterades som första område att utveckla.
+Lokalbefolkningen livnär sig på export av jordbruk och därmed har området behov av
+distribution av stora mängder vatten. Tillgången till rent och säkert dricksvatten för
+hushållsbruk
+
+och
+
+hälsostationer
+
+är
+
+bristfällig
+
+i
+
+och
+
+med
+
+avsaknaden
+
+av
+
+reningsanläggningar och omedvetenheten om riskerna av vattenburna sjukdomar. Enligt
+undersökningen från 2017 har 88 % av invånarna i Ward 10 klagat på att vattentillförseln
+är otillräcklig, och endast 26 % har åtkomst till det existerande distributionsnätverket.
+Resten av invånarna använder sig av brunnar eller andra tillvägagångssätt för att tillförse
+sig med vatten.
+År 2003 byggdes ett vattendistributionsnätverk i området. Några år efter byggandet av
+rörledningssystemet överfördes ansvaret för förvaltning och underhåll från ZINWA till
+den lokala Samaringa-gemenskapskommittén, på grund av problem med betalning av
+vattenräkningarna. Därefter blev vattenförsörjningen avgiftsfri och underhållet utfördes
+av frivilliga. Efter ansvarsöverföringen började nätverket förfalla och förtroendet för den
+allmänna vattenförsörjningen sjönk. På grund av detta började lokalbefolkningen bygga
+sina egna rudimentära vattenledningssystem för sina egna behov. Dessa egenhändigt
+utförda system är oorganiserade och dränerar vattenresurserna mer än nödvändigt samt
+blir lämnade i miljön vartefter de börjar läcka och slutar att fungera. Vattenreningen för
+de egenhändigt gjorda systemen och det gamla allmänna systemet är obefintlig,
+konsumenterna själva ansvarar för att rena sitt dricksvatten.
+
+81
+Avhandlingens syfte är att ge en grov teknisk bakgrund för återuppbyggnaden av ett nytt
+allmänt vattendistributionssystem med inkluderad vattenrening som skulle kompensera
+för de oorganiserade egenhändigt gjorda systemen. För att komma upp till en tillräcklig
+kvantitet och kvalitet med tanke på hushållsbehoven och bevattningsvattnen krävs ett
+rörledningsdistributionsnätverk som är tillräckligt utbrett, och därtill bör sociologiska
+aspekter från lokalbefolkningens synpunkt tas i beaktande för att inte låta ett nytt system
+förfalla igen.
+Avhandlingen är ett teoretiskt ramverk som anger hur ett gravitationsdrivet
+vattendistributionsnätverk i lantbyggsområden i utvecklingsländer kan byggas upp, när
+resurserna som används bör vara lokala. I ramverket ingår komponenterna som ett
+distributionssystem uppbyggs av samt hur dessa kan dimensioneras grovt. Komponenter
+som ingår i ett gravitationsdrivet distributionssystem är vattenupptagningspunkter,
+samlingstankar,
+
+lagringstankar,
+
+vattenreningsmetoder som
+
+tryckreduceringstankar,
+
+långsamma sandfilter och
+
+rörledningar
+
+samt
+
+klorering av systemet.
+
+Komponenternas dimensioneringar beror på behoven och tillgångarnas flödesvariation
+och kapacitet.
+Teorin om distributionsnätverket tillämpas på situationen i Ward 10 och analyseras med
+ett
+
+simuleringsprogram,
+
+MIKE+.
+
+Topografiinformationen
+
+som
+
+simuleringens
+
+rörledningsnätverk baserar sig på är från en kartuppbyggnad som är ritad på QGIS utifrån
+satellitbilder, LIDAR-kartor och intervjuer med lokala. Med dessa informationskällor har
+hushållen och vattenresurserna lokaliserats samt höjdkurvorna och distanserna av
+rörledningarna definierats i Ward 10.
+Distributionssystemet levererar 80 liter vatten per person per dag vilket enligt WHO:s
+standarder inkluderar vattenförbrukning för hushållsbehov samt bevattning för
+jordbruksbehov. Invånarantalet har beaktats med en 30 års perspektiv med 1,48 %
+befolkningstillväxt, vilket uppskattas till 5645 invånare. Det totala vattenbehovet har
+multiplicerats med ett dagligt variationsmönster för att beakta flödesförändringarna i
+systemet. Dessutom har generella tilläggskonstanter till flödet multiplicerats med
+grundbehovet för att kompensera för olika säsongsvariationer och övriga oförutsedda
+förbrukningar för att få det maximala designflödet i rörledningarna.
+För att hitta tillräckliga vattenkällor för behoven har en topografisk simulering av
+regnvattenavledningen i området gjorts och kompletterats med resultat från en tidigare
+utförd grundvattenssimulering för att mäta vattenkällornas kapaciteter. Intagen till
+systemen har valts utifrån simuleringens resultat, varefter lokala mätningar har gjorts
+
+82
+under torrperioden för att få konkreta flödesmätningar av bifloderna. De slutliga
+positionerna för intagen bör bestämmas på plats, där en tillräcklig höjdnivå för systemets
+tryck balanseras med tillräcklig kapacitet i vattenkällan oberoende årstid.
+Eftersom dimensioneringarna på vattentankarna baserar sig på flödesvariationerna som
+har antagit teoretiska värden under ett dygn är dessa dimensioner bara riktgivande. Fler
+undersökningar bör göras i området om hur vattentillgångarnas flöden varierar med
+årstiderna samt hur vattenförbrukningen varierar under längre tider för att få ett mera
+realistiskt flödesvariationsmönster som beskriver en utsträckt tidsperiod och lämpar sig
+specifikt för Ward 10.
+Det föreslagna distributionssystemet är ett integrerat system med två olika vattenbehov,
+bevattningsvatten och dricksvatten. Vattenrening rekommenderas för att inte låta
+dricksvattenreningen ske på invånarnas eget ansvar eftersom intagen till systemet är från
+ytvatten som lätt kontamineras. Däremot är rening av bevattningsvatten inte nödvändigt
+vilket kan medföra långsiktiga extra kostnader när vatten för bägge behoven renas i ett
+integrerat system. Alternativt kunde parallella system byggas för respektive vattenkvalitet
+men det dubblerar materialkostnaderna för konstruktionen.
+Arbetet behandlar inte vilket tillvägagångssätt som lämpar sig bäst för Ward 10, utan är
+ett förslag som utgör grunden för projektet som vartefter får ta form av de lokala
+bestämmelserna och behoven.
+
+83
+
+8 References
+Action contre la faim, 2008. Design, sizing, construction and maintenance of gravityfed system in rural areas, module 1. u.o.:u.n.
+Action contre la faim, 2008. Design, sizing, construction and maintenance of gravityfed system in rural areas, Module 2. u.o.:Action contre la faim.
+Anupoju, S., 2021. The Constructor. [Online]
+Available at: https://theconstructor.org/environmental-engg/types-of-sedimentationtank/14711/
+Anupoju, S., 2021. The Constructor. [Online]
+Available at: https://theconstructor.org/environmental-engg/sedimentation-tank-designparameters/21277/
+Arnalich, S., 2020. Gravity Flow Water Supply - Conception, design and sizing for
+Development Projects. u.o.:u.n.
+Awais, M. o.a., 2017. Opportunities for Sustainable Community Development of Ward
+10 in Honde Valley, Stockholm: KTH -Department of Energy Technology.
+CAWST, 2009. Introduction to Drinking Water Quality Testing. Calgary: Centre for
+Affordable Water and Sanitation Technology.
+Chikuhwa, J., 2021. [Interview] (20.4.2021).
+Clean Water Systems, 2017. The Definitive Guide To Well Water Treatment. Santa
+Cruz, California: u.n.
+Engineering ToolBox, 2021. Pump Power Calculator. [Online]
+Available at: https://www.engineeringtoolbox.com/pumps-power-d_505.html
+Google, 2018. Google maps. [Online]
+Available at: https://www.google.com/maps/d/u/0/viewer?msa=0&ie=UTF8&t=h&ll=18.608937135938913%2C32.75938641729083&mid=1JEkfH9bJtMKrVCMHrKGPP_
+QmMys&z=13
+[Used 9.4.2021].
+
+84
+Huisman, L. & Wood, W. E., 1974. Slow Sand Filtration. u.o.:World Health
+Organisation.
+Ingeduld, P., 2017. DHI Blog. [Online]
+Available at: https://blog.dhigroup.com/2017/11/13/understand-water-age-within-waterdistribution-network/
+Mukome, M., 2021. [Interview] (20.5.2021).
+Oram, B., 2021. Chlorination of Drinking Water. Water Research Center.
+Pilgrim, D. H., 2001. Australian Rainfall and Runoff: a guide to flood estimation.
+Australian Capital Territory.: Institution of Engineers Australia Barton.
+RCMRD, 2018. RCMRD Open data site. [Online]
+Available at: https://opendata.rcmrd.org/datasets/zimbabwe-srtm-dem-30metres/explore
+[Used 9.4.2021].
+Reed, B. J., 2005. Minimum water quantity needed for domestic uses, New Delhi:
+World Health Organisation.
+Sampers, E., 2005. Water, sanitation and hygiene for populations at risk. Paris:
+Hermann éditeurs des sciences et des arts.
+sswm, 2021. Sustainable Sanitation and Water Management Toolbox. [Online]
+Available at: https://sswm.info/sswm-university-course/module-6-disaster-situationsplanning-and-preparedness/further-resources-0
+Swenson, H. A. & Baldwin, H. L., 1965. A primer on water quality. u.o.:United States
+Geological Survey.
+Tebbutt, T. H. Y., 2002. Principles of water quality control, fifth edition. Jordan Hill,
+Oxford: Elsevier Science.
+The World Bank, 2021. The World Bank. [Online]
+Available at: https://data.worldbank.org/indicator/SP.POP.GROW?locations=ZW
+
+85
+Thomas, B., 2021. Modelling of Groundwater Disposable Resources for Honde valley,
+Zimbabwe with limited data availability., Warsaw: Warsaw University of Technology,
+Environmental Engineering Euro Hydroinformatics and Water Management
+(EUROAQUAE).
+USGS, 2021. United States Geological Survey. [Online]
+Available at: https://www.usgs.gov/special-topic/water-science-school/science/artesianwater-and-artesian-wells?qt-science_center_objects=0#
+WHO, 2017. Guidelines for drinking-water quality: fourth edition incorporating the
+first. Geneva: World Health Organization.
+Wisniewski, E., 2012. Sedimentation tank design for rural communities in the hilly
+regions of Nepal, Melbourne, Australia: Department of Chemical and Biomolecular
+Engineering, Melbourne School of Engineering, The University of Melbourne.
+Zinn, C. o.a., 2018. How are water treatment technologies used in developing countries
+and which are the most effective? An implication to improve global health. Journal of
+public health and emergency.
+
+86
+
+9 Appendices
+9.1 Appendix A, Base data for Ward 10
+HONDE VALLEY
+
+N
+N Name
+WARD
+10
+
+Current
+inhabita
+nt water
+demand
+for
+80
+l/c/d
+
+Predicted
+inhabitant
+water
+demand
+for
+80
+l/c/d
+
+Storage
+required
+per
+irrigation
+cycle (m3)
+
+290640
+
+451615
+
+471600
+
+Funct
+ional
+Tank
+s
+
+Tank
+capaci
+ty
+(m3)
+
+Inhab
+itants
+
+Predi
+cted
+inha Hous
+bitan ehold
+ts
+s
+
+12
+
+2048
+
+3633
+
+5645
+
+Inhab
+itants
+
+Predi
+cted
+inha Hous
+bitan ehold
+ts
+s
+
+Current
+inhabita
+nt water
+usage.
+80 l/c/d
+
+Predicte
+d
+inhabitant
+water
+usage. 80
+l/c/d
+
+Storage
+required
+per
+irrigation
+cycle (m3)
+
+311
+
+483
+
+234
+
+24880
+
+38660
+
+68040
+
+153
+
+237
+
+287
+
+12240
+
+19019
+
+38160
+
+219
+
+340
+
+172
+
+17520
+
+27223
+
+42840
+
+683
+
+1061
+
+693
+
+54640
+
+84903
+
+149040
+
+1957
+
+MANYONHO
+CLUSTER 4
+Funct
+ional
+Tank
+s
+
+Tank
+capaci
+ty
+(m3)
+
+N
+N Name
+Manyonh
+1 o
+2
+455.3
+Nyabadz
+2 a
+1
+51.89
+Mutsamb
+3 a
+1
+250
+Jombe primary
+4 and
+secondary
++ school
+Two
+small
+5 Business
++ Centres
+757.1
+TOTAL 4
+9
+
+87
+NGWENDE CLUSTER 3
+
+N
+N
+1
+2
+3
++
+4
++
+5
++
+6
++
+7
++
+
+Funct
+ional
+Tank
+Name
+s
+Ngwende 1
+Mutetwa 1
+Masare Business
+Centre + two
+churches
+FDC carpentry
+factory + motor
+mechanic shop
+Social
+Tourism
+Centre
+Honde
+Mission
+Technolo
+gy
+Honde
+Mission
+Clinic
+TOTAL 2
+
+Tank
+capaci
+ty
+(m3)
+153
+340
+
+Inhab
+itants
+341
+289
+
+Predi
+cted
+inha
+bitan
+ts
+529
+449
+
+493
+
+630
+
+978
+
+Hous
+ehold
+s
+113
+100
+
+Current
+inhabita
+nt water
+usage.
+80 l/c/d
+27280
+23120
+
+Predicte
+d
+inhabitant
+water
+usage. 80
+l/c/d
+42389
+35925
+
+Storage
+required
+per
+irrigation
+cycle (m3)
+31680
+32040
+
+213
+
+50400
+
+78314
+
+63720
+
+Current
+inhabita
+nt water
+usage.
+80 l/c/d
+
+Predicte
+d
+inhabitant
+water
+usage. 80
+l/c/d
+
+Storage
+required
+per
+irrigation
+cycle (m3)
+
+SAMARINGA CLUSTER 2
+Funct
+ional
+Tank
+s
+
+N
+N Name
+Samaring
+a
+/
+1 Mutsaka 1
+Samaring
+2 a schools 2
+3 Baradza
+1
+4 Hambira 1
+Samaringa
+5 primary and high
++ school
+6 Samaring
++ a Clinic
+Muitsi
+7 Business
++ Centre
+TOTAL 5
+
+Tank
+capaci
+ty
+(m3)
+
+Inhab
+itants
+
+Predi
+cted
+inha Hous
+bitan ehold
+ts
+s
+
+372.6
+
+162
+
+251
+
+57
+
+12960
+
+20138
+
+19440
+
+337.3
+33.2
+39.3
+
+159
+174
+191
+
+247
+270
+296
+
+59
+56
+63
+
+12720
+13920
+15280
+
+19765
+21629
+23743
+
+19440
+18360
+20880
+
+782.4
+
+686
+
+1065
+
+235
+
+54880
+
+85276
+
+78120
+
+88
+
+MATINGO CLUSTER 1
+
+N
+N Name
+1 Matingo
+Nyakabi
+2 nga
+Chipunh
+3 a
+Saruwak
+4 a
+5 Gowa
+Small
+6 business
++ center
+Two
+7 preschoo
++ ls
+TOTAL
+
+Hous
+ehold
+s
+446
+
+Current
+inhabita
+nt water
+usage.
+80 l/c/d
+71120
+
+Predicte
+d
+inhabitant
+water
+usage. 80
+l/c/d
+110510
+
+Storage
+required
+per
+irrigation
+cycle (m3)
+68760
+
+Funct
+ional
+Tank
+s
+1
+
+Tank
+capaci
+ty
+(m3)
+16.13
+
+Inhab
+itants
+889
+
+Predi
+cted
+inha
+bitan
+ts
+1381
+
+0
+
+0
+
+322
+
+500
+
+56
+
+25760
+
+40027
+
+20520
+
+0
+
+0
+
+163
+
+253
+
+81
+
+13040
+
+20262
+
+27720
+
+0
+
+0
+
+20800
+
+32320
+
+63720
+
+0
+
+0
+
+260
+404
+172
+(included in
+Saruwaka)
+61
+
+1
+
+16.13
+
+1634
+
+130720
+
+203121
+
+180720
+
+2539
+
+816
+
+Irrigation
+Number of irrigation cycles
+Irrigation time
+Irrigation once every
+
+48
+6
+72
+
+months
+h
+
+Population growth parameters
+Growth rate
+1.48 %
+Time span
+30
+years
+Demand
+total LPCD
+Irrigation LPCD
+domestic LPCD
+
+Current inhabitant ratio
+80
+43.2
+36.7
+
+Predicted inhabitant ratio
+80
+27.8
+52.1
+
+total LPS
+Irrigation LPS
+Domestic LPS
+
+3.36
+1.81
+1.54
+
+5.22
+1.81
+3.40
+
+89
+Multiplier data
+Time
+Period
+(h)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+avg.
+
+Flow
+(unitless)
+0.2
+0.15
+0.12
+0.2
+0.4
+0.6
+0.7
+0.8
+0.63
+0.5
+0.42
+0.37
+0.28
+0.3
+0.3
+0.4
+0.48
+0.58
+0.7
+0.6
+0.44
+0.3
+0.24
+0.05
+0.406667
+
+Multiplier
+0.491803
+0.368852
+0.295082
+0.491803
+0.983607
+1.47541
+1.721311
+1.967213
+1.54918
+1.229508
+1.032787
+0.909836
+0.688525
+0.737705
+0.737705
+0.983607
+1.180328
+1.42623
+1.721311
+1.47541
+1.081967
+0.737705
+0.590164
+0.122951
+1
+
+90
+
+9.2 Appendix B, Pressure profiles and pressures in pipelines
+It is strived to keep a minimum pressure of 1 bar in the system and pressure between 1-3
+bar at each outlet. Nodes under 1 bar are usually next to a water tank which according to
+the simulation is empty, but in reality does have a pressure if the tank is containing water.
+Nodes above 3 bar are mostly junction nodes or dummy nodes, therefore requiring a
+higher PN pipe for that section.
+
+91
+
+92
+
+93
+
+94
+
+95
+
+96
+
+97
+
+98
+
+

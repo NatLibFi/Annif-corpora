@@ -1,0 +1,5327 @@
+Modeling molecular trajectories using long
+short-term memory with stacked state
+pooling
+
+Otto Lindfors
+Master's thesis in computer science
+Supervisors: Sepinoud Azimi Rashti, Sebastien Lafond
+Faculty of Science and Engineering
+Åbo Akademi University
+June 2021
+
+Abstract
+
+Atomistic molecular dynamics can be used for simulating large molecular systems with great accuracy. The downside to this is that simulations are computationally expensive and thus take a long time to perform. Many times, one
+is only interested in a subset, or a summarizing statistic, of the information
+available in the results of the simulations. This raises the question whether it
+is necessary to run full molecular dynamics simulations when one is interested
+in only partial outputs or if similar results can be achieved with a cleverly designed machine learning algorithm. In this thesis, an attempt to answer this
+question is made by proposing a deep learning model for solving general manybody problems. The model generates long sequences of particle positions by
+predicting one time step at a time, using its previous outputs as new inputs.
+It is demonstrated that this model is capable of running simple molecular dynamics. Suggestions for further experiments to measure the capability of the
+model to generalize to complex many-body problems are presented.
+Keywords:
+
+CNN, deep learning, Gaussian mixture model, LSTM, machine
+
+learning, molecular dynamics, probabilistic model, RNN, sequence-to-sequence
+learning, social-LSTM, stacked state pooling
+
+Contents
+
+1 Introduction
+1.1
+
+Previous Work
+
+1
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2 Theory
+
+3
+
+2.1
+
+A Note on Tensors
+
+2.2
+
+Long Short-Term Memory
+
+2.3
+
+Pooling the LSTM States of Spatially Nearby Particles
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . .
+
+4
+4
+6
+
+2.3.1
+
+A brief Motivation for using LSTM State Pooling
+
+. . . . . . .
+
+8
+
+2.3.2
+
+Grid Based Sum Pooling . . . . . . . . . . . . . . . . . . . . .
+
+9
+
+2.3.3
+
+Distance based ltering . . . . . . . . . . . . . . . . . . . . . .
+
+10
+
+2.3.4
+
+Limitations
+
+11
+
+2.3.5
+
+Stacked State Pooling - An Attempt to Overcome the Limita-
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+tions in Resolution
+2.3.6
+
+. . . . . . . . . . . . . . . . . . . . . . . .
+
+Motivation for using Sum Pooling from a Perspective of Physics
+
+2.4
+
+Convolutional Neural Networks
+
+2.5
+
+Probabilistic Predictions
+
+2.6
+
+2
+
+13
+14
+
+. . . . . . . . . . . . . . . . . . . . .
+
+15
+
+. . . . . . . . . . . . . . . . . . . . . . . . .
+
+17
+
+2.5.1
+
+Mixture Density Network
+
+. . . . . . . . . . . . . . . . . . . .
+
+21
+
+2.5.2
+
+Recurrent Neural Networks and Probability Densities . . . . .
+
+23
+
+Multipole Expansion
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.6.1
+
+Monopole Approximation
+
+2.6.2
+
+Dipole Approximation
+
+24
+
+. . . . . . . . . . . . . . . . . . . .
+
+26
+
+. . . . . . . . . . . . . . . . . . . . . .
+
+26
+
+3 A First Experiment
+
+28
+
+3.1
+
+Data Exploration . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+29
+
+3.2
+
+Data Preprocessing . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+31
+
+3.3
+
+Model
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+34
+
+3.4
+
+Result
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+35
+
+4 A Second Experiment
+
+38
+
+4.1
+
+Newtonian Many-Body Mechanics . . . . . . . . . . . . . . . . . . . .
+
+39
+
+4.2
+
+Velocity Verlet Integration . . . . . . . . . . . . . . . . . . . . . . . .
+
+40
+
+4.3
+
+Data Preprocessing . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+41
+
+4.4
+
+Model
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+42
+
+4.5
+
+Result
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+47
+
+5 Conclusions
+5.1
+
+Suggestions for Future Work . . . . . . . . . . . . . . . . . . . . . . .
+
+54
+55
+
+6 List of Abbreviations
+
+57
+
+References
+
+58
+
+1 Introduction
+
+Otto Lindfors
+
+1
+
+Introduction
+
+Molecular dynamics is a collection of methods for simulating the motion of interacting particles. The particle motion is simulated by numerically solving Newton's
+equations of motion in order to obtain trajectories as the solution. This is done by
+numerically integrating the equations of motions with respect to time and approximating the forces to be constant over short time intervals
+
+∆t,
+
+where
+
+∆t
+
+is the step
+
+size used in the numerical integration. A smaller step size will lead to a smaller error
+and in the limit of
+
+∆t → 0
+
+one obtains the true integral. Therefore, a suciently
+
+small step size must be chosen when performing molecular dynamics simulations.
+This means that a large number of calculations must be done in order to simulate
+a relatively short period of time. Furthermore, when the simulated system contain
+many particles the total number of calculations is further increased. Therefore, simulations of large molecular structures are computationally very expensive.
+
+The extended aim of the work in this thesis is to develop a machine learning based
+method for performing computationally less expensive molecular dynamics simulations than conventional methods but still having sucient precision for calculating
+accurate summarizing statistics on the results.
+
+The scope of this thesis is limited
+
+to demonstrating the viability of the approach in basic many-body problems. It is
+shown that the model is able to perform reasonably well even when being trained on
+solutions (trajectories) with sub-optimal sampling rates.
+
+Two approaches are taken. The rst approach, presented in section 3, attempts to
+model the surface molecules in a large drug carrying nanoparticle, consisting of
+
+40 000
+
+atom, using a naïve LSTM based neural network. However, this turned out to be a
+challenge and the particle trajectories were unsuccessfully modeled. In addressing the
+shortcomings of the rst approach, a second approach where a sophisticated model
+inspired by the works of [1] and [2] is developed with the specic task of modeling
+particle-particle interactions in mind. The model generates a sequence of predictions
+one step at a time, always using the previous prediction as new input. At each time
+step, the particle interactions are modeled on a per-particle basis. The approach has
+
+1
+
+1 Introduction
+
+Otto Lindfors
+
+similarities with molecular dynamics although being fundamentally dierent in that
+no rules for the interactions and position predictions are given. Instead these rules
+are learned in a completely data-driven fashion.
+
+In section 2 the various model components are presented in detail. In section 2.6 an
+approximation of inter-molecular electrostatic forces, central to some of the subsequent sections, is presented. Section 3 and 4 present the rst and second experiments,
+respectively, and detailed descriptions of the specic model architectures and implementation details. Section 5 present the conclusions and suggested future work.
+
+1.1
+
+Previous Work
+
+In previous work such as Wang et.
+deep learning approach is taken.
+
+al [3] and Pihlajamäki et.
+
+al. [4] a similar
+
+A deep learning model is used as a component
+
+for estimating the inter-atomic energies in popular molecular dynamics software in
+order to speed up computations.
+
+The work in this thesis uses similar ideas but
+
+approaches the problem by simplifying the simulated systems to only contain a partial
+description of the atomic structure and letting the deep learning model replace the
+entire molecular dynamics simulation. Further experiments are needed in order to
+tell whether or not this is a viable approach for general molecular dynamics problems
+but the initial proof of concept performed in this thesis shows promising results (see
+section 4.5).
+
+2
+
+2 Theory
+
+Otto Lindfors
+
+2
+
+Theory
+
+On the most general level, a neural network is a function
+maps values from some
+
+f : RM → RN .
+
+M -dimensional
+
+domain to some
+
+fθ
+
+parameterized by
+
+N -dimensional
+
+θ
+
+that
+
+codomain,
+
+Although the neural network in this thesis is dened to be real
+
+valued it is not a requirement. [5] Machine learning deals with problems that are too
+complex or too large to be feasibly solved analytically and are therefore approached
+using numerical methods. [6] In case of supervised learning, the problem is to nd a
+function that describes some other observed function with as little error as possible
+by numerically tting the neural network to samples of the observed function.
+
+The neural network is tted to the samples by maximizing the likelihood that the
+parameters
+ples.
+
+θ
+
+correspond to the neural network
+
+fθ ,
+
+which best describes the sam-
+
+In practice, the neural network is optimized using a nite set of samples, a
+
+training set. Because the training set is nite, the diculty lies in nding a function
+
+fθ
+
+that correctly maps values from the domain to the codomain for values that are
+
+not present in the training set.
+
+This is referred to as generalization of the model.
+
+The goal is not to learn the specic samples that are present in the training set but
+instead to learn the underlying function or phenomenon that generated the samples
+in the rst place. As a simple example, consider gures 1a and 1b where a
+
+n:th order
+
+polynomial is tted to some noisy data generated by a second order polynomial. As
+a more abstract example related to deep learning, one can consider the task of image
+recognition where the true function that produce the training samples is the human
+consciousness. The goal would in this case be to model the human decision process
+that takes the form of images being labeled as, say, cat or dog. The challenge in
+this is that, the samples only contain the
+so, only the
+
+result
+
+result
+
+of the human decision process, and
+
+of a very small portion of the conscious process of the human mind
+
+will be mimicked, at most. [6]
+
+3
+
+2 Theory
+
+Otto Lindfors
+
+1.5
+
+1
+
+1
+0.5
+0.5
+0
+
+0
+−1
+
+−0.5
+
+0
+
+0.5
+
+−1
+
+1
+
+(a) The polynomial is memorizing
+this specic dataset by describing
+many of the small variations in the
+dataset.
+Figure 1: Fitting a
+
+n:th
+
+−0.5
+
+0
+
+0.5
+
+1
+
+(b) The polynomial captures the general trend in the dataset.
+
+order polynomial to noisy data generated by a quadratic
+
+function. Figure 1a is an example of overtting. Figure 1b is an example of a well
+tted polynomial.
+
+2.1
+
+A Note on Tensors
+
+In this work, multidimensional arrays will be referred to as tensors, which is dierent
+from the mathematical tensors. A mathematical object
+
+A
+
+whose elements are iden-
+
+tied by tree or more indices will be called a tensor. As an example, the elements of
+a matrix are
+
+(aij ),
+
+and the elements of what will be called a tensor are
+
+(aijk... ).
+
+The
+
+reason for this (ab)use of the meaning of the word tensor is the common terminology
+used in the eld of machine learning.
+
+2.2
+
+Long Short-Term Memory
+
+Long short-term memory (LSTM) is a recurrent neural network (RNN) architecture,
+which was introduced in 1997 as being better than its predecessors at capturing
+long-term dependencies in temporal sequences. [7] Since then, the LSTM has been
+successfully applied to a broad range of sequence modeling tasks, such as handwriting
+imitation, speech recognition, machine translation, computer vision, and prediction
+of human social behavior. [1, 2, 8, 9, 10, 11, 12] The basic idea behind an RNN is to
+iterate over the same RNN cell multiple times while using feedback connections to
+previous iterations. At each iteration, the RNN accepts an input vector and a state
+
+4
+
+2 Theory
+
+Otto Lindfors
+
+vector. The input vector is used for updating the state vector, which is forwarded
+to the next iteration through the feedback connection, thus giving the algorithm its
+name.
+puts.
+
+The feedback connection connects the cell to (in principle) all previous inTherefore, the state will contain residues of all previous inputs.
+
+Because of
+
+this, RNNs are suitable for modeling sequences where elements depend on the ones
+preceding them. Naturally, such sequences are often time series. [7, 13, 14]
+
+ht
+
+h1
+h1
+
+ht
+
+xt
+
+h2
+
+hT
+h1
+
+x1
+
+hT
+
+x2
+
+xT
+
+Figure 2: Unfolding of an RNN. Left: A single time step computation of
+the RNN. Right: An unfolded sequence of RNN computations.
+
+When training an RNN, iterating the same computation is equivalent to traversing
+an unfolded graph of consecutive RNN cells, as visualized in gure 2. However, the
+feedback connection causes the state to be unstable.
+
+If the derivative of the cell's
+
+activation function has values between, and excluding,
+
+−1
+
+and
+
+1,
+
+the product of the
+
+partial derivatives that are calculated by the backpropagation algorithm, when applying the chain rule for calculating gradients, will decay as the number of time steps
+increases.
+than
+
+1
+
+Similarly, if the activation function has a derivative with values greater
+
+or smaller than
+
+−1,
+
+the product of partial derivatives will grow as the num-
+
+ber of time steps increases. When gradients are decaying, the errors from long-term
+dependencies will become insignicant in comparison to the errors from short-term
+dependencies, and vice-versa for large gradients.
+
+This issue was a bottleneck for
+
+early implementations of RNNs. [14, 15] The long short-term memory is an attempt
+to address these issues.
+
+The LSTM has gating mechanisms that control to what
+
+extent the cell states are aected by new inputs and previous cell states. The LSMT
+has two internal states, a memory state for capturing long-term dependencies and a
+conventional cell state for capturing short-term dependencies. [7, 16]
+
+5
+
+2 Theory
+
+Otto Lindfors
+
+The forward pass of the LSTM is described by
+
+ft = σ(Wf xt + Uf ht−1 + bf )
+
+(1)
+
+it = σ(Wi xt + Ui ht−1 + bi )
+
+(2)
+
+ot = σ(Wo xt + Uo ht−1 + bo )
+
+(3)
+
+c̃t = tanh(Wc xt + Uc ht−1 + bc )
+
+(4)
+
+ct = ft ⊙ ct−1 + it ⊙ c̃t
+
+(5)
+
+ht = ot ⊙ tanh ct
+
+(6)
+
+where the sigmoid functions
+
+ft , it
+
+and
+
+ot
+
+have values beween
+
+0 and 1.
+
+The Hadamard
+
+products work as a gating mechanism for controlling to what extent the elements
+of the cell state
+
+ct
+
+and the memory state
+
+determines to what extent
+
+ct−1
+
+ht
+
+are updated. [15] The forget gate
+
+remains unchanged, while
+
+the state is updated with new information in
+
+c̃t .
+
+it
+
+ft
+
+controls to what extent
+
+A computational graph of equations
+
+(1) - (6) is shown in gure 3.
+
+ct−1
+
+ct
+
+it
+
+ct
+
+ft
+
+c̃t
+
+ht−1 , xt
+
+ot
+
+ht
+
+ht
+
+Figure 3: The LSTM represented as a computational graph.
+
+2.3
+
+Pooling the LSTM States of Spatially Nearby Particles
+
+In the model that uses state pooling, the particles are represented by LSTMs. Each
+particle will be modeled by a separate LSTM, such that there are as many LSTMs
+
+6
+
+2 Theory
+
+Otto Lindfors
+
+as there are particles. The LSTM state can be seen to contain an abstract representation of the physical properties of the particle that the LSTM represents. Some of
+these physical properties can cause an interaction between particles and some other
+properties can determine the nature of the interaction. For example, the charge distribution of an object determine the magnitude of its electric eld and whether it
+behaves like a monopole, dipole, quadrupole, etc. (see section 2.6). Depending on
+their respective properties, two particles do not necessarily interact. To allow for the
+possibility that particles may interact, but without requiring it, and to allow for the
+possibility that dierent particles interact according to dierent rules, the properties
+of each particle must be taken into consideration when calculating the next position
+and state for a particle.
+
+In dense systems, it is reasonable
+
+1
+
+to simplify the problem by only considering the
+
+closest neighboring particles, within some radial distance
+
+r, of each particle for which
+
+the trajectory is being predicted. A somewhat similar approach is also taken by Wang
+et. al. where particles outside the cut-o radius are simplied as monopoles. [3] By
+limiting the set of particles that are considered, it is assumed that the forces contributing to the interactions in the system are only signicant within distances of
+Hence,
+
+r
+
+is a hyperparameter of the model and specic to the system. Using domain
+
+knowledge about the physical system, a suitable value for
+for
+
+r
+
+r.
+
+r
+
+can be chosen. The value
+
+can be further improved by hyperparameter tuning.
+
+At each time instant
+
+t
+
+each particle
+
+i
+
+is described by a set of coordinates,
+
+xit
+
+and
+
+yti ,
+
+and some arbitrary number of additional features. Additionally, each particle is also
+represented by an LSTM with a hidden (memory) state vector
+vector
+
+cit .
+
+Note that the superscript
+
+i
+
+hit
+
+and a cell state
+
+represents an index rather than an exponent.
+
+To allow for the particles to interact, the hidden states are shared between neighboring LSTMs. As the hidden states are treated as some abstract representations of
+the physical states, it is unknown how these should be combined in order to model
+the particle-particle interaction. One of the things that is assumed, based on domain
+
+1 The
+
+magnitude of all interactions are taken to be inversely proportional to some power of the
+distance, F ∼ r−n , that is, they decrease with distance.
+7
+
+2 Theory
+
+Otto Lindfors
+
+knowledge, is that the distances and angles to the neighbors are of signicance when
+modeling the interactions. To give the LSTMs access to this spatial information, but
+without knowing how to interpret the values of the states in a physical sense, and
+therefore not knowing how to combine the two, state pooling is used as a general
+representation for the neighborhood of particles.
+
+Similar approaches to the one that will be presented here, which learn interactions
+by pooling neighboring states, have been shown to be successful.
+
+However, these
+
+approaches focus mainly on modeling how humans move in crowded spaces. [2, 12]
+This thesis will explore if state pooling is useful for modeling particle-particle interactions, and will analyze whether or not this technique could be used when modeling
+molecular systems.
+
+2.3.1 A brief Motivation for using LSTM State Pooling
+One may ask why something like state pooling, which will be described shortly, is
+used. After all, the forces acting on each particle are determined by only the current
+state of the physical system. As will be seen in section 4, the initial inputs to the
+model are obtained through molecular dynamics simulations, which contain a complete description of the physical system, including all forces at each time instant. A
+problem with using any set of features for making predictions is that one still have to
+derive a description of the relationship between these features in order to accurately
+describe how the system evolves with time. For this, any sucient set of features,
+such as LSTM states that are assumed to contain representations of the physical
+states of the particles, may be used.
+
+In this work, only measurements of position are given, which means, no time derivatives of these are given.
+
+The time derivatives of the position measurements, such
+
+as velocities or accelerations, are needed in order to solve Newton's equations of
+motion.
+
+The time derivatives are easily approximated as discrete changes in the
+
+measured positions with respect to time. These changes in position are expected to
+
+8
+
+2 Theory
+
+Otto Lindfors
+
+be found (calculated) by the LSTMs. The LSTM hidden states, as described in section 2.2, are expected to contain information about all such derived variables. State
+pooling can be seen as introducing a relationship between the inferred properties of
+multiple particles in a way that should allow the machine learning algorithm to learn
+the rules for these relationships (interactions), using minimal predened knowledge.
+In systems with high particle density, state pooling can eciently summarize the
+properties (LSTM states) of all particles in some neighborhood of predened size by
+using some summarizing statistic, as will be described in the next sections.
+
+2.3.2 Grid Based Sum Pooling
+State pooling is a compact representation of the neighborhood of particles. It combines the states of the neighboring LSTMs while preserving spatial information. It
+can be seen as a collective state of the neighborhood. State pooling works by placing
+a square grid of size
+where
+
+N
+
+N × N,
+
+centered at the
+
+i:th
+
+particle, in the coordinate system,
+
+is the number of cells along one side of the grid. The sides of this square
+
+grid have some physical length
+
+l = 2r,
+
+as illustrated in gure 4. The LSTM states
+
+of only those particles that fall within the boundaries of this grid will be used to
+construct the pooling tensor
+
+Hit .
+
+y
+
+2r
+
+x
+2r
+Figure 4: A
+
+N ×N
+
+square pooling grid were
+
+N = 4.
+
+The primary particle
+
+(the i:th particle) is in the center of the grid and is marked with red, and
+its neighbors
+
+Let
+
+hit
+
+i ̸= j
+
+are marked with black.
+
+be the hidden state vector of the LSTM representing the i:th particle at time
+
+9
+
+2 Theory
+
+Otto Lindfors
+
+t,
+
+and let
+
+(xit , yti )
+
+be the Cartesian spatial coordinates of the particle. The hidden
+
+states of the neighboring particles
+pooling tensor
+of shape
+
+Hit .
+
+j ̸= i
+
+are shared with the
+
+Given some hidden state dimension
+
+N × N × D.
+
+The elements of
+
+Hit,mn =
+
+∑︂
+
+Hit
+
+D,
+
+i:th
+
+particle through a
+
+the pooling tensor will be
+
+are given by
+
+1mn (xjt − xit , ytj − yti )hjt
+
+(7)
+
+j̸=i
+
+where
+
+1mn (x, y)
+
+is an indicator function checking if a coordinate
+
+cell of the pooling grid. This means that the matrix element
+sional vector consisting of the sum of all state vectors
+coordinates
+
+(xjt , ytj )
+
+are within the cell
+
+m, n
+
+hjt
+
+(x, y)
+
+Hit,mn
+
+is in the
+
+is a
+
+D
+
+m, n
+
+dimen-
+
+of those particles whose
+
+of the pooling grid. This is depicted in
+
+gure 5.
+
+y
+
+y
+
+y
+h3
+h2
+
+h2 + h3
+h1
+
+h1
+h4
+
+x
+
+x
+
+(a)
+Figure 5: A
+
+h4
+
+x
+
+(b)
+N ×N
+
+the pooling tensor
+
+square pooling grid, were
+
+H
+
+(c)
+N = 4,
+
+is used to construct
+
+at some arbitrary time instant.
+
+In 5a, the pool-
+
+ing grid is placed in a coordinate system where the coordinates of four
+i
+particles (black dots) will be used to construct Ht . In 5b, the same four
+particles are represented as LSTM hidden state vectors
+
+hi .
+
+In 5c, the
+
+state vectors, whose corresponding coordinates are within the same grid
+cell, are summed.
+
+2.3.3 Distance based ltering
+Since the pooling grid is of square shape, the maximum allowed range of the interaction is not uniform in all directions.
+
+The distance between particles is allowed
+
+to be greatest along the diagonals of the pooling grid and smallest in vertical and
+
+10
+
+2 Theory
+
+Otto Lindfors
+
+horizontal directions.
+directions
+
+Thus, on average, fewer particles are allowed to interact in
+
+θ = {0, π2 , π, 3π
+},
+2
+
+where
+
+θ
+
+is the angle from the
+
+x-axis
+
+in counter-clockwise
+
+direction, than in any other direction. In order to avoid introducing such bias into
+
+hjt
+
+the model, the states
+
+are ltered based on their corresponding particles' radial dis-
+
+tance from particle i, as depicted in gure 6, before using them when constructing
+
+y
+
+Hit .
+
+y
+
+r
+
+x
+
+x
+
+2r
+
+2r
+
+(a)
+
+(b)
+
+Figure 6: At any time
+
+t,
+
+only particles whose distance from the reference
+
+(the red dot in the center) is less than r are considered when
+i
+constructing the pooling tensor Ht . In 6a, the indicator function R(x, y)
+
+particle
+
+i
+
+takes the value
+
+1
+
+inside the circle with radius
+
+r
+
+0
+
+outside
+
+R(x, y) is
+i
+tensor Ht .
+
+used to
+
+and the value
+
+the circle. In 6b is depicted how the indicator function
+exclude some particles when constructing the pooling
+
+The elements of
+
+Hit
+
+are now given by
+
+Hit,mn =
+
+∑︂
+
+1mn (xjt − xit , ytj − yti )R(xjt − xit , ytj − yti )hjt
+
+(8)
+
+j̸=i
+where
+
+R(x, y)
+
+is an indicator function like
+
+R(x, y) =
+
+⎧
+⎪
+⎨1
+
+if
+
+⎪
+⎩0
+
+otherwise
+
+√︁
+x2 + y 2 ≤ r
+(9)
+
+2.3.4 Limitations
+State pooling, as described in previous sections, replaces the exact coordinates of
+neighboring particles
+
+j ̸= i
+
+with discrete evenly spaced coordinates relative to parti-
+
+11
+
+2 Theory
+
+Otto Lindfors
+
+cle
+
+i.
+
+The process is very similar to rasterization in image processing. Transforming
+
+continuous coordinates to discrete ones introduces uncertainty in the values of the
+new representation.
+
+This uncertainty is greater for coordinates close to particle
+
+compared to particles further away.
+
+This is illustrated in gure 7.
+
+i
+
+Because the
+
+direction of the force acting on a particle is determined by the angle to the neighboring particle it interacts with, the uncertainty in the direction of the force will
+grow as the uncertainty in the angle grows. Similarly for the magnitude of the force
+the uncertainty is proportional to the uncertainty in the radial distance separating
+the interacting particles.
+
+For particles close to each other, the uncertainty arising
+
+from the rasterization is signicant, and thus the prediction errors are expected to
+be greater when particles are close to each other compared to when they are far
+apart. A good balance between the resolution of the pooling grid and the number
+of trainable parameters has to be found through experiments.
+
+This limitation in
+
+precision must be considered when setting up the experiments and when evaluating
+the model's prediction performance.
+
+y
+
+y
+
+α2
+
+θ2
+θ1
+
+α1
+
+x
+
+x
+
+Figure 7: State pooling is similar to rasterization in image processing.
+The exact positions are replaced by pixels in a matrix.
+
+In this thesis,
+
+the pixel values are LSTM states. This process makes both the angular
+and radial coordinates discrete. For coordinates close to the center of the
+pooling grid, state pooling introduces greater uncertainty in the angular
+position than for more distant coordinates. This is illustrated by
+
+α1 > α2 .
+
+Thereby, the force cannot be determined as precisely for a nearby particle
+as for a distant one. It is expected that there will be greater uncertainty
+in predictions for position of nearby particles than of distant ones.
+
+12
+
+2 Theory
+
+Otto Lindfors
+
+2.3.5 Stacked State Pooling - An Attempt to Overcome the Limitations
+in Resolution
+In an attempt to overcome the limited spatial resolution of the pooling grid, stacked
+state pooling is introduced. The hypothesis is that the resolution can be increased
+by using multiple identical pooling grids, each corresponding to a dierent physical
+size. The resulting pooling tensors can then be combined by calculating the elementwise sum.
+
+This is illustrated in gure 8.
+
+One can use a small neural network for
+
+interpreting the information in the stacked pooling tensor before feeding it as input
+to the LSTM. Whether or not this will provide any signicant improvements in the
+results will be seen in the experiments of section 4.
+
++
+
++
+
+=
+
+Figure 8: The top row: Three pooling grids of the same
+
+8×8
+
+shape but
+
+each corresponding to a dierent physical size. A small grid will record
+more precise positions than a large gird.
+
+However, the small grid will
+
+only detect particles within a small total area.
+
+Similarly, a large grid
+
+will be able to detect particles within a large total area.
+
+Coordinates
+
+at short distances from the common center point of the grids can be
+recorded with greater precision than coordinates at long distances from
+the common center point. The bottom row: By combining three pooling
+tensors (in this case by summation), a stacked pooling tensor is obtained.
+Each distinct particle position in the coordinate system (top left) will lead
+to unique patterns in the stacked pooling tensor (bottom right).
+
+13
+
+2 Theory
+
+Otto Lindfors
+
+2.3.6 Motivation for using Sum Pooling from a Perspective of Physics
+In section 2.3.2, a type of sum pooling was described. The elements of the pooling
+tensor
+
+Hit ,
+
+given by equation (8), are sums of hidden state vectors
+
+hjt .
+
+When im-
+
+plementing the pooling operation, the hidden states could equally well be pooled by
+some other summarizing statistic, such as the average. [17]. The choice of summarizing statistic should be motivated by the problem one attempts to solve. From a
+purely physical perspective, the choice of using a sum as the summarizing statistic
+can be motivated by reasoning that the net force
+sum of all contributing forces
+
+Fj .
+
+F
+
+acting on a single particle is a
+
+All forces in the system are taken to be either
+
+constant or proportional to some power of the inverse radial distance
+
+F∼
+
+∑︁
+
+r̂
+
+j
+
+j
+kj r−p
+,
+
+where
+
+p
+
+is a positive integer and
+
+k
+
+r,
+
+such that
+
+is a constant that depends on the
+
+j
+
+properties of the interacting particles. Since the forces are approximately invariant to
+small translations, multiple nearby particles can be approximated as a single particle
+whose position is given by the mean coordinate.
+
+F(rn ) ≈ F(rm )
+
+for
+
+r̂1
+1
+r̂N
+F ∼ k1 −p + · · · + kN −p ≈ (k1 + . . . kN )
+N
+r1
+rN
+
+(︃
+
+rn ≈ rm
+
+r̂1
+r̂N
+−p + · · · + kN −p
+r1
+rN
+
+(10)
+
+)︃
+(11)
+
+State pooling replaces continuous coordinates with discrete ones, see gure 6. Because
+the force is approximately invariant to small changes in position, the properties of
+multiple particles with the same discrete coordinates can be summed according to
+equation (11).
+
+Particle properties
+
+k
+
+are represented by hidden state vectors
+
+hi .
+
+Thus, it is reasonable to sum the state vectors of all particles that have the same
+discrete coordinates. The state vectors are summed component-wise, which means
+that dierent properties will not be mixed.
+
+(︁
+)︁
+hi + hj = hin + hjn
+
+(12)
+
+Therefore, a vector sum will be used when pooling the LSTM hidden states of nearby
+particles.
+
+14
+
+2 Theory
+
+Otto Lindfors
+
+2.4
+
+Convolutional Neural Networks
+
+The pooling tensor
+where
+
+D
+
+Hit
+
+can easily become very large as it has the shape
+
+is the dimensionality of the LSTM states.
+
+The tensor
+
+Hit
+
+N × N × D,
+will be used
+
+as input to an LSTM which uses several fully connected layers, equations (1)-(4),
+to transform the input. [7, 16] As the pooling tensor is large, these transformations
+become computationally expensive to perform.
+
+More importantly, the number of
+
+trainable parameters can become prohibitively large. One can do several things in
+order to reduce the size of the pooling tensor while at the same time extracting the
+relevant information from it. The LSTM states
+
+hit
+
+can be transformed (embedded)
+
+into a lower dimension before pooling, or the pooled states can be embedded into a
+lower dimension. Another option is to use a convolutional neural network (CNN).
+CNNs have been shown to be good feature extractors in various computer vision
+tasks. [11, 18, 19]. Similar to an image of shape
+
+H × W × C,
+
+height and width of the image, respectively, and
+the pooling tensor
+
+Hit
+
+is of shape
+
+N × N × D.
+
+C
+
+where
+
+H
+
+and
+
+W
+
+are the
+
+is the number of color channels,
+
+The convolutional layers may extract
+
+important features from the pooling tensor similarly to how features are extracted
+from an image.
+
+A CNN have very few trainable parameters compared to a fully
+
+connected layer, thereby making it a suitable component to use between the state
+pooling and the LSTM.
+
+One important weakness of CNNs that should be kept in mind when using them is
+that CNNs are not generally invariant to translations of the input, only equivariant.
+This is attributed to the use of subsampling in the convolutional layers. [20, 21, 22]
+However, this will not be an issue, as the pooling grid is always centered on the
+primary particle, and so shift invariance is not necessary.
+
+Even though the name suggest a convolution is calculated, a cross-correlation is used
+in practice for performance reasons. In early CNNs convolution was calculated and
+the name has stuck since then. [17] The simplest two-dimensional (2D) convolutional
+layer takes as input a 2D array
+the input and a 2D lter
+
+A ∈ R2
+
+and calculates the cross correlation between
+
+K ∈ R2 that is smaller than the input.
+15
+
+The cross correlation
+
+2 Theory
+
+Otto Lindfors
+
+C
+
+is calculated as
+
+(cp,q ) =
+
+∑︂
+(ap+m−1,q+n−1 ) ⊙ (km,n )
+
+(13)
+
+m,n
+This is visualized in gure 9. When the input is a tree-dimensional array, like the
+pooling tensor or an color image, the cross correlation is calculated separately for
+each channel, using a separate lter for each channel.
+there are
+
+D
+
+lters and the result is
+
+D
+
+In the case of
+
+separate cross correlations
+
+Cd .
+
+D
+
+channels,
+
+The
+
+D
+
+C.
+
+This whole
+
+cross correlations are summed together to produce a single output
+
+separate
+
+operation is called a convolutional kernel. Additionally, one may use multiple kernels.
+When using
+shape
+
+B
+
+kernels there will be
+
+N1 × N2 × B .
+
+B
+
+separate outputs. The result is an array of
+
+Finally, the convolutional layer is often followed by a pooling
+
+layer whose purpose is to reduce the size of the output by, for example, summing
+together groups of elements. [17, 23] This operation is visualized in gure 10.
+
+(km,n )
+
+(cp,q ) =
+
+∑︁
+
+m,n (ap+m−1,q+n−1 )
+
+⊙ (km,n )
+
+(ap+m−1,q+n−1 )
+
+Figure 9: A visualization of equation (13). The cross correlation is calculated between the matrix
+
+K
+
+(the lter) and the input matrix
+
+A.
+
+This can
+
+be visualized as sliding the lter over the input, while at each position
+calculating the Hadamard product of the lter and the portion of the
+input that the lter overlap, and summing the elements of the Hadamard
+product to give a single scalar.
+
+16
+
+2 Theory
+
+Otto Lindfors
+
+B
+
+kernels:
+
+K1 × K2 × D
+M1 × M2
+
+N1
+M1
+
+×
+
+N2
+M2
+
+×B
+
+N1 × N2 × B
+
+N1 × N2 × D
+
+Figure 10: Illustration of a two dimensional convolution layer followed
+by a pooling layer with stride equal the size of the pooling kernel's size.
+From left to right: An input of size
+
+N1 × N2 × D,
+
+on which
+
+B
+
+kernels
+
+K1 × K2 × D operate (only one kernel is illustrated), producing a
+N1 ×N2 ×B , which is then pooled with a pooling kernel
+N2
+N1
+×M
+× B . In the
+of M1 × M2 , producing a nal output of size
+M1
+2
+
+of size
+
+convolution of size
+size
+
+illustration the input is assumed to be appropriately padded to produce
+a same sized output
+
+N1 × N2 .
+
+The illustrated convolutional kernel uses
+
+no dilation (i.e. uses the whole input) and is assumed to be shifted by
+steps of length
+
+2.5
+
+1.
+
+Probabilistic Predictions
+
+State pooling, as described in section 2.3, introduces uncertainty into the coordinates
+of neighboring particles. Therefore the predicted position estimates for the primary
+particle will also be inherently uncertain. By this reasoning, the estimates for target
+positions should not be exact values, but rather expressed as some probability density function conditioned on the history of previous positions. This is achieved by
+using the model output to parameterize such a probability density function. When
+the true distribution of the target is unknown, the probability density for a Gaussian
+distribution should be used, as it introduces the least amount of prior knowledge into
+the model. [24]
+
+The value of a Gaussian probability distribution
+relative likelihood of the outcome
+
+N.
+
+a
+
+N
+
+at some coordinate
+
+a
+
+gives the
+
+being randomly drawn from the distribution
+
+In other words, it answers the question, given some outcome (training data),
+
+what is the relative likelihood that the Gaussian distribution generated by the model
+
+17
+
+2 Theory
+
+Otto Lindfors
+
+describes that outcome? This means that when the probability density is generated
+by the model in the form of a prediction, and the sample is the target coordinates
+in the training data, the value of the probability density at the target coordinates is
+the relative likelihood that the model would generate the observed data. Thereby,
+the likelihood
+
+L
+
+so the likelihood
+
+is a measure of how well the model describes the target data
+
+L
+
+y,
+
+and
+
+θ.
+
+should be maximized with respect to the model parameters
+
+θ 0 = argmaxL(y|θ)
+
+(14)
+
+θ
+
+At any given time, the predicted probability density describing the position at
+
+t+1
+
+should be conditioned on the entire history of past positions. The motivation for this
+can be intuitively understood as follows. The model predicts position as probability
+densities
+
+ξ,
+
+x.
+
+rather than of exact positions
+
+Assuming the position and velocity of
+
+some primary particle, and the positions of all neighboring particles are known, the
+exact
+
+2
+
+position of the primary particle at time
+
+how much
+
+x
+
+will change during the time
+
+this requires that the exact value for
+
+∆t,
+
+x(t)
+
+t+∆t can be predicted, by calculating
+as described in section 4.2. However,
+
+is known. Because the model uses state
+
+pooling for calculating probabilistic predictions, the exact position
+
+x(t) is not known.
+
+Instead the position is described by a probability density
+
+ξ(t).
+
+Therefore
+
+should be a conditional probability density, conditioned on
+
+ξ(t).
+
+Similarly, when
+
+was predicted, the preceding position was
+on
+
+ξ(t − ∆t).
+
+Thus
+
+target vector
+
+yn ,
+
+Therefore,
+
+should be conditioned on all past positions.
+
+M -dimensional
+
+Given some
+
+ponents
+
+t
+
+ξ(t)
+
+ξ(t) should be conditioned
+
+ξ(t−∆t), which in turn should be conditioned on ξ(t−2∆t), and so on.
+
+a prediction at time
+
+ξ(t + ∆t)
+
+input vector
+
+y = (y1 , . . . , yN ),
+
+x = (x1 , . . . , xM )
+
+and an
+
+N -dimensional
+
+with independently normally distributed target com-
+
+the conditional relative likelihood of observing a component
+
+yn
+
+is given
+
+by
+1 yn −µ 2
+1
+p(yn |x) = √
+e− 2 ( σ )
+2πσ
+
+which is the probability density for a one-dimensional Gaussian distribution.
+
+2 Exact
+
+with respect to the training data.
+
+18
+
+(15)
+
+The
+
+2 Theory
+
+Otto Lindfors
+
+variables
+
+yn .
+
+µ and σ are the mean and standard deviation, respectively, of the component
+
+In the two-dimensional case, for which
+
+both target components
+
+y1
+
+and
+
+y2
+
+N = 2, the relative likelihood of observing
+
+simultaneously is given by the product of the
+
+likelihoods of observing each component separately.
+
+p(y|x) =
+In
+
+D
+
+1
+−1
+e 2
+2πσ1 σ2
+
+dimensions, when the components of
+
+(︂
+
+y1 −µ1
+σ1
+
+y
+
+)︂2
+
++ 12
+
+(︂
+
+y2 −µ2
+σ2
+
+)︂2
+(16)
+
+are independently distributed, one can
+
+generalize equation (16) as
+
+D
+∏︂
+
+D
+∏︂
+
+1
+− 12
+e
+p(y|x) =
+p(yd |x) =
+(2π)d/2 σd
+d=1
+d=1
+where
+
+µd
+
+and
+
+component
+
+yd
+
+σd
+
+(︂
+
+yd −µd
+σd
+
+)︂2
+(17)
+
+now are the mean and standard deviation, respectively, of the
+
+in the
+
+d:th dimension.
+
+Equation (17) will become useful when mixture
+
+densities are considered. If the target components in the two-dimensional case are
+not independent, the correlation
+
+ρ must be added to equation (16).
+
+This modication
+
+will turn equation (16) into the probability density function for a bivariate Gaussian
+distribution.
+
+1
+−
+1
+2
+√︁
+p(y|x) =
+e 2(1−ρ )
+2
+2πσ1 σ2 1 − ρ
+
+(︃(︂
+
+y1 −µ1
+σ1
+
+)︂2 (︂
+)︂2
+(︂
+)︂(︂
+)︂)︃
+y −µ
+y −µ
+y2 −µ2
++ 2σ 2 −2ρ 1σ 1
+σ
+2
+
+1
+
+2
+
+(18)
+
+≡ Nn (µ1 , µ2 , σ1 , σ2 , ρ)
+
+(19)
+
+The likelihood of observing the input vector
+
+x and the target vector y simultaneously
+
+is given by the joint probability density [25]
+
+L ≡ p(y, x) = p(y|x)p(x)
+The model output
+
+ŷ
+
+(20)
+
+will be used to parameterize a Gaussian distribution by letting
+
+the means, standard deviations and the correlation be functions of the output
+
+ŷ.
+
+The
+
+output is calculated by a fully connected layer with a linear activation function. Since
+the means
+
+µd should have values in the open interval µd ∈]−∞, ∞[, the corresponding
+
+components of the output vector are used without any modications.
+
+19
+
+Since the
+
+2 Theory
+
+Otto Lindfors
+
+standard deviations
+
+σd should be in the open interval σd ∈]0, ∞[, a softplus function is
+
+applied to the corresponding components of the output vector. A hyperbolic tangent
+is used for limiting the correlation
+
+Thus, the likelihood
+
+L
+
+ρ
+
+to the open interval
+
+] − 1, 1[.
+
+µd (ŷ) = ŷ µ,d
+
+(21)
+
+σd (ŷ) = softplus(ŷ σ,d ) ≡ ln(ex + 1)
+
+(22)
+
+ρd (ŷ) = tanh ŷ ρ,d
+
+(23)
+
+of the target vector
+
+y
+
+is predicted by the model. Optimizing
+
+of the neural network loss is now a matter of maximizing the relative likelihood
+with respect to the layer weights. Since the likelihood
+
+L
+
+L is expressed by a continuous
+
+exponential function, it is convenient to maximize the logarithmic likelihood. Maximizing the logarithmic likelihood is equivalent to minimizing the negative logarithmic
+likelihood. Thereby, the error function
+
+E
+
+of the neural network is dened.
+
+E = − ln L
+
+σ = 0.3
+σ = 0.5
+σ = 1.0
+
+1
+
+(24)
+
+σ = 0.3
+σ = 0.5
+σ = 1.0
+
+10
+5
+
+0.5
+0
+0
+−1
+
+−0.5
+
+0
+
+0.5
+
+−1
+
+1
+
+(a) The probability density functions
+for three normal distributions with
+dierent standard deviations σ .
+
+−0.5
+
+0
+
+0.5
+
+1
+
+(b) The negative logarithmic likelihood. A smaller standard deviation
+lead to a more distinct minima.
+
+Figure 11
+
+Everything so far applies to single vector transformations
+a transformation
+
+f
+
+In order to nd
+
+that can be claimed to describe the true function or phenomenon
+
+that generated the target vector
+
+X = {x1 , . . . , xS }
+
+f : x → ŷ.
+
+y,
+
+more than one sample must be considered. Let
+
+be a set of input vectors and
+
+20
+
+Y = {y1 , . . . , xS }
+
+be a set of target
+
+2 Theory
+
+Otto Lindfors
+
+vectors.
+
+The simultaneous likelihood of the whole data set is the product of the
+
+fs .
+
+likelihood of each separate transformation
+
+L=
+
+∏︂
+
+[9, 15]
+
+Ls
+
+(25)
+
+s
+The error function now becomes
+
+E = − ln
+
+∏︂
+
+Ls
+
+(26)
+
+s
+
+= − ln
+
+∏︂
+
+p(ys |xs )p(xs ) = − ln
+
+∏︂
+
+s
+
+=−
+
+∑︂
+
+s
+
+ln p(ys |xs ) −
+
+∑︂
+
+s
+
+The likelihood
+
+p(ys |xs ) − ln
+
+∏︂
+
+p(xs )
+
+(27)
+
+s
+
+ln p(xs )
+
+(28)
+
+s
+
+p(ys |xs )
+
+is predicted by the model, such that
+
+θ
+
+is a function of the model parameters
+
+and the input
+
+xs .
+
+p(ys |xs ) ≡ p(ys |ŷs )
+The second term in
+
+equation (28) does not depend on the model parameters and is, thus, a constant in
+the optimization problem. The error function for the complete set
+
+E=−
+
+∑︂
+
+X
+
+is reduced to
+
+ln p(ys |ŷs )
+
+(29)
+
+s
+
+where the relative likelihood
+
+p(ys |ŷs )
+
+is given by equation (17) or (18).
+
+2.5.1 Mixture Density Network
+It is not always appropriate to calculate a single-valued prediction. This is the case
+for problems where the solution is multi-valued and the average is not necessarily
+a correct solution itself.
+
+Imagine a particle restricted to some circular motion.
+
+If
+
+there is uncertainty in the exact angular position of the particle, then the particle is
+still bound to be found somewhere along a circular trajectory, but now with a (normalized) probability density function
+particle at coordinates
+
+(R, α),
+
+mean Cartesian position
+
+p(α)
+
+describing the probability of nding the
+
+R is the radius of the circular trajectory. The
+∫︁
+(⟨x⟩ , ⟨y⟩) = α p(α)(r cos(α), r sin(α))dα would be somewhere
+
+where inside the circle at coordinates given by
+
+⟨x⟩2 + ⟨y⟩2 < R2 .
+
+Similarly, for other
+
+non-linear trajectories, the mean would not always be a suitable metric for describ-
+
+21
+
+2 Theory
+
+Otto Lindfors
+
+ing the position of a particle. Relevant to this thesis are such particle trajectories
+where there is inherent uncertainty in the position estimates at some specic time,
+and thus the next position would have to be expressed as a probability density along
+some non-linear trajectory, see gure 12b. This thesis will be restricted to problems
+in only two spatial dimensions.
+
+0.4
+
+0.22
+4
+3
+.
+0 0.49
+0.67
+0.87
+
+0.2
+
+1.
+1
+2
+
+0.5
+0.1
+
+5
+0.1 · 10 −
+2
+
+0
+−0.2
+
+−0.4
+−0.4
+
+1.1
+1.5
+22.5
+3.1
+
+1
+
+3.7
+4.4
+5.2
+
+0
+−2
+
+2
+0.1 10
+−0.25 ·
+
+0
+
+0.2
+
+0.10.3
+
+−0.5
+
+0.4
+
+(a) A plot of the probability density
+function of a bivariate Gaussian distribution. Such a probability density
+can describe linear relationships.
+
+0.8
+
+0
+
+0.5 0.3 0.1
+
+1
+
+2
+
+(b) A plot of a Gaussian mixture density. A mixture density can describe
+non-linear relationships.
+
+Figure 12
+
+A single bivariate Gaussian distribution, given by (18), is limited to describing a
+linear relationship between two stochastic variables, as illustrated in gure 12a. As
+spatial trajectories of interacting particles are generally arbitrary, the probability
+density function
+linear functions.
+
+p(ys |ŷs ) ≡ p(ys |xs )
+
+should be able to express such arbitrary non-
+
+Arbitrary density functions can be constructed as a mixture of
+
+component probability densities
+
+ϕi
+
+as
+
+p(ys |xs ) =
+
+∑︂
+
+ci (xs )ϕi (ys |xs )
+
+(30)
+
+i
+where
+
+ci
+
+are normalized mixing coecients and
+
+ϕi
+
+are probability densities for Gaus-
+
+sian distributions given by equation (17) or (18). The index
+ponent of the mixture. In general, the correlation
+
+ρi
+
+i
+
+denotes the
+
+i:th
+
+com-
+
+in equation (18) is redundant
+
+when used in a mixture density, since a Gaussian mixture with component probabilities given by (17) is a universal approximator, capable of approximating any density
+
+22
+
+2 Theory
+
+Otto Lindfors
+
+function with an arbitrary non-zero error. The error is proportional to the number
+of mixture components, and in the limit of
+
+i → ∞,
+
+mixture density is illustrated in gure 12b.
+
+D
+
+(17), the
+
+separate standard deviations
+
+σi,d
+
+it will be zero. [25] A Gaussian
+
+When using component densities like
+(one for each dimension
+
+mixture component can be replaced by a global standard deviation
+
+σi
+
+d)
+
+of the
+
+i:th
+
+of the mixture
+
+component. [26] However, in this thesis, a small number of mixture components will
+be preferred over a very generalized model, and therefore components given by equation (17) will be used.
+
+When the mixing coecients
+
+ϕi (ys |ŷs )
+
+ci (xs ) ≡ ci (ŷs )
+
+and probability densities
+
+ϕi (ys |xs ) ≡
+
+are modeled by a conventional neural network, it gives rise a mixture den-
+
+sity network. [26] The mixture coecients should be properly normalized, so that
+
+∑︁
+
+i ci (xs )
+
+= 1.
+
+A Boltzmann distribution (sometimes also called a softmax distribu-
+
+tion) can be applied to the model output
+of sample
+
+s,
+
+ŷcs , corresponding to the mixture coecients
+
+in order to normalize the mixture coecients. The Boltzmann distribu-
+
+tion is given by
+
+exp(ŷ cs,i )
+exp(ŷ cs,i )
+ci (xs ) = ∑︁M
+≡
+c
+Zs
+j=1 exp(ŷ s,j )
+where the normalization constant
+sponding to a sample
+
+s.
+
+Zs
+
+for
+
+i, j = 1, 2, . . . , M
+
+(31)
+
+is summed over all mixture components corre-
+
+By substituting the mixture density (30) into the sequence
+
+error (29), the error for the mixture density network becomes
+
+E=−
+
+∑︂
+
+ln
+
+∑︂
+
+s
+
+ci (xs )ϕi (ys |xs )
+
+(32)
+
+i
+
+2.5.2 Recurrent Neural Networks and Probability Densities
+In the case of temporal sequences, the input sequence
+calculating a sequence of hidden states
+for calculating a sequence of outputs
+
+X = {x1 , . . . , xT }
+
+H = {h1 , . . . , hT }
+
+Ŷ = {ŷ1 , . . . , ŷT }.
+
+is used for
+
+which, in turn, is used
+
+An RNN will be used for
+
+generating an output sequence of arbitrary length by treating the output vector
+as a new input vector
+
+xt+1 .
+
+23
+
+ŷt
+
+2 Theory
+
+Otto Lindfors
+
+Real particles have properties that are essential for making accurate predictions that
+are consistent with Newtonian mechanics (see section 4.1). Some of these properties,
+such as velocities, cannot be determined based on only a single observation of a vector
+
+xt .
+
+3
+
+prior,
+
+In order to allow for the initial prediction
+
+ŷT
+
+ŷT
+
+Xin = {x1 , . . . , xT },
+
+will be based on a short input sequence
+
+a single vector
+
+x̂T .
+
+The initial output
+
+ŷT
+
+to be based on some statistical
+
+corresponds to the true target
+
+model will produce an output sequence of arbitrary length
+sequence will be
+
+Ŷ = {ŷT , . . . , ŷT +T ′ },
+
+Xtarget = {xT +1 , . . . , xT +1+T ′ }.
+
+instead of only
+
+T ′,
+
+xT +1 .
+
+As the
+
+the complete output
+
+which corresponds to a true target sequence
+
+Similarly, the sequence of hidden state vectors will be
+
+H = {hT , . . . , hT +T ′ }.
+
+In terms of the negative logarithmic likelihood (29), it does not matter whether the
+dierent samples are simultaneous transformations of multiple vectors or repeated
+transformations of a single vector. Thus, a temporal sequence, which is a repeated
+transformation of a single vector, can be treated as a set of simultaneous transformations
+
+f : xt , ht−1 → ŷt .
+
+The error of the output sequence will be a sum over the
+
+temporal samples. [1, 15]
+
+E=−
+
+T∑︂
++T ′
+
+ln p(xt+1 |xt ) ≡ −
+
+T∑︂
++T ′
+
+ln p(xt+1 |ŷt )
+
+(33)
+
+t=T
+
+t=T
+
+For a mixture density network, the error will be [1, 26]
+
+E=−
+
+T∑︂
++T ′
+t=T
+
+2.6
+
+ln
+
+∑︂
+
+ci (xt )ϕi (xt+1 |xt ) ≡ −
+
+i
+
+T∑︂
++T ′
+t=T
+
+ln
+
+∑︂
+
+ci (xt )ϕi (xt+1 |ŷt )
+
+(34)
+
+i
+
+Multipole Expansion
+
+When modeling interaction between molecules, or any object, it is convenient to use
+approximations.
+
+The electric eld due to an arbitrary charge distribution can be
+
+3 An
+
+object with zero initial velocity will start to move in the direction of the force it is subject
+to. However, if the initial velocity is not zero, the force will only cause a change in the object's
+initial velocity. Without knowing the initial velocity, one can only guess where the particle will be
+after some time ∆t. Therefore, knowing the initial velocity is essential when estimating the future
+position.
+24
+
+2 Theory
+
+Otto Lindfors
+
+seen to contain a monopole term, a dipole term, a quadrupole term, and other higher
+order terms. Given some arbitrary charge distribution, as in gure 13, the potential
+in the point given by
+
+r
+
+is given in Gaussian units by
+
+∫︂
+φ(r) =
+V
+where
+
+ρ(r′ )
+dv ′
+|r − r′ |
+
+(35)
+
+ρ(r′ ) is the charge density in the point given by r′ . [27] (In SI units φ is scaled
+
+by a proportionality constant
+
+kE = 1/(4πε0 ),
+
+see for example [28]).
+
+dv ′
+r′
+
+r
+
+O
+
+Figure 13:
+
+An arbitrary charge distribution centered at origin and an
+′
+′
+innitesimally small volume dv at the point given by the vector r from
+origin.
+
+By centering the volume at origin and requiring that
+by
+
+r
+
+is outside the volume, the denominator
+
+|r| > |r′ |,
+
+|r − r′ |−1
+
+i.e. the point given
+
+can be expanded in terms of
+
+r′
+as follows.
+r
+
+)︁− 1
+(︁
+|r − r′ |−1 = r2 − 2rr′ + r′2 2
+(︃
+)︃− 12
+1
+2rr′ r′2
+=
+1− 2 + 2
+r
+r
+r
+(︄
+)︄
+[︃
+]︃
+[︃
+]︃2
+1
+1
+2rr′ r′2
+113
+2rr′ r′2
+=
+1−
+− 2 + 2 +
+− 2 + 2 − O(r′3 )
+r
+2
+r
+r
+222
+r
+r
+=
+
+1 rr′ 1 r′2 3 4(rr′ )2
++ 3 −
++
++ O(r′3 )
+r
+r
+2 r3
+8 r5
+
+(36)
+
+(37)
+
+(38)
+
+(39)
+
+where the binomial expansion
+
+(1 + x)s = 1 + sx +
+25
+
+s(s − 1) 2
+x + ...
+2!
+
+(40)
+
+2 Theory
+
+Otto Lindfors
+
+was used. Substituting the expression for
+
+|r − r′ |−1
+
+into equation (35) yields
+
+)︃
+[︃
+]︃
+1 rr′ 1 3(rr′ )2 r′2
+′3
+φ(r) =
++ 3 +
+− 3 + O(r ) ρ(r′ )dv ′
+5
+r
+r
+2
+r
+r
+V
+∫︂
+∫︂
+r
+1
+r′ ρ(r′ )dv ′
+φ(r) =
+ρ(r′ )dv ′ + 3
+r V
+r V
+∫︂
+3 ∑︂
+3
+∑︂
+1 xi xj
++
+(3x′i x′j − δij r′2 )ρ(r′ )dv ′ + O(r′3 )
+5
+2
+r
+V
+i=1 j=1
+∫︂ (︃
+
+where
+
+x1 = x, x2 = y and x3 = z .
+
+(41)
+
+(42)
+
+The rst term in equation (42) is the monopole con-
+
+tribution, the second term is the dipole contribution, the third term is the quadrupole
+contribution, and the fourth term is the contribution from higher order moments. [27]
+
+2.6.1 Monopole Approximation
+As
+
+r grows in proportion to r′ , the quadrupole moment quickly diminishes.
+
+molecules, i.e. molecules where
+
+r′
+
+For small
+
+is small, the contribution of the dipole moment will
+
+also quickly diminish. Therefore, it can be assumed that for a system of molecules,
+where the molecules are small in comparison to the distance separating them, only
+the monopole contribution needs to be taken into consideration. In such systems, one
+can make the approximation of point-like particles with no geometric orientation.
+
+2.6.2 Dipole Approximation
+In many cases it is not appropriate to only use the monopole approximation.
+
+In
+
+such cases one can retain more information about the particles by approximating the
+particles as dipoles, keeping the rst two terms in equation (42). Given a particle
+with some arbitrary charge distribution, the particle can be roughly approximated
+as a dipole by describing it with the dipole moment
+
+p = qd
+where
+
+q
+
+is a measure of the charge of the dipole and
+
+(43)
+
+d
+
+is the displacement vector
+
+describing the net charge separation. By using a molecule's geometric orientation as
+input to a neural network, one could let let the neural network build some abstract
+
+26
+
+2 Theory
+
+Otto Lindfors
+
+description of the molecules geometry and/or dipole moment.
+
+27
+
+3 A First Experiment
+
+Otto Lindfors
+
+3
+
+A First Experiment - A Preamble to a Second Experiment
+
+The purpose of the experiment is to explore the whether or not the motion of the surface molecules in a large nanoparticle can be modeled using a simple neural network
+based machine learning model. The model is trained on molecular dynamics simulations of several functionalized drug-carrying nanoparticles in aqueous environments.
+The nanoparticles consist of a gold core to which thiolated ligands are attached by
+the (self-assembling) gold-sulfur bonds that the thiol and the gold form.
+
+To the
+
+free ends of the ligand either a drug molecule or a background molecule is attached.
+The drug may either be hydrophobic (quinolinol) or hydrophilic (panobinostat). The
+main purpose of the hydrophilic background molecule is to increase the solubility
+of the hydrophobic drug. It is non-trivial to determine an optimal ratio of drug to
+background molecules, such that the amount of dissolved drug is maximized.
+
+See
+
+Kovacevic, et. al (2021) for further details of the simulated systems. [29]
+
+When designing drug-carrying nanoparticles like the ones described above, molecular
+dynamics simulations are run in order to evaluate how the particles' properties are
+aected by changes in the system. [29] In order to accelerate the search for promising
+designs, mainly promising drug to background molecule ratios, a machine learning
+algorithm could help interpreting complex relationships between dierent atomistic
+and molecular properties in the system as a whole. The machine learning algorithm
+could give an estimate for dierent particle properties, mainly the solvent accessible
+surface area (SASA), without the need to run full molecular dynamics simulations
+that are computationally expensive. This rst approach tries to model the motion
+of the surface molecules, the spatial congurations of which determine the solvent
+accessible surface area, in order to explore whether or not there are some simple
+patterns present in the motion that could be exploited for estimating the SASA.
+A few alterations of a simple LSTM centered model was developed.
+
+All models
+
+take molecule positions and labels as input and tries to predict the future positions
+from these. The hypothesis is that if there is some generic pattern in the motion of
+
+28
+
+3 A First Experiment
+
+Otto Lindfors
+
+the molecules, the model may capture it and successfully model the motion of the
+molecules.
+
+3.1
+
+Data Exploration
+
+The molecule positions that are used as training data in the machine learning optimization problem are obtained through molecular dynamics (MD) simulations. The
+Amber molecular dynamics package [30] was used to model the drug carrier consisting of approximately
+
+40 000-50 000
+
+atoms in a water solvent for
+
+300 ns.
+
+In total, 44
+
+simulations with dierent drugs and dierent ratios of drug to background molecules
+were created.
+
+From each simulation a set of
+
+pdb
+
+extracted, thereby creating a timeseries of 300
+
+les, one per nanosecond, were
+
+pdb
+
+les.
+
+A
+
+pdb
+
+le contains the
+
+structural information of the system at some specic time instance in the simulation.
+This structural information includes, among other things, the coordinates of each
+atom and information about which atoms make a molecule.
+drug-carrying nanoparticle, based on a single
+14b. The drug carrier is approximately
+
+30 nm
+
+pdb
+
+A visual render of a
+
+le, is shown in gures 14a and
+
+in diameter. During the length of a
+
+simulation the drug carrier evolves towards its equilibrium conguration. Since the
+drug carrier is in a solvent of small molecules, which in this case are water molecules,
+the motion of the drug carrier's surface molecules are mostly thermal (Brownian)
+motion. Because of this, the trajectories of the surface molecules are random walks
+with possibly (depending on the molecule) a trend in some direction. For example,
+the hydrophobic quinolinol is repelled by the water and is forced towards to the center
+of the drug carrier and ends up buried among the ligands, whereas the hydrophilic
+background molecule is attracted by water and is forced to the surface (water and
+drug carrier interface) of the drug carrier. This is visualized in gure 15 and quantied in gure 16. In the case of a hydrophilic drug, it is competing for space at the
+water interface with the also hydrophilic background molecule and the ratio of the
+two determine the nal properties of the drug carrier. [29]
+
+29
+
+3 A First Experiment
+
+Otto Lindfors
+
+(a) A drug-carrying nano-particle
+with approximately 40 000 atoms.
+Drug molecules (bright pink) and
+background
+molecules
+(bright
+turquoise) attached on the ends of
+ligands (grey) that are attached to a
+gold core (not visible).
+
+(b) A cross section view of a drugcarrying nanoparticle. The thiolated
+ligands (gray and orange) are attached to the gold core (yellow) by
+gold-sulfur bonds. The sulfur atoms
+are colored orange.
+
+Figure 14: Images are rendered using UCSF ChimeraX. [31]
+
+(a) t = 1 ns
+Figure 15:
+
+(b) t = 150 ns
+
+(c) t = 300 ns
+
+Hydrophobic drug molecules (bright pink) are repelled by
+
+the solvent and are therefore buried among the ligands (grey). The hydrophilic background molecules (bright turquoise) are attracted by water
+and are therefore forced to the surface of the drug carrier. 15a at the beginning, 15b in the middle and 15c at the end of the simulation. Images
+are rendered using UCSF ChimeraX. [31]
+
+30
+
+3 A First Experiment
+
+48
+
+mean radial distance [nm]
+
+mean radial distance [nm]
+
+Otto Lindfors
+
+46
+ONC
+
+44
+
+OCN
+OCQ
+
+42
+
+OQL
+
+40
+38
+
+0
+
+100
+
+200
+
+50
+40
+30
+20
+
+300
+
+0
+
+100
+
+time [ns]
+
+200
+
+300
+
+time [ns]
+
+(a) Radial distribution of the surface
+molecules with respect to time.
+
+(b) Radial distribution of all molecules
+(and gold core) with respect to time.
+
+Figure 16: The distance from the drug-carrier center point to each atom,
+averaged per group. The plot shows how the molecules are radially distributed. As time progresses the drug (OQL) and background molecules
+(ONC) are separated. The OCQ and OCN are the molecules at the ends
+of the ligands to which the drug and background molecules are attached,
+respectively.
+
+3.2
+
+Data Preprocessing
+
+The aim of the experiment is to explore whether or not there are some simple patterns
+present in the motion of the active substances (molecules) near the water interface
+(the drug carrier surface) that could be exploited using an LSTM. The
+
+pdb
+
+les are
+
+rst preprocessed to produce NumPy les containing the coordinates of each molecule
+rather the coordinates of each atom.
+
+This is done by calculating the geometric
+
+center point of each molecule and removing all atoms in each molecule except for
+the ones closest to the center points.
+of atoms from around
+
+40 000-50 000
+
+See gure 17a.
+
+to approximately
+
+This reduces the number
+
+6000.
+
+Since this can still be
+
+prohibitively many particles when each particle has multiple features, and because
+the data exploration shows that mainly the drug and background molecules determine
+the nal spatial conformation of the drug carrier, all but the drug and background
+molecules are removed. Additionally, all water molecules are removed since these act
+as a heat bath and so the motion of individual water molecules is unnecessary to
+model. The result of preprocessing a single
+In order to obtain a time series, all
+
+pdb
+
+le so far is visualized in gure 17b.
+
+300 pdb les of a MD simulation are preprocessed
+
+31
+
+3 A First Experiment
+
+Otto Lindfors
+
+similarly.
+
+(a) Each circular marker represents
+an atom in a molecule. The small
+black triangular marker represents
+the geometric center of the molecule.
+The red marker is the atom closest to
+the geometric center.
+
+(b) The center atoms of all drug and
+background molecules in a drug carrier.
+
+Figure 17
+
+I addition to the coordinates of the center atoms, the molecule type will also be used
+as a feature. The molecule name is encoded using a simple one-hot encoding.
+
+Two dierent datasets are created, one that is two-dimensional (2D) and one that
+is three-dimensional (3D). The 3D dataset is what has been described so far. The
+samples in the 2D dataset are created by taking geometric slices of the drug carriers
+in the 3D dataset. A slice is taken at the initial time step t0 along an arbitrary axis
+
+d
+
+that goes through the same center of the drug carrier by removing all molecules that
+do not fall within a distance
+
+±∆d
+
+along the axis. See gure 18. I order to ensure
+
+that the same center point is always used, the drug carrier's centermost gold atom
+(the same atom is always chosen) is aligned with origin. Multiple slices are taken at
+dierent angles so that the whole 3D drug carrier is used when producing slices. At
+the following time steps
+selected at
+
+t0
+
+tn
+
+the slices are taken dierently. All particles but the ones
+
+are removed. This way, complete trajectories are obtained and can be
+
+used as time series. Because the trajectories happen to be such that the slices remain
+thin throughout all
+
+300 ns
+
+the slices can be attened into two dimensions without
+
+loss of much information. The attening is done by simply removing the coordinate
+
+32
+
+3 A First Experiment
+
+Otto Lindfors
+
+along the thickness axis
+
+d.
+
+Finally all slices are rotated to lie in the
+
+x -y
+
+plane. See
+
+gure 18 for a visual description of this process.
+
+(a) The complete drug
+carrier.
+
+(b) A slice of the drug carrier.
+
+(c) The slice is rotated to
+lay in the x-y plane.
+
+(d) Only the centers of
+drug and background
+molecules are selected.
+
+(e) 18d viewed in the x-y
+plane
+
+(f) The slice is attened.
+
+Figure 18
+
+The preprocessed les are passed to the model through an ecient input pipeline
+that creates sliding windows of shorter sequence lengths than the complete
+
+300
+
+time
+
+steps. These shorter sequences are then split into an input and a target sequence.
+The input sequence will be used to predict the target sequence.
+
+Additionally the
+
+input pipeline creates augmented copies of the sequences through random rotations
+of the drug carrier (the drug carrier is rotated the same amount at all steps in a
+sequence).
+
+To summarize, the nal temporal sequences consist of multiple time steps. Each time
+step consists of a set of features describing every molecule at that time instant. The
+features are the coordinates of each molecule's center atom and the one-hot encoded
+
+33
+
+3 A First Experiment
+
+Otto Lindfors
+
+molecule name.
+
+The dataset is divided into training and validation sets having 70% and 30% of
+the samples respectively.
+
+Since the sliding window causes the same data point to
+
+be included in multiple sequences (at dierent relative time steps), the divide is
+made in such a way that the training set and validation set are guaranteed to be
+non-overlapping, thereby ensuring that any datapoint in the validation set is never
+observed during training, and vice versa.
+
+3.3
+
+Model
+
+The model takes as input temporal sequences of length
+length
+
+T′
+
+T
+
+and predicts sequences of
+
+that are compared to the target sequences. The input sequence is passed to
+
+a time distributed multilayer preceptron (MLP), followed by a set of LSTMs, followed
+by another MLP. The output is a single-step prediction and an LSTM state for the
+time step
+
+T + 1.
+
+This will be called the initialization phase as during it the LSTM
+
+internal states accumulates information from the whole input sequence before a rst
+prediction is made. The prediction and the LSTM state at time step
+as input at time step
+
+T + 2,
+
+and so on until the last step
+
+T′
+
+T +1
+
+are used
+
+has been reached. The
+
+exact number of layers and nodes were varied in search for an optimal model. An
+overview of the architecture is shown in gure 19.
+
+Input shape (None, T , particles, features)
+Timedistributed MLP
+LSTM
+
+LSTM
+MLP
+Output shape (None, T ′ , particles, features)
+
+Figure 19
+
+34
+
+3 A First Experiment
+
+Otto Lindfors
+
+3.4
+
+Result
+
+The models were trained for a maximum of
+overtting.
+
+The sequence lengths were
+
+30
+
+epochs with early stopping to reduce
+
+T = 25
+
+with dierent hyper parameters were trained.
+
+and
+
+T ′ = 125.
+
+Multiple models
+
+Dropout was applied to the hidden
+
+perceptron layers during training. The hyperparameters were selected using Bayesian
+optimization with the tree-structured Parzen estimator. [32] The hyperparameters
+were
+
+
+
+the number of units in the layers of the rst MLP,
+
+
+
+the number of units in the LSTMs, tuned separately per LSTM,
+
+
+
+the number of units in the second MLP.
+
+A model with two sequential LSTMs had the best performance. A summary of all
+trained variations of that model is given in gure 20. Any of the trained models were
+unable to produce meaningful results regardless of whether the 2D or 3D dataset
+was used.
+
+All models fell into one of two categories when evaluating them on the
+
+validation set. Either the predicted particle positions would converge into a single
+conguration regardless of the input, or the particles would oscillate between two
+meta stable congurations, as seen in gure 21.
+
+This suggest that the model in
+
+combination with the training algorithm is only able to nd the static values for
+which the loss is small, rather than modeling particle trajectories. There are a few
+potential reasons for this. 1) The drastic simplications made in the preprocessing
+may obscure the information necessary for modeling the motion of the molecules. 2)
+There is no simple pattern present in the motion of the molecules.
+
+3) The model
+
+does not have the capability of expressing the motion. 4) A combination of 1-3.
+
+Alternative 4 is the most likely.
+
+Since the molecules in the drug carrier are large
+
+and tightly packed their geometric shapes are of importance in order to accurately
+model their motion. Furthermore the molecules form long chains by forming chemical bonds which further constrain their motion. These properties are not explicitly
+present in the preprocessed data and may obscure much of the information necessary
+
+35
+
+3 A First Experiment
+
+Otto Lindfors
+
+for deriving some rules for the motion. The motion of the molecules is very chaotic
+but it has a general trend, as described in section 3.2. However, this trend is a result of a stochastic process and should therefore be treated accordingly. The model
+is very simple and more care should be put into formulating a more sophisticated
+architecture that has the capability of modeling the drug carrier properly.
+
+(a)
+
+(b)
+
+(c)
+
+(d)
+
+(e)
+
+(f)
+
+Figure 20: Validation loss surfaces with respect to hyperparameters. Figures 20a-20c show that the validation loss at the end of training is essentially unaected by changes in the hyperparameters. Figures 20d-20f
+show the amount with which the loss decreased during training, with respect to the hyperparameters.
+
+36
+
+3 A First Experiment
+
+Otto Lindfors
+
+(a)
+Predicted
+molecule
+positions
+oscillate between two
+meta stable states.
+
+(b)
+Predicted
+molecule
+positions
+stays in a single
+conguration.
+
+(c) The mean absolute velocity
+of the same molecules as in 21b
+shows that the predicted motion
+has truly stagnated.
+
+Figure 21: Predictions on the validation set. Figures 21a and 21b: The
+mean radial distance (calculated from position predictions) from each
+molecule to the drug carriers center. Red is drug molecules, blue is background molecules, and green is the mean weighted by the ratio in molecule
+counts.
+
+The smaller distances (bottom) are predictions, the larger dis-
+
+tances (top) are true values.
+
+37
+
+4 A Second Experiment
+
+Otto Lindfors
+
+4
+
+A Second Experiment
+
+The shortcomings of the rst experiment led to the development of the model whose
+components are the main focus of the theory sections 2.2-2.5.
+
+An attempt at ad-
+
+dressing some of the issues associated with the information loss due to preprocessing
+of the MD simulations is made. The model is tested on a relatively straightforward
+problem of predicting two-dimensional trajectories of interacting particles. The problem is approached by modeling the particle-particle interactions, rather than trying
+to model the trajectories directly as in the rst experiment. As described in section
+2.3, the particle-particle interactions are allowed to be arbitrary. The machine learning algorithm has the potential to nd these arbitrary rules for the interactions by
+not being programmed with any domain knowledge of the nature of these interactions.
+
+The core idea behind this approach is that the molecules do not undergo chemical
+reactions and interact mainly through electromagnetic forces and collisions. Generally, molecules have some charge distribution and can therefore be approximated in
+terms of a multipole expansion, as described in section 2.6. This means that over
+long distances, compared to the size of the molecule, the electric eld can be approximated as a monopole eld, meaning that the molecule itself can be approximated as
+a point-like particle in terms of the charge. A practical example of the monopole approximation being successfully used in a similar deep learning approach to molecular
+dynamics can be seen in the work of Wang et. al. [3] On shorter distances one must
+also account for the dipole moments, and eventually, as the intermolecular distance
+is further decreased the quadrupole and higher order moments must also be considered. [27] It is therefore convenient to rst test the model using only the monopole
+approximation as a proof of concept, which is what this experiment will focus on. In
+order to directly measure the model's performance on modeling the intermolecular
+forces, only electrostatic interactions are considered, no collisions.
+
+The hypothesis is that when irregularly shaped molecules are approximated as pointlike particles (or dipoles, etc.), as described by section 2.6.1, the model could potentially account for the missing information about the higher order moments and the
+
+38
+
+4 A Second Experiment
+
+Otto Lindfors
+
+missing geometric shape information by modeling the corrections for these using the
+LSTMs. By observing the motion of a molecule (including collisions) together with
+the trajectories of the neighboring molecules the LSTM could perhaps infer some
+(abstract) representation of an approximate charge distribution or geometric shape.
+This is left as a suggestion for future work to test.
+
+Multiple many-body systems are simulated and used as training data. Trajectories of
+simulated particles are obtained by solving the classical equations of motion numerically, using velocity Verlet integration. The model's loss on the simulated trajectories
+is minimized with respect to the layer weights, using gradient descent. That is, the
+model is tasked with predicting the trajectories of simulated particles in a many-body
+system and the optimization algorithm is tasked with minimizing the prediction error
+of the model.
+
+4.1
+
+Newtonian Many-Body Mechanics
+
+Assuming an inertial reference frame, the motion of the i:th particle in a many-body
+system is given by the second order ordinary dierential equation
+
+∂ 2 ri (t)
+≡ mi r̈i (t)
+∂t2
+
+(44)
+
+is the net force the i:th particle is subject to and
+
+r̈i (t) is the acceleration of
+
+Fi (ri (t)) = mi
+where
+the
+
+Fi
+
+i:th
+
+particle due to
+
+Fi .
+
+This is Newton's second law of motion. In this inertial
+
+reference, frame Newton's third law, stating that two directly interacting particles
+exert equal and opposite forces on each other, will also hold.
+
+Fij = −Fji
+
+4
+
+(45)
+
+4 Generally, because the force eld propagate with a nite velocity (usually the speed of light),
+forces will not be opposite. Therefore, Newton's third law is only approximate. However, in this
+thesis, the magnitude of the particle velocities are taken to be suciently small when compared
+to the relative absolute distances between particles so that the approximation errors are negligible
+when the forces are taken as being instantaneous. [33, 34]
+
+39
+
+4 A Second Experiment
+
+Otto Lindfors
+
+This allows us dene the force as a function of the coordinates, and equation (44)
+will correctly describe the motion of a single particle. [33]
+
+i can be
+
+For the machine learning model, this means that the motion of each particle
+modeled independently at every time step. Thus, only the forces
+
+i ̸= j
+
+Fij
+
+need to be considered when modeling the trajectory of the
+
+thermore, only the change in position of the
+aect the force
+
+i:th
+
+due to particles
+
+i:th
+
+particle. Fur-
+
+particle relative the other particles
+
+Fij , making state pooling a reasonable method for describing a neigh-
+
+borhood with many particles. Therefore, solving Newtonian many-body problems is
+a suitable experiment for testing the machine learning model. By not programming
+any domain knowledge about the denition of the particle-particle interactions
+
+Fij
+
+into the model, other than that required by state pooling, the machine learning algorithm is tasked with deriving some rules for the particle-particle interactions given
+the trajectories
+
+4.2
+
+rij (t).
+
+Data Acquisition Using Velocity Verlet Integration
+
+The simulated many-body systems consist of
+
+N
+
+interacting particles.
+
+ticles are initialized in states with random positions
+random masses
+
+mi
+
+ri ,
+
+The
+
+random velocities
+
+N
+
+par-
+
+ṙ i ≡
+
+∂r
+,
+∂t
+
+and additional system-specic randomly initialized variables, like
+
+charge for example.
+
+Simulating trajectories
+tion given by (44).
+
+ri (t)
+
+is equivalent to numerically solving the equation of mo-
+
+Given initial conditions
+
+ri (t0 )
+
+and
+
+velocity respectively, an approximate solution at time
+assuming constant acceleration during the time interval
+
+ṙ i (t0 )
+
+for the position and
+
+t1 = t0 + ∆t
+
+is obtained by
+
+∆t.
+
+1
+ri (t1 ) ≈ ri (t0 ) + ṙ i (t0 )∆t + r̈i (t0 )∆t2
+2
+
+(46)
+
+An approximate solution to the position at some arbitrary number of time steps
+into the future is obtained by the following algorithm.
+
+40
+
+∆t
+
+4 A Second Experiment
+
+Otto Lindfors
+
+1. Calculate the next position
+
+ri (tn+1 ) ≈ ri (tn ) + ṙ i (tn )∆t + 12 r̈i (tn )∆t2
+
+2. Calculate the next acceleration
+
+3. Calculate the next velocity
+
+r̈i (tn+1 ) ≈
+
+Fi (ri (tn+1 ))
+tn+1
+
+ṙ i (tn+1 ) ≈ ṙ i (tn ) + 21 (r̈i (tn ) + r̈i (tn+1 ))∆t
+
+4. Repeat from 1
+
+This is the velocity Verlet method of numerically integrating (44) in order to solve for
+
+ri (t).
+
+Examples of approximate solutions obtained by velocity Verlet integration are
+
+shown in gure 22. Solutions like these are used as training data in the experiments.
+
+5
+
+0.5
+
+2
+
+0
+
+1
+
+0
+
+0
+
+−5
+
+−0.5
+−3
+
+−2
+
+2
+
+(a)
+
+3
+
+4
+
+−5
+
+5
+
+0
+
+5
+
+(c)
+
+(b)
+
+Figure 22: Examples of particle trajectories used as training data. The
+trajectories are obtained by solving Newton's equations of motion using
+velocity Verlet integration. The particles interact through a force that is
+inversely proportional to the square of the relative vector distance between
+the particles.
+
+4.3
+
+Data Preprocessing
+
+The simulated trajectories are saved as NumPy arrays in
+tion produces an array of size
+of time steps,
+
+les. A single simula-
+
+Ts ×N ×F , where Ts is the simulation length in number
+
+N = 25 is the number of particles and F = 4 is the number of features.
+
+The simulations were run for
+time units. The magnitude of
+only every
+
+npy
+
+1 000 000
+1
+
+iterations with a time step size of
+
+∆t = 10−7
+
+1 000 000
+
+time steps
+
+unit of time is arbitrary. Of the
+
+1000:th step was kept, since the step size used in the numerical integration
+
+is very small (in order to give accurate solutions). The resulting sequences consist
+of
+
+1000
+
+time steps with the coordinates, masses and charges of
+
+41
+
+25
+
+particles at each
+
+4 A Second Experiment
+
+Otto Lindfors
+
+time step.
+
+Similar to the preprocessing described in section 3.2, an ecient input pipeline that
+creates pairs of shorter input and target sequences, and creates augmented copies by
+random rotations is used. Additionally, at the beginning of the input pipeline only
+every
+
+20:th
+
+time step of a sequence is kept, thereby further reducing the sampling
+
+frequency so that a complete simulation is reduced from
+
+1000
+
+steps to
+
+50
+
+steps. As
+
+before a sliding window is used for sampling the input and target sequences from the
+complete simulation sequence. The sliding window is shifted by
+
+5 time steps between
+
+each sampling to ensure that the samples are not too similar. Input sequence lengths
+
+T = 5
+
+and target sequence lengths
+
+T ′ = 30
+
+are used.
+
+From each training sample
+
+(sequence), 10 augmented copies were made. A total of
+
+100 simulations make up the
+
+training set and
+
+20
+
+simulations make up the validation set. Since modeling decisions
+
+were made based on the result on the validation set, an additional
+aside as an unbiased test set.
+
+les were set
+
+This results in the training set consisting of
+
+samples, and the validation and test sets of
+
+4.4
+
+20
+
+4000
+
+20 000
+
+samples each.
+
+Model
+
+The model predicts one time step at a time.
+
+At each time step the input is the
+
+coordinates, charges and masses for all particles.
+
+The output is a set of Gaussian
+
+probability density functions (see section 2.5) describing the predicted coordinates
+one time step into the future. Each particle is described by a separate LSTM (state)
+but all LSTMs share the same weights. Stacked state pooling is used with embedded
+memory states, followed by a small CNN, followed by a single-layer perceptron (SLP).
+The perceptron output is concatenated with a single particle's embedded features and
+passed as input to the LSTM. The LSTM's updated memory state is transformed
+by a small SLP into parameters for a Gaussian probability density. An overview of
+the model is shown in gure 23, and a conceptual description of the state pooling
+module in gure 24.
+
+The model is iterated over an input sequence
+
+42
+
+Xin = {x1 , . . . , xT }
+
+in order to pre-
+
+4 A Second Experiment
+
+Otto Lindfors
+
+{xj̸t =i }
+
+xit
+
+=i
+{hj̸t−1
+}
+
+State
+Embedding
+
+Hit
+Input
+
+2D CNN
+
+Embedding
+
+Dense
+
+hit , cit
+
+hit−1 , cit−1
+hit
+N
+
+ŷit = {µit , σti , ρit } → xit+1
+Figure 23: A schematic description of how a single-particle prediction is
+i
+made at a single time step. The pooling tensor Ht is constructed from
+the previous memory states and the current features (position) Xt ≡ Yt−1 .
+i
+The LSTM (black disk) takes as input its particle's features xt , the result
+of the pooling procedure, and the previous states.
+
+43
+
+4 A Second Experiment
+
+Otto Lindfors
+
+ŷjt , hjt
+
+ŷjt+1 , hjt+1
+
+ŷit , hit
+
+Hit
+
+ŷkt , hkt
+
+ŷit+1 , hit+1
+
+Hit
+
+ŷit+2 , hit+2
+
+ŷkt+1 , hkt+1
+
+Figure 24: A simplied description of the model, showing how predictions
+are made for a single particle
+
+i,
+
+two time steps into the future.
+
+The
+
+predictions for the other particles are done similarly. At each time step
+the layers (black disks) can share weights. For simplicity, no LSTM cell
+i
+i
+states ct , only memory states ht , are shown.
+
+pare the LSTM states (see section 2.5.2), after which an output sequence
+
+{yT , . . . , yT +1 }
+
+Y =
+
+is produced in an iterative manner, as shown in gure 25. The out-
+
+puts are predictions of the particle positions
+
+Xtarget = {xT +1 , . . . , xT +T ′ }
+
+and are
+
+compared to these using the negative logarithmic likelihood as the error function
+(see section 2.5).
+
+{x1 , . . .
+
+, xT }
+
+h1
+
+hT
+
+hT +1
+
+hT +T ′
+
+ŷ1
+{ŷT ,
+{xT +1 ,
+
+ŷT +1 , . . .
+xT +2 , . . .
+
+, ŷT +T ′ }
+, xT +T ′ +1 }
+
+i
+Figure 25: During the initialization phaze, the LSTM memory state ht
+i
+and cell state ct are accumulating information for T iterations, after which
+the rst prediction yT
+
+The layer that embeds the memory states (state embedding) before the state pooling,
+and the layer that embeds the i:th particle's features (input embedding) before they
+
+44
+
+4 A Second Experiment
+
+Otto Lindfors
+
+are passed to the
+
+i:th
+
+LSTM, are simple linear transformations
+
+with an embedding dimension of
+
+αit = Wα xit
+
+(47)
+
+β j̸t =i = Wβ hj̸t =i
+
+(48)
+
+32.
+
+The stacked state pooling is implemented ac-
+
+4 separate pooling tensors that are summed together.
+
+cording to section 2.3 using
+
+pooling grids all have an identical
+
+32 × 32
+
+physical size, with the relative side lengths
+
+The
+
+shape, but each correspond to a dierent
+
+1,
+
+1 1
+1
+,
+and
+respectively. Specically, he
+2 4
+8
+
+largest pooling grid is chosen to have a side length of
+
+11
+
+length units, but this value
+
+is specic to the data set and must be chosen on a case by case basis. The value of
+
+11
+
+length units is approximately the same distance as the largest distances between
+
+any two particles seen in the data set, and it is equivalent with the smallest pooling
+grid having a spatial resolution of approximately
+
+0.04
+
+length units, which is of the
+
+same order of magnitude as some of the smallest inter-particle distances in the data
+set. Using stacked state pooling reduces the required amount of computer memory
+needed for training and also speeds up the calculations. As a comparison, training the
+model using
+
+10
+
+4
+
+stacked pooling tensors (multi-grid model) of shape
+
+hours compared to the
+
+17.5
+
+32 × 32
+
+took only
+
+hours needed for training the same model with only
+
+a single pooling grid (mono-grid model) of shape
+
+64 × 64.
+
+5
+
+The errors were similar
+
+between the two models, as shown in gure 26, with the multi-grid model having a
+more stable loss on the validation data set than the mono-grid model. Furthermore,
+the mono-grid size was limited by the GPU memory, whereas the multi-grids are
+only a
+
+1
+the size of the mono-grid. The multi-grid model is chosen because of the
+4
+
+performance and stability benets, especially because of the memory benets.
+
+The two-dimensional CNN has
+function, and kernels with
+
+2×2
+
+and
+
+4×4
+
+3
+
+consecutive layers, each with a ReLU activation
+
+16, 16,
+
+and
+
+32
+
+units respectively.
+
+Filters sizes of both
+
+were tested on a limited data set. The performance of both were
+
+identical, as shown gure 27. The larger lters were chosen in order to increase the
+
+5 Note
+
+that the performance benets of a smaller state pooling tensor does not only come from
+the pooling calculations but also from calculations in the layer(s) following the state pooling.
+45
+
+4 A Second Experiment
+
+Otto Lindfors
+
+4
+
+S loss
+
+S mea
+
+S val. loss
+non-S loss
+
+2
+
+S val. mae
+
+1.5
+
+non-S val. loss
+
+non-S mae
+non-S val. mae
+
+1
+
+0
+0.5
+
+−2
+0
+
+10
+
+20
+
+30
+
+0
+
+epoch
+
+10
+
+20
+
+30
+
+epoch
+
+(a) Negative logarithmic likelihood
+loss during training.
+
+(b) Mean absolute error during training.
+
+Figure 26: Comparison of using stacked (S) state pooling with four pooling grids of size
+
+32 × 32,
+
+and a single pooling grid (non-S) of size
+
+64 × 64.
+
+The multi-grid model uses less memory and is trained approximately twice
+as fast as the mono-grid model.
+
+"eld of view" of the kernels.
+
+The SLP that embeds the CNN output
+
+gti
+
+before it is passed to the LSTM is a
+
+simple non-linear transformation, with an embedding dimension of
+
+32, having a ReLU
+
+activation function.
+
+γ it = relu(Wγ gti )
+
+(49)
+
+The the output layer predicts parameters for a bivariate Gaussian distribution and
+is thus a
+
+5
+
+unit SLP with several activation functions given by equations (21), (22)
+
+and (23), as described in section 2.5.
+
+In the case of the mixture density model, 5
+
+mixture components without correlation are used, see equation (16). For each mixture a mixture (weighing) coecient as (31) must be predicted. Thus, the output
+layer of the mixture density model has
+
+25
+
+units.
+
+Because of the way the model is built to calculate single particle positions, and
+because all particles should abide the same laws of motion, all layers share their
+weights between all particle instances (in the same way as the LSTMs share their
+weights).
+
+46
+
+4 A Second Experiment
+
+Otto Lindfors
+
+4×4
+4×4
+2×2
+2×2
+
+4
+2
+
+4×4
+4×4
+2×2
+2×2
+
+loss
+val. loss
+
+1.5
+
+loss
+val. loss
+
+mea
+val. mae
+mae
+val. mae
+
+1
+
+0
+
+0.5
+
+−2
+0
+
+10
+
+20
+
+30
+
+0
+
+epoch
+
+10
+
+20
+
+30
+
+epoch
+
+(a) Negative logarithmic likelihood
+loss during training.
+
+(b) Mean absolute error during training.
+
+Figure 27: Comparison of using dierent sized lters in the CNN layers.
+There is no signicant dierence in the errors.
+
+4.5
+
+Result
+
+The model was trained for a maximum of 50 epochs with early stopping to reduce
+overtting. The input sequences were of length
+of length
+
+T ′ = 30
+
+T = 5 steps and the target sequences
+
+steps. Because of the shared layers, the model had merely
+
+trainable parameters.
+
+140 768
+
+The prediction error was minimized by stochastic gradient
+
+descent using the Nesterov-accelerated adaptive moment estimation (Nadam) algorithm with a learning rate
+the small constant
+
+ε = 10−7
+
+η = 0.001,
+
+the decay rates
+
+µ = 0.9
+
+and
+
+ν = 0.999,
+
+that is only used in divisions for numerical stability. [35]
+
+With the single-density model an error, as given by equation (33), of
+mean absolute error of
+
+and
+
+0.0681
+
+−3.4332
+
+and a
+
+were reached on the validation set. The training loop
+
+was ended after 40 epochs when the smallest error had not improved in four epochs.
+The errors are plotted in gure 28. The mixture density model, suered from several
+bugs that hindered it to be trained properly. It is therefore left as future work to
+compare the performance of the mixture density model to the single-density model.
+Theoretically, a mixture density model with a large number of components should
+be able to model the trajectories better than a single-density model, as a mixture
+density is a universal approximator [25, 26]. Though, how well the models (with a
+limited number of mixture components) perform in practice on a specic and nite
+data set must be measured in experiments.
+
+47
+
+4 A Second Experiment
+
+Otto Lindfors
+
+2
+
+val. loss
+
+val. mae
+mae
+
+0.6
+
+loss
+
+0
+
+0.4
+
+−2
+
+0.2
+
+−4
+
+0
+
+10
+
+20
+
+30
+
+40
+
+0
+
+epoch
+
+10
+
+20
+
+30
+
+40
+
+epoch
+
+(a) Negative logarithmic likelihood.
+
+(b) Mean absolute error.
+
+Figure 28: Early stopping terminated the training loop after
+
+40
+
+epochs.
+
+Analyzing the paths that are predicted by the single-density model reveals how wellbehaved the model is.
+
+Looking at the less successful predictions indicates where
+
+there is room for improvement. In this analysis more emphasis will therefore be set
+on analyzing why the less successful predictions fail. The following analysis is done
+using the unbiased data set that was set aside in section 4.3.
+
+In gures 29 - 30, predictions on the unbiased test set are compared to the corresponding target trajectories. An overview of three dierent regions in the many-body
+systems are shown in gure 29. A visual inspection of the regions conrms that the
+mean absolute error of approximately
+
+0.01 correspond to overall good predictions.
+
+In
+
+gure 30, three (mainly) long-long range interactions are presented, long-range being
+of the order of magnitude
+
+1.
+
+The long-range interactions cause slow changes in the
+
+direction of the particles velocity, meaning the trajectories make wide curves. These
+interactions the model predicts well.
+
+Many times, the short-range interactions, as
+
+shown in gure 31, look physically realistic as if there only was a stronger attractive
+force than what was used in the MD simulations, leading to steeper approaches in
+the predicted trajectories. A closer inspection of more samples of close approaches
+reveals another behavior. Particles that are attracted by each other may approach
+too slowly or they may turn away from each other before they meet, see gure 32.
+The latter would be realistic if there was an attractive force proportional to
+
+48
+
+r−1
+
+an
+
+4 A Second Experiment
+
+Otto Lindfors
+
+a repulsive force proportional to
+
+r−2 ,
+
+leading to the net force being attractive over
+
+large distances and repulsive over small distances. However, this is not the case. The
+simulated systems have a Coulomb force and a gravitational force, both which are
+proportional to
+
+r−2 .
+
+Thus, there must be something else causing these eects.
+
+In gure 33 a force driving the particles away from each other seem to exist although
+no such force is present.
+
+6
+
+This is due to subsampling of the true trajectories as part
+
+of the data input pipeline. As the particles' trajectories never appear to cross each
+other, another level of diculty is added to the modeling task. In the simulations
+the particles' velocities have changed direction because the particles have "passed
+by" each other when making a partial orbit. As this pass-by is not apparent in the
+training samples, due to subsampling, the model must learn to correctly add a correction that accounts for this missing information, which adds another level of diculty.
+Based on the samples in gures 32c, 33, 34b and 34c, this correction must be such
+that when attractive particles approach each other, instead of making a partial orbit
+as real (simulated) particles would, the particles make an early steeper curve, so that
+they never meet, and so that the loss is minimized. This way the model would learn
+to always make slightly steeper curves than in reality (e.g. by adding what may be
+interpreted as a force component perpendicular to the velocity in the direction of the
+focus of the current trajectory), and thus also leading to predictions like those seen
+in gure 33.
+
+Despite the too sparse subsampling, the overall modeling accuracy is acceptable.
+More frequent subsampling of the time series should be used when building the data
+sets. In all examples given in gures 29-34 the predicted likelihoods are signicantly
+more localized (smaller standard deviations) before a close approach than after. This
+pattern is present throughout all predictions. This could in part be a realization of
+the limitations described in section 2.3.4 and in part a consequence of too sparse
+subsampling.
+
+It could likely be improved by a combination of more frequent sub-
+
+sampling and adjusting the relative sizes and resolutions of the state pooling grids.
+
+6A
+
+repulsive force only in the direction of the line connecting the particles would not cause these
+trajectories though.
+49
+
+4 A Second Experiment
+
+Otto Lindfors
+
+Additionally, proper hyperparameter tuning of the model should be performed in
+order to quantify which hyperparameters are the best [36].
+
+(a)
+
+(b)
+
+(c)
+
+Figure 29: An overview of predictions in three dierent regions over the
+course of
+
+30
+
+steps.
+
+Target trajectories are white, predicted trajectories
+
+are red, and predicted probability densities are represented with a color
+gradient.
+
+50
+
+4 A Second Experiment
+
+Otto Lindfors
+
+(a) Long range interaction
+(upper right) and shortrange interaction (lower
+left)
+
+(b)
+
+(c) Particles of dierent
+masses interacting. The
+lower right particle is the
+lighter of the two.
+
+Figure 30: Some typical long-range interactions. 28b
+
+(a)
+
+(b)
+
+(c)
+
+Figure 31: As particles get close to each other, interactions that appear
+as if the strength of the attractive force is overestimated are typically
+observed.
+
+51
+
+4 A Second Experiment
+
+Otto Lindfors
+
+(a)
+
+(b)
+
+(c)
+
+Figure 32: Predictions may have too slow velocity such that the travelled
+distance is too short, as in 32a, or they may make premature changes in
+the direction of travel.
+
+(a)
+
+(b)
+
+(c)
+
+Figure 33: Too infrequent subsampling make it seem as if the true particle
+trajectories (white) never cross, even though they in reality do.
+
+52
+
+4 A Second Experiment
+
+Otto Lindfors
+
+(a)
+Figure 34:
+
+(b)
+
+(c)
+
+Because of sub-optimal training data, the model has been
+
+optimized to make incorrect trajectory corrections causing the particles
+to never meet.
+
+53
+
+5 Conclusions
+
+Otto Lindfors
+
+5
+
+Conclusions
+
+The aim of this work was to explore if an LSTM-based machine learning model
+can predict the surface properties of a drug carrying nanoparticle by modeling the
+dynamics of the drug carrier's surface molecules.
+
+An initial attempt was made at
+
+modeling the trajectories of the most important surface molecules.
+
+This attempt
+
+failed due to the following possible reasons.
+1. The approximation of large non-symmetric molecules as point-like particles
+and limiting the observations to only two types of molecules obscures too many
+important features.
+
+2. There is no simple pattern to learn.
+
+3. The model architecture is not suitable for the task and does not have the
+capability of being trained to express the motion of the surface molecules.
+A second approach was developed to address the shortcomings of the rst. In this
+approach the dynamics of a system of classical particles are modeled by explicitly
+modeling the particle-particle interactions. For this, LSTM state pooling similar to
+that used by Alahi et. al. [2] but with some key dierences is used. Specically the
+following techniques are introduced to the state pooling.
+1. Distance based ltering. The pooling grid is made eectively circular by ltering the LSTM states (the particles) by their radial distance from the center of
+the pooling grid. See section 2.3.3 and gure 6.
+
+2. Stacked state pooling. Multiple pooling tenors, all of the same
+
+N ×N
+
+shape
+
+but each corresponding to a dierent physical size, are combined using a summarizing statistic. In this thesis, that summarizing statistic is a simple sum.
+See section 2.3.5 and gure 8
+
+3. A CNN is used for processing the pooled states (i.e.
+
+the pooling tensor
+
+Hit )
+
+before using them as input to the LSTM.
+Stacked state pooling showed that multiple small pooling grids give similar results as
+using a single large pooling grid. Furthermore, using stacked state pooling, instead
+
+54
+
+5 Conclusions
+
+Otto Lindfors
+
+of a single large pooling grid, requires less GPU memory and reduced the training
+time from
+
+17.5
+
+hours to
+
+10
+
+hours. See section 4.4
+
+In order to test the model from the ground up, beginning from the lowest order
+approximation of the charged particles, as described by section 2.6, the model is
+tasked with solving the equations of motion for a many-body problem consisting
+of gravitationally- and electrostatically-interacting monopolies . Overall the model
+performs well and demonstrates the proof of concept the experiment was set up for.
+Artifacts in the position predictions of closely approaching particles is observed. The
+artifacts show patterns that indicate that the they are likely caused by too sparse
+subsampling of the simulated particle trajectories when building the training data set.
+
+Additionally, the predicted likelihood estimates for the future positions are signicantly less localized after close approaches than before. The conclusion is drawn that
+this is likely due to a combination of nite spatial resolution of the state pooling (see
+section 2.3.4), which is used for modeling the particle-particle interactions, and too
+sparse subsampling as described before.
+
+5.1
+
+Suggestions for Future Work
+
+The following tasks are suggested, in no particular order, as future work.
+
+1. Proper methodological hyperparameter optimization should be performed in
+order to analyze the full potential of the model.
+
+2. The Gaussian mixture model should be evaluated and compared to the results
+of the non-mixture model presented in section 4.5.
+
+3. The state pooling (section 2.3) should be expanded to tree spatial dimensions.
+
+4. Experiments should be performed to evaluate the the model on tasks where
+the monopoles are replaced by dipoles. The model must predict both positions
+and orientations of the dipoles, thereby adding another level of diculty.
+
+55
+
+5 Conclusions
+
+Otto Lindfors
+
+5. Lastly, if 4 is successful, the next step would be to model quadrupoles, before
+moving to the original problem of modeling the surface molecules in a drug
+carrying nanoparticle. The model presented in this thesis has no mechanism
+specically designed to consider inter-molecular bonds, such as those between
+the ligands and drug molecules, that restrict the motion of a molecule.
+
+A
+
+straightforward approach would be to use a simple hybrid model where the
+ligands and the bulk of the nanoparticle are replaced by simple strands to
+which the surface molecules are attached, as visualized in gure 35. The machine learning model could be used to model the interaction between surface
+molecules (and the solvent) and the strands could restrict the molecules radial
+distance from the drug carrier's core by a simple damped restoring force, much
+like a simple spring.
+
+Figure 35:
+
+A simplied drug carrier where the motion of the surface
+
+molecules are restricted by simple damped restoring forces in the directions of a lines connecting the molecules to the drug carrier's center point.
+
+56
+
+6 List of Abbreviations
+
+Otto Lindfors
+
+6
+
+List of Abbreviations
+
+CNN, convolutional neural network
+GPU, graphics processing units
+LSTM, long short-term memory
+MD, molecular dynamics
+MLP, multilayer perceptron
+ReLU, rectied linear unit
+RNN, recurrent neural network
+SASA, solvent accessible surface area
+SLP, sinlge-layer perceptron
+2D, two-dimensional
+3D, three-dimensional
+
+57
+
+References
+[1] Alex
+
+Graves.
+
+Generating
+
+Sequences
+
+arXiv:1308.0850 [cs], June 2014.
+
+With
+
+Recurrent
+
+Neural
+
+Networks.
+
+arXiv: 1308.0850.
+
+[2] Alexandre Alahi, Kratarth Goel, Vignesh Ramanathan, Alexandre Robicquet,
+Li Fei-Fei, and Silvio Savarese. Social LSTM: Human Trajectory Prediction in
+Crowded Spaces. In
+
+2016 IEEE Conference on Computer Vision and Pattern
+
+Recognition (CVPR), pages 961971, Las Vegas, NV, USA, June 2016. IEEE.
+[3] Han Wang, Linfeng Zhang, Jiequn Han, and Weinan E. Deepmd-kit: A deep
+learning package for many-body potential energy representation and molecular
+dynamics.
+
+Computer Physics Communications, 228:178184, 2018.
+
+[4] Antti Pihlajamäki, Joonas Hämäläinen, Joakim Linja, Paavo Nieminen, Sami
+Malola, Tommi Kärkkäinen, and Hannu Häkkinen. Monte carlo simulations of
+au38(sch3)24 nanocluster using distance-based machine learning methods.
+
+The
+
+Journal of Physical Chemistry A, 124(23):48274836, 2020.
+[5] Nils Mönning and Suresh Manandhar.
+
+Evaluation of complex-valued neural
+
+networks on real-valued classication tasks.
+
+arXiv preprint arXiv:1811.12351,
+
+2018.
+
+[6] Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
+MIT Press, 2016.
+
+Deep Learning, chapter 5.
+
+http://www.deeplearningbook.org,
+
+[7] Sepp Hochreiter and Jürgen Schmidhuber.
+
+accessed: 01-04-2019.
+
+Long short-term memory.
+
+Neural
+
+computation, 9:173580, 12 1997.
+[8] Alex Graves, Abdel-rahman Mohamed, and Georey Hinton. Speech recognition
+with deep recurrent neural networks. In
+
+2013 IEEE international conference on
+
+acoustics, speech and signal processing, pages 66456649. Ieee, 2013.
+[9] Ilya Sutskever, Oriol Vinyals, and Quoc V Le. Sequence to sequence learning
+with neural networks.
+
+arXiv preprint arXiv:1409.3215, 2014.
+
+58
+
+[10] Hasim Sak, Andrew W Senior, and Françoise Beaufays. Long short-term memory
+recurrent neural network architectures for large scale acoustic modeling. 2014.
+
+[11] Oriol Vinyals, Alexander Toshev, Samy Bengio, and Dumitru Erhan. Show and
+tell: A neural image caption generator. In
+
+Proceedings of the IEEE conference
+
+on computer vision and pattern recognition, pages 31563164, 2015.
+[12] Parth Kothari, Sven Kreiss, and Alexandre Alahi. Human trajectory forecasting in crowds: A deep learning perspective.
+
+IEEE Transactions on Intelligent
+
+Transportation Systems, pages 115, 2021.
+[13] Yoshua Bengio, Patrice Simard, and Paolo Frasconi. Learning long-term dependencies with gradient descent is dicult.
+
+IEEE transactions on neural networks,
+
+5(2):157166, 1994.
+
+[14] James Martens and Ilya Sutskever.
+hessian-free optimization. In
+
+Learning recurrent neural networks with
+
+ICML, 2011.
+
+[15] Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
+MIT Press, 2016.
+
+Deep Learning, chapter 10.
+
+http://www.deeplearningbook.org,
+
+accessed: 01-04-2019.
+
+[16] Felix A Gers, Jürgen Schmidhuber, and Fred Cummins.
+Continual prediction with lstm.
+
+Neural computation, 12(10):24512471, 2000.
+
+[17] Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
+MIT Press, 2016.
+
+Learning to forget:
+
+Deep Learning, chapter 9.
+
+http://www.deeplearningbook.org,
+
+accessed: 01-04-2019.
+
+[18] Alex Krizhevsky, Ilya Sutskever, and Georey E Hinton.
+tion with deep convolutional neural networks.
+
+Imagenet classica-
+
+Advances in neural information
+
+processing systems, 25:10971105, 2012.
+[19] Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into
+rectiers: Surpassing human-level performance on imagenet classication.
+
+In
+
+Proceedings of the IEEE International Conference on Computer Vision (ICCV),
+December 2015.
+
+59
+
+[20] Coenraad Mouton, Johannes C. Myburgh, and Marelie H. Davel.
+
+Stride and
+
+Articial Intelligence Research,
+
+pages 267
+
+translation invariance in cnns.
+
+In
+
+281, Cham, 2020. Springer International Publishing.
+
+[21] Aharon Azulay and Yair Weiss. Why do deep convolutional networks generalize
+so poorly to small image transformations?
+
+arXiv preprint arXiv:1805.12177,
+
+2018.
+
+[22] Richard Zhang. Making convolutional networks shift-invariant again. In
+
+Inter-
+
+national Conference on Machine Learning, pages 73247334. PMLR, 2019.
+[23] V Dumoulin, F Visin, and GEP Box. A guide to convolution arithmetic for deep
+learning. arxiv prepr.
+
+arXiv preprint arXiv:1603.07285, 2018.
+
+[24] Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
+19.4. MIT Press, 2016.
+
+Deep Learning,
+
+http://www.deeplearningbook.org,
+
+chapter
+
+accessed: 01-04-
+
+2019.
+
+[25] Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
+MIT Press, 2016.
+
+[26] Christopher
+
+Deep Learning, chapter 3.
+
+http://www.deeplearningbook.org,
+
+Bishop.
+
+Mixture
+
+density
+
+accessed: 01-04-2019.
+
+networks.
+
+Technical
+
+Report
+
+NCRG/94/004, January 1994.
+
+[27] John R. Reitz, Frederick J. Milford, and Robert W. Christy.
+
+Electromagnetic Theory (4th Edition).
+
+Foundations of
+
+Addison-Wesley Publishing Company,
+
+USA, 4 edition, 2008.
+
+[28] J. J. Sakurai and Jim Napolitano.
+
+Modern Quantum Mechanics.
+
+Cambridge
+
+University Press, 3 edition, 2020.
+
+[29] Marina Kovacevic, Igor Balaz, Domenico Marson, Erik Laurini, and Branislav
+Jovic. Mixed-monolayer functionalized gold nanoparticles for cancer treatment:
+Atomistic molecular dynamics simulations study.
+
+[30] D.A. Case,
+
+K. Belfon,
+
+I.Y. Ben-Shalom,
+
+Biosystems, 202:104354, 2021.
+
+S.R. Brozell,
+
+D.S. Cerutti,
+
+T.E.
+
+Cheatham, III, V.W.D. Cruzeiro, T.A. Darden, R.E. Duke, G. Giambasu, M.K.
+
+60
+
+Gilson, H. Gohlke, A.W. Goetz, R. Harris, S. Izadi, S.A. Izmailov, K. Kasavajhala, A. Kovalenko, R. Krasny, T. Kurtzman, T.S. Lee, S. LeGrand, P. Li, C.
+Lin, J. Liu, T. Luchko, R. Luo, V. Man, K.M. Merz, Y. Miao, O. Mikhailovskii,
+G. Monard, H. Nguyen, A. Onufriev, F.Pan, S. Pantano, R. Qi, D.R. Roe, A.
+Roitberg, C. Sagui, S. Schott-Verdugo, J. Shen, C. Simmerling, N.R.Skrynnikov,
+J. Smith, J. Swails, R.C. Walker, J. Wang, L. Wilson, R.M. Wolf, X. Wu, Y.
+Xiong, Y. Xue, D.M. York and P.A. Kollman (2020). Amber 2020, university of
+california, san francisco.
+
+[31] Eric
+
+Pettersen
+
+Tom
+
+Goddard
+
+Greg
+
+Couch
+
+Elaine
+
+Meng
+
+Scooter
+
+Morris
+
+Thomas Ferrin, Conrad Huang. Ucsf chimerax, developed by the resource for
+biocomputing, visualization, and informatics at the university of california, san
+francisco, with support from national institutes of health r01-gm129325 and the
+oce of cyber infrastructure and computational biology, national institute of
+allergy and infectious diseases.
+
+[32] James Bergstra, Rémi Bardenet, Yoshua Bengio, and Balázs Kégl. Algorithms
+for hyper-parameter optimization. In
+
+25th annual conference on neural informa-
+
+tion processing systems (NIPS 2011), volume 24. Neural Information Processing
+Systems Foundation, 2011.
+
+Analytical Mechanics, Third Edition,
+
+[33] G.R Fowles.
+
+chapter 2.
+
+Holt, Rinehart
+
+and Wilson, 1977.
+
+[34] J. J. Sakurai and Jim Napolitano.
+
+Modern Quantum Mechanics, chapter Quan-
+
+tum Fields, Relativistic Quantum Mechanics.
+
+Cambridge University Press, 3
+
+edition, 2020.
+
+[35] Timothy Dozat. Incorporating nesterov momentum into adam. 2016.
+
+//openreview.net/pdf?id=OM0jvwB8jIp57ZJjtNEZ,
+[36] James Bergstra, Daniel Yamins, and David Cox.
+
+https:
+
+accessed 2021-06-06.
+
+Making a science of model
+
+search: Hyperparameter optimization in hundreds of dimensions for vision architectures.
+
+In Sanjoy Dasgupta and David McAllester, editors,
+
+61
+
+Proceedings
+
+of the 30th International Conference on Machine Learning,
+
+volume 28 of
+
+Pro-
+
+ceedings of Machine Learning Research, pages 115123, Atlanta, Georgia, USA,
+1719 Jun 2013. PMLR.
+
+62
+
+

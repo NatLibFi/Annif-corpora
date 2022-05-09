@@ -1,0 +1,4379 @@
+Laboratory of Molecular Science and Technology
+Faculty of Science and Engineering
+Åbo Akademi University
+
+EVALUATION OF CALCULATIVE TOOLS INTENDED FOR
+THE PREDICTION OF LIQUID HYDROCARBON VISCOSITY
+Wolter Rautelin
+
+Master’s thesis carried out under the supervision of M.Sc. Kati Sandberg, Professor Reko Leino,
+and Dr. Patrik Eklund
+June 2020
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+ABSTRACT
+The main purpose of this work was to comprehend and promulgate the process of predicting
+the kinematic viscosity of liquid hydrocarbon mixtures using empirical correlations and
+mixing rules. The performance of the most promising empirical correlations, describing the
+temperature dependence of the kinematic viscosity of liquid hydrocarbon mixtures, as well
+as mixing rules, describing the outcome of combining two fluids differing in kinematic
+viscosity, are evaluated by comparative means against a diverse experimental dataset
+attained exclusively for this work. The evaluated methods were chosen based on recognition
+and potentiality expressed in previous publications. A total of five empirical correlations, six
+mixing rules, and recent amended versions (where applicable) were investigated. The general
+results indicate that the most accurate and universal method of both types were found.
+
+Keywords: Liquid viscosity, kinematic viscosity, hydrocarbons, empirical estimation, mixing
+rules
+
+I
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+POPULÄRVETENSKAPLIG SAMMANFATTNING
+Viskositeten hos en vätska utsäger hur “tjock” eller “tunn” en vätska är. En vätska som till
+exempel vatten har en låg viskositet och är mycket tunn, medan till exempel honung har en
+betydligt högre viskositet och är mycket tjockare. Viskositeten är en av de viktigaste
+egenskaperna hos kolvätevätskor (bränslen, smörjmedel, oljor osv.). En för hög eller för låg
+viskositet kan orsaka katastrofala problem i de flesta tillämpningarna. Standardiserade
+gränser för hur låg eller hög viskositeten hos produkter som består av kolvätevätskor får vara
+har fastställts på grund av detta. Gränserna är oftast temperaturbundna, dvs. en viss
+viskositet skall uppnås vid en viss temperatur. Viskositeten hos produkterna kan variera
+avsevärt, eftersom oljeraffinaderier är mycket komplicerade och allt fler nya råvaror tas i
+bruk tack vare den ökande klimatmedvetenheten. Det skulle därmed vara mycket nyttigt att
+kunna estimera viskositeten hos kolvätevätskor vid olika temperaturer på basen av till
+exempel andra fysikalisk-kemiska egenskaper. I denna pro gradu-avhandling undersöktes
+flera olika metoder som kan lösa detta problem. Det visade sig att det bästa sättet för att
+estimera viskositeten för en kolvätevätska vid en okänd temperatur var att använda kända
+värden för viskositet vid en eller två temperaturer. Med andra ord betyder detta att kända
+viskositetsvärden används för att bestämma viskositeten vid ytterligare temperaturer.
+Alternativt kan temperaturen då 50 volymprocent av ett prov har destillerats och i vissa fall
+densiteten vid 15 °C användas. Alla metoder som hittades visade sig vara mycket noggranna
+för proven som undersöktes. Estimering av viskositeten då två vätskor av känd konsistens
+blandas ihop undersöktes också. Två mycket exakta metoder för estimeringen av de
+resulterande blandningarnas viskositet hittades.
+
+II
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+FOREWORD
+This thesis was conducted as a part of a project at Neste Oyj, Porvoo, Finland during 2020.
+First and foremost, I would like to thank my supervisor Kati Sandberg at Neste for the
+opportunity to be able to conduct this work for a truly brilliant company and for the guidance,
+patience, and feedback over the course of the work. Secondly, I would like to express my
+sincerest gratitude to Cesar Araujo at Neste for both the mental and practical support
+regarding calculations and statistics over the course of the work. Furthermore, I would also
+want to thank the laboratory technicians at Neste for their hard work and dedication as well
+as everyone else at Neste for taking me in and making me a part of the group.
+From Åbo Akademi University, I would like to thank my two supervisors Professor Reko Leino
+and Dr. Patrik Eklund for their input regarding writing, academic etiquette, and general
+guidance on the thesis procedures. Furthermore, Professor Reko Leino deserves an
+additional recognition of gratitude for enabling this work to take place between the two
+organizations.
+Finally, I would like to thank my girlfriend for the love, support, patience, and care I have
+received over the course of this work. She, if anyone, knows what a time of growth, including
+growth pains, the writing of this thesis has been to me.
+
+III
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+ABBREVIATIONS
+AAD
+
+Absolute Average Deviation
+
+API
+
+American Petroleum Institute
+
+API TDB
+
+API Technical Data Book
+
+ASTM
+
+American Society for Testing and Materials
+
+A-S & M
+
+Aboul-Seoud and Moharam correlation
+
+CEN
+
+Comité Européen de Normalisation, European Committee for Standardization
+
+cP
+
+Centipoise
+
+cSt
+
+Centistoke
+
+DEFSTAN
+
+Defense standard
+
+EN
+
+European Norms, (European Standards)
+
+ISO
+
+International Organization for Standardization
+
+JIG
+
+Joint Inspection Group
+
+LPG
+
+Liquified Petroleum Gas
+
+MBP
+
+Mass Boiling Point
+
+NFGW
+
+New Focus on the General Walther equation-correlation
+
+P
+
+Poise
+
+St
+
+Stoke
+
+VABP
+
+Volume Average Boiling Point
+
+VBI
+
+Viscosity Blending Index
+
+VBP
+
+Volume Boiling Point
+
+VI
+
+Viscosity Index
+
+WABP
+
+Weight Average Boiling Point
+
+IV
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+DEFINITIONS
+Blend
+
+Mixture of two or more components (where component = pure
+compound/hydrocarbon mixture/fuel)
+
+Cloud point
+
+Temperature below which waxes in fuel solidify and cause a
+cloudy appearance (clogging filters and injectors)
+
+Empirical correlation
+
+A relationship or correlation supported by experiment or
+observation (not necessarily supported by theory)
+
+Freezing point
+
+Lowest temperature at which a fuel remains free of solid
+hydrocarbon crystals (crystals restrict flow of fuel through
+filters if present)
+
+Hydrocarbon mixture
+
+A mixture containing various hydrocarbon molecules
+
+Mixing rule
+
+An equation used for the estimation of viscosity when two or
+more known components are mixed.
+
+Neat hydrocarbon mixture
+
+Hydrocarbon mixture which has not been blended with another
+hydrocarbon mixture (e.g. a sample of a production run of fuel)
+
+V
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+TABLE OF CONTENTS
+
+ABSTRACT .............................................................................................................................I
+POPULÄRVETENSKAPLIG SAMMANFATTNING ...................................................................... II
+FOREWORD ........................................................................................................................ III
+ABBREVIATIONS ................................................................................................................. IV
+DEFINITIONS ....................................................................................................................... V
+TABLE OF CONTENTS.......................................................................................................... VI
+1
+
+INTRODUCTION ............................................................................................................ 1
+
+2
+
+BACKGROUND .............................................................................................................. 5
+2.1
+
+Viscosity of liquids ................................................................................................ 6
+
+2.1.1
+
+Dynamic viscosity .......................................................................................... 6
+
+2.1.2
+
+Kinematic viscosity ........................................................................................ 7
+
+2.2
+
+Hydrocarbon types and their influence on the physicochemical properties of fuel 8
+
+2.3
+
+Typical standards governing the quality of fuels and oil products .......................... 9
+
+2.3.1
+
+Aviation turbine fuels .................................................................................... 9
+
+2.3.2
+
+Diesel fuels ................................................................................................. 10
+
+2.3.3
+
+Heating oil .................................................................................................. 12
+
+2.3.4
+
+Distillate marine fuels ................................................................................. 12
+
+2.3.5
+
+Base oils (lubricants) ................................................................................... 13
+
+2.4
+
+Selected standard laboratory test methods for the determination of
+liquid viscosity .................................................................................................... 13
+
+2.4.1
+
+ASTM D445 ................................................................................................. 14
+
+2.4.2
+
+ASTM D2270 ............................................................................................... 15
+
+2.4.3
+
+ASTM D7042 ............................................................................................... 15
+
+2.4.4
+
+ASTM D7945 ............................................................................................... 16
+
+2.4.5
+
+ASTM D5293 ............................................................................................... 16
+
+VI
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+3
+
+AIM OF THIS WORK .................................................................................................... 18
+
+4
+
+PREDICTION OF THE VISCOSITY OF COMPLEX HYDROCARBON MIXTURES ................... 19
+4.1
+
+4.1.1
+
+Walther correlation..................................................................................... 21
+
+4.1.2
+
+Aboul-Seoud and Moharam correlation ...................................................... 24
+
+4.1.3
+
+Mehrotra correlation .................................................................................. 24
+
+4.1.4
+
+Moharam correlation .................................................................................. 25
+
+4.1.5
+
+Puttagunta correlation ................................................................................ 26
+
+4.1.6
+
+Riazi distribution model .............................................................................. 27
+
+4.2
+
+6
+
+Mixing rules for the calculation of petroleum blend viscosities ........................... 29
+
+4.2.1
+
+Wright blending method ............................................................................. 29
+
+4.2.2
+
+Kendall and Monroe correlation.................................................................. 31
+
+4.2.3
+
+Refutas index method ................................................................................. 32
+
+4.2.4
+
+Chevron mixing rule .................................................................................... 33
+
+4.2.5
+
+Walther mixing rule .................................................................................... 33
+
+4.2.6
+
+Chirinos mixing rule .................................................................................... 35
+
+4.3
+5
+
+Empirical correlations for the prediction of liquid hydrocarbon mixture viscosity 20
+
+Examples of results obtained by previous research groups ................................. 36
+
+EXPERIMENTAL .......................................................................................................... 37
+5.1
+
+Methodology and plan........................................................................................ 37
+
+5.2
+
+Sample preparation ............................................................................................ 39
+
+5.3
+
+Analysis .............................................................................................................. 39
+
+5.3.1
+
+Viscosity, ASTM D445 .................................................................................. 39
+
+5.3.2
+
+Density, EN ISO 12185 (ASTM D4052) ......................................................... 40
+
+5.3.3
+
+Freezing point, IP 529 (ASTM D7153e1)....................................................... 40
+
+5.3.4
+
+Distillation range, ASTM D86 ....................................................................... 41
+
+RESULTS AND DISCUSSION ......................................................................................... 42
+6.1
+
+General results ................................................................................................... 42
+
+VII
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+6.1.1
+
+R2 adjusted.................................................................................................. 43
+
+6.1.2
+
+Weighted average and 50 % boiling point ................................................... 43
+
+6.2
+
+Empirical correlations ......................................................................................... 44
+
+6.2.1
+
+Walther correlation..................................................................................... 45
+
+6.2.2
+
+Aboul-Seoud and Moharam correlation ...................................................... 49
+
+6.2.3
+
+Mehrotra correlation .................................................................................. 52
+
+6.2.4
+
+Moharam correlation .................................................................................. 54
+
+6.2.5
+
+Puttagunta correlation ................................................................................ 56
+
+6.3
+
+Mixing rules ........................................................................................................ 56
+
+7
+
+CONCLUSION.............................................................................................................. 61
+
+8
+
+SUMMARY IN SWEDISH – SVENSK SAMMANFATTNING .............................................. 63
+8.1
+
+Utvärdering av kalkylmetoder avsedda för estimering av kolvätevätskors
+viskositet ............................................................................................................ 63
+
+9
+
+8.1.1
+
+Estimering av komplexa kolväteblandningars viskositet .............................. 64
+
+8.1.2
+
+Experimentell del ........................................................................................ 67
+
+8.1.3
+
+Resultat ...................................................................................................... 67
+
+8.1.4
+
+Konklusioner ............................................................................................... 71
+
+REFERENCES ............................................................................................................... 72
+
+VIII
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+1
+
+INTRODUCTION
+
+Traditional oil refineries are enormous facilities where crude oil is separated into different
+fractions and then processed to give a plethora of products. The most characteristic part of
+a traditional oil refinery is, among other process units, the primary atmospheric distillation
+tower (i.e. the topping unit). Here, the crude oil is distilled, giving different fractions, which
+are then processed further to produce various oil-based products. Traditional products of oil
+refining can be categorized into four different classes based on the targeted use. These
+include: 1) Industrial and domestic fuels (gas oils, fuel oils, or LPG (Liquified Petroleum Gas));
+2) Motor fuels (gasoline, diesel, kerosene, LPG); 3) Feedstocks for various chemical industries
+(virgin naphtha, LPG, olefins); and 4) Other products (e.g. lubricating oils, bitumens, paraffins,
+and solvents).1 A simplified view of the various products produced in a traditional oil refinery
+is presented in Figure 1.
+
+Figure 1: Simplified view of the products of a traditionally run refinery. Reproduced from: D. Y. Murzin,
+Chemical Reaction Technology; Walter de Gruyter GmbH: Turku, Finland, 2015, p.116 (see ref. 1.).
+
+The chemically similar components of crude oil (hydrocarbons) are separated by distillation,
+as mentioned above. In distillation, separation occurs due to the differences in boiling points
+of the constituents of the mixture being distilled. The boiling points of the individual
+components are, on the other hand, related to the number of carbon atoms in the molecules
+(i.e. the size of the molecule). Fractions owning a higher boiling point (larger molecules) are
+
+1
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+thus recovered at the lower parts of the distillation unit, while fractions with lower boiling
+points (smaller molecules) are recovered at higher sections of the distillation tower. A more
+detailed illustration of the atmospheric distillation unit, showing the approximate side
+stream draw-offs (side cuts) is depicted in Figure 2. Notice that some of the side streams are
+returned as reflux.1
+
+Figure 2: Illustration of the process scheme of a crude oil atmospheric distillation unit. Reproduced from: D. Y.
+Murzin, Chemical Reaction Technology; Walter de Gruyter GmbH: Turku, Finland, 2015, p.117 (see ref. 1.).
+
+Various parameters such as reflux rate and temperature profile can be adjusted at this stage
+of the process to affect the properties of the side streams.1 Further processing of the side
+streams introduces multiple parameters which may be altered to affect the properties of the
+final product. Examples of boiling point ranges and carbon number ranges of various oil
+fractions are given in Table 1.
+
+2
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Table 1: Boiling ranges of different oil fractions.1
+Fraction
+
+Boiling range (°C)
+
+Carbon number range
+
+Fuel gases
+
+<20
+
+1-5
+
+Naphtha
+
+70-170
+
+6-10
+
+Kerosene
+
+170-250
+
+10-14
+
+Gas oil
+
+250-340
+
+14-19
+
+Heavy fraction
+
+350-500
+
+19-35
+
+Vacuum residue
+
+>500
+
+>35
+
+Use
+Methane, ethane, propane,
+butane
+Gasoline base, chemical
+feedstock
+Jet, diesel, and heating fuel
+Lubricants, base stock, boiler
+fuel
+Bitumen, heavy fuel oil,
+marine fuel oil
+
+The complexity of a refinery ensures that two refineries with the same refining scheme are
+very unlikely to exist. Process schemes of refineries are usually designed based on market
+demand and crude oil characteristics. A general example of an oil refinery scheme including
+various process units for the reaction and workup of side streams, as well as the resulting
+products is shown in Figure 3.1
+
+Figure 3: Process scheme of a generic refinery. Reproduced from: D. Y. Murzin, Chemical Reaction Technology;
+Walter de Gruyter GmbH: Turku, Finland, 2015, p.119 (see ref. 1.).
+
+3
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Middle distillates (e.g. diesel fuel, aviation fuel, and heating oil) are commonly among the
+main products of a traditionally run refinery. The complexity of a refinery results in a very
+wide range of grades within each product group. Most of the products produced in a refinery
+are specification products, meaning that the physicochemical properties of the products
+must meet certain limits.1 The estimation of the final physicochemical properties of products
+has therefore always been important for the petroleum industry. The recent and future
+introduction of alternative fuel feedstocks and production methods due to the rising
+awareness of global warming has introduced added complexity to the estimation of key
+properties of the products.2 Key properties of liquid hydrocarbons of the middle to heavy
+distillate range are, among others, the density, cloud point, freezing point, pour point, cetane
+number, and viscosity of the products.2–4
+Viscosity is one of the most important properties of liquid hydrocarbon products.3,4 A precise
+theory expressing the viscosity of liquid fluids has not been found, despite a century of
+theoretical research, due to the complexity of the involved liquid momentum transfer
+mechanisms. Furthermore, the effect of temperature on the viscosity of liquids is
+characterized by a non-linear relationship. Simple methods for the accurate prediction of
+liquid viscosity do not exist and the introduction of alternative feedstocks introduces new
+aspects to consider.2,5,6 All the aforementioned arguments served as motivation for this
+thesis.
+
+4
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+2
+
+BACKGROUND
+
+Recent increase in the production of heavy and extra-heavy crude oils has accentuated the
+importance of estimating physical and chemical properties, such as viscosity and density.
+These parameters are of utmost importance in for instance the pipeline transportation of
+oils.7 One of the main properties of interest in the field of base oils and lubricants has always
+been the viscosity, since the main function of the lubricants in a mechanical system is the
+control of friction and wear. Change in the viscosity of oil is well known to result from changes
+in temperature, pressure, and shear rate. The film-forming properties of oil are also known
+to be proportional to these dimensions. Lubricant viscosity is extremely sensitive to
+temperature change, which is why the temperature dependence of viscosity is of major
+concern for the lubricant industry.8 Efforts concerning the optimization of direct-injection
+diesel engines is primarily focused on the improved atomization of the fuel when sprayed
+into the combustion chamber. This is usually achieved by an increase in injection pressure,
+whereas the size of the droplets formed within the injectors is governed by fuel viscosity
+through a mechanism called droplet breakup. Higher viscosity translates to larger droplets as
+well as additional strain on all mechanical parts of the fuel system. Droplet size is, in addition,
+directly related to the emission characteristics of an engine, since smaller droplets favor
+vaporization and more complete combustion. Herein, a balance between emissions and
+viscosity of the fuel is found, which clearly describes the importance of accurate prediction
+of hydrocarbon viscosity.4 Aircraft fuel tanks can reach extremely low temperatures at high
+altitudes. A crucial characteristic of jet fuel is therefore the low-temperature fluidity of the
+fuel. Low-temperature fluidity of aviation fuel can be characterized by two intrinsic features:
+freezing point, and kinematic viscosity. These must be sufficiently low, ensuring proper fuel
+fluidity in the turbine engine systems of aircraft.9
+Viscosities of fuels may be specified to fall within a maximum limit, minimum limit or even
+both, in standard specifications. Fuel viscosities exceeding specification limits may lead to
+issues related to emission characteristics (excessive droplet size), fuel pumpability and even
+filter plugging.3 On the other hand, viscosities significantly below the specification limit range
+may indirectly cause issues related to decreased lubricity, which may cause wear in the fuel
+system components by reduced film-forming properties. In fact, this is applicable for all cases
+mentioned above, including those cases where the specification does not specify a minimum
+limit for viscosity.8,9 However, desulfurization of fuels has complicated this mechanism and
+
+5
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+an increased viscosity may not therefore provide increased lubricity in all cases. See Section
+2.3 for more information about liquid hydrocarbon specifications.
+
+2.1
+
+Viscosity of liquids
+
+Viscosity is an intrinsic property of all fluids. A flowing fluid has an internal resistance to flow.
+Hence, the viscosity of a fluid is the measure of this resistance to flow (or shear). Viscosity is
+a function of both temperature and pressure. The viscosity of liquids and gases are affected
+differently by changes in temperature and pressure. The temperature dependence of liquid
+viscosity (including liquid hydrocarbons) is fully characterized by the structure of the
+individual molecules.10
+The theories of fluid viscosity related to gases are very well developed in comparison to those
+of liquids. Momentum transfer between molecules results in the viscosity of a certain
+medium. The molecules within gaseous substances are separated by vast distances in
+comparison to the molecules in liquids. Momentum transfer occurring within gaseous
+substances is therefore governed by much simpler forces than the corresponding forces
+acting on momentum transfer within liquids, due to the proximity of the molecules within
+the liquids. Several theories have been formulated for the viscosity of gases, including
+accurate methods for viscosity prediction and temperature dependency. 5 Nevertheless, the
+subject of the viscosities of gaseous fluids is out of the scope of the present work. Thus, only
+Newtonian liquids (i.e. liquids in which the viscosity remains constant while the amount of
+applied shear stress is varied) will be discussed in this thesis.
+The viscosity of liquids may be expressed in two different forms: 1) Absolute or dynamic
+viscosity and 2) Kinematic viscosity.5 The two types are described in Section 2.1.1 and 2.1.2.
+2.1.1
+
+Dynamic viscosity
+
+The dynamic viscosity is described as “the tangential force per unit area required to slide one
+layer (A) against another layer (B) when the two layers are maintained at a unit distance”. 5
+The system is depicted in Figure 4 where the force F causes layers A and B to slide at velocities
+v1 and v2, respectively.5 The viscosity of a fluid can be described mathematically as shown in
+equation (1).
+𝜎= 𝜂
+
+𝑑𝑣
+𝑑𝑥
+
+(1)
+
+where σ is the shear stress, η represents the dynamic viscosity and 𝑑𝑣/𝑑𝑥 is the shear rate.
+
+6
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+Figure 4: Shear of a liquid film. Reproduced from: D. S Viswanath; T. K. Ghosh; D. H. L. Prasad; N. V. K. Dutt; K.
+Y. Rani Viscosity of Liquids; Springer Netherlands: Dordrecht, The Netherlands, 2007, p.2 (see ref. 5.).
+
+The dynamic viscosity may therefore be written in the form of equation (2).
+𝑥
+
+𝜂 = 𝜎𝑣
+
+(2)
+
+where σ represents as the shear stress that is enacted when layer A moves in relation to layer
+B, x is the length that A moved in relation to B and v is the velocity at which that occurred.
+Converting kinematic viscosity to dynamic viscosity:
+The dynamic viscosity of a sample at the measured temperature can be calculated by
+multiplying the kinematic viscosity result with the density (ρ) of the sample, provided that
+both are known at the same temperature.11 The most common units of dynamic viscosity are
+Pascal-seconds (Pa∙s or kg/m∙s), Poise (P, g/cm∙s), and Centipoise (cP, 1/100 Poise).5
+2.1.2
+
+Kinematic viscosity
+
+The kinematic viscosity of a sample can be obtained by dividing the dynamic viscosity (η) with
+the density (ρ) of the sample, provided that both have been determined at the same
+temperature.12 The most common units for kinematic viscosity are m2/s, Stokes (St, cm2/s),
+and Centistokes (cSt, mm2/s).5
+The laboratory test method used in this thesis (see Section 5.3.1) provides only the kinematic
+viscosity of a sample (density is not provided). All the empirical correlations and mixing rules
+described in Section 4 either require or provide the kinematic viscosity of a sample. All
+further mentioning of viscosity in this work therefore specifically implies kinematic viscosity
+unless otherwise specified.
+
+7
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+2.2
+
+Hydrocarbon types and their influence on the physicochemical properties of
+fuel
+
+Liquid hydrocarbon mixtures in the middle distillate range are primarily composed of nparaffins (i.e. normal paraffins), i-paraffins (i.e. isoparaffins), olefins (i.e. unsaturated
+paraffins), cyclic paraffins, and aromatics. Each of the molecular group types supply specific
+properties to the products. Some of the most important properties provided by each group
+type, to middle distillate fuels, are listed below.13,14 The cold flow properties of middle
+distillate fuels are very important. The impact on these properties are therefore mentioned
+several times in the list provided below.
+•
+
+Normal paraffins
+o
+
+Increased energy content and decreased cold flow properties. Positive
+impact on the cetane number of the fuel.
+
+•
+
+Isoparaffins
+o
+
+Shape irregularity and branching provides improved cold flow properties
+compared to n-paraffin counterparts. Influences the resulting cetane
+number of the fuel negatively.
+
+•
+
+Olefins
+o
+
+Good combustion characteristics, however, undesirable in fuels due to poor
+gum stability.
+
+•
+
+Cycloparaffins
+o
+
+Improved cold flow properties and higher density than n- and i-paraffin
+counterparts of the same carbon number.
+
+•
+
+Alkylbenzenes (substituted single-ring aromatics)
+o
+
+Provide increased energy density per unit volume as well as elastomer
+swelling, both crucial for fuel system integrity.
+
+•
+
+Naphthalenes, alkylnaphthalenes, tetralins and indans
+o
+
+These multi-ring aromatics cause adverse effects on combustion through
+contribution to soot formation.
+
+Every hydrocarbon class holds anywhere from tens to hundreds of individual chemical
+compounds. Each of the compounds contributes to the properties of a sample. The sum of
+these, result in the final properties of a sample, which can be measured by routine laboratory
+procedures.13 Complete analyses of middle distillates, involving the identification of the 1000
+
+8
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+or more components in a sample, are possible by the use of complex and time consuming
+spectroscopic and chromatographic methods. Tracing the effect that each individual
+compound has on the physicochemical properties of a sample is, however, considered
+impractical, since the hydrocarbon component classes (e.g. n-paraffins) have been found to
+impart certain chemical and physical properties as groups. Researchers have therefore
+resorted to various “group-type” separations when working with petroleum-based products.
+Identification and quantification of these group-types can be achieved by spectroscopic
+methods like GC-MS (gas chromatography-mass spectrometry) and GCxGC (two-dimensional
+gas chromatography).10,13
+
+2.3
+
+Typical standards governing the quality of fuels and oil products
+
+Standards regulate the quality of fuels and oils by specifying limits for specific physical and
+chemical properties of the substances. Multiple standards for each product class are
+available since countries and/or continents are governed by local institutions, supplying their
+own standards for the products. Some of the largest standardization organizations in the
+world include ASTM International (American Society for Testing and Materials), API
+(American Petroleum Institute), CEN (Comité Européen De Normalisation), and ISO
+(International Organization for Standardization). Organizations governing the use of fuels in
+specific cases, exist as well. The United States military (MIL standards) for example, governs
+the quality of fuels for military use in the USA. Additionally, standards by organizations such
+as the British Ministry of Defense (DEFSTAN standards) include specifications for fuels
+intended for civil, commercial, and military use Heavily standardized industries, such as the
+aviation industry, follow additional standards of organizations such as the Joint Inspection
+Group (JIG), whose main concern is the aviation fuel supply chain (i.e. refinery to aircraft).
+The standards published by ASTM International, CEN, and ISO were of interest in this work.
+The standards regulating the quality of the products relevant to this work, including
+tabulated viscosity limits for each product group, are described in this section.
+2.3.1
+
+Aviation turbine fuels
+
+One of the main governing organizations for the quality of aviation fuel is ASTM International.
+Fossil aviation fuels are regulated by the “ASTM D1655 Standard Specification for Aviation
+Turbine Fuels”. This standard originally dictated the specification limits for “aviation fuel
+consisting predominantly of refined hydrocarbons derived from fossil raw materials”. Today,
+products originating from renewable raw materials must satisfy these limits as well. The fuels
+
+9
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+grades included are Jet A and Jet A-1.14 Aviation fuels consisting of both fossil and synthetic
+blending components are additionally governed by the “ASTM D7566 Standard Specification
+for Aviation Turbine Fuel Containing Synthesized Hydrocarbons”. Specifications limits for the
+properties of currently approved synthetic blending components are defined in the annexes
+of the standard. The final fuel blends, however, have to satisfy the requirements of both
+D7566 and D1655, if synthetic components are present (as indicated above).15 Other
+commercial and military grade aviation fuels are governed by for example standards
+DEFSTAN 91-91, DEFSTAN 91-87, and MIL-DTL-83133 issued by the Ministry of Defense of the
+United Kingdom and the United States Airforce, respectively. The fuel grades included in
+these specifications are JP-8 and Jet A-1.16–18 Multiple additional aviation fuel specifications
+by various military and government organizations exist as well.19 Detailed descriptions of
+these can be found elsewhere in the literature. The viscosity limits of the mentioned
+specifications are given in Table 2.
+Table 2: Viscosity limits of common aviation fuel specifications.
+Specification
+
+ASTM D1655 14
+
+ASTM D7566 15
+
+DEFSTAN 91-91 16
+
+DEFSTAN 91-87 17
+
+MIL-DTL-83133 18
+
+Fuel grade
+
+JET A-1
+
+JET A-1 containing
+
+JET A-1
+
+JP-8
+
+JP-8
+
+8.00 at -20 °C
+
+8.00 at -20 °C
+
+8.00 at -20 °C
+
+synthesized
+hydrocarbons
+Kinematic viscosity,
+max.
+
+8.00 at -20 °C
+
+(mm2/s)
+
+8.00 at -20 °C
+(12.00 at -40 °C) *
+
+*required only for blends with specific components
+
+2.3.2
+
+Diesel fuels
+
+Diesel fuels can be divided into two main groups based on use. Automotive diesel fuel or onroad diesel is a group of fuels which have been developed to be suitable for automotive use.
+Non-road diesel (i.e. red diesel, due to colorant) is a group of fuels which are intended to be
+used in applications excluding automotive use. In some countries, a colorant is added to nonroad diesel to dissociate the two fuel types due to fiscal policies. Certain performance
+additives, beneficial for the automotive use of the fuels, may not have been added to nonroad diesel.
+2.3.2.1
+
+Automotive diesel fuels, Europe
+
+Automotive diesel fuels are governed by the European Committee for Standardization
+(Comité Européen De Normalisation, CEN) in Europe. EN 590 is the standard for fossil
+
+10
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+automotive diesel fuel and EN 15940 is the standard for paraffinic automotive diesel fuel
+from synthesis or hydrotreatment. Both standards include generally acceptable limits as well
+as climate-related requirements. The climate related requirements are divided into classes 0,
+1, 2, 3, and 4 in both standards. The classification is governed by the cetane number of the
+fuel in all cases. The generally acceptable requirements of EN 15940 are further divided into
+classes A and B due to the acceptance of cycloparaffins in class B (this decreases the cetane
+number of the resulting fuel). The viscosity requirements of classes A and B do not differ.20,21
+The viscosity requirements of both standards are listed in Table 3.
+Table 3: Viscosity limits of the European automotive diesel fuel specifications.
+EN 590 and EN 15940 20,21
+
+Specification
+Generally applicable limits:
+Kinematic viscosity at +40 °C
+
+Min. = 2,00
+(mm2/s)
+
+Max. = 4,50
+
+Climate related requirements, categories:
+
+0
+
+1
+
+2
+
+3
+
+4
+
+Kinematic viscosity at +40 °C, min. (mm2/s)
+
+1,50
+
+1,50
+
+1,50
+
+1,40
+
+1,20
+
+Kinematic viscosity at +40 °C, max. (mm2/s)
+
+4,00
+
+4,00
+
+4,00
+
+4,00
+
+4,00
+
+2.3.2.2
+
+Automotive diesel fuels, United States of America
+
+The “ASTM D975 Standard Specification for Diesel Fuel” specifies the quality of diesel fuel in
+at least the United States of America. Diesel fuel quality is defined by a variety of different
+grades in the ASTM specification.22 The following grades are included:
+•
+
+No. 1-D S15
+
+•
+
+No. 1-D S500
+
+•
+
+No. 1-D S5000
+
+•
+
+No. 2-D S15
+
+•
+
+No. 2-D S500
+
+•
+
+No. 2-D S5000
+
+•
+
+No. 4-D
+
+The number after the S refers to the limit of sulfur content in each grade. Differences in other
+properties such as viscosity are defined as well.22 The viscosity limits of the grades are listed
+in Table 4.
+
+11
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Table 4: Viscosity limits of the American automotive diesel fuel specification.
+ASTM D975 22
+
+Specification
+Fuel grade
+
+No. 1-D S15
+
+No. 1-D S500
+
+No. 1-D S5000
+
+No. 2-D S15
+
+No. 2-D S500
+
+No. 2-D S5000
+
+No. 4-D
+
+Kinematic viscosity at
+
+1,3
+
+1,3
+
+1,3
+
+1,9
+
+1,9
+
+1,9
+
+5,5
+
+2,4
+
+2,4
+
+2,4
+
+4,1
+
+4,1
+
+4,1
+
+24,0
+
+40 °C, min. (mm2/s)
+Kinematic viscosity at
+40 °C, max.
+
+(mm2/s)
+
+2.3.3
+
+Heating oil
+
+A common European standard for the quality of heating oil and non-road diesel does not
+exist. The sulfur content of the fuels is capped by the Sulphur Content of Liquid Fuels Directive.
+All other properties of the fuels are governed by country-specific standards, the EN 590
+standard for automotive diesel fuel or no standard at all, depending on the country.23
+The quality of heating oil and non-road diesel is governed by the “ASTM D0396 Standard
+Specification for Fuel Oils” in the USA. The fuels are divided into six grades of which No. 4
+and 5 are further divided into “light” and/or “heavy” grades. 24 The specified viscosity limits
+of the grades are listed in Table 5.
+Table 5: Viscosity limits of the American fuel oil specification.
+ASTM D0396 24
+
+Specification
+Fuel grade
+
+No. 1
+
+No. 2
+
+B6-B20
+
+S15, S500 or S5000
+
+S15, S500 or S5000
+
+S15, S500 or S5000
+
+1,3
+
+1,9
+
+2,4
+
+Fuel grade (continues)
+Kinematic viscosity at 100 °C, min.
+
+Kinematic viscosity at 40 °C, min.
+
+No. 4 (Light)
+
+No. 4
+
+1,3
+
+1,9
+
+>5,5
+
+4,1
+
+4,1
+
+5,5
+
+24,0
+
+No. 5 (Light)
+
+No. 5 (Heavy)
+
+No. 6
+
+5,0
+
+9,0
+
+15,0
+
+8,9
+
+14,9
+
+50,0
+
+(mm2/s)
+Kinematic viscosity at 40 °C, max.
+(mm2/s)
+
+(mm2/s)
+Kinematic viscosity at 100 °C, max.
+(mm2/s)
+
+2.3.4
+
+Distillate marine fuels
+
+Distillate marine fuel quality is governed by the ISO 8217 specification. The fuels are
+separated into seven different categories listed below.25
+•
+
+ISO-F-DMX
+
+12
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+•
+
+ISO-F-DMA
+
+•
+
+ISO-F-DFA
+
+•
+
+ISO-F-DMZ
+
+•
+
+ISO-F-DFZ
+
+•
+
+ISO-F-DMB
+
+•
+
+ISO-F-DFB
+
+Distillate marine fuels are categorized into the grades by their kinematic viscosities at 40 °C.
+The last letter in the name of each category refers to the viscosity limits of the specific
+category.25 Viscosity limits for the categories are listed in Table 6.
+Table 6: Viscosity limits of the European distillate marine fuel specification.
+ISO 8217 25
+
+Specification
+Fuel grade (ISO-F-)
+
+DMX
+
+Kinematic viscosity at 40 °C, min. (mm2/s)
+
+1,4
+
+2,0
+
+3,0
+
+2,0
+
+Kinematic viscosity at 40 °C, max. (mm2/s)
+
+5,5
+
+6,0
+
+6,0
+
+11,0
+
+2.3.5
+
+DMA
+
+DFA
+
+DMZ
+
+DFZ
+
+DMB
+
+DFB
+
+Base oils (lubricants)
+
+One of the most relevant properties for the classification and marketing of base oils is the
+viscosity of the products. The API 1509 (API Engine Oil Licensing and Certification System,
+EOLCS) categorizes base oils into groups I, II, III, IV, and V based on refining method, viscosity,
+saturate content, and sulfur content.26 The viscosity index (see Section 2.4.2) limits for these
+groups are listed in Table 7.
+Table 7: Viscosity index limits of API base oil groups.
+API 1509 26
+
+Specification
+Base oil group
+
+I
+
+II
+
+III
+
+IV (PAO)
+
+V
+
+Viscosity index, min.
+
+≥80
+
+≥120
+
+PAO manufacturer specification
+
+All others
+
+Viscosity index, max.
+
+<120
+
+-
+
+PAO manufacturer specification
+
+All others
+
+The viscosity index of groups I – III are limited by EOLCS, whereas the PAO product
+specifications give rise to the limits of group IV. All other grades of viscosity index are covered
+by group V, as can be seen from Table 7.
+
+13
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+2.4
+
+Selected standard laboratory test methods for the determination of liquid
+viscosity
+
+The viscosity (dynamic or kinematic) of hydrocarbon samples may be determined by multiple
+standardized methods. Results presented in the literature may have been determined by any
+of these techniques. A selection of important standardized test methods for viscosity
+determination are presented in this section.
+2.4.1
+
+ASTM D445
+
+The “ASTM D445 Standard Test Method for Kinematic Viscosity of Transparent and Opaque
+Liquids” describes the standard procedure for determining the kinematic viscosity (v) of a
+transparent or opaque sample of liquid petroleum.11 This method was used for all viscosity
+measurements presented in this thesis due to its widespread use, broad temperature range,
+and capability of processing multiple samples simultaneously. Furthermore, the method is
+generally accepted by most standards. A sketch of a Cannon-Fenske Routine viscometer used
+in this method is provided in Figure 5. The standard test method is discussed in more detail
+in the experimental section (see Section 5.3.1).
+
+Figure 5: Dimensional illustration of a Cannon-Fenske Routine viscometer (left) as well as a presentation of
+the method of filling the instrument by suction (right). Reproduced from: D. S Viswanath; T. K. Ghosh; D. H. L.
+Prasad; N. V. K. Dutt; K. Y. Rani Viscosity of Liquids; Springer Netherlands: Dordrecht, The Netherlands, 2007,
+p.2 (see ref. 5.).
+
+14
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+2.4.2
+
+ASTM D2270
+
+The “ASTM D2270 Standard Practice for Calculating Viscosity Index from Kinematic Viscosity
+at 40 °C and 100 °C” comprises the standard for calculating the viscosity index of a sample,
+given that the kinematic viscosity data of the sample is known at 40 °C and 100 °C. The
+viscosity index (VI) is a generally accepted measure of temperature dependence of the
+viscosity of a sample. The VI of a sample is in practice a single number which indicates the
+temperature dependence of the kinematic viscosity of the sample. The higher the viscosity
+index, the lower the decrease in viscosity of the sample with increasing temperature.27
+2.4.3
+
+ASTM D7042
+
+The “ASTM D7042 Standard Test Method for Dynamic Viscosity and Density of Liquids by
+Stabinger Viscometer (and the Calculation of Kinematic Viscosity)” describes the procedure
+for measuring both the dynamic viscosity (η) and the density of a liquid petroleum product
+or crude oil (provided that the sample is transparent and opaque) simultaneously using the
+Stabinger Viscometer. The precision of the method has only been determined for the
+materials, viscosities, densities, and temperatures indicated in the specification. 12
+The Stabinger Viscometer is a modified Couette-type coaxial rotational cylinder viscometer.
+A general illustration of a coaxial cylinder viscometer is given in Figure 6.5
+
+Figure 6: General structure of a coaxial rotational cylinder viscometer. Reproduced from: D. S Viswanath; T. K.
+Ghosh; D. H. L. Prasad; N. V. K. Dutt; K. Y. Rani Viscosity of Liquids; Springer Netherlands: Dordrecht, The
+Netherlands, 2007, p.2 (see ref. 5.).
+
+15
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+2.4.4
+
+ASTM D7945
+
+The “ASTM D7945 Standard Test Method for Determination of Dynamic Viscosity and Derived
+Kinematic Viscosity of Liquids by Constant Pressure Viscometer” comprises the procedure for
+the determination of the dynamic viscosity and the density of a sample. These are
+determined for the purpose of deriving the kinematic viscosity of the sample based on the
+results. The dynamic viscosity and density are obtained by an automated apparatus. The
+kinematic viscosity is determined, based on these results, by the calculative procedure
+described in Section 2.1.2. The method also describes how the standard practice ASTM D341
+(see Section 4.1.1) can be used for calculating the temperature at which a petroleum product
+attains a certain kinematic viscosity. The constant pressure viscometer is a capillary flow
+viscometer that uses the Hagen-Poiseuille principle of capillary flow to determine the
+viscosity of a sample (the time it takes for a specific volume of liquid to pass through a
+capillary is proportional to the viscosity of the fluid). 5 It differs however from traditional
+viscometers in that, even though a capillary is used to restrict the flow of fluid and provide
+the means by which the viscosity of the sample is determined, a constant pressure of
+compressed air is used as the driving force for the fluid instead of gravity. 28
+The unnecessary complexity and time-consuming task of measuring each sample separately,
+the introduction of an additional source of error by automation, and the mathematically
+derived kinematic viscosity were the grounds for not following this procedure in this work.
+2.4.5
+
+ASTM D5293
+
+The “ASTM D5293 Standard Test Method for Apparent Viscosity of Engine Oils and Base
+Stocks Between -10 °C and -35 °C Using Cold-Cranking Simulator” encompasses a specialized
+approach for assessing the effects of the low temperature viscosity of oils on the
+performance in conditions simulating a real-life use case. The Cold-Cranking Simulator (CCS)
+result correlates with the cranking of an engine at low temperature and is known as the
+Apparent Cranking Viscosity. This approach produces results purely from a usability
+standpoint and should not be used for the prediction of low temperature flow in an engine.
+Information such as the determination of base stock suitability for engine oil formulations is
+gathered using this method. The method is calibrated using calibration oils that could be used
+for the formulation of an engine oil.29 A picture of a Cold-Cranking Simulator is provided in
+Figure 7.
+
+16
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+Figure 7: Picture of a Cold-Cranking Simulator produced by Cannon Instruments Co. Reproduced from: D. S
+Viswanath; T. K. Ghosh; D. H. L. Prasad; N. V. K. Dutt; K. Y. Rani Viscosity of Liquids; Springer Netherlands:
+Dordrecht, The Netherlands, 2007, p.2 (see ref. 5.).
+
+This method is described in this section due to the alternative angle of interest toward the
+viscosity of a hydrocarbon mixture. The purpose of the method is to investigate, evaluate,
+and enumerate the effect of the viscosity of the product in the final use case. In other words,
+the method seeks to describe an entirely different aspect of the viscosity of a hydrocarbon
+mixture, expressed in terms of usability of the product in the intended application. 29
+
+17
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+3
+
+AIM OF THIS WORK
+
+The viscosity of liquids is, among other things, a non-linear property with regards to
+temperature. This simple fact, arising from the complex molecular interactions involved in
+the seemingly straightforward physicochemical property of viscosity, complicates the
+predictive analytics involved in the estimation of the temperature dependence of liquid
+viscosity. Empirical correlations and mixing rules are still to this date one of the few feasible
+methods available for the prediction of liquid hydrocarbon mixture viscosities. Several
+empirical correlations and mixing rules are available in the literature, improved approaches
+have been proposed since the early 20th century. Several reviews regarding the most
+common “classical” methods as well as revisions of the methods are also available. Most of
+the aforementioned efforts have been aimed toward the estimation of the viscosities of
+liquid hydrocarbons derived from traditional fossil feedstocks. In fact, most of the methods
+described in this work have originally been developed for the estimation of crude oil
+viscosities. The suitability of these methods for the prediction of the viscosity of liquid
+hydrocarbon mixtures arising from the continuously growing alternative feedstock pool has
+not been evaluated in detail. The aim of this work is therefore to arrive at the best methods
+for the prediction of liquid hydrocarbon mixture viscosities of a diverse component pool
+including the blends thereof.
+
+18
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+4
+
+PREDICTION OF THE VISCOSITY OF COMPLEX HYDROCARBON
+MIXTURES
+
+Several research groups have attempted to capture the intrinsic nature of liquid viscosity
+using various theories. Multiple mechanistic models have been proposed to describe the
+correlation of liquid viscosity, temperature, and pressure. The models most representative
+of this relationship are the Friction Theory and the Expand Fluid Theory. Multiple models
+exist that consider both the temperature and pressure when calculating the viscosities of
+liquids. The viscosity prediction model developed by Quiñones-Cisneros et al.30 calculates the
+viscosity of pure compounds, such as individual n-alkanes, based on the Friction Theory and
+the van der Waals Theory at low to high pressures. The development of a three-singleparameter model based on the Friction Theory and the Cubic Equations of State, by the same
+group, expanded the application of the model to light, medium, and heavy oil systems.31–33
+Yarranton et al.34 developed a three-parameter correlation capable of calculating the
+viscosities of hydrocarbons, heavy oils, and heavy oil mixtures based on the expand fluid
+theory. Motahhari et al.35 and Ramos-Pallares et al.36 implemented the Expand Fluid Theory
+on mixtures of compounds as well as petroleum systems using binary interaction parameters.
+The mechanistic models described in the works by Quiñones-Cisneros et al.., Yarranton et al.,
+Motahhari et al., and Ramos-Pallares et al. are capable of predicting the variation of fluid
+viscosity at high pressures and high temperatures with relatively low deviation. These models
+are therefore of great importance, for example, in the field of oil and gas reservoirs.
+Mechanistic models of this type, however, often contain an excessive number of parameters
+that require determination by regression, thus introducing an overwhelming complexity to
+the calculations.10
+The liquid of interest in most chemical engineering processes, including the samples tested
+in this thesis, are under a medium- to low-pressure environment. The impact of the pressure
+on the viscosity of the liquid is negligible under these conditions and can therefore be
+excluded from the calculations. Variation in the viscosity of a hydrocarbon mixture can
+consequently be considered to occur only due to changes in temperature. The viscositytemperature relationship of hydrocarbon mixtures can be described by a variety of empirical
+equations.10 These empirical correlations are usually much simpler than the mechanistic
+models, only containing a couple of basic parameters and one or more experimentally
+determined values, based on which the viscosity can be extrapolated to a different
+
+19
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+temperature. The most common experimentally determined property used for this is the
+viscosity of a sample at a single temperature. Other common properties are for example the
+weighted average boiling point temperature and the specific gravity of a sample. 37
+Most empirical correlations available in the literature are based on the equations developed
+by Vogel38, Walther39, or Andrade40. A clear trend toward the use of the Walther correlation
+can, however, be distinguished. This can be explained by the simple fact that the approaches
+based on the Walther correlation exhibit much lower average absolute deviations (AAD)
+compared to the Vogel and Andrade counterparts.37 The most promising correlations found
+in the literature are discussed in this section.
+The equations evaluated in this work were chosen based on recommendations as well as
+performance presented in the literature and are therefore mostly concentrated on iterations
+of the Walther correlation. The performance of the most promising equations of this section
+were evaluated using the experimental data gathered in the experimental section of this
+work. The results can be found in Section 6.2.
+
+4.1
+
+Empirical correlations for the prediction of liquid hydrocarbon mixture
+viscosity
+
+Each of the correlations described in this section can be thought of as solutions for different
+situations where a varying amount and type of input data is accessible. Table 8 summarizes
+the required inputs and provided outputs of the empirical correlations of this section. The
+output of all empirical correlations discussed in this thesis is the viscosity of the studied
+sample at a desired temperature.
+Table 8: Summary of inputs and outputs of empirical correlations.
+Correlation
+
+Input
+
+Output
+
+Walther39
+
+Viscosity at two temperatures
+
+Viscosity at desired temperature
+
+NFGW8
+
+Viscosity at three temperatures
+
+Viscosity at desired temperature
+
+Aboul-Seoud and Moharam41
+
+Viscosity at one temperature
+
+Viscosity at desired temperature
+
+Mehrotra42
+
+Weighted average of boiling points
+
+Viscosity at desired temperature
+
+Kotzakoulakis version of Mehrotra correlation37
+
+50 % mass boiling point
+
+Viscosity at desired temperature
+
+Moharam43
+
+Weighted average of boiling points
+
+Viscosity at desired temperature
+
+and specific gravity
+
+20
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Kotzakoulakis version of Moharam correlation37
+
+50 % mass boiling point and specific
+
+Viscosity at desired temperature
+
+gravity at 15 °C
+Puttagunta44
+
+4.1.1
+
+Viscosity at exactly 100 °F (37,78 °C)
+
+Viscosity at desired temperature
+
+Walther correlation
+
+The Walther equation provides the foundation of the ASTM D341 standard. The ASTM D341
+Standard Practice for Viscosity-Temperature Charts for Liquid Petroleum Products is a
+method for assessing the effect of temperature on the viscosity of various petroleum
+products. The method is based on conventional viscosity-temperature charts. These charts
+have traditionally been used for the approximation of the viscosity of a fuel or oil sample, at
+any temperature, provided that the viscosity of the sample is known at two separate
+temperatures. The two known data points are marked on the chart and a line connecting
+both is drawn. The viscosity at any other temperature can be established within the limits of
+the chart by the plotted line. Multiple charts with different scales are available.45
+The charts given in the standard have also been used for the approximation of liquid
+viscosities of blends of components. This requires manual plotting of the viscositytemperature lines of each component on the chart and blending of the components by linear
+proportioning at constant viscosity or temperature (the horizontal or vertical distance is
+measured). The manual method is time consuming and the obtained results are known to be
+inaccurate.7 See Section 4.2.1 and 4.2.5 for detailed information regarding the calculation
+approach to these methods and how the inaccuracy can be reduced.
+The charts themselves are simplified practical tools that are governed by an equation. The
+underlying equation is therefore of greater interest regarding the scope of this work than the
+charts themselves. The first chart of this kind was published by MacCoull, it is based on
+equation (3)42 and features a static value of 0.7 in the double logarithm parenthesis.45,46 The
+equation is a two-parameter logarithmic viscosity equation:7
+log log(𝑣 + 0.7) = 𝑏1 + 𝑏2 ∙ log 𝑇
+
+(3)
+
+Subsequent development and publication of the equation by both ASTM45 (subcommittee
+D02.07) and Walther39 have resulted in the equation mostly being known as the ASTM
+equation or the Walther equation:
+log log(𝑣 + 0.8) = 𝑏1 + 𝑏2 ∙ log 𝑇
+
+(4)
+
+21
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+The Walther and ASTM forms of the equation (4)37 differed from the original only by the value
+of 0.7 being 0.8 in the parenthesis (ASTM later reverted back to the original value of 0.7).45
+In both (3) and (4), ν is the kinematic viscosity (in cSt or mm2/s), T is the temperature in °K
+and, b1 and b2 are constants of the equation (determined for each sample separately).37,42
+Many forms of the equations (3) and (4) have been referred to as the Walther equation in
+the literature. Equations of this general type will therefore be referred to as the Walther
+equation in this work.
+The Walther equation can be utilized for the prediction of the viscosity of a sample at any
+temperature, given that viscosity of the sample is initially known at two different
+temperatures. The equation should be modified in the following fashion:
+Two data points should be used to solve for the constants b1 and b2. The Walther equation
+(3) should be rewritten to isolate terms b1 and b2, as shown in equations (5) and (6),
+respectively. The viscosity ν3 at temperature T3 can be calculated from the resulting equation
+(7) by inserting the values for b1 and b2 into their respective places.a
+𝑏1 = log log(𝑣1 + 0.7) +
+𝑏2 =
+
+log log(𝑣2 +0.7)−log log(𝑣1+0.7)
+log 𝑇1 −log 𝑇2
+
+log log(𝑣2+0.7)−log log(𝑣1+0.7)
+log 𝑇1 −log 𝑇2
+𝑏1 −𝑏2 ∙log𝑇3
+
+𝑣3 = 1010
+
+− 0.7
+
+∙ log 𝑇1
+
+(5)
+(6)
+(7)
+
+The viscosity-temperature relationship of a sample can be observed by altering the value of
+T3.
+Researchers have long been relying on the Walther equation as given in equation (3) and (4),
+with the constant C in the general expression (8)8 owning a static value of 0.7 or 0.8. Some
+researchers, such as Nissan et al., have suggested that the value of C should be a static value
+of 0.6 if the viscosity is expressed in centistokes.8
+log log(𝑣 + 𝐶 ) = 𝐴 + 𝐵 ∙ log 𝑇
+
+(8)
+
+Sánchez-Rubio et al. have more recently taken a new approach toward the determination of
+the C parameter of the Walther equation. The form of the Walther equation results in a
+
+a
+
+Determined by thesis author during the thesis work.
+
+22
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+straight line on the viscosity charts of the form loglog(viscosity) versus log(temperature). Two
+points are needed for the mathematical construction of a line, just as was discussed in
+equations (5), (6), and (7). It was therefore reasoned that a third point between the two
+points already needed would improve the results significantly. This means that the Walther
+equation, at three known temperatures, should be solved. An iterative procedure in the
+solving of the combined “triple” Walther equation gives a different value of C for each sample
+studied (sample specific C). Sánches-Rubio et al. studied lubricants, for which the common
+temperatures of viscosity determination are 40 °C and 100 °C. The best temperature to use
+for the third point was found to be the mean logarithmic temperature (i.e. 63.25 °C).
+However, no mathematical reasoning was found to justify this. 8
+Solving for a fluid specific C value is performed in the following way. Three identical Walther
+equations are substituted with v1, v2, v3 and T1, T2, T3, respectively.8 Rearranging the
+equations gives:
+𝐴 = log log(𝑣1 + 𝐶 ) − 𝐵 ∙ log 𝑇1
+
+(9)
+
+𝐴 = log log(𝑣2 + 𝐶 ) − 𝐵 ∙ log 𝑇2
+
+(10)
+
+𝐴 = log log(𝑣3 + 𝐶 ) − 𝐵 ∙ log 𝑇3
+
+(11)
+
+The combination and rearrangement of equations (9) and (10) as well as (10) and (11)
+separately give: 8
+1
+𝑋
+1
+𝑌
+
+log(𝑣 +𝐶)
+
+= log [log(𝑣2+𝐶)]
+
+(12)
+
+1
+
+log(𝑣 +𝐶)
+
+= log [log(𝑣3+𝐶)]
+
+(13)
+
+2
+
+The subsequent combination and rearrangement of equation (12) and (13) lead to:
+[log(𝑣2+𝐶)]𝑌
+[log(𝑣1
+
++𝐶)]𝑌
+
+[log(𝑣 +𝐶)]𝑋
+
+= [log(𝑣3+𝐶)]𝑋
+2
+
+(14)
+
+And if (X + Y) = Z, then the general expression (15) can be obtained:
+[log(𝑣2 + 𝐶 )]𝑍 = [log(𝑣3 + 𝐶 )]𝑋 ∙ [log(𝑣1 + 𝐶 )]𝑌
+
+(15)
+
+The iteration of equation (15) will give the fluid specific value for parameter C. The new
+equation encompassing this process of deriving the fluid specific C was named the NFGW
+(New Focus on the General Walther equation) equation by the authors of the work.8
+
+23
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+4.1.2
+
+Aboul-Seoud and Moharam correlation
+
+Replacing the parameter b1 in the Walther equation (3) with the double logarithm of a known
+viscosity allows for the prediction of the viscosity of a sample at any temperature.41 This form
+of the equation is known as the Aboul-Seoud and Moharam correlation (16):
+𝑇
+
+ln ln(𝑣 + 0.8) = ln ln(𝑣𝑜 + 0.8) + 𝑎2 ∙ ln (𝑇 )
+𝑜
+
+(16)
+
+where v is the kinematic viscosity (in cSt or mm2/s) at temperature T (K°), vo is the known
+kinematic viscosity (in cSt or mm2/s) of the sample at temperature To (K°), and a2 is a
+parameter of the equation estimated by Aboul-Seoud and Moharam to be equal to -3.7 based
+on experimental results (same as b2 in equation (3) and (4)).41
+The Aboul-Seoud and Moharam (A-S & M) correlation has been reported to be the best
+correlation to use when only a single viscosity measurement of a sample is available. 37
+4.1.3
+
+Mehrotra correlation
+
+Mehrotra studied the parameters in equation (3) and found that the kinematic viscosity of
+his crude oil samples was in good correlation with the average boiling points (Tb) of the crude
+oils.42 The weighted average boiling point (Tb) of a sample is determined by equation (17)37.
+𝑇𝑏 = ∑𝑛𝑖=1 ∆𝑥𝑖 ∙ 𝑇𝑏𝑖
+
+(17)
+
+where n is the number of distillation cuts, Δxi the mass fraction of distillation cut i with Σ Δxi
+= 1, and Tbi is the mid boiling point temperature of the distillation cut i (K°).
+Mehrotra consequently modified the equation (3) to predict the kinematic viscosity of a
+sample at any temperature using the Tb of the samples. Examination of the parameters in the
+equation showed that the value of b2 did not vary significantly with the Tb and could therefore
+be set to -3.7.42 The remaining parameter b1 was expressed in terms of Tb and adopted the
+form:
+𝑏1 = 5.489 + 0.148𝑇𝑏0.5
+
+(18)
+
+This resulted in the final form of the Mehrotra correlation (19)47:
+log log(𝑣 + 0.7) = 5.489 + 0.148𝑇𝑏0.5 − 3.7 log 𝑇
+
+(19)
+
+24
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+where v is the kinematic viscosity (in cSt or mm2/s), Tb is the average boiling point (K°), and T
+is the temperature (K°).
+Further improvement of the correlation has recently been performed by Kotzakoulakis et
+al.37 They utilized a set of 137 crude oils to refine the correlation to the following form (20):
+ln ln(𝑣 + 0.8) = 7.014𝑇𝑏0.178 − 3.682 ln 𝑇
+
+(20)
+
+where v is the viscosity (cSt or mm2/s) to be estimated, Tb is the 50% mass boiling point (°K),
+and T the temperature (°K).37
+4.1.4
+
+Moharam correlation
+
+Moharam et al. combined the double logarithm relationship of the Wright blending model
+(further discussed in Section 4.2.1) with the previously established correlation of the Tb and
+the inverse of the absolute temperature. The resulting general empirical correlation (21) is
+said to describe the kinematic viscosity-temperature behavior of hydrocarbon liquids for the
+temperature range of 50-550 °C.43
+𝑇
+
+ln 𝑣 = 𝐴 ∙ exp [( 𝑏 ) ∙ 𝛾 𝐵 ] + 𝐶
+𝑇
+
+(21)
+
+𝑇
+
+𝑏
+where 𝐴 = 1.0185, 𝐵 = 305.078
+− 0.55526 and 𝐶 = −3.2421, v is the kinematic viscosity
+
+(in cSt or mm2/s), Tb is the average boiling point (K°), and T is the temperature (K°), and γ is
+the specific gravity of the sample.
+The specific gravity (i.e. relative density) is the ratio of the density of a material related to the
+density of pure water.48 The specific gravity can be calculated using equation (22).
+𝜌
+
+𝛾=𝜌
+
+𝑤
+
+(22)
+
+where γ is the specific gravity, ρ is the density of a material, and ρw is the density of water.
+The density of the material of interest should be known at the temperature of interest in
+order to calculate the specific gravity of a sample at the desired temperature.48
+Aboul-Seoud and Moharam later verified that the Tb of two oils could possibly be very close
+or even exactly the same. The Mehrotra correlation and other correlation relying only on the
+Tb of the sample were found to be ineffective in such cases. Aboul-Seoud and Moharam
+
+25
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+therefore modified the Mehrotra correlation to consider both the specific gravity and the
+average boiling point of the sample.41 This resulted in the equation (23):
+ln ln(𝑣 + 0.8) = 4.3414 (𝑇𝑏 ∙ 𝛾)0.2 + 6.6913 − 3.7 ln 𝑇
+
+(23)
+
+where v is the kinematic viscosity (in cSt or mm2/s), Tb is the average boiling point (°K), T is
+the temperature (°K), and γ is the specific gravity of the sample.
+A recent development of the Moharam correlation has been performed by Kotzakoulakis et
+al.37 The effects of the parameters in equation (22) on the prediction of the viscosities of 137
+crude oils was studied. Their investigations showed that using the 50 % mass boiling point
+instead of the average boiling point lowered the absolute average deviation (AAD) of the
+results by about 10 %. The modification of equation (22) by Kotzakoulakis et al. also permits
+the use of the specific gravity of the samples at 15 °C instead of using the specific gravity at
+the desired temperature, i.e. T in eq. (22) and (23). The reference water density at 15 °C for
+the calculation of the specific gravity of a sample was set to exactly 0.999099 g/cm 3.37 The
+resulting equation (24) takes the following form:
+ln ln(𝑣 + 0.8) = 14.69𝑇𝑏 0.0684 𝛾 0.267 − 3.682 ln 𝑇
+
+(24)
+
+where v is the kinematic viscosity (in cSt or mm2/s), Tb is the 50 % mass boiling point (K°), T is
+the temperature (K°), and γ is the specific gravity at 15 °C of the sample.
+Using the weighted average boiling point, the 50 % mass boiling point, or the 50 % volume
+boiling point for predicting the kinematic viscosity of a sample (in the Mehrotra or Moharam
+correlations) presents an issue for samples with incomplete distillation data. The equation
+(15) for the calculation of the weighted average boiling point requires the complete
+distillation range of a sample to be known.37 The Riazi distribution model presented in
+Section 4.1.6 may be used to solve this issue.
+4.1.5
+
+Puttagunta correlation
+
+A five-parameter correlation was published by Puttagunta et al.44 in 1992. The correlation
+predicts the viscosity of a sample at any temperature based on the viscosity of the sample at
+exactly 100 °F (37.78 °C) and atmospheric pressure. The required data can be obtained either
+by experimental determination or curve fitting.41 The Puttagunta correlation is defined by
+the equation (25)41,44:
+
+26
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+log 𝑣 =
+
+𝑏
+𝑇−37.78 𝑠
+(1+
+)
+310.93
+
++𝑐
+
+(25)
+
+where v is the kinematic viscosity at temperature T (in cSt or mm 2/s), T is the temperature
+(in °C), and b and s are functions of the kinematic viscosity at 37.78 °C.
+It has been found that the equation is essentially the Walther equation expressed for the
+specific temperature of 37.78 °C.42 The correlation is nevertheless presented in this work,
+since it is also known as the API Procedure 11A4.1 of the API Technical Data Book (TDB). The
+API TDB is an annually updated book (a software nowadays) containing the latest technical
+data, methods, and standards regarding the areas of petroleum refining officially sanctioned
+by the API.49
+The API Procedure 11A4.1 discloses a correlation for the prediction of the viscosity of a liquid
+petroleum fraction as a function of temperature provided that the kinematic viscosity of the
+sample is known at 100 °F (37.78 °C) and atmospheric pressure.41 It features an absolute error
+of approximately 5.6 %, according to tests performed by the API and said to work best on
+light paraffinic fractions with API gravities over 30° API.50
+4.1.6
+
+Riazi distribution model
+
+Riazi has developed a distribution model for multiple properties of uncharacterized fractions
+of oils.51,52 The correlation exhibits excellent prediction of boiling points of oils with a
+correlation factor (R2) of over 0.99 (see Section 6.1.1 for definition of R2). The Riazi
+distribution model is therefore useful for the prediction of the entire distillation curve, the
+50 % boiling point, and the weighted average Tb of a sample if only incomplete data is
+available.37 The Riazi distribution model is described by the following equations (26) and
+(27)51,52:
+𝑇𝑖 −𝑇𝑜
+𝑇𝑜
+
+𝐴
+
+1/𝛽
+
+1
+
+= (𝐵 ln (1−𝑥 ))
+
+(26)
+
+𝑖
+
+Equation (26) in linear form:
+𝑌 = 𝐶1 + 𝐶2 𝑋
+
+where
+
+𝑌 = ln (
+
+𝑇𝑖 −𝑇𝑜
+𝑇𝑜
+
+)
+
+and
+
+1
+
+X = ln ln (1−𝑥 )
+𝑖
+
+(27)
+
+Where:
+To = initial boiling point of sample (K°)
+
+27
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Ti = temperature at which i percent of the sample has been distilled (weight or volume
+percent based on what xi is chosen to be)
+xi = volume or weight fraction of distillate
+A and B = sample specific parameters (det. from exp. data, see below)
+C1 and C2 = intercept and slope of the distillation curve
+Partial distillation data can be used to plot the terms X and Y from which the slope and
+intercept (C1 and C2 respectively) can be determined.37,51,52 The sample specific parameters A
+and B can be determined from the equations (28) and (29):
+1
+
+𝐵=𝐶
+
+2
+
+(28)
+
+and
+𝐴 = 𝐵𝑒 𝐶1 𝐵
+
+(29)
+
+Equation (24) can be solved and used to derive the complete distillation curve of a sample.37
+
+28
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+4.2
+
+Mixing rules for the calculation of petroleum blend viscosities
+
+Mixing rules are calculative tools (i.e. equations) for the prediction of the viscosities of blends
+of hydrocarbon mixtures. A variety of mixing rules are available in the literature. Centeno et
+al.7 evaluated the performance of a total of 26 mixing rules on the prediction of the viscosity
+of various crude oil blends. The overall accuracy of the mixing rules on viscosity prediction of
+the crude oil blends were found to be relatively poor, which is why they expanded the
+investigation to naphtha, diesel, and vacuum gas oil blends. Only four of the seventeen
+generally accepted mixing rules for middle distillates were found to be acceptable in terms
+of accuracy when tested. These included the Chirinos, Refutas, Chevron, and Walther mixing
+rules.7 A summary of the inputs and outputs of all mixing rules discussed in this work is
+provided in Table 9.
+Table 9: Summary of inputs and outputs of mixing rules.
+Mixing rule
+Wright blending method53
+
+Kendall and Monroe correlation54
+
+Refutas index
+
+method7
+
+Chevron mixing rule55
+
+Walther mixing rule39
+
+Chirinos mixing
+
+4.2.1
+
+rule7
+
+Input
+
+Output
+
+Viscosity at two temperatures and
+
+Viscosity by volume fraction at desired
+
+volume fractions for all components
+
+temperatures
+
+Viscosity (at the same temperature) and
+
+Viscosity by volume fraction at the same
+
+weight fractions of all components
+
+temperature as the input
+
+Viscosity (at the same temperature) and
+
+Viscosity by volume fraction at the same
+
+weight fractions of all components
+
+temperature as the input
+
+Viscosity (at the same temperature) and
+
+Viscosity by volume fraction at the same
+
+volume fractions of all components
+
+temperature as the input
+
+Viscosity (at the same temperature) and
+
+Viscosity by volume fraction at the same
+
+volume fractions of all components
+
+temperature as the input
+
+Viscosity (at the same temperature) and
+
+Viscosity by volume fraction at the same
+
+weight fractions of all components
+
+temperature as the input
+
+Wright blending method
+
+In 1946, Wright proposed a new method for using the ASTM chart (described in Section 4.1.1
+in conjunction with the Walther correlation) for predicting blend viscosities. The method has
+since proved to be a very effective tool for predicting the viscosity of all sorts of hydrocarbon
+blends and mixtures. The method is also referenced in the “ASTM D7152 Standard Practice
+for Calculating Viscosity of a Blend of Petroleum Products”, which is another reason why it
+will be discussed in this section.56
+
+29
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+The blending method proposed by Wright in 1946 was a method that utilized the charts of
+ASTM D341 to predict the viscosities of blends. Here the viscosity-temperature lines of the
+components are plotted on the chart and blended by linear proportioning along the log(T)
+axis. The advantage of this is that the “blending” is performed at “constant viscosity” instead
+of “constant temperature”, which would be the case if the chart were used as originally
+intended (see Section 4.2.5). An example of the use of a viscosity-temperature chart
+according to the Wright blending method is given in Figure 8, where Oil-A and Oil-B are the
+blending components and the long line between these, marked by intercepts O and R, is the
+“blend”.53
+
+Figure 8: Using the viscosity-temperature charts according to the Wright blending method. Reproduced from:
+M. H. Rahmes; W. L. Nelson Viscosity Blending Relationships of Heavy Petroleum Oils. Anal. Chem. 1948, 20,
+912–915 (see ref. 53).
+
+The equations for the lines and the intercepts in Figure 8 can be used in a similar fashion to
+the Walther equation (see Section 4.1.1) to create a set of equations capable of predicting
+the viscosity of a blend mathematically.57 Two viscosity values and the temperatures at which
+these were determined are needed for each “component”. This information can be used to
+calculate the inverse slope of each line. The information gathered thus far, including the
+intended volume fractions of each component, can be used to arrive at the viscosity of the
+30
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+blend by linear proportioning. The prediction of the “blend” viscosity (slope) over a finite
+temperature range, as well as the prediction of the viscosity-temperature relationship of the
+individual components, similarly to the modified Walther equation (see Section 4.1.1), is
+then be possible. This method is referred to as "Modified Wright Method" if mass fractions
+are used.57 A simple arrangement of input temperature values for the equation, within the
+temperature range of interest, in any spreadsheet software, allow for the graphical mapping
+of the resulting “blend” line (including accurate data points).
+The “ASTM D7152 Standard Practice for Calculating Viscosity of a Blend of Petroleum
+Products” describes the procedures for calculating the estimated kinematic viscosity of a
+blend of two or more petroleum products. Two types of blending methods are described in
+this standard, the ASTM Blending Method and the Wright Blending Method.58 The ASTM
+Blending Method is used for estimating the viscosity of a blend using the kinematic viscosity
+of each blend component at two separate temperatures and the blend fractions (volume
+fraction) of each component. The fraction of each component needed to prepare a certain
+blend, owning a specific viscosity value, can be estimated with this method. Mathematically
+transformed viscosity values for each component at the chosen temperature are used to
+produce the blend viscosity at said temperature. This method is referred to as "Modified
+ASTM Method" in case mass fractions are used. Reversion of the procedure allows for the
+determination of the amount of each component that has been used to create a blend of
+certain viscosity (only applicable for two component systems). 56,57 The Wright Blending
+Method has a far more substantial base in theory, is more accurate, and has been described
+in the literature previously.53 Only the Wright Blending Method (of the two) will therefore be
+subjected to further testing in this work.
+4.2.2
+
+Kendall and Monroe correlation
+
+The mixing rules of the late 1920’s were extremely inaccurate. Even the prediction of binary
+blends of pure compounds resulted in preposterous deviations since most mixing rules were
+based on the simple linear law of mixtures. Kendall and Monroe subsequently turned to
+experimental work; they measured the viscosities of binary systems where the properties of
+the components featured a significantly wider separation than those analyzed in previous
+studies.54 The Kendall and Monroe equation (30)7,54 was developed based on these
+experimental results and adopted the following form:
+1/3
+
+𝜇 1/3 = 𝑤𝐴 𝜇𝐴
+
+1/3
+
++ 𝑤𝐵 𝜇𝐵
+
+(30)
+
+31
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Where μ is the kinematic viscosity (in cSt or mm2/s) and w the weight fraction of the
+components (wA for A and wB for B). The amount of components is undefined, however, Σwi
+= 1.7
+The Kendall and Monroe equation has been added to the API Technical Data Book (see
+Section 4.1.5 for definition) due to the widespread use of the correlation in the petroleum
+industry. The equation forms the base for the API Procedure 11A3.1, which is one of the
+simpler procedures of the API TDB. The procedure is recommended to be used only for the
+estimation of the viscosities of mixtures of components owning very similar “molecular
+weights and general character”.59
+4.2.3
+
+Refutas index method
+
+The Refutas index method predicts the viscosity of a blend of components based on the
+viscosity blending indices of the individual components.7 The method was originally
+developed for the prediction of blend viscosities of all petroleum components ranging from
+gasoline to vacuum residue.7 The wide application range and satisfactory estimation errors
+for multiple products, including the close resemblance to the Chevron mixing rule, is the
+reason why the Refutas index method has been included in this work.7 The so called viscosity
+blending index (VBI) of each component is separately determined using the following
+equation:
+𝑉𝐵𝐼𝑖 = 23.097 + 33.469 log log(𝑣𝑖 + 0.8)
+
+(31)
+
+where vi is the viscosity of component i at a certain temperature (the same temperature
+should be used for all components).
+The VBI of the individual components are then added together while considering the weight
+fractions of each component, arriving at the average VBI of the blend (VBIβ)7:
+𝑉𝐵𝐼𝛽 = 𝑤𝐴 𝑉𝐵𝐼𝐴 + 𝑤𝐵 𝑉𝐵𝐼𝐵
+
+(32)
+
+where wi is the weight fraction of component i and VBIi is the VBI of component i in the blend.
+The VBIβ can be converted to the blend viscosity using the following equation7:
+(
+
+𝑣 = 1010
+
+𝑉𝐵𝐼𝛽 −23.097
+)
+33.469
+
+− 0.8
+
+(33)
+
+32
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+The temperature of the components or the blend is not considered at any point, as seen from
+the equations (31), (32), and (33). The viscosity of the blend is therefore calculated at the
+temperature at which the component viscosities were determined (i.e. a “constant
+temperature” approach). The Refutas index method is not suitable for the prediction of the
+viscosity of pure hydrocarbons or blends of only a few of them.55
+4.2.4
+
+Chevron mixing rule
+
+The Chevron mixing rule was developed by the Chevron Research Company. 55 It is based on
+the Refutas index method and features a simpler approach to the calculation of the viscosity
+blending index of a component. The total viscosity blend index of the components is
+calculated using volume fractions instead of weight fractions which is also more convenient
+since this data is usually more readily available. The Chevron mixing rule is not suitable for
+predicting the viscosities of blends of pure hydrocarbons just as its parent method, i.e. the
+Refutas index method.55
+The VBI of the individual components are calculated using equation (34), the total VBI by
+equation (35), and total VBI is finally converted to the blend viscosity using equation (36): 7,55
+𝑉𝐵𝐼𝑖 =
+
+log 𝑣𝑖
+3+log 𝑣𝑖
+
+𝑉𝐵𝐼𝛽 = ∑𝑛𝑖=1 𝑥𝑖 𝑉𝐵𝐼𝑖
+
+𝑣 = 10
+
+(
+
+3𝑉𝐵𝐼𝛽
+)
+1−𝑉𝐵𝐼𝛽
+
+(34)
+(35)
+
+(36)
+
+where vi is the viscosity of the component i, VBIi is the viscosity blending index of component
+i, xi is the volume fraction of component i, VBIβ is the total VBI of the blend, and v is the
+viscosity of the blend. The Chevron mixing rule is a “constant temperature” approach
+similarly to the Refutas index method.
+4.2.5
+
+Walther mixing rule
+
+The Walther equation described in Section 4.1.1 can be transformed to a highly accurate
+mixing rule39, known as the Walther mixing rule (37):
+log log(𝑣 + 𝐶 ) = 𝑥𝐴 log log (𝑣𝐴 + 𝐶 ) + 𝑥𝐵 log log(𝑣𝐵 + 𝐶 )
+
+(37)
+
+33
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+where ν is the kinematic viscosity of the blend (in cSt or mm2/s), vA and vB are viscosities of
+the components, x is the volume fraction of each respective component and C is a parameter
+of the equation.7
+The Walther mixing rule is the opposite approach to the Wright blending method. Here the
+“blending” happens at a “constant temperature” instead of happening at a “constant
+viscosity” as in the Wright method.39 This difference in the approaches is displayed in Figure
+9.
+
+Figure 9: Graphical comparison of the constant temperature vs. constant viscosity approach. Adapted from:
+M. H. Rahmes; W. L. Nelson Viscosity Blending Relationships of Heavy Petroleum Oils. Anal. Chem. 1948, 20,
+912–915 (see ref. 53).
+
+The estimation taking place when using the Walther mixing rule is illustrated by the line
+owning the intercepts Q, R, and P whereas the estimation of the Wright method is depicted
+by the line with the intercepts M, O, and N. Here it can clearly be seen that the Walther
+mixing rule line follows a constant temperature value whereas the Wright method line
+follows a constant viscosity value.
+This constant temperature nature of the Walther mixing rule is also the biggest drawback of
+the mixing rule (applicable for all constant temperature mixing rules). The lack of
+
+34
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+temperature variance in the mixing rule requires the viscosities of the blending components
+to be known at the temperature of interest of the final blend, which might not be possible
+for all neat components (e.g. components owning a low flash point or high freezing point).
+4.2.6
+
+Chirinos mixing rule
+
+The Chirinos mixing rule (38)7,60 is an iteration of the Walther mixing rule (37), where the
+parameter C has been fixed to a static value of 0.7 based on experimental determination and
+the volume fractions have been replaced by weight fractions.
+log log(𝑣 + 0.7) = 𝑤𝐴 log log (𝑣𝐴 + 0.7) + 𝑤𝐵 log log(𝑣𝐵 + 0.7)
+
+(38)
+
+where ν is the kinematic viscosity of the blend (in cSt or mm 2/s), vA and vB are viscosities of
+the components, and w is the weight fraction of each respective component.7
+This version of the equation was originally developed for bitumen-diluent mixtures60 and is
+therefore included in this work for comparative purposes.
+
+35
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+4.3
+
+Examples of results obtained by previous research groups
+
+All the empirical correlations and mixing rules described in Section 4.1 and 4.2 have been
+investigated by a variety of research groups. Examples of previously reported deviations for
+the methods are provided in this section. The empirical correlations assessed in this work
+have mostly been investigated for the prediction of crude oils. A list of results from the works
+of Sánchez-Rubio et al.8, Aboul-Seoud and Moharam41, and Kotzakoulakis et al.37 is presented
+in Table 10.
+Table 10: Examples of previously reported deviations of correlations.
+Equation
+
+Absolute average deviation (%)
+
+From work by
+
+Walther, eq. (6)
+
+3.84*
+
+Sánchez-Rubio et al.8
+
+NFGW, eq. (13)
+
+0.37*
+
+Sánchez-Rubio et al.8
+
+Aboul-Seoud and Moharam, eq. (14)
+
+1.47
+
+Aboul-Seoud and Moharam41
+
+13.7
+
+Kotzakoulakis et al.37
+
+5.0
+
+Aboul-Seoud and Moharam41
+
+218
+
+Kotzakoulakis et al.37
+
+Mehrotra by Kotzakoulakis, eq. (18)
+
+199
+
+Kotzakoulakis et al.37
+
+Moharam, eq. (19)
+
+5.54
+
+Aboul-Seoud and Moharam41
+
+3.05
+
+Aboul-Seoud and Moharam41
+
+Moharam, eq. (21)
+
+101
+
+Kotzakoulakis et al.37
+
+Moharam by Kotzakoulakis, eq. (22)
+
+52.9
+
+Kotzakoulakis et al.37
+
+Puttagunta, eq. (23)
+
+1.59
+
+Aboul-Seoud and Moharam41
+
+Mehrotra, eq. (17)
+
+Moharam
+
+by
+
+Aboul-Seoud
+
+and
+
+*Mean of standard deviations reported in the work
+
+Sánchez-Rubio results are the result of estimating 42 data points of 4 crude oils based on two
+(Walther equation) and three (NFGW equation) data points from each sample.8 Aboul-Seoud
+and Moharam results are obtained by estimating 478 or 316 data points of 16 or 14 crude
+oils respectively.41 Kotzakoulakis et al. AADs are the result of estimating the viscosities of 254
+different crude oils at both 15 °C and 0 °C (i.e. 308 data points).37
+Centeno et al. investigated the accuracy of 17 different mixing rules by estimating the
+viscosities of naphtha, diesel, and vacuum gas oil binary blends. The percentage standard
+error (SE) for the predicted viscosities compared with experimental results are given in the
+original article.7 All mixing rules discussed in Section 4.2, except the Kendall and Monroe
+equation (30), performed very well according to the results reported by Centeno et al. (SE
+for Kendall and Monroe equation above 10 % at its worst, SE was below 5 % in all other cases).
+The Wright blending method, however, was not investigated by the group.
+
+36
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+5
+
+EXPERIMENTAL
+
+Viscosity data for a variety of neat and blended hydrocarbon mixtures was needed for
+assessing the performance of the calculative tools found in the literature. Independent
+experimental determination of the kinematic viscosities was performed instead of using
+commercially available databanks due to repeatability and comparability concerns.
+Additional sample properties, required for specific correlations, were determined as well.
+
+5.1
+
+Methodology and plan
+
+The sample matrix was designed to contain an extensive variety of hydrocarbon mixtures.
+These included market grade fuels, experimental fuels, oils, and model compounds of the
+middle to heavy distillate range. Neat sample properties, sample mixture properties as well
+as the effects of cumulatively raising the volumetric ratio of one of the components in the
+mixtures was of interest.
+An assortment of mixtures was created for the purpose of this work. These included binary
+mixtures (mixtures of two components), tertiary mixtures (mixtures of three components),
+and quaternary mixtures (mixtures of four components). The mixtures were organized into
+five separate groups: four binary sample sets (BS1, BS2, BS3, and BS4) and one separate
+sample set for the tertiary and quaternary mixtures (TQ1). The TQ1 sample set was created
+and used for validation of the predictive capability of the methods. The tertiary and
+quaternary mixtures of TQ1 are mixtures of model compounds and an experimental fuel of
+the middle distillate range. This provided a highly complex set of viscosity data that could be
+used in the assessment of the models. The TQ1 sample set was, in other words, treated as a
+benchmark for the prediction flexibility of the correlations (in regards of input). The need for
+an additional group of samples arose during the thesis work, when the correlations requiring
+distillation data as input were found (see Section 4.1). An assortment of neat liquid
+hydrocarbons was analyzed, and the sample group was named Singular sample set 1 (S1). A
+summary of all sample sets are listed in Table 11.
+
+37
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Table 11: Summary of sample set details.
+Sample set
+
+No. of components
+
+Use
+
+per mixture
+Binary sample set 1 (BS1)
+
+2
+
+Mixing rules and correlations requiring viscosity as input
+
+Binary sample set 2 (BS2)
+
+2
+
+Mixing rules and correlations requiring viscosity as input
+
+Binary sample set 3 (BS3)
+
+2
+
+Mixing rules and correlations requiring viscosity as input
+
+Binary sample set 4 (BS4)
+
+2
+
+Mixing rules and correlations requiring viscosity as input
+
+3 or 4
+
+Mixing rules and correlations requiring viscosity as input
+
+Tertiary and quaternary
+sample set 1 (TQ1)
+Singular sample set 1 (S1)
+
+1 (neat components)
+
+Correlations requiring distillation data as input
+
+An assortment of the mixtures in the sample sets consisted of 0 – 100 vol-% of component A
+in a base of component B (applicable for most binary mixtures). Individual cases required
+more specific mixtures to be created and some combinations were of interest only at certain
+volumetric ratios.
+The most relevant experimentally determined physicochemical property, regarding this work,
+was the kinematic viscosity of the neat samples and the mixtures thereof. Properties such as
+density and distillation data of the samples were determined as well, since these were
+needed for the assessment of certain correlations. Additional properties such as freezing
+point (see Section 5.3.3 for further information regarding choice of this method) of the
+samples, were used to determine viable sample combinations and the temperature limit of
+reliable viscosity results for example.
+The various individual, binary, tertiary, and quaternary samples discussed above, represent
+a scale between middle to heavy distillate liquid hydrocarbon mixtures, thus providing a good
+dataset for evaluating the calculative tools found in the literature. BS1-4 and TQ1 were used
+to evaluate empirical correlations that require 1, 2, or 3 viscosity data points as input (i.e.
+empirical correlations that are useful in situations where 1, 2, or 3 viscosity values of the
+sample at differing temperatures are known). The mixing rules were evaluated using BS1-4.
+The sample set S1 was in turn, used to evaluate empirical correlations that require the T b
+and/or specific gravity of the samples as input (i.e. correlations that are useful situations
+where no viscosity data is available and the viscosity of the sample is needed).
+
+38
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+5.2
+
+Sample preparation
+
+All binary, tertiary, and quaternary mixtures were prepared using volumetric pipettes and
+stored in 250 ml glass bottles. A final volume of 200 ml was chosen for the samples. This was
+done to simplify the volume ratios and thus ease the blending process in the laboratory. The
+volumetric ratios were identical for all binary sample series. 36 binary blends of the range 0
+- 100 % were created. The tertiary and quaternary samples investigated in this work were
+created by a different logic (e.g. three components of varying vol-% in tertiary blends and
+four components of varying vol-% in quaternary blends).
+
+5.3
+
+Analysis
+
+Test methods based on standardized procedures defined by ASTM International and EN ISO
+were used in this work. The standard procedures were used since product standards require
+all measurements in the industry to be conducted by following these methods. This ensured
+realistic results which could be of use when comparing the results to real-world cases.
+Additionally, empirical correlations such as the Kotzakoulakis et al. version of the Moharam
+correlation (see Section 4.1.4) require specifically the results of ASTM methods as input
+data.37 Duplicate measurements were performed for all samples and the average result was
+used in further evaluations.
+5.3.1
+
+Viscosity, ASTM D445
+
+The viscosities of the samples were determined by the practices defined in the “ASTM D445
+Standard Test Method for Kinematic Viscosity of Transparent and Opaque Liquids”. A suitable
+amount of each sample was transferred into a Cannon-Fenske routine viscometer of
+appropriate size by suction. The viscometers containing the samples were lowered into a
+temperature-controlled bath to control and stabilize the temperature of the samples.
+Heating and cooling of the bath was controlled by a Lauda Kryomat high performance
+thermostat. Multiple baths with different bath mediums were needed due to the wide
+temperature range of the determinations. The flow time of each sample was determined
+after an appropriate time was allowed for the samples to reach the target temperature. The
+viscosity value for each sample was calculated based on the flow time and the calibration
+constant of the viscometer. Two consecutive measurements of each sample were made and
+an acceptable reproducibility error, r, between each set of values was assured, wherever
+applicable. The parameter k is defined for each sample type/temperature combination
+separately, in the standard test method, and does not therefore cover the entire range of
+
+39
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+samples in the sample matrix. The final viscosity value for each sample was reported as the
+average of these two parallel results (owning an acceptable r value if defined).11
+The procedure was repeated for all samples at temperatures of +30, +20, +10, 0, -10, -20, 30, and -40 °C. Some of the neat or mixed samples defined in the sample matrix were,
+however, limited by the relatively high freezing points or low flashpoints of the components.
+Example of average result calculation:
+Flow time 1 = F1
+Flow time 2 = F2
+Viscometer calibration constant = CV
+Viscosity of first measurement = F1 ∙ CV = V1
+Viscosity of second measurement = F2 ∙ CV = V2
+Average of results = (V1 + V2) / 2 = VA
+r = VA ∙ k
+5.3.2
+
+Density, EN ISO 12185 (ASTM D4052)
+
+The density of the samples was determined according to the standard procedure “EN ISO
+12185 Crude petroleum and petroleum products – Determination of density – Oscillating Utube method”. A Mettler Toledo DM45 DeltaRange density meter was used for the
+measurements.61
+A small amount of sample (typically less than 1.2 ml) is introduced into a temperaturecontrolled sample cell (15 °C in this case). The oscillation frequency of the sample is
+determined when the sample has acclimatized to the correct temperature. The density of
+the sample is calculated from this value using cell constants (previously determined using
+calibration fluids with known densities).61
+5.3.3
+
+Freezing point, IP 529 (ASTM D7153e1)
+
+The change in fluidity of a sample consisting of liquid hydrocarbons of the middle to heavy
+distillate range can be determined by multiple methods. These include for example the cloud
+point (i.e. when the first paraffins in the sample crystallize on a visually observable scale), the
+
+40
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+pour point (i.e. when the sample becomes stagnant in nature instead of fluid), and the
+freezing point (i.e. when the last of the crystallized paraffins are liquified). The freezing point
+of the samples was chosen to be used in this work since even the slightest amount of
+crystallized paraffins could skew the delicate viscosity results, and none of these would be
+present above the temperature reported as the freezing point of the sample. The freezing
+point of the samples was determined in this work according to the standard procedure IP
+529: Determination of the freezing point of aviation fuels – Automatic laser method using an
+ISL FZP 5G2s freezing point analyser.62
+The sample is cooled down at a rate of 10 °C / min ± 5 °C while simultaneously being
+irradiated by a laser light. Two detectors within the instrument track the formation of
+paraffinic crystals and the opacity of the sample. The cooling of the sample is discontinued
+and heating of the sample at a constant temperature is initiated once both paraffin crystals
+and opacity has been detected. The freezing point of the sample is registered when all
+paraffin crystals have returned to liquid phase and the sample is clear.62
+5.3.4
+
+Distillation range, ASTM D86
+
+The boiling range characteristics of the samples in sample set S1 were determined according
+to the “ASTM D86 Standard Test Method for Distillation of Petroleum Products and Liquid
+Fuels at Atmospheric Pressure”. The test method comprises the atmospheric distillation of a
+sample of petroleum product to determine the boiling range of the sample. The distillation
+is performed in a laboratory batch distillation unit which can determine the entire boiling
+range quantitatively. In other words, the entire distillation range is recorded in relation to
+the volumetric ratio of product that has been recovered at each temperature (e.g. the
+temperature at which, for example, 50 volumetric percent of a sample has been recovered).63
+
+41
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+6
+
+RESULTS AND DISCUSSION
+
+The empirical correlations and mixing rules determined to be the most promising for our
+efforts in Section 4, were subjected to rigorous testing. The results are discussed in this
+section of the thesis. Results are presented in the form of adjusted R2 values due to the
+impracticality of a detailed analysis of the substantial amount of experimental data
+generated in the present work. The detailed experimental results have been compiled in a
+separate report.64
+
+6.1
+
+General results
+
+The results for the viscosity determinations of the neat components of sample sets BS1, BS2,
+BS3, BS4 and TQ1 (BS1N, BS2N, TQ1N1 etc.) as well as selected mixtures from all sample sets
+(BS1M, BS2M, TQ1M1, TQ1M2 etc.) are presented in Figure 10. Selected components have
+been used in multiple sample sets and are therefore denoted by two sample set codes (e.g.
+BS1 + BS2).
+
+Figure 10: General results of viscosity determinations.
+
+A surprising agreement between the temperature profiles of the neat components as well as
+the mixtures studied in this work was observed. It was speculated based on these results that
+the prediction of all sample sets would therefore be possible with relatively satisfactory
+accuracy.
+
+42
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+6.1.1
+
+R2 adjusted
+
+The coefficient of determination (R2) is a quantity used for assessing the accuracy of a
+mathematical model (predictive description of experimental data). It relates the variance in
+the data which is explained by the mathematical model and that which is explained by simply
+assuming an average of the experimental points.65 The R2 of a model (or correlation) may be
+calculated using equation (40).
+𝑅2 = 1 − (
+
+𝑆𝑆𝑟𝑒𝑠
+𝑆𝑆𝑡𝑜𝑡
+
+)=1−
+
+∑𝑁𝑒𝑥𝑝 (𝜂
+̂𝑒𝑥𝑝 −𝜂𝑒𝑠𝑡 )
+
+2
+
+∑𝑁𝑒𝑥𝑝 (𝜂
+̂𝑒𝑥𝑝 −𝜂
+̅𝑒𝑥𝑝 )
+
+(40)
+
+2
+
+where SSres is the sum of squared residuals of the model, SStot is the sum of total squared
+residuals, 𝜂̂ 𝑒𝑥𝑝 represents the experimental data, 𝜂𝑒𝑠𝑡 represents the estimated data, 𝜂̅ 𝑒𝑥𝑝
+is the average of all experimental data and 𝑁𝑒𝑥𝑝 is the number of experimental data points .
+It is a consequence from (40) that, very accurate models have R2 values close to 1. In contrast,
+poorly accurate ones may have very low and even negative values of R2. However,
+assessment of model accuracy using R2 should be done with caution as this parameter can
+be artificially improved by adding sufficient terms (parameters to a model). The adjusted R2,
+which considers the amount of terms in a model, should preferably be used instead.65 All R2
+adjusted results presented in this work were calculated according to equation (41).
+(𝑁𝑒𝑥𝑝 −1)
+
+𝑅2 𝑎𝑑𝑗𝑢𝑠𝑡𝑒𝑑 = 1 − ((1 − 𝑅2 ) ∙ (𝑁
+
+𝑒𝑥𝑝 −𝑁𝑝 −1)
+
+)
+
+(41)
+
+where Nexp is the number of experimental data points and Np is the number of terms in the
+model. The adjusted R2 results are presented in the form of 1 - adjusted R2 due to high
+accuracy of the correlations and mixing rules. The logic regarding the accuracy of a model for
+1 – adjusted R2 is the contrary compared to the adjusted R2. In other words, very accurate
+models have a 1 – adjusted R2 close to 0 and poorly accurate ones may have very high or
+even negative values of 1 – adjusted R2.
+6.1.2
+
+Weighted average and 50 % boiling point
+
+The volume specific boiling points of a sample (i.e. at which temperature a certain volume of
+sample has been distilled) may be determined by the method described in ASTM D86 (see
+Section 5.3.4). These results will give the Volume Average Boiling Point when calculations are
+performed according to equation (42).66
+
+43
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+𝑉𝐴𝐵𝑃 = 0.2 ∙ (𝑇10% + 𝑇30% + 𝑇50% + 𝑇70% + 𝑇90% )
+
+(42)
+
+The temperatures at which certain weight percentages of a sample have been distilled are
+provided by the ASTM D2887 method. These results will provide the Weight Average Boiling
+Point (WABP) when used in equation (41).66
+𝑊𝐴𝐵𝑃 = 0.2 ∙ (𝑇10% + 𝑇30% + 𝑇50% + 𝑇70% + 𝑇90% )
+
+(43)
+
+Both the VABP and the WABP can technically be used as input data in correlations where the
+Weighted Average Boiling Point is required as input (see Section 4.1.3 and Section 4.1.4).
+The 50 % boiling point can naturally be of two types as well. It can either be the 50 % mass
+boiling point (50 % MBP, determined by ASTM D2887) or the 50 % volume boiling point (50 %
+VBP, determined by ASTM D86). It was decided, based on early testing, that only the volume
+specific boiling points would be used to assess correlations where boiling point data was
+needed (the resulting accuracy of the model was found to be better).
+
+6.2
+
+Empirical correlations
+
+The empirical correlations were investigated by testing the predictive accuracy of the
+methods based on experimental data obtained exclusively for this work. Two of the empirical
+correlations, the Walther correlation and the Aboul-Seoud and Moharam correlation, could
+be assessed using sample sets BS1, BS2, BS3, BS4 and TQ1 (i.e. binary, tertiary, and
+quaternary mixtures). The remaining two correlations of interest (the Kotzakoulakis version
+of the Mehrotra correlation and the Moharam correlation), were assessed using sample set
+S1. A list of the adjusted R2 results of the correlations is provided in Table 12.
+Table 12: Average adjusted R2 of the investigated empirical correlations.
+Average adjusted R2
+
+Average adjusted R2
+
+(original parameters)
+
+(regressed parameters)
+
+Walther*
+
+0.996331
+
+0.998997
+
+Aboul-Seoud and Moharam
+
+0.969477
+
+0.999041
+
+Kotzakoulakis version of Mehrotra correlation
+
+-0.132616
+
+0.998192
+
+Kotzakoulakis version of Moharam correlation
+
+-5.705039
+
+0.997511
+
+Empirical correlation
+
+*No regression performed (see Section 6.2.1)
+
+44
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+An average of all sample set results is provided for correlations where multiple sample sets
+have been assessed (the average of multiple adjusted R2 results has no statistical meaning,
+the results in Table 12 are therefore merely suggestive).
+6.2.1
+
+Walther correlation
+
+Primary investigations of the Walther correlation were focused on utilizing the traditional
+form of the equation (i.e. equations (3), (5), (6), and (7)). It was found at a very early stage
+that the parameters b1 and b2 could be calculated in two different ways. One was the
+traditional way described by equations (5) and (6), whereas the other was the method
+described in ASTM D341. The method described in the standard is meant to be used for
+situations where the kinematic viscosity to be predicted falls under 2.0 mm 2/s (cSt).45 This
+was a common occurrence in the dataset and both approaches were therefore investigated.
+The difference in adjusted R2 for the entire BS1, for example, was found to be approximately
+1 ∙ 10-9 (cold inputs were used, see below for more information). The method reported in the
+standard was, however, used in all subsequent calculations (precautionary action).
+Another aspect of the Walther correlation is that the input temperatures can be varied. This
+was tested on all sample sets, where applicable (due to temperature (fluidity) constraints).
+The input viscosities used for comparing the calculations were taken at +20 °C and 0 °C in one
+case, and -20 °C and -40 °C in the other. The surprising result was that the accuracy decreased
+when the applied input values were taken from a higher temperature range. This can be
+speculated to result from the temperature dependence of liquid viscosities where the slope
+of the curve grows in a non-linear fashion when temperature decreases, thus increasing the
+uncertainty of the prediction toward the colder temperatures (see Figure 10). Using the
+colder temperature viscosity data as input can be speculated to have decreased the
+inaccuracy at the more critical temperature range with regards to viscosity prediction. A
+visual interpretation of the problem is given in Table 13.
+
+45
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Table 13: Visual interpretation of how the choice of input temperature affects the uncertainty of prediction.
+Warm inputs (grey)
+
+Cold inputs (grey)
+
+Temperature
+
+Sample viscosity
+
+Temperature
+
+Sample viscosity
+
+40 °C
+
+x
+
+40 °C
+
+x
+
+30 °C
+
+x
+
+30 °C
+
+x
+
+20 °C
+
+x
+
+20 °C
+
+x
+
+10 °C
+
+x
+
+10 °C
+
+x
+
+0 °C
+
+x
+
+0 °C
+
+x
+
+-10 °C
+
+x
+
+-10 °C
+
+x
+
+-20 °C
+
+x
+
+-20 °C
+
+x
+
+-30 °C
+
+x
+
+-30 °C
+
+x
+
+-40 °C
+
+x
+
+-40 °C
+
+x
+
+Expected accuracy of prediction due to increasing slope of viscosity-temperature curve:
+Excellent:
+
+Good:
+
+Improved accuracy:
+
+Fair:
+
+Poor:
+
+Input (no inaccuracy):
+
+The uncertainty naturally decreases around the chosen inputs (notice the striped cells above,
+between, and below the chosen input values). Use of the warm inputs only affects the yellow
+and orange rows positively, whereas the cold inputs affect all the red and orange rows.
+Let’s, for example, assume that we know the viscosity of a sample at +20 °C and 0 °C. This
+will allow us to predict the viscosity of a sample at +30, +10, and -10 °C with increased
+accuracy, whereas the prediction accuracy of the +40, -20, -30, and -40 °C points are
+unaltered. When adding up the residuals of the results (estimated value – experimental
+value), the sum will simply be larger than if we would know the viscosity at -20 °C and -40 °C.
+The lower sum of residuals for the scenario where the colder values are known, is caused by
+the fact that the worst inaccuracies of the dataset (right half of Table 13 fair and poor cells)
+are improved by the input values and surrounding effect (striped cells). The +40, +30, +20,
++10, and 0 °C accuracy is naturally good to fair, which leads to a smaller sum of residuals.
+
+46
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Adjusted R2 values for all sample sets studied are presented in Figure 11. The results have
+been separated into results for both cold and warm inputs.
+
+Figure 11: 1 - Adjusted R2 results of the Walther correlation.
+
+It was only possible to use the warmer inputs for BS4. The lack of cold data partially explains
+the significantly lower 1 – adjusted R2 for BS4. The prediction of TQ1 data with warm input
+values resulted, unsurprisingly, in the highest 1 – adjusted R2 result of all sample sets. The 1
+– adjusted R2 for TQ1 was approximately 0.012058 when warm inputs were used. Switching
+to cold inputs surprisingly resulted in the largest 1 – adjusted R2 of the Walther correlation
+results (1 – R2 adj. ≈ 0.000012). This will be the lowest 1 – adjusted R2 result reported in this
+thesis and is a strong indication of the flexibility of the Walther correlation. The use of cold
+input values was therefore concluded to be the best approach for lowering the local
+prediction uncertainty of the cold region. The difference in prediction accuracy when going
+from warm inputs (Figure 12) to cold inputs (Figure 13) is presented in the form of parity
+plots below.b
+
+b
+
+The diagonal reference line is created by the equation y = x. This line represents the ideal relationship
+between experimental and estimated value.
+
+47
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+Figure 12: Parity plot of BS1 Walther correlation results using +20 and 0 °C data as inputs.
+
+The inaccuracy of the results in the colder end of the plot (right half) in comparison with the
+warm result (left half) can clearly be seen from this figure.
+
+Figure 13: Parity plot of BS1 Walther correlation results using -20 and -40 °C data as inputs.
+
+The general accuracy of the results is clearly greatly improved when cold input values are
+used. All the stray data points have been adjusted and most of the data points overlap the
+reference line. The spread of the results in the colder half of the plot has also been corrected.
+
+48
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Additionally, a general trend was observed where the R2 adjusted of the individual sample
+sets would increase when the input range was broadened (e.g. +20 °C and -40 °C viscosity
+values were used as inputs).
+The original correlation gave some promising results as can be seen in Figure 11, Figure 12,
+and Figure 13 above. Previously reported results of the NFGW equation (see Table 8)
+attracted favorable attention and was therefore investigated despite the excellent results
+already obtained by using the first regression analysis. Unfortunately, the 1 – adjusted R2 of
+the BS1 results had a value of 0.002807 when the NFGW approach was tested with cold
+inputs (1 – adjusted R2 for BS1 using the original approach and cold inputs ≈ 0.000073). It
+could therefore be concluded that the NFGW approach is an unnecessarily complicated
+method for lighter hydrocarbon liquids than its original design.
+A more straightforward approach of estimating the fluid specific C value was considered in
+the present work. The fluid specific value of the C parameter was derived by regression using
+the Solver function in ©Microsoft Excel. A comparison of the original parameter approach
+versus the regressed parameter approach showed that the Walther correlation is extremely
+well optimized in its native state. The adjusted R2 of the prediction was found to decrease or
+increase by a maximum of 1 ∙ 10-5 only. It could therefore be concluded that the regression
+of the C parameter was unnecessary for the investigated samples.
+6.2.2
+
+Aboul-Seoud and Moharam correlation
+
+The Aboul-Seoud and Moharam correlation was evaluated using the same sample sets as the
+Walther correlation (BS1, BS2, BS3, BS4, and TQ1). Even the additional sample set S1 could
+be utilized in this case. The amount of input values required for the A-S & M correlation is
+half of what is required for the Walther correlation (one vs. two viscosity values for each
+component, see Table 8). The difference in 1 – adjusted R2 between the two methods was
+only approximately 0.04 for BS1 when the original parameters from the literature were used.
+The 1 – adjusted R2 for all sample sets are provided in Figure 14.
+
+49
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+Figure 14: 1 - Adjusted R2 results for the Aboul-Seoud and Moharam correlation.
+
+The 1 – adjusted R2 for the binary sample sets decrease when going from BS1 toward BS4.
+This can be explained by the stepped decrease of the amount of data points to be predicted
+in each sample set. TQ1 presented again, unsurprisingly, the highest 1 – adjusted R2 of all
+sample sets studied. The size of the error, however, is very small when considering the
+content of the sample set. The excellent results for TQ1 suggests that this correlation may be
+able to reliably predict the viscosity of complex mixtures (i.e. is flexible regarding input
+variability).
+The regression of the parameters using the Solver function in ©Microsoft Excel was tested
+for the A-S & M correlation as well. The parameters were regressed for each sample set
+separately. The results of the assessment are depicted by the red bars in Figure 14. A
+significant increase in the prediction accuracy can be achieved by regressing the parameters.
+The A-S & M correlation is nearly as accurate as the Walther correlation in the prediction of
+sample sets BS1, BS2, BS3, BS4, and TQ1, when the parameters are regressed for each set
+separately. The prediction of the viscosities of sample set S1 provided satisfactory results as
+well. Substantially less accurate prediction results are afforded when the parameters are
+regressed for all sample sets collectively. The substantial difference between regressed and
+original parameters is shown, as an example, for sample set BS1 in Figure 15 and Figure 16.
+
+50
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+Figure 15: Aboul-Seoud and Moharam correlation results using original parameters.
+
+The spread of the data points is substantial in the right half of the parity plot. This displays
+again the uncertainty of viscosity prediction in cold temperatures.
+
+Figure 16: Aboul-Seoud and Moharam correlation results using regressed parameters.
+
+The results are significantly improved when regressed parameters are used instead.
+Surprising similarity between the parity plot above and the Walther correlation results
+
+51
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+(Figure 12 and Figure 13) can be observed. It can therefore be concluded that the AboulSeoud and Moharam correlation is able to predict the viscosity of middle to heavy distillates
+if the parameters are regressed for a test data set.
+6.2.3
+
+Mehrotra correlation
+
+The original Mehrotra correlation as well as the Kotzakoulakis version of the Mehrotra
+correlation were investigated using the sample set S1. The original correlation requires the
+weighted average boiling point to be used as input whereas the Kotzakoulakis version accepts
+the 50 % mass boiling point as input (see Section 4.1.3). Exact information was not found in
+the literature regarding the type of average boiling point to be used as input in the correlation.
+It was however decided, as previously mentioned, that only the volume average boiling
+points would be used as inputs. The Kotzakoulakis version of the Mehrotra correlation
+features an increase in accuracy (see Table 10), decrease in amount of variables, and
+simplification of required inputs. Excellent results were observed when the Kotzakoulakis
+version was tested (see Section 6.2.3.1). The performance of the original Mehrotra
+correlation and the A-S & M version were therefore not evaluated in this work.
+6.2.3.1
+
+Kotzakoulakis version of the Mehrotra correlation
+
+Kotzakoulakis et al. explicitly report the use of the 50 % mass boiling point as input in their
+version of the correlation.37 Only the 50 % volume boiling points (50 % VBP) was, however,
+investigated in the present work. The sample set S1 was used to evaluate this version of the
+Mehrotra correlation. Regression of the parameters of the correlation using the Solver
+function in ©Microsoft Excel was performed in this case as well.
+The original parameters of the correlation provide extremely high 1 – adjusted R2 results (1
+– adjusted R2 ≈ 1.13262), indicating that the original parameters in fact are optimized for
+crude oils or other heavier hydrocarbon liquids. The results for S1, using the original
+parameters from the article, are presented in Figure 17.
+
+52
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+Figure 17: Results for the Kotzakoulakis version of the Mehrotra correlation using original parameters.
+
+It is clear from the Figure 17 that the results are far from ideal. The adjusted R2 result also
+indicates that even the average of the viscosity results in S1 provide a better fit than the
+model (see Section 6.1.1 for definition of R2 adjusted). Prediction accuracy can be improved
+substantially by regressing the correlation parameters. The results for S1, using regressed
+parameters, are presented in Figure 18.
+
+Figure 18: Results for the Kotzakoulakis version of the Mehrotra correlation using regressed parameters.
+
+53
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+A substantial difference between the parity plots can be observed when the parameters are
+regressed. A significant increase in the 1 – adjusted R2 can also be observed (1 – adjusted R2
+of regressed correlation ≈ 0.001807). An additional observation can be made from the results.
+This is the fact that the 50 % VBP can be used as input instead of the 50 % MBP without issues.
+Overall, the Kotzakoulakis version of the Mehrotra correlation can be considered as a viable
+option for viscosity prediction of middle to heavy distillates. The correlation should, however,
+be considered only in cases where no viscosity data is available.
+6.2.4
+
+Moharam correlation
+
+The original Moharam correlation (equation (21)) is said to describe the viscosity of a sample
+between 50 and 550 °C. The original version of the correlation was therefore not of interest
+regarding the efforts of this work (temperature range studied in this thesis= +40 to -40 °C).
+The version developed by A-S & M was excluded due to the same reason as the A-S & M
+version of the Mehrotra correlation was excluded (see Section 6.2.3). The Kotzakoulakis
+version of the Moharam correlation was, however, of interest and is therefore discussed in
+this section.
+6.2.4.1
+
+Kotzakoulakis version of the Moharam correlation.
+
+The Kotzakoulakis version of the Moharam correlation has been reported to result in lower
+deviations than the original Moharam correlation (see Table 10). This version requires the
+50 % mass boiling point and the specific gravity at 15 °C to be used as inputs. The 50 % VBP
+was used in this work due to the promising results obtained for the Kotzakoulakis version of
+the Mehrotra correlation (see Section 6.2.3.1). The reference density for water at 15 °C,
+needed for the calculation of specific gravity, was set to 999.099 kg/m3 as instructed in the
+original article.37 Sample set S1 was used in the investigations due to the input constraints.
+Regression of the parameters of the correlation was performed using the Solver function in
+©Microsoft Excel in this case as well. The results for S1, using original parameters reported
+in the literature, are presented in Figure 19.
+
+54
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+Figure 19: Results for the Kotzakoulakis version of the Moharam correlation using original parameters.
+
+The difference between the Kotzakoulakis version of the Mehrotra and Moharam
+correlations is essentially only the addition of the specific gravity at 15 °C and a single
+parameter. The initial results portray a situation where the accuracy would decrease when
+an additional experimental input is provided. This, however, goes against the trend observed
+thus far. Regression of the correlation parameters was therefore performed. The results are
+presented in Figure 20.
+
+Figure 20: Results for the Kotzakoulakis version of the Moharam correlation using regressed parameters.
+
+55
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Remarkable improvement of the prediction accuracy and therefore 1 – adjusted R2 (1 –
+adjusted R2 for regressed parameters ≈ 0.002489) is observed when comparing Figure 19 and
+Figure 20. The 1 – adjusted R2 is, in this case, slightly higher for the Kotzakoulakis version of
+the Moharam correlation when compared to the Kotzakoulakis version of the Mehrotra
+correlation. The accuracy is, however, extremely similar in both cases and the Moharam
+correlation should, therefore, be considered if density data for the samples is available. A
+possible explanation for this is that two experimental points are relied upon in the Moharam
+correlation instead of only one in the Mehrotra correlation (Walther correlation vs. A-S & M
+correlation for example). This can be speculated to increase the probability of highly accurate
+predictions, as for example, in cases where significant error in the distillation point
+measurement has occurred. Furthermore, the use of the 50 % VBP as input was not found to
+cause issues in this case either.
+6.2.5
+
+Puttagunta correlation
+
+The Puttagunta correlation was not investigated in this work because it is essentially the
+Walther equation expressed for the specific temperature of 37.78 °C. 42
+
+6.3
+
+Mixing rules
+
+The mixing rules discussed in Section 4.2 were evaluated using sample sets BS1, BS2, BS3,
+and BS4. The Chirinos mixing rule and the Refutas index method are iterations of the Walther
+mixing rule and the Chevron mixing rule, respectively. The Chirinos and Chevron rules are,
+however, included for comparative purposes. The Wright blending method and the Kendall
+and Monroe mixing rule are evaluated in this section as well due to their widespread use in
+the industry. A list of the average adjusted R2 results of the mixing rules is provided in Table
+14 (results in Table 14 are only suggestive).
+Table 14: Average adjusted R2 of the investigated mixing rules.
+Average adjusted R2
+
+Average adjusted R2
+
+(original parameters)
+
+(regressed parameters)
+
+Wright blending method
+
+0.999354
+
+-
+
+Kendall and Monroe correlation
+
+0.861519
+
+-
+
+Refutas index method
+
+0.999381
+
+-
+
+Chevron mixing rule
+
+0.998211
+
+-
+
+Walther mixing rule
+
+0.999586
+
+0.999894
+
+Chirinos mixing rule
+
+0.998968
+
+-
+
+Mixing rule
+
+56
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+The results for all sample sets and mixing rules are presented in the form of 1 – adjusted R2
+values in Figure 21.
+
+Figure 21: 1 - Adjusted R2 for all mixing rules.
+
+It is clearly seen from Figure 21 that the Kendall and Monroe mixing rule is the least accurate
+of all mixing rules. The Kendall and Monroe mixing rule should be used only for estimating
+viscosities of blends of components similar in nature (see Section 4.2.2, the inaccuracy of the
+results was expected). The Kendall and Monroe mixing rule was therefore excluded from all
+further investigations. An illustration of the 1 – adjusted R2 results excluding the Kendall and
+Monroe results is presented in Figure 22.
+
+57
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+Figure 22: 1 - Adjusted R2 for all mixing rules excluding the Kendall and Monroe results.
+
+A considerably clearer overview of the results may be depicted when the Kendall and Monroe
+mixing rule is removed from Figure 21. The results displayed in Figure 22 indicate that all of
+the remaining mixing rules are extremely accurate. The Chevron mixing rule and the Chirinos
+mixing rule, however, can be ruled out when compared to their respective analogues. The
+accuracy of the Wright blending method is unexpectedly high when considering the amount
+of inputs required for each of the mixing rules (see Table 9). The C parameter of the Walther
+mixing rule should be optimized for each individual situation in the same manner as the C
+parameter in the Walther correlation (see Section 4.2.5). The C parameter was set to a
+constant value of 0.7 in the initial tests (for which the results are presented in Figure 22). The
+effect of altering the C parameter was investigated in detail due to the promising results
+already obtained with the static C parameter. The C parameter of the Walther mixing rule
+was regressed using the Solver function in ©Microsoft Excel. The 1 – adjusted R2 results for
+the regressed Walther correlation are presented in Figure 23 (other results are unaltered and
+presented for comparative purposes).
+
+58
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+Figure 23: 1 - Adjusted R2 for all mixing rules, Walther mixing rule regressed.
+
+An example of the improved Walther mixing rule accuracy when going from the static C
+parameter to the regressed C parameter is presented for BS3 in Figure 24 and Figure 25,
+respectively.
+
+Figure 24: Parity plot of BS3 results for Walther mixing rule with C = 0.7.
+
+59
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+The Walther mixing rule produces excellent results when a static value of 0.7 is used for the
+C parameter as can be seen from the parity plot above. The influence on the relatively high
+1 – adjusted R2 for the BS3 sample set is caused by the inaccuracy of predicting the colder
+results (right half of Figure 24). This can be corrected by regression, however, at a cost in the
+accuracy of the warm results (left half of Figure 25).
+
+Figure 25: Parity plot of Walther mixing rule results using regressed parameters.
+
+The parameter of the Walther mixing rule has been regressed in the results displayed in
+Figure 25. The colder results (right half of parity plot) have improved by the regression. This
+has however come at the expense of the accuracy of the warmer results (left half of plot) as
+they became slightly overestimated. Regression of the parameter in the Walther mixing rule
+should therefore be considered carefully and for each situation separately.
+The accuracy of the Walther mixing rule is, nevertheless, excellent and it was therefore
+concluded that the it is the best mixing rule, when the viscosity for both mixture components
+are known at the desired temperature (i.e. the temperature of interest of the resulting
+mixture). The Wright blending method produced impressive results with 75 % less input data
+than the rest of the mixing rules and should therefore be considered in cases where the
+viscosity of both components is not known at the temperature of interest (the Wright
+blending method is capable of predicting entire mixture datasets with only four inputs, 16
+inputs are required for all other cases presented in this section).
+
+60
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+7
+
+CONCLUSION
+
+A total of eight empirical correlations and six mixing rules were evaluated in this thesis. Four
+of the empirical correlations and all the mixing rules were investigated in detail using
+experimental data.
+Effective methods for predicting the viscosity of a wide assortment of liquid hydrocarbons,
+using multiple types of input data, were identified. The Walther correlation proved to be an
+extremely effective method for predicting viscosity when two viscosity data points are known
+for a sample. It was also found that the input viscosities used in the Walther correlation for
+calculating the viscosity of a sample, should be determined at as distant temperatures as
+possible to improve the overall accuracy of the results. Further investigations should,
+however, be conducted to validate this claim.
+The Aboul-Seoud and Moharam correlation proved to be effective in predicting the viscosity
+of liquid hydrocarbon mixtures using only one viscosity data point of a sample. The effect of
+varying the temperature at which this measurement is taken was not investigated. It can
+however be speculated that a colder temperature would be more beneficial regarding
+prediction accuracy for the temperature range studied in this thesis. The correlations
+requiring distillation data as input were initially found to be extremely inaccurate for the
+investigated samples. Situation specific regression of the correlation parameters was found
+to result in substantial improvements for all correlations, besides the Walther correlation.
+The Kotzakoulakis versions of the Mehrotra and Moharam correlations, which were initially
+found to be inaccurate for the samples tested in this thesis, were later found to be as accurate
+as the Walther correlation when the parameters were regressed.
+The restriction of viscosity prediction was found to be the availability of input data and not
+the accuracy of the correlation as previously anticipated. The four correlations studied were
+found to provide incredibly accurate results. It can be concluded that the viscosity of
+hydrocarbon liquids of the middle to heavy distillate range was reliably explained based on a
+few selected experimental points. A list of required inputs, with increasing accuracy level, is
+provided below:
+
+61
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+•
+
+50 % volume boiling point and density at 15 °C
+
+•
+
+50 % volume boiling point
+
+•
+
+Viscosity at two separate temperatures (preferably as far apart as possible)
+
+•
+
+Viscosity at one temperature
+
+Further work on empirical correlations should concentrate on the development of the
+Kotzakoulakis version of the Moharam correlation. The viscosity data or the 50 % volume
+distillation point of two samples may be the same and would therefore result in the same
+prediction results. Including the specific gravity into the calculations may be beneficial for
+the prediction accuracy in situations of the aforementioned type (all other correlations utilize
+only one type of physicochemical data as input).
+It was determined based on the investigations performed in this thesis that the most
+promising mixing rule for middle to heavy distillates is the Walther mixing rule. It is highly
+accurate in its native form and does benefit substantially from regression when it comes to
+complex blends. The Walther mixing rule requires substantial amounts of input data if the
+viscosity of a blend is to be predicted at multiple temperatures (due to the constant
+temperature nature). This is the situation for all mixing rules studied in this thesis, except for
+the Wright blending method. The Wright blending method is close to being as accurate as
+the Walther mixing rule without regression and can therefore be of great use when limited
+viscosity data of the blending components is known. Relatively high inaccuracy may, however,
+be expected when the viscosity of complex mixtures is estimated using the Wright blending
+method. The method should therefore be used with caution in these cases. Further work
+regarding the mixing rules should therefore be aimed toward the optimization of the Wright
+blending method by regression.
+The general aim of the thesis was, in other words, achieved. Multiple precise methods for
+viscosity prediction of neat components as well as mixtures thereof were identified. A few of
+the approaches, however, require additional investigations to be optimized.
+
+62
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+8
+8.1
+
+SUMMARY IN SWEDISH – SVENSK SAMMANFATTNING
+Utvärdering av kalkylmetoder avsedda för estimering av kolvätevätskors
+viskositet
+
+Traditionella oljeraffinaderier är massiva anläggningar där råolja separeras och omformas till
+diverse produkter. Flera processteg krävs för att förädla de olika fraktionerna till användbara
+produkter och egenskaperna hos slutprodukterna kan således variera kraftigt.
+Råvaruutbudet har dessutom utvidgats betydligt under de senaste årtionden tack vare den
+växande klimatmedvetenheten. De flesta produkterna som skapas i ett raffinaderi är därmed
+specifikationsprodukter, dvs. diverse standardiseringsorgan ställer krav på olika
+nyckelegenskaper hos produkterna.
+Viskositet är ett mått på den interna friktionen av en fluid (dvs. vätska, gas eller ånga) och
+beskriver “tjockheten” av ifrågavarande fluid, till exempel är vatten “tunnare” än honung
+som är betydligt “tjockare”. Viskositeten för vatten är därmed lägre än viskositeten för
+honung. Viskositeten kan uttryckas endera som dynamisk (absolut) viskositet eller kinematisk
+viskositet. Den kinematiska viskositeten används i de flesta metoderna som diskuteras i
+denna avhandling. Viskositet innebär därmed kinematisk viskositet i resten av denna svenska
+sammanfattning ifall inget annat meddelas.
+Viskositet är en av de viktigaste egenskaperna hos produkter som består av kolväten i
+vätskefas. En för hög viskositet hos till exempel bränslen kan förorsaka problem med
+bränsletillförseln samt höja utsläppen eftersom droppstorleken vid insprutning i
+förbränningskammaren ökar (sämre förångning leder till ofullständig förbränning). En för låg
+bränsleviskositet kan däremot orsaka indirekta problem via den resulterande låga
+smörjförmågan hos bränslet. Resultatet är oftast total funktionsoduglighet av
+bränsletillförselsystemets väsentliga delar. Viskositet är även en av de viktigaste
+egenskaperna som ska tas i beaktade då kolvätevätskor transporteras i till exempel
+rörledningar. En pålitlig metod för att generellt kunna approximera viskositeten för olika
+kolvätevätskor skulle därför vara behövd. Syftet med denna avhandling var att utvärdera
+lämpligheten av välkända empiriska korrelationer för estimeringen av diverse
+kolvätevätskors viskositet. Även så kallade blandningsregler (mixing rules) undersöktes.
+Dessa används för att estimera viskositeten hos en blandning som har skapats eller skall
+skapas genom att blanda en eller flera kolvätevätskor av känd konsistens.
+
+63
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+8.1.1
+
+Estimering av komplexa kolväteblandningars viskositet
+
+Viskositeten hos en fluid uppstår i teorin som en följd av omplaceringen av rörelsemängd
+mellan molekylerna som fluiden består av (intern friktion). Omplaceringen sker i gaser och
+ångor genom kollisioner av glest stationerade molekyler. Omplaceringsmekanismerna hos
+vätskor är däremot mycket mera komplicerade eftersom molekylerna är mycket närmare
+varandra. Denna komplexitet härstammar från att krafterna som är involverade i
+mekanismerna är svårare att beskriva. Som följd av detta försvåras även estimeringen av
+vätskornas viskositet med hjälp av teoretiska mekanistiska modeller (som försöker förklara
+de komplicerade mekanismerna matematiskt). De flesta mekanistiska modellerna tar i
+beaktande både temperatur och tryck vid estimeringen av viskositet. Dagens mekanistiska
+modeller lyckas estimera viskositeten för diverse fluider vid både höga temperaturer och
+höga tryck med relativt låga avvikelser. De mekanistiska modellerna innehåller dock oftast
+orimligt många parametrar som måste härledas genom regression. Regressionen av en stor
+mängd parametrar inför onödig komplexitet i beräkningarna samt ökar risken för förhöjda
+avvikelser i estimeringen. System som är under höga tryck eller temperaturer är dock inte av
+intresse i detta arbete. De flesta processerna inom kemiindustrin sker vid tryck som kan anses
+vara låga eller medelhöga.
+
+Tryckets inverkan på systemet kan därmed försummas i
+
+beräkningarna. Betydligt enklare (fast ändå svåra) empiriska korrelationer, som beskriver
+förhållandet mellan viskositet och andra fysikalisk-kemiska egenskaper hos kolvätevätskor,
+kan användas för att estimera vätskornas viskositet i förhållande till temperatur.
+De flesta empiriska korrelationerna som beskrivs i litteraturen är baserade på ekvationer
+utvecklade av Vogel, Walther eller Andrade. I litteraturen kan en tydlig trend gentemot
+korrelationer som baserar sig på Walther-ekvationen urskiljas. Den genomsnittliga avvikelsen
+för ekvationer av denna sort är nämligen betydligt lägre än tillvägagångsätten som baserar
+sig på tillämpningar av de andra ekvationstyperna. De mest lovande ekvationerna av denna
+typ, utvalda på basen av rekommendationer och i litteraturen uttryckt prestanda, beskrivs i
+detta arbete. Vissa av metoderna nämns som en följd av att de har en stark anknytning till
+standardiserade procedurer i oljeindustrin.
+Walther-korrelationen baserar sig på den generella ekvationen (3). De kännetecknande
+dragen för Walther-korrelationen är dubbellogaritmen i vänstra ledet av ekvationen samt
+den enkla logaritmen i högra ledet.
+log log(𝑣 + 0,7) = 𝑏1 + 𝑏2 ∙ log 𝑇
+
+(3)
+
+64
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+där v är den kinematiska viskositeten (cSt eller mm2/s), T är temperaturen (°K) och b1 samt
+b2 är konstanter (bestäms skilt för varje prov).
+Genom att skriva om ekvation (3) och utnyttja experimentellt fastställda värden för viskositet
+vid två skilda temperaturer kan man bestämma konstanterna b1 och b2 för ett specifikt prov
+enligt följande:
+𝑏1 = log log(𝑣1 + 0,7) +
+𝑏2 =
+
+log log(𝑣2 +0,7)−log log(𝑣1+0,7)
+log 𝑇1 −log 𝑇2
+
+∙ log 𝑇1
+
+(5)
+
+log log(𝑣2+0,7)−log log(𝑣1+0,7)
+
+(6)
+
+log 𝑇1 −log 𝑇2
+𝑏1 −𝑏2 ∙log𝑇3
+
+𝑣3 = 1010
+
+− 0,7
+
+(7)
+
+Den ursprungliga Walther-korrelationen kan således användas för att estimera viskositeten
+för ett prov vid godtycklig temperatur, då provets viskositet vid två temperaturer är känd.
+Flera olika versioner av ekvationen bakom Walther-korrelationen existerar. Versionerna av
+ekvationen kan anses som lösningar för olika situationer där endast begränsad
+viskositetsinformation eller ingen viskositetsdata över huvud taget finns tillgänglig.
+Ekvationerna har utvecklats av diverse forskargrupper under det senaste århundradet. En
+grov lista på korrelationer (ekvationer), behövliga indata och typer av utdata som ges av
+ekvationerna framställs i Tabell 1.
+Tabell 1: Empiriska korrelationer av intresse för detta arbete samt indata och utdata för respektive korrelation.
+Korrelation
+
+Indata
+
+Utdata
+
+Walther
+
+Viskositet vid två temperaturer
+
+Viskositeten vid godtyckligt vald temperatur
+
+Aboul-Seoud och Moharam
+
+Viskositet vid en temperatur
+
+Viskositeten vid godtyckligt vald temperatur
+
+Mehrotra
+
+Vägt medelvärde av kokpunkter
+
+Viskositeten vid godtyckligt vald temperatur
+
+Moharam
+
+Vägt medelvärde av kokpunkter
+
+Viskositeten vid godtyckligt vald temperatur
+
+och densitetstalet
+Puttagunta
+
+Viskositeten av provet, bestämd
+
+Viskositeten vid godtyckligt vald temperatur
+
+vid exakt 100 °F (37,78 °C)
+
+Syftet för alla korrelationer är den samma, det vill säga utöka informationen gällande
+temperaturens inverkan på en vätskas viskositet (se kolumnen för utdata i Tabell 1).
+Kolvätevätskor, som till exempel bränslen, är blandningar av upp till tusentals olika
+föreningar. Varje förening har en unik kokpunkt vilket leder till att kokpunkten för
+
+65
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+kolvätevätskor sprids över en relativt bred temperaturskala. Kokpunkten för kolvätevätskor
+rapporteras således som en skala på basen av mängden prov som har kokat över vid en viss
+temperatur (destillationsdata). Det vägda medelvärdet för denna skala (Tb) beräknas enligt
+ekvation (17).
+𝑣ä𝑔𝑡 𝑚𝑒𝑑𝑒𝑙𝑣ä𝑟𝑑𝑒 𝑇𝑏 = ∑𝑛𝑖=1 ∆𝑥𝑖 ∗ 𝑇𝑏𝑖
+
+(17)
+
+Det vägda medelvärdet för Tb används som indata i Mehrotra-korrelationen och Moharamkorrelationen. Densitetstalet som används som ytterligare indata i Moharam-korrelationen
+kallas även relativ densitet och är ett mått på densiteten av en substans, jämfört med
+densiteten av rent vatten.
+Korrelationerna som vi har diskuterat hittills kan endast användas för att estimera
+viskositeten för en kolvätevätska då tillräckliga data för att tillfredsställa någon av
+korrelationerna finns tillgänglig. Då viskositeten för blandningar av en eller flera
+kolvätevätskor med känd viskositet (viskositetsinformation erhållen genom experimentellt
+arbete eller estimering med empiriska korrelationer) vill estimeras, måste så kallade
+blandningsregler (mixing rules) användas. Blandningsregler är alltså ekvationer som ger
+viskositeten för en blandning av kolvätevätskor på basen av utgångsmaterialens
+viskositetsinformation och diverse parametrar som endera beräknas med hjälp av
+experimentellt data eller bestäms genom regression. Centeno et al. undersökte prestandan
+på 26 olika blandningsregler genom att estimera viskositeten för blandningar av nafta, diesel
+och vakuumgasolja. Endast fyra av dessa ansågs vara funktionsdugliga på basen av
+noggrannheten av estimeringarna. Blandningsreglerna som undersöktes i detta arbete samt
+indata och utdata för respektive regel framgår i Tabell 2. En del av reglerna beskrivs endast
+för att de har en stark anknytning till standardiserade procedurer i oljeindustrin och är därför
+väsentliga, men de ger nödvändigtvis inte de bästa approximationerna.
+
+66
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Tabell 2: Blandningsregler av intresse för detta arbete samt indata och utdata för respektive regel.
+Blandningsregel
+
+Indata
+
+Utdata
+
+Viskositet vid två temperaturer för
+
+Viskositet enligt volymprocent vid godtyckligt
+
+alla komponenter
+
+vald temperatur
+
+Viskositeten för alla komponenter vid
+
+Viskositet enligt volymprocent vid samma
+
+korrelationen
+
+samma temperatur
+
+temperatur som indata
+
+Refutas-index metoden
+
+Viskositeten för alla komponenter vid
+
+Viskositet enligt volymprocent vid samma
+
+samma temperatur
+
+temperatur som indata
+
+Viskositeten för alla komponenter vid
+
+Viskositet enligt volymprocent vid samma
+
+samma temperatur
+
+temperatur som indata
+
+Viskositet vid en temperatur för alla
+
+Viskositet enligt volymprocent vid samma
+
+komponenter
+
+temperatur som indata
+
+Viskositet vid en temperatur för alla
+
+Viskositet enligt volymprocent vid samma
+
+komponenter
+
+temperatur som indata
+
+Wright-blandningsregeln
+
+Kendall
+
+och
+
+Monroe-
+
+Chevron-blandningsregeln
+
+Walther-blandningsregeln
+
+Chirinos-blandningsregeln
+
+8.1.2
+
+Experimentell del
+
+Fem olika binära blandningar (BB1, BB2, BB3 osv.) av olika kolvätevätskor skapades för att
+undersöka prestandan av de olika empiriska korrelationerna och blandningsreglerna.
+Komponenterna som användes i blandningarna bestod av försäljbara och experimentella
+bränslen samt modellföreningar av medel- till tungdestillatsklassen. Blandningar med
+volymförhållandet 0 - 100 % undersöktes (inklusive utgångsmaterial). Viskositeten
+bestämdes mellan +40 och -40 °C med 10 °C intervall vid så många punkter som möjligt
+(beroende på frys- och flampunkt). I vissa fall undersöktes även tertiära och kvaternära
+blandningar. Dessa resultat inkluderades bland de fem olika binära blandningarnas resultat
+vid tillhörande platser. De empiriska korrelationerna som använder kokpunktsdata som
+indata hittades mitt i arbetet och utvärderades således med en skild datamängd som bestod
+av ett brett sortiment singulära kolvätevätskor (singulär datamängd 1, SD1).
+8.1.3
+
+Resultat
+
+Storheten R2 utsäger hur bra en modell beskriver experimentellt data. Modellens
+estimeringsfel jämförs med estimeringsfelet då ingen modell över huvud taget används (felet
+då beräknat medeltal och experimentella data jämförs). Justerat R2 är en storhet som tar i
+beaktande mängden parametrar som modellen innehåller. En modell som beskriver
+experimentella data exakt uppvisar ett justerat R2 på 1,00. Resultaten i denna svenska
+sammanfattning presenteras för det mesta i formen av 1 – justerat R2 eftersom metoderna
+som undersöktes uppvisar mycket höga värden för justerat R2. Logiken bakom 1 – justerat R2
+
+67
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+är motsatt till vanliga justerade R2. Detta betyder att metoden är exaktare desto närmare 0
+resultatet är. En mycket inexakt metod uppvisar höga eller till och med negativa resultat för
+1 – justerat R2.
+Den stora mängden data som krävdes för att framställa dessa resultat har samlats i en separat
+rapport.64
+BB1-BB5 användes för att utvärdera två empiriska korrelationers prestanda (Waltherkorrelationen samt Aboul-Seoud och Moharam-korrelationen). Walther-korrelationen visade
+sig vara mycket noggrann och uppvisade ett mycket lågt 1 – justerat R2 (resultatet för till
+exempel BB1 ≈ 0,00007). Två olika tillvägagångssätt för att bestämma konstanterna b1 och b2
+undersöktes (ekvationerna (5) och (6) samt metoden som framförs i standarden). En
+obetydligt liten positiv inverkan på 1 – justerat R2 observerades (förbättring på 1 ∙ 10-9 för till
+exempel BB1), men metoden ur standarden användes för säkerhets skull ändå. Det framgick
+också från resultaten att det lönar sig att använda viskositetsdata från kallare temperaturer
+som indata i Walther-korrelationen i vårt fall (se Tabell 3) och att noggrannheten i allmänhet
+växer då indatat väljs för två temperaturer som är så långt ifrån varandra som möjligt.
+Walther-korrelationen visade sig vara noggrannare än Aboul-Seoud och Moharam (A-S & M)
+-korrelationen. Detta var förväntat eftersom A-S & M-korrelationen inte avviker betydligt
+från den traditionella Walther-korrelationen och mängden indata i relation till Waltherkorrelationen är hälften mindre. Resultaten är mycket imponerande med tanke på
+minskningen i mängden indata. Resultaten kunde förbättras betydligt genom att bestämma
+BB specifika parametrar för A-S & M-korrelationen genom regression (utfördes med hjälp av
+Solver funktionen i ©Microsoft Excel). Noggrannheten för A-S & M-korrelationen steg
+således till en lika hög nivå som Walther korrelationen. Det justerade R2 för BB1 med
+ursprungliga parametrar samt med regressionsparametrar framförs som ett exempel i Tabell
+3.
+Tabell 3: BB1 resultat för Walther korrelationen och Aboul-Seoud och Moharam korrelationen.
+Justerat R2
+
+Justerat R2
+
+Ursprungliga parametrar
+
+Regressionsparametrar
+
+Walther
+
+0,998461*
+
+0,999926**
+
+Aboul-Seoud och Moharam
+
+0,962174
+
+0,999887
+
+Korrelation
+
+*Varmt indata (+20 °C och 0 °C, ingen regression); **Kallt indata (-20 °C och -40 °C, ingen regression)
+
+68
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+SD1 användes för att utvärdera prestandan av korrelationerna som kräver kokpunktsdata
+som indata. Mehrotra-korrelationen använder endast det vägda medelvärdet av
+kokpunkterna (Tb) för att estimera viskositeten av ett prov. Två olika versioner av Tb kan
+användas i beräkningarna, Tb beräknad på basen av kokpunkter registrerade då en bestämd
+massa har destillerats (WABP, Weight Average Boiling Point) och Tb beräknad på basen av
+kokpunkter som registrerats då en bestämd volym har destillerats (VABP, Volume Average
+Boiling Point). Endast kokpunkten då 50 volymprocent av en blandning har kokat över mättes
+för proven i SD1 eftersom endast Kotzakoulakis version av Mehrotra-korrelationen var av
+intresse för denna avhandling. Kotzakoulakis et al. uttrycker explicit att kokpunkten vid 50
+massaprocent skall användas men 50 volymprocent användes ändå (logiskt sett mera
+noggrann då mätmetoder jämförs). Otroligt höga värden för justerade R2 registrerades då de
+ursprungliga parametrarna användes (se Tabell 4), vilket tyder på att den ursprungliga
+versionen faktiskt är utvecklad för tyngre kolvätevätskor (till exempel råolja). Regression för
+att hitta de optimala parametrarna var det logiska nästa steget (genomfördes också i detta
+fall med hjälp av Solver funktionen i ©Microsoft Excel). En imponerande ökning i
+noggrannheten kunde urskiljas då de nya parametrarna användes. Resultaten framförs i
+Tabell 4.
+Moharam korrelationen utnyttjar både Tb och densitetstalet för att estimera viskositeten av
+provet. Densitetstalet är temperaturberoende och skall därmed bestämmas skiljt för varje
+temperatur. Tillgång till detta data fanns inte vilket resulterade i att endast en modifierad
+version av Moharam korrelationen (Kotzakoulakis version, som använder kokpunkten vid 50
+volymprocent och densitetstalet vid 15 °C, som indata) utvärderades. Denna korrelation
+visade sig också vara mycket inexakt då de ursprungliga parametrarna användes för att
+estimera viskositeten hos våra prov. Resultaten förbättrades betydligt då parametrarna
+optimerades genom regression. Resultaten framförs i Tabell 4.
+Tabell 4: Resultat för Kotzakoulakis version av både Mehrotra och Moharam korrelationen.
+Justerat R2
+
+Justerat R2
+
+Ursprungliga parametrar
+
+Regressionsparametrar
+
+Kotzakoulakis version av Mehrotra
+
+-0,132617
+
+0,998193
+
+Kotzakoulakis version av Moharam
+
+-5,705039
+
+0.997512
+
+Korrelation
+
+Ur Tabell 4 går det tydligt att avläsa att de ursprungliga versionerna av Kotzakoulakis version
+av Moharam- och Mehrotra-korrelationerna inte har utvecklats för kolvätevätskor av den
+
+69
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+typen som undersöktes i detta arbete. Imponerande resultat för båda korrelationerna kunde
+dock erhållas då parametrarna optimerades genom regression. Justerade R2 för Kotzakoulakis
+version av Mehrotra korrelationen är något högre än justerade R2 för Kotzakoulakis version
+av Moharam korrelationen. Detta tyder på att införingen av densitetstalet vid 15 °C i
+beräkningarna har en negativ inverkan på resultatet. Användningen av två fysikalisk-kemiska
+storheter i beräkningarna kan dock anses vara nyttigt för noggrannhetens skull i allmänhet
+(50 vol-% kokpunkten för flera kolvätevätskor kan till exempel vara exakt lika).
+Puttagunta korrelationen undersöktes inte eftersom korrelationen visade sig vara Walther
+korrelationen skriven i en sådan form att indata kunde accepteras endast vid exakt 100 °F.
+Blandningsreglerna undersöktes genom att jämföra 1 – justerat R2 som resulterade då
+blandningsreglerna estimerade alla datapunkter i BB1-BB5 (exklusive indata). Resultaten för
+detta framställs i Figur 1.
+
+Figur 1: 1 - justerat R2 för de bästa blandningsreglerna.
+
+Av blandningsreglerna visade sig Walther-blandningsregeln vara exaktast. I Figur 1 har
+parametrarna i Walther-blandningsregeln optimerats genom regression. Waltherblandningsregeln är exaktast fastän den inte skulle optimeras genom regression.
+Wright-blandningsregeln kan anses vara så gott som lika noggrann med tanke på hur mycket
+mindre indata som krävs (se Tabell 2). Wright-blandningsregeln kan vara mycket nyttig i
+sådana fall där flampunkt eller fryspunkt inhiberar viskositetsbestämningen för en eller båda
+70
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+av komponenterna vid den önskade temperaturen. Wright-blandningsregeln skall dock
+användas med försiktighet i sin nutida form, resultateten kan vara mycket inexakta ifall
+blandningen är komplex (se det höga resultatet för BB3 i Figur 1).
+8.1.4
+
+Konklusioner
+
+Då viskositetsdata vid två temperaturer är tillgängligt för kolvätevätskan av intresse skall
+Walther-korrelationen i sin ursprungliga form definitivt användas. Ifall viskositeten vid endast
+en temperatur är tillgänglig skall Aboul-Seoud och Moharam-korrelationen användas.
+Kotzakoulakis version av Mehrotra- och Moharam-korrelationen är klart och tydligt i sin
+ursprungliga form optimerade för tyngre kolvätevätskor än de som undersöktes i denna
+avhandling. Dessa korrelationer skall således inte användas för estimeringen av medel- eller
+tungdestillat i sin ursprungliga form. Regressionen av parametrarna i Kotzakoulakis version
+av Mehrotra- och Moharam-korrelationen kan förbättra resultatet betydligt. Båda
+versionerna är därmed godtagbara för viskositetsestimering ifall det behövliga data finns
+tillgängligt. Av dessa undersökningar framgår det trots allt att Moharam-korrelationen högst
+antagligen är säkrare än Mehrotra-korrelationen eftersom densitetstalet tas i beaktande.
+Puttagunta-korrelationen är en förenklad version av Walther korrelationen och skall därmed
+undvikas. De bästa och mest universella blandningsreglerna presenterade i litteraturen är
+Walther- och Wright-blandningsreglerna. Walther-blandningsregeln borde dock prioriteras
+ifall tillräckliga data finns tillgängligt. Framtida insatser skall enligt dessa resultat fokusera på
+förståelsen och utvecklingen av främst Moharam-korrelationen. Vidare forskning gällande
+optimeringen av Wright-blandningsregeln genom regression kan även vara nyttigt för
+situationer där indata för Walther-blandningsregeln inte finns tillgängligt. De allmänna
+målsättningarna för denna pro gradu-avhandling uppfylldes.
+
+71
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+
+9
+(1)
+
+REFERENCES
+Murzin, D. Y. Oil Refining. In Chemical Reaction Technology; Walter de Gruyter GmbH:
+Turku, Finland, 2015; pp 116–122.
+
+(2)
+
+Saldana, D. A.; Starck, L.; Mougin, P.; Rousseau, B.; Ferrando, N.; Creton, B. Prediction
+of Density and Viscosity of Biofuel Compounds Using Machine Learning Methods.
+Energy and Fuels 2012, 26, 2416–2426.
+
+(3)
+
+Pires, A. P. P.; Han, Y.; Kramlich, J.; Garcia-Perez, M. Chemical Composition and Fuel
+Properties of Alternative Jet Fuels. BioResources 2018, 13, 2632–2657.
+
+(4)
+
+Aquing, M.; Ciotta, F.; Creton, B.; Féjean, C.; Pina, A.; Dartiguelongue, C.; Trusler, J. P.
+M.; Vignais, R.; Lugo, R.; Ungerer, P.; et al. Composition Analysis and Viscosity
+Prediction of Complex Fuel Mixtures Using a Molecular-Based Approach. Energy and
+Fuels 2012, 26, 2220–2230.
+
+(5)
+
+Viswanath, D. S.; Ghosh, T. K.; Prasad, D. H. L.; Dutt, N. V. K.; Rani, K. Y. Viscosity of
+Liquids; Springer Netherlands: Dordrecht, The Netherlands, 2007; pp 1–432.
+
+(6)
+
+Brush, S. G. Theories of Liquid Viscosity. Chem. Rev. 1962, 62, 513–548.
+
+(7)
+
+Centeno, G.; Sánchez-Reyna, G.; Ancheyta, J.; Muñoz, J. A. D.; Cardona, N. Testing
+Various Mixing Rules for Calculation of Viscosity of Petroleum Blends. Fuel 2011, 90,
+3561–3570.
+
+(8)
+
+Sánchez-Rubio, M.; Chinas-Castillo, F.; Ruiz-Aquino, F.; Lara-Romero, J. A New Focus
+on the Walther Equation for Lubricant Viscosity Determination. Lubr. Sci. 2006, 18,
+95–107.
+
+(9)
+
+Yang, J.; Xin, Z.; He, Q. (Sophia); Corscadden, K.; Niu, H. An Overview on Performance
+Characteristics of Bio-Jet Fuels. Fuel 2019, 237, 916–936.
+
+(10)
+
+Cai, G.; Liu, Z.; Zhang, L.; Zhao, S.; Xu, C. Quantitative Structure-Property Relationship
+Model for Hydrocarbon Liquid Viscosity Prediction. Energy and Fuels 2018, 32, 3290–
+3298.
+
+(11)
+
+ASTM D445-19a, Standard Test Method for Kinematic Viscosity of Transparent and
+Opaque Liquids (and Calculation of Dynamic Viscosity); ASTM International: West
+
+72
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+Conshohocken, PA, 2019.
+(12)
+
+ASTM D7042-19e1, Standard Test Method for Dynamic Viscosity and Density of Liquids
+by Stabinger Viscometer (and the Calculation of Kinematic Viscosity); ASTM
+International: West Conshohocken, PA, 2017.
+
+(13)
+
+Striebich, R. C.; Shafer, L. M.; Adams, R. K.; West, Z. J.; DeWitt, M. J.; Zabarnick, S.
+Hydrocarbon Group-Type Analysis of Petroleum-Derived and Synthetic Fuels Using
+Two-Dimensional Gas Chromatography. Energy and Fuels 2014, 28, 5696–5706.
+
+(14)
+
+ASTM D1655-19a, Standard Specification for Aviation Turbine Fuels; ASTM
+International: West Conshohocken, PA, 2015.
+
+(15)
+
+ASTM D7566-19a, Standard Specification for Aviation Turbine Fuel Containing
+Synthesized Hydrocarbons; ASTM International: West Conshohocken, PA, 2019.
+
+(16)
+
+Defence Standard 91-91, Turbine Fuel , Kerosine Type , Jet A-1 NATO Code : F-35;
+Ministry of Defence, 2011.
+
+(17)
+
+Defence Standard 91-87, Turbine Fuel , Aviation Kerosine Type , Containing Fuel
+System Icing Inhibitor NATO Code : F-34; Ministry of Defence, 2002.
+
+(18)
+
+MIL-DTL-83133E Turbine Fuel, Aviation, Kerosene Type, JP-8 (Nato F-34), Nato F-35,
+and JP-8 + 100 (Nato F-37); United States Air Force, 2008.
+
+(19)
+
+Warren, K. A. World Jet Fuel Specifications; ExxonMobil Aviation, 2008.
+
+(20)
+
+EN 590, Automotive Fuels. Diesel. Requirements and Test Methods; European
+Committee for Standardization, CEN: Brussels, Belgium, 2013.
+
+(21)
+
+EN 15940, Automotive Fuels. Paraffinic Diesel Fuel from Synthesis or Hydrotreatment.
+Requirements and Test Methods; European Committee for Standardization, CEN:
+Brussels, Belgium, 2016.
+
+(22)
+
+ASTM D975-20a, Standard Specification for Diesel Fuel; ASTM International: West
+Conshohocken, PA, 2020.
+
+(23)
+
+CEN/TR 15738:2008, Petroleum Products - Heating Fuels - Need Feasibility and
+Required Deliverables for a Common European Specification; European Committee for
+Standardization, CEN: Brussels, Belgium, 2008.
+
+73
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+(24)
+
+ASTM D396-19a, Standard Specification for Fuel Oils; ASTM International: West
+Conshohocken, PA, 2019.
+
+(25)
+
+ISO 8217:2017, Petroleum Products - Fuels (Class F) - Specification of Marine Fuels;
+International Organisation for Standardization, ISO: Vernier, Geneva, Switzerland,
+2017.
+
+(26)
+
+API 1509 - Annex E, API Base Oil Interchangeability Guidlines for Passanger Car Motor
+Oils and Diesel Engine Oils; American Petroleum Institute: Washington, D.C., 2019.
+
+(27)
+
+ASTM D2270-10(2016), Standard Practice for Calculating Viscosity Index from
+Kinematic Viscosity at 40 °C and 100 °C; ASTM International: West Conshohocken, PA,
+2016.
+
+(28)
+
+ASTM D7945-16, Standard Test Method for Determination of Dynamic Viscosity and
+Derived Kinematic Viscosity of Liquids by Constant Pressure Viscometer; ASTM
+International: West Conshohocken, PA, 2016.
+
+(29)
+
+ASTM D5293-17a, Standard Test Method for Apparent Viscosity of Engine Oils and
+Base Stocks Between -10 °C and -35 °C Using Cold-Cranking Simulator; ASTM
+International: West Conshohocken, PA, 2017.
+
+(30)
+
+Quiñones-Cisneros, S. E.; Zéberg-Mikkelsen, C. K.; Stenby, E. H. The Friction Theory (fTheory) for Viscosity Modeling. Fluid Phase Equilib. 2000, 169, 249–276.
+
+(31)
+
+Quiñones-Cisneros, S. E.; Zéberg-Mikkelsen, C. K.; Stenby, E. H. One Parameter
+Friction Theory Models for Viscosity. Fluid Phase Equilib. 2001, 178, 1–16.
+
+(32)
+
+Quiñones-Cisneros, S. E.; Zéberg-Mikkelsen, C. K.; Stenby, E. H. The Friction Theory for
+Viscosity Modeling: Extension to Crude Oil Systems. Chem. Eng. Sci. 2001, 56, 7007–
+7015.
+
+(33)
+
+Quiñones-Cisneros, S. E.; Zéberg-Mikkelsen, C. K.; Baylaucq, A.; Boned, C. Viscosity
+Modeling and Prediction of Reservoir Fluids: From Natural Gas to Heavy Oils. Int. J.
+Thermophys. 2004, 25, 1353–1366.
+
+(34)
+
+Yarranton, H. W.; Satyro, M. A. Expanded Fluid-Based Viscosity Correlation for
+Hydrocarbons. Ind. Eng. Chem. Res. 2009, 48, 3640–3648.
+
+74
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+(35)
+
+Motahhari, H.; Satyro, M. A.; Yarranton, H. W. Predicting the Viscosity of Asymmetric
+Hydrocarbon Mixtures with the Expanded Fluid Viscosity Correlation. Ind. Eng. Chem.
+Res. 2011, 50, 12831–12843.
+
+(36)
+
+Ramos-Pallares, F.; Schoeggl, F. F.; Taylor, S. D.; Satyro, M. A.; Yarranton, H. W.
+Predicting the Viscosity of Hydrocarbon Mixtures and Diluted Heavy Oils Using the
+Expanded Fluid Model. Energy and Fuels 2016, 30, 3575–3595.
+
+(37)
+
+Kotzakoulakis, K.; George, S. C. A Simple and Flexible Correlation for Predicting the
+Viscosity of Crude Oils. J. Pet. Sci. Eng. 2017, 158, 416–423.
+
+(38)
+
+Vogel, H. The Law of the Relation between the Viscosity of Liquids and the
+Temperature. Phys. Zeitschrift 1921, 22, 645–646.
+
+(39)
+
+Walther, C. Über Die Auswertungen von Viskositätsangaben. Erdöl und Teer 1931, 7,
+382–384.
+
+(40)
+
+Andrade, E. N. da C. XLI. A Theory of the Viscosity of Liquids.—Part I. London,
+Edinburgh, Dublin Philos. Mag. J. Sci. 1934, 17 (112), 497–511.
+
+(41)
+
+Aboul-Seoud, A. L.; Moharam, H. M. A Generalized Viscosity Correlation for Undefined
+Petroleum Fractions. Chem. Eng. J. 1999, 72, 253–256.
+
+(42)
+
+Mehrotra, A. K.; Monnery, W. D.; Svrcek, W. Y. A Review of Practical Calculation
+Methods for the Viscosity of Liquid Hydrocarbons and Their Mixtures. Fluid Phase
+Equilib. 1996, 117, 344–355.
+
+(43)
+
+Moharam, H. M.; Al-Mehaideb, R. A.; Fahim, M. A. New Correlation for Predicting the
+Viscosity of Heavy Petroleum Fractions. Fuel 1995, 74, 1776–1779.
+
+(44)
+
+Puttagunta, V. R.; Miadonye, A.; Singh, B. Viscosity-Temperature Correlation for
+Prediction of Kinematic Viscosity of Conventional Petroleum Liquid. Chem. Eng. Res.
+Des. 1992, 70, 627–631.
+
+(45)
+
+ASTM D341-17, Standard Practice for Viscosity-Temperature Charts for Liquid
+Petroleum Products; ASTM International: West Conshohocken, PA, 2017.
+
+(46)
+
+MacCoull, N. International Critical Tables of Numerical Data, Physics, Chemistry and
+Technology; Washburn, E. W., Ed.; McGraw-Hill Book Co.: New York, 1927.
+
+75
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+(47)
+
+Mehrotra, A. K. A Simple Equation for Predicting the Viscosity of Crude Oil Fractions.
+Chem. Eng. Res. Des. 1995, 73, 87–90.
+
+(48)
+
+Nakayama, Y.; Boucher, R. F. Characteristics of a Fluid. In Introduction to Fluid
+Mechanics; Butterworth-Heinemann: Oxford, 1999; p 8.
+
+(49)
+
+API Tech Data Book 10 http://www.apidatabook.com/ (accessed May 19, 2020).
+
+(50)
+
+Correlation for the Liquid Viscosity of Petroleum Fractions at Low Pressure, Procedure
+11A4.1. In American Petroleum Institute (API) Technical Data Book; American
+Petroleum Institute: New York, 1997.
+
+(51)
+
+Riazi, M. R. Distribution Model for Properties of Hydrocarbon-Plus Fractions. Ind. Eng.
+Chem. Res 1989, 28, 1731–1735.
+
+(52)
+
+Riazi, M. R. A Continuous Model for C 7+ Fraction Characterization of Petroleum Fluids.
+Ind. Eng. Chem. Res 1997, 36, 4299–4307.
+
+(53)
+
+Rahmes, M. H.; Nelson, W. L. Viscosity Blending Relationships of Heavy Petroleum Oils.
+Anal. Chem. 1948, 20, 912–915.
+
+(54)
+
+Kendall, J.; Monroe, K. P. Viscosity of Liquids. II. Viscosity-Composition Curves for Ideal
+Liquid Mixtures. J. Am. Chem. Soc. 1917, 39, 1787–1802.
+
+(55)
+
+Riazi, M. R. Characterization and Properties of Petroleum Fractions, ASTM Manual
+Series: MNL50; ASTM International: West Conshohocken, PA, 2005; pp 335–338.
+
+(56)
+
+ASTM D7152-11(2016)E1, Standard Practice for Calculating Viscosity of a Blend of
+Petroleum Products; ASTM International: West Conshohocken, PA, 2016.
+
+(57)
+
+Wagner, E. P.; Koehle, M. A.; Moyle, T. M.; Lambert, P. D. Predicting Temperature
+Dependent Viscosity for Unaltered Waste Soybean Oil Blended with Petroleum Fuels.
+J. Am. Oil Chem. Soc. 2010, 87, 453–459.
+
+(58)
+
+ASTM D7152 - 11(2016)E1, Standard Practice for Calculating Viscosity of a Blend of
+Petroleum Products; ASTM International: West Conshohocken, PA, 2016.
+
+(59)
+
+Liquid Viscosities of Defined Mixtures at Low Pressures, Procedure 11A3.1. In
+American Petroleum Institute (API) Technical Data Book; American Petroleum
+Institute: New York, 1997.
+
+76
+
+Wolter Rautelin
+Master’s thesis
+___________________________________________________________________________
+(60)
+
+Miadonye, A.; Latour, N.; Puttagunta, V. R. A Correlation for Viscosity and Solvent
+Mass Fraction of Bitumen-Diluent Mixtures. Pet. Sci. Technol. 2000, 18, 1–14.
+
+(61)
+
+ISO 12185:1996, Crude Petroleum and Petroleum Products - Determination of Density
+- Oscillating U-Tube Method; International Organisation for Standardization, ISO:
+Vernier, Geneva, Switzerland, 1996.
+
+(62)
+
+IP 529:2015, Determination of the Freezing Point of Aviation Fuels - Automatic Laser
+Method; Energy Institute (formerly Institute of Petroleum - IP): London, United
+Kingdom, 2015.
+
+(63)
+
+ASTM D86-19, Standard Test Method for Distillation of Petroleum Products and Liquid
+Fuels at Atmospheric Pressure; ASTM International: West Conshohocken, PA, 2019.
+
+(64)
+
+Rautelin, W. M. W. (CONFIDENTIAL) Compilation of the Experimental Results Attained
+for the Thesis: Evaluation of Calculative Tools Intended for the Prediction of Liquid
+Hydrocarbon Viscosity; Helsinki, Finland, 2020.
+
+(65)
+
+Montgomery, D. C.; Runger, G. C. Simple Linear Regression and Correlation. In Applied
+Statistics and Probability for Engineers; Anderson, W., Welter, J., Pigliucci, N. M.,
+Lesure, M., Aiello, G., Eds.; John Wiley & Sons, Inc.: New York, 2003; pp 397–398.
+
+(66)
+
+Average boiling point https://www.engineeringtoolbox.com/Average-boiling-pointVABP-MABP-WABP-CABP-MeABP-formula-d_1994.html (accessed Jun 17, 2020).
+
+77
+
+
