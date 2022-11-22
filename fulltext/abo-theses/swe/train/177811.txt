@@ -1,0 +1,12611 @@
+FAKULTETSOMRÅDET FÖR
+NATURVETENSKAPER OCH TEKNIK
+
+pro gradu-avhandling
+Matematik
+
+Optimal stokastisk reglering och
+estimering med Kalmanltret
+Skribent:
+
+Handledare:
+
+Tuomas Virtanen
+
+Mikael Kurula
+
+2020
+
+Tuomas Virtanen
+
+Förord
+Arbetet som presenteras i denna avhandling, som handlar om Kalmanltret och
+optimal reglering av linjära stokastiska system, har gjorts vid Fakulteten för naturvetenskaper och teknik vid Åbo Akademi. Största delen av arbetet gjordes
+under sommaren och hösten 2019. Stort tack till min handledare Mikael Kurula
+med all hjälp och tid under arbetets gång. Jag vill även tacka professor Paavo
+Salminen för hans kommentarer. Jag vill också tacka min familj och mina vänner
+för all stöd under denna tid.
+
+Åbo, Juli 2020
+
+Tuomas Virtanen
+
+ii
+
+Tuomas Virtanen
+
+Abstrakt
+Linjära system används för matematiska modeller inom många olika områden, bland annat reglerteknik. Avhandlingen behandlar teori för MIMO-system
+(eng. Multiple Input Multiple Output), det vill säga modeller som består av
+tillståndsvariabler, en styrsignal bestående av era inputvariabler och en mätsignal som ger information om era av systemets tillståndsvariabler. Då systemet
+dessutom påverkas av störningar, mätsignalen påverkas av mätfel och endast några av tillståndsvariablerna kan mätas är systemet stokastiskt. Huvudsyftet med
+avhandlingen är att se på hur man kan reglera ett stokastiskt MIMO-system
+optimalt med avseende på att minimera en kvadratisk kostnadsfunktional. Detta är det så kallade LQG-problemet (eng. Linear Quadratic Gaussian) som är
+ett tvådelat problem. Eftersom systemet är stokastiskt måste systemets tillstånd
+estimeras och sedan måste en styrsignal bestämmas så att kostnaden minimeras. Metoden för estimeringen av tillståndet är ett Kalmanlter och i denna avhandling delas ltret upp i två delar, Kalmanprediktorn och Kalmankorrektorn.
+Minimeringen av kostnaden kan göras separat och sedan kan skattningen given
+av prediktorn eller korrektorn användas för att beräkna den optimala reglersignalen för systemet. Avhandlingen belyser med ett exempel på reglering av två
+kopplade elnätverk att reglering med användning av skattningen som ges av prediktorn fungerar och bör användas även då mätsignalen saknas en längre tid. För
+exemplet har ett simuleringsprogram skrivits i MatLab.
+
+iii
+
+INNEHÅLL
+
+Tuomas Virtanen
+
+Innehåll
+1 Inledning
+
+1
+
+2 Linjär systemteori
+
+4
+
+2.1
+
+2.2
+
+2.3
+
+2.4
+
+Introduktion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4
+
+2.1.1
+
+Sampling av tidskontinuerliga linjära system . . . . . . . .
+
+6
+
+Egenskaper hos tidsdiskreta LTI-system . . . . . . . . . . . . . . .
+
+8
+
+2.2.1
+
+Styrbarhet . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+8
+
+2.2.2
+
+Observerbarhet
+
+. . . . . . . . . . . . . . . . . . . . . . . .
+
+10
+
+2.2.3
+
+Stabiliserbarhet . . . . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+Luenbergerobservatör . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+
+2.3.1
+
+. . . . . . . . . . . . . . . . . . . . .
+
+15
+
+Optimal reglering . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+16
+
+2.4.1
+
+21
+
+Separationsprincipen
+
+Oändlig tidshorisont
+
+. . . . . . . . . . . . . . . . . . . . .
+
+3 Optimal stokastisk estimering
+
+23
+
+3.1
+
+Denitioner och antaganden för diskreta stokastiska system . . . .
+
+23
+
+3.2
+
+Estimering med Kalmanltret
+
+. . . . . . . . . . . . . . . . . . . .
+
+26
+
+3.3
+
+Stationärt Kalmanlter . . . . . . . . . . . . . . . . . . . . . . . .
+
+39
+
+3.4
+
+Sampling av tidskontinuerliga stokastiska system . . . . . . . . . .
+
+41
+
+4 Optimal stokastisk reglering
+
+47
+
+4.1
+
+Reglerproblemet . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+47
+
+4.2
+
+Minimering av kostnaden genom tillståndsåterkoppling
+
+51
+
+4.3
+
+Minimering av kostnaden genom återkoppling av det skattade till-
+
+4.4
+
+. . . . . .
+
+ståndet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+54
+
+Optimal reglering av två kopplade elnätverk
+
+58
+
+iv
+
+. . . . . . . . . . . .
+
+INNEHÅLL
+
+Tuomas Virtanen
+
+5 Sammanfattande diskussion
+
+65
+
+A Matristeori
+
+67
+
+A.1
+
+Matrisalgebra
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+67
+
+A.2
+
+Matrisexponentialfunktionen . . . . . . . . . . . . . . . . . . . . .
+
+70
+
+B Sannolikhetsteori
+B.1
+
+B.2
+
+72
+
+Grundläggande sannolikhetslära . . . . . . . . . . . . . . . . . . .
+
+72
+
+B.1.1
+
+Väntevärde och varians . . . . . . . . . . . . . . . . . . . .
+
+73
+
+B.1.2
+
+Fördelningsfunktion . . . . . . . . . . . . . . . . . . . . . .
+
+74
+
+B.1.3
+
+Oberoende stokastiska variabler
+
+. . . . . . . . . . . . . . .
+
+75
+
+B.1.4
+
+Betingat väntevärde
+
+. . . . . . . . . . . . . . . . . . . . .
+
+76
+
+Flerdimensionella stokastiska variabler
+B.2.1
+
+p-dimensionell
+
+. . . . . . . . . . . . . . .
+
+77
+
+normalfördelning . . . . . . . . . . . . . . .
+
+80
+
+C Programkod
+
+81
+
+C.1
+
+Exempel 3.24
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+81
+
+C.2
+
+Kopplade elnätverk . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+85
+
+Litteratur
+
+90
+
+v
+
+KAPITEL 1.
+
+INLEDNING
+
+Tuomas Virtanen
+
+Kapitel 1
+Inledning
+Ett system av linjära dierentialekvationer används för att bland annat beskriva
+biologiska, fysikaliska eller nansiella modeller. Inom reglerteori studeras system
+som har styrbara variabler, exempelvis acceleration, samt en mätsignal som ger
+någon information om systemets olika tillstånd, exempelvis hastighet och position. Då systemets tillstånd dessutom påverkas av störningar och mätsignalen
+innehåller mätfel, kan systemet modelleras som ett stokastiskt system. Ett exempel på ett sådant system är satellitnavigering, där GPS-mottagaren beräknar
+sin position utgående från mätsignaler från era satelliter. Återkoppling är ett
+centralt begrepp inom reglerteori och med detta avses att mätsignalen används
+för att reglera systemet.
+Det linjärkvadratiska gaussiska reglerproblemet (LQG-problemet) är ett
+välstuderat och fundamentalt stokastiskt reglerproblem där modellen är linjär,
+kostnadsfunktionalen är kvadratisk, störningarna samt mätfelen är additivt
+gaussiskt vitt brus och problemet är att hitta en reglersignal som minimerar
+kostnadsfunktionalen.
+
+Detta
+
+problem
+
+är
+
+tvådelat,
+
+å
+
+ena
+
+sidan
+
+har
+
+vi
+
+det
+
+linjärkvadratiska estimeringsproblemet (LQE) att skatta systemets tillstånd, å
+andra sidan har vi det linjärkvadratiska reglerproblemet (LQR) att konstruera
+själva regulatorn som reglerar systemet optimalt. Det visar sig att dessa två
+problem kan lösas oberoende av varandra och lösningen på estimeringsproblemet
+i diskret tid ges av det så kallade Kalmanltret, utvecklat huvudsakligen av den
+ungerskfödda amerikanska matematikern Rudolf Kalman på 1960-talet.
+Avhandlingens upplägg är att i kapitel 2 ge en kort introduktion till linjär systemteori av deterministiska system. I denna avhandling används en så
+
+1
+
+KAPITEL 1.
+
+INLEDNING
+
+Tuomas Virtanen
+
+kallad tillståndsmodell för linjära system som introduceras i introduktionskapitlet. Tillståndsmodellen bygger på dierentialekvationer som beskriver systemet.
+Ddierentialekvationen för tillståndsvektorn löses i introduktionskapitlet. Denna
+lösning samplas, vilket betyder att systemet i kontinuerlig tid överförs till ett
+diskretiserat system. Styrbarhet, observerbarhet och stabiliserbarhet är några
+egenskaper som gås igenom i korthet för system i diskret tid. Dessa egenskaper är viktiga för att regleringen av systemet ska vara användbar och speciellt
+viktiga för att kunna minimera kostnaden för regleringen. Återkoppling och optimal reglering av deterministiska system samt konstruktionen av en så kallad
+Luenbergerobservatör introduceras också i introduktionskapitlet. För detta introduktionskapitel har i huvudsak [HRS07], [Lue79], [LXP08] och [TSH01] använts.
+Kapitel 3 behandlar teorin för optimal stokastisk estimering. I detta kapitel
+denieras stokastiska system och vilka antaganden som sedan används för att
+bygga upp teorin för att kunna estimera tillståndsvektorn. Detta görs vanligtvis
+med ett så kallat Kalmanlter, men i denna avhandling ges en tvådelad metod för
+skattningen genom Kalmanprediktorn och Kalmankorrektorn. Idén för att dela
+upp Kalmanltret har tagits från [LXP08] och i denna avhandling görs ett försök att rigoröst deniera och härleda formler för att beräkna dessa skattningar,
+där också [LR95] och [Åst70] har varit till stor hjälp. För den stokastiska teorin
+har [Gir03], [Kay93], [JP03] och [Ros10] använts som källor. Meningen med det
+uppdelade Kalmanltret är att ha en optimal skattning av tillståndet både då ny
+information om systemet är tillgängligt och då ingen ny information är tillgänglig men en optimal skattning behövs för att optimalt reglera systemet. I detta
+kapitel introduceras också kort det stationära Kalmanltret och samplingen av
+stokastiska system i kontinuerlig tid, för dessa har utöver [Åst70] också [HRS07]
+använts som källa.
+Kapitel 4 behandlar teorin för optimal stokastisk reglering. I detta kapitel presenteras LQG-problemet och verktygen för att lösa minimeringsproblemet av den
+kvadratiska kostnadsfunktionalen härleds. Konstruktionen av den optimala regulatorn för systemet bestäms både då mätsignalen ger exakt systemets tillstånd
+och då mätsignalen påverkas av brus. Det andra fallet är huvudresultatet och ger
+alltså den optimala reglersignalen för det stokastiska systemet där tillståndsvektorn estimeras med Kalmanprediktorn eller Kalmankorrektorn introducerade i
+kapitel 3.
+
+2
+
+KAPITEL 1.
+
+INLEDNING
+
+Tuomas Virtanen
+
+För att tillämpa resultatet nns ett exempel på reglering av kopplade elnätverk där artiklarna [AA11], [PMH13], [Ros+13] och [Sha+16] har studerats för
+ändamålet. Dierentialekvationerna samt olika parametervärden är tagna ur artiklarna. För tillämpningen har ett simuleringsprogram skrivits i MatLab och
+programkoden för detta hittas i bilagan.
+I bilagan nns också grundläggande teori för matrisalgebra, matrisexponentialfunktionen och sannolikhetsteori. Teorin för betingade väntevärdet och erdimensionella normalfördelningen är synnerligen viktiga och läsaren ombeds bekanta sig med dessa före kapitel 3.
+
+3
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+Kapitel 2
+Linjär systemteori
+2.1 Introduktion
+Matematiska modeller vars beteende kan beskrivas med hjälp av era linjära
+dierentialekvationer ger upphov till teorin om linjära system. Detta kapitel introducerar deterministiska tidsinvarianta linjära system och deras egenskaper.
+Deterministisk system- och reglerteori fungerar som en introduktion till den mera krävande stokastiska reglerteorin som är den huvudsakliga teorin i denna avhandling. Som grundläggande teori för linjär systemteori används matristeori
+samt linjär algebra och en kort sammanfattning av det som använts här nns i
+bilaga A.
+Exemplet nedan används som ett genomgående exempel i avhandlingen för
+att belysa de olika teoridelarna. Exemplet är ett utvidgat exempel av [Sär13,
+Exempel 3.6, s. 4345].
+
+Exempel 2.1.
+i planet. Sätt
+respektive
+vill säga
+
+Låt
+
+x3 =
+
+x1
+
+=0
+
+och
+
+x2
+
+dx1
+och
+dt
+
+y -riktning.
+
+dx3
+dt
+
+och
+
+vara
+
+x4 =
+
+x-
+
+dx2
+. Då är
+dt
+
+dx4
+dt
+
+u = (u1 , u2 )T . Då
+⎛ ⎞
+dx1
+dt
+⎜ dx
+⎟
+⎜ dt2 ⎟
+⎜ ⎟
+⎜ dx3 ⎟
+⎝ dt ⎠
+dx4
+dt
+
+x3
+
+y -koordinaterna
+
+och
+
+x4
+
+för en punkt
+
+punktens hastighet i
+
+x-
+
+Anta att accelerationen är noll i båda riktningarna, det
+
+= 0.
+
+Vidare anta att vi kan styra punktens acceleration
+
+och beteckna dessa inputvariabler med
+och
+
+respektive
+
+u1
+
+och
+
+u2 .
+
+Låt nu
+
+x = (x1 , x2 , x3 , x4 )T
+
+kan vi beskriva systemets beteende på vektorform enligt
+
+⎛
+0
+⎜
+⎜0
+=⎜
+⎜0
+⎝
+0
+
+⎞⎛ ⎞ ⎛
+0 1 0
+x1
+0
+⎟⎜ ⎟ ⎜
+⎜ ⎟ ⎜
+0 0 1⎟
+⎟ ⎜x2 ⎟ + ⎜0
+⎜ ⎟ ⎜
+0 0 0⎟
+⎠ ⎝x3 ⎠ ⎝1
+0 0 0
+x4
+0
+4
+
+0
+
+⎞
+
+⎟ (︄ )︄
+0⎟
+⎟ u1 ,
+0⎟
+⎠ u2
+1
+
+KAPITEL 2.
+
+eller kort
+
+LINJÄR SYSTEMTEORI
+
+ẋ = Ax + Bu.
+
+Tuomas Virtanen
+
+Om vi har tillgång till den exakta positionen av
+
+punkten men inte dess hastighet eller acceleration så kan vi beskriva en utsignal
+för systemet enligt
+
+⎛ ⎞
+x
+(︄ )︄ (︄
+)︄ ⎜ 1 ⎟
+⎟
+y1
+1 0 0 0 ⎜
+⎜ x2 ⎟ ,
+=
+⎟
+y2
+0 1 0 0 ⎜
+⎝ x3 ⎠
+x4
+y = Cx.
+
+eller kort
+
+Modellen enligt vilken systemet i exemplet beskrivs kallas
+
+tillståndsmodellen
+
+och är speciellt användbar för linjära system med era input- och outputvariabler.
+
+MIMO-system
+
+Sådana system kallas också
+
+put). Den formella denitionen för ett
+
+(eng. Multiple Input Multiple Out-
+
+linjärt tidsinvariant system
+
+(LTI-system)
+
+i kontinuerlig tid är följande:
+
+Denition 2.2.
+t
+
+Vektorn
+
+x(t) ∈ Rn
+
+beskriver systemets tillstånd vid tidpunkt
+
+tillståndsvektorn, u(t) ∈ Rm
+
+och kallas
+
+systemet och
+
+p
+
+y(t) ∈ R
+
+är en
+
+utsignal
+
+är en deterministisk
+
+mätning
+
+som ger en
+
+insignal
+
+som styr
+
+av systemets tillstånd.
+
+Då kan systemet skrivas på tillståndsmodellen
+
+Tillståndet
+
+x(0) = x0
+
+̇
+x(t)
+= Ax(t) + Bu(t),
+
+(2.1)
+
+y(t) = Cx(t) + Du(t).
+
+(2.2)
+
+är systemets
+
+starttillstånd.
+
+matris, B insignalmatris, C utsignalmatris
+Matriserna
+
+A, B , C
+
+och
+
+D
+
+Avbildningen
+
+A
+
+kallas
+
+system-
+
+D direktmatris.
+
+och
+
+antas här vara konstanta, därför kallas systemet
+
+tidsinvariant. Oftast kan direktmatrisen
+
+D
+
+utelämnas och då kallas systemet
+
+strikt propert. Systemet i exempel 2.1 är ett exempel på ett strikt propert system.
+Systemets tillstånd vid tidpunkt
+tillstånd
+
+x0
+
+och en given styrsignal
+
+t kan beräknas utgående från ett känt startu(t)
+
+genom att lösa följande begynnelsevär-
+
+desproblem:
+
+̇
+x(t)
+= Ax(t) + Bu(t),
+
+Lösning:
+
+x(0) = x0 .
+
+Skriv om dierentialekvationen som
+
+̇ − Ax(t) = Bu(t)
+x(t)
+och multiplicera med den integrerande faktorn
+matrisexponentialfunktionen (se A.2), för att få
+
+5
+
+∫︁
+
+e
+
+(−A)dt
+
+= e−At ,
+
+där
+
+e−At
+
+är
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+)︁
+e−At x(t) = e−At Bu(t)
+∫︂ t
+−At
+e−As Bu(s)ds + x(0)
+⇐⇒ e x(t) =
+0
+∫︂ t
+At
+⇐⇒ x(t) = e x(0) +
+eA(t−s) Bu(s)ds,
+
+̇ − Ax(t)) = e−At Bu(t) ⇐⇒
+e−At (x(t)
+
+d
+dt
+
+(︁
+
+0
+där sista ekvivalensen gäller enligt sats A.6. Den entydiga lösningen till (2.1) blir
+
+t
+
+∫︂
+
+At
+
+eA(t−s) Bu(s)ds.
+
+x(t) = e x0 +
+
+(2.3)
+
+0
+
+2.1.1
+
+Sampling av tidskontinuerliga linjära system
+
+I praktiken sker styrning eller reglering av system med datorer som opererar i
+diskret tid men modellerna av system beskrivs oftast av dierentialekvationer enligt fysikaliska modeller och är på formen (2.1)(2.2). För regleringen behöver vi
+beskriva systemet i diskret tid och detta utförs med
+på det sättet att systemets tillstånd
+
+tk := kT ,
+
+där
+
+T >0
+
+evalueras vid de diskreta tidpunkterna
+
+är längden av samplingsperioden. Mätningarna av utsigna-
+
+len görs vid tidpunkterna
+
+tk
+
+u(t) hålls konstant på varje samp[︁
+)︁
+t ∈ kT, (k + 1)T . Då styrsignalen skickas
+
+och styrsignalen
+
+uk := u(tk )
+
+lingsintervall så att
+
+x(t)
+
+sampling. Samplingen utförs
+
+då
+
+från datorn till systemet görs detta oftast med
+
+digital-till-analog-omvandlare
+
+och
+
+då styrsignalen är konstant på varje samplingsintervall har D\A-omvandlaren en
+
+nollte ordningens hållkrets
+
+(eng. zero-order hold; ZOH). Det samplade systemet
+
+önskas beskrivas av dierensekvationen
+och då behöver matriserna
+
+As
+
+och
+
+Bs
+
+xk+1 = As xk + Bs uk ,
+
+där
+
+xk := x(tk )
+
+bestämmas.
+
+Enligt (2.3) fås att
+
+Atk+1
+
+xk+1 = x(tk+1 ) = e
+
+∫︂
+x0 +
+
+tk+1
+
+eA(tk+1 −s) Bu(s)ds
+
+0
+
+= eA(k+1)T x0 +
+
+∫︂
+
+(k+1)T
+
+eA((k+1)T −s) Bu(s)ds
+
+0
+
+∫︂
+
+kT
+
+∫︂
+
+AT A(kT −s)
+
+(k+1)T
+
+e
+x0 +
+e e
+Bu(s)ds +
+eA((k+1)T −s) Bu(s)ds
+0
+(︃
+)︃ ∫︂ TkT
+∫︂ tk
+= eAT eAtk x0 +
+eA(tk −s) Bu(s)ds +
+eAτ Bu((k + 1)T − τ )dτ
+0
+0
+(︃∫︂ T
+)︃
+∫︂ T
+AT
+Aτ
+AT
+Aτ
+= e x(tk ) +
+e Bu(tk )dτ = e xk +
+e dτ Buk .
+
+=e
+
+AT AkT
+
+0
+
+0
+(2.4)
+6
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+För utsignalen fås att
+
+yk : = y(tk ) = Cx(tk ) + Du(tk )
+= Cxk + Duk .
+Det samplade systemet kan nu skrivas som
+
+xk+1 = As xk + Bs uk ,
+yk = Cs xk + Ds uk ,
+för
+
+k = 0, 1, 2, . . .
+As := e
+
+AT
+
+och matriserna ges av
+
+T
+
+(︃∫︂
+,
+
+Bs :=
+
+e
+
+Aτ
+
+)︃
+dτ
+
+B,
+
+Cs := C
+
+Ds := D.
+
+och
+
+0
+
+Exempel 2.3.
+
+Vi utför sampling med ZOH-metoden av systemet som introdu-
+
+cerades i exempel 2.1. Beteckna samplingsperioden med
+och således är
+
+Ak = 0
+
+för varje
+
+k≥2
+
+∆t.
+
+Eftersom
+
+A2 = 0
+
+fås enligt denitionen (A.2) för matrisex-
+
+ponentialfunktionen att
+
+⎛
+As = e
+
+A∆t
+
+1 0 ∆t
+
+⎜
+⎜0 1
+= I + A∆t = ⎜
+⎜0 0
+⎝
+
+0
+
+0 0
+
+0
+
+1
+
+0
+
+⎞
+
+⎟
+∆t⎟
+⎟.
+0⎟
+⎠
+1
+
+(2.5)
+
+Vidare har vi att
+
+⎛
+
+1 0 τ 0
+
+⎞
+
+⎛
+
+0 0
+
+⎞
+
+∆t
+
+⎟
+⎟ ⎜
+⎜
+⎜0 1 0 τ ⎟ ⎜0 0 ⎟
+⎟
+⎟ ⎜
+⎜
+Bs =
+⎜0 0 1 0⎟ dτ ⎜1 0⎟
+0
+⎠ ⎝
+⎠
+⎝
+0 1
+0 0 0 1
+⎛
+⎞
+⎛
+⎞ ⎛ (∆t)2
+2
+∆t 0 (∆t)
+0
+0 0
+2
+⎜
+⎟ ⎜ 2
+(∆t)2 ⎟ ⎜
+⎜ 0 ∆t
+⎟ ⎜0 0 ⎟ ⎜ 0
+0
+2 ⎟⎜
+⎟=⎜
+=⎜
+⎜0
+⎟
+⎜
+⎜
+0
+∆t
+0 ⎠ ⎝1 0 ⎟
+⎝
+⎠ ⎝ ∆t
+0
+0
+0
+∆t
+0 1
+0
+∫︂
+
+Nu fås det diskretiserade systemet
+
+xk+1 = As xk + Bs uk ,
+yk = Cs xk ,
+där
+
+As
+
+och
+
+Bs
+
+ges av (2.5)(2.6) och
+
+Cs =
+7
+
+(︄
+)︄
+1 0 0 0
+0 1 0 0
+
+.
+
+0
+
+⎞
+
+(∆t)2 ⎟
+⎟
+2 ⎟
+
+.
+0 ⎟
+⎠
+∆t
+
+(2.6)
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+2.2 Egenskaper hos tidsdiskreta LTI-system
+I fortsättningen behandlar vi endast strikt propra system i diskret tid och väljer
+därför direktmatrisen
+Det strikt propra
+
+D = 0 och lämnar bort det nedre indexet s på matriserna.
+
+tidsdiskreta LTI-systemet
+
+enligt tillståndsmodellen ges då av:
+
+xk+1 = Axk + Buk ,
+
+(2.7)
+
+yk = Cxk .
+x0
+
+För givet starttillstånd
+
+och en given styrsignal
+
+−1
+u := {uk }N
+k=0
+
+kan syste-
+
+mets (2.7) tillståndsekvation itereras för att få
+
+x1 = Ax0 + Bu0 ,
+x2 = Ax1 + Bu1 = A(Ax0 + Bu0 ) + Bu1 ,
+= A2 x0 + A1 Bu0 + A0 Bu1 ,
+.
+.
+.
+
+xN = AN x0 + AN −1 Bu0 + . . . + A0 BuN −1
+och lösningen till systemets (2.7) tillståndsekvation är då
+
+N
+
+xN = A x0 +
+
+N
+−1
+∑︂
+
+AN −1−k Buk .
+
+(2.8)
+
+k=0
+Egenskaper som är viktiga att analysera är systemets styrbarhet, observerbarhet
+och stabiliserbarhet. I detta avsnitt ges kortfattat vad som menas med dessa egenskaper och hur systemmatriserna i (2.7) används för att kontrollera egenskaperna.
+Denitioner och satser för styrbarhet och observerbarhet för både tidsdiskreta
+och tidskontinuerliga system hittas exempelvis i [Lue79, s. 276289].
+
+2.2.1
+
+Styrbarhet
+
+Denition 2.4 (Styrbarhet). Ett tidsdiskret system (2.7) är styrbart om för varje
+tillstånd
+
+x∗ ∈ Rn
+
+en styrsignal
+
+och starttillståndet
+
+N −1
+u := {uk }k=0
+
+x0 = 0 nns ett ändligt index Nx∗ > 0 och
+
+som tillämpat på (2.7) ger att
+
+Frågan är om det nns ett ändligt index
+varje tillstånd
+
+x∗ ∈ Rn
+
+kan nås från origo på
+
+8
+
+N
+N
+
+xNx∗ = x∗ .
+
+som inte beror av
+steg?
+
+x∗ ,
+
+men att
+
+KAPITEL 2.
+
+Då
+
+x0 = 0
+
+LINJÄR SYSTEMTEORI
+
+kan lösningen (2.8) skrivas på matrisform enligt
+
+⎛
+⎞
+u
+)︂ ⎜ N −1 ⎟
+.
+N −1
+⎟
+.
+A
+B ⎜
+⎝ . ⎠.
+u0
+
+(︂
+xN = B AB · · ·
+
+Blockmatrisen framför styrsignalen
+
+Sats 2.5.
+
+Tuomas Virtanen
+
+(︁
+)︁
+T T
+u = uT
+N −1 , . . . , u0
+
+Det tidsdiskreta systemet
+
+betecknas
+
+CN (A, B).
+
+med A ∈ Rn×n och B ∈ Rn×m är
+
+(2.7)
+
+styrbart om och endast om det gäller för n × nm styrbarhetsmatrisen
+(︂
+)︂
+Cn (A, B) = B AB · · · An−1 B
+att
+
+rang Cn (A, B) = n.
+För beviset av satsen behövs först ett hjälpresultat.
+
+Lemma 2.6.
+
+Låt A ∈ Rn×n ha full rang. Då gäller att An+k är en linjärkombi-
+
+nation av matriserna I , A, . . ., An−1 för varje k ≥ 0.
+Bevis.
+
+Enligt
+
+Cayley-Hamiltons sats
+
+pA (A) = 0,
+
+är
+
+där
+
+pA (λ)
+
+är det karakteris-
+
+tiska polynomet
+
+n
+∑︂
+
+pA (λ) = det (λI − A) =
+
+ci λi ,
+
+cn = 1.
+
+i=0
+Vi får att
+
+n
+
+0 = pA (A) = A +
+
+n−1
+∑︂
+
+ci A
+
+i
+
+⇐⇒
+
+n
+
+A =−
+
+n−1
+∑︂
+
+i=0
+det vill säga
+
+An
+
+i=0
+
+är en linjärkombination av
+
+A
+
+n+k
+
+ci A i ,
+
+=−
+
+n−1
+∑︂
+
+I, A, . . . , An−1 .
+
+Vidare gäller att
+
+ci Ai+k ,
+
+i=0
+varför
+
+An+k
+
+en linjärkombination av
+
+Bevis av Sats 2.5.
+
+Om
+
+I, A, . . . , An−1
+
+rang Cn (A, B) = n
+
+för varje
+
+k ≥ 0.
+
+så är matrisen surjektiv, vilket impli-
+
+cerar att systemet är styrbart.
+Om systemet är styrbart så nns ett
+att
+
+CN (A, B) u = x∗ ,
+
+där
+
+x∗ ∈ Rn
+
+N > 0 och en styrsignal u0 , . . . , uN −1
+
+är godtyckligt. Anta att
+
+9
+
+N ≥ n,
+
+så
+
+då fås som
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+följd av lemma 2.6 att matrisen
+
+B, AB, . . . , An−1 B
+
+An+k B
+
+Tuomas Virtanen
+
+är en linjärkombination av matriserna
+
+i styrbarhetsmatrisen
+
+Cn (A, B)
+
+för varje
+
+k ≥ 0.
+
+Då kan vi
+
+∗
+∗
+hitta en ny styrsignal u0 , . . . , un−1 , så att
+
+x∗ = CN (A, B)u = Cn (A, B)u∗ .
+Detta visar att
+
+Cn (A, B)
+
+är surjektiv och har således rangen
+
+n.
+
+Eftersom systemets styrbarhet är oberoende av matriserna
+matrisparet
+
+(A, B)
+
+Exempel 2.7.
+
+C
+
+och
+
+D
+
+sägs att
+
+är styrbart.
+
+Vi undersöker styrbarhetsmatrisen för systemet i exempel 2.3.
+
+Systemmatriserna ges av
+
+⎛
+
+1 0 ∆t
+
+⎜
+⎜0 1
+A=⎜
+⎜0 0
+⎝
+0 0
+
+⎞
+
+⎛ (∆t)2
+
+⎟
+∆t⎟
+⎟
+0⎟
+⎠
+1
+
+⎜ 2
+⎜ 0
+B=⎜
+⎜ ∆t
+⎝
+0
+
+0
+
+0
+1
+0
+
+och
+
+0
+
+⎞
+
+(∆t)2 ⎟
+⎟
+2 ⎟
+
+.
+0 ⎟
+⎠
+∆t
+
+Styrbarhetsmatrisen för detta system är då
+
+⎛ (∆t)2
+2
+
+⎜
+⎜ 0
+C4 (A, B) = ⎜
+⎜ ∆t
+⎝
+0
+
+0
+
+3(∆t)2
+2
+
+0
+
+5(∆t)2
+2
+
+0
+
+7(∆t)2
+2
+
+(∆t)2
+2
+
+0
+
+3(∆t)2
+2
+
+0
+
+5(∆t)2
+2
+
+0
+
+0
+
+∆t
+
+0
+
+∆t
+
+0
+
+∆t
+
+∆t
+
+0
+
+∆t
+
+0
+
+∆t
+
+0
+
+4
+
+Vi kan se att matrisen har rangen
+
+2.2.2
+
+⎞
+
+7(∆t)2 ⎟
+⎟
+2 ⎟
+
+.
+0 ⎟
+⎠
+∆t
+
+vilket implicerar att systemet är styrbart.
+
+Observerbarhet
+
+Denition 2.8
+
+.
+
+(Observerbarhet)
+
+om det nns ett ändligt
+
+observerbart
+
+kan entydigt bestämmas
+
+y0 , . . . , yN −1 .
+
+Frågan är om det nns ett
+
+N
+
+Ett tidsdiskret system (2.7) är
+
+N > 0 så att starttillståndet x0
+
+utgående från mätningarna
+
+hjälp av
+
+0
+
+stycken mätningar
+
+N
+
+så att
+
+x0
+
+kan alltid bestämmas entydigt med
+
+y0 , . . . , yN −1 ?
+
+stemets (2.7) utsignal vid tidpunkt
+
+N
+
+Från lösningen (2.8) ser vi att sy-
+
+är
+
+yN = CxN = CAN x0 + CAN −1 Bu0 + . . . + CA0 BuN −1 .
+
+10
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+Då styrsignalen är känd kan den, utan att inskränka på allmängiltigheten, antas
+vara noll och då fås att
+
+yN = CAN x0 .
+Om mätningarna
+
+y0 , . . . , yN −1 skrivs som en pN × 1 vektor
+⎛
+⎞ ⎛
+⎞
+y
+C
+⎜ 0 ⎟ ⎜
+⎟
+⎜ y1 ⎟ ⎜ CA ⎟
+⎜
+⎟ ⎜
+⎟
+⎜ . ⎟=⎜
+⎟ x0 .
+.
+.
+⎜ .. ⎟ ⎜
+⎟
+.
+⎝
+⎠ ⎝
+⎠
+yN −1
+CAN −1
+
+Blockmatrisen framför starttillståndet
+
+Sats 2.9.
+
+Det tidsdiskreta systemet
+
+x0
+
+betecknas med
+
+(2.7)
+
+fås att
+
+(2.9)
+
+ON (C, A).
+
+med A ∈ Rn×n och C ∈ Rp×n är
+
+observerbart om och endast om det gäller för pn × n
+⎞
+⎛
+C
+⎟
+⎜
+⎜ CA ⎟
+⎟
+⎜
+On (C, A) = ⎜ . ⎟
+⎜ .. ⎟
+⎠
+⎝
+n−1
+CA
+
+observerbarhetsmatrisen
+
+att
+
+rang On (C, A) = n.
+Bevis.
+
+Om
+
+rang On (C, A) = n
+
+så är matrisen injektiv, vilket implicerar att
+
+systemet observerbart.
+Om systemet är observerbart så gäller att (2.9) har en entydig lösning
+något
+
+N > 0,
+
+ger att
+varje
+
+vilket implicerar att matrisen
+
+CAn+k
+
+k ≥ 0.
+
+är en linjärkombination av matriserna
+
+Då följer att om
+
+således rangen
+
+ON (C, A)
+
+N ≥n
+
+så måste
+
+x0
+
+för
+
+är injektiv. Lemma 2.6
+
+C, CA, . . . , CAn−1
+
+On (C, A)
+
+för
+
+vara injektiv och har
+
+n.
+
+Eftersom systemets observerbarhet är oberoende av matriserna
+sägs också att matrisparet
+
+(C, A)
+
+B
+
+och
+
+D,
+
+så
+
+är observerbart.
+
+(︁
+)︁T
+Anmärkning 2.10. Observera att matriserna On (C, A) = Cn (AT , C T ) och
+(︁
+)︁T
+Cn (A, B) = On (B T , AT ). Detta ger att matrisparet (A, B) är styrbart om
+och endast om matrisparet
+
+(B T , AT ) är observerbart och matrisparet (C, A) är
+
+observerbart om och endast om matrisparet
+och observerbarhet är alltså
+
+duala
+
+(AT , C T )
+
+är styrbart. Styrbarhet
+
+egenskaper för ett linjärt system.
+
+11
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+Notera dock att detta betyder inte att ett styrbart system är observerbart, ef-
+
+B medan observerbarhetsmatrisen
+
+tersom styrbarhetsmatrisen beror av matrisen
+beror av matrisen
+
+Exempel 2.11.
+
+C.
+Vi undersöker observerbarhetsmatrisen för systemet i exem-
+
+pel 2.3. Systemmatriserna ges av
+
+⎛
+
+1 0 ∆t
+
+⎜
+⎜0 1
+A=⎜
+⎜0 0
+⎝
+
+0
+
+0 0
+
+0
+
+⎞
+
+0
+
+(︄
+
+⎟
+∆t⎟
+⎟
+0⎟
+⎠
+1
+
+1
+
+C=
+
+och
+
+)︄
+1 0 0 0
+0 1 0 0
+
+.
+
+Observerbarhetsmatrisen för detta system är då
+
+⎛
+
+1
+⎜
+⎜0
+⎜
+⎜
+⎜1
+⎜
+⎜0
+⎜
+O4 (C, A) = ⎜
+⎜1
+⎜
+⎜
+⎜0
+⎜
+⎜1
+⎝
+0
+Vi kan se att matrisen har rangen
+
+2.2.3
+
+0
+
+0
+
+0
+
+⎞
+
+⎟
+0 ⎟
+⎟
+⎟
+0 ∆t
+0 ⎟
+⎟
+1 0
+∆t ⎟
+⎟
+⎟.
+0 2∆t 0 ⎟
+⎟
+⎟
+1 0 2∆t⎟
+⎟
+0 3∆t 0 ⎟
+⎠
+1 0 3∆t
+1
+
+0
+
+4 vilket implicerar att systemet är observerbart.
+
+Stabiliserbarhet
+
+Ett system med följande tillståndsekvation kallas ett
+
+autonomt
+
+xk+1 = Axk
+
+system
+(2.10)
+
+och enligt (2.8) lösningen
+
+x k = Ak x 0 ,
+
+Denition 2.12 (Stabilitet).
+bilt
+
+k ≥ 0.
+
+Ett autonomt system (2.10) är
+
+(2.11)
+
+(asymptotiskt) sta-
+
+om dess lösning (2.11) uppfyller
+
+lim xk = 0,
+
+k→∞
+för varje val av starttillstånd
+system (2.7) med styrsignalen
+
+x0 ∈ R n .
+u = 0
+
+Om detta uppfylls för icke-autonoma
+
+så är också systemet (2.7) stabilt. Då
+
+systemet är stabilt sägs också att matrisen
+
+12
+
+A
+
+är stabil.
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+Om systemet har endast en tillståndsvariabel
+
+x
+
+så gäller att
+
+xk = α k x 0
+och då är detta system stabilt för varje
+
+x0 ∈ R
+
+om och endast om
+
+|α| < 1.
+
+För system med era tillståndsvariabler fås följande resultat enligt [Lue79, s.
+155156].
+
+Sats 2.13.
+
+Systemet
+
+(2.7)
+
+är asymptotiskt stabilt om och endast om för varje
+
+egenvärde λi , i ∈ {1, . . . , n} till systemmatrisen A gäller att |λi | < 1.
+Bevis.
+
+Vi visar fallet då
+
+A är diagonaliserbar. Då existerar en inverterbar matris,
+
+så att
+
+A = M ΛM −1
+
+där
+
+λ1 , . . . , λn
+
+⎛
+⎞
+λ1 0 . . . 0
+⎜
+⎟
+⎜ 0 λ2 . . . 0 ⎟
+⎜
+⎟ −1
+=M⎜.
+,
+.
+. ⎟M
+..
+.
+.
+⎜ ..
+.
+.
+. ⎟
+⎝
+⎠
+0 0 . . . λn
+
+är egenvärdena till
+
+A.
+
+Nu fås att
+
+xk = Ak x0 = M ΛM −1 M ΛM −1 · · · M ΛM −1 x0
+= M Λk M −1 x0
+⎞
+⎛
+k
+λ
+0 ... 0
+⎟
+⎜ 1
+⎜ 0 λk . . . 0 ⎟
+2
+⎟ −1
+⎜
+x0
+=M⎜ .
+.
+. ⎟M
+.
+.
+..
+. ⎟
+⎜ ..
+.
+.
+⎠
+⎝
+0 0 . . . λkn
+och då gäller att
+
+lim xk = 0 ⇐⇒ |λi | < 1,
+
+k→∞
+
+Beviset för fallet då
+istället på
+resultat.
+
+A
+
+för varje
+
+i ∈ {1, . . . , n}.
+
+inte är diagonaliserbar baserar sig på att
+
+Jordans normalform
+
+Stabiliseringsproblemet
+
+A
+
+skrivs
+
+och då fås med liknande beräkningar samma
+går ut på att konstruera en
+
+regulator
+
+som tar
+
+systemets (2.7) utsignal som input och ger som output en styrsignal till systemet (2.7), sådant att det ihopkopplade system är stabilt [TSH01, s. 57]. Då
+systemets tillstånd är tillgängligt, det vill säga matrisen
+len, och regulatorn är statisk, fås en styrsignal av formen
+
+C = I
+
+för utsigna-
+
+uk = −Lxk
+
+för varje
+
+k = 0, 1, . . ., där L är en godtycklig m × n matris. Denna form av reglering kallas
+
+13
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+statisk tillståndsåterkoppling
+
+Tuomas Virtanen
+
+och denna styrsignal tillämpad på systemet (2.7)
+
+ger tillståndsekvationen
+
+xk+1 = Axk + Buk = Axk − BLxk = (A − BL)xk .
+
+(2.12)
+
+Denna ekvation är nu i form av ett autonomt system och kallas också ett
+
+system
+
+slutet
+
+eftersom tillståndet återkopplas genom styrsignalen. Stabiliseringsproble-
+
+met i detta fall reduceras till att bestämma matrisen
+
+Denition 2.14 (Stabiliserbarhet).
+det nns en matris
+
+Sats 2.15.
+
+L,
+
+Matrisparet
+
+så att matrisen
+
+A − BL
+
+L
+
+så att (2.12) är stabil.
+
+(A, B) kallas stabiliserbart
+
+om
+
+är stabil.
+
+Låt matrisparet (A, B) vara styrbart. Då gäller att matrisparet
+
+(A, B) är stabiliserbart.
+Beviset utelämnas men baserar sig på satsen om polplacering [Lue79, s. 299].
+
+2.3 Luenbergerobservatör
+Tillståndsåterkopplingen (2.12) kräver att tillståndsvektorn
+
+xk
+
+observatör
+
+ta är ofta inte fallet. Härnäst kommer en så kallad
+
+konstrueras, med avsikten att rekonstruera tillståndsvektorn
+mätningar
+
+y0 , . . . , yk
+
+och en given styrsignal
+
+u.
+
+är känd, men det-
+
+för LTI-system att
+
+xk
+
+utgående från
+
+Luenbergerobservatören är en
+
+deterministisk version av Kalmanltret som konstrueras i nästa kapitel.
+Konstruktionen av Luenbergerobservatören görs enligt [Åst70, s. 142] på följande sätt. Först skapas ett modellsystem
+
+̂ k+1 = Ax
+̂ k + Buk ,
+x
+̂k,
+ŷk = C x
+där
+
+̂k
+x
+
+betecknar skattningen av tillståndet
+
+som i (2.7) och styrsignalen
+
+̂ 0 = x0
+x
+
+u
+
+xk .
+
+Systemmatriserna är samma
+
+är samma som för det ursprungliga systemet. Om
+
+så skulle modellens lösning sammanfalla med systemets (2.7) lösning,
+
+vilket skulle medföra att
+
+̂k
+x
+
+är en exakt skattning av tillståndet för varje
+
+Problemet är att starttillståndet
+
+x0
+
+är okänt och endast mätningar
+
+tillgängliga som inte beaktas av den ovanstående modellen. Låt
+
+k ≥ 0.
+
+y0 , . . . , yk
+
+är
+
+̂k
+ek = xk − x
+
+beteckna felet mellan skattningen och det verkliga tillståndet. Då ger den så
+
+14
+
+KAPITEL 2.
+
+kallade
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+innovationen ỹk := yk − ŷk = Cek
+
+tillståndet
+
+xk ,
+
+ett mått på hur bra
+
+̂k
+x
+
+skattar
+
+och detta antyder att tillståndsekvationen har formen
+
+̂ k+1 = Ax
+̂ k + Buk + K ỹk ,
+x
+för någon matris
+fås
+
+K.
+
+(2.13)
+
+Subtraheras tillståndet (2.13) från systemets tillstånd (2.7)
+
+felsystemet
+
+̂ k+1 = A(xk − x
+̂ k ) − K ỹk
+ek+1 = xk+1 − x
+
+(2.14)
+
+= (A − KC)ek .
+Om det gäller för felsystemet (2.14) att
+
+x0
+
+och varje val av skattning
+
+Denition 2.16
+
+̂0,
+x
+
+så kallas (2.13) en
+
+.
+
+(Detekterbarhet)
+
+det nns en matris
+
+K,
+
+ek → 0 då k → ∞, för varje starttillstånd
+
+Matrisparet
+
+så att matrisen
+
+A − KC
+
+tillståndsobservatör.
+
+(C, A)
+
+kallas
+
+detekterbart
+
+om
+
+är stabil.
+
+Det är alltså möjligt att konstruera en Luenbergerobservatör om och endast
+om matrisparet
+
+Sats 2.17.
+
+(C, A)
+
+är detekterbart.
+
+Låt matrisparet (C, A) vara observerbart. Då gäller att matrisparet
+
+(C, A) är detekterbart.
+Bevis.
+
+Resultatet fås genom dualitet. Enligt anmärkning 3.4 fås att om
+
+(C, A)
+
+T
+T
+T
+T
+är observerbart så är (A , C ) styrbart. Sats 2.15 ger att då är (A , C ) stabiliserbart. Denitionen för stabiliserbarhet säger att det nns en matris
+matrisen
+
+AT −C T K T
+
+enligt denitionen för detekterbarhet är matrisparet
+
+2.3.1
+
+A−KC
+
+är stabil. Då är också matrisen
+
+(C, A)
+
+K T , så att
+
+stabil och således
+
+detekterbart.
+
+Separationsprincipen
+
+Låt nu styrsignalen till systemet (2.7) vara
+
+̂k,
+uk = −Lx
+
+där
+
+̂k
+x
+
+är skattningen
+
+given av observatören (2.13) och är känd eftersom observatören är konstruerad
+på det sättet. Då blir tillståndsekvationen för det slutna systemet
+
+̂k
+xk+1 = Axk − BLx
+= Axk − BL(xk − ek )
+= (A − BL)xk + BLek ,
+
+15
+
+(2.15)
+
+KAPITEL 2.
+
+där felet
+
+ek
+
+av matrisen
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+ges av (2.14). Å ena sidan kan matrisen
+
+L
+
+K
+
+bestämmas oberoende
+
+så att skattningen given av observatören konvergerar mot syste-
+
+mets egentliga tillstånd. Å andra sidan kan matrisen
+matrisen
+
+K
+
+L bestämmas oberoende av
+
+så att systemet stabiliseras. Detta kallas för
+
+separationsprincipen
+
+i
+
+deterministisk reglerteori och gäller för linjära system [Lue79, s. 307]. Felet (2.14)
+och tillståndet (2.15) kan skrivas som ett autonomt system
+
+(︄
+
+xk+1
+ek+1
+
+)︄
+=
+
+(︄
+A − BL
+
+)︄ (︄ )︄
+xk
+
+BL
+A − KC
+
+0
+
+ek
+
+.
+
+(2.16)
+
+Egenvärdena för denna matris är precis unionen av egenvärdena för matriserna
+
+A − BL
+
+och
+
+A − KC
+
+och detta slutna system är stabilt då matrisparet
+
+är detekterbart, matrisparet
+har valts så att
+
+A − BL
+
+och
+
+(A, B)
+
+är stabiliserbart och matriserna
+
+A − KC
+
+(C, A)
+
+K
+
+och
+
+L
+
+är stabila.
+
+2.4 Optimal reglering
+Det är av intresse att bestämma matriserna
+
+K
+
+och
+
+L
+
+på ett optimalt sätt. I
+
+denna avhandling är huvudintresset stokastiska system, för vilka Kalmanltret
+kan ses som en observatör, varför en explicit konstruktionen av matrisen
+
+K
+
+för
+
+Luenbergerobservatören utelämnas här.
+Med optimal reglering avses att konstruera en
+
+regulator
+
+som styr systemet till
+
+origo så att en given kostnad minimeras. Om regulatorns styrsignal är i form av
+tillståndsåterkoppling
+lingsmatrisen
+
+uk = −Lxk , är optimal reglering bestämning av återkopp-
+
+L så att kostnaden minimeras. En kostnadsfunktional J(x0 , u) ger
+
+ett skalärt värde på kostnaden att utföra styrningen
+tillståndet
+
+−1
+u = {uk }N
+k=0 ,
+
+givet start-
+
+x0 .
+
+Här används följande kvadratiska kostnadsfunktional
+
+JN (x0 , u) := xT
+N SN xN +
+
+N
+−1
+∑︂
+
+T
+(xT
+k Qxk + uk Ruk ),
+
+(2.17)
+
+k=0
+eftersom den är enkel att hantera matematiskt och är tillräckligt exibel för
+många tillämpningar. Denna kostnadsfunktional har en
+och
+
+SN
+
+är kostnadsmatrisen för sluttillståndet vid tiden
+
+ändlig tidshorisont N
+
+N.
+
+Systemets tillstånd
+
+beskrivs oftast som en avvikelse från det önskade tillståndet och då ger
+naden för denna avvikelse. Matriserna
+
+SN
+
+16
+
+och
+
+Q
+
+Q
+
+kost-
+
+kan väljas godtyckligt med
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+restriktionen till positivt semidenita matriser så att termerna i (2.17) som innehåller dessa matriser är icke-negativa. Matrisen
+
+R
+
+är kostnadsmatrisen för
+
+styrningen och den väljs så att den är positivt denit, vilket betyder att varje
+term i 2.17 som innehåller
+Det
+
+R
+
+är positiv.
+
+linjärkvadratiska reglerproblemet
+
+eller kort
+
+quadratic) går ut på att hitta en reglersignal
+
+LQ-problemet
+
+(eng. linear-
+
+u för ett linjärt system (2.7), sådan
+
+att den kvadratiska kostnadsfunktionalen (2.17) minimeras.
+Följande sats enligt [HRS07, Sats 5.3.1], modierad för kostnadsfunktionalen (2.17), ger den optimala reglersignalen för deterministiska LTI-system, då vi
+
+xk
+
+har tillgång till systemets tillstånd
+
+Sats 2.18.
+nalen
+
+vid varje tidpunkt
+
+Reglersignalen till systemet
+
+(2.17),
+
+(2.7),
+
+k.
+
+som minimerar kostnadsfunktio-
+
+är
+
+uk = −Lk xk ,
+
+k = 0, . . . , N − 1,
+
+där den tidsvarianta återkopplingsmatrisen Lk ges av
+
+Lk := (B T Sk+1 B + R)−1 B T Sk+1 A
+
+(2.18)
+
+och Sk är lösningen till ekvationen
+
+Sk := AT Sk+1 A + Q − AT Sk+1 B(B T Sk+1 B + R)−1 B T Sk+1 A
+med begynnelsevärdet SN i
+
+(2.19)
+
+(2.17).
+
+Vidare gäller att minimala kostnaden är
+
+min JN (x0 , u) = xT
+0 S0 x0 ,
+
+(2.20)
+
+u
+
+där S0 fås ur
+Anmärkning
+
+(2.19).
+2.19. Om tillståndet
+
+xk
+
+inte är tillgängligt vid varje tidpunkt kan
+
+enligt separationsprincipen 2.3.1 en Luenbergerobservatör konstrueras om systemet är detekterbart. Då kan skattningen
+regleringen istället för tillståndet
+
+Anmärkning
+
+̂k
+x
+
+givet av observatören användas för
+
+xk .
+
+2.20. De tidsvarierande återkopplingsmatriserna
+
+Lk
+
+är oberoende
+
+av tillståndet och utsignalen av systemet och kan alltså beräknas på förhand så
+snart systemmatriserna och kostnadsmatriserna är kända.
+
+17
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+För beviset av satsen behövs först två lemman. Det första angående lösningarna till den
+
+dynamiska tidsdiskreta Riccatiekvationen
+
+(2.19), vilket ofta utelämnas
+
+i litteraturen vid konstruktionen av den optimala reglersignalen. Det andra (som
+också behövs senare i det stokastiska fallet) hjälper med omskrivningen av kostnadsfunktionalen (2.17).
+
+Lemma 2.21.
+
+Låt SN ≥ 0, Q ≥ 0 och R > 0. Deniera Sk genom
+
+(2.19)
+
+för
+
+0 ≤ k ≤ N − 1. Då gäller att Sk ≥ 0 för varje k = 0, . . . , N .
+Vidare om Q > 0 så är Sk > 0 för varje k = 0, . . . , N − 1.
+Bevis.
+Då
+
+Enligt antagandet är
+
+R>0
+
+så är
+
+SN ≥ 0. Anta nu att Sk+1 ≥ 0 för något k ≤ N − 1.
+
+(B T Sk+1 B + R) > 0
+
+och därmed inverterbar, varför (2.19) ger
+
+att
+
+Sk = AT Sk+1 A − AT Sk+1 B(B T Sk+1 B + R)−1 B T Sk+1 A + Q.
+1/2
+
+Sk+1 . Vi kan skriva
+(︁
+1/2
+1/2
+1/2 )︁
+1/2
+Sk = (Sk+1 A)T I − Sk+1 B(B T Sk+1 B + R)−1 B T Sk+1 (Sk+1 A) + Q.
+
+Låt
+
+Då
+
+Sk+1
+
+Q≥0
+
+vara den positivt semidenita kvadratroten av
+
+gäller att
+
+Sk ≥ 0
+
+om
+
+(︁
+1/2
+1/2
+1/2 )︁
+1/2
+(Sk+1 A)T I − Sk+1 B(B T Sk+1 B + R)−1 B T Sk+1 (Sk+1 A) ≥ 0.
+Eftersom
+
+Låt
+
+T T P T ≥ 0 om P ≥ 0 enligt lemma A.3 räcker det att
+(︁
+1/2
+1/2 )︁
+I − Sk+1 B(B T Sk+1 B + R)−1 B T Sk+1 ≥ 0.
+
+R1/2
+
+vara den positivt denita kvadratroten av
+
+R.
+
+visa att
+
+Vi kan skriva
+
+I − Sk+1 B(B T Sk+1 B + R)−1 B T Sk+1
+(︁
+)︁−1
+1/2
+1/2
+= I − Sk+1 B(R1/2 )−1 (R1/2 )−1 B T Sk+1 B(R1/2 )−1 + I (R1/2 )−1 B T Sk+1 .
+1/2
+
+Sätt
+
+1/2
+
+1/2
+
+W := Sk+1 B(R1/2 )−1
+
+och då får vi med hjälp av lemma A.1 att
+
+I − Sk+1 B(B T Sk+1 B + R)−1 B T Sk+1 = I − W (W T W + I)−1 W T .
+1/2
+
+1/2
+
+= (W W T + I)−1 ,
+vilket är en positivt denit matris eftersom det är en invers. Då har vi visat att
+
+Sk = (Sk+1 A)T (W W T + I)−1 (Sk+1 A) + Q ≥ 0
+1/2
+
+och enligt induktionsprincipen fås att
+fås att om
+
+Q>0
+
+1/2
+
+Sk ≥ 0
+
+så ser vi ur (2.21) att
+
+för varje
+
+Sk > 0
+
+18
+
+k = 0, . . . , N − 1.
+
+för varje
+
+(2.21)
+Vidare
+
+k = 0, . . . , N − 1.
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+Lemma 2.22.
+
+Låt Lk och Sk ges av
+
+Tuomas Virtanen
+
+(2.18)
+
+respektive
+
+(2.19)
+
+och anta att matri-
+
+serna Q och SN , är positivt semidenita och R positivt denit. Då gäller följande
+likhet
+T
+T
+(Axk + Buk )T Sk+1 (Axk + Buk ) − xT
+k Sk xk + xk Qxk + uk Ruk
+
+= (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk ).
+Bevis.
+
+(2.22)
+
+Utveckling av vänstra ledet i (2.22) ger
+
+T
+T T
+T T
+V L = xT
+k A Sk+1 Axk + xk A Sk+1 Buk + uk B Sk+1 Axk
+T
+T
+T
+T
++ uT
+k B Sk+1 Buk − xk Sk xk + xk Qxk + uk Ruk
+
+(2.23)
+
+T
+T T
+= xT
+k (A Sk+1 A + Q − Sk )xk + xk A Sk+1 Buk
+T
+T
+T
++ uT
+k B Sk+1 Axk + uk (B Sk+1 B + R)uk .
+Lemma 2.21 ger att
+
+Sk ≥ 0
+
+(B T Sk+1 B + R) > 0
+
+för varje
+
+k = 0, . . . , N
+
+och då
+
+R > 0
+
+så är
+
+och därmed inverterbar enligt sats A.2. Vi kan nu slå
+
+ihop de två sista termerna i (2.23), med användning av (2.18), på följande sätt
+
+T
+T
+T
+uT
+k B Sk+1 Axk + uk (B Sk+1 B + R)uk
+(︁
+)︁
+T
+T
+−1 T
+= uT
+k (B Sk+1 B + R) uk + (B Sk+1 B + R) B Sk+1 Axk
+T
+= uT
+k (B Sk+1 B + R)(uk + Lk xk ).
+Vidare gäller att
+
+T
+T
+−1
+LT
+k = A Sk+1 B(B Sk+1 B + R)
+
+nering och det faktum att
+
+R
+
+och
+
+Sk+1
+
+(2.24)
+
+enligt reglerna för transpo-
+
+är symmetriska. Då är
+
+T
+AT Sk+1 B = LT
+k (B Sk+1 B + R).
+
+(2.25)
+
+Insättning av (2.24) och (2.25) i (2.23) ger att
+
+T
+T T
+T
+V L = xT
+k (A Sk+1 A + Q − Sk )xk + xk Lk (B Sk+1 B + R)uk
+T
++ uT
+k (B Sk+1 B + R)(uk + Lk xk ).
+Om vi nu skriver om (2.19) som
+
+T
+Sk = AT Sk+1 A + Q − LT
+k (B Sk+1 B + R)Lk ,
+så kan första termen i (2.26) skrivas
+
+19
+
+(2.26)
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+T
+xT
+k (A Sk+1 A + Q − Sk )xk
+(︂
+(︁ T
+)︁)︂
+TS
+T (B T S
+= xT
+A
+A
++
+Q
+−
+A
+S
+A
++
+Q
+−
+L
+B
++
+R)L
+xk
+k+1
+k+1
+k+1
+k
+k
+k
+T
+T
+= xT
+k Lk (B Sk+1 B + R)Lk xk .
+
+(2.27)
+
+Insättning av (2.27) i (2.26) ger nu att
+
+T
+T T
+T
+T
+V L = xT
+k Lk (B Sk+1 B + R)Lk xk + xk Lk (B Sk+1 B + R)uk
+T
++ uT
+k (B Sk+1 B + R)(uk + Lk xk )
+T
+T
+T
+T
+= xT
+k Lk (B Sk+1 B + R)(uk + Lk xk ) + uk (B Sk+1 B + R)(uk + Lk xk )
+
+= (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk ).
+
+Bevis av Sats 2.18.
+
+Vi gör en omskrivning av kostnadsfunktionalen (2.17) enligt
+
+följande
+
+JN (x0 , u) = xT
+N SN xN +
+= xT
+0 S0 x0 +
+= xT
+0 S0 x0 +
+
+N
+−1
+∑︂
+
+T
+(xT
+k Qxk + uk Ruk )
+
+k=0
+N
+−1
+∑︂
+
+T
+(xT
+k+1 Sk+1 xk+1 − xk Sk xk ) +
+
+k=0
+N
+−1
+∑︂
+
+N
+−1
+∑︂
+
+T
+(xT
+k Qxk + uk Ruk )
+
+k=0
+
+(︁
+)︁
+(Axk + Buk )T Sk+1 (Axk + Buk ) − xT
+k Sk xk
+
+k=0
+
++
+
+N
+−1
+∑︂
+
+T
+(xT
+k Qxk + uk Ruk ).
+
+k=0
+Nu kan vi använda lemma 2.22 som ger att
+
+JN (x0 , u) = xT
+0 S0 x0 +
+
+N
+−1
+∑︂
+
+(uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk )
+
+k=0
+och eftersom
+
+(B T Sk+1 B + R) > 0
+
+så är varje term i summan större än eller
+
+lika med noll. Då och endast då styrsignalen väljs som
+
+k = 0, . . . , N − 1
+
+uk = −Lk xk
+
+för varje
+
+så är varje term i summan lika med noll och vi får att
+
+min JN (x0 , u) = xT
+0 S0 x0 .
+u
+
+20
+
+KAPITEL 2.
+
+2.4.1
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+Oändlig tidshorisont
+
+I vissa tillämpningar kan det vara oklart hur man ska välja tidshorisonten
+
+N
+
+i
+
+kostnadsfunktionalen (2.17), vilket motiverar enligt [HRS07, s. 61] att studera
+reglerproblemet med en oändlig tidshorisont och följande kostnadsfunktional
+
+∞
+∑︂
+T
+J∞ (x0 , u) :=
+(xT
+k Qxk + uk Ruk ).
+
+(2.28)
+
+k=0
+Minimeringen av denna är meningsfull endast då kostnaden kan göras ändlig och
+ett tillräckligt villkor för detta är att systemet är stabiliserbart [HRS07, s. 62].
+Det visar sig att under vissa villkor kan man approximera problemet för
+oändlig tidshorisont med problemet för ändlig tidshorisont och låter
+Låt
+
+Q = H TH
+
+för någon
+
+N → ∞.
+
+p × n matris H . Då är Riccatiekvationen (2.19) av
+
+formen
+
+Sk = AT Sk+1 A + H T H − AT Sk+1 B(B T Sk+1 B + R)−1 B T Sk+1 A
+
+(2.29)
+
+och enligt följande sats konvergerar lösningen mot ett gränsvärde som är oberoende av valet av
+
+Sats 2.23.
+
+SN .
+
+Anta att Q ≥ 0, R > 0, matrisparet (H, A) är detekterbart, där
+
+H T H = Q och matrisparet (A, B) är stabiliserbart. Beteckna lösningen vid
+tidpunkt k = 0 till
+
+(2.29)
+
+startad från SN med S0 (SN ) och låt
+
+L(S) := (B T SB + R)−1 B T SA.
+
+(2.30)
+
+Då gäller följande påståenden:
+1. Det nns en entydig matris S+ ≥ 0, oberoende av SN , så att
+
+lim S0 (SN ) = S+ .
+
+N →∞
+
+Matrisen S+ satiserar den
+
+algebraiska Riccatiekvationen
+
+S = AT SA + Q − AT SB(B T SB + R)−1 B T SA
+
+(2.31)
+
+och matrisen A − BL(S+ ) är stabil. Vidare gäller att om matrisparet
+
+(A, B) är styrbart så är S+ > 0.
+2. Reglersignalen till systemet
+
+(2.7)
+
+som minimerar
+
+uk = −L(S+ )xk
+och minimala kostnaden är J∞ (x0 , u) = xT
+0 S+ x0 .
+21
+
+(2.28)
+
+ges av
+
+KAPITEL 2.
+
+LINJÄR SYSTEMTEORI
+
+Tuomas Virtanen
+
+Första påståendet nns bevisat i [LR95, Sats 17.5.3, s. 382] och det andra
+påståendet nns bevisat i [HRS07, Sats 5.3.2, s. 62].
+Observera att återkopplingsmatrisen i detta fall är tidsinvariant. Den optimala reglersignalen till systemet (2.7) som minimerar kostnadsfunktionalen (2.28)
+med oändlig tidshorisont är alltså i form av statisk tillståndsåterkoppling.
+
+Anmärkning
+
+2.24. Om
+
+A är inverterbar så gäller enligt [LR95, Korollarium 13.5.3
+
+s. 326] att bland alla positivt semidenita lösningar till (2.31) är
+lösningen för vilken matrisen
+alla lösningar
+
+S
+
+A − BL(S+ )
+
+S+ den entydiga
+
+är stabil. Det gäller också att bland
+
+till (2.31), för vilka matrisen
+
+A − BL(S)
+
+entydiga positivt semidenita lösningen. Vidare gäller att
+
+är stabil, är
+
+S+
+
+för matrisen
+
+A
+
+den
+
+är den maximala
+
+positivt semidenita lösningen till (2.31) i den mening att för varje
+löser (2.31) så gäller att matrisen
+
+S+
+
+S ̸= S+
+
+som
+
+S+ −S är positivt semidenit. Inverterbarheten
+
+är inte nödvändig enligt [DGG86].
+
+22
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+Kapitel 3
+Optimal stokastisk estimering
+3.1 Denitioner och antaganden för diskreta stokastiska system
+Repetition av grundläggande sannolikhetslära och normalfördelningen för stokastiska vektorer samt notationer och begrepp som används i denna avhandling
+nns i bilaga B.
+Detta kapitel börjar med några denitioner för stokastiska processer enligt [LR95, s. 375] som är viktiga grundläggande denitioner för stokastiska
+system. Teorin för stokastiska system görs här endast i diskret tid, men en
+metod för sampling av kontinuerliga system ges i avsnitt 3.4. Ett exempel
+av samplingen och metoden för estimeringen av tillståndet som gås igenom i
+avsnitt 3.2 presenteras i slutet av kapitlet.
+
+Denition 3.1.
+(i) En
+
+vk
+
+stokastisk process
+består av
+
+n
+
+är en följd
+
+{vk }k≥0
+
+stycken stokastiska variabler.
+
+vitt brus
+
+xk
+
+är vitt brus, såsom denierat ovan, och varje vektor
+
+vk
+
+är oberoende, vilket implicerar att
+
+Gaussiskt vitt brus
+är dessutom
+
+j ̸= k
+
+och
+
+(ii) En stokastisk process sägs vara
+
+(iii)
+
+av stokastiska vektorer, där varje
+
+n-dimensionellt
+
+om för
+
+Cov(vj , vk ) = 0
+
+då
+
+gäller att
+
+xj
+
+j ̸= k .
+
+normalfördelad.
+
+(iv) En stokastisk process sägs ha
+
+väntevärdet noll
+
+k ≥ 0.
+23
+
+om
+
+E(vk ) = 0
+
+för varje
+
+KAPITEL 3.
+
+Ett
+
+OPTIMAL STOKASTISK ESTIMERING
+
+stokastiskt LTI-system
+
+Tuomas Virtanen
+
+ges av tillståndsmodellen:
+
+xk+1 = Axk + Buk + F vk ,
+
+(3.1)
+
+yk = Cxk + Gwk .
+
+(3.2)
+
+Följande antaganden görs för systemet (3.1)(3.2):
+1.
+
+Processbruset {vk }k≥0
+
+och
+
+mätbruset {wk }k≥0
+
+är gaussiskt vitt brus med
+
+väntevärdet noll och givna kovariansmatriser
+
+E(vk vkT ) = Pv ≥ 0,
+
+E(wk wkT ) = Pw > 0,
+
+för varje
+
+k.
+
+2. Processbruset och mätbruset är oberoende processer så att
+
+E(vj wkT ) = 0,
+3. Starttillstådet
+
+G
+
+j
+
+och
+
+k.
+
+x0 antas vara normalfördelat med givna väntevärdet m0 och
+
+kovariansmatrisen
+4. Matrisen
+
+för varje
+
+P0 > 0.
+
+antas vara surjektiv.
+
+5. Vidare antas att
+
+x0
+
+oberoende för varje
+
+och
+
+vj
+
+är oberoende för varje
+
+j
+
+samt
+
+x0
+
+och
+
+wk
+
+är
+
+k.
+
+På samma sätt som för deterministiska system fås att lösningen till (3.1) ges av
+
+xn = An x0 +
+
+n−1
+∑︂
+
+An−1−k (Buk + F vk ),
+
+(3.3)
+
+k=0
+men lösningen här är en stokastisk vektor som följd av processbruset. Observera
+att ekvation (3.2) kan också skrivas
+
+yk = Cxk + fk ,
+där
+
+{fk }k≥0
+
+är gaussiskt vitt brus med väntevärdet noll och kovariansmatrisen
+
+Pf = GPw GT .
+
+Lemma 3.2.
+
+Låt x och v vara oberoende normalfördelade stokastiska vektorer
+
+med kovariansmatriserna Cov(x) = Px och Cov(v) = Pv . Låt A och F vara sådana konstanta matriser att multiplikationerna Ax och F v samt summan
+
+Ax + F v är denierade. Då är summan Ax + F v en normalfördelad stokastisk
+vektor med väntevärdet A E(x) + F E(v) och kovariansmatrisen
+
+APx AT + F Pv F T .
+24
+
+KAPITEL 3.
+
+Bevis.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Vi kan skriva
+
+(︂
+
+Ax + F v = A F
+och då
+
+x
+
+v
+
+och
+
+(︄ )︄
+)︂ x
+v
+
+är oberoende så följer enligt påstående
+
+gaussisk och således är
+
+Ax + F v
+
+Tuomas Virtanen
+
+2
+
+i sats B.20 att
+
+( xv )
+
+är
+
+gaussisk. Väntevärdet fås direkt på grund av
+
+lineariteten av väntevärdet.
+Kovariansmatrisen blir, tack vare att
+
+x
+
+och
+
+v
+
+är oberoende,
+
+)︁
+(︁
+E (Ax + F v − E(Ax + F v))(Ax + F v − E(Ax + F v))T
+(︂(︁
+)︁(︁
+)︁T )︂
+= E A(x − E(x)) + F (v − E(v)) A(x − E(x)) + F (v − E(v))
+)︁
+)︁
+(︁
+(︁
+= E A(x − E(x))(x − E(x))T AT + E F (v − E(v))(v − E(v))T F T
+= APx AT + F Pv F T .
+
+Lemma 3.3.
+
+Låt xn vara tillståndsvektorn, yn vara mätsignalen och un vara
+
+reglersignalen enligt
+
+(3.1)(3.2)
+
+för n = 0, . . . , k , där x0 , v0 , . . . , vk , w0 , . . . , wk
+
+är sinsemellan oberoende gaussiska vektorer. Anta att reglersignalen un är en
+funktion av tillståndet xn och mätsignalen yn för varje n = 0, . . . , k . Då gäller
+följande påståenden:
+1. vk är oberoende av xn för varje n = 0, . . . , k ,
+2. wk är oberoende av xn för varje n = 0, . . . , k ,
+3. vk är oberoende av yn för varje n = 0, . . . , k .
+Bevis.
+
+Lösningen (3.3) ger att vektorn
+
+v0 , . . . , vn−1 .
+
+Enligt antagandet är
+
+xn
+
+är en funktion av
+
+un = f (xn , yn )
+
+av
+
+wn .
+
+eller med insättning av
+
+x0 , u0 , . . . , un−1 , v0 , . . . , vn−1
+
+lösningen (3.3) och ekvation (3.2) en funktion av
+och
+
+Upprepad användning av antagandena ger att
+
+x0 , v0 , . . . , vn−1 , w0 , . . . , wn .
+
+x0 , v0 , . . . , vn−1 , w0 , . . . , wn−1 .
+av
+
+xn
+
+då
+
+yn = Cxn + Gwn
+
+för varje
+
+Anmärkning
+
+Vidare fås också att
+
+xn
+
+un
+
+följer att
+
+är oberoende av
+
+vk
+
+xn
+
+är oberoende av
+
+yn
+
+är en funktion
+
+är en funktion av
+
+Enligt antagandena fås nu att
+
+n = 0, . . . , k , wk
+
+x0 , u0 , . . . , un−1 ,
+
+för varje
+för varje
+
+vk
+
+är oberoende
+
+n = 0, . . . , k ,
+
+och
+
+n = 0, . . . , k .
+
+3.4. På grund av lineariteten hos systemet (3.1)(3.2) och lem-
+
+man 3.2 och 3.3 följer att
+att processerna
+
+{xk }k≥0
+
+xn
+
+samt
+
+och
+
+yn
+
+är gaussiska för varje
+
+{yk }k≥0
+
+n ≥ 0.
+
+är gaussiska processer.
+
+25
+
+Detta betyder
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+3.2 Estimering med Kalmanltret
+Ofta är bara en del av tillståndsvariablerna tillgängliga och mätningen av dem
+påverkas dessutom av mätfel eller mätbrus. Detta ger upphov till ett estimeringsproblem att bestämma den bästa skattningen för hela tillståndsvektorn, utgående från den tillgängliga informationen om systemet. Ett nytt sätt att lösa detta
+problem presenterades av den ungerskfödda amerikanska matematikern Rudolf
+E. Kalman i sin mycket inytelserika artikel [Kal60]. Lösningen har senare fått
+namnet
+
+Kalmanltret.
+
+I denna avhandling ges en tvådelad formel av skattningen, Kalmanprediktorn
+och Kalmankorrektorn. Idén med uppdelningen är att systemets tillstånd kan
+estimeras av prediktorn vid varje tidpunkt även om mätningar saknas ibland. Då
+en ny mätning är tillgänglig ger korrektorn en förbättrad skattning av tillståndet.
+Prediktiorn är en
+
+a priori-skattning
+
+eftersom den bestäms
+
+det nuvarande tillståndet har gjorts. Korrektorn är en
+Skattningen av tillståndet betecknas med
+
+̂
+x
+
+före
+
+en mätning av
+
+a posteriori-skattning.
+
+och kan bestämmas enligt olika
+
+kriterier. Ett sätt att bestämma skattningen är så att det kvadratiska medelfelet
+
+̂ 2 ) minimeras. Detta ger en så kallad MMSE-skattning
+E(∥x − x∥
+
+(eng. minimum
+
+mean square error) och enligt följande lemma ges denna skattning av det betingade väntevärdet. Lemmat är baserat på den för skalära fallet [Ros10, Proposition
+6.1, s. 349] och skrivs här för reellvärda stokastiska vektorer.
+
+Lemma 3.5.
+
+Låt x och y vara stokastiska vektorer på samma sannolikhetsrum
+
+och låt σ(y) vara σ -algebran genererad av y . Då är
+
+̂ := E(x | σ(y))
+x
+
+(3.4)
+
+en σ(y)-mätbar stokastisk vektor som uppfyller
+
+)︁
+(︁
+)︁
+(︁
+̂ 2 ,
+min E ∥x − z∥2 = E ∥x − x∥
+
+(3.5)
+
+z
+
+där z är σ(y)-mätbar.
+Bevis.
+
+För en godtycklig
+
+σ(y)-mätbar
+
+stokastisk vektor
+
+z
+
+gäller att
+
+∥x − z∥2 = ∥x − E(x | σ(y)) + E(x | σ(y)) − z∥2
+= ∥x − E(x | σ(y))∥2 + ∥E(x | σ(y)) − z∥2
+(︁
+)︁T (︁
+)︁
++ 2 E(x | σ(y)) − z
+x − E(x | σ(y)) .
+26
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+Då är
+
+(︁
+)︁
+(︁
+)︁
+(︁
+)︁
+E ∥x − z∥2 = E ∥x − E(x | σ(y))∥2 + E ∥E(x | σ(y)) − z∥2
+(︂(︁
+)︁T (︁
+)︁)︂
++ 2 E E(x | σ(y)) − z
+x − E(x | σ(y)) .
+
+(3.6)
+
+Vi kan använda tredje egenskapen i sats B.18 för den sista termen
+
+E
+
+(︂(︁
+
+)︁T (︁
+
+)︁)︂
+E(x | σ(y)) − z
+x − E(x | σ(y))
+(︃ (︂
+)︂)︃
+(︁
+)︁T (︁
+)︁ ⃓
+⃓
+= E E E(x | σ(y)) − z
+x − E(x | σ(y)) σ(y)
+
+och eftersom
+
+(︁
+
+E(x | σ(y)) − z
+
+)︁T
+
+är
+
+σ(y)-mätbar fås enligt egenskap 5 i sats B.18
+
+att
+
+(︃
+E
+
+(︂(︁
+
+)︁T (︁
+
+)︂
+)︁ ⃓
+x − E(x | σ(y)) ⃓ σ(y)
+
+)︃
+
+E(x | σ(y)) − z
+(︂(︁
+)︁T (︁
+)︁)︂
+= E E(x | σ(y)) − z E x − E(x | σ(y)) | σ(y)
+(︂(︁
+)︁T (︁
+)︁)︂
+= E E(x | σ(y)) − z
+E(x | σ(y)) − E(E(x | σ(y)) · 1 | σ(y))
+(︂(︁
+)︁T (︁
+)︁)︂
+= E E(x | σ(y)) − z
+E(x | σ(y)) − E(x | σ(y))
+
+E
+
+= 0.
+Den andra termen i (3.6) är icke-negativ och då fås för varje
+
+σ(y)-mätbar z
+
+att
+
+(︁
+)︁
+(︁
+)︁
+E ∥x − z∥2 ≥ E ∥x − E(x | σ(y))∥2 ,
+där likhet gäller då och endast då
+
+z = E(x | σ(y)).
+
+Således har vi visat påståen-
+
+det (3.5), det vill säga det betingade väntevärdet (3.4) minimerar det kvadratiska
+medelfelet.
+Enligt följande sats gäller att om
+även den betingade fördelningen för
+
+x och y
+
+är simultant normalfördelade så är
+
+x
+
+y
+
+givet
+
+gaussisk. Väntevärdet och kova-
+
+riansmatrisen bestämmer entydigt fördelningen för en gaussisk vektor och dessa
+ger explicita formler för att beräkna skattningen (3.4) som minimerar det kvadratiska medelfelet.
+
+27
+
+KAPITEL 3.
+
+Sats 3.6.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+Låt x ∈ Rn och y ∈ Rp vara normalfördelade stokastiska vektorer
+
+sådana att deras simultana fördelning är gaussisk. Anta att kovariansmatrisen
+
+Py > 0. Då är den betingade fördelningen för x givet y gaussisk och det betingade
+väntevärdet ges av
+
+(︁
+)︁
+E(x | σ(y)) = E(x) + Px,y Py−1 y − E(y) .
+
+(3.7)
+
+Den betingade kovariansmatrisen är
+
+Bevis.
+
+där
+
+Cov(x | σ(y)) = Px − Px,y Py−1 Py,x .
+
+(3.8)
+
+z = C1 x + C2 y,
+
+(3.9)
+
+Sätt
+
+C1
+
+och
+
+C2
+
+Vidare gäller att
+
+y
+
+och
+
+z
+
+z
+x
+
+och
+
+y
+
+normalfördelad enligt lemma 3.2.
+
+är simultant normalfördelade eftersom
+
+(︄ )︄
+y
+
+och
+
+z
+
+är konstanta matriser. Då är
+
+(︄
+=
+
+0
+
+I
+
+)︄ (︄ )︄
+x
+y
+
+C1 C2
+
+antas vara simultant normalfördelade.
+
+Vi vill nu bestämma
+
+C1
+
+och
+
+C2
+
+så att
+
+y
+
+och
+
+z
+
+är oberoende, vilket för nor-
+
+malfördelade vektorer är ekvivalent med att de är okorrelerade enligt påstående
+
+3
+
+i sats B.20. Således
+
+0 = Cov(z, y)
+(︁
+)︁
+= E (z − E(z))(y − E(y))T
+(︂(︁
+)︁(︁
+)︁T )︂
+= E C1 (x − E(x)) + C2 (y − E(y)) y − E(y)
+(︁
+)︁
+(︁
+)︁
+= C1 E (x − E(x))(y − E(y))T + C2 E (y − E(y))(y − E(y))T
+= C1 Px,y + C2 Py .
+Eftersom vi antar att
+
+Py > 0 så kan vi multiplicera med inversen Py−1
+
+från höger
+
+och får att
+
+C2 = −C1 Px,y Py−1 ,
+där
+
+C1
+
+kan väljas godtyckligt. Vi kan välja
+
+C1 = I
+
+och då är
+
+C2 = −Px,y Py−1 .
+
+Insättning i (3.9) ger att
+
+z = x − Px,y Py−1 y
+28
+
+(3.10)
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+är nu en vektor som är oberoende av
+
+y.
+
+Tuomas Virtanen
+
+Vi kan nu bestämma det betingade
+
+väntevärdet och kovariansen för vektorn
+
+x = z + Px,y Py−1 y.
+Eftersom
+
+z
+
+är oberoende av
+
+y
+
+och
+
+y
+
+är
+
+σ(y)-mätbar
+
+har vi att
+
+E(x | σ(y)) = E(z + Px,y Py−1 y | σ(y))
+= E(z | σ(y)) + Px,y Py−1 E(y | σ(y))
+= E(z) + Px,y Py−1 y,
+Vidare med insättning av (3.10) fås att
+
+E(z) + Px,y Py−1 y = E(x − Px,y Py−1 y) + Px,y Py−1 y
+= E(x) − Px,y Py−1 E(y) + Px,y Py−1 y
+= E(x) + Px,y Py−1 (y − E(y)),
+vilket visar (3.7).
+Eftersom
+
+z
+
+är bestämd så att
+
+betingade kovariansmatrisen för
+
+x
+
+Cov(z, y) = 0
+
+och
+
+y
+
+är
+
+σ(y)-mätbar
+
+fås den
+
+med hjälp av sats B.18 som
+
+Cov(x | σ(y)) = Cov(z + Px,y Py−1 y | σ(y))
+= Cov(z | σ(y)) + Px,y Py−1 Cov(y, z | σ(y))
++ Cov(z, y | σ(y))Py−1 Py,x + Px,y Py−1 Cov(y | σ(y))Py−1 Py,x
+= Cov(z | σ(y))
+= Cov(z).
+Vidare har vi med insättning av (3.10) och enligt lemma B.16 att
+
+Cov(z) = Cov(x − Px,y Py−1 y)
+= Cov(x) − Px,y Py−1 Cov(y, x)
+− Cov(x, y)Py−1 Py,x + Px,y Py−1 Cov(y)Py−1 Py,x
+= Px − Px,y Py−1 Py,x − Px,y Py−1 Py,x + Px,y Py−1 Py Py−1 Py,x
+= Px − Px,y Py−1 Py,x ,
+vilket visar (3.8).
+
+29
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Enligt anmärkning 3.4 är tillståndsvektorn
+
+Gwk
+
+gaussiska för varje
+
+k ≥ 0.
+
+xk
+
+Tuomas Virtanen
+
+och mätningen
+
+Eftersom mätbruset
+
+wk
+
+yk = Cxk +
+
+är gaussiskt och obero-
+
+xk enligt lemma 3.3 så följer att vektorn
+(︄ )︄ (︄
+)︄ (︄
+)︄ (︄ )︄
+xk
+xk
+I 0
+xk
+=
+=
+yk
+Cxk + Gwk
+C G
+wk
+
+ende av tillståndet
+
+är också gaussisk. Tillståndsvektorn
+
+xk
+
+och mätningen
+
+yk
+
+är alltså simultant
+
+gaussiska och då är enligt sats 3.6 den betingade fördelningen för
+gaussisk. Då en mätning av
+
+yk
+
+xk
+
+givet
+
+yk
+
+har gjorts kan det betingade väntevärdet (3.7)
+
+beräknas och kovariansmatrisen fås genom (3.8).
+
+l
+
+införs be-
+
+P0
+
+för start-
+
+För mängden av tillgänglig information om systemet vid tiden
+teckningen
+tillståndet
+
+Yl ,
+x0
+
+vilket innefattar väntevärdet
+samt alla
+
+tillgängliga
+
+Observera att för mängden
+tidpunkt
+säga
+
+l = −1
+
+Yk
+
+m0
+
+mätningar
+
+och kovariansen
+
+yi
+
+upp till och med tidpunkt
+
+behöver det inte gälla att mätningen
+
+l.
+
+yk ∈ Yk . Vid
+
+är endast information om starttillståndet tillgängligt, det vill
+
+Y−1 = {m0 , P0 }. A priori - och a posteriori -skattningarna kan nu denieras
+
+enligt följande.
+
+Denition 3.7.
+
+Prediktionen
+
+vet informationen
+
+2
+
+̂ k ∥ ).
+E(∥xk − x
+
+Yl ,
+
+där
+
+vid tiden
+
+l < k,
+
+k
+
+är skattningen av tillståndet
+
+xk
+
+gi-
+
+som minimerar det kvadratiska medelfelet
+
+Prediktionen betecknas med
+
+̂ k|l
+x
+
+och ges av det betingade vän-
+
+tevärdet, alltså
+
+̂ k|l := E(xk | Yl ),
+x
+
+l < k.
+
+(3.11)
+
+Den tillhörande betingade kovariansmatrisen betecknas med
+
+Pk|l := Cov(xk | Yl ),
+Anmärkning
+tillståndet
+
+l < k.
+
+(3.12)
+
+3.8. Det följer direkt från denna denition att prediktionen av start-
+
+x0
+
+är
+
+̂ 0|−1 = m0 ,
+x
+
+P0|−1 = P0 .
+
+(3.13)
+
+Dessa är startvärden för både prediktorn och korrektorn.
+För korrektionen gäller utöver prediktionen att mätningen vid nuvarande tidpunkt är tillgänglig och denna mätning skrivs därför ut explicit i det betingade
+väntevärdet och kovariansen.
+
+30
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Denition 3.9.
+
+Yl ,
+
+informationen
+ka medelfelet
+
+Korrektionen
+där
+
+l<k
+2
+
+vid tiden
+
+k
+
+är skattningen av tillståndet
+
+samt mätningen
+
+̂ k ∥ ).
+E(∥xk − x
+
+Tuomas Virtanen
+
+yk ,
+
+xk
+
+givet
+
+som minimerar det kvadratis-
+
+Korrektionen betecknas med
+
+̂ k|k
+x
+
+och ges av det
+
+betingade väntevärdet, alltså
+
+̂ k|k := E(xk | Yl , yk ),
+x
+
+l < k.
+
+(3.14)
+
+Den tillhörande betingade kovariansmatrisen betecknas med
+
+Pk|k := Cov(xk | Yl , yk ),
+För
+
+k ≥ 1
+
+l < k.
+
+(3.15)
+
+fås följande resultat för prediktionen av tillståndet
+
+xk
+
+som en
+
+rekursion.
+
+Sats 3.10 (Kalmanprediktorn). Låt Yl , l < k vara den tillgängliga informationen
+och uk−1 = f (Yl ) vara den kända delen av reglersignalen u i tidsintervallet [k −
+
+̂ k−1|l vara en given optimal skattning av tillståndet vid
+1 − ∆t, k − 1). Vidare låt x
+tidpunkt k − 1 och Pk−1|l vara den givna tillhörande kovariansmatrisen.
+Då fås prediktionen av tillståndet xk , k ≥ 1, för systemet
+
+̂ k|l = Ax
+̂ k−1|l + Buk−1 ,
+x
+
+(3.1)
+
+enligt
+
+l ≤k−1
+
+(3.16)
+
+och den tillhörande betingade kovariansmatrisen ges av
+
+Pk|l = APk−1|l AT + F Pv F T ,
+
+(3.17)
+
+där Pv är kovariansmatrisen för processbruset.
+Bevis.
+
+Det stokastiska LTI-systemets tillståndsekvation (3.1) kan också skrivas
+
+xk = Axk−1 + Buk−1 + F vk−1
+
+(3.18)
+
+och insättning av (3.18) i denitionen för prediktionen (3.11) ger
+
+̂ k|l = E(xk | Yl )
+x
+= E(Axk−1 + Buk−1 + F vk−1 | Yl )
+= A E(xk−1 | Yl ) + B E(uk−1 | Yl ) + F E(vk−1 | Yl ).
+Eftersom
+
+vk−1
+
+uk−1 = f (Yl ) är Yl -mätbar och som följd av lemma 3.3 är processbruset
+
+oberoende av informationen
+
+Yl
+
+så får vi att
+
+31
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+A E(xk−1 | Yl ) + B E(uk−1 | Yl ) + F E(vk−1 | Yl )
+= A E(xk−1 | Yl ) + Buk−1 + F E(vk−1 ).
+Vidare då
+
+E(vk−1 ) = 0
+
+och omskrivning med denitionen (3.11) fås
+
+̂ k−1|l + Buk−1 ,
+A E(xk−1 | Yl ) + Buk−1 + F E(vk−1 ) = Ax
+vilket visar (3.16).
+Den tillhörande kovariansmatrisen är enligt denitionerna (3.12), (B.9)
+och (3.11)
+
+Pk|l = Cov(xk | Yl )
+(︂(︁
+)︂
+)︁(︁
+)︁T
+= E xk − E(xk | Yl ) xk − E(xk | Yl ) | Yl
+(︁
+)︁
+̂ k|l )(xk − x
+̂ k|l )T | Yl
+= E (xk − x
+Med insättning av (3.16) och (3.18) fås att
+
+(︁
+)︁
+̂ k|l )(xk − x
+̂ k|l )T | Yl
+E (xk − x
+(︂(︁
+)︂
+)︁(︁
+)︁T
+̂ k−1|l ) + F vk−1 A(xk−1 − x
+̂ k−1|l ) + F vk−1 | Yl .
+= E A(xk−1 − x
+Användning av lemma 3.3 som säger att
+informationen
+
+E
+
+Yl
+
+vk−1
+
+är oberoende av
+
+xk−1
+
+samt av
+
+ger att
+
+(︂(︁
+)︂
+)︁(︁
+)︁T
+̂ k−1|l ) + F vk−1 A(xk−1 − x
+̂ k−1|l ) + F vk−1 | Yl
+A(xk−1 − x
+(︁
+)︁
+T )F T .
+̂ k−1|l )(xk−1 − x
+̂ k−1|l )T | Yl AT + F E(vk−1 vk−1
+= A E (xk−1 − x
+
+Slutligen ger en omskrivning med hjälp av denitionerna att
+
+(︁
+)︁
+T )F T
+̂ k−1|l )(xk−1 − x
+̂ k−1|l )T | Yl AT + F E(vk−1 vk−1
+A E (xk−1 − x
+= A Cov(xk−1 | Yl )AT + F Cov(vk−1 )F T
+= APk−1|l AT + F Pv F T ,
+vilket visar (3.17).
+
+32
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+För att kunna använda prediktionen (3.16) i sats 3.10 för att bestämma
+korrektionen (3.14) behövs först några hjälpresultat. Följande lemma är enligt [Åst70, Sats 7.3.3, s. 220].
+
+Lemma 3.11.
+
+Låt x, y1 och y2 vara simultant normalfördelade stokastiska vek-
+
+torer. Anta att y1 och y2 är oberoende och att kovariansmatriserna Py1 och Py2
+är positivt denita. Då gäller att
+
+Bevis.
+
+Låt
+
+E(x | y1 , y2 ) = E(x | y1 ) + E(x | y2 ) − E(x).
+(︄ )︄
+(︄
+)︄
+y1
+E(y1 )
+y=
+, då är E(y) =
+och vi får att
+y2
+E(y2 )
+
+(︂(︁
+)︁(︁
+)︁T )︂
+x − E(x) y − E(y)
+⎛
+(︄
+)︄T ⎞
+(︁
+)︁ y1 − E(y1 )
+⎠
+= E ⎝ x − E(x)
+y2 − E(y2 )
+(︂ (︂(︁
+)︁(︁
+)︁T )︂ (︂(︁
+)︁(︁
+)︁T )︂)︂
+= E x − E(x) y1 − E(y1 )
+, E x − E(x) y2 − E(y2 )
+(︂
+)︂
+= Px,y1 Px,y2 .
+
+Px,y = E
+
+Eftersom
+
+y1
+
+och
+
+y2
+
+antas vara oberoende ges kovariansmatrisen för
+
+(︄
+Py =
+
+P y1
+
+0
+
+0
+
+P y2
+
+av
+
+)︄
+,
+
+observera att denna matris är inverterbar eftersom vi antar att
+
+Py2 > 0.
+
+y
+
+P y1 > 0
+
+och
+
+Sats 3.6 ger nu att
+
+E(x | y1 , y2 ) = E(x | y)
+(︁
+)︁
+= E(x) + Px,y Py−1 y − E(y)
+(︄
+)︄ (︄
+)︄
+(︂
+)︂ P −1
+0
+y1 − E(y1 )
+y1
+= E(x) + Px,y1 Px,y2
+0 Py−1
+y2 − E(y2 )
+2
+(︁
+)︁
+(︁
+)︁
+= E(x) + Px,y1 Py−1
+y1 − E(y1 ) + Px,y2 Py−1
+y2 − E(y2 )
+1
+2
+(︁
+)︁
+(︁
+)︁
+−1
+= E(x) + Px,y1 Py−1
+y
+−
+E(y
+)
++
+E(x)
++
+P
+P
+y
+−
+E(y
+)
+− E(x)
+1
+1
+x,y
+2
+2
+2
+y
+1
+2
+= E(x | y1 ) + E(x | y2 ) − E(x).
+
+33
+
+KAPITEL 3.
+
+Deniera
+
+OPTIMAL STOKASTISK ESTIMERING
+
+skattningsfelet
+
+̃ := x − x
+̂,
+x
+
+enligt
+
+Tuomas Virtanen
+
+där skattningen
+
+̂
+x
+
+ges av (3.4).
+
+Då kan skattningsfelet för prediktionen respektive korrektionen betecknas med
+
+̃ k|l := xk − x
+̂ k|l ,
+x
+
+l < k,
+
+och
+
+̃ k|k := xk − x
+̂ k|k .
+x
+
+Följande hjälpresultat enligt [Åst70, s. 218220] ger några användbara egenskaper
+för skattningsfelet, bland annat att skattningsfelet
+
+̃ är oberoende av mätningen
+x
+
+y.
+
+Lemma 3.12.
+
+Låt x och y vara simultant normalfördelade stokastiska vektorer.
+
+̂ = E(x | σ(y)) och x
+̃ =x−x
+̂ . Då gäller att x
+̃ och y är oberoende och att
+Låt x
+̃ och x
+̂ är oberoende. Vidare gäller att
+x
+̃ = 0 och
+E(x)
+Bevis.
+
+Det är klart att
+
+̃ = Cov(x | y) = Px|y .
+Cov(x)
+
+̃ = E(x) − E( E(x | y)) = 0.
+E(x)
+
+simultant gaussiska vektorer så är också
+
+̃
+x
+
+och
+
+y
+
+Eftersom
+
+x
+
+och
+
+y
+
+är
+
+simultant gaussiska vektorer.
+
+Eftersom de är gaussiska räcker det att visa att de är okorrelerade. Kovariansmatrisen för
+
+̃
+x
+
+och
+
+y
+
+blir med insättning av (3.7)
+
+(︂ (︁
+)︁T )︂
+̃ y − E(y)
+Px,y
+̃ = E x
+(︂(︁
+)︁(︁
+)︁T )︂
+= E x − E(x | y) y − E(y)
+)︃
+(︃(︂
+(︁
+)︁)︂
+−1
+T
+= E x − E(x) + Px,y Py (y − E(y)) (y − E(y))
+(︂(︁
+(︂(︁
+)︁(︁
+)︁T )︂
+)︁(︁
+)︁T )︂
+= E x − E(x) y − E(y)
+− Px,y Py−1 E y − E(y) y − E(y)
+= Px,y − Px,y Py−1 Py
+= 0.
+Således är
+
+y
+
+och
+
+̃
+x
+
+oberoende. Eftersom
+
+egenskap 2 i sats B.18 så följer att
+och
+
+̃
+x
+
+är oberoende av
+
+y
+
+̂
+x
+
+̂ = E(x | y)
+x
+
+och
+
+̃
+x
+
+är en funktion av
+
+är oberoende.
+
+Vidare då
+
+fås att
+
+̃ = E(x
+̃x
+̃ T ) = E(x
+̃x
+̃ T | y)
+Cov(x)
+(︁
+)︁
+= E (x − E(x | y))(x − E(x | y))T | y
+= Cov(x | y).
+
+34
+
+y
+
+enligt
+
+̃ =0
+E(x)
+
+KAPITEL 3.
+
+Anmärkning
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+3.13. Observera att enligt lemma 3.12 fås att kovariansmatriserna
+
+för skattningsfelen av prediktionen och korrektionen är lika med kovariansmatriserna (3.12) och (3.15), det vill säga
+
+̃ k|l ) = Pk|l ,
+Cov(x
+För en given prediktion
+
+̂ k|l
+ŷk|l := C x
+
+̂ k|l , l < k ,
+x
+
+̃ k|k ) = Pk|k .
+Cov(x
+förväntas utsignalen vid tidpunkt
+
+innovationen
+
+och då denieras
+
+l < k.
+
+Innovationen är alltså den nya informationen som mätningen
+
+̂k
+x
+
+av tillståndet
+
+xk
+
+vara
+
+som
+
+ỹk|l := yk − ŷk|l ,
+
+ningen
+
+k
+
+(3.19)
+
+yk
+
+ger till skatt-
+
+[Kay93, s. 395]. Följande hjälpresultat ger några
+
+egenskaper för innovationen.
+
+Lemma 3.14.
+
+Låt {wk }k≥0 vara gaussiskt vitt brus med väntevärdet noll,
+
+Cov(wk ) = Pw > 0 och wk är oberoende av x0 för varje k . Då gäller för
+innovationen
+
+(3.19)
+
+att
+
+E(ỹk|l ) = 0.
+̂ k|l , fås kovariansGivet den tillhörande kovariansmatrisen Pk|l för prediktionen x
+matrisen för innovationen som
+
+Pỹk|l = CPk|l C T + GPw GT
+
+(3.20)
+
+och denna kovariansmatris är inverterbar då G antas vara surjektiv. Vidare är
+
+ỹk|l oberoende av alla mätningar y0 , . . . , yl , l < k .
+Bevis.
+
+Med hjälp av ekvationen (3.2) för utsignalen kan vi skriva innovatio-
+
+nen (3.19) som
+
+̂ k|l
+ỹk|l = Cxk + Gwk − C x
+̂ k|l ) + Gwk
+= C(xk − x
+
+(3.21)
+
+̃ k|l + Gwk .
+= Cx
+Lemma 3.12 ger att väntevärdet för skattningsfelet
+är
+
+E(wk ) = 0,
+
+̃ k|l är 0 och enligt antagandet
+x
+
+då är
+
+̃ k|l ) + G E(wk ) = 0.
+E(ỹk|l ) = C E(x
+
+35
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Enligt lemma 3.3 är
+
+wk
+
+wk
+
+och
+
+xn
+
+oberoende för varje
+
+̃ k|l = xk − x
+̂ k|l
+x
+
+också oberoende av
+
+för varje
+
+Tuomas Virtanen
+
+n, 0 ≤ n ≤ k , och därmed är
+
+l < k . Då fås kovariansmatrisen
+
+för innovationen som
+
+Pỹk|l
+
+)︁(︁
+)︁T )︂
+= E ỹk|l − E(ỹk|l ) ỹk|l − E(ỹk|l )
+(︁
+)︁
+̃ k|l + Gwk )(C x
+̃ k|l + Gwk )T
+= E (C x
+(︂(︁
+
+T
+T T
+̃ k|l x
+̃T
+= C E(x
+k|l )C + G E(wk wk )G
+
+= CPk|l C T + GPw GT .
+Vidare ger lemma 3.12 att
+
+̃ k|l
+x
+
+är oberoende av mätningarna
+
+y0 , . . . , yl
+
+och då
+
+följer att innovationen (3.21) också är oberoende av dessa mätningar.
+Kovariansmatrisen (3.20) för innovationen är inverterbar eftersom
+
+y T (CPk|l C T + GPw GT )y = (C T y)T Pk|l (C T y) + (GT y)T Pw (GT y)
+≥ (GT y)T Pw (GT y)
+≥ 0,
+där likhet gäller då och endast då
+endast då
+
+y≡0
+
+GT y = 0.
+
+Pỹk|l > 0
+
+och det följer att
+
+Då
+
+G
+
+är surjektiv gäller detta
+
+och således inverterbar.
+
+Följande resultat ger korrektionssteget för Kalmanltret.
+
+Sats 3.15
+
+.
+
+(Kalmankorrektorn)
+
+̂ k|l vara den optimala skattFör l < k , låt x
+
+ningen av tillståndet xk givet informationen Yl och låt Pk|l vara den tillhörande
+kovariansmatrisen. Dessa ges av Kalmanprediktorn i sats 3.10. Låt yk vara en
+mätning vid nuvarande tidpunkt k . Då ges korrektionen av
+
+̂ k|k = x
+̂ k|l + Kk ỹk|l ,
+x
+där Kk är
+
+Kalmanförstärkningen
+
+(3.22)
+
+denierad enligt
+
+Kk := Pk|l C T (CPk|l C T + GPw GT )−1
+och ỹk|l är innovationen
+
+(3.19).
+
+(3.23)
+
+Den tillhörande kovariansmatrisen är
+
+Pk|k = (I − Kk C)Pk|l .
+Bevis.
+av
+
+Då prediktionen
+
+(Yl , yk )
+
+enligt
+
+̂ k|l = E(xk | Yl )
+x
+
+̂ k|l
+ỹk|l = yk − C x
+
+är given så bestäms
+
+(3.24)
+
+(Yl , ỹk|l )
+
+och då gäller följande likhet
+
+̂ k|k = E(xk | Yl , yk ) = E(xk | Yl , ỹk|l ).
+x
+36
+
+entydigt
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Lemma 3.14 säger att innovationen
+kovariansmatrisen
+
+Pỹk|l
+
+ỹk|l
+
+Tuomas Virtanen
+
+är oberoende av informationen
+
+Yl
+
+och
+
+är inverterbar. Då kan vi använda lemma 3.11, sats 3.6
+
+och lemma 3.14 för att få
+
+E(xk | Yl , ỹk|l ) = E(xk | Yl ) + E(xk | ỹk|l ) − E(xk )
+(︁
+)︁
+̂ k|l + E(xk ) + Pxk ,ỹk|l Pỹ−1
+̃
+̃
+=x
+y
+−
+E(
+y
+)
+− E(xk )
+k|l
+k|l
+k|l
+
+(3.25)
+
+̂ k|l + Pxk ,ỹk|l Pỹ−1
+=x
+ỹk|l .
+k|l
+Lemma 3.14 ger kovariansmatrisen
+
+Pỹk|l
+
+och vi behöver ännu bestämma
+
+Pxk ,ỹk|l .
+
+̂ k|l + xk − x
+̂ k|l = x
+̂ k|l + x
+̃ k|l och eftersom E(ỹk|l ) = 0
+xk = x
+(︂(︁
+)︁ T )︂
+Pxk ,ỹk|l = E xk − E(xk ) ỹk|l
+(︂(︁
+)︁ T )︂
+̂ k|l + x
+̃ k|l − E(x
+̂ k|l + x
+̃ k|l ) ỹk|l
+=E x
+(︂(︁
+(︂(︁
+)︁ T )︂
+)︁ T )︂
+̂ k|l − E(x
+̂ k|l ) ỹk|l
+̃ k|l − E(x
+̃ k|l ) ỹk|l
+.
++E x
+=E x
+
+Vi kan skriva
+
+fås att
+
+(3.26)
+
+̂ k|l är en funktion av Yl
+ỹk|l oberoende
+av Yl och eftersom x
+(︂(︁
+)︁ T )︂
+̃ k|l ) = 0 och då är
+̂ k|l − E(x
+̂ k|l ) ỹk|l = 0. Enligt lemma 3.12 är E(x
+E x
+
+Enligt lemma 3.14 är
+fås att
+
+E
+
+(︂(︁
+(︂(︁
+(︁
+)︁ T )︂
+)︁ T )︂
+T )︁.
+̃ k|l ỹk|l
+̂ k|l − E(x
+̂ k|l ) ỹk|l
+̃ k|l − E(x
+̃ k|l ) ỹk|l
+=E x
++E x
+x
+wk
+
+Enligt lemma 3.3 är
+är
+
+wk
+
+och
+
+också oberoende av
+
+xn
+
+oberoende för varje
+
+̃ k|l = xk − x
+̂ k|l
+x
+
+för varje
+
+n, 0 ≤ n ≤ k ,
+
+l < k.
+
+(3.27)
+
+och därmed
+
+Nu fås med insättning
+
+av (3.21) i (3.27) att
+
+(︁
+)︁
+T )︁ = E (︁x
+̃ k|l ỹk|l
+̃ k|l (C x
+̃ k|l + Gwk )T
+E x
+T
+̃ k|l x
+̃T
+̃ k|l wkT )GT
+= E(x
+k|l )C + E(x
+
+(3.28)
+
+= Pk|l C T .
+Insättning av (3.20) och (3.28) i (3.25) ger att
+
+̂ k|k = x
+̂ k|l + Pk|l C T (CPk|l C T + GPw GT )−1 ỹk|l
+x
+̂ k|l + Kk ỹk|l .
+=x
+Den tillhörande kovariansmatrisen blir enligt (3.22), (3.21), lemma 3.12 och an-
+
+37
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+märkning 3.13
+
+̃ k|k )
+Pk|k = Cov(x
+)︁
+(︁
+̂ k|k )(xk − x
+̂ k|k )T
+= E (xk − x
+(︂(︁
+)︁(︁
+)︁T )︂
+̂
+̃
+̂
+̃
+= E xk − (xk|l + Kk yk|l ) xk − (xk|l + Kk yk|l )
+(︂(︁
+)︁(︁
+)︁T )︂
+̃ k|l − Kk (C x
+̃ k|l + Gwk ) x
+̃ k|l − Kk (C x
+̃ k|l + Gwk )
+=E x
+(︂(︁
+)︁(︁
+)︁T )︂
+̃ k|l − Kk Gwk (I − Kk C)x
+̃ k|l − Kk Gwk
+= E (I − Kk C)x
+
+(3.29)
+
+T
+T
+T
+̃ k|l x
+̃T
+= (I − Kk C) E(x
+k|l )(I − Kk C) + Kk G E(wk wk )(Kk G)
+
+= (I − Kk C)Pk|l (I − Kk C)T + Kk GPw GT KkT .
+Vidare kan vi förenkla detta uttryck enligt
+
+(I − Kk C)Pk|l (I − Kk C)T + Kk GPw GT KkT
+= (I − Kk C)Pk|l − (I − Kk C)Pk|l C T KkT + Kk GPw GT KkT
+= (I − Kk C)Pk|l − Pk|l C T KkT + Kk CPk|l C T KkT + Kk GPw GT KkT
+= (I − Kk C)Pk|l + (Kk CPk|l C T + Kk GPw GT − Pk|l C T )KkT
+(︁
+)︁
+= (I − Kk C)Pk|l + Kk (CPk|l C T + GPw GT ) − Pk|l C T KkT
+= (I − Kk C)Pk|l + (Pk|l C T − Pk|l C T )KkT
+= (I − Kk C)Pk|l ,
+vilket visar (3.24).
+
+Anmärkning
+
+3.16. Observera att
+
+Kk CPk|l = Pk|l C T (CPk|l C T + GPw GT )−1 CPk|l ≥ 0
+och då är
+
+Pk|k = Pk|l − Kk CPk|l ≤ Pk|l .
+Den tillhörande kovariansmatrisen för korrektionen är alltså mindre än den tillhörande kovariansmatrisen för prediktionen.
+Kovariansmatrisen på sista raden i (3.29) är i
+
+Josephs form
+
+och den är att
+
+Pk|k
+
+är symmetrisk.
+
+föredra i numeriska beräkningar eftersom den säkerställer att
+
+Avrundningsfel kan förorsaka att (3.24) inte är positivt denit, vilket krävs av
+teorin. En anmärkningsvärd egenskap för prediktionen och korrektionen samt
+deras tillhörande kovariansmatriser är att de kan ges som rekursiva formler, enligt
+
+38
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+satserna 3.10 och 3.15. Således behövs alltså endast den föregående optimala
+skattningen för att beräkna nästa optimala skattning och tidigare skattningar
+ger ingen ytterligare information. Detta är den så kallade
+
+Markovegenskapen
+
+för
+
+stokastiska processer.
+
+3.3 Stationärt Kalmanlter
+Som påpekades i anmärkning 3.8 behövs
+
+E(x0 ) = m0
+
+och
+
+Cov(x0 ) = P0
+
+som
+
+startvärden för att kunna rekursivt beräkna den optimala skattningen av tillståndet. Under vissa villkor konvergerar kovariansmatrisen och således Kalmanförstärkningen till stationära värden, som är oberoende av startvärdet
+
+P0 .
+
+Den
+
+tillhörande kovariansmatrisen för korrektorn enligt (3.24) är
+
+Pk|k = (I − Kk C)Pk|k−1 .
+Med insättning av Kalmanförstärkningen (3.23) fås att
+
+Pk|k = Pk|k−1 − Pk|k−1 C T (CPk|k−1 C T + GPw GT )−1 CPk|k−1 .
+Prediktorns kovariansmatris (3.17) vid tidpunkt
+
+k+1
+
+(3.30)
+
+är
+
+Pk+1|k = APk|k AT + F Pv F T .
+Beteckna
+
+Σk := Pk+1|k
+
+och låt
+
+Pv = J J T
+
+för någon
+
+(3.31)
+
+n×q
+
+matris
+
+J.
+
+Då ger
+
+insättning av (3.30) i (3.31) att
+
+(︁
+)︁
+Σk = A Pk|k−1 − Pk|k−1 C T (CPk|k−1 C T + GPw GT )−1 CPk|k−1 AT + F Pv F T
+= AΣk−1 AT + F JJ T F T − AΣk−1 C T (CΣk−1 C T + GPw GT )−1 CΣk−1 AT .
+(3.32)
+Detta liknar Riccatiekvationen (2.29) för deterministisk optimal reglering och ett
+liknande resultat fås för konvergens. Resultatet följer direkt från sats 2.23.
+
+Sats 3.17.
+
+Anta att Pv ≥ 0, Pw > 0, G surjektiv, matrisparet (C, A) är de-
+
+tekterbart och matrisparet (A, F J ) är stabiliserbart, där J J T = Pv . Beteckna
+lösningen vid tidpunkt k = N till
+
+(3.32),
+
+startad från Σ0 , med ΣN (Σ0 ) och låt
+
+K(Σ) := ΣC T (CΣC T + GPw GT )−1 .
+Då gäller följande påståenden:
+39
+
+(3.33)
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+Det nns en entydig matris Σ− ≥ 0, oberoende av Σ0 , så att
+
+lim ΣN (Σ0 ) = Σ− .
+
+N →∞
+
+Matrisen Σ− satiserar den algebraiska Riccatiekvationen
+
+Σ = AΣAT + F Pv F T − AΣC T (CΣC T + GPw GT )−1 CΣAT
+
+(3.34)
+
+och matrisen A−AK(Σ− )C är stabil. Vidare gäller att om matrisparet (A, F J )
+är styrbart så är Σ− > 0.
+Eftersom matrisen
+
+Σ−
+
+är entydig så kan vi beteckna den tidsinvarianta Kal-
+
+manförstärkningen med
+
+K := K(Σ− ) = Σ− C T (CΣ− C T + GPw GT )−1
+och det
+
+stationära Kalmanltret
+
+ges av
+
+̂ k+1 = Ax
+̂ k + Buk + AK ỹk ,
+x
+där
+
+(3.35)
+
+(3.36)
+
+̂ k . Detta system har en liknande form som Luenbergerobservatöỹk = yk −C x
+
+ren (2.13) och är en tillståndsobservatör till det stokastiska systemet (3.1)(3.2),
+det vill säga
+
+xk+1 = Axk + Buk + F vk ,
+yk = Cxk + Gwk .
+Skattningsfelet ges av
+
+̃ k = xk − x
+̂k,
+x
+
+(3.1)
+(3.2)
+
+så felsystemet är
+
+̃ k+1 = xk+1 − x
+̂ k+1
+x
+̂ k + Buk + AK ỹk )
+= Axk + Buk + F vk − (Ax
+̂ k ) + F vk − AK(yk − C x
+̂k)
+= A(xk − x
+̂ k ) + F vk − AK(Cxk + Gwk − C x
+̂k)
+= A(xk − x
+̃ k + F vk − AKGwk .
+= (A − AKC)x
+Skattningsfelet är alltså ett stokastiskt system med systemmatrisen
+och vitt brus
+
+F Pv F
+
+T
+
+matrisen
+
+ηk = F vk − AKGwk
+
++ AKGPw (AKG)
+A − AKC
+
+T
+
+A − AKC
+
+med väntevärdet noll och kovariansen
+
+. Om antagandena i sats 3.17 är uppfylda så är
+
+stabil och då kovergerar det stationära Kalmanltrets till-
+
+stånd (3.36) mot det stokastiska systemets tillstånd.
+
+40
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+Sambandet mellan det stationära Kalmanltret och prediktorn samt korrektorn i denna avhandling fås enligt följande. Prediktionen som ges av sats 3.10
+är
+
+̂ k+1|k = Ax
+̂ k|k + Buk ,
+x
+där
+
+̂ k|k
+x
+
+(3.37)
+
+är korrektionen i sats 3.15, det vill säga
+
+̂ k|k = x
+̂ k|k−1 + Kk ỹk|k−1 .
+x
+
+(3.38)
+
+Insättning av (3.38) i (3.37) ger
+
+̂ k+1|k = A(x
+̂ k|k−1 + Kk ỹk|k−1 ) + Buk
+x
+̂ k|k−1 + Buk + AKk ỹk|k−1 ,
+= Ax
+vilket är på formen (3.36), med tidsvariant Kalmanförstärkning. Då villkoren i
+sats 3.17 är uppfylda kovergerar
+
+Kk
+
+mot den tidsinvarianta (3.35).
+
+3.4 Sampling av tidskontinuerliga stokastiska system
+Hittills har tidsdiskreta stokastiska system behandlats och hur man bestämmer
+en optimal skattning av tillståndet baserat på tillgänglig information, så att det
+kvadratiska medelfelet minimeras. Modellerna för systemen är förstås oftast tidskontinuerliga. Frågan är om ett tidskontinuerligt stokastiskt system kan samplas
+så att det diskretiserade systemet har samma stokastiska egenskaper som det
+tidskontinuerliga systemet vid samplingstidpunkterna. Bruset för tidskontinuerliga system modelleras med
+
+Denition 3.18.
+(Ω, A, P)
+1.
+
+En
+
+Brownsk rörelse,
+
+också kallad
+
+Wienerprocess {Wt }t≥0
+
+i
+
+R
+
+på
+
+Wienerprocess.
+sannolikhetsrummet
+
+uppfyller följande villkor:
+
+W0 = 0.
+Wt ∼ N (0, σ 2 t).
+
+2. För
+
+t>0
+
+3. För
+
+0 ≤ t1 < . . . < tk
+
+är
+
+gäller att inkrementen
+
+oberoende.
+4. För varje
+
+ω∈Ω
+
+är
+
+t → Wt (ω)
+
+kontinuerlig.
+
+41
+
+Wtk − Wtk−1 , . . . , Wt2 − Wt1
+
+är
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Denition 3.19.
+en
+
+En process
+
+{Wt }t≥0 := {( Wt(1)
+
+n-dimensionell Wienerprocess
+
+(2)
+
+Wt
+
+Tuomas Virtanen
+
+(n)
+
+... Wt
+
+)T }t≥0
+
+i
+
+Rn
+
+kallas
+
+(1)
+(2)
+(n)
+om dess komponenter Wt , Wt , . . . , Wt
+är
+
+oberoende endimensionella Wienerprocesser.
+
+Denition 3.20. Autokorrelationsfunktionen rX (t1 , t2 ) för en stokastisk process
+{Xt }t≥0 denieras som
+rX (t1 , t2 ) := E(Xt1 XT
+t2 ).
+Om autokorrelationsfunktionen beror endast på skillnaden
+
+τ = t−s, s < t, skrivs
+
+rX (τ ) := E(Xs XT
+s+τ ).
+
+Denition 3.21.
+när
+
+En tidskontinuerlig stokastisk process
+
+{Xt }t∈R
+
+är
+
+svagt statio-
+
+om det gäller att
+
+1.
+
+E(Xt ) = µ,
+
+2.
+
+rX (t1 , t2 ) = rX (t1 − t2 ),
+
+för varje
+
+t ∈ R,
+för varje
+
+t1 , t2 ∈ R.
+
+Följande lemma följer direkt från denitionerna.
+
+Lemma 3.22.
+(i)
+
+där Wt
+
+Låt {Wt }t≥0 = {( Wt(1)
+
+(2)
+
+Wt
+
+⎛
+
+σ12 τ
+
+⎜
+rW (τ ) = Cov(Wτ ) = ⎜
+⎝
+0
+Matrisen PW kallas ibland
+
+där
+
+)T }t≥0 vara en Wienerprocess,
+
+∼ N (0, σi2 t). Då är {Wt }t≥0 en svagt stationär process och det gäller
+
+att
+
+En
+
+(n)
+
+... Wt
+
+0
+..
+
+.
+
+σn2 τ
+
+⎞
+⎟
+⎟ = PW τ.
+⎠
+
+inkrementella kovariansmatrisen
+
+för processen Wt .
+
+stokastisk dierentialekvation är av formen
+⎧
+(︁
+)︁
+⎨dx(t) = Ax(t) + Bu(t) dt + HdWt ,
+⎩ x(0) = x0 ,
+
+Wt
+
+(3.39)
+
+är en Wienerprocess. Lösningen ges av en stokastisk integral, för vilken
+
+teorin är omfattande och kan läsas i till exempel [Øks98]. Här ges endast resultatet som diskretiserar systemet, enligt [Åst70, Sats 3.10.1, s. 84], modierad att
+också innehålla styrsignalen
+
+u(t)
+
+som samplas med nollte ordningens hållkrets
+
+på samma sätt som i avsnitt 2.1.1 för deterministiska system.
+
+42
+
+KAPITEL 3.
+
+Sats 3.23.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+Låt T > 0 vara samplingstiden. Då fås att systemets
+
+(3.39)
+
+tillstånd
+
+vid de diskreta tidpunkterna tk = kT , k = 0, 1, . . . är
+
+xk+1 = Ad (T )xk + Bd (T )uk + vk ,
+där
+
+Ad (T ) := e
+
+AT
+
+och Bd (T ) :=
+
+(3.40)
+
+T
+
+∫︂
+
+eAτ dτ B.
+
+0
+
+Processen {vk }k≥0 är gaussiskt vitt brus med väntevärdet noll och kovariansmatrisen
+
+T
+
+∫︂
+Pv =
+
+Ad (τ )HPW H T AT
+d (τ )dτ,
+
+(3.41)
+
+0
+
+där PW är inkrementella kovariansmatrisen för Wienerprocessen Wt i
+
+(3.39).
+
+Exempel 2.1 kan nu utvidgas med störningar. Systemet samplas och sedan
+kan Kalmanltret tillämpas på det diskretiserade systemet för att estimera positionen.
+
+Exempel 3.24.
+y
+
+Låt störningarna vara i form av ändringar i acceleration i
+
+x och
+
+riktningar. Då kan tillståndsekvationen i exempel 2.3 skrivas som en stokastisk
+
+dierentialekvation
+
+⎛
+⎞⎛ ⎞
+0
+x1
+0 0 1 0
+⎜
+⎟⎜ ⎟
+⎜ ⎟ ⎜
+⎜
+⎜dx2 ⎟ ⎜0 0 0 1⎟ ⎜x2 ⎟
+⎟ ⎜ ⎟ dt + ⎜0
+⎜ ⎟=⎜
+⎜1
+⎜dx ⎟ ⎜0 0 0 0⎟ ⎜x ⎟
+⎝
+⎠ ⎝ 3⎠
+⎝ 3⎠ ⎝
+0
+x4
+0 0 0 0
+dx4
+⎛
+
+där
+
+x1 , x2
+
+är
+
+riktning och
+
+dx1
+
+x
+
+⎞
+
+⎛
+
+respektive
+
+dv1 , dv2
+
+y
+
+positionen,
+
+x3 , x4
+
+0
+
+⎞
+
+⎟ (︄ )︄
+0⎟
+⎟ dv1 ,
+0⎟
+⎠ dv2
+1
+
+är hastigheten i
+
+x
+
+(3.42)
+
+respektive
+
+y
+
+är störningar. Ekvation (3.42) är på formen
+
+dx(t) = Ax(t)dt + HdVt
+och detta diskretiseras med samplingsperioden
+
+∆t.
+
+Den diskreta tillståndsekva-
+
+tion för systemet är
+
+xk+1 = As xk + vk .
+Sats 3.23 ger att
+
+As = e
+
+A∆t
+
+⎛
+1
+⎜
+⎜0
+=⎜
+⎜0
+⎝
+0
+43
+
+0 ∆t
+1
+
+0
+
+0
+
+1
+
+0
+
+0
+
+0
+
+⎞
+
+⎟
+∆t⎟
+⎟,
+0⎟
+⎠
+1
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+vilken beräknades redan i exempel 2.3 . Processen
+
+{vk }k≥0
+
+Tuomas Virtanen
+
+är gaussiskt vitt brus
+
+med väntevärdet noll och kovariansen blir enligt sats 3.23
+
+∆t
+
+∫︂
+Pv =
+
+eAs HPV (eAs H)T ds.
+
+0
+Vi har att
+
+Låt
+
+Vt ,
+
+PV =
+
+⎞⎛
+0
+1 0 s 0
+⎟⎜
+⎜
+⎜0 1 0 s ⎟ ⎜0
+⎟⎜
+eAs H = ⎜
+⎜0 0 1 0⎟ ⎜1
+⎠⎝
+⎝
+0
+0 0 0 1
+)︂
+⎛
+
+(︂
+
+2
+σv1
+0
+2
+0 σv2
+
+⎞
+s 0
+⎟
+⎟ ⎜
+⎜0 s⎟
+0⎟
+⎟
+⎟=⎜
+⎜1 0⎟ .
+0⎟
+⎠
+⎠ ⎝
+0 1
+1
+0
+
+⎞
+
+⎛
+
+vara inkrementella kovariansmatrisen för Wienerprocessen
+
+då är
+
+⎞
+s 0
+)︄ (︄
+)︄
+⎟ (︄ 2
+∫︂ ∆t ⎜
+⎜0 s⎟ σv1
+0
+s
+0
+1
+0
+⎟
+⎜
+ds
+Pv =
+⎜1 0 ⎟ 0 σ 2
+0
+s
+0
+1
+0
+⎠
+⎝
+v2
+0 1
+⎞
+⎛
+2 2
+2
+σv1
+s
+0
+σv1
+s 0
+⎟
+∫︂ ∆t ⎜
+2 ⎟
+2 2
+⎜ 0
+s⎟
+s
+0 σv2
+σv2
+⎜
+ds
+=
+⎜ σ2 s
+2
+0
+σv1
+0 ⎟
+0
+⎠
+⎝ v1
+2
+2
+s
+0
+σv2
+0
+σv2
+⎛ σ2 (∆t)3
+⎞
+2 (∆t)2
+σv1
+v1
+0
+0
+2
+2 (∆t)3
+2 (∆t)2 ⎟
+⎜ 3
+σv2
+σv2
+⎜ 0
+⎟
+0
+3
+2
+⎟.
+=⎜
+2
+2
+⎜ σv1 (∆t)
+⎟
+2
+0
+σ
+∆t
+0
+⎝ 2
+⎠
+v1
+2 (∆t)2
+σv2
+2
+0
+0
+σv2 ∆t
+2
+⎛
+
+(3.43)
+
+Låt mätbruset vara gaussiskt vitt brus med väntevärdet noll och kovariansmatrisen
+
+Pw =
+
+(︂
+
+2
+σw1
+0
+2
+0 σw2
+
+)︂
+
+.
+
+(3.44)
+
+Den tidsdiskreta modellen av systemet ges nu av
+
+xk+1 = Axk + vk ,
+
+vk ∼ N4 (0, Pv ),
+
+yk = Cxk + wk ,
+
+wk ∼ N2 (0, Pw ),
+
+44
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+där systemmatriserna ges av
+
+⎛
+
+1 0 ∆t
+
+⎜
+⎜0 1
+A=⎜
+⎜0 0
+⎝
+0 0
+
+0
+1
+0
+
+0
+
+⎞
+
+⎟
+∆t⎟
+⎟,
+0⎟
+⎠
+1
+
+(︄
+C=
+
+)︄
+1 0 0 0
+0 1 0 0
+
+och kovariansmatriserna ges av (3.43) samt (3.44).
+För att se hur estimatet som ges av prediktionen eller korrektionen avviker
+sig från det verkliga tillståndet och mätningen har detta simulerats med Mat-
+
+lab. Koden för programmet nns i bilaga C.1. Bilens starttillstånd
+slumpmässigt enligt en normalfördelning med väntevärdet
+ansmatrisen
+
+P0 = I .
+
+m0 = 0
+
+x0
+
+väljs
+
+och kovari-
+
+Varianserna för processbruset och mätbruset antas vara
+
+2
+2
+2
+2
+= 14 , σv1
+=1
+= σw2
+= σv2
+σw1
+
+och samplingsintervallet sätts till
+
+∆t =
+
+1
+. Då är
+10
+
+processbrusets kovariansmatris för det diskretiserade systemet
+
+⎛
+
+0.0003
+
+0
+
+0.0050
+
+0
+
+⎞
+
+⎟
+⎜
+⎟
+⎜ 0
+0.0003
+0
+0.0050
+⎟.
+Pv = ⎜
+⎜0.0050
+0
+0.1000
+0 ⎟
+⎠
+⎝
+0
+0.0050
+0
+0.1000
+Prediktionen ges av
+
+̂ k|l = Ax
+̂ k−1|l ,
+x
+
+Pk|l = APk−1|l AT + Pv
+
+och korrektionen ges av
+
+̂ k|k = x
+̂ k|k−1 + Kk (yk − C x
+̂ k|k−1 ),
+x
+Kk = Pk|k−1 C T (CPk|k−1 C T + Pw )−1 ,
+Pk|k = Pk|k−1 − Kk CPk|k−1 .
+Prediktionen av starttillståndet är
+
+̂ 0|−1 = m0 = 0,
+x
+
+P0|−1 = P0 = I.
+
+En simulering med dessa parametrar där mätningen görs vid varje steg och
+således kan korrektionen användas vid varje steg illustreras i gur 3.1. Användning av samma bana och störningar men mätningar vid var fjärde steg, så att
+prediktionen används för att estimera positionen vid de övriga tidpunkterna,
+illustreras i gur 3.2.
+
+45
+
+KAPITEL 3.
+
+OPTIMAL STOKASTISK ESTIMERING
+
+Tuomas Virtanen
+
+Figur 3.1: Simulerad bana, mätningar och skattning av positionen enligt Kalmankorrektorn.
+
+Figur 3.2: Samma bana som gur 3.1, mätningar vid var fjärde steg och skattning
+av positionen enligt Kalmanprediktorn.
+
+46
+
+KAPITEL 4.
+
+OPTIMAL STOKASTISK REGLERING
+
+Tuomas Virtanen
+
+Kapitel 4
+Optimal stokastisk reglering
+4.1 Reglerproblemet
+I avsnitt 2.4 bestämdes den optimala reglersignalen som minimerar den kvadratiska kostnadsfunktionalen (2.17) för det linjära deterministiska systemet (2.7).
+Motsvarande fundamentala stokastiska reglerproblem är det
+
+gaussiska reglerproblemet
+
+eller
+
+LQG-problemet
+
+linjärkvadratiska
+
+(eng. linear-quadratic-Gaussian
+
+control problem) för linjära system med vitt brus. Då tillståndsvektorn är stokastisk blir kostnaden (2.17) en stokastisk variabel och kostnadsfunktionalen för
+stokastiska reglerproblemet väljs att vara väntevärdet av (2.17) och betecknas
+med
+
+(︄
+)︄
+N
+−1
+∑︂
+(︁
+)︁
+T
+(xT
+lN (x0 , u) := E JN (x0 , u) = E xT
+N SN xN +
+k Qxk + uk Ruk ) .
+
+(4.1)
+
+k=0
+Analogt med deterministiska fallet används här en kostnadsfunktional med ändlig
+tidshorisont.
+För att bestämma den optimala reglersignalen, som minimerar (4.1), är det
+viktigt att specicera vad som är en
+
+tillåten reglersignal.
+
+Den tillgängliga in-
+
+formationen som används för att reglera systemet är mätningar av systemets
+tillstånd vid olika tidpunkter, som påverkas av brus. Om
+vation (3.2) för mätsignalen så är
+värdet på tillståndsvektorn
+
+xk .
+
+C=I
+
+och
+
+G = 0 i ek-
+
+yk = xk , det vill säga mätningen ger det exakta
+
+I detta fall ger inga andra föregående mätningar
+
+någon ytterligare information om tillståndet och då kan den tillåtna reglersignalen vara en funktion av tillståndet,
+form av
+
+tillståndsåterkoppling
+
+uk = f (xk ),
+
+det vill säga regleringen är i
+
+och behandlas i avsnitt 4.2.
+
+47
+
+KAPITEL 4.
+
+OPTIMAL STOKASTISK REGLERING
+
+Vanligtvis är matriserna
+
+C ̸= I
+
+och
+
+G ̸= 0, det vill säga det exakta värdet på
+
+tillståndet är inte tillgängligt. Då ger mängden
+fördelning
+
+ji ≤ k ,
+
+(m0 , P0 )
+
+Tuomas Virtanen
+
+Yk ,
+
+samt tillgängliga mätningar
+
+det vill säga starttillståndets
+
+yj0 , . . . , yji , 0 ≤ j0 < . . . <
+k.
+
+den tillgängliga informationen för systemet vid tidpunkt
+
+Då kan den
+
+tillåtna reglersignalen endast vara en funktion av denna information, det vill säga
+
+uk = f (Yk ).
+Den optimala skattningen av tillståndet
+
+̂k,
+x
+
+som ges av Kalmanprediktorn
+
+i sats 3.10 eller Kalmankorrektorn i sats 3.15, använder också den tillgängliga
+informationen
+
+̂ k = g(Yk ). Reglersignaler av formen uk = f (x
+̂k)
+Yk , det vill säga x
+
+är alltså tillåtna. I detta fall används
+
+återkoppling av det skattade tillståndet
+
+och
+
+behandlas i avsnitt 4.3.
+Det stokastiska reglerproblemet kan enligt [Åst70, s. 258] formuleras på följande sätt:
+
+Problem 4.1.
+
+Hitta en tillåten reglersignal för det stokastiska systemet
+
+xk+1 = Axk + Buk + F vk ,
+
+(3.1)
+
+yk = Cxk + Gwk ,
+
+(3.2)
+
+så att den kvadratiska kostnadsfunktionalen
+
+(︄
+
+lN (x0 , u) = E xT
+N SN xN +
+
+)︄
+
+N
+−1
+∑︂
+
+T
+(xT
+k Qxk + uk Ruk )
+
+(4.1)
+
+k=0
+minimeras.
+Analogt med deterministiska fallet görs först en omskrivning av uttrycket
+innanför väntevärdet i kostnadsfunktionalen (4.1) enligt följande lemma [Åst70,
+Lemma 8.6.1, s. 278].
+
+Lemma 4.2.
+
+Anta att SN ≥ 0, Q ≥ 0 och R > 0 i
+
+(4.1)
+
+och låt
+
+Lk = (B T Sk+1 B + R)−1 B T Sk+1 A,
+
+(2.18)
+
+Sk = AT Sk+1 A + Q − AT Sk+1 B(B T Sk+1 B + R)−1 B T Sk+1 A,
+
+(2.19)
+
+för varje k = 0, . . . , N − 1.
+
+48
+
+KAPITEL 4.
+
+OPTIMAL STOKASTISK REGLERING
+
+Tuomas Virtanen
+
+Då gäller att
+
+xT
+N SN xN +
++
+
+N
+−1
+∑︂
+
+T
+T
+(xT
+k Qxk + uk Ruk ) = x0 S0 x0 +
+
+k=0
+N
+−1
+∑︂
+
+N
+−1
+∑︂
+
+vkT F T Sk+1 F vk
+
+k=0
+
+(uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk )
+
+k=0
+N
+−1
+∑︂
+
++2
+
+(4.2)
+
+vkT F T Sk+1 (Axk + Buk ).
+
+k=0
+
+Bevis.
+
+Analogt med beviset av sats 2.18 skriver vi om uttrycket i vänstra ledet
+
+av (4.2) med användning av tillståndsekvation (3.1). Då fås att
+
+xT
+N SN xN +
+
+N
+−1
+∑︂
+
+T
+(xT
+k Qxk + uk Ruk )
+
+k=0
+
+= xT
+0 S0 x0 +
+= xT
+0 S0 x0 +
+
+N
+−1
+∑︂
+k=0
+N
+−1
+∑︂
+
+(︁ T
+)︁
+T
+T
+xk+1 Sk+1 xk+1 − xT
+k Sk xk + xk Qxk + uk Ruk
+(︁ T
+)︁
+T
+xk Qxk + uT
+k Ruk − xk Sk xk
+
+k=0
+
++
+
+N
+−1
+∑︂
+
+(Axk + Buk + F vk )T Sk+1 (Axk + Buk + F vk )
+
+k=0
+
+= xT
+0 S0 x0 +
+
+N
+−1
+∑︂
+
+(︁ T
+T S x )︁
+xk Qxk + uT
+Ru
+−
+x
+k
+k
+k k k
+
+k=0
+
++
+
+N
+−1
+∑︂
+
+(Axk + Buk )T Sk+1 (Axk + Buk ) +
+
+k=0
+N
+−1
+∑︂
+
++2
+
+N
+−1
+∑︂
+
+vkT F T Sk+1 F vk
+
+k=0
+
+vkT F T Sk+1 (Axk + Buk ).
+
+k=0
+Eftersom
+
+SN ≥ 0, Q ≥ 0
+
+och
+
+R>0
+
+så är
+
+Sk ≥ 0
+
+för varje
+
+k = 0, . . . , N
+
+lemma 2.21 . Då ger lemma 2.22 att
+
+xT
+N SN xN +
++
+
+N
+−1
+∑︂
+
+N
+−1
+∑︂
+
+k=0
+N
+−1
+∑︂
+
+k=0
+
+T
+T
+(xT
+k Qxk + uk Ruk ) = x0 S0 x0 +
+
+vkT F T Sk+1 F vk
+
+(uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk )
+
+k=0
+N
+−1
+∑︂
+
++2
+
+vkT F T Sk+1 (Axk + Buk ).
+
+k=0
+
+49
+
+enligt
+
+KAPITEL 4.
+
+OPTIMAL STOKASTISK REGLERING
+
+Tuomas Virtanen
+
+De esta termer i (4.2) är av kvadratisk form och följande lemma enligt [Åst70, Lemma 8.3.3, s. 262] ger en enkel formel för att beräkna väntevärdet
+av kvadratisk form.
+
+Lemma 4.3.
+
+Låt x ∈ Rn vara en stokastisk vektor med väntevärdet mx och
+
+kovariansmatrisen Px . För en godtycklig matris S ∈ Rn×n gäller att
+
+E(xT Sx) = mT
+x Smx + tr(SPx ).
+Bevis.
+
+Vi har att
+
+(︁
+)︁
+T
+T
+E(xT Sx) = E (x − mx )T S(x − mx ) + mT
+x Sx + x Smx − mx Smx
+(︁
+)︁
+T
+T
+= E (x − mx )T S(x − mx ) + mT
+x S E(x) + E(x )Smx − mx Smx
+)︁
+(︁
+= E (x − mx )T S(x − mx ) + mT
+x Smx .
+(4.3)
+Eftersom
+
+(x − mx )T S(x − mx )
+
+är en skalär så gäller att
+
+(︂ (︁
+(︁
+)︁
+)︁)︂
+T
+T
+E (x − mx ) S(x − mx ) = E tr (x − mx ) S(x − mx ) .
+Vidare eftersom
+
+tr(AB) = tr(BA)
+
+så är
+
+(︂ (︁
+(︂ (︁
+)︁)︂
+)︁)︂
+E tr (x − mx )T S(x − mx ) = E tr S(x − mx )(x − mx )T .
+Spåret är summan av diagonalelementen och väntevärdet av en summa är summan av väntevärdena så kan vi byta ordningen på operationerna för väntevärdet
+och spåret för att få
+
+(︂ (︁
+(︂ (︁
+)︁)︂
+)︁)︂
+E tr S(x − mx )(x − mx )T = tr E S(x − mx )(x − mx )T
+(︂
+(︁
+)︁)︂
+= tr S E (x − mx )(x − mx )T
+
+(4.4)
+
+= tr(SPx ).
+Insättning av (4.4) i (4.3) ger påståendet.
+
+Anmärkning
+
+4.4. Observera att lemma 4.3 kan också användas för betingade
+
+väntevärdet av kvadratisk form. Om
+
+E(x | y) = mx|y
+
+och
+
+Cov(x | y) = Px|y
+
+gäller att
+
+E(xT Sx | y) = mT
+x|y Smx|y + tr(SPx|y ),
+vilket bevisas på samma sätt som beviset för lemma 4.3.
+
+50
+
+så
+
+KAPITEL 4.
+
+OPTIMAL STOKASTISK REGLERING
+
+Tuomas Virtanen
+
+4.2 Minimering av kostnaden genom tillståndsåterkoppling
+I detta avsnitt bestäms reglersignalen som minimerar kostnaden då den tillåtna
+reglersignalen är en funktion av tillståndet, det vill säga då mätsignalen ger
+exakta värdet på alla tillståndsvariabler och påverkas inte av något mätbrus.
+Följande lemma, som är en omformulering av [Åst70, Lemma 8.3.1, s.260],
+implicerar att operationen att minimera kostnaden (4.1) med avseende på reglersignaler som är funktioner av tillståndet kommuterar med operationen att ta
+väntevärdet av kostnaden.
+
+Lemma 4.5.
+
+Anta att den tillåtna reglersignalen är en funktion av tillståndet,
+
+u = f (x), f : Rn → Rm . Vidare anta att funktionen l(x, u) antar ett minsta
+värde i ett entydigt u för varje givet värde på den stokastiska vektorn x.
+Då gäller att
+
+(︁
+)︁
+(︁
+)︁
+min E l(x, u) = E min l(x, u) .
+u
+
+Bevis.
+
+u
+
+För varje tillåten reglersignal
+
+f (x)
+
+gäller att
+
+l(x, f (x)) ≥ min l(x, u),
+u
+
+varför enligt (B.11) fås att
+
+(︁
+)︁
+(︁
+)︁
+E l(x, f (x)) ≥ E min l(x, u) .
+u
+
+Minimering av vänstra ledet med avseende på alla tillåtna reglersignaler
+
+f (x)
+
+ger att
+
+(︁
+)︁
+(︁
+)︁
+min E l(x, u) ≥ E min l(x, u) .
+u
+
+Låt
+
+u∗ (x)
+
+tersom
+
+beteckna värdet på
+
+u∗ (x)
+
+u
+
+u
+
+för vilken
+
+l(x, u)
+
+(4.5)
+
+antar sitt minsta värde. Ef-
+
+är en tillåten reglersignal gäller samtidigt att
+
+(︁
+)︁
+(︁
+)︁
+(︁
+)︁
+E min l(x, u) = E l(x, u∗ (x)) ≥ min E l(x, u) .
+u
+
+u
+
+(4.6)
+
+Påståendet följer från olikheterna (4.5) och (4.6).
+Nu kan reglersignalen som minimerar kostnadsfunktionalen (4.1) för det stokastiska systemet med tillståndsekvationen (3.1) bestämmas enligt [Åst70, Sats
+8.6.2, s. 281], då det exakta tillståndet är tillgängligt.
+
+51
+
+KAPITEL 4.
+
+Sats 4.6.
+
+OPTIMAL STOKASTISK REGLERING
+
+Tuomas Virtanen
+
+−1
+Det nns en följd av entydigt bestämda reglersignaler u∗ = {u∗k }N
+k=0 ,
+
+där u∗k = f (xk ) för varje k , till systemet
+
+xk+1 = Axk + Buk + F vk ,
+yk = xk ,
+som minimerar kostnadsfunktionalen
+
+(4.1).
+
+u∗k = −Lk xk ,
+där Lk ges av
+
+(2.18)(2.19),
+
+Vidare gäller att
+
+k = 0, . . . , N − 1,
+
+som i sats 2.18 för deterministiska fallet. Den mi-
+
+nimala kostnaden är
+
+min lN (x0 , u) = mT
+0 S0 m0 + tr(S0 P0 ) +
+u
+
+N
+−1
+∑︂
+
+tr(F T Sk+1 F Pv ),
+
+k=0
+
+där m0 och P0 är väntevärdet respektive kovariansmatrisen för x0 och Pv är
+kovariansmatrisen för processbruset {vk }k≥0 .
+Bevis.
+
+Enligt lemma 4.2 är kostnaden (4.1) lika med
+
+lN (x0 , u) = E(xT
+0 S0 x0 ) +
+
+N
+−1
+∑︂
+
+E(vkT F T Sk+1 F vk )
+
+k=0
+
++
+
+N
+−1
+∑︂
+
+(︁
+)︁
+E (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk )
+
+k=0
+N
+−1
+∑︂
+
++2
+
+(4.7)
+
+(︁
+)︁
+E vkT F T Sk+1 (Axk + Buk ) .
+
+k=0
+Låt
+
+uk = f (xk )
+
+för någon funktion
+
+lemma 3.3 så är också
+
+vk
+
+N
+−1
+∑︂
+
+f.
+
+oberoende av
+
+Eftersom
+
+uk ,
+
+vk
+
+är oberoende av
+
+xk
+
+enligt
+
+vilket ger att
+
+)︁
+(︁
+E vkT F T Sk+1 (Axk + Buk ) = 0.
+
+(4.8)
+
+k=0
+För de övriga termerna kan vi använda lemma 4.3. För det första har vi att
+
+T
+E(xT
+0 S0 x0 ) = m0 S0 m0 + tr(S0 P0 ).
+Då
+
+E(vk ) = 0
+
+och
+
+Cov(vk ) = Pv
+
+(4.9)
+
+fås för det andra att
+
+(︁
+)︁
+E(vkT F T Sk+1 F vk ) = E(vk )T F T Sk+1 F E(vk ) + tr F T Sk+1 F Cov(vk )
+= tr(F T Sk+1 F Pv ).
+52
+
+(4.10)
+
+KAPITEL 4.
+
+OPTIMAL STOKASTISK REGLERING
+
+Vidare eftersom
+
+(B T Sk+1 B + R) > 0
+
+Tuomas Virtanen
+
+så gäller att
+
+lk (xk , uk ) = (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk ) ≥ 0
+och likhet gäller då och endast då
+
+uk + Lk xk = 0,
+
+eller
+
+uk = −Lk xk .
+Då har
+
+lk (xk , uk )
+
+ett minsta värde
+
+bestäms entydigt för varje värde på
+
+0
+xk
+
+(4.11)
+
+med avseende på
+
+uk
+
+för varje
+
+k
+
+och
+
+uk
+
+enligt (4.11). Lemma 4.5 ger att
+
+(︁
+)︁
+min E (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk )
+uk
+(︁
+)︁
+= E min(uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk ) = 0.
+uk
+
+(4.12)
+
+Minimala kostnaden fås med instättning av (4.8), (4.9), (4.10) och (4.12)
+i (4.7) som
+
+min lN (x0 , u) = mT
+0 S0 m0 + tr(S0 P0 ) +
+u
+
+N
+−1
+∑︂
+
+tr(F T Sk+1 F Pv )
+
+k=0
+
++
+
+N
+−1
+∑︂
+
+(︁
+)︁
+min E (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk )
+
+k=0
+
+uk
+
+= mT
+0 S0 m0 + tr(S0 P0 ) +
+
+N
+−1
+∑︂
+
+tr(F T Sk+1 F Pv ),
+
+k=0
+då
+
+uk = −Lk xk ,
+
+för varje
+
+k = 0, . . . , N − 1.
+
+Observera att reglersignalen här är densamma som i deterministiska fallet,
+det vill säga processbruset påverkar inte valet av reglersignalen ifall systemets
+tillstånd kan mätas exakt vid varje tidpunkt. Processbruset ger dock upphov
+till en större minimal kostnad än om systemet inte hade brus, jämför med den
+minimala kostnaden för deterministisk optimal reglering (2.20).
+
+53
+
+KAPITEL 4.
+
+OPTIMAL STOKASTISK REGLERING
+
+Tuomas Virtanen
+
+4.3 Minimering av kostnaden genom återkoppling
+av det skattade tillståndet
+Kalmankorrektorn
+
+ger
+
+den
+
+optimala
+
+skattningen
+
+yk
+
+minstakvadratmening, givet mätningen
+
+saknas.
+
+På
+
+basen
+
+av
+
+den
+
+bästa
+
+av
+
+̂k
+x
+
+av tillståndet
+
+tillgängliga
+
+optimala
+
+xk
+
+tillståndet
+
+och informationen
+
+manprediktorn ger den optimala skattningen
+
+yk
+
+̂k
+x
+
+Yl , l < k .
+xk
+
+i
+
+Kal-
+
+då mätningen
+
+skattningen
+
+kan
+
+reglersignalen som minimerar kostnadsfunktionalen
+
+(︄
+
+lN (x0 , u) = E xT
+N SN xN +
+
+)︄
+
+N
+−1
+∑︂
+
+T
+(xT
+k Qxk + uk Ruk )
+
+(4.1)
+
+k=0
+bestämmas. Reglersignalen
+informationen
+
+Yk
+
+uk
+
+i detta fall är en funktion av den tillgängliga
+
+upp till och med tidpunkten
+
+k.
+
+Enligt lemma 4.2 och ekvatio-
+
+nerna (4.9) och (4.10) kan kostnadsfunktionalen (4.1) skrivas som
+
+T
+lN (x0 , u) = mT
+0 S0 m0 + tr(S0 P0 ) +
+
+N
+−1
+∑︂
+
+tr(F T Sk+1 F Pv )
+
+k=0
+
++
+
+N
+−1
+∑︂
+
+(︁
+)︁
+E (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk )
+
+k=0
+N
+−1
+∑︂
+
++2
+
+(︁
+)︁
+E vkT F T Sk+1 (Axk + Buk ) .
+
+k=0
+Enligt antagandena för processbruset och mätbruset är
+
+uk = f (Yk ),
+
+som visades i lemma 3.3. Vidare eftersom
+
+f (y0 , . . . , yk ),
+
+och
+
+ma 3.3, följer att
+
+vk
+
+vk
+
+är oberoende av
+
+är oberoende av
+
+yn
+
+uk .
+
+för varje
+
+vk
+
+oberoende av
+
+det vill säga
+
+n = 0, . . . , k ,
+
+xk
+
+uk =
+
+enligt lem-
+
+Därmed är alla termer i sista summan
+
+lika med noll, det vill säga
+
+T
+lN (x0 , u) = mT
+0 S0 m0 + tr(S0 P0 ) +
+
+N
+−1
+∑︂
+
+tr(F T Sk+1 F Pv )
+
+k=0
+
++
+
+N
+−1
+∑︂
+
+(4.13)
+
+(︁
+)︁
+E (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk ) .
+
+k=0
+För att minimera termerna
+
+(︁
+)︁
+E (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk ) så
+
+behövs ett liknande hjälpresultat till lemma 4.5 där minimeringen nu görs med
+avseende på reglersignaler som är funktioner av det skattade tillståndet. Följande
+lemma är en omformulering av [Åst70, Lemma 8.3.2, s. 261].
+
+54
+
+KAPITEL 4.
+
+OPTIMAL STOKASTISK REGLERING
+
+Tuomas Virtanen
+
+Lemma 4.7.
+
+Anta att den tillåtna reglersignalen är en funktion av mätsignalen,
+(︁
+)︁
+u = f (y), f : Rp → Rm . Vidare anta att funktionen g(y, u) = E l(x, y, u) | y
+antar ett minsta värde i ett entydigt u för varje givet värde på den stokastiska
+vektorn y .
+Då gäller att
+
+(︁
+)︁
+(︁
+)︁
+(︁
+(︁
+)︁)︁
+min E l(x, y, u) = E min g(y, u) = E min E l(x, y, u) | y .
+u
+
+Bevis.
+
+u
+
+För varje tillåten reglersignal
+
+u
+
+f (y)
+
+gäller att
+
+(︁
+)︁
+g y, f (y) ≥ min g(y, u),
+u
+
+eller
+
+(︁
+)︁
+(︁
+)︁
+E l(x, y, f (y)) | y ≥ min E l(x, y, u) | y ,
+u
+
+varför enligt B.11 fås att
+
+(︂ (︁
+(︂
+)︁)︂
+(︁
+)︁)︂
+E E l(x, y, f (y)) | y ≥ E min E l(x, y, u) | y ,
+u
+
+där vänstra ledet kan skrivas med egenskap 3 i sats B.18 som
+
+(︁
+)︁
+(︁
+)︁)︂
+E E l(x, y, f (y)) | y = E l(x, y, f (y)) .
+(︂
+
+Minimering av vänstra ledet med avseende på alla tillåtna reglersignaler
+
+f (y)
+
+ger att
+
+(︁
+)︁
+(︁
+)︁
+min E l(x, y, u) ≥ E min E(l(x, y, u) | y) .
+u
+
+Låt
+
+u∗ (y)
+
+tersom
+
+u
+
+beteckna värdet på
+
+u∗ (y)
+
+u
+
+för vilken
+
+g(y, u)
+
+(4.14)
+
+antar sitt minsta värde. Ef-
+
+är en tillåten reglersignal gäller samtidigt att
+
+(︁
+)︁
+(︁
+)︁
+E g(y, u∗ (y)) ≥ min E g(y, u) ,
+u
+
+det vill säga
+
+(︁
+)︁
+(︁
+)︁
+E min E(l(x, y, u) | y) ≥ min E l(x, y, u) .
+u
+
+u
+
+(4.15)
+
+Påståendet följer från olikheterna (4.14) och (4.15).
+Vi kan nu bevisa följande sats som är huvudresultatet i denna avhandling.
+Satsen är en generalisering av [Åst70, Sats 8.6.3, s.282] och ger lösningen till
+LQG problemet också ifall mätningar inte görs vid varje tidpunkt.
+
+55
+
+KAPITEL 4.
+
+Sats 4.8.
+
+OPTIMAL STOKASTISK REGLERING
+
+Tuomas Virtanen
+
+−1
+∗
+Det nns en entydig reglersignal u∗ = {u∗k }N
+k=0 , där uk = f (Yk ) för
+
+varje k , till systemet
+
+xk+1 = Axk + Buk + F vk ,
+yk = Cxk + Gwk ,
+
+(3.1)
+(3.2)
+
+där x0 ∼ Nn (m0 , P0 ), vk ∼ Nn (0, Pv ) och wk ∼ Np (0, Pw ), som minimerar
+kostnadsfunktionalen
+
+(4.1).
+
+Reglersignalen ges av
+
+u∗k =
+
+⎧
+⎨−Lk x
+̂ k|k ,
+
+om yk ∈ Yk ,
+
+⎩ −Lk x
+̂ k|l ,
+
+om yk ∈
+/ Yk ,
+
+̂ k|l ges av Kalmanprediktorn
+där x
+
+(3.16)
+
+̂ k|k ges av Kalmankorrektorn
+och x
+
+(3.22).
+
+Återkopplingsmatrisen fås som i deterministiska fallet enligt
+
+Lk = (B T Sk+1 B + R)−1 B T Sk+1 A,
+
+k = 0, . . . , N − 1
+
+(2.18)
+
+där Sk , k = 0, . . . , N − 1 är lösningen till Riccatiekvationen
+
+Sk = AT Sk+1 A + Q − AT Sk+1 B(B T Sk+1 B + R)−1 B T Sk+1 A
+
+(2.19)
+
+med begynnelsevärdet SN , och matriserna SN ≥ 0, Q ≥ 0 och R > 0 är givna i
+kostnadsfunktionalen
+
+(4.1).
+
+Vidare är den minimala kostnaden
+
+min lN (x0 , u) = mT
+0 S0 m0 + tr(S0 P0 ) +
+u
+
+N
+−1
+∑︂
+
+tr(F T Sk+1 F )
+
+k=0
+
++
+
+N
+−1
+∑︂
+
+(4.16)
+
+T
+tr(Pk|l LT
+k B Sk+1 A),
+
+k=0
+
+där kovariansmatrisen Pk|l ges av
+
+(3.17)
+
+för prediktorn om l < k eller av
+
+(3.24)
+
+för korrektorn om l = k och yk är tillgänglig.
+(︁
+)︁
+Bevis. Låt f (Yl , uk ) = E (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk ) | Yl ,
+
+uk = g(Yl )
+
+och
+
+l ≤ k.
+
+där
+
+Då får vi enligt anmärkning 4.4 att
+
+(︁
+)︁
+E (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk ) | Yl
+= E(uk + Lk xk | Yl )T (B T Sk+1 B + R) E(uk + Lk xk | Yl )
+(︁
+)︁
++ tr (B T Sk+1 B + R) Cov(uk + Lk xk | Yl ) .
+56
+
+(4.17)
+
+KAPITEL 4.
+
+Eftersom
+
+uk
+
+OPTIMAL STOKASTISK REGLERING
+
+är
+
+Yl -mätbar
+
+Tuomas Virtanen
+
+ger sats B.18 att
+
+̂ k|l
+E(uk + Lk xk | Yl ) = uk + Lk E(xk | Yl ) = uk + Lk x
+
+(4.18)
+
+Cov(uk + Lk xk | Yl ) = Lk Cov(xk | Yl )Lk = Lk Pk|l Lk .
+
+(4.19)
+
+och
+
+Nu fås att
+
+(︁
+)︁
+E (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk ) | Yl
+̂ k|l )T (B T Sk+1 B + R)(uk + Lk x
+̂ k|l )
+= (uk + Lk x
+)︁
+(︁
++ tr (B T Sk+1 B + R)Lk Pk|l LT
+k .
+Eftersom
+
+(B T Sk+1 B + R) > 0
+
+(4.20)
+
+så är
+
+̂ k|l )T (B T Sk+1 B + R)(uk + Lk x
+̂ k|l ) ≥ 0,
+(uk + Lk x
+där likhet fås då och endast då
+
+̂ k|l = 0,
+uk + Lk x
+
+eller
+
+̂ k|l .
+uk = −Lk x
+Funktionen
+
+k
+
+f (Yl , uk )
+
+(4.21)
+
+har alltså ett minsta värde med avseende på
+
+och bestäms entydigt för varje värde på
+
+̂ k|l
+x
+
+uk
+
+för varje
+
+enligt (4.21). Vi kan nu använda
+
+lemma 4.7 och får att
+
+(︁
+)︁
+min E (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk )
+uk
+(︂
+(︁
+)︁)︂
+T
+T
+= E min E (uk + Lk xk ) (B Sk+1 B + R)(uk + Lk xk ) | Yl .
+uk
+
+(4.22)
+
+Insättning av (4.20) i (4.22) ger nu att
+
+(︁
+)︁
+min E (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk )
+uk
+(︁
+)︁
+̂ k|l )T (B T Sk+1 B + R)(uk + Lk x
+̂ k|l )
+= E min(uk + Lk x
+uk
+(︁
+)︁
++ tr (B T Sk+1 B + R)Lk Pk|l LT
+k
+(︁
+)︁
+= tr (B T Sk+1 B + R)Lk Pk|l LT
+k ,
+där minsta värdet antas då
+av
+
+Lk
+
+och då
+
+(4.23)
+
+̂ k|l . Vi kan skriva om (4.23) med insättning
+uk = −Lk x
+
+tr(AB) = tr(BA)
+
+får vi att
+
+)︁
+tr (B T Sk+1 B + R)Lk Pk|l LT
+k
+(︁
+)︁
+T
+= tr Pk|l LT
+k (B Sk+1 B + R)Lk
+(︁
+)︁
+T
+T
+−1 T
+= tr Pk|l LT
+k (B Sk+1 B + R)(B Sk+1 B + R) B Sk+1 A
+)︁
+(︁
+TS
+= tr Pk|l LT
+B
+A
+.
+k+1
+k
+(︁
+
+57
+
+(4.24)
+
+KAPITEL 4.
+
+OPTIMAL STOKASTISK REGLERING
+
+Tuomas Virtanen
+
+Minsta värdet (4.16) på kostnadsfunktionalen (4.1) fås nu enligt (4.13), (4.23)
+och (4.24) som
+
+T
+min lN (x0 , u) = mT
+0 S0 m0 + tr(S0 P0 ) +
+u
+
+N
+−1
+∑︂
+
+tr(F T Sk+1 F )
+
+k=0
+
++
+
+N
+−1
+∑︂
+
+(︁
+)︁
+min E (uk + Lk xk )T (B T Sk+1 B + R)(uk + Lk xk )
+uk
+
+k=0
+
+T
+= mT
+0 S0 m0 + tr(S0 P0 ) +
+
+N
+−1
+∑︂
+
+tr(F T Sk+1 F )
+
+k=0
+
++
+
+N
+−1
+∑︂
+
+(︁
+)︁
+TS
+tr Pk|l LT
+B
+A
+,
+k+1
+k
+
+k=0
+då
+
+̂ k|l
+uk = −Lk x
+
+Anmärkning
+
+för varje
+
+k = 0, . . . , N − 1
+
+och
+
+l ≤ k.
+
+4.9. Som påpekades i anmärkning 3.16 är den tillhörande kovarians-
+
+matrisen för korrektorn mindre än för prediktorn. Detta ger att minsta kostnaden
+för regleringen fås om mätningar är tillgängliga vid varje tidpunkt, så att korrektorn kan beräknas vid varje steg och den använda reglersignalen beräknas som
+återkoppling av det skattade tillståndet från korrektorn.
+
+4.4 Optimal reglering av två kopplade elnätverk
+Problemställningen med kopplade elnätverk är att reglera referenspunkterna för
+belastningseekten på båda nätverken så att frekvensen på nätverken hålls konstant. Det intressanta med kopplade nätverk är att om det ena nätverket utsätts
+för en stor ändring i belastningen så kommer mera eekt öda från det ena nätverket till det andra och referenspunkterna behöver ändras för båda nätverken.
+För regleringen används vanligtvis en PI- eller PID-reglerare, men här används
+linjärkvadratisk reglering, där tillståndsvariablerna för systemet estimeras med
+Kalmanprediktorn eller Kalmankorrektorn. För teorin om elnätverk och hur ekvationerna nedan beskriver systemet hänvisas läsaren till [Kun94]. Ekvationerna
+och använda parametrar har tagits ur artiklarna [AA11], [PMH13], [Ros+13]
+och [Sha+16] som studerats för detta ändamål.
+
+58
+
+KAPITEL 4.
+
+OPTIMAL STOKASTISK REGLERING
+
+Tuomas Virtanen
+
+Två kopplade elnätverk beskrivs av följande dierentialekvationer:
+
+d∆fi
+dt
+d∆Pmechi
+dt
+d∆PGi
+dt
+i,j
+d∆Ptie
+dt
+där indexen
+
+= − T1P i ∆fi −
+
+i,j
+KP i
+∆Ptie
+TP i
+
+= − T1T i ∆Pmechi +
+= − T1Gi ∆PGi +
+
+och
+
+j
+
+KP i
+∆Pmechi
+TP i
+
+−
+
+KP i
+∆PLi ,
+TP i
+
+j ̸= i,
+
+1
+∆PGi ,
+TT i
+
+1
+∆Prefi
+TGi
+
+= 2πTi,j (∆fi − ∆fj ),
+i
+
++
+
+−
+
+(4.25)
+(4.26)
+
+1
+∆fi
+TGi Ri
+
+(4.27)
+
+j ̸= i,
+
+(4.28)
+
+betecknar vilket elnätverk det är. Beteckningen
+
+∆
+
+används
+
+för att betona att tillståndsvariablerna är avvikelser från det stationära värdet.
+Parametrarna och variablerna för nätverket förklaras i tabell 4.1.
+
+Parameter
+
+Beskrivning
+
+TP i
+
+Elsystemets tidskonstant
+
+KP i
+
+Elsystemets förstärkning
+
+TT i
+
+Ångturbinens tidskonstant
+
+TGi
+
+Centrifugalregulatorns tidskonstant
+
+Ri
+
+Ångturbinens reglerparameter
+
+Ti,j
+
+Kopplingslinans tidskonstant
+
+fi
+
+Frekvens
+
+Pmech
+
+Mekanisk eekt
+
+PLi
+
+Frekvensoberoende belastning
+
+PGi
+
+Ångturbinens eekt
+
+Prefi
+
+Referenspunkt för belastningseekt
+
+i,j
+
+Ptie
+
+Eektöde från område
+
+i
+
+till
+
+j
+
+Tabell 4.1: Beskrivning av parametrarna och variablerna för modellen.
+
+Om nätverken antas ha en konstant belastning så är
+
+d∆PLi
+dt
+
+= 0,
+
+små föränd-
+
+ringar i belastningen simuleras med processbrus. Tillståndsvektorerna för två
+nätverk är då
+
+x
+
+(1)
+
+x(2)
+
+(︂
+
+1,2
+
+)︂T
+
+= ∆f1 ∆Pmech1 ∆PG1 ∆Ptie
+,
+(︂
+)︂T
+2,1
+.
+= ∆f2 ∆Pmech2 ∆PG2 ∆Ptie
+
+59
+
+KAPITEL 4.
+
+OPTIMAL STOKASTISK REGLERING
+
+Eftersom eektödet för det andra systemet är
+
+Tuomas Virtanen
+
+2,1
+1,2
+∆Ptie
+= −∆Ptie
+
+kan vi kombi-
+
+nera dessa tillståndsvektorer till en tillståndsvektor:
+
+(︂
+)︂T
+1,2
+x = ∆f1 ∆Pmech1 ∆PG1 ∆f2 ∆Pmech2 ∆PG2 ∆Ptie
+.
+∆f1 → 0
+
+Från (4.28) fås att då
+
+och
+
+1,2
+∆Ptie
+→0
+
+så
+
+∆f2 → 0.
+
+(4.29)
+
+Variablerna som
+
+kan regleras är referenspunkterna för belastningseekten på båda nätverken och
+
+(︂
+)︂T
+u = ∆Pref1 ∆Pref2 . Belastningsförändringar simuleras som
+(︂
+)︂T
+v = ∆PL1 ∆PL2 . Systemet kan nu skrivas på tillståndsformen
+
+då är insignalen
+processbrus
+
+̇
+x(t)
+= Ax(t) + Bu(t) + Hv(t),
+där systemmatriserna fås ur (4.25)(4.28) som
+
+⎛
+
+− TP1 1
+
+⎜
+⎜
+0
+⎜
+⎜
+⎜− (TG11R1 )
+⎜
+A=⎜
+0
+⎜
+⎜
+⎜
+0
+⎜
+⎜
+0
+⎝
+2πT1,2
+B=
+(︄
+H=
+
+KP 1
+TP 1
+− TT1 1
+
+0
+
+0
+
+0
+
+0
+
+1
+
+0
+
+0
+
+0
+
+TT 1
+
+0
+
+1
+− TG1
+
+0
+
+0
+
+0
+
+0
+
+0
+
+− TP1 2
+
+0
+
+0
+
+0
+
+0
+
+KP 2
+TP 2
+− TT1 2
+
+0
+
+0
+
+− (TG21R2 )
+
+0
+
+0
+
+0
+
+−2πT1,2
+
+0
+
+(︄
+0 0 1/TG1 0 0
+0 0
+
+0
+
+1
+TT 2
+1
+− TG2
+
+0
+
+0
+
+0
+
+0 0 −KP 2 /TP 2 0 0 0
+
+0
+
+⎟
+0 ⎟
+⎟
+⎟
+0 ⎟
+⎟
+KP 2 ⎟
+,
+TP 2 ⎟
+⎟
+0 ⎟
+⎟
+0 ⎟
+⎠
+0
+
+,
+
+)︄T
+0 0 0
+
+0
+
+⎞
+
+)︄T
+
+0 0 1/TG2 0
+
+−KP 1 /TP 1 0 0
+
+P1
+−K
+TP 1
+
+.
+
+Då processbruset modelleras med en Wienerprocess beskrivs systemet av en stokastisk dierentialekvation
+
+dx(t) = Ax(t)dt + Bu(t)dt + HdVt .
+Systemet samplas med perioden
+
+T
+
+och då fås det diskretiserade systemet
+
+xk+1 = As xk + Bs uk + vk ,
+där matriserna ges enligt sats 3.23 av
+
+As = e
+
+AT
+
+(︃∫︂
+,
+
+Bs =
+
+As
+
+)︃
+
+e ds B
+0
+
+60
+
+T
+
+(4.30)
+
+KAPITEL 4.
+
+OPTIMAL STOKASTISK REGLERING
+
+Parameter Nätverk 1
+
+Tuomas Virtanen
+
+Nätverk 2
+
+TP i
+
+20 s
+
+20 s
+
+KP i
+
+120 Hz/MW
+
+120 Hz/MW
+
+TT i
+
+0.3 s
+
+0.3 s
+
+TGi
+
+0.08 s
+
+0.08 s
+
+Ri
+
+2.4 Hz/MW
+
+2.4 Hz/MW
+
+Tabell 4.2: Använda värden på parametrar för simuleringen
+
+och kovariansmatrisen för det diskreta processbruset ges av (3.41)
+
+T
+
+∫︂
+Pv =
+
+eAτ HPV (eAτ H)T dτ,
+
+0
+där
+
+PV
+
+är inkrementella kovariansmatrisen för Wienerprocessen
+
+För simuleringen antar vi att
+
+T1,2 = 0.545
+
+−5
+
+PV = 10 I ,
+
+A s , Bs
+
+och
+
+Pv
+
+1,2
+∆Ptie
+
+Mätbruset
+
+∆f1
+
+från det första nätverket och ef-
+
+mellan nätverken, så att utsignalen är
+
+yk = Cxk + wk ,
+
+10 I ,
+
+kopplingslinans tidskonstant är
+
+beräknas numeriskt med Matlab.
+
+De mätbara variablerna är frekvensen
+
+−5
+
+i (4.30).
+
+och övriga använda värden på parametrarna för simuleringen hittas
+
+i tabell 4.2. Matriserna
+
+fektödet
+
+Vt
+
+wk
+
+C=
+
+(︄
+)︄
+1 0 0 0 0 0 0
+0 0 0 0 0 0 1
+
+antas vara vitt brus, med väntevärdet
+
+.
+
+0 och kovariansmatrisen
+
+oberoende av processbruset. Kostnadsmatriserna väljs enligt
+
+Q = 5 C TC ,
+
+R=I
+
+och
+
+detta så att kostnaden är endast på de uppmätta tillstånden och
+
+är större än kostnaden på regleringen av systemet.
+Vi antar att systemet har körts en tid och är i ett stationärt tillstånd. Detta
+motiverar att starttillståndets väntevärde är
+
+m0 = 0
+
+och stationära tillståndets
+
+kovariansmatris kan beräknas med hjälp av sats 3.17 genom att lösa den algebraiska Riccatiekvationen (3.34). Lösningen hittas med Matlab-funktionen `idare'
+och denna kovariansmatris används som
+
+P0
+
+för simuleringen.
+
+Vi kan nu tillämpa Sats 4.8 för att reglera systemet optimalt. Matlab-koden
+för denna simulering hittas i bilaga C.2. Varje simulering görs med en belastningsökning på nätverk 2 vid
+
+t=1
+
+s. På gurerna ses mätningen av frekvensen på
+
+nätverk 1 uppe till vänster, mätningen av belastningen på kopplingslinan uppe
+till höger och de nedre graferna är insignalen till respektive nätverk.
+
+61
+
+OPTIMAL STOKASTISK REGLERING
+
+Tuomas Virtanen
+
+Figur 4.1: Mätning varje sekund, samplingstid T=1s.
+
+KAPITEL 4.
+
+62
+
+Figur 4.2: Mätning var fjärde sekund, samplingstid T=1s.
+
+KAPITEL 4.
+OPTIMAL STOKASTISK REGLERING
+
+63
+
+Tuomas Virtanen
+
+OPTIMAL STOKASTISK REGLERING
+
+Tuomas Virtanen
+
+Figur 4.3: Mätning varje sekund, samplingstid T=0.1s.
+
+KAPITEL 4.
+
+64
+
+KAPITEL 5.
+
+SAMMANFATTANDE DISKUSSION
+
+Tuomas Virtanen
+
+Kapitel 5
+Sammanfattande diskussion
+Arbetet betraktade det linjärkvadratiska gaussiska reglerproblemet och estimeringsproblemet för stokastiska system. Kalmanltret som ger den bästa skattningen av tillståndsvektorn med avseende på det kvadratiska medelfelet delades upp
+i Kalmanprediktorn och Kalmankorrektorn. En uppdelning av Kalmanltret är
+inte vanligt i litteraturen och därför bestod mycket av arbetet att rigoröst bevisa
+att prediktorn och korrektorn ger optimala skattningar av tillståndsvektorn givet den tillgängliga informationen om systemet. Speciellt var det nödvändigt att
+hitta ett sätt att få fram det betingade väntevärdet och kovariansen för gaussiska vektorer utan att använda täthetsfunktionen eller fördelningsfunktionen för
+normalfördelningen vilket man ofta använder som denitioner för normalfördelningen. Detta eftersom tillståndsvektorns kovariansmatris kan i vissa fall vara
+singulär, vilket den inte får vara i täthetsfunktionen.
+Behovet av uppdelningen av Kalmanltret kommer fram då mätsignalen inte
+är tillgänglig vid varje tidpunkt men en optimal skattning av tillståndet behövs
+för regleringen. För att tillämpa den härledda teorin och på något sätt få fram
+data att optimal reglering fungerar med prediktorn och korrektorn beslöts att
+använda MatLab för att simulera reglering av två kopplade elnätverk. Dierentialekvationerna och parametervärdena som beskriver kopplade elnätverk framkom ur artiklarna som användes. Även om MatLab har färdiga funktioner för
+att sampla systemet och beräkna Kalmanförstärkningen för att reglera systemet
+så användes dessa inte eftersom de nödvändigtvis inte är exakt samma som presenterats i denna avhandling. Istället nns dessa funktioner i programmet som
+hittas i bilagan.
+
+65
+
+KAPITEL 5.
+
+SAMMANFATTANDE DISKUSSION
+
+Tuomas Virtanen
+
+Målet med att reglera de kopplade elnätverken är att hålla frekvensen för elnätet stabilt. Simuleringarna gjordes så att det ena elnätverket utsätts för en stor
+belastningsökning och olika samplingstider och mätintervall undersöktes. Som
+det framkommer ur gurerna 4.1, 4.2 och 4.3 så fungerar Kalmanprediktorn utmärkt då samplingstiden och därmed reglerintervallet är mycket kortare jämfört
+med hur ofta en mätning är tillgänglig. Det lönar sig alltså att använda Kalmanprediktorn för att optimalt reglera systemet och att ha en kort samplingstid även
+om nya mätningnar är sällan tillgängliga.
+Det är värt att poängtera att under projektets gång framkom det också att
+om systemet är sådant att man önskar hålla det i ett stationärt tillstånd och
+vissa villkor för systemmatriserna samt kovariansmatriserna för starttillståndet
+uppfylls så är det stationära Kalmanltret ett utmärkt verktyg för att beräkna
+kovariansmatrisen för systemet.
+Det kan konstateras att samplingen av ett tidskontinuerligt stokastiskt system
+gicks inte igenom grundligt och endast ekvationen för tillståndsvektorn samplades. Skulle mätsignalen och mätbruset också först modelleras som en stokastisk
+dierentialekvation ger samplingen upphov till att processbruset och mätbruset
+inte nödvändigtvis är oberoende av varandra efter samplingen. I detta fall behövs
+också teorin och formlerna för estimeringen och optimala regleringen uppdateras
+där istället för att ha två olika oberoende processer för störningen i form av processbruset och mätbruset används endast en störningsprocess. Detta görs delvis
+i [HRS07] men där är Kalmanltret inte uppdelat. Det kunde också vara intressant att undersöka hur teorin kunde utvecklas då mätsignalen ger information
+om olika tillståndsvariabler vid olika tidpunkter.
+
+66
+
+BILAGA A.
+
+MATRISTEORI
+
+Tuomas Virtanen
+
+Bilaga A
+Matristeori
+A.1 Matrisalgebra
+Låt
+
+A
+
+vara en
+
+m×n
+
+⎛
+⎜
+A=⎜
+⎝
+huvuddiagonalen
+
+ai j , i = 1, . . . , m; j = 1, . . . , n.
+⎞
+
+matris med reella element
+
+A
+
+för matrisen
+
+a1 1
+
+···
+
+a1 n
+
+.
+.
+.
+
+..
+
+.
+.
+.
+
+.
+
+am 1 · · ·
+
+⎟
+⎟,
+⎠
+
+am n
+
+ges av elementen
+
+a1 1 , a2 2 , . . . , aq q ,
+
+där
+
+q =
+
+min(m, n).
+Transponatet
+elementen
+
+av matrisen
+
+A
+
+betecknas med
+
+AT
+
+och är en
+
+n×m
+
+matris med
+
+aj i .
+⎛
+⎜
+AT = ⎜
+⎝
+
+För de reella matriserna
+
+A
+
+och
+
+B
+
+a1 1 · · ·
+.
+.
+.
+
+..
+
+am 1
+.
+.
+.
+
+.
+
+a1 n · · ·
+
+⎞
+⎟
+⎟
+⎠
+
+am n
+
+gäller att
+
+(AB)T = B T AT .
+En
+
+kvadratisk
+
+matris är en matris för vilken
+
+m = n, det vill säga den har lika
+
+många rader som kolonner. En kvadratisk matris är
+
+diagonalmatris
+
+symmetrisk
+
+om
+
+AT = A. En
+
+är en kvadratisk matris för vilken gäller att alla element utanför
+
+huvuddiagonalen är nollor.
+
+Identitetsmatrisen I
+
+element på huvuddiagonalen är ettor. En matris
+
+67
+
+är en diagonalmatris, där alla
+
+A
+
+är
+
+ortogonal
+
+om
+
+AT A = I .
+
+BILAGA A.
+
+Rangen
+
+MATRISTEORI
+
+av en
+
+m×n
+
+matris
+
+Tuomas Virtanen
+
+A
+
+anger hur många linjärt oberoende rader eller
+
+kolonner matrisen har. Det gäller alltid att
+
+rang A ≤ min(m, n)
+och om
+
+rang A = min(m, n)
+
+är matrisen
+En
+
+surjektiv
+
+n×n
+
+matris
+
+−1
+
+att
+
+A A=I
+
+en
+
+högerinvers
+
+och
+
+och om
+
+A
+
+−1
+
+= I,
+
+till matrisen
+
+inverterbara matriser
+
+A
+
+rang A = n
+
+inverterbar
+
+är
+
+AA
+
+så sägs matrisen ha
+
+och
+
+Lemma A.1.
+
+så är matrisen
+
+A.
+
+Inversen
+
+B
+
+gäller att
+
+A
+
+A−1
+
+och
+
+−1
+
+Om
+
+rang A = m
+
+så
+
+injektiv.
+
+n×n
+
+om det nns en
+
+det vill säga
+
+(AT )−1 = (A−1 )T
+
+full rang.
+
+matris
+
+är både en
+
+A−1 ,
+
+sådan
+
+vänsterinvers
+
+och
+
+är entydig då den existerar. För
+
+(AB)−1 = B −1 A−1 .
+
+Låt S ∈ Rm×n och T ∈ Rn×m vara godtyckliga matriser. Då är
+
+ST + I inverterbar om och endast om T S + I är inverterbar och det gäller att
+(ST + I)−1 = I − S(T S + I)−1 T .
+Bevis.
+
+Anta att
+
+ST + I
+
+är inverterbar och sätt
+
+U = I − T (ST + I)−1 S .
+
+Då
+
+gäller att
+
+(︁
+)︁
+(T S + I)U = (T S + I) I − T (ST + I)−1 S
+= T S − T ST (ST + I)−1 S + I − T (ST + I)−1 S
+= T S + I − T (ST + I)(ST + I)−1 S
+=I
+och
+
+(︁
+)︁
+U (T S + I) = I − T (ST + I)−1 S (T S + I)
+= T S + I − T (ST + I)−1 ST S − T (ST + I)−1 S
+= T S + I − T (ST + I)−1 (ST + I)S
+= I.
+Således är
+är
+
+ST + I
+
+U
+
+inversen av
+
+T S + I.
+
+Analogt fås att då
+
+inverterbar och inversen ges av
+
+68
+
+TS + I
+
+är inverterbar så
+
+I − S(T S + I)−1 T .
+
+BILAGA A.
+
+Spåret
+
+MATRISTEORI
+
+av en
+
+m×n
+
+Tuomas Virtanen
+
+A,
+
+matris
+
+vilket betecknas
+
+tr(A),
+
+är summan av huvud-
+
+diagonalelementen
+
+tr(A) = a1 1 + . . . + aq q ,
+där
+
+q = min(m, n).
+
+tr(B).
+
+Det är klart att
+
+tr(AT ) = tr(A)
+
+och
+
+tr(A + B) = tr(A) +
+
+Dessutom gäller att
+
+tr(AB) = tr(BA),
+ifall multiplikationerna
+Låt
+
+A
+
+AB
+
+BA
+
+och
+
+vara symmetrisk och
+
+(A.1)
+
+är denierade.
+
+x = (x1 , x2 , . . . , xn )T
+
+då är funktionen
+
+Q(x) := xT Ax
+en
+
+kvadratisk form.
+
+A ≥ 0,
+
+Matrisen
+
+A
+
+sägs vara
+
+positivt semidenit,
+
+vilket betecknas
+
+om den är symmetrisk och det gäller att kvadratiska formen är icke-
+
+negativ för varje vektor
+
+x,
+
+det vill säga
+
+xT Ax ≥ 0,
+
+∀x.
+
+Om det även gäller att
+
+xT Ax > 0,
+så sägs
+
+A
+
+positivt denit,
+
+vara
+
+Sats A.2.
+
+∀x ̸= 0
+
+vilket betecknas
+
+A > 0.
+
+En positivt semidenit matris A är positivt denit om och endast om
+
+A är inverterbar.
+Se [HJ12, Korollarium 7.1.7, s. 431] för bevis.
+
+Lemma A.3.
+
+Låt P vara en positivt semidenit n × n matris och låt T vara en
+
+n × m matris. Då är T T P T positivt semidenit.
+Bevis.
+
+Låt
+
+x ∈ Rm
+
+och
+
+y = T x.
+
+Då gäller att
+
+xT T T P T x = y T P y ≥ 0.
+
+Lemma A.4.
+
+Låt A vara en positivt (semi)denit matris. Då nns en en-
+
+tydig positivt (semi)denit kvadratrot av A, vilket betecknas A1/2 , sådan att
+
+A1/2 A1/2 = A.
+Lemmat är ett specialfall av [HJ12, Sats 7.2.6, s. 439].
+
+69
+
+BILAGA A.
+
+MATRISTEORI
+
+Tuomas Virtanen
+
+A.2 Matrisexponentialfunktionen
+Matrisexponentialfunktionen
+
+är en funktion för kvadratiska matriser och de-
+
+nieras med hjälp av Taylorutvecklingen för den skalära exponentialfunktionen
+enligt
+
+At
+
+e
+
+∞ k k
+∑︂
+t A
+
+:=
+
+k!
+
+k=0
+där
+
+= I + tA +
+
+t2
+A2
+2
+
++ ...,
+
+(A.2)
+
+A är en godtycklig kvadratisk matris. Denitionen är meningsfull om matris-
+
+serien (A.2) konvergerar. Detta visas med hjälp av
+
+matrisnormen, som denieras
+
+enligt
+
+|Ax|
+.
+x̸=0 |x|
+
+∥A∥ = sup
+
+Lemma A.5.
+
+Följande egenskaper gäller för matrisnormen:
+
+1. |Ax| ≤ ∥A∥ · |x|,
+2. |ajk | ≤ ∥A∥ för alla matriselement ajk ,
+(︄ n
+)︄1/2
+∑︂
+3. ∥A∥ ≤
+|ajk |2
+,
+j,k=1
+
+4. ∥A + B∥ ≤ ∥A∥ + ∥B∥,
+5. ∥AB∥ ≤ ∥A∥ · ∥B∥,
+6. ∥tA∥ = |t| ∥A∥
+
+(t ∈ C).
+
+För bevis se [AB89, Lemma 2.2, s. 90].
+Från egenskaperna
+
+5.
+
+och
+
+6.
+
+fås nu att
+
+⃦ k k⃦ ⃓ k⃓
+⃦t A ⃦ ⃓t ⃓
+k
+⃦
+⃦ ⃓ ⃓
+⃦ k! ⃦ ≤ ⃓ k! ⃓ ∥A∥ ,
+där högra ledet är en term i en konvergent serie. Det följer att
+
+∞ ⃦ k k⃦
+∑︂
+⃦t A ⃦
+⃦
+⃦
+⃦ k! ⃦ < ∞,
+k=0
+
+vilket visar att matrisserien (A.2) är konvergent.
+
+70
+
+BILAGA A.
+
+Sats A.6.
+
+MATRISTEORI
+
+Tuomas Virtanen
+
+Följande egenskaper gäller för matrisexponentialfunktionen:
+
+1. eA+B = eA · eB
+
+om AB = BA,
+
+2. (eA )−1 = e−A ,
+3.
+
+d At
+e
+dt
+
+= AeAt = eAt A,
+
+t ∈ R.
+
+För bevis se [AB89, Sats 2.2, s. 93], likheten
+
+AeAt = eAt A i egenskap 3. följer
+
+från denitionen (A.2).
+Som följd av egenskap
+
+1.
+
+och denitionen (A.2) fås, då
+
+eA · e−A = eA−A = e0 = I,
+det vill säga
+
+eA
+
+och
+
+e−A
+
+är varandras inverser.
+
+71
+
+B = −A,
+
+att
+
+BILAGA B.
+
+SANNOLIKHETSTEORI
+
+Tuomas Virtanen
+
+Bilaga B
+Sannolikhetsteori
+Som källa till det här kapitlet har i huvudsak [JP03], [Ros10] och [DV85] använts.
+
+B.1 Grundläggande sannolikhetslära
+Låt
+
+Ω vara en icke-tom mängd med elementen ω . Mängden Ω kallas utfallsrummet
+
+Denition B.1.
+mängden
+
+Ω
+
+En familj
+
+A
+
+Ω
+
+av delmängder av
+
+sägs vara en
+
+σ -algebra
+
+över
+
+om det gäller att
+
+1.
+
+Ω ∈ A,
+
+2.
+
+A ∈ A =⇒ Ac ∈ A
+
+3.
+
+A1 , A2 , . . . ∈ A =⇒
+
+∞
+⋃︁
+
+Ai ∈ A.
+
+i=1
+Elementen
+
+Ai i σ -algebran A
+
+Denition B.2.
+σ -algebran A
+1.
+
+2.
+
+En avbildning
+
+kallas
+
+händelser.
+
+P : A → [0, 1]
+
+sägs vara ett
+
+sannolikhetsmått
+
+på
+
+om det gäller att
+
+P(Ω) = 1
+(︃ ∞ )︃
+∞
+⋃︁
+∑︁
+P
+Ai =
+P(Ai ),
+i=1
+
+då
+
+A1 , A2 , . . . ∈ A
+
+och
+
+Ai ∩ Aj = ∅, i ̸= j.
+
+i=1
+
+Sannolikhetsmåttet ger sannolikheten för varje händelse
+
+Ai ∈ A.
+
+Denition B.3. Ett sannolikhetsrum ges av trippeln (Ω, A, P), där Ω är en icketom mängd,
+på
+
+A
+
+är
+
+σ -algebran
+
+av delmängder av
+
+A.
+72
+
+Ω
+
+och
+
+P
+
+är sannolikhetsmåttet
+
+BILAGA B.
+
+SANNOLIKHETSTEORI
+
+Denition B.4.
+
+Låt
+
+(Ω, A, P)
+
+Tuomas Virtanen
+
+vara ett sannolikhetsrum. En avbildning
+
+X:Ω→R
+stokastisk variabel
+
+sägs vara en
+
+om för varje
+
+x∈R
+
+gäller att
+
+{ω ∈ Ω : X(ω) ≤ x} ∈ A
+och då sägs
+
+X
+
+vara en
+
+X:Ω→R
+
+Låt
+
+mätbar
+
+funktion med avseende på
+
+σ -algebran A.
+
+vara en stokastiskt variabel. Då är
+
+σ(X) := {X −1 (A) | A ∈ A}
+σ -algebra
+
+en
+
+algebran som
+
+B.1.1
+
+och kallas
+
+X
+
+σ -algebran som genereras av X .
+
+Det är den minsta
+
+σ-
+
+är mätbar med avseende på.
+
+Väntevärde och varians
+
+Denition B.5.
+variabel.
+
+Låt
+
+Väntevärdet
+
+(Ω, A, P)
+av
+
+X
+
+X
+
+vara ett sannolikhetsrum och
+
+en stokastisk
+
+ges av
+
+∫︂
+Xd P .
+
+E(X) :=
+Ω
+För att väntevärdet ska existera krävs att
+
+∫︂
+|X| d P < ∞
+
+E(|X|) =
+Ω
+och då sägs
+
+X
+
+Variansen
+
+vara
+för
+
+X
+
+integrerbar.
+ges av
+
+∫︂
+Var(X) :=
+
+(X − E(X))2 d P .
+
+Ω
+Notera att
+
+(︁
+)︁
+Var(X) = E (X − E(X))2 = E(X 2 ) − E(X)2
+och om
+
+X2
+
+är integrerbar, det vill säga
+
+E(X 2 ) < ∞,
+
+så är
+
+Var(X)
+
+(B.1)
+väldenierat.
+
+Väntevärdet är en linjär avbildning, det vill säga för stokastiska variablerna
+
+X
+
+och
+
+Y
+
+och ett tal
+
+β∈R
+
+gäller att
+
+E(βX) = β E(X)
+Om
+
+X
+
+och
+
+Y
+
+och
+
+E(X + Y ) = E(X) + E(Y ).
+
+är integrerbara stokastiska variabler, sådana att
+
+att
+
+E(X) ≤ E(Y ).
+73
+
+X ≤ Y,
+
+så gäller
+
+BILAGA B.
+
+B.1.2
+
+SANNOLIKHETSTEORI
+
+Tuomas Virtanen
+
+Fördelningsfunktion
+
+Denition B.6.
+
+(Ω, A, P) vara ett sannolikhetsrum och låt X : Ω → R vara
+
+Låt
+
+en stokastisk variabel.
+
+Fördelningsfunktionen för X
+
+är funktionen
+
+FX : R → [0, 1]
+
+och bestäms av
+
+FX (x) := P(X ≤ x)
+Om
+
+för varje
+
+x ∈ R.
+
+X1 , . . . , Xn : Ω → R är stokastiska variabler ges deras simultana fördelnings-
+
+funktion
+
+av
+
+FX1 ,...,Xn : Rn → [0, 1]
+
+genom
+
+FX1 ,...,Xn (x1 , . . . , xn ) := P(X1 ≤ x1 , . . . , Xn ≤ xn )
+
+Denition B.7.
+
+Låt
+
+xi ∈ R, i = 1, . . . , n.
+
+X : Ω → R vara en stokastisk variabel och låt FX
+
+delningsfunktionen för
+
+fX : R → R,
+
+för varje
+
+vara för-
+
+X . Om det existerar en icke-negativ, integrerbar funktion
+
+sådan att
+
+∫︂
+
+x
+
+FX (x) =
+
+fX (u)du,
+−∞
+
+så sägs
+
+fX
+
+vara
+
+Lemma B.8.
+
+tätheten
+
+för
+
+X.
+
+Låt X : Ω → R vara en integrerbar stokastisk variabel med tät-
+
+hetsfunktionen fX . Låt g : R → R och Y = g(X). Då gäller att
+∫︂
+g(u)fX (u)du.
+E(Y ) =
+R
+
+Speciellt fås att
+
+∫︂
+
+ufX (u)du och
+
+E(X) =
+
+∫︂
+Var(X) =
+
+R
+
+(u − E(X))2 fX (u)du.
+
+R
+
+Normalfördelningen
+Den stokastiska variabeln
+parametrarna
+
+Om det dessutom
+
+X
+
+är
+
+normalfördelad
+
+gaussisk
+
+eller
+
+med
+
+2
+
+µ ∈ R och σ > 0, vilket betecknas med X ∼ N (µ, σ ), om den har
+
+tätheten
+
+har
+
+X : Ω → R
+
+1 x−µ 2
+1
+fX (x) = √ e− 2 ( σ ) x ∈ R.
+σ 2π
+tillåts att σ = 0 sägs X vara singulärt normalfördelad
+
+och då
+
+ingen täthet.
+
+Det gäller att väntevärdet och variansen för en normalfördelad stokastisk
+variabel ges av
+
+E(X) = µ,
+
+Var(X) = σ 2 ,
+
+vilket kan verieras med hjälp av lemma B.8. Dessa parametrar bestämmer entydigt fördelningen för en normalfördelad stokastisk variabel.
+
+74
+
+BILAGA B.
+
+B.1.3
+Låt
+Den
+
+SANNOLIKHETSTEORI
+
+Tuomas Virtanen
+
+Oberoende stokastiska variabler
+
+(Ω, A, P) vara ett sannolikhetsrum och A, B ∈ A är händelser med P(B) > 0.
+betingade sannolikheten
+
+för händelsen
+
+P(A | B) :=
+Man kan visa att
+
+P(A | B)
+
+Denition B.9.
+
+Händelserna
+
+A
+
+givet händelsen
+
+B
+
+ges av
+
+P(A ∩ B)
+.
+P(B)
+
+(B.2)
+
+är ett sannolikhetsmått.
+
+A
+
+och
+
+B
+
+sägs vara
+
+oberoende
+
+om
+
+P(A ∩ B) = P(A) P(B).
+Om
+
+A
+
+och
+
+B
+
+är oberoende händelser fås att
+
+P(A | B) =
+
+Denition B.10.
+1. Låt
+
+Låt
+
+P(A ∩ B)
+P(A) P(B)
+=
+= P(A).
+P(B)
+P(B)
+
+(Ω, A, P)
+
+vara ett sannolikhetsrum.
+
+(Ai )i∈I ⊆ A vara σ -algebror. Då sägs Ai
+
+vara
+
+oberoende σ -algebror
+
+J ⊂ I och varje händelse Ai ∈ Ai
+(︄
+)︄
+∏︂
+⋂︂
+P
+P(Ai ).
+Ai =
+
+för varje ändlig indexmängd
+
+2. Stokastiska variabler
+
+σ(Xi )
+
+Sats B.11.
+
+är oberoende
+
+(Xi )i∈I
+
+om
+
+gäller att
+
+i∈J
+
+i∈J
+
+sägs vara
+
+oberoende stokastiska variabler
+
+om
+
+σ -algebror.
+
+Låt f, g vara integrerbara funktioner och X, Y stokastiska variabler.
+
+Då gäller att f (X) och g(Y ) är oberoende och
+
+(︁
+)︁
+E f (X)g(Y ) = E(f (X)) E(g(Y )).
+
+Denition B.12.
+
+Kovariansen
+
+mellan två stokastiska variabler
+
+(B.3)
+
+X
+
+och
+
+Y
+
+med
+
+ändliga varianser denieras enligt
+
+(︁
+)︁
+Cov(X, Y ) := E (X − E(X))(Y − E(Y )) = E(XY ) − E(X) E(Y ).
+Om
+
+Cov(X, Y ) = 0
+
+Då
+
+X
+
+och
+
+Y
+
+så sägs
+
+X
+
+och
+
+Y
+
+vara
+
+(B.4)
+
+okorrelerade.
+
+är oberoende så gäller enligt (B.3) att
+
+E(XY ) = E(X) E(Y ) och
+
+således är oberoende stokastiska variabler också okorrelerade, men omvändningen
+gäller vanligtvis inte.
+
+75
+
+BILAGA B.
+
+B.1.4
+
+SANNOLIKHETSTEORI
+
+Tuomas Virtanen
+
+Betingat väntevärde
+
+Denition B.13.
+
+Låt
+
+(Ω, A, P)
+
+stokastiska variabler på
+
+Ω.
+
+Det
+
+vara ett sannolikhetsrum och låt
+
+X
+
+betingade väntevärdet av X givet Y
+
+och
+
+Y
+
+är en
+
+vara
+
+σ(Y )-
+
+mätbar stokastisk variabel, betecknad
+
+E(X | Y ),
+sådan att
+
+∫︂
+
+∫︂
+E(X | Y )d P
+
+Xd P =
+A
+
+för varje
+
+A ∈ σ(Y ).
+
+A
+
+Denition B.14.
+
+Låt
+
+stokastisk variabel på
+
+(Ω, A, P)
+
+vara ett sannolikhetsrum och
+
+X
+
+en integrerbar
+
+Ω. Låt V ⊆ A vara en σ -algebra. Det betingade väntevärdet
+E(X | V)
+
+är en
+
+V -mätbar
+
+stokastisk variabel på
+
+Ω,
+
+för vilken det gäller att
+
+∫︂
+
+∫︂
+
+E(X | V)d P
+
+Xd P =
+
+för varje
+
+A ∈ V.
+
+A
+
+A
+
+Från denitionerna ser man att
+
+E(X | Y ) = E(X | σ(Y )).
+Nedan följer viktiga resultat för det betingade väntevärdet. För bevis av resultaten, se [JP03, Kapitel 23, s. 197-207].
+
+Sats B.15.
+
+Låt (Ω, A, P) vara ett sannolikhetsrum. Låt X och Y vara integrer-
+
+bara stokastiska variabler på Ω och V ⊆ A är en σ -algebra. Följande påståenden
+gäller
+1. Avbildningen X → E(X | Y ) är linjär.
+2. Det nns en funktion f , sådan att E(X | Y ) = f (Y ).
+
+(︁
+)︁
+3. E E(X | Y ) = E(X).
+4. E(X | Y ) = E(X) om X och Y är oberoende.
+5. E(XY | V) = X E(Y | V) om XY är integrerbar och X är V -mätbar.
+6. För konstanter a, b ∈ R gäller att E(aX+bY | V) = a E(X | V)+b E(Y | V).
+76
+
+BILAGA B.
+
+SANNOLIKHETSTEORI
+
+Tuomas Virtanen
+
+7. Olikheten X ≤ Y implicerar att E(X | V) ≤ E(Y | V).
+Betingade variansen
+
+för
+
+X
+
+givet
+
+Y
+
+denieras enligt
+
+(︁
+)︁
+Var(X | Y ) := E (X − E(X | Y ))2 | Y
+betingade kovariansen
+
+och
+
+kastiska variabeln
+
+Z
+
+mellan två stokastiska variabler
+
+X
+
+och
+
+Y
+
+givet sto-
+
+denieras enligt
+
+(︁
+)︁
+Cov(X, Y | Z) := E (X − E(X | Z))(Y − E(Y | Z)) | Z .
+
+B.2 Flerdimensionella stokastiska variabler
+Låt
+
+X1 , . . . , Xn
+
+vara stokastiska variabler på sannolikhetsrummet
+
+T
+kallas kolonnvektorn x := (X1 , . . . , Xn )
+en
+
+en
+
+(Ω, A, P).
+
+n-dimensionell stokastisk vektor
+
+Då
+
+eller
+
+n-dimensionell stokastisk variabel.
+x = (X1 , . . . , Xn )T ges av
+∫︂
+(︂∫︁
+)︂T (︂
+)︂T
+∫︁
+E(x) :=
+xd P = Ω X1 d P . . . Ω Xn d P = E(X1 ) . . . E(Xn ) .
+Väntevärdet av en stokastisk vektor
+
+Ω
+
+(B.5)
+
+stokastisk matris genom
+⎛
+⎞
+X1,1 . . . X1,n
+⎜ .
+⎟
+. ⎟
+..
+.
+.
+M =⎜
+.
+.
+.
+⎝
+⎠
+Xm,1 . . . Xm,n
+
+På samma sätt denieras en
+
+och väntevärdet av en stokastisk matris ges av
+
+⎛
+
+E(X1,1 ) . . . E(X1,n )
+.
+.
+.
+
+⎜
+E(M ) := ⎜
+⎝
+
+..
+
+.
+
+.
+.
+.
+
+⎞
+⎟
+⎟.
+⎠
+
+(B.6)
+
+E(Xm,1 ) . . . E(Xm,n )
+Lineariteten hos väntevärdet gäller också för stokastiska vektorer och matriser.
+Det gäller alltså för den
+
+n-dimensionella
+
+stokastiska vektorn
+
+x
+
+att
+
+E(Ax + b) = A E(x) + b,
+där
+
+A
+
+är en konstant
+
+Det gäller också för
+
+m×n
+
+matris och
+
+n-dimensionella
+
+b
+
+en konstant
+
+stokastiska vektorer
+
+m-dimensionell
+x1 , x2 , . . . , xk
+
+E(x1 + x2 + . . . + xk ) = E(x1 ) + E(x2 ) + . . . + E(xk )
+77
+
+vektor.
+
+att
+
+BILAGA B.
+
+SANNOLIKHETSTEORI
+
+Kovariansmatrisen Px = Cov(x)
+
+Tuomas Virtanen
+
+för en stokastisk vektor
+
+x = (X1 , . . . , Xn )T
+
+denieras som
+
+(︁
+)︁
+Px := E (x − E(x))(x − E(x))T
+
+(B.7)
+
+och enligt denitionerna (B.1), (B.4) och (B.6) fås att
+
+⎛
+
+⎞
+. . . (X1 − E(X1 ))(Xn − E(Xn ))
+⎜
+⎟
+.
+.
+..
+⎟
+.
+.
+Px = E ⎜
+.
+.
+.
+⎝
+⎠
+2
+(Xn − E(Xn ))(X1 − E(X1 )) . . .
+(Xn − E(Xn ))
+⎛
+⎞
+Var(X1 )
+. . . Cov(X1 , Xn )
+⎜
+⎟
+.
+.
+..
+⎟.
+.
+.
+=⎜
+.
+.
+.
+⎝
+⎠
+Cov(Xn , X1 ) . . .
+Var(Xn )
+(X1 − E(X1 ))2
+
+På samma sätt denieras kovariansmatrisen
+stokastiska vektorer
+
+n
+
+x∈R
+
+m
+
+y∈R
+
+och
+
+Px,y = Cov(x, y)
+
+mellan två
+
+som
+
+(︁
+)︁
+Px,y := E (x − E(x))(y − E(y))T .
+Då alla par av variabler
+är oberoende fås att
+
+(Xi , Yj )
+
+(B.8)
+
+är oberoende, det vill säga vektorerna
+
+Px,y = 0 och
+
+då sägs vektorerna
+
+x och y
+
+x
+
+och
+
+y
+
+vara okorrelerade,
+
+omvändningen gäller vanligtvis inte. Följande räkneregler, som följer direkt från
+denitionerna och lineariteten hos väntevärdet, gäller för kovariansmatrisen.
+
+Lemma B.16. Låt x ∈ Rn och y ∈ Rm vara stokastiska vektorer och låt A och B
+vara konstanta matriser, sådana att multiplikationerna nedan är väldenierade.
+Det gäller att
+T .
+1. Py,x = Px,y
+
+2. Cov(Ax ± By) = A Cov(x)AT ± A Cov(x, y)B T
+
+± B Cov(y, x)AT + B Cov(y)B T .
+
+Denition B.17.
+
+Låt
+
+stokastiska vektorer på
+
+(Ω, A, P)
+Ω.
+
+Det
+
+vara ett sannolikhetsrum och låt
+
+betingade väntevärdet av x givet y
+
+mätbar stokastisk vektor, betecknad
+
+E(x | y),
+sådan att
+
+∫︂
+
+∫︂
+E(x | y)d P
+
+xd P =
+A
+
+x
+
+A
+78
+
+för varje
+
+A ∈ σ(y).
+
+och
+
+y
+
+är en
+
+vara
+
+σ(y)-
+
+BILAGA B.
+
+SANNOLIKHETSTEORI
+
+Tuomas Virtanen
+
+betingade kovariansmatrisen Px|y = Cov(x | y)
+
+Den
+givet
+
+y
+
+för en stokastisk vektor
+
+denieras som
+
+(︁
+)︁
+Cov(x | y) := E (x − E(x | y))(x − E(x | y))T | y .
+Den
+
+x
+
+(B.9)
+
+betingade kovariansmatrisen mellan x och y givet z ges av
+(︂(︁
+)︁(︁
+)︁T ⃓ )︂
+Cov(x, y | z) := E x − E(x | z) y − E(y | z) ⃓ z .
+
+(B.10)
+
+Följande resultat följer från resultaten för endimensionella fallet.
+
+Sats B.18. Låt (Ω, A, P) vara ett sannolikhetsrum. Låt x och y vara integrerbara
+stokastiska variabler på Ω och σ(y) ⊆ A är σ -algebran som genereras av y .
+Följande påståenden gäller
+1. Avbildningen x → E(x | σ(y)) är linjär.
+2. Det nns en funktion f , sådan att E(x | σ(y)) = f (y).
+
+(︁
+)︁
+3. E E(x | σ(y)) = E(x).
+4. Om x är oberoende av y fås att E(x | σ(y)) = E(x).
+5. E(xz | σ(y)) = x E(z | σ(y)) om z och xz är integrerbara och x är
+
+σ(y)-mätbar.
+6. Om x är σ(y)-mätbar fås att E(x | σ(y)) = x och Cov(x | σ(y)) = 0.
+7. Cov(Ax ± Bz | σ(y)) = A Cov(x | σ(y))AT ± A Cov(x, z | σ(y))B T
+
+± B Cov(z, x | σ(y))AT + B Cov(z | σ(y))B T .
+Om de stokastiska vektorerna
+olikheten
+
+x≤y
+
+att
+
+Xi ≤ Yi
+
+x
+
+och
+
+för varje
+
+y
+
+är av samma dimension
+
+i = 1, . . . , n
+
+E(x) ≤ E(y).
+
+79
+
+n
+
+så betyder
+
+och det gäller att
+
+(B.11)
+
+BILAGA B.
+
+B.2.1
+
+SANNOLIKHETSTEORI
+
+p-dimensionell
+
+Denition B.19.
+malfördelade
+
+Tuomas Virtanen
+
+normalfördelning
+
+X1 , . . . , X p
+
+sägs vara
+
+simultant nor-
+
+om det gäller för varje följd av reella tal
+
+a1 , . . . , a p
+
+att den stokas-
+
+Stokastiska variablerna
+
+tiska variabeln
+
+Z :=
+
+p
+∑︂
+
+ai X i
+
+i=1
+är normalfördelad. En stokastisk vektor
+eller
+
+p-dimensionellt normalfördelad
+
+x = (X1 , . . . , Xp )T
+
+sägs vara
+
+om de stokastiska variablerna
+
+gaussisk
+
+X1 , . . . , X p
+
+är
+
+simultant normalfördelade.
+Denna denition tillåter att komponenterna kan vara singulärt normalfördelade, i vilket fall vektorn
+
+x
+
+saknar täthet i
+
+Rp .
+
+Ifall
+
+x
+
+har en täthet så kan den
+
+gaussiska vektorn denieras med hjälp av den simultana täthetsfunktionen.
+Det är uppenbart från denitionen att komponenterna
+
+X1 , . . . , X p
+
+i en
+
+gaussisk vektor är gaussiska. Omvändningen gäller nödvändigtvis inte, det vill
+säga det faktum att två stokastiska variabler
+inte att vektorn
+
+x = (X1 , X2 )T
+
+X1
+
+och
+
+X2
+
+är gaussiska implicerar
+
+är gaussisk, det är alltså viktigt att de är också
+
+simultant normalfördelade.
+Som för den normalfördelade stokastiska variabeln så bestäms fördelningen för
+den gaussiska vektorn
+
+Cov(x) = Px ,
+
+x entydigt av väntevärdet E(x) = µ och kovariansmatrisen
+
+vilket kan betecknas
+
+x ∼ Np (µ, Px ).
+
+Nedan följer några viktiga resultat för gaussiska vektorer, där det tredje påståendet är ett överraskande och användbart resultat. För bevis, se [JP03, Sats
+16.2, s. 129], [JP03, Sats 16.3, s. 130] och [JP03, Sats 16.4, s. 131].
+
+Sats B.20.
+
+Låt x vara en n-dimensionell gaussisk vektor med väntevärdet µ och
+
+låt y vara en m-dimensionell gaussisk vektor oberoende av x. Följande påståenden gäller
+1. Det nns oberoende stokastiska variabler Z1 , . . . , Zn , där Zi ∼ N (0, λi ),
+
+λi ≥ 0, för varje 1 ≤ i ≤ n och en ortogonal matris A, sådan att x =
+µ + Az , där z = (Z1 , . . . , Zn )T .
+(︄ )︄
+x
+2. Vektorn h =
+är gaussisk i Rn+m .
+y
+3. Två komponenter Xj och Xk av x = (X1 , . . . , Xn )T är oberoende om och
+endast om de är okorrelerade.
+80
+
+BILAGA C.
+
+PROGRAMKOD
+
+Tuomas Virtanen
+
+Bilaga C
+Programkod
+C.1 Exempel 3.24
+1
+
+clear;
+
+clf;
+
+2
+
+t = 12;
+
+%simuleringstid i sekunder
+
+3
+
+dt = 0.1;
+
+%samplingsintervall
+
+4
+
+dy = 0.1;
+
+%mätintervall för bild 1
+
+5
+
+n = t/dt;
+
+%antalet iterationer av simuleringen
+
+6
+7
+
+%systemmatriser
+
+8
+
+A1 = [0, 0, 1,
+
+9
+
+A = expm(A1*dt);
+
+0;0, 0,
+
+0, 1;0, 0,
+
+10
+
+H = [0, 0, 1, 0;0, 0, 0, 1]';
+
+11
+
+C = [1, 0, 0, 0;0, 1, 0, 0];
+
+0,
+
+0;0, 0,
+
+0,
+
+0];
+
+12
+13
+
+%processbrusets väntevärde och kovarians
+
+14
+
+q1 = 1;
+
+15
+
+Pv = integral(@(s)expm(A1*s)*H*r*H'*expm(A1'*s),0,dt,'ArrayValued',true);
+
+16
+
+mv = zeros(size(A,1),1);
+
+q2 = 1;
+
+r = [q1^2, 0;0, q2^2];
+
+F = eye(size(Pv,1));
+
+17
+18
+
+%mätbrusets väntevärde och kovarians
+
+19
+
+r1 = 0.5;
+
+20
+
+mw = zeros(size(C,1),1);
+
+r2 = 0.5;
+
+Pw = [r1^2, 0;0, r2^2];
+G = eye(size(Pw,1));
+
+21
+22
+
+%starttillståndets väntevärde och kovarians
+
+23
+
+m0 = zeros(size(A,1),1);
+
+P0 = eye(size(A,1));
+
+24
+
+x0 = mvnrnd(m0,P0,1)';
+
+p1 = plot(x0(1),x0(2),'b*');
+
+25
+
+81
+
+hold on
+
+BILAGA C.
+
+PROGRAMKOD
+
+Tuomas Virtanen
+
+26
+
+%allokering av variabler
+
+27
+
+x = cell(1,n);
+
+y = cell(1,n);
+
+28
+
+x_pred = cell(1,n);
+
+x_korr = cell(1,n);
+
+29
+
+P_pred = cell(1,n);
+
+P_korr = cell(1,n);
+
+x_est = cell(1,n);
+
+30
+31
+
+if dy == dt %gör mätning vid t = 0 om mätintervall = samplingsintervall
+
+32
+33
+
+y0 = C*x0 + G*mvnrnd(mw,Pw,1)';
+[x_est_0, P_est_0] = kf_korrektion(m0,P0,y0,C,G,Pw);
+
+34
+
+[x_pred{1},P_pred{1}] = kf_prediktion(x_est_0,P_est_0,A,F,Pv);
+
+35
+
+p3 = plot(y0(1),y0(2),'r.');
+
+36
+
+else
+
+37
+
+[x_pred{1},P_pred{1}] = kf_prediktion(m0,P0,A,F,Pv);
+
+38
+
+x_est_0 = m0;
+
+39
+
+end
+
+40
+41
+
+p4 = plot(x_est_0(1),x_est_0(2),'k*');
+
+42
+43
+
+for k = 1:n
+
+44
+
+%iterera tillståndet och beräkna prediktionen
+
+45
+
+if k == 1
+
+46
+47
+
+x{1} = A*x0 + F*mvnrnd(mv,Pv,1)';
+else
+
+48
+49
+
+=
+
+=
+
+=
+
+=
+
+=
+
+[x_pred{k},P_pred{k}] = kf_prediktion(x_pred{k 1},P_pred{k 1},A,F,Pv);
+
+50
+51
+
+else
+
+[x_pred{k},P_pred{k}] = kf_prediktion(x_korr{k 1},P_korr{k 1},A,F,Pv);
+
+52
+53
+54
+
+=
+
+x{k} = A*x{k 1} + F*mvnrnd(mv,Pv,1)';
+if isempty(x_korr{k 1})
+
+end
+end
+
+55
+56
+
+%gör mätning och beräkna korrektion vid varje mätintervall dy
+
+57
+
+if mod(k*dt,dy) == 0
+
+58
+
+y{k} = C*x{k} + G*mvnrnd(mw,Pw,1)';
+[x_korr{k},P_korr{k}] = kf_korrektion(x_pred{k},P_pred{k},y{k},C,G,Pw);
+
+59
+60
+
+end
+
+61
+62
+
+if isempty(x_korr{k})
+x_est{k} = x_pred{k};
+
+63
+64
+
+else
+x_est{k} = x_korr{k};
+
+65
+66
+
+end
+
+82
+
+BILAGA C.
+
+67
+
+PROGRAMKOD
+
+Tuomas Virtanen
+
+if k == 1
+
+==');
+
+68
+
+p2 = plot([x0(1),x{1}(1)],[x0(2),x{1}(2)],'b
+
+69
+
+p4 = plot([x_est_0(1),x_est{k}(1)],[x_est_0(2),x_est{k}(2)],'k ');
+
+70
+
+else
+
+=
+
+=
+
+=
+
+==');
+
+71
+
+p2 = plot([x{k 1}(1),x{k}(1)],[x{k 1}(2),x{k}(2)],'b
+
+72
+
+p4 = plot([x_est{k 1}(1),x_est{k}(1)],[x_est{k 1}(2),x_est{k}(2)],'k ');
+
+=
+
+73
+
+end
+
+74
+
+if mod(k*dt,dy) == 0
+
+75
+
+=
+
+p3 = plot(y{k}(1),y{k}(2),'r.');
+
+76
+77
+
+=
+
+end
+end
+
+78
+79
+
+legend([p1; p2; p3; p4],{'Starttillst{\aa}nd','Verklig position','M{\"a}tning','
+Estimat'},'Interpreter','latex');
+
+80
+
+hold off
+
+81
+82
+
+function [x,P] = kf_prediktion(x,P,A,F,Q)
+
+83
+
+x = A * x;
+
+84
+
+P = A * P * A' + F * Q * F';
+
+85
+
+end
+
+86
+87
+
+function [x,P] = kf_korrektion(x,P,y,C,G,R)
+
+=
+
+88
+
+K = P * C' * (C * P * C' + G * R * G')^( 1);
+
+89
+
+x = x + K * (y
+
+90
+
+P = P
+
+91
+
+=K
+
+=C
+
+* x);
+
+* C * P;
+
+end
+Följande kod körs efter ovanstående kod för att beräkna prediktion och korrektion
+med längre mätintervall men med samma realisering som i ovanstående kod.
+
+1
+
+dy = 0.4;
+
+2
+
+x_pred = cell(1,n);
+
+x_korr = cell(1,n);
+
+3
+
+P_pred = cell(1,n);
+
+P_korr = cell(1,n);
+
+%mätintervall för bild 2
+x_est = cell(1,n);
+
+4
+5
+
+[x_pred{1},P_pred{1}] = kf_prediktion(m0,P0,A,F,Pv);
+
+6
+
+x_est_0 = m0;
+
+7
+8
+9
+
+p1 = plot(x0(1),x0(2),'b*');
+hold on
+_
+_
+_
+_
+p4 = plot(x est 0(1),x est 0(2),'k*');
+
+10
+11
+12
+
+for k = 1:n
+%beräna prediktionen
+
+83
+
+BILAGA C.
+
+13
+
+PROGRAMKOD
+
+if k >1
+
+Tuomas Virtanen
+
+=
+
+if isempty(x_korr{k 1})
+
+14
+
+=
+
+=
+
+=
+
+=
+
+[x_pred{k},P_pred{k}] = kf_prediktion(x_pred{k 1},P_pred{k 1},A,F,Pv);
+
+15
+16
+
+else
+
+[x_pred{k},P_pred{k}] = kf_prediktion(x_korr{k 1},P_korr{k 1},A,F,Pv);
+
+17
+18
+
+end
+
+19
+
+end
+
+20
+
+%beräkna korrektion vid varje mätintervall dy
+
+21
+22
+
+if mod(k*dt,dy) == 0
+[x_korr{k},P_korr{k}] = kf_korrektion(x_pred{k},P_pred{k},y{k},C,G,Pw);
+
+23
+
+end
+
+24
+
+if isempty(x_korr{k})
+x_est{k} = x_pred{k};
+
+25
+26
+
+else
+x_est{k} = x_korr{k};
+
+27
+28
+
+end
+
+29
+30
+
+if k == 1
+
+==');
+
+31
+
+p2 = plot([x0(1),x{1}(1)],[x0(2),x{1}(2)],'b
+
+32
+
+p4 = plot([x_est_0(1),x_est{k}(1)],[x_est_0(2),x_est{k}(2)],'k ');
+
+33
+
+else
+
+=
+
+=
+
+=
+
+==');
+
+34
+
+p2 = plot([x{k 1}(1),x{k}(1)],[x{k 1}(2),x{k}(2)],'b
+
+35
+
+p4 = plot([x_est{k 1}(1),x_est{k}(1)],[x_est{k 1}(2),x_est{k}(2)],'k ');
+
+36
+
+end
+
+37
+
+if mod(k*dt,dy) == 0
+
+38
+
+=
+
+=
+
+p3 = plot(y{k}(1),y{k}(2),'r.');
+
+39
+40
+
+=
+
+end
+end
+
+41
+42
+
+legend([p1; p2; p3; p4],{'Starttillst{\aa}nd','Verklig position','M{\"a}tning','
+Estimat'},'Interpreter','latex');
+
+hold off
+
+43
+44
+
+function [x,P] = kf_prediktion(x,P,A,F,Q)
+
+45
+
+x = A * x;
+
+46
+
+P = A * P * A' + F * Q * F';
+
+47
+
+end
+
+48
+
+function [x,P] = kf_korrektion(x,P,y,C,G,R)
+
+=
+
+49
+
+K = P * C' * (C * P * C' + G * R * G')^( 1);
+
+50
+
+x = x + K * (y
+
+51
+
+P = P
+
+52
+
+=K
+
+=C
+
+* x);
+
+* C * P;
+
+end
+
+84
+
+BILAGA C.
+
+PROGRAMKOD
+
+Tuomas Virtanen
+
+C.2 Kopplade elnätverk
+1
+
+clear;
+
+clf;
+
+2
+
+t = 100;
+
+%simuleringstid i sekunder
+
+3
+
+dy = 1;
+
+%mätintervall
+
+4
+
+dt = 1;
+
+%samplingsintervall
+
+5
+
+du = dt;
+
+%reglerintervall
+
+6
+
+n = t/dt;
+
+7
+8
+
+tp1 = 20;
+
+tp2 = 20;
+
+9
+
+kp1 = 120;
+
+kp2 = 120;
+
+10
+
+tt1 = 0.3;
+
+tt2 = 0.3;
+
+11
+
+tg1 = 0.08;
+
+tg2 = 0.08;
+
+12
+
+r1 = 2.4;
+
+r2 = 2.4;
+
+13
+
+t12 = 0.545;
+
+14
+15
+
+%systemmatriser
+
+16
+
+A1 = [ 1/tp1, kp1/tp1,
+
+17
+
+=
+
+0,
+
+18
+
+=1/(tg1*r1),
+
+19
+
+=1/tt1,
+
+0,
+
+0,
+
+0,
+
+0,
+
+=kp1/tp1;
+
+1/tt1,
+
+0,
+
+0,
+
+0,
+
+0;
+
+0,
+
+0,
+
+0,
+
+0;
+
+kp2/tp2,
+
+0,
+
+kp2/tp2;
+
+1/tt2,
+
+0;
+
+0,
+
+=1/tg1,
+
+0,
+
+0,
+
+0,
+
+=1/tp2,
+
+20
+
+0,
+
+0,
+
+0,
+
+0,
+
+21
+
+0,
+
+0,
+
+22
+
+2*pi*t12,
+
+0,
+
+=1/(tg2*r2),
+0,
+=2*pi*t12,
+0,
+
+=1/tt2,
+
+0,
+
+=1/tg2,
+
+0,
+
+0,
+
+23
+24
+25
+26
+
+B1 = [0, 0, 1/tg1, 0, 0,
+0, 0,
+
+0, 0;
+
+0, 0, 0, 1/tg2, 0]';
+
+=
+
+27
+
+H1 = [ kp1/tp1, 0, 0,
+
+28
+
+0, 0, 0,
+
+0, 0, 0, 0;
+
+=kp2/tp2,
+
+0, 0, 0]';
+
+29
+30
+31
+
+C = [1, 0, 0, 0, 0, 0, 0;
+0, 0, 0, 0, 0, 0, 1];
+
+32
+33
+
+%Wienerprocessens inkrementella kovarians
+
+34
+
+Ph = 10^ 5 * eye(size(H1,2));
+
+=
+
+35
+36
+
+%sampla systemet
+
+37
+
+A = expm(A1*dt);
+
+38
+
+B = integral(@(s)expm(A1*s),0,dt,'ArrayValued',true)*B1;
+
+39
+
+H = integral(@(s)expm(A1*s),0,dt,'ArrayValued',true)*H1;
+
+85
+
+0;
+0];
+
+BILAGA C.
+
+PROGRAMKOD
+
+Tuomas Virtanen
+
+40
+41
+
+%processbrusets väntevärde och kovarians
+
+42
+
+Pv = integral(@(s)expm(A1*s)*H1*Ph*H1'*(expm(A1*s)'),0,dt,'ArrayValued',true);
+
+43
+
+mv = zeros(size(Pv,1),1);
+
+44
+
+F = eye(size(Pv,1));
+
+45
+46
+
+%mätbrusets väntevärde och kovarians
+
+47
+
+Pw = 10^ 5 * eye(size(C,1));
+
+48
+
+mw = zeros(size(C,1),1);
+
+49
+
+G = eye(size(Pw,1));
+
+=
+
+50
+51
+
+%starttillståndets väntevärde och kovarians
+
+52
+
+m0 = zeros(size(A,1),1);
+
+53
+
+P0 = idare(A',C',F*Pv*(F'),Pw);
+
+54
+
+x0 = m0;
+
+55
+56
+
+%kostnadsmatriser
+
+57
+
+Q = 5*(C')*C;
+
+58
+
+R = eye(size(B,2));
+
+59
+
+SN = zeros(size(Q));
+
+60
+61
+62
+
+%Lös Riccatiekvationen och beräkna återkopplingsmatriserna för regleringen i
+förväg
+[L0, L, S0, S] = aterkoppling(A,B,SN,Q,R,n);
+
+63
+64
+
+%allokering av variabler
+
+65
+
+x = cell(1,n);
+
+y = cell(1,n);
+
+66
+
+x_pred = cell(1,n);
+
+x_korr = cell(1,n);
+
+67
+
+P_pred = cell(1,n);
+
+P_korr = cell(1,n);
+
+68
+
+v = cell(1,n);
+
+w = cell(1,n);
+
+u = cell(1,n);
+
+69
+70
+
+%slumpa process- och mätbruset
+
+71
+
+v0 = mvnrnd(mv,Pv,1)';
+
+72
+
+w0 = mvnrnd(mw,Pw,1)';
+
+73
+
+for k = 1:n
+
+74
+
+v{k} = mvnrnd(mv,Pv,1)';
+
+75
+
+w{k} = mvnrnd(mw,Pw,1)';
+
+76
+
+end
+
+77
+78
+
+%bestäm styrsignalen vid tid t = 0 och beräkna prediktionen
+
+79
+
+if dy == dt
+
+80
+
+%om mätning görs vid tid 0 beräkna korrektionen
+
+y0 = C*x0 + w0;
+
+86
+
+BILAGA C.
+
+PROGRAMKOD
+
+Tuomas Virtanen
+
+81
+
+[x_korr_0,P_korr_0] = kf_korrektion(m0,P0,y0,C,G,Pw);
+
+82
+
+u0 =
+
+83
+84
+
+=
+
+L0*x_korr_0;
+_
+[x pred{1},P_pred{1}] = kf_prediktion(x_korr_0,P_korr_0,A,B,u0,F,Pv);
+
+else
+
+85
+
+x_pred_0 = m0;
+
+86
+
+u0 =
+
+87
+
+[x_pred{1},P_pred{1}] = kf_prediktion(x_pred_0,P0,A,B,u0,F,Pv);
+
+88
+
+=L0*x_pred_0;
+
+end
+
+89
+90
+
+for k = 1:n
+
+91
+
+%iterera tillståndet och beräkna prediktionen
+
+92
+
+if k == 1
+
+93
+
+% H ∗ [0; 1] simulerar en 0.1% ökning på nätverk 2
+
+94
+
+x{1} = A*x0 +B*u0 + H*[0; 1] + F*v0;
+
+95
+96
+
+else
+
+=
+
+=
+
+=
+
+x{k} = A*x{k 1} + B*u{k 1} + F*v{k 1};
+
+97
+
+=
+
+if isempty(x_korr{k 1})
+
+98
+
+=
+
+=
+
+=
+
+=
+
+[x_pred{k},P_pred{k}] = kf_prediktion(x_pred{k 1},P_pred{k 1},A,B,u{
+
+99
+
+=
+
+k 1},F,Pv);
+100
+
+else
+
+[x_pred{k},P_pred{k}] = kf_prediktion(x_korr{k 1},P_korr{k 1},A,B,u{
+
+101
+
+=
+
+k 1},F,Pv);
+102
+
+end
+
+103
+
+end
+
+104
+
+%gör mätning och beräkna korrektion vid varje mätintervall dy
+
+105
+
+if mod(k*dt,dy) == 0
+
+106
+
+y{k} = C*x{k} + G*w{k};
+[x_korr{k},P_korr{k}] = kf_korrektion(x_pred{k},P_pred{k},y{k},C,G,Pw);
+
+107
+108
+
+end
+
+109
+
+%beräkna styrsignalen
+
+110
+
+if mod(k*dt,du) == 0
+if isempty(x_korr{k})
+
+111
+112
+113
+
+u{k} =
+else
+
+114
+115
+116
+117
+118
+119
+
+u{k} =
+
+=L{k}*x_pred{k};
+=L{k}*x_korr{k};
+
+end
+else
+if k == 1
+u{1} = u0;
+else
+
+87
+
+BILAGA C.
+
+Tuomas Virtanen
+
+=
+
+120
+
+u{k} = u{k 1};
+
+121
+
+end
+
+122
+123
+
+PROGRAMKOD
+
+end
+end
+
+124
+125
+
+%plotta mätningarna och styrsignalerna
+
+126
+
+for k = 1:n
+
+127
+
+if k == 1
+
+128
+
+if exist('y0','var')
+
+129
+
+s1 = subplot(2,2,1); plot(0,y0(1),'r.'); hold on;
+
+130
+
+s2 = subplot(2,2,2); plot(0,y0(2),'r.'); hold on;
+
+131
+
+else
+
+132
+
+s1 = subplot(2,2,1); hold on;
+
+133
+
+s2 = subplot(2,2,2); hold on;
+
+134
+
+end
+
+135
+
+s3 = subplot(2,2,3); plot([(k 1)*dt,k*dt],[u0(1),u0(1)],'b '); hold on
+
+136
+
+s4 = subplot(2,2,4);
+
+137
+
+=
+=
+plot([(k=1)*dt,k*dt],[u0(2),u0(2)],'b=');
+
+hold on
+
+else
+
+138
+
+if ~isempty(y{k})
+
+=
+plot((k=1)*dt,y{k}(2),'r.');
+
+139
+
+s1 = subplot(2,2,1); plot((k 1)*dt,y{k}(1),'r.');
+
+140
+
+s2 = subplot(2,2,2);
+
+141
+
+end
+
+142
+
+s3 = subplot(2,2,3); plot([(k 1)*dt,k*dt],[u{k 1}(1),u{k 1}(1)],'b ');
+
+143
+
+s4 = subplot(2,2,4);
+
+144
+
+end
+
+145
+
+if k == n
+
+=
+=
+=
+=
+plot([(k=1)*dt,k*dt],[u{k=1}(2),u{k=1}(2)],'b=');
+
+146
+
+subplot(2,2,1); plot([0,t],[0,0],'k:');
+
+hold off
+
+147
+
+subplot(2,2,2); plot([0,t],[0,0],'k:');
+
+hold off
+
+148
+
+subplot(2,2,3); plot([0,t],[0,0],'k:');
+
+hold off
+
+149
+
+subplot(2,2,4); plot([0,t],[0,0],'k:');
+
+hold off
+
+150
+
+end
+
+151
+
+end
+
+152
+
+xlabel(s1, 'tid (s)'); ylabel(s1, '\Delta w_1');
+
+153
+
+xlabel(s2, 'tid (s)'); ylabel(s2, '\Delta P_{tie}');
+
+154
+
+xlabel(s3, 'tid (s)'); ylabel(s3, '\Delta P_{ref1}');
+
+155
+
+xlabel(s4, 'tid (s)'); ylabel(s4, '\Delta P_{ref2}');
+
+156
+
+h = zoom;
+
+h.Motion = 'vertical';
+
+h.Enable = 'on';
+
+157
+158
+
+function [x,P] = kf_prediktion(x,P,A,B,u,F,Pv)
+
+159
+
+%Prediktionen av tillståndet
+
+160
+
+x = A * x + B * u;
+
+88
+
+BILAGA C.
+
+PROGRAMKOD
+
+161
+
+%Prediktionens kovarians
+
+162
+
+P = A * P * A' + F * Pv * F';
+
+163
+
+Tuomas Virtanen
+
+end
+
+164
+165
+
+function [x,P] = kf_korrektion(x,P,y,C,G,Pw)
+
+166
+
+%Kalmanförstärkningen
+
+167
+
+K = P * C' * (C * P * C' + G * Pw * G')^( 1);
+
+168
+
+%Korrektionen av tillståndet
+
+169
+
+x = x + K * (y
+
+170
+
+%Korrektionens kovarians
+
+171
+
+P = P
+
+172
+
+=K
+
+=C
+
+=
+
+* x);
+
+* C * P;
+
+end
+
+173
+174
+
+function [L0, L, S0, S] = aterkoppling(A,B,SN,Q,R,n)
+
+175
+176
+
+L = cell(n,1);
+
+177
+
+S = cell(n,1);
+
+178
+
+=
+
+179
+
+L{n} = (B'*SN*B + R)^( 1)*B'*SN*A;
+
+180
+
+S{n} = A'*SN*A + Q
+
+181
+
+= A'*SN*B*(B'*SN*B
+
+=
+
+182
+
+for i = 1:n 1
+
+=
+=
+=
+S{n=i} = A'*S{n=i+1}*A + Q...
+= A'*S{n=i+1}*B*(B'*S{n=i+1}*B
+
+183
+
+=
+
+L{n i} = (B'*S{n i+1}*B + R)^( 1)*B'*S{n i+1}*A;
+
+184
+185
+186
+
+=
+
+=
+
++ R)^( 1)*B'*S{n i+1}*A;
+
+end
+
+187
+
+=
+
+188
+
+L0 = (B'*S{1}*B + R)^( 1)*B'*S{1}*A;
+
+189
+
+S0 = A'*S{1}*A + Q
+
+190
+
+=
+
++ R)^( 1)*B'*SN*A;
+
+= A'*S{1}*B*(B'*S{1}*B
+
+end
+
+89
+
+=
+
++ R)^( 1)*B'*S{1}*A;
+
+LITTERATUR
+
+Tuomas Virtanen
+
+Litteratur
+[AA11]
+
+Ehab S. Ali och Sahar M. Abd-Elazim.  Bacteria foraging optimization algorithm based load frequency controller for interconnected
+power system. I:
+
+Systems
+
+Internationa Journal of Electrical Power & Energy
+
+33 (3 2011), s. 633638. doi:
+
+10.1016/j.ijepes.2010.12.
+
+022.
+[AB89]
+
+Karl G. Andersson och Lars-Christer Böiers.
+
+lekvationer.
+[DGG86]
+
+Ordinära dierentia-
+
+Lund: Studentlitteratur AB, 1989, s. vi+358.
+
+Carlos E. De Souza, Michel R. Gevers och Graham C. Goodwin.  Riccati equations in optimal ltering of nonstabilizable systems having
+singular state transition matrices. I:
+
+tic Control
+
+IEEE Transactions on Automa-
+
+AC-31.9 (1986), s. 831838. doi:
+
+10.1109/TAC.1986.
+
+1104415.
+[DV85]
+
+M. H. A. Davis och R. B. Vinter.
+
+Stochastic modelling and control.
+
+Monographs on Statistics and Applied Probability. Chapman & Hall,
+London, 1985, s. xii+393. doi:
+[Gir03]
+
+Narayan C. Giri.
+
+10.1007/978-94-009-4828-0.
+
+Multivariate statistical analysis.
+
+2. utg. New York:
+
+Marcel Dekker, 2003, s. xiv+558.
+[HJ12]
+
+Roger A. Horn och Charles R. Johnson.
+
+Matrix Analysis. 2. utg. New
+
+York, NY, USA: Cambridge University Press, 2012, s. xviii+643.
+[HRS07]
+
+Christiaan Heij, André Ran och Freek van Schagen.
+
+Introduction to
+
+mathematical systems theory: Linear systems, identication and control. Birkhäuser Verlag, Basel, 2007, s. x+166. doi: 10.1007/978-3-
+
+7643-7549-2.
+
+90
+
+LITTERATUR
+
+[JP03]
+
+Tuomas Virtanen
+
+Jean Jacod och Philip Protter.
+
+Probability essentials.
+
+sitext. Springer-Verlag, Berlin, 2003, s. x+254. doi:
+
+2. utg. Univer-
+
+10.1007/978-
+
+3-642-55682-1.
+[Kal60]
+
+Rudolph E. Kalman.  A New Approach to Linear Filtering and Prediction Problems. I:
+
+Engineering
+[Kay93]
+
+Transactions of the ASMEJournal of Basic
+
+82.1 (1960), s. 3545. doi:
+
+10.1115/1.3662552.
+
+Steven M. Kay.
+
+Fundamentals of Statistical Signal Processing: Esti-
+
+mation Theory.
+
+Upper Saddle River, NJ, USA: Prentice-Hall, Inc.,
+
+1993, s. xii+595.
+[Kun94]
+
+Prabha S. Kundur.
+
+Power System Stability and Control.
+
+McGraw-
+
+Hill, Inc., 1994.
+[LR95]
+
+Peter Lancaster och Leiba Rodman.
+
+Algebraic Riccati Equations. Ox-
+
+ford science publications. Clarendon Press, jan. 1995, s. xvii+480.
+[Lue79]
+
+David G. Luenberger.
+
+Introduction to dynamic systems: Theory, Mo-
+
+dels, and Applications.
+[LXP08]
+
+New York: Wiley, 1979, s. xvi+446.
+
+Frank L. Lewis, Lihua Xie och Dan Popa.
+
+Optimal and robust estima-
+
+tion: with an introduction to stochastic control theory.
+
+2. utg. Boca
+
+Raton: Taylor & Francis, 2008, s. xxii+523.
+[PMH13]
+
+Sidhartha Panda, Banaja Mohanty och Prakash K. Hota.  Hybrid
+BFOAPSO algorithm for automatic generation control of linear and
+nonlinear interconnected power systems. I:
+13 (12 2013), s. 47181730. doi:
+
+[Ros+13]
+
+Applied Soft Computing
+
+10.1016/j.asoc.2013.07.021.
+
+Samira Roshany-Yamchi m. .  Kalman Filter-Based Distributed Predictive Control of Large-Scale Multi-Rate Systems: Application to Power Networks. I:
+
+IEEE Transactions on Control Systems Technology
+
+21.1 (2013), s. 2739. doi:
+[Ros10]
+
+Sheldon M. Ross.
+
+10.1109/TCST.2011.2172444.
+
+A First Course in Probability. 8. utg. Pearson Pren-
+
+tice Hall, 2010, s. xiv+530.
+[Sha+16]
+
+Nilaykumar N. Shah m. .  Automatic load frequency control of two
+area system using L-Q-R method. I:
+
+Engineering and Scientic Research
+
+21276/Ijcesr.
+91
+
+International Journal of Current
+3 (6 2016), s. 5466. doi:
+
+10.
+
+LITTERATUR
+
+[Sär13]
+
+Simo Särkkä.
+
+Tuomas Virtanen
+
+Bayesian Filtering and Smoothing.
+
+Vol. 3. Institute
+
+of Mathematical Statistics Textbooks. Cambridge University Press,
+2013, s. xxii+232. doi:
+[TSH01]
+
+10.1017/CBO9781139344203.
+
+Harry L. Trentelman, Anton A. Stoorvogel och Malo Hautus.
+
+theory for linear systems.
+
+Control
+
+Communications and Control Engineering
+
+Series. Springer-Verlag London, Ltd., London, 2001, s. xvi+389. doi:
+
+10.1007/978-1-4471-0339-4.
+[Åst70]
+
+Karl J. Åström.
+
+Introduction to stochastic control theory.
+
+Mathema-
+
+tics in Science and Engineering, Vol. 70. Academic Press, New YorkLondon, 1970, s. xiv+299.
+[Øks98]
+
+Bernt Øksendal.
+
+Stochastic Dierential Equations. An Introduction
+
+with Applications.
+
+5. utg. Universitext. Springer-Verlag, 1998. doi:
+
+10.1007/978-3-662-03620-4.
+
+92
+
+

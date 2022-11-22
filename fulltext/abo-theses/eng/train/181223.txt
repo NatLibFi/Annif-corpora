@@ -1,0 +1,4783 @@
+Simulation of two ergodic Markov chains
+Mikael Nyman, 33409
+
+Thesis Pro Gradu
+Faculty of Science and Engineering
+Mathematics
+Åbo Akademi
+
+2021
+
+Contents
+
+1 Introduction
+
+1
+
+2 Introductory theory
+
+3
+
+2.1
+
+Distribution functions and probability measures
+
+. . . . . . . .
+
+3 Discrete time Markov chains
+
+3
+
+7
+
+3.1
+
+Snowfall at Kilpijärvi, Finland . . . . . . . . . . . . . . . . . .
+
+7
+
+3.2
+
+The marginal distribution
+
+. . . . . . . . . . . . . . . . . . . .
+
+9
+
+3.3
+
+Classication of states
+
+. . . . . . . . . . . . . . . . . . . . . .
+
+15
+
+3.4
+
+The long time behaviour and stationary distribution of Markov
+chains
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4 Simulation
+
+23
+
+34
+
+4.1
+
+Algorithm . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.2
+
+Simulating the data from Kilpisjärvi precipitation . . . . . . .
+
+40
+
+4.3
+
+Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+42
+
+4.4
+
+Simulation of the
+
+. . . . . . . . . . . . . . . .
+
+47
+
+4.5
+
+Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+47
+
+7×7
+
+matrix P
+
+5 Conclusions
+
+36
+
+53
+
+5.1
+
+Convergence of the Kilpisjärvi simulation . . . . . . . . . . . .
+
+5.2
+
+Convergence of the matrix
+
+. . . . . . . . . . . . . . . . . . .
+
+54
+
+5.3
+
+Visualization of convergence . . . . . . . . . . . . . . . . . . .
+
+54
+
+5.4
+
+Summary
+
+54
+
+P
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+53
+
+6 Summary in Swedish - Svensk sammanfattning
+
+56
+
+Appendices
+
+58
+1
+
+A R code for chapter 4
+A.1
+
+59
+
+Code for the plot of probability through time for the Kilpisjärvi
+simulation for
+
+n = 50.
+
+. . . . . . . . . . . . . . . . . . . . . .
+
+A.2
+
+Code for the barplot from the Kilpisjärvi simulation . . . . . .
+
+A.3
+
+Code for the
+
+A.4
+
+Datamanipulation and code for table of measurements in Fig-
+
+A.5
+
+Barplot code for the
+
+7×7
+
+matrix. . . . . . . . . . . . . . . . . . . . .
+
+ure (4.13). . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Bibliography
+
+7×7
+
+matrix. . . . . . . . . . . . . . . . .
+
+59
+60
+61
+62
+64
+
+65
+
+Chapter 1
+Introduction
+In
+
+2017 I participated in the course Markov chains
+
+at Åbo Akademi Univer-
+
+sity, Finland, and found the material, as well as the applications, interesting.
+Therefore I knew that this was a subject that I wanted to write my master's
+thesis about. According to Lateef (2019), Markov chains are applied in many
+areas to solve real-world problems, such as Google page ranking, predicting
+typing of words, and generating texts. Another area is weather predictions,
+which we will see in Chapter
+
+3
+
+with empirical observations from the Finnish
+
+meteorological institute (FMI).
+The purpose of this thesis is to present the theory of discrete Markov
+chains and simulate two dierent ergodic and irreducible Markov chains.
+Moreover, we will see how these chains behave in the long run. Hence, the
+main core of this thesis is the stationary distribution. The reader is supposed
+to have basic knowledge of mathematics and programming to understand the
+content.
+The name Markov is from the russian mathematician Andrei Andreevich
+Markov, who lived between the years 1856-1922. According to [5, Chapter 2],
+Markov systematically studied a certain property. Informally the property
+states that the probability of being at a certain state at a future time point,
+given any set of time points up to present time, only depends on the last of
+the time points up to present time. This property is called the Markov property. The conditional probabilities, which correspond to transitions from one
+state to another, can be connected as a chain. Hence, the whole designation
+Markov chain. Also, the conditional probabilites can be represented in a
+matrix, which we call a transition matrix. A transition matrix has dierent
+properties depending on its entries.
+
+One example of Markov chains, with
+
+1
+
+certain properties, is irreducible and ergodic Markov chains. These are the
+
+4.
+2 covers some introductory theory that mainly is used in Chapter
+
+type of Markov chains I have chosen to simulate in Chapter
+Chapter
+
+4,
+
+where we go through the theory of discrete Markov chains, provided with
+
+examples. The open source software Geogebra is used to plot and visualize
+some of the theory, and Microsoft Excel to read in and manipulate the empirical data provided by FMI. The empirical data, which is used in examples,
+originate from measurements made in Kilpisjärvi (in the north of Finland)
+during 30 years. After manipulation, the empirical data is transformed into
+a transition matrix. Most of the theory for Markov chains is obtained from
+[5].
+In Chapter
+
+4
+
+we simulate two ergodic and irreducible Markov chains,
+
+where the rst chain consists of the empirical data from FMI. The second
+chain we simulate is larger, in terms of dimension, consisting of
+
+7
+
+columns.
+
+Chapter
+
+4
+
+7
+
+rows and
+
+starts with a presentation of a coding algorithm to
+
+simulate Markov chains, where the algorithm is mainly based on an internet
+publication from Bonakdarpour M. (2016). All code for tables and charts is
+added to the appendices at the end of the thesis.
+I have put much of eort in the visualizations, since I believe that they
+are vital. Vital especially for showing content to the reader for the purpose of
+understanding. One aspect of that can be seen in the simulations in Chapter
+
+4, where I found a way to visualize convergence for Markov chains for smaller
+and larger numbers of transitions.
+
+2
+
+Chapter 2
+Introductory theory
+In this section, we review some of the basic theory of probability needed in
+this thesis. For further details, see [7] and [9].
+
+2.1 Distribution functions and probability measures
+Denition 2.1.
+
+The function
+
+F : R → [0, 1]
+
+is said to be a probability
+
+distribution function if
+i)
+ii)
+
+F
+
+is non-decreasing and right-continuous,
+
+limx→−∞ F (x) = 0
+
+Example 2.2.
+
+Let for
+
+and
+
+limx→+∞ F (x) = 1
+
+a<b
+
+F (x) :=
+
+
+
+0,
+
+x−a
+,
+ b−a
+
+
+Then
+
+F
+
+1,
+
+x≤a
+a≤x≤b.
+x≥b
+
+is the probability distribution function of a uniform probability dis-
+
+tribution on
+
+[0, 1].
+
+Denition 2.3. (Ω, F , P)
+
+is said to be a probability space if it consists of
+
+3
+
+the following three parts:
+
+
+
+1)
+2)
+
+
+3)
+Remark
+
+σ -algebra F ,
+
+The
+
+A
+
+consisting all possible outcomes.
+
+where
+
+The probability measure
+2.4. The subsets
+
+Denition 2.5.
+is a
+
+Ω
+
+The sample space
+
+σ -algebra,
+
+E∈F
+
+F is a set of subsets E ⊂ Ω.
+P assigning probabilities to events.
+
+are called events.
+
+(Ω, F , P) be a probability space and B ∈ F ,
+P(B) > 0. The conditional probability
+event B is dened as
+
+Let
+
+be such that
+
+with respect to
+
+P(A|B) :=
+
+Theorem 2.6.
+
+For
+
+Furthermore let
+
+P(Ai ) > 0
+
+P(A ∩ B)
+P(B)
+
+i = 1, 2, ..., n.
+
+P(B) =
+
+n
+X
+
+For
+
+F
+
+(2.1)
+
+n ∈ N = {1, 2, ...}, let {Ai }ni=1
+(
+Ai ∩ Aj = ∅, i 6= j
+∪ni=1 Ai = Ω.
+for
+
+where
+
+for event
+
+be events such that
+
+B∈F
+
+it holds that
+
+P(Ai ) P(B|Ai ).
+
+(2.2)
+
+i=1
+
+Theorem 2.7. Bayes Formula.
+B∈F
+
+be such that
+
+{Ai }ni=1 be events as in Theorem 2.6 and
+P(B) > 0. Then for k = 1, ..., n, it holds that
+Let
+
+P(Ak ) P(B|Ak )
+P(Ak |B) = Pn
+i=1 P(Ai ) P(B|Ai )
+
+(2.3)
+
+Denition 2.8. A function X : Ω → N is a geometrically distributed random
+variable, with parameter
+
+p ∈ (0, 1)
+
+if
+
+P(X = k) := P({ω : X(ω) = k}) = pk (1 − p) =: pk q, ∀k ≥ 0.
+
+(2.4)
+
+Denition 2.9. The expectation value of a geometrically distributed random
+variable (with parameter
+
+p)
+
+E[X] =
+
+is
+
+∞
+X
+
+k P(X = k) =
+
+k=0
+
+∞
+X
+k=0
+
+4
+
+kpk q.
+
+(2.5)
+
+Theorem 2.10.
+
+Let
+
+X
+
+be a discrete random variable with the geometric
+
+distribution with paramater
+
+p.
+
+Then
+
+E[X] =
+Proof.
+
+p
+1−p
+
+(2.6)
+
+From the denition of expectation and by the denition of the geo-
+
+metric distribution we get that
+
+E[X] = (1 − p)
+
+n
+X
+
+k
+
+kp = q
+
+n
+X
+
+k=0
+
+= qp
+
+n
+X
+
+kp
+
+k−1
+
+k=1
+
+k=0
+
+(2.7)
+
+p
+1
+=
+,
+= qp
+2
+(1 − p)
+1−p
+
+where we used the well known identity: For
+
+∞
+X
+
+kpk
+
+kpk−1 =
+
+k=1
+
+0<p<1
+
+1
+.
+(1 − p)2
+
+Theorem 2.11. (Markov's Inequality)
+P Let X : Ω → N be a function, P(X ≥
+n) = P(ω : X(ω) ≥ n),
+
+and
+
+E[X] =
+
+∞
+n=0
+
+P (X ≥ n) ≤
+Proof.
+
+n P(ω : X(ω) = n),
+E[X]
+.
+n
+
+then
+
+(2.8)
+
+By (2.5) we get that
+
+E[X] =
+=
+≥
+
+∞
+X
+x=0
+n
+X
+x=0
+∞
+X
+
+x P(X = x)
+x P(X = x) +
+
+∞
+X
+x=n
+
+x P(X = x).
+
+x=n
+
+5
+
+x P(X = x)
+
+(2.9)
+
+Since
+
+x ≥ n,
+
+it follows that
+
+∞
+X
+
+x P(X = x) ≥
+
+x=n
+
+∞
+X
+
+n P(X = x)
+
+x=n
+∞
+X
+
+=n
+
+P(X = x)
+
+(2.10)
+
+x=n
+
+= n P(X ≥ n).
+
+Theorem 2.12.
+random variables,
+
+{Xi }ni=1 be a sequence of independent and identical
+and let E[Xi ] = µ. Then, as n → ∞, we have that
+
+Let
+
+X1 + X2 + ... + Xn
+→µ
+n
+
+(2.11)
+
+with probability one, or equivalently
+
+
+
+X1 + X2 + ... + Xn
+P lim
+=µ
+n→∞
+n
+
+
+= 1.
+
+(2.12)
+
+Equation (2.11) is called the strong law of large numbers. For a simplied
+2
+proof, see [8]. The somewhat simplied proof assumes that E[Xi ] < ∞ and
+E[Xi4 ] < ∞, in comparison to the formal proof, which only requires that
+
+E[Xi ] < ∞
+
+.
+
+6
+
+Chapter 3
+Discrete time Markov chains
+
+3.1 Snowfall at Kilpijärvi, Finland
+The Finnish Meteorological Institute (FMI) provides a large amount of open
+data for the public use.
+
+The amount of precipitation throughout Finland
+
+is one measurement that is constantly monitored and has been monitored
+for many years back.
+
+One weather station that monitors the amount of
+
+precipitation is located in the far north of Finland, namely in Kilpisjärvi.
+We will use observed data in January between the time period 01.01.198931.12.2018 to explain some of the theory of Markov chains. In the rst simple
+model called the Bernoulli model we only look at the pattern of snowy and
+dry days. A day is dened as snowy if the precipitation amount is larger
+than
+
+626
+year
+
+0, 1
+
+millimeters (mm) and dry otherwise. By using the data we get
+
+snowy and
+
+j
+
+snowy).
+
+304 dry days in total. Let Xi,j = 1(A), where A=(day i
+1(A) = 1 if the event A occurs and 0 otherwise.
+
+7
+
+of
+
+Precipitation at Kilpisjärvi
+
+Figure 3.1:
+
+The pattern of January precipitation at Kilpisjärvi, Finland,
+
+between the time period 01.01.1989-31.12.2018.
+
+(30 years in total) Rows
+
+correspond to days, columns to years, and the blue dots to matching data
+whenever we have precipitation
+
+≥ 0, 1
+
+8
+
+mm.
+
+Today dry
+
+Today wet
+
+Total
+
+Yesterday dry
+
+82
+
+87
+
+169
+
+Yesterday wet
+
+88
+
+313
+
+401
+
+Total
+
+170
+
+400
+
+570
+
+Table 3.1: Observed precipitation data in January at Kilpisjärvi, Finland,
+between the time period 01.01.1989-31.12.2018.
+
+Denition 3.1. A random process {X0 , X1 , ...} with nite and discrete state
+space
+
+S = {0, 1, ..., N }, for simpilicity, composes a Markov
+n ∈ N and all i0 , i1 , ..., j ∈ S it holds
+
+chain (abbrevia-
+
+tion M.C.) if for all
+
+P(Xn = j|X0 = i0 , X1 = i1 , . . . , Xn−1 = in−1 ) = P(Xn = j|Xn−1 = in−1 ).
+(3.1)
+A M.C. is said to be time homogenous if the probability in (3.1) does not
+depend on
+
+n,
+
+i.e. the transition probability from one state to another stays
+
+the same no matter the time point we observe the chain. (3.1) is called the
+Markov property.
+
+Denition 3.2. An (N +1)×(N +1) matrix P
+
+is called a transition matrix of the time homogenous M.C.
+
+(pi,j )N
+i,j=0
+
+· · · p0,N
+· · · p1,N 
+
+. 
+..
+. 
+.
+.
+· · · pN,N
+
+The matrix representation of the elements
+
+
+
+p0,0 p0,1
+ p1,0 p1,1
+
+P =  ..
+.
+.
+ .
+.
+pN,0 pN,1
+where all rows in
+
+P
+
+add up to
+
+1,
+
+P = (pi,j )N
+i,j=0 ,
+{Xn }∞
+.
+n=0
+
+with elements
+
+is
+
+(3.2)
+
+such that
+
+p0,0 + p0,1 + · · · + p0,N = p1,0 + p1,1 + · · · + p1,N
+.
+.
+.
+
+= pN,0 + pN,1 + · · · + pN,N = 1.
+
+3.2 The marginal distribution
+Marginal probabilities play an important role in Markov chains and are not
+very hard to compute. If we consider a
+
+9
+
+0−1
+
+Markov chain, i.e.
+
+S = {0, 1},
+
+we have that
+
+P(Xn+1 = 1) = P(Xn+1 = 1, Xn = 0) + P(Xn+1 = 1, Xn = 1)
+= P(Xn = 0)p0,1 + P(Xn = 1)p1,1
+= (1 − P (Xn = 1))p0,1 + P(Xn = 1)p1,1
+= p0,1 − P(Xn = 1)p0,1 + P(Xn = 1)p1,1
+= P(Xn = 1)(p1,1 − p0,1 ) + p0,1
+Let
+
+p1 := P(X0 = 1).
+
+Then
+
+p0 = P(X0 = 0) = 1 − p1 ,
+
+and from (3.3) we get
+
+a general recursive scheme that can be calculated for each
+
+n:
+
+P(X1 = 1) = p1 (p1,1 − p0,1 ) + p0,1
+P(X2 = 1) = P(X1 = 1)(p1,1 − p0,1 ) + p0,1
+= (p1 (p1,1 − p0,1 ) + p0,1 )(p1,1 − p0,1 ) + p0,1
+= p1 (p1,1 − p0,1 )2 + p0,1 (p1,1 − p0,1 ) + p0,1
+= p1 (p1,1 − p0,1 )2 + p0,1 (1 + (p1,1 − p0,1 ))
+P(X3 = 1) = p1 (p1,1 − p0,1 )3 + p0,1 (1 + (p1,1 − p0,1 ) + (p1,1 − p0,1 )2 )
+= p1 (p1,1 − p0,1 )3 + p0,1
+
+2
+X
+
+(3.3)
+
+(3.4)
+
+(p1,1 − p0,1 )r
+
+r=0
+.
+.
+.
+
+n
+
+P(Xn = 1) = p1 (p1,1 − p0,1 ) + p0,1
+
+n−1
+X
+
+(p1,1 − p0,1 )r
+
+r=0
+In case p0,0 = p1,1 = 1 in equation
+p0,1 = 0. If p0,1 6= p1,1 we can write
+
+p0,1
+
+n−1
+X
+r=0
+
+(p1,1 − p0,1 )r =
+
+(3.4) we see that
+
+P(Xn = 1) = p1 ,
+
+p0,1 (1 − (p1,1 − p0,1 )n )
+1 − (p1,1 − p0,1 )
+
+p0,1
+p0,1 (p1,1 − p0,1 )n
+=
+−
+1 − (p1,1 − p0,1 )
+1 − (p1,1 − p0,1 )
+
+since
+
+(3.5)
+
+by using geometric series. Therefore equation (3.4) can be written
+
+
+
+p0,1
+p0,1
+P(Xn = 1) =
++ p1 −
+(p1,1 − p0,1 )n ,
+1 − (p1,1 − p0,1 )
+1 − (p1,1 − p0,1 )
+10
+
+(3.6)
+
+when
+
+p0,1 6= p1,1 .
+
+If we take a look at equation (3.6) we see that the choice of
+
+p1 is crucial. The eect of p1 is dampened exponenp1 = p0,1 /1 − (p1,1 − p0,1 ) it has no eect at all. In that case
+the same for each n. This choice of p1 is called the stationary
+
+the initial distribution
+tially and when
+
+P(Xn = 1)
+
+is
+
+initial distribution, which we will return to later on.
+The following lemma is an important computation, called the ChapmanKolmogorov equation. We let the state space
+
+S = {0, ..., N },
+
+and dene
+
+(n)
+
+pi,j = P(Xn = j|X0 = i).
+
+Lemma 3.3.
+
+Chapman-Kolmogorov equation. It holds that
+
+(n)
+pi,j
+
+N
+X
+
+=
+
+(m) (n−m)
+
+pi,k pk,j
+
+, 1 ≤ m ≤ n − 1.
+
+(3.7)
+
+k=0
+
+Proof.
+
+For
+
+1≤m≤n−1
+(n)
+
+pi,j = P({Xn = j} ∩ (∪N
+k=0 {Xm = k})|X0 = i)
+=
+
+=
+
+N
+X
+k=0
+N
+X
+
+P({Xn = j} ∩ {Xm = k}|X0 = i)
+P(Xn = j, Xm = k|X0 = i)
+
+k=0
+By using Theorem 2.7, we know that
+
+P(Xn = j, Xm = k, X0 = i) P(X0 = i)
+P(Xn = j, Xm = k|X0 = i)
+=
+P(Xm = k|X0 = i)
+P(X0 = i) P(Xm = k, X0 = i)
+P(Xn = j, Xm = k, X0 = i)
+=
+P(Xm = k, X0 = i)
+= P(Xn = j|Xm = k, X0 = i).
+
+11
+
+Finally by using Markov property in the following equation we get that
+
+(n)
+pi,j
+
+=
+
+=
+
+=
+
+N
+X
+k=0
+N
+X
+k=0
+N
+X
+
+P(Xn = j|Xm = k, X0 = i) P(Xm = k|X0 = i)
+P(Xn = j|Xm = k) P(Xm = k|X0 = i)
+(m) (n−m)
+
+pi,k pk,j
+
+k=0
+
+Equation (3.7) can be rewritten in matrix notation as
+
+(n)
+
+P n ≡ (pi,j ) = P n−m P m .
+pn = (pn (0), ..., pn (N )) = (P(Xn = 0), ..., P(Xn = N ))
+ability distribution of Xn . By recalling the computation
+Let
+
+denote the probof
+
+P(Xn = 1)
+
+in
+
+equation (3.4), we see that
+
+pn = pn−1 P
+can be calculated with the initial distribution
+
+pn = p0 P n .
+
+12
+
+(3.8)
+
+p0 .
+
+Therefore
+(3.9)
+
+Figure 3.2: Visualization of the transitions for S = {0,1}.
+
+13
+
+Figure 3.3: Kilpisjärvi transition diagram
+
+Example 3.4.
+
+(Kilpisjärvi precipitation) The observed data in table (3.1)
+
+can be used as a Markov chain model. Let us say that it rains on January
+
+1
+
+this year. In our model that is considered as wet, i.e. the initial distribution
+
+p0 = (0, 1). Now, what would the probability of rain be 6 days
+(6)
+January 7? By using (3.9) we see that we need to determine P
+,
+
+
+0.485 0.515
+P =
+0.219 0.781
+P we get that
+
+
+0.299 0.701
+=
+.
+0.298 0.702
+
+hence on
+where
+
+(3.10)
+
+and after matrix-multiplication of
+
+P (6)
+
+(3.11)
+
+Since we want to know the probability distribution (pn ) 6 days hence, given
+that we obeserve rain the rst day we get from (3.9)
+
+p6 = (0, 1)P (6) = (0.298, 0.702).
+14
+
+(3.12)
+
+In the rst column in (3.12) we have the probability of a dry day on January
+7, given wet day on January 1. In the second column we have the probability
+we want to compute. The probability of a wet day in Kilpisjärvi on January
+7, given a wet day on January 1, is 0.702.
+
+3.3 Classication of states
+Denition 3.5. For a Markov chain {Xn }∞
+n=0 in the state space S , the hitting
+j∈S
+
+time of a given state
+
+is dened as
+
+Tj := inf{n > 0 : Xn = j}.
+
+Denition 3.6.
+if the event
+
+(3.13)
+
+T ∈ Z+ ∪ {∞} is called a stopping time
+expressed in terms of X1 , X2 , ..., Xm .
+
+A random variable
+
+{T = m}
+
+can be
+
+This means that a stopping time is a specic random time such that we
+at time
+
+m
+
+Tj is
+{Tj = m} = {X1 =
+6 j, X2 =
+6 j, ..., Xm = j}.
+
+know weather an event has occured or not. The hitting time
+
+a stopping time, since the event
+
+Theorem 3.7.
+
+(The strong Markov property) Let
+
+the transitions probabilities
+time with respect to
+
+{Xn }.
+
+pi,j
+
+and statespace
+
+{Xn }
+
+be an M.C. with
+
+S . Also, let Tj be a stopping
+m, we need to show that
+
+Then for any integer
+
+P(XT +m = j|X0 = i0 , X1 = i1 , ..., XT = i)
+
+(3.14)
+
+(m)
+
+= P(Xm = j|X0 = i) = pi,j
+and
+
+(m)
+
+P(XT +m = j|XT = i) = P(Xm = j|X0 = i) = pi,j .
+Proof.
+
+(3.15)
+
+First we prove equality (3.14):
+
+P(XT +m = j|X0 = i0 , X1 = i1 , ..., XT = i)
+P(XT +m = j, X0 = i0 , X1 = i1 , ..., XT = i)
+=
+P(X0 = i0 , X1 = i1 , ..., XT = i)
+P∞
+P(XT +m = j, X0 = i0 , X1 = i1 , ..., XT = i, T = τ )
+= τ =1
+P(X0 = i0 , X1 = i1 , ..., XT = i)
+
+15
+
+(3.16)
+
+Next, since
+
+T
+
+{T = τ } can be expressed as
+X0 , X1 , ..., Xτ . The Markov property now
+
+is a stopping time, the event
+
+the process up to time
+
+τ,
+
+i.e. as
+
+gives us that
+
+P(XT +m = j|X0 = i0 , ..., XT = i, T = τ ) = P(XT +m = j|XT = i)
+(m)
+
+= pi,j
+
+(3.17)
+
+Hence, equation (3.16) becomes
+
+P∞
+
+P(Xτ +m = j, X0 = i0 , ..., XT = i, T = τ )
+P(X0 = i0 , ..., XT = i)
+P∞
+P(Xτ +m = j, X0 = i0 , ..., XT = i, T = τ ) P(X0 = i0 , ..., XT = i, T = τ )
+= τ =1
+P(X0 = i0 , ..., XT = i)
+P∞ (m)
+pi,j P(X0 = i0 , ..., XT = i, T = τ )
+= τ =1
+P(X0 = i0 , ..., XT = i)
+P∞
+(m)
+τ =1 P(X0 = i0 , ..., XT = i, T = τ )
+=pi,j
+P(X0 = i0 , ..., XT = i)
+τ =1
+
+(m)
+
+=pi,j = P(Xm = j|X0 = i)
+(3.18)
+Finally we get equality (3.15) from (3.14):
+
+P(XT +m = j, XT = i)
+P(XT +m = j|XT = i) =
+P(XT = i)
+P∞
+P(XT +m = j, XT = i, T = τ )
+= τ =1
+P(XT = i)
+P∞
+P(XT +m = j|XT = i, T = τ ) P(XT = i, T = τ )
+= τ =1
+P(XT = i)
+P∞
+(m)
+τ =1 P(XT = i, T = τ )
+=pi,j
+P(XT = i)
+(m)
+
+=pi,j
+
+Denition 3.8.
+
+State
+
+i
+
+reaches state
+
+j,
+
+denoted as
+
+(n)
+
+∃n ≥ 0 : pi,j > 0.
+16
+
+i → j,
+
+if
+
+(3.19)
+
+Denition 3.9.
+
+i
+
+Two states
+
+municate, denoted as
+
+↔,
+
+and
+
+j
+
+that reach each other are said to com-
+
+i.e.
+
+i↔j
+
+if
+
+i→j
+
+j → i.
+
+and
+
+(3.20)
+
+Denition 3.10. The probability of an event associated with the M.C. when
+the chain starts at state
+
+i
+
+is dened as
+
+Pi (...) := P(...|X0 = i),
+and
+
+i
+
+(3.21)
+
+is called the initial state.
+
+Proposition 3.11.
+
+i, j ∈ {0, ..., N }
+
+For all
+
+(n)
+pi,j
+
+=
+
+n
+X
+
+it holds
+
+(n−m)
+
+Pi (Tj = m)pj,j
+
+m=1
+
+Proof. Write {Xn = j} =
+i by using conditional
+
+Pn
+
+state
+
+m=1 {Tj = m, Xn = j}. Starting from initial
+probability and nally taking advantage of the
+
+Markov property we get that
+
+(n)
+
+pi,j = Pi (Xn = j)
+n
+X
+Pi ((Tj = m) ∩ (Xn = j))
+=
+=
+=
+=
+=
+
+m=1
+n
+X
+m=1
+n
+X
+m=1
+n
+X
+m=1
+n
+X
+
+Pi (Xn = j|Tj = m)Pi (Tj = m)
+P(Xn = j|X0 = i, X1 6= j, ..., Xm−1 6= j, Xm = j)Pi (Tj = m)
+P(Xn = j|Xm = j)Pi (Tj = m)
+(n−m)
+
+Pi (Tj = m)pj,j
+
+.
+
+m=1
+
+Denition 3.12.
+
+A state
+
+j
+
+is called absorbing if
+
+pj,j = 1,
+which means that if the chain reaches state
+one.
+
+17
+
+j it will stay there with probability
+
+Corollary 3.13.
+
+j
+
+For an absorbing state
+
+it holds that
+
+(n)
+
+pi,j = Pi (Tj ≤ n).
+
+(3.22)
+
+Proof. Equation (3.22) says that starting from the state i, the
+hit j before or at time n. From Proposition 3.11 we know that
+(n)
+
+pi,j =
+
+n
+X
+
+(n−m)
+
+Pi (Tj = m)pj,j
+
+chain has to
+
+.
+
+m=1
+(n−m)
+Since j is an absorbing state we have that pj,j
+(n)
+pi,j = Pi (Tj ≤ n) for an absorbing state j .
+
+= 1 for all m ≤ n.
+
+Therefore
+
+Theorem 3.14. ↔ is an equivalence relation.
+(0)
+
+(n)
+
+Proof. Pi,i = P(Xn = i|X0 = i) and Pi,i = 1 which means that i ↔ i. Next
+if i communicates with k and k communicates with j we can nd integers m
+(m)
+(n)
+and n such that pi,k > 0 and pk,j > 0. Then by summing over all possible
+states t in the state space S we have that
+(m+n)
+pi,j
+
+=
+
+N
+X
+
+(m) (n)
+
+(m) (n)
+
+pi,t pt,j ≥ pi,k pk,j > 0
+
+(3.23)
+
+t=0
+and
+
+i → j.
+
+Similarly we can show that
+
+(r+s)
+pj,i
+
+=
+
+N
+X
+
+j→i
+
+(r) (s)
+
+since
+
+(r) (s)
+
+pj,t pt,i ≥ pj,u pu,i > 0
+
+(3.24)
+
+t=0
+for integers
+
+r
+
+and
+
+Denition 3.15.
+
+s
+
+such that
+
+(r)
+
+pj,u > 0
+
+and
+
+(X0 , X1 , ...)
+i, j ∈ S there
+
+A Markov chain
+
+{0, ..., N } is irreducible
+and l such that
+
+if for all
+
+(s)
+
+pu,i > 0.
+
+P(Xk = j|X0 = i) > 0
+
+and
+
+with state space
+
+S=
+
+exist nonnegative integers
+
+k
+
+P(Xl = i|X0 = j) > 0.
+
+This means that a chain is irreducible if, given any two states, the states
+with a positive probability can reach one another.
+
+Any two states of the
+
+chain are hereby communicating and will always be reachable.
+
+18
+
+Denition 3.16.
+
+The period
+
+d(si )
+
+of a certain state
+
+si
+
+of a given Markov
+
+chain with state space S is dened by
+
+(n)
+
+d(si ) = gcd{n ≥ 1 : (pi,i > 0)}.
+
+(3.25)
+
+Here the abbreviation gcd stands for the greatest common divisor. A
+state
+
+si
+
+i∈S
+
+of a Markov chain, it means that the chain itself is aperiodic, otherways
+
+is said to be aperiodic if
+
+d(si ) = 1
+
+in (3.25). If
+
+d(si ) = 1
+
+holds for all
+
+the chain is called periodic.
+A chain that is both irreducible and aperiodic (Denition 3.15 and 3.16) is
+called ergodic.
+
+Theorem 3.17.
+municates with
+
+Proof.
+
+j
+
+Periodicity is an equivalence class property, i.e., if
+then
+
+i
+
+d(i) = d(j).
+(t)
+
+(s)
+
+(r)
+
+r, s be such that pi,j > 0, pj,i > 0 and assume that pj,j > 0.
+
+Let
+
+com-
+
+(r) (s)
+
+(r+s)
+
+0 < pi,j pj,i ≤ pi,i
+
+Then
+(3.26)
+
+and
+
+(r) (s) (t)
+
+(r+s+t)
+
+0 < pi,j pj,i pi,i ≤ pi,i
+By denition
+
+d(i)
+
+must be a fraction of
+
+r+s
+
+and
+
+.
+
+(3.27)
+
+r + s + t,
+
+since state
+
+i
+
+can
+
+not have multiple periods. Hence d(i) must divide their dierence t for any
+(t)
+t such that pj,j > 0. Therefore d(i) divides d(j). By similar arguments d(j)
+divides d(i), so the two numbers have to be equal.
+
+(n)
+
+fi,j = Pi (Tj = n) be the rst passage distribution from starting state
+(0)
+i, to ending state j . In zero steps, i.e. when n = 0, we have that fi,j = 0
+and in general for n ≥ 1
+Let
+
+(n)
+
+fi,j = P(Xn = j, Xk 6= j, k = 1, ..., n − 1|X0 = i).
+
+Lemma 3.18.
+
+Let
+
+n1
+
+and
+
+n2
+
+be two positive integers that are relatively
+
+prime (greatest common divider =
+written as
+
+Proof.
+
+n = sn1 + tn2 ,
+
+(3.28)
+
+1).
+
+Then any integer
+
+for non-negative integers
+
+s
+
+and
+
+n > n 1 n2
+
+can be
+
+t.
+
+n2 congruence classes of the n2 distinct positive
+n − 0n1 , n − 1n1 , n − 2n1 , ..., n − (n2 − 1)n1 . We have two possibilities
+
+Consider the modulo
+
+integers
+
+with these congruence classes.
+
+The rst possibility is that all the congru-
+
+ence classes are dierent and the second one is that at least two congruence
+
+19
+
+classes are the same. If all congruence classes are dierent it means that one
+congruence class must be
+
+0.
+
+n − sn1
+
+Then
+
+is divisible by
+
+n2
+
+such that
+
+n − sn1
+= t ↔ n = sn1 + tn2 .
+n2
+
+(3.29)
+
+Equation (3.29) holds if all congruence classes are dierent.
+congruence classes are the same, we are able to write
+
+n − tn1 = mn2 + l
+
+for
+
+0 ≤ t < s ≤ n2 − 1, k < m,
+
+In case two
+
+n − sn1 = kn2 + l
+0 < l ≤ n2 − 1.
+
+and
+
+and
+For
+
+these two congruence classes to be equal we get that
+
+n − sn1 − (n − tn1 ) = kn2 + l − (mn2 + l)
+↔
+−sn1 + tn1 = kn2 − mn2
+↔
+(s − t)n1 = (m − k)n2 .
+n1
+
+Since
+
+and
+
+n2
+
+(3.30)
+
+are relatively prime, for equation (3.30) to be true,
+
+must contain all prime factors of
+
+n2 .
+
+(s − t)
+
+That is a contradiction, since then
+
+s − t > n 2 − 1.
+
+Proposition 3.19. Let X be an irreducible and aperiodic chain and i, j ∈ S .
+Then there is an integer
+
+Proof.
+
+N = N (i, j)
+
+such that
+
+(n)
+
+pi,j > 0
+
+for all
+
+n ≥ N.
+
+X is aperiodic, we know that d(j) = 1. Therefore we can nd
+(n2 )
+(n1 )
+two integers n1 , n2 that are relatively prime such that pj.j > 0 and pj.j > 0.
+From Lemma 3.18 any large enough n can be written as n = sn1 +tn2 . Hence
+
+s 
+t
+(n)
+(sn +tn )
+(n )
+(n )
+pj,j = pj,j 1 2 ≥ pj,j1
+pj,j2
+> 0,
+(3.31)
+Since
+
+(n )
+
+(n )
+
+pj,j1 , pj,j2 > 0
+
+s, t ≥ 0. In other words, starting from state j , the
+probability of returning to state j in n steps is greater than zero. Now, for
+(n0 )
+each pair i, j there is an n0 such that pi,j > 0. Therefore
+
+since
+
+and
+
+(n+n0 )
+
+pi,j
+since
+
+(n)
+
+(n) (n )
+
+≥ pj,j pi,j0 > 0,
+
+(3.32)
+
+(n )
+
+pj,j , pi,j0 > 0.
+
+Corollary 3.20.
+
+Assume that
+
+X
+
+and
+
+Y
+
+are identically and independently
+
+distributed (iid) irreducible aperiodic Markov chains. Furthermore let
+
+(X, Y ).
+
+Then
+
+Z
+
+is an irreducible Markov chain.
+
+20
+
+Z =
+
+Proof.
+
+The Markov property holds for
+
+Z
+
+since
+
+P(Zn = (j, l)|Z0 = (i0 , k0 ), Z1 = (i1 , k1 ), ..., Zn−1 = (in−1 , kn−1 ))
+= P(Xn = j, Yn = l|X0 = i0 , Y0 = k0 ; X1 = i1 , Y1 = k1 ; ...; Xn−1 = in−1 ,
+Yn−1 = kn−1 )
+= P(Xn = j, Yn = l|Xn−1 = in−1 , Yn−1 = kn−1 )
+= P(Zn = (j, l)|Zn−1 = (in−1 , kn−1 )).
+(3.33)
+By using Theorem 2.7 we get the transition probabilities for
+
+Z
+
+as following:
+
+pi,k;j,l = P(Zn = (j, l)|Zn−1 = (i, k))
+= P(Xn = j, Yn = l|Xn−1 = i, Yn−1 = k)
+P ({Xn = j} ∩ {Xn−1 = i}) P ({Yn = l} ∩ {Yn−1 = k})
+=
+P(Xn−1 = i)
+P(Yn−1 = k)
+= P(Xn = j|Xn−1 = i) P(Yn = l|Yn−1 = k)
+= pi,j pk,l ,
+since
+that
+
+(3.34)
+
+X and Y are iid. By Proposition 3.19 there is an N = (i, k, j, l) such
+(n)
+(n)
+(n)
+pi,j > 0 and pk,l > 0 for n > N . Hence pi,k;j,l > 0 which means that Z
+
+is irreducible.
+
+Denition 3.21.
+fi,j :=
+
+∞
+X
+
+(n)
+
+fi,j = Pi (Tj < ∞)
+
+(3.35)
+
+n=0
+The state
+if
+
+fi,i = 1.
+
+i in equation (3.35) is persistent, or by another name recurrent,
+i is called transient. We can think of transient
+
+Otherwise state
+
+states as if there are one or more absorbing states in the chain, there is a
+chance that we will never return to starting state again. It is also possible
+that the chain never enters the starting state after running for a while. In
+both of these cases we have a positive probability of no return with
+
+fi,i 6= 1.
+
+On the other hand a persistent state is one that the process will eventually
+with certainty return to, in a nite amount of steps.
+
+Theorem 3.22.
+
+A state
+
+i
+
+is persistent if and only if
+
+21
+
+P∞
+
+n=1
+
+(n)
+
+pi,i = ∞.
+
+Proof.
+
+Suppose
+
+i is transient and let M
+M (i) =
+
+∞
+X
+
+be the number of returns to i. Then
+
+1(Xn = i).
+
+(3.36)
+
+n=1
+Since
+
+fi,i = Pi (Ti < ∞) = Pi (M ≥ 1)
+and
+
+(2)
+
+Pi (M ≥ 2) = Pi (Ti < ∞, Ti < ∞)
+= Pi (Ti < ∞)Pi (Ti < ∞)
+2
+= fi,i
+,
+where
+
+(2)
+
+Ti
+
+i
+
+is the time we return to
+
+starts over once we return to
+
+the second time.
+
+i and reach state XTi
+
+Because the chain
+
+by strong Markov property.
+
+Hence by the strong Markov property
+
+k
+Pi (M ≥ k) = (Pi (Ti < ∞))k = fi,i
+,
+which is the probability that we will return to
+expected value of returns to
+
+i
+
+i, k
+
+times or more.
+
+The
+
+is hence
+
+Ei [M ] =
+
+∞
+X
+
+Pi (M ≥ k).
+
+(3.37)
+
+k=1
+We are interested in how many times we return to state
+options for each step, i.e. we return to state
+
+i.
+
+i
+
+We also need to know how many times we hit state
+
+reached anymore (i transient).
+
+Hence
+
+(Denition 2.8) with parameter
+
+fi,i .
+
+i
+
+and only have two
+
+i,
+
+until
+
+i
+
+can not be
+
+has a geometric distribution
+
+Theorem 2.10 states that
+
+Ei [M ] =
+Since state
+
+M −1
+
+i
+
+or we do not return to state
+
+fi,i
+.
+(1 − fi,i )
+
+is transient we know that
+
+fi,i < 1
+
+(3.38)
+
+and
+
+Ei [M ] < ∞,
+
+and
+
+consequentely
+
+∞
+X
+n=1
+
+(n)
+
+pi,i =
+
+∞
+X
+
+Ei [1(Xn = i)] = Ei [M ] < ∞.
+
+n=1
+22
+
+(3.39)
+
+On the other hand, if
+
+1.
+
+i
+
+is persistent, the chain returns to
+
+i
+
+with probability
+
+Then the process starts over and again the chain will return to
+
+probability
+
+1.
+
+This happens an innite number of times.
+
+Markov property
+
+Pi (M = ∞) = 1
+∞
+X
+
+and
+
+Ei [M ] = ∞,
+
+i
+
+with
+
+By the strong
+
+i.e.
+
+(n)
+
+pi,i = Ei [M ] = ∞.
+
+(3.40)
+
+n=1
+
+Denition 3.23.
+
+The mean recurrence time of a persistent state
+(n)
+fi,i is dened as
+
+i
+
+with
+
+probability distribution
+
+µi :=
+
+∞
+X
+
+(n)
+
+fi,i .
+
+(3.41)
+
+n=1
+State
+
+i
+
+is called null persistent if
+
+Corollary 3.24.
+Proof.
+0.
+
+Since
+
+µi = ∞
+
+For a transient state
+
+i
+
+and positive persistent if
+it holds that
+
+i is transient, fi,i < 1 and thus
+
+P∞
+
+n=1
+
+(n)
+
+µi < ∞.
+
+(n)
+
+limn→∞ pi,i → 0.
+
+pi,i < ∞.
+
+Thus
+
+limn→∞ pni,i =
+
+3.4 The long time behaviour and stationary distribution of Markov chains
+Denition 3.25.
+
+bution for a Markov chain if
+
+πP = π ,
+
+π = (π0 , π1 , ..., πN )
+πi ≥ 0 for i = 0, ..., N
+
+A row vector
+
+which is equivalent of solving the equation
+
+π(P − I) = 0
+where
+
+I
+
+is a stationary distriPN
+and
+i=0 πi = 1 and
+
+is the identity matrix for
+
+P. I
+
+(3.42)
+
+has ones on the main diagonal and
+
+zeros elsewhere.
+
+Remark
+
+3.26. A Markov chain need not to have a stationary distribution, but
+
+if it has a limiting distribution, then the limit is stationary, as one readily
+checks.
+
+23
+
+Example 3.27.
+
+Consider the Markov chain with the transition matrix
+
+
+P =
+
+
+0 1
+.
+1 0
+
+Since the chain, with a periodicity of
+with probability
+
+π.
+
+1,
+
+2,
+
+will jump between the two states
+
+the chain never will converge to any certain distribution
+
+P has a stationary distribution, since
+
+
+ 
+
+1 1
+1 1
+0 1
+,
+=
+,
+.
+1 0
+2 2
+2 2
+
+However, Denition 3.25 states that
+
+While we manually calculate the stationary distribution of a Markov
+chain, it can be convenient to take the transpose of equation (3.42), depending on how the transition matrix we work with looks like. This will be
+done in the following example where we calculate the stationary distribution
+using Gaussian elimination.
+
+Example 3.28. Consider a Markov chain with the state space S = (0, 1, 2, 3, 4)
+and transition matrix
+
+1
+2
+
+1
+2
+1
+2
+
+
+0 0
+1 0
+0 0
+
+ 21 1
+1
+
+0
+0
+P =
+3 3 1 3 1
+0 0
+0 2
+2
+1
+0 0 12 0
+2
+
+
+0
+
+P . Recall from equation
+(3.42) that we want to solve the equation π(P − I) = 0 that is equivalent
+T
+T
+of solving the transpose of the equation, i.e. (P − I)π = 0. We start by
+T
+calculating the matrix P − I by using Gaussian elimination.
+
+and we want to nd a stationary distribution of
+
+24
+
+
+
+−1
+
+ 1
+ 21
+PT − I = 
+ 2
+0
+0
+
+1
+1
+ 21
+∼
+2
+0
+0
+
+1
+2
+
+−1
+
+1
+3
+1
+3
+
+0
+0
+
+1
+3
+
+−1
+
+1
+2
+
+−1
+
+0
+0
+
+0
+
+1
+2
+1
+2
+
+1
+2
+
+0
+0
+1
+2
+
+
+
+
+
+
+
+
+−1
+
+− 12 − 13 0 − 12
+−1 31
+0
+0 
+
+1
+1
+
+−1
+0
+2
+2
+
+1 
+1
+−1
+0
+3
+2
+1
+0
+0
+−1
+2
+
+25
+
+
+
+1
+0
+
+∼
+0
+0
+0
+
+1
+0
+
+∼
+0
+0
+0
+
+1
+0
+
+∼
+0
+0
+0
+
+1
+0
+
+∼
+0
+0
+0
+
+1
+0
+
+∼
+0
+0
+0
+
+1
+0
+
+∼
+0
+0
+0
+
+1
+0
+
+∼
+0
+0
+0
+
+
+− 12 − 31 0 − 12
+1 
+0
+− 34 12
+4 
+5
+1
+1 
+3
+−
+4
+6
+2
+4 
+1
+0
+−1 12 
+3
+1
+0
+0
+−1
+2
+
+1
+1
+− 2 − 3 0 − 12
+1 − 32 0 − 13 
+
+3
+5
+1
+1 
+−
+4
+6
+2
+4 
+1
+0
+−1 12 
+3
+1
+0
+0
+−1
+2
+
+2
+0 − 3 0 − 23
+1 − 32 0 − 13 
+
+1 
+0 − 31 12
+2 
+0 13 −1 12 
+1
+0 0
+−1
+2
+
+2
+0 − 3 0 − 23
+1 − 32 0 − 13 
+
+0 1 − 32 − 23 
+
+0 13 −1 21 
+1
+0 0
+−1
+2
+
+0 0 −1 − 53
+1 0 −1 − 43 
+
+0 1 − 23 − 32 
+
+0 0 − 21 1 
+0 0 12 −1
+
+0 0 −1 − 53
+1 0 −1 − 43 
+
+0 1 − 23 − 32 
+
+0 0 1 −2 
+0 0 12 −1
+
+0 0 0 − 11
+3
+
+1 0 0 − 10
+3 
+9 
+0 1 0 −2 
+0 0 1 −2 
+0 0 0 0
+
+26
+
+Here the notation  ∼ means that row operations have been calculated
+according to Gaussian elimination. Since there are only zeros in the last row,
+
+π5 will be a free variable.
+5 unknown variables and
+
+We now have an equation system that consists of
+
+π5 .
+
+all equations are functions of
+
+The stationary
+
+distribution can be calculated as following. We have that
+
+
+
+ π1
+
+
+
+
+ π2
+π3
+
+
+
+π4
+
+
+
+π
+5
+
+x
+= 11
+3 5
+10
+= 3 x5
+= 92 x5
+= 2x5
+= free variable
+π5
+
+Denition 3.25 states that
+
+ 11 
+3
+
+where
+
+should be such that
+
+5
+X
+
+πiT
+
+
+= π5
+
+i=1
+
+87
+6
+
+
+=1
+
+22
+, π2 = 20
+, π3
+29
+87
+87
+The stationary distribution as a row vector is thereby
+
+that gives us
+
+
+2
+
+ 10 
+ 39 
+T
+
+π = π5 
+2
+2
+1
+
+π5 =
+
+and thus
+
+
+π=
+
+Lemma 3.29.
+
+Let
+
+µk
+
+
+
+π1 =
+
+
+
+22 20 9 4 2
+, , , ,
+87 87 29 29 29
+
+be as in (3.41) and
+
+vi,k
+
+=
+
+9
+29
+
+
+
+, π4 =
+
+4
+.
+29
+
+
+
+
+.
+
+as in (3.44). For an irreducible
+
+and positive persistent Markov chain there exists a stationary distribution
+
+πi =
+k
+
+for a xed state
+
+Theorem 3.30.
+visits to state
+
+j
+
+and
+
+i, k ∈ S .
+
+vi,k
+µk
+
+For a proof of this statement, see [5].
+
+The expected number of visits to state
+
+i, j ∈ S.
+
+i between successive
+
+is given by
+
+
+
+Tj −1
+
+vi,j = Ej 
+
+X
+
+
+1(Xn = i) =
+
+n=0
+for
+
+(3.43)
+
+µj
+πi
+=
+µi
+πj
+
+For a proof of this statement, see [5].
+
+27
+
+(3.44)
+
+Theorem 3.31.
+
+An irreducible Markov chain has a stationary distribution
+
+if and only if the the chain is positive persistent.
+
+This implies that the
+
+stationary distribution is unique and given by
+
+πi =
+
+1
+.
+µi
+
+(3.45)
+
+Theorem 3.32. For an irreducible Markov chain with mean recurrence time
+µj ≤ ∞ ,
+
+if
+
+j
+
+is an aperiodic state, then
+
+1
+.
+µj
+
+(n)
+
+lim pj,j =
+
+n→∞
+
+Corollary 3.33.
+
+(3.46)
+
+If a Markov chain is irreducible and aperiodic, then
+
+(n)
+
+lim pi,j =
+
+n→∞
+
+fi,j
+.
+µj
+
+(3.47)
+
+For a proof of these three statements above, see [5].
+
+Denition 3.34.
+
+The time spent in state
+
+Nj (n) :=
+
+n
+X
+
+j
+
+is dened as
+
+1(Xi = j),
+
+(3.48)
+
+i=1
+where
+
+Nj (n)
+
+counts the number of times we hit state
+
+Corollary 3.35.
+
+Let
+
+j
+
+j.
+
+be a persistent and an aperiodic state. Then
+
+
+n
+Nj (n)
+1
+1 X (i)
+lim E
+= lim
+pj,j =
+n→∞
+n→∞ n
+n
+µj
+i=1
+
+
+for all starting states communicating with
+Cesáro-limit of the transition probabilities
+
+Proof.
+
+j . Equation
+(i)
+pj,j .
+
+(3.49)
+
+(3.49) is called the
+
+(i)
+
+1
+as n → ∞. We make use of the
+µj
+basic fact that if a limit exists, it equals the cesáro-limit. Next we have that
+Theorem 3.32 states that
+
+Ej [Nj (n)] =
+
+pj,j →
+
+n
+X
+
+Pj (Xi = j) =
+
+i=1
+
+n
+X
+i=1
+
+28
+
+(i)
+
+pj,j .
+
+(3.50)
+
+Because of persistence in the equation above, starting from state
+that we will return to
+
+j,
+
+we know
+
+j with probability one. The same holds if we change
+j to k , if j and k communicate with each other. We
+
+the starting state from
+get that
+
+Ek [Nj (n)] =
+
+n
+X
+
+Pk (Xi = j) =
+
+i=1
+When we let
+
+n→∞
+
+and
+
+j
+
+(3.51)
+
+i=1
+
+fk,j
+1
+= ,
+µj
+µj
+
+(i)
+
+pk,j →
+
+i=1
+
+k
+
+(i)
+
+pk,j .
+
+in (3.51), Corollary 3.33 states that
+
+n
+X
+
+since
+
+n
+X
+
+communicate and therefore
+
+(3.52)
+
+fk,j = 1.
+
+Theorem 3.36. Given an ergodic state j , the limiting occupation probability
+of
+
+j
+
+is
+
+1
+with probability one, i.e.
+µj
+
+
+
+Nj (n)
+1
+P lim
+→
+n→∞
+n
+µj
+Proof.
+
+
+= 1.
+
+Suppose that the Markov chain starts in state
+
+be the successive times when the chain hit state
+
+j.
+
+(3.53)
+
+j.
+
+Let
+
+Tj (1), Tj (2), ....
+j,
+
+When we hit state
+
+at specic random time, we can by the strong Markov property consider
+it as restarting the chain.
+
+Hence
+
+Tj (1), Tj (2) − Tj (1), Tj (3) − Tj (2), ....
+
+are
+
+independent and identically distributed random variables with probability
+generating function
+
+Fj,j (s)
+
+and mean
+
+µj < ∞.
+
+By the Strong law of large
+
+numbers (2.12) we have that
+
+Tj (1) + (Tj (2) − Tj (1)) + ... + (Tj (l) − Tj (l − 1))
+l
+Tj (l)
+= lim
+= µj
+l→∞
+l
+lim
+
+l→∞
+
+with probability
+
+1
+
+the proportion of time spent in state
+before, at, or after
+
+Tj (l). We have that
+time n. Also, we reach
+
+for the specic random times
+
+n
+
+j
+
+up to
+
+(3.54)
+
+Nj (n)
+is
+n
+state j
+
+steps. Hence
+
+Tj (Nj (n)) ≤ n ≤ Tj (Nj (n) + 1).
+29
+
+(3.55)
+
+Furthermore,
+
+j
+
+Nj (n) → ∞
+
+as
+
+n→∞
+
+with probability one, since we hit state
+
+an innite amount of times. Thus, as
+
+and
+
+sistent chain
+
+X,
+
+with probability one
+
+Nj (n)
+Nj (n)
+1
+≤
+→
+n
+Tj (Nj (n))
+µ
+
+(3.56)
+
+Nj (n) + 1
+1
+Nj (n) + 1
+≥
+→
+n
+Tj (Nj (n) + 1)
+µ
+
+(3.57)
+
+Nj (n)
+1
+→ .
+n
+µ
+
+(3.58)
+
+which means that
+
+Theorem 3.37.
+
+n → ∞,
+
+(Ergodic theorem for Markov chains) For a positive perif
+
+f : S → R
+
+satises
+
+Eπ [|f (X1 )|] < ∞,
+
+where
+
+π
+
+is the
+
+stationary distribution, we have that
+
+n
+
+1X
+f (Xk ) → Eπ [f (X1 )]
+n k=1
+
+(3.59)
+
+in probability, regardless of the initial distribution.
+
+Proof.
+
+As in Theorem 3.36, we let
+
+successive hits of state
+
+j.
+
+Tj (l)
+
+stand for specic random times of
+
+By splitting the random times into intervals, each
+
+interval represents one successive return to state
+
+j.
+
+Then we let
+
+Yi
+
+represent
+
+the intervals with corresponding transitions so that
+
+Tj (l+1)
+
+X
+
+Yi =
+
+f (Xk ).
+
+(3.60)
+
+Tj (l)+1
+
+Tj (0) ≡ 0 since even though we start at state j , it does not count as a successive return to j . By the strong Markov property are Y0 , Y1 , ... independent
+and furthermore Y1 , Y2 , ... identical.Y0 starts from an initial distribution at
+time 0, hence the distribution diers from Y1 , Y2 , .... By decomposing we get
+n
+X
+k=1
+
+Nj (n)
+
+f (Xk ) = Y0 +
+
+X
+k=1
+
+Tj (Nj (n))
+
+Yk −
+
+X
+k=n+1
+
+≡ Y0 + SNj (n) − Rn .
+30
+
+f (Xk )
+
+(3.61)
+
+Since we have that
+
+
+
+Y0 = f (X1 ) + ... + f (XTj (1) )
+
+
+
+Y1 = f (XT (1)+1 ) + ... + f (XT (2) )
+j
+j
+.
+.
+
+.
+
+
+
+Y = f (X
+n
+Tj (n)+1 ) + ... + f (XTj (n+1) )
+
+(3.62)
+
+i ∈ S , is a sum of a nite number of random
+limn→∞ Ynn = 0. Next, persistence ensures us that, as
+n → ∞, P(Nj (n)) → ∞) = 1. Provided that E[|Y1 |] < ∞, the law of large
+we know that
+
+Yi ,
+
+for any
+
+variables. Therefore
+
+numbers gives us that
+
+
+
+
+
+f XTj (1)+1 + ... + f XTj (2) + ... + f XTj (Nj (n)+1) + ... + f XTj (Nj (n+1))
+Nj (n)
+SNj (n)
+→ E[Z1 ]
+=
+Nj (n)
+(3.63)
+in probability. Also, according to (3.36)
+
+Nj (n)
+n
+
+→
+
+1
+µj
+
+= πj .
+
+Hence since
+
+SNj (n)
+SNj (n) Nj (n)
+=
+n
+Nj (n) n
+
+(3.64)
+
+SNj (n)
+→ πj E[Y1 ]
+n
+
+(3.65)
+
+we get that
+
+in probability. Next we know that the earliest time point we can hit state
+
+n amount of steps, is at time n + 1.
+Tj (Nj (n)) + 1 ≤ n + 1 ≤ Tj (Nj (n) + 1).
+
+j
+
+the next time, after
+
+Also, we know that
+
+the time points
+
+Hence
+
+Tj (Nj (n)+1)
+
+X
+
+|Rn | ≤
+
+Tj (Nj (n)+1)
+
+X
+
+|f (Xk )| ≤
+
+k=n+1
+By the strong Markov property
+
+|f (Xk )| ≡ ηn .
+
+(3.66)
+
+k=Tj (Nj (n))+1
+
+η1 , η2 , ...
+
+are independent and identically
+
+distributed. Hence
+
+P(|Rn | ≥ n) ≤ P(ηn ≥ n) ≤
+31
+
+E[ηn ]
+→ 0,
+n
+
+(3.67)
+
+by Markov's inequality (2.11)Next using Theorem 3.30, if
+
+E[|Y1 | < ∞]
+
+
+
+Tj (2)
+
+E[η1 ] = E 
+
+X
+
+
+|f (Xk )| =
+
+and
+
+E[Y1 ] =
+
+m
+X
+i=1
+
+m
+X
+
+f (i)vi,j
+
+i=1
+
+m ∈ S.
+
+then
+
+since
+
+k=Tj (1)+1
+
+for
+
+E[η1 < ∞]
+
+|f (i)|vi,j =
+
+m
+X
+
+|f (i)|
+
+i=1
+
+m
+1 X
+=
+f (i)πi
+πj i=1
+
+πi
+πj
+
+(3.68)
+
+(3.69)
+
+Then nally we have that
+
+m
+SNj (n)
+1 X
+→ πj E[Y1 ] = πj
+f (i)πi = Eπ f (X1 ).
+n
+πj i=1
+
+32
+
+(3.70)
+
+Figure 3.4: Visualization of the intervals in equation 3.60
+
+33
+
+Chapter 4
+Simulation
+The purpose of this chapter is to simulate the long time behaviour of Markov
+chains and compare it to theoretical results. The simulations are done with
+the programming language R, which is an environment for statistical computing and graphics.
+
+For each simulation in R the function
+
+rmultinom()
+
+will be used. That is because we want to include randomness between each
+transition from one transition to another. The inclusion of randomness reects well real life situations, where random events usually occur and have
+an eect.
+R has many built-in packages to manipulate data and new ones are continuously created and developed by users around the world. If you can not
+nd a certain package in the library of R, it is usually possible to install new
+packages manually by downloading the packages to your computer. A more
+convenient way though is to use the built-in respository (CRAN) to install
+the package directly in R. In the coding process I have used RStudio that
+is a user environment to R with many built-in tools. One useful integrated
+tool is RMarkdown, which is a le format that can convert the code to many
+other formats. RMarkdown displays both the source code (input) and the
+result (output) in a convenient way, and hence I have used it for some of my
+created tables.
+I have chosen to simulate two dierent ergodic Markov chains, where
+the rst matrix is based on my manipulated data from FMI. The second
+matrix is made up and created by me, with the properties of an ergodic
+Markov chain. In Section 4.1 we go through the simulation algorithm, used
+for both matrices, followed by the coding process and the results. The coding
+process is similar for both matrices, but the data manipulation diers, since
+
+34
+
+the created matrix is larger in terms of dimension.
+
+The results from the
+
+simulations are presented in tables as estimates, where
+
+Nj (n)
+= π̂j (n)
+n
+and
+
+n
+= µ̂j (n).
+Nj (n)
+
+In my results tables I also calculate
+
+vj =
+
+πj
+P
+
+,
+πi
+
+i∈S:i6=j
+which is similar to
+tables as
+
+vi,j
+
+from (3.44). Estimates of
+
+v̂j (n).
+
+35
+
+vj
+
+are presented in the result
+
+4.1 Algorithm
+In order to reproduce the same results in a simulation R has a built-in function
+
+set.seed(seed, kind = N ull, normal.kind = N ull),
+
+where
+
+seed
+
+takes on
+
+a single value interpreted as an integer , or Null. Hence if we keep the same
+
+seed-value
+
+for a random number generator,
+
+the same random numbers.
+
+set.seed()
+
+function will produce
+
+As random number generator we will use the
+
+rmultinom(n, size, prob), where n is the
+size the number of objects going into
+positive vector of length K . prob species the
+
+built-in multinomial distribution
+
+number of random vectors to draw,
+
+K
+
+boxes, and
+
+prob
+
+probability for the
+
+a numeric
+
+K
+
+classes. Next we use the built-in function
+
+f unction(arglist){{expr}return(value)}.
+arglist
+
+can consist of zero, one, or many expression terms as we call for the
+
+function.
+
+expr
+
+and
+
+value consist of an expression, where the expression itself
+
+can consist of several expressions. Before running the algorithm we set the
+seed to some number, which in this case is
+
+Again, the number inside
+the number
+
+148
+
+148:
+
+set.seed() could be another one, but in this case
+
+will produce the same randomly generated vectors for this
+
+simulation. Next, we have the code for the algorithm:
+
+36
+
+Figure 4.1: Code for simulation algorithm
+
+sim.mark.chain
+
+is the name of the function that we call for when we
+
+simulate a transition matrix.
+
+P
+
+is in our case a matrix,
+
+name for the number of iterations, and
+
+37
+
+num.chains
+
+num.iters a variable
+
+a variable name for the
+
+number of simulations.
+
+The rst step is that we save the number of rows
+
+num.states. Then we create two new empty
+S and probabilities. S saves the number of columns according to num.chains and probabilities saves the number of rows according to
+num.iters. Above in picture (4.1) num.iters has the value of 50 that can
+
+in the input in the variable
+matrices named
+
+be changed according to how many iterations, i.e. transitions, we want to
+
+num.iters is changed to
+num.chains can be changed,
+do.
+
+greater values in the simulations.
+
+late the Markov chain. Next we have the variables
+
+P _n
+
+pi_0
+
+and
+
+P _n,
+
+where
+
+saves the input matrix and updates its values for each transition, as
+
+we see later on.
+in
+
+Similarly,
+
+according to the number of times we simu-
+
+num.states.
+
+pi_0
+
+is a vector of the same length as the number of rows
+
+1 followed by one or more
+num.states. As an example, if
+then the output of pi_0 for one
+
+The rst number in the vector is
+
+zeros depending on the number of rows in
+the input matrix has
+
+5
+
+rows (=
+
+5
+
+states),
+
+transition would be the following:
+
+pi_0 is as following saved in the rst row of the matrix probabilities.
+
+We
+
+then pick a random starting state, for each simulation, which is saved in the
+rst row of the matrix
+
+S.
+
+init.states
+num.chains:
+
+The variable
+
+states, which depend on the value of
+
+saves all random starting
+
+We loop through the numbers of transitions from the second number,
+until
+
+num.iters
+
+reaches its last value:
+
+38
+
+Similarly we loop through the number of simulated chains
+
+k ∈ (1, num.chains)
+
+i ∈ (2, num.iters) :
+
+for each
+
+f or-loop a new variable pi_n obtains the value of pi_0×P _n,
+where P _n initially has the value of the input matrix P . For each transition
+P _n is updated and therefore also pi_n. pi_n is then saved in the matrix
+probabilities in row i for i ∈ (2, num.iters):
+In the rst
+
+A new variable
+
+p
+
+gets the value from a row of
+
+where the vector is taken from the
+all states for the transitions.
+from
+
+S[i − 1, k]
+
+[i − 1, k]:th
+
+P,
+
+in form of a vector,
+
+matrix position of
+
+S,
+
+storing
+
+This means that the state number returned
+
+determines the row number for
+
+P.
+
+Then the vector
+
+probabilities, i.e. probability vector, is passed into the
+
+p
+
+storing
+
+rmultinom() function,
+
+where the function draws a sample from the probability vector. The sample
+number, determining the next state, is stored in
+
+Finally the matrix
+it to
+
+P
+
+P _n,
+
+initially set as
+
+P,
+
+S
+
+on row
+
+i,
+
+and column
+
+k:
+
+is updated by multiplying
+
+for each iteration. The algorithm continues until it reaches its last
+
+num.iters and num.chains. For each iteration i,
+probabilities, S, and num.iters are stored in a list:
+
+value of
+
+39
+
+the values in
+
+4.2 Simulating the data from Kilpisjärvi precipitation
+The rst simulation we do is with the 0-1-chain with the obtained data from
+Table 3.1. Firstly we create the matrix in R with the corresponding states
+Dry and Wet and set the name of the matrix to
+
+transM atrix:
+
+Then we call for the function in gure (4.1) and run the chain:
+
+For given number of iterations and number of chains declared in the
+function in Figure (4.1), the variable
+
+sim2
+
+stores all values for the simula-
+
+transM atrix. All values in sim2 are returned by
+the function sim.mark.chain. The returned data in sim2 is devided into
+three variables storing the two matrices, probabilities and S , and the integer
+number returned from num.iters:
+tion of the inputmatrix
+
+Next we manipulate the data so that it can be used in tables and charts:
+
+40
+
+T _i
+
+stores the columns consisting ve simulated markov chains as a
+
+dataframe data type. The library
+
+data.table is added to access the table func-
+
+tion, for counting state occupancy. Frequencies are added to the dataframe
+
+T _j
+
+and then selected columns consisting only of the frequencies in the vari-
+
+able
+
+T _j _f req .
+
+Finally
+
+T _j _f req
+
+consisting of all the frequencies in each
+
+state, for each Markov chain, is manipulated to t the measurements, and
+rounded up to three digits.
+
+41
+
+4.3 Results
+
+Figure 4.2: Table of measurements,
+
+n = 50.
+
+Figure 4.3: Occupation in each state for
+
+42
+
+n = 50.
+
+Figure 4.4: Table of measurements,
+
+n = 500.
+
+Figure 4.5: Occupation in each state for
+
+43
+
+n = 500.
+
+Figure 4.6: Table of measurements,
+
+n = 5000.
+
+Figure 4.7: Occupation in each state for
+
+44
+
+n = 5000.
+
+Figure 4.8: Table of measurements,
+
+n = 50000.
+
+Figure 4.9: Occupation in each state for
+
+45
+
+n = 50000.
+
+Figure 4.10: Simulated estimates from M.c.
+
+1 and the real value of the
+
+stationary distribution.
+
+Figure 4.11: Simulated estimates from M.c.
+
+1 and the real value of the
+
+mean occurance time.
+
+Figure 4.12: Simulated estimates from M.c. 1 and the real value of
+
+46
+
+vj .
+
+4.4 Simulation of the 7 × 7 matrix P
+The algorithm in the following simulations is the same as in Figure (4.1) and
+the coding process in R follows a similar methodology as in Section (4.2).
+The code for the methodology and the code for the tables and charts is added
+to appendices. Suppose we have the
+
+
+
+0.25
+ 0.2
+
+0.05
+
+P =
+ 0
+0.05
+
+0.05
+0.05
+and simulate the matrix
+and
+
+500000
+
+0.5
+0.25
+0.2
+0
+0.05
+0.05
+0.05
+P.
+
+0.05
+0.35
+0.25
+0.25
+0.05
+0.05
+0.05
+
+7×7
+
+matrix
+
+0.05
+0.05
+0.35
+0.5
+0.2
+0.05
+0.05
+
+0.05
+0.05
+0.05
+0.25
+0.25
+0.2
+0.05
+
+We simulate matrix
+
+numbers of transitions,
+
+n.
+
+0.05
+0.05
+0.05
+0
+0.35
+0.25
+0.5
+P
+
+0.05
+0.05
+0.05
+0
+0.05
+0.35
+0.25
+
+
+
+
+
+
+,
+
+
+
+
+
+ve times, with
+
+50, 5000,
+
+The ve simulated chains are named
+
+M.c. 1, M.c. 2', ... , M.c. 5. The main goal is to see how the number of
+occurances,
+
+Nj (n),
+
+for each
+
+j ∈ S,
+
+changes through time.
+
+4.5 Results
+
+47
+
+Figure 4.13: Table of measurements,
+
+n = 50.
+
+Figure 4.14: Occupation in each state for
+
+48
+
+n = 50.
+
+Figure 4.15: Table of measurements,
+
+49
+
+n = 5000.
+
+Figure 4.16: Occupation in each state for
+
+50
+
+n = 5000.
+
+Figure 4.17: Table of measurements,
+
+n = 500000.
+
+Figure 4.18: Occupation in each state for
+
+51
+
+n = 500000.
+
+Figure 4.19: Simulated estimates from M.c.
+
+1 and the real value of the
+
+stationary distribution.
+
+Figure 4.20: Simulated estimates from M.c.
+
+1 and the real value of the
+
+mean occurance time.
+
+Figure 4.21: Simulated estimates from M.c. 1 and the real value of
+
+52
+
+vj .
+
+Chapter 5
+Conclusions
+
+5.1 Convergence of the Kilpisjärvi simulation
+The results in Figure 4.10 show how the estimate of
+
+π
+
+for
+
+50000
+
+transitions
+
+is the best one of the estimates, since it is closest to the real value.
+and
+
+500
+50
+
+since
+
+50
+
+numbers of transitions seem to be too few to get a good estimate,
+transitions actually is closer to the real value of
+
+π.
+
+As I mentioned
+
+before, these values are from the rst simulation (M.c. 1), so the estimates
+from
+
+π̂j (50)
+
+and
+
+π̂j (500)
+
+may be extreme. Nevertheless, due to randomness,
+
+we would need more than
+
+500
+
+transitions to ensure a good estimate. Even
+
+though the simulated chain goes in wrong direction, in terms of convergence
+comparing
+
+n = 50
+
+and
+
+n = 500,
+
+the local divergences vanish in the long run.
+
+n = 50000 only deviates
+π.
+As π̂j (n) converges to πj , µ̂j (n) converges to µj , and v̂j (n) converges to vj ,
+since π, µ, and v are depending on each other. For µj (50000), we can expect a
+dry day on average every 3.3481:st time, and a wet day every 1.4259:th time.
+That explains why the same simulated chain for
+
+0.0003
+
+from the real value of
+
+The estimate is close to the real mean occurance time, which has a value
+
+(3.3516, 1.4252). According to v̂j (50000), we can expect a dry day every
+0.4259:th time, between two successive wet days. Similarly we can expect
+2.3481 wet days between two succesive dry days. The estimate is close to the
+real value of vj , which is (0.4252, 2.3516).
+
+of
+
+53
+
+5.2 Convergence of the matrix P
+Each of the chosen discrete time points (n) for the simulation of matrix
+
+P,
+5.
+
+generated results closer to the stationary distribution, except for
+
+j =
+
+I interpret these results so that if the time points are far enough from
+
+each other, each larger time point is closer to the value of the stationary
+distribution. The magnitude between each of the time point is
+In Figure 4.19 we see that for
+
+50
+
+transitions (n
+
+= 50),
+
+we are in most of
+
+the states far from the stationary distribution, i.e. it would not be a good
+estimate for the stationary distribution. For
+
+n = 5000, we get a correct distrij = 4. For n = 500000 we get
+
+bution of two decimals in all states, except for
+
+a correct distribution of two decimals in all states and a correct distribution
+of three decimals for
+
+j = 1, 2, 4, 5.
+
+I interpret the results of the estimates, in
+
+relation to the stationary distribution, that an estimate with a lower amount
+of transitions can be accepted, if we allow some variations. A question that
+arises is how large the number of transitions should be to be a valid estimate
+for the stationary distribution. I think, according to the simulation results in
+Figure 4.19, that an
+
+n-value
+
+somewhere between
+
+5000
+
+and
+
+500000
+
+ensures a
+
+convergence, with two decimals, to the stationary distribution. Nevertheless,
+since the thesis is limited, I have not studied how large
+
+n should be to ensure
+
+convergence of a certain decimal accuracy.
+
+5.3 Visualization of convergence
+I found the results of the horizontal barcharts very intriguing, since they
+show convergence in a way that is quite easy to understand.
+
+Both of my
+
+two dierent matrix-simulations follow a similar pattern visually. A smaller
+number of transitions results in large variation between the ve simulations.
+When
+
+n grows bigger, the boxes of M.c.1, ..., M.c.5 are stacked more similarly.
+n, M.c.1, ..., M.c.5 are
+
+Finally, when we take the highest simulated value of
+
+stacked almost identically, which is an indication that they all converge.
+
+5.4 Summary
+Based on the results I got, it seems as if there are many things that impact how accurate results we get. Firstly, if we have fewer states, the chain
+converges faster to the stationary distribution.
+
+54
+
+Secondly, the number of
+
+transitions impacts how much variation we have for dierent simulations. A
+smaller number of transitions can result in uctuations, due to randomness,
+in a way that the chain does not seem to converge. However, for both of the
+two simulated matrices, for a large enough
+
+55
+
+n,
+
+they both converge.
+
+Chapter 6
+Summary in Swedish - Svensk
+sammanfattning
+Målet med denna avhandling är att presentera den grundläggande teorin för
+diskreta Markovkedjor och jämföra teoretiska resultat med egna simuleringar.
+Tanken är att visa hur Markovkedjor, med vissa egenskaper, beter sig under en lång tidsperiod och att visualisera konvergensen mot Markovkedjans
+stationära fördelningen. Kapitel
+
+4
+
+är avhandlingens viktigaste del, där jag
+
+simulerar två olika ergodiska Markovkedjor och visualiserar dessa i tabeller
+och diagram.
+
+För en djupare förståelse av innehållet i avhandlingen antas
+
+läsaren ha grundläggande kunskap i matematik och programmering.
+Avhandlingens första helhet är en introduktion om dess innehåll och delmoment och där berättar jag även om vad en Markovkedja är.
+
+Jag blev
+
+intresserad av att skriva om Markovkedjor efter att ha deltagit i en kurs om
+ämnet vid Åbo Akademi. Tillämpning av matematik intresserar mig mer än
+teoretisk matematik, varför valet av Markovkedjor föll naturligt, eftersom de
+har stora praktiska tillämpningsområden.
+Kapitel
+
+2
+
+handlar om introducerande teori till Markovkedjor.
+
+Till att
+
+börja med tas det upp grundläggande teori om matriser och gränsvärdessatser
+samt teori från sannolikhetsläran.
+
+Denna grundläggande teori i kapitel
+
+2
+
+fungerar som byggsten för att introducera och utveckla innehållet när det
+gäller Markovkedjor. I den andra helheten behandlar jag även en metod som
+heter Gauss eliminering, för numerisk beräkning av Markovkedjans stationära
+fördelning.
+Kapitel
+
+3
+
+börjar med en allmän denition av en Markovkedja, samt
+
+tillämpning av Markovkedjan i form av empiriskt data från det nska me-
+
+56
+
+teorologiska institutet (FMI). Teorin för Markovkedjor byggs på för att föra
+läsaren mot avhandlingens kärna, den stationära fördelningen.
+
+Avhandlin-
+
+gens empiriska data härstammar från mätningar i Kilpisjärvi i norra Finland
+och är tagen under en tidsperiod av
+
+30 år.
+
+Data har jag manipulerat i mjuk-
+
+varoprogrammet Microsoft Excel, där jag använder min manipulerade data
+för att räkna ut en övergångsmatris, som används för teoriexempel och simuleringar.
+I kapitel
+
+4
+
+utförs simuleringar, i programmeringsspråket R, av två olika
+
+matriser med era olika tidsintervall. Den ena matrisen innehåller empirisk
+data från FMI och den andra matrisen, som är större i dimension, har jag
+skapat med de egenskaper som krävs för en ergodisk Markovkedja. I kapitel
+
+4
+
+presenteras även den algoritm som utförs för varje simulering och visualiseras
+i såväl tabeller som diagram. All kod för tabeller och diagram presenteras i
+slutet av avhandlingen som appendix.
+I kapitel
+
+5
+
+låga värden på
+
+diskuteras resultaten från simuleringarna i kapitel
+
+n
+
+4.
+
+Vid
+
+uppstod det stora variationer i båda simuleringarna, vilket
+
+gav upphov till att ett större
+
+n-värde,
+
+vid ett förhållandevis lågt
+
+n-värde,
+
+kunde resultera i en sämre approximation av den stationära fördelningen.
+Det visade sig ändå i mina tabeller, när
+
+n-värdet
+
+blev tillräckligt stort, att
+
+de simulerade kedjorna konvergerade mot den stationära fördelningen.
+
+De
+
+tillfälliga variationerna, på grund av slumpmässighet, hade således mindre
+betydelse för stort
+
+n-värde.
+
+En annan sak som jag tar fasta på utgående
+
+från resultaten är att storleken på en matris, eller närmare bestämt antalet
+tillstånd, verkar ha stor betydelse för hur snabbt Markovkedjan konvergerar mot sin stationära fördelning. När jag simulerade data från Kilpisjärvi
+gav ett övergångsvärde på
+tionära fördelningen.
+värde på
+
+500000
+
+50000
+
+ett resultat som var väldigt nära den sta-
+
+För den andra simuleringen, av matrisen
+
+ungefär samma precision.
+
+P,
+
+gav ett
+
+Jag kan konstatera att båda
+
+mina simuleringar, innehållande slumpmässighet, konvergerar mot deras stationära fördelning och motsvarar därmed väl teorin för diskreta och ergodiska
+Markovkedjor.
+Jag funderade över hur jag kunde visualisera konvergensen mot den stationära fördelningen och kom på ett sätt som jag inte har stött på tidigare.
+Jag kodade horisontella stapeldiagram över antalet träar i olika tillstånd,
+för olika antalet övergångar.
+
+Därmed visualiseras antalet träar i relation
+
+till antalet övergångar, vilket i min mening ger ett snyggt intryck. Stapeldiagramens värden över antalet träar motsvarar de värden som nns i mina
+tabeller, men dessa visualiseringar är betydelsefulla för att enklare se hur
+
+57
+
+simulationer beter sig under olika och längre tidsperioder. För lågt värde på
+
+n
+
+var det stora variationer i stapeldiagrammen.
+
+När
+
+n
+
+växte verkade alla
+
+fem simulationer se mer och mer lika ut visuellt och till sist för det största
+värdet, var alla fem simulationer nästan visuellt identiska. Precis som i mina
+tabeller över simulerade resultat, är detta en indikation på konvergens.
+Största delen av teorin för Markovkedjor har hämtats från boken
+
+stic modelling of scientic data,
+
+stocha-
+
+Guttorp, P. (1995), som innehåller uttöm-
+
+mande teoritiska resultat. Algoritmen, som används i simuleringarna i kapitel
+
+4,
+
+bygger på en internetpublikation av Bonakdarpour M. (2016). För era
+
+intressanta resultat, kunde simuleringarna utvecklas till att omfatta icke ergodiska och icke reducerbara Markovkedjor. Resultaten från simuleringarna
+kunde även verieras, ur ett statistiskt perspektiv, genom att öka antalet
+gånger kedjorna simuleras.
+
+Eftersom avhandlingen är begränsad, har jag
+
+valt att avgränsa simulationerna till två olika ergodiska Markovkedjor.
+
+58
+
+Appendix A
+R code for chapter
+
+4
+
+A.1 Code for the plot of probability through
+time for the Kilpisjärvi simulation for n =
+50.
+
+59
+
+A.2 Code for the barplot from the Kilpisjärvi
+simulation
+
+num.iters in the algorithm
+n = 500, n = 5000, and n = 50000.
+
+By changing the value of
+the barplot for
+
+60
+
+in Figure (4.1), we get
+
+A.3 Code for the 7 × 7 matrix.
+
+sim.seven
+
+saves all values returned from the algorithm in Figure (4.1).
+
+61
+
+A.4 Datamanipulation and code for table of
+measurements in Figure (4.13).
+
+62
+
+kable(), from library knitr, declares what
+Occ_7, numb_hits_ave, and visits, consist
+
+The rst argument passed into
+variable we plot. The variables
+of values in Figure (4.13).
+
+63
+
+A.5 Barplot code for the 7 × 7 matrix.
+
+64
+
+Bibliography
+[1] Bhattacharya, Rabi N.; Waymire, Edward C.:
+
+Applications,
+
+Stochastic Processes with
+
+Society for Industrial and Applied Mathematics 2009
+
+[2] Björkfelt, I.,Bjon, S.:
+
+Matriser,
+
+Matematik och statistik, Åbo Akademi
+
+2003
+
+Simulating Discrete Markov Chains: Limiting Distri
+butions, Github 2016, Last accessed 2:nd Mar 2020: https://stephens999
+
+[3] Bonakdarpour, M.:
+
+.github.io/veMinuteStats/simulating_discrete_chains_2.html
+[4] Chen, Y.:
+
+Discrete-Time Markov Chain  Part I, Washington edu 2018,
+
+Last accessed 14:th May 2021: http://faculty.washington.edu/yenchic/1
+8A_stat516/Lec3_DTMC_p1.pdf
+[5] Guttorp, P.:
+
+STOCHASTIC MODELLING OF SCIENTIFIC DATA,
+
+Chapman&Hall/CRC 1995
+[6] Ross, Sheldon M.:
+
+tion,
+
+Introduction to PROBABILITY MODELS - 4th edi-
+
+Academic Press, Inc. 1989
+
+[7] Ross, Sheldon M.:
+
+Introduction to Probability models - 10th edition,
+
+Elsevier 2010
+[8] Rothman, A.:
+
+Law,
+
+Proof of the Law of Large Numbers Part 2: The Strong
+
+Towardsdatascience 2020, Last accessed 14:th May 2021: https://
+
+towardsdatascience.com/proof-of-the-law-of-large-numbers-part-2-thestrong-law-356aa608ca5d
+[9] Salminen, P.:
+
+Sannolikhetslära,
+
+Matematik och statistik, Åbo Akademi
+
+2010
+
+65
+
+[10] The Finnish meteorological institute (FMI) - Enontekiö Kilpisjärvi
+kyläkeskus:
+
+https://cdn.fmi./fmiodata-convert-api/preview/21f718f7-
+
+97a6-440a-b6e6-c9ca89973716/?locale=en
+
+Introduction To Markov Chains With Examples-Markov
+Chains With Python, Edureka 2019, Last accessed 16:th Apr 2020:
+
+[11] Zulaikha, L.:
+
+https://www.edureka.co/blog/introduction-to-markov-chains/
+
+66
+
+

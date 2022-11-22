@@ -1,0 +1,2856 @@
+Freight optimization
+Tobias Mäenpää
+
+Master’s thesis
+Supervisor: Ilkka Lassila, ABB Oy
+Examinator: Prof. Margareta Björklund-Sänkiaho
+Energy Technology, Vasa
+Study programme in Chemical Engineering
+Faculty of Science and Engineering
+Åbo Akademi University
+September 9, 2020
+
+ABSTRAKT
+Automatiseringen av fabriker är ett världsomfattande fenomen som har växt från år till år. Det
+
+här är en av orsakerna till varför optimerade leverantörskedjor är allt viktigare, ekonomiskt
+men också med tanke på miljön.
+
+Den optimerade leverantörskedjan har idag blivit ett måste för att man ska kunna nå
+konkurrenskraftiga fördelar gentemot andra företag. I det här diplomarbetet kommer logistiken
+
+delas upp i mindre delar för att skapa en ny process. Målet är att skapa en smidigare
+leverantörskedja med ett miljövänligt synsätt samtidigt som avkastningen ökar.
+
+Som metodologi har både kvantitativa och kvalitativa analyser använts, så som FMEA, fivewhys och fishbone diagram. Det här resulterar i en ny logistisk process som sparar både pengar
+och miljö. Utsläppskalkyler, besparingar och en kontrollplan presenteras som resultat till följd
+av detta arbete.
+
+I diplomarbetet skapades en ny logistisk process för att sänka transport- och lagerkostnader
+samtidigt som mera miljövänliga metoder tillämpades. Den uppnådda processen ger ett
+jämnare materialflöde och därtill en kontrollplan för framtida förbättringar.
+Nyckelord: Grön logistik, leverantörskedjor, utsläpp, materialflöde
+
+ABSTRACT
+Factory automation is a worldwide phenomenon growing from year to year. This is
+one of the reasons why optimized supply chains become more and more important,
+economically but also environmentally.
+
+Optimized supply chains have become a crucial part of gaining competitive
+
+advantages against other companies. In this thesis, the logistics process will be
+
+divided into smaller sections when creating a new logistics process. The goal is to
+
+create a smoother supply chain with a more environmentally friendly approach while
+increasing the profit.
+
+For the methodology, both qualitative and quantitative analysis such as FMEA, fivewhys and fishbone diagram have been used. This has resulted in a new logistics
+
+process saving both money and the environment. Emission calculations, savings and
+a control plan are presented as a result of this thesis.
+
+In this thesis, a new logistics process was created to lower transportation and storage
+
+costs while implementing greener logistics methods. The achieved process allows a
+smoother inventory flow with a control plan enabling further optimization.
+
+Key words: Green logistics, supply chain management, emissions,
+material flow
+
+TABLE OF CONTENTS
+Contents
+
+ABSTRAKT ................................................................................................................. 2
+ABSTRACT ................................................................................................................. 3
+TABLE OF CONTENTS ............................................................................................. 4
+ACKNOWLEDGEMENTS ......................................................................................... 6
+1
+Introduction .......................................................................................................... 1
+2
+THEORY .............................................................................................................. 3
+2.1 Definition of logistics system ........................................................................ 3
+2.2 Logistics efficiency and objective ................................................................. 3
+2.3 Logistics and profitability .............................................................................. 5
+2.4 Perspective of logistics .................................................................................. 7
+2.5 Supply chain management ............................................................................. 8
+2.5.1
+Introduction ............................................................................................ 8
+2.5.2
+
+Managing inventory in the supply chain .............................................. 10
+
+2.7.2
+
+Identifying risks .................................................................................... 15
+
+2.7.4
+
+Analyzing past events ........................................................................... 17
+
+2.6 Strategies...................................................................................................... 12
+2.7 Risk management......................................................................................... 14
+2.7.1
+Defining risk ......................................................................................... 14
+2.7.3
+2.7.5
+2.7.6
+2.7.7
+
+Risk analysis ......................................................................................... 16
+Analyzing operations ............................................................................ 19
+Responding to risks .............................................................................. 20
+Logistics risk management ................................................................... 22
+
+2.8 Green logistics ............................................................................................. 24
+2.8.1
+Strategic perspective of green logistics ................................................ 25
+2.8.2
+
+3
+
+2.8.3
+
+Greener transport modes ...................................................................... 27
+Reverse logistics ................................................................................... 29
+
+MATERIAL AND METHODS ......................................................................... 31
+3.1 Current logistics system ............................................................................... 31
+3.2 Qualitative analysis ...................................................................................... 33
+3.3 Quantitative data analysis ............................................................................ 34
+3.4 Business case ............................................................................................... 35
+3.5 Environmental comparison .......................................................................... 36
+3.6 Implementation of new logistics process ..................................................... 36
+3.7 Control plan ................................................................................................. 36
+4
+RESULTS ........................................................................................................... 37
+4.1 Result of analysis ......................................................................................... 37
+4.2 New logistics model .................................................................................... 40
+4.3 Savings ......................................................................................................... 41
+4.4 Supply chain ................................................................................................ 42
+4.5 Environment ................................................................................................ 43
+4.6 Control plan ................................................................................................. 44
+
+5 DISCUSSION ......................................................................................................... 46
+6 CONCLUSIONS AND RECOMMENDATIONS .................................................. 48
+SVENSK SAMMANFATTNING ............................................................................. 50
+REFERENCES ........................................................................................................... 53
+APPENDICES ............................................................................................................ 56
+
+ACKNOWLEDGEMENTS
+This Master´s thesis has been conducted for ABB Oy, Smart Power. The project
+included all the steps from investigating and researching to the final implementation.
+
+I would like to thank Ilkka Lassila from ABB Oy, for supervising me through the
+project with inspirational conversations and creative thoughts.
+
+The thesis was written for Åbo Akademi University and I would also like to express
+my appreciation to Professor Margareta Björklund-Sänkiaho for guidance and
+
+expertise during the project. I truly think this will be a hot topic in the future with a
+growing awareness of green logistics.
+
+Vaasa, 09.09.2020
+Tobias Mäenpää
+
+1
+
+INTRODUCTION
+
+As the factory automation is growing worldwide it becomes increasingly important for
+companies to optimize their material flows in order to gain advantages towards
+competitors. The amount of materials imported from other countries is growing from
+
+year to year and because of these two considerations, freight optimization is becoming
+
+even more important focusing on a high-quality supply chain. This was also noted in
+a study regarding transportation by Xiang Zhou et al. (2016:2): “With the worldwide
+energy shortage, economic globalization, development of international logistics,
+
+global warming and the protection of the ecosystem and environment, the research on
+the optimization and strategic planning of the freightage network, development of the
+freight collection and distribution system with the port as its center as well as the
+
+optimization of the supply chain has become a hot-discussed topic and focus all over
+the world.”
+
+The importance of logistics is also noted by Bravo and Vidal (2013:1) in “Freight
+
+transportation function in supply chain”: “Freight transportation is undoubtedly one of
+the most studied issues in the scientific logistics literature to date, mainly because of
+the high costs that this component typically generates compared with total logistics
+
+costs faced by any kind of industry.” According to them, on average 64 per cent of
+
+logistics costs result from transportation costs. This clearly indicates that freight
+optimization should be considered as an important topic.
+
+The above-mentioned factors have been detected at ABB Oy, Smart Power, which is
+
+why the decision was made to investigate the possibilities of developing the logistics
+process. ABB Oy, Smart Power, is a highly automated factory manufacturing electrical
+switches for different needs. This factory is located in Vaasa, Finland, but the
+
+manufactured switches are exported worldwide. In recent years, the manufacturing
+process has been optimized during various production development projects and this
+has created a strong need to optimize the logistics process as well. This Master´s thesis
+is one of the recent projects with the aim of enabling further growth for the factory.
+
+1
+
+In their 2009 research, Zu et al. conclude: “The logistics industry becomes more and
+more important in the national economy. It makes a rapid transition from the tradition
+
+logistics to a modern logistics.” This sums up the intentions for this Master´s thesis,
+
+to make a partial transition towards a more modern logistics process. As mentioned,
+the volumes of imported materials have increased from year to year and in this
+
+Master’s thesis the scope will be inbound logistics, focusing on a high-quality supply
+chain. The most important objectives will be cost savings, flexibility, streamlined
+
+processes and green supply chain management. The goal for this thesis is to create a
+more reliable inbound freight while improving the efficiency of the current inbound
+
+program. It is important to keep the green logistics in mind in the whole supply chain
+and this is one of the aspects that will be taken into account. (Zu et.al, 2009:1)
+
+“Today, climate change is the greatest challenge for future generations”. This is one
+
+of the key statements in Aktas, Bloemhof and Fransoo’s (2018) study on green
+logistics solutions. They continue the introduction with some important aspects. “In
+particular, logistics is perceived as a key sector to contribute to sustainable
+
+development meeting the future generations’ needs in terms of low greenhouse gas
+emissions in a socially and economically responsible way. Green logistics involves all
+attempts to reduce the ecological impact of peoples’ mobility, traffic systems and of
+
+transport in regional and global supply chains including the reverse flow of products
+
+and materials.” This sums this thesis up regarding the goal of investigating green
+logistics and why this topic is a central part of the project.
+
+2
+
+2
+2.1
+
+THEORY
+Definition of logistics system
+
+Logistics is a term used to describe the flow of different materials, starting from raw
+
+materials ending up as final products for customers. Typical stages in a logistics system
+are transportation, storage and handling, which are key elements in McKinnon,
+
+Browne and Whitening (2012) Green Logistics: “The prime, and in many cases sole,
+objective has been to organize logistics in a way that maximizes profitability. The
+calculation of profitability, however, has included only the economic costs that
+
+companies directly incur. The wider environmental and social costs, traditionally
+excluded from the balance sheet, have been largely ignored – until recently.”
+
+Amodeo, Chehade and Yalaoui introduce the term of logistics as follows: “To remain
+competitive, business must design, produce and distribute their products and services
+while taking account of delays and increasingly restrictive quality requirements. To
+
+succeed, they put in place new technologies and methods to continually improve their
+production and distribution tools. Such a system is called a production system, or more
+commonly a logistics system. These systems combine the set of processes due to which
+
+a business produces a product or service, thus allowing it to satisfy a demand.” This is
+a typical example of how close production systems and logistics system are to each
+other today.
+
+According to McKinnon et al. (2012), the importance of optimizing the logistics
+
+system has increased during recent decades enabling companies to grow the business
+and improve efficiency.
+
+2.2
+
+Logistics efficiency and objective
+
+The purpose with logistics is designing a system that enables growth for the business
+
+with a higher profit rate. Through changing different variables, a company wants to
+
+achieve a system that fits their strategy. The variables affect different sections and it
+is the overall achieved properties that need to suit the business. This is how Patrik
+
+3
+
+Jonsson and Stig-Arne Mattsson describe the objective of logistics and how logistics
+efficiency has an impact on the business. In “Logistik” from 2016, they have picked a
+couple of different sections that are important when discussing logistics efficiency and
+objective. These sections will be presented below.
+
+The first section is Customer care. Creating good relationships with customers is a
+crucial factor for keeping the cash flow on a continuously good level. Good
+relationships are maintained by keeping the service on a high level, which means that
+the on-time delivery needs to be on point. All this indicates that the material flow needs
+
+to be on point to have any chances keeping the deliveries on time. (Jonsson and
+Mattsson, 2016)
+
+After having customers and orders, one of the most important sections is found, costs
+and profitability. This section affects the business from many points of view. A well-
+
+designed system keeps personnel costs low and offers the opportunity to lower the
+depreciation costs. However, operating costs will be higher if logistics has not been
+
+organized well. This is a topic that will be further processed in the next chapter,
+logistics and profitability. (Jonsson and Mattsson, 2016)
+
+One of the major determinants concerning logistics systems is the amount of money
+
+spent in order to keep the risks as low as possible. This section investigates the logistics
+
+process from a capital-related point of view. The biggest investment usually takes
+
+place when building stock-levels in the warehouse, investments like this have to be
+compared to other ways of growing the capital. The investment also needs to be
+compared to the risk of hitting a stock-out, as Harish Patil and Rajiv Divekar point out
+
+in their article “Inventory Management Challenges For B2C” (2014). Facing a stockout can be expensive if the customers start to look for other options and this quickly
+
+becomes more of a question regarding risk management than tied-down capital. Risk
+management will be further discussed in chapter 2.7.
+
+Another important section when thinking through the objective and efficiency of
+
+logistics is the flexibility. Increasing the flexibility gives the company a chance to
+create additional value to the customers. Typical factors in creating flexibility are
+
+4
+
+delivery times and delivery volumes. To make this possible, a dynamic logistics
+
+system that responds to the customers is needed. The dynamic system has to
+communicate with the available information regarding seasonal changes and other
+
+factors affecting stock quantities. In this way, customers can be offered great service
+which is more than only a great product. (Jonsson and Mattsson, 2016)
+
+Related to flexibility and capital, the next section is lead time. To minimize the tiedup capital, lead time has a central role and flexibility is a required factor to make this
+
+possible. There is a crucial need to optimize the lead time in order to make the cashflow
+as smooth as possible. Possible attributes to be varied are order quantities and transport
+modes. (Jonsson and Mattsson, 2016)
+
+The final topic is green logistics, which has received more attention for every year and
+
+there are many ways to influence this. The transport mode is one important point but
+also packing material and packing style need to be designed according to the needs of
+
+the company. A carefully planned packing process can shorten the lead time because
+of less handling time. All the information concluded in chapter 2.2 can be found in
+Logistik from 2016 by Jonsson and Mattsson.
+2.3
+
+Logistics and profitability
+
+The long-term goal for almost all companies is to gain as high return on investment as
+possible and a great mechanism to achieve this is a fully optimized logistics system.
+
+The costs are kept as low as possible to affect positively on the return. One way to
+illustrate this phenomenon is using the DuPont model shown below. Here it is
+
+visualized how the logistics system has its impact on the return on investment. This is
+how Jonsson and Mattsson (2016) have concluded the overall idea of profitability
+regarding logistics systems.
+
+On the left side, that finally affects the asset turnover, the yellow boxes all have a direct
+impact on the assets. This means that the asset turnover becomes lower. On the right
+
+side, the operating expenses affect the earnings negatively which means that the profit
+margin becomes smaller. Summarized the template gives the information that through
+
+5
+
+a well-optimized logistics system a positive influence can be reached on many points,
+which all have a direct positive impact on the return on investment. (Jonsson &
+Mattsson, 2016)
+
+Figure 1 Return on investment (Dupont analysis template, 2017)
+
+Another aspect when discussing logistics and profitability is how and where logistics
+
+profitability is monitored. This is a topic that has been discussed by Radulescu et al.
+in their article “Increasing the company´s profitability through logistics management”.
+In their conclusion they point out the importance of analyzing the supply chain as a
+single chain instead of analyzing each part without connecting them to each other. This
+is necessary when searching for maximized competitiveness.
+
+Another point of view regarding competitive advantages is thinking long-term instead
+of short-term. This topic has been discussed by Laari, Töyli and Ojala. Their study
+
+indicates that one of the largest areas where long-term thinking can create more
+profitability is the area of green logistics. This green thinking needs to be long-term
+implemented but can attract customers willing to choose green products instead of
+competitors´ non-green products. This can increase the income and, in that way,
+increase the return on investment.
+
+Peter Mesarc (2018) concludes his article regarding a company´s logistics efficiency
+
+in a simple and straight forward way. Only focus in value-adding work and eliminate
+
+6
+
+non-value adding work. This can be done through optimizing or outsourcing while the
+main target is accessing more space for making more money.
+
+2.4
+
+Perspective of logistics
+
+There are different ways to observe a logistics system and to make decisions and
+changes accordingly. It is important to have the ability to divide the system into smaller
+
+pieces when searching for better solutions. These three approaches by Jonsson and
+Mattsson (2016) are all presented below.
+Strategical and tactical perspective
+
+Here the main focus is achieving better future conditions through decision making.
+
+These are long-term decisions that will be a part of the company’s business strategy.
+
+Typical decisions could be outsourcing or choosing where to locate the warehouse.
+
+Another tactical decision could be choosing the correct suppliers according to the
+business strategy. (Jonsson & Mattson, 2016)
+
+Also Grzegorz Lichocik and Adam Sadowski (2013) point out the role of strategical
+perspective: “Correctly planned and fulfilled logistics tasks may result in improving
+
+performance of a company as well as the whole supply chain. Disregarding the
+importance of the designing and strategic analysis processes will surely make a supply
+chain less effective. In a company aware of its importance, supply chain management
+
+may play a key role exerting the same impact on its performance as sales, marketing
+or production.”
+Operative perspective
+
+Through the operative decisions better solutions can be achieved while using the same
+resources as before. To enhance the capability of systems in use they are optimized. It
+is important that the flow of information works well between strategical and operative
+
+decision makers, otherwise the business can suffer because of dissatisfied customers
+who are not aware of changes that have been made. (Jonsson & Mattson, 2016)
+
+7
+
+Internal and external perspective
+
+When designing a logistics system, it is important to have the ability to separate the
+internal and the external perspective. The needs for each section are different but the
+cooperation needs to be exceptional to gain the most from it.
+
+Focusing on the internal perspective the needs of the production are mainly checked
+and, according to that, the orders are placed. To make the return of investment as high
+as possible it is needed to focus on the external perspective as well. This can be a way
+
+to lower the price of components ordered from the suppliers. In large business units,
+there is something called network perspective as well. This needs also to be taken into
+
+account. How are the sub-suppliers affected by decisions made? When using large and
+long supply chains good relationships and understanding of different working
+processes are critical. (Jonsson & Mattson, 2016)
+2.5
+
+Supply chain management
+
+2.5.1 Introduction
+Management of logistics systems is all about three points: planning, organizing and
+controlling. With planning good decisions are searched for to give a secure base to
+
+build on. Then it is all about organizing the resources to make the best out of the
+decisions made. To be able to continue the development of the system the last section
+“controlling” is important. The need of good ways of measuring the performance is
+
+critical to provide the opportunity to develop the existing system. Introduction to
+logistics system management is a book written by Ghianpaolo Ghiani, Gilbert Laporte
+and Roberto Musmanno. The introduction above is summarized with their thoughts as
+basis.
+
+In Lee Tzong-Ru’s article Powerful Supply Chain (2010), supply chain management
+is pointed out to receive considerable interest because the companies do not only
+
+expect cost reductions and reduced lead time, but also a competitive advantage when
+
+reaching out for the dynamic market today. Tzong-Ru continues that the objective of
+
+supply chain management is not to focus on local optimizations but to improve the
+entire process.
+
+8
+
+According to Ghiani et al. (2013), the planning area is usually divided into a couple of
+
+different decision-making areas: Forecasting, location, supply, storage and
+distribution.
+
+The forecasting is a procedure where the future capacity and stock level are in focus.
+With a correct forecast, the production quantity and the order quantity can be adjusted
+to give a better material flow. Location and supply both belong to the strategical
+
+perspective of decisions that were mentioned in chapter 2.4. These are decisions made
+
+according to the company’s business strategy and they are heavily influenced by the
+type of business sector operated. Concerning storage and distribution, the main focus
+is on the material flow. These two sections are crucial when searching for great cash
+flows. (Ghiani et al. 2013)
+
+As mentioned, next step after planning is organizing. Here the spotlight is how to
+distribute the resources correctly and how to split responsibilities and tasks. Factors
+affecting these decisions are operating sector, values and expectations shared by the
+
+organization and how good the company’s use of technology is. The target is to
+
+achieve a logistics system that can handle all types of problems without having any
+
+major stops. Ghiani et al. continue to formulate the organization section with some
+facts about how to organize the resources for reaching better decision making. For
+
+medium-large firms the power needs to be delegated and functions must be created.
+This will establish relationships of authority. (Ghiani et al. 2013)
+
+To follow up the efficiency of a logistics system different indicators are required.
+
+These indicators can be used to calculate the performance of the system, and usually
+this is done in the last section of managing the logistics system. Generally, these are
+
+called KPIs which stand for key performance indicators. By following the progress of
+these indicators, adjustments can be made before problems occur. Typically, the KPIs
+
+are classified into three categories: volume, effectiveness and efficiency. The quantity
+of work done is measured into the category volume, the quality of the work done is
+measured into the category effectiveness and the costs are measured to the third
+
+category, efficiency. When the KPIs are defined, the creation of an easily readable
+
+control panel needs to be done, the information needs to be near at hand and the layout
+has to be nicely designed. (Ghiani et al. 2013)
+
+9
+
+2.5.2 Managing inventory in the supply chain
+When managing the inventory’s material flow, there are some important elements to
+be considered. A game plan is urgent and the awareness of how to handle different
+
+demands is essential. A vital topic to be considered when managing inventories is
+
+EBQ, which stands for economic batch quantity. The perfect batch size is calculated
+to please the needs of the production, but it also needs to be economically optimized
+
+to give the possibilities to grow the return on investment. The problem when
+
+calculating the EBQ is that the demands are assumed to be stable but usually this is
+not the reality. This chapter about managing inventory in the supply chain is based on
+
+Logistics Management and Strategy written by Harrison, van Hoek and Skipworth
+(2014).
+
+The first subsection is safety stock. This is a common way of handling stock and
+
+keeping the volume on a certain level. This safety stock will cover different surprises
+
+that occur, such as large orders or transport delays. As shown in the figure below, there
+is a safety stock level on the right and the inventory level should never land below this.
+Purchase orders are placed to keep the stock quantity above this level. The safety stock
+is calculated on the basis of how high the service level is chosen to be and the goal is
+
+that the stock quantity always is higher than the safety stock. This means that the order
+
+should be placed exactly one lead time before expecting the stock level to be lower
+than the safety stock. This point where a new order is placed is called the reorder point.
+(Harrison et al. 2014)
+
+10
+
+Figure 2 Purchasing cycles (Purchase assist technology, 2020)
+
+When having the safety stock sorted out and calculated the next step is to calculate the
+EBQ. The question at this point is how large orders can be placed without affecting
+
+the logistics cost too much. Below there is a formula for how to calculate the EBQ
+
+without considering any risks during the process. This formula is called the Wilson
+formula. (Harrison et al. 2014)
+
+𝐸𝐵𝑄 = √
+
+2∗𝑧∗𝐶𝑠
+𝑐∗𝐶
+
+(1)
+
+𝑧 = 𝑢𝑠𝑎𝑔𝑒 𝑟𝑎𝑡𝑒, 𝑐𝑜𝑛𝑠𝑡𝑎𝑛𝑡
+𝑐 = 𝑚𝑎𝑛𝑢𝑓𝑎𝑐𝑡𝑢𝑟𝑒𝑑 𝑐𝑜𝑠𝑡 𝑜𝑓 𝑡ℎ𝑒 𝑆𝐾𝑈 (𝑠𝑡𝑜𝑐𝑘 𝑘𝑒𝑒𝑝𝑖𝑛𝑔 𝑢𝑛𝑖𝑡)
+𝐶𝑠 = 𝐶ℎ𝑎𝑛𝑔𝑒𝑜𝑣𝑒𝑟 𝑐𝑜𝑠𝑡 𝑝𝑒𝑟 𝑢𝑛𝑖𝑡, 𝑐𝑜𝑠𝑡 𝑎𝑠𝑠𝑜𝑠𝑖𝑎𝑡𝑒𝑑 𝑤𝑖𝑡ℎ 𝑡𝑜𝑜𝑙𝑐ℎ𝑎𝑛𝑔𝑒
+𝐶 = 𝐼𝑛𝑣𝑒𝑛𝑡𝑜𝑟𝑦 𝑐𝑎𝑟𝑟𝑦𝑖𝑛𝑔 𝑐𝑜𝑠𝑡
+When using this formula, the outcome will be a point where the annual carrying cost
+
+crosses the annual setup cost. However, no risks have yet been calculated. Another
+
+point to consider is the quantity of pieces that fit in one box or the maximum number
+of boxes on one pallet. This means the result will not be exactly at the crossing between
+those two lines, but it is a first step when deciding the ordering quantity. (Harrison et
+al. 2014)
+
+11
+
+Figure 3 Economic batch size (Continuous delivery consulting, 2013)
+
+2.6
+
+Strategies
+
+The challenge when developing the logistics strategy is considering not only the
+
+logistics needs, but also all restricting factors for the other sectors that are affected by
+
+the logistical decisions. The range of a logistics system is all the way from supplier to
+customer and this is the biggest challenge when forming a logistics strategy. There are
+
+different elements needed to be dealt when creating the strategy, and to achieve a well-
+
+working system the strategy has to deal with the problems of all elements. Kent N.
+
+Gourdin continues his introduction of logistics strategies in Global Logistics
+Management – A Competitive Advantage for the New Millennium with some key points
+to think about when creating and establishing the logistics strategy. These key points
+that will be presented are customer service, channels of supply and distribution,
+inventories, transportation and information management.
+
+As mentioned in chapter 2.2, the importance of customer service is high. When
+
+forming the strategy this sector is a great place where information can be gathered.
+
+The customers should always be placed in the center and their opinions should always
+be considered when the strategy is established. The choices made should be best for
+
+the customer when developing a long-term strategy. Without customers, there will not
+be any business. (Gourdin, 2001)
+
+12
+
+Keeping the quantity of suppliers on an appropriate level can be the way to achieve a
+logistics system to work better. In this way, each logistics channel can be optimized to
+match its needs. One strategy worth considering is bolstering the suppliers to create
+
+stronger relationships with long-term contracts. This is a strategy that gives
+opportunities to all partners in the supply chain for keeping the development
+continuous. (Gourdin, 2001)
+
+When creating strong supply chains, the discussion about inventories is also worth
+taking. Today, there is better understanding for the costs of having inventories
+
+and through coordinated operations and smoother material flows the costs can be
+minimized. This is a section where large amounts of money can be saved if the
+
+inventory management is on point. This topic about controlling inventory levels is not
+only about the levels at the factory but also throughout the supply chain. (Gourdin,
+2001)
+
+Moving forward to the transportation of the materials the main question is all about
+
+what transportation mode should be used for every supplier and every delivery. The
+next question is how large the shipment quantities should be. This is a question that
+
+could belong to the management of inventories as well and is an excellent example of
+
+how these sections affect each other. Here the EBQ calculations can be used to provide
+a good starting point. The last question is who should handle the shipment? There are
+considerable amounts of money that could be saved when asking for offers by different
+companies. (Gourdin, 2001)
+
+The last step in creating a strategy, according to Gourdin, 2001, is thinking about the
+
+information flow. How should the system be planned to gather as much information
+as possible? This is the main question that has to be considered when making the
+
+strategy and focusing on information management. There are many ways information
+can be gathered, and the quantity of technical tools is increasing quickly. This section
+is close to customer care and through good information flow the customers can be even
+more satisfied, which gives the company more business. (Gourdin, 2001)
+
+13
+
+To summarize the making of the logistics strategy, the understanding of the internal
+
+material flow is clear, and the internal logistics activities should be known. Then it is
+possible to move on to the whole supply chain, and as Kent Gourdin mentioned in
+Global Logistics Management, the supply chain is only as strong as its weakest link.
+With this said, a great supply chain with great capacity can be ruined if one link in the
+supply chain cannot fulfil its tasks.
+2.7
+
+Risk management
+
+Even though everything possible is done to make a process as good as possible, there
+will always be certain risks. These can be risks that could be avoided by changing the
+
+process, but then new risks will come up. In the supply chain there will be risks at
+
+every single stage and when managing the process, the target is to minimize these
+without losing efficiency. A stable process is wanted to be achieved and this means
+that the whole supply chain needs to be taken into account. (Waters, 2011: 1-13)
+
+2.7.1 Defining risk
+“The fundamental of risk is that unforeseen events may happen in the future” is how
+
+Donald Waters (2011) defines what a risk is in Supply Chain Risk Management. This
+means that risks occur because of uncertainty about the future and the result will be a
+damaged supply chain.
+
+According to Waters (2011), there are two ways of dealing with risks. The most
+common way is to quietly ignore the risk and continue working with the thought that
+
+it is very rare that the damage could occur. The other way is to have a proactive policy
+
+where plan b is already available. Using a proactive method, the effects of different
+
+problems can be reduced. In this way, the costs of the damage will not be as large as
+the costs of using a reactive policy.
+
+Even though it is unlikely that a risk could happen, it is needed to be aware of the fact
+
+that some of the risks will probably happen sooner or later. The awareness of the harm
+is crucial for the managers who are dealing with risks. Common harms are lost
+deliveries and lost customers.
+
+14
+
+2.7.2 Identifying risks
+
+When identifying risks for a supply chain the first general step is dividing the
+procedure into smaller operations to make it easier to notice particular risks. Below is
+a list of how the dividing can be done. (Waters, 2011)
+1. Define the overall supply chain process.
+
+2. Divide this into a series of distinct, related operations.
+3. Systematically consider the details of each operation.
+
+4. Identify the risks in each operation and their main features.
+5. Describe the most significant risks in a register.
+
+Even though there is a process for identifying risks it will always be impossible to
+
+identify every single risk that may occur. Forecasts will be made to avoid problems
+
+but because of the unpredictable future, surprises will always appear. Critical when
+talking about risk management at a firm is that the employees have been educated
+properly regarding risk identification. Some may fear that revealing a risk might
+
+suggest that things have been done incorrectly, but a risk should not be hidden because
+of this. This scenario is typical when developing the management of risk identification
+in companies.
+
+Other problematic risks that exist are time-, progress- and response-dependent risks.
+All of these are impossible to identify before reaching a certain period. Examples could
+
+be decisions made by the government or actions taken due to the result of another risk.
+Below is a figure describing the identification stage involved in the bigger picture of
+risk management (Waters, 2011)
+
+Figure 4 Summary of risk identification (Waters, 2011)
+
+15
+
+2.7.3 Risk analysis
+
+In this chapter, a couple of different methods of analysis will be presented. Even
+
+though these are the most used ones, it is important to be aware of the fact that these
+methods can be modified and adjusted to better fit and please a business form.
+
+Failure modes and effects analysis (FMEA)
+This is a method using a process chart as basis and ranks each risk according to a point
+system. Every potential failure is ranked by three factors: Occurrence, severity and
+
+probability of detection. These factors are scaled 1-10 and multiplied together. The
+
+final factor will be on a scale from 1 to 1000. This is a good way to decide where to
+start developing a process. Ciofu (2018) has described this analysis method in the
+
+article FMEA – Basic Concept in Product Quality and states the width of this method
+of risk analysis. It can be used for manufacturing purposes but also for logistics
+processes. Ciofu (2018) has quoted Murphy’s law which is the main reason behind this
+method. “Everything that can fail, will fail”. Below a simple FMEA model is
+presented.
+
+Figure 5 FMEA analysis (Moresteam, 2018)
+
+16
+
+Scenario analysis
+A method that is often used in the early stages is scenario analysis and, has the what-
+
+if approach. Waters (2011) has described this method in Supply Chain Risk
+Management and mentions that this type of analysis is a brainstorming method where
+
+experts are gathered to compare different solutions. If solution A prevents a risk that
+
+solution B does not, solution A can surely be preferred. When considering using this
+method it must be taken into account that many resources in the form of experts are
+
+required to make it possible. Chen, Yang and Chen have used this method in their
+published study Scenario Analysis and Path Selection of Low-Carbon
+
+Transformation in China Based on a Modified IPAT Model. Here they describe this
+
+type of analysis as a way of making assumptions and forecasts of what may happen in
+the future. Most common is to use statistical data as basis, but also political and
+economic development can be used.
+Simulation
+The basis of this method is like scenario analysis, but the outcome is a more detailed
+quantitative analysis than the what-if method. Computer modeling is used to imitate
+
+how a process would work over a longer period. Typical variables that are measured
+are output and waiting time. When using this method of analysis a great benefit is
+gained when different solutions can be compared without making huge modifications
+in the production area. Even though simulation modeling has taken a huge step
+forward, this is a method that can be really time consuming. (Waters, 2011)
+
+2.7.4 Analyzing past events
+By the point noticing that a problem has occurred an analysis has to be made to prevent
+
+the failure from happening again. There are different methods available and below two
+of the most common are listed. Both methods are described in Supply Chain Risk
+Management by Waters (2011).
+
+17
+
+Five whys
+This method is a commonly used root cause analysis and the benefit is the possibility
+
+to connect symptoms with causes. With this method of analysis, risks that already have
+occurred are analyzed to find out what the root cause is. Waters (2011) used the
+
+following example. Here it can clearly be seen how the root cause can be found using
+this method.
+
+Figure 6 Five whys (Waters, 2011)
+
+Cause-and-effect diagrams
+Cause-and-effect diagrams are a commonly used method of analysis when making
+
+grids of different causes that all affect the same section. This type of analysis method
+is called a fishbone or Ishikawa diagram. The benefit of using this type of diagram is
+gaining a wider perspective of how the process is working and how a process can be
+affected by different risks and causes. The analyzed topics are always the same:
+
+material, measurement, machine, method, environment and people. These topics can
+be observed as fishbones in the diagram. Below an example is presented. (Waters,
+2011)
+
+18
+
+Figure 7 Fishbone diagram (Lean six sigma definition, 2020)
+
+2.7.5 Analyzing operations
+The ability to minimize the risks requires awareness of how different processes work
+in the reality. This creates a strong need of valuable information. There are a few
+
+different methods and the two most common are interviews and meetings. Interviews
+
+have the strength that the source can be chosen differently and, in that way, have a
+
+wider perspective of the risks for a process. Meetings have the strength of developing
+discussions where different solutions can be discussed. (Waters, 2011)
+
+A mistake that often occurs during different projects is not noticing that people react
+
+and operate in different ways. Some people are more dominant than others and because
+
+of this many good ideas can be held aside. To counter this, the delphi-method can be
+used. This is a method where questionnaires are sent out to experts in the company.
+Every expert must answer the questions and an important point is that the answers are
+anonymous. In this way, the fear of saying something stupid is eliminated and all ideas
+can be processed. (Waters, 2011)
+
+When analyzing the risks in a process the importance of having an up-to-date process
+
+chart is significant. The process should be broken down into smaller activities and
+
+19
+
+operations giving the processor hints where to find the risks. As an example, the
+sequence when moving goods from a delivery truck into stores has been divided into
+the activities below.
+-
+
+Use a forklift to take pallets out of the delivery truck
+Move the pallets to the receiving area
+
+Take the goods off the pallets and remove transport packaging
+Inspection of the goods
+
+Move goods into bulk storage
+
+Keep the materials until needed in the picking stores
+
+There are different ways of presenting this kind of information, but a diagram is often
+used. This allows the user to add information regarding different risks for each activity.
+
+Other information that is often added to the process chart are duration and distance.
+(Waters, 2011)
+
+2.7.6 Responding to risks
+Moving on to the next step after the analyzing stage is done the focus will be on how
+to respond to the risks. An appropriate way to handle each risk and a proper
+
+implementation of the response is required. There are huge variations in how to
+
+respond to risks, but normally these can be divided into the groups listed below. This
+same division has been done by Shayb (2019) in Risk Management – Identifying,
+Assessing and Responding to Risks.
+1. Ignore or tolerate the risk
+This is a decision that must be made by the manager. When noticing a risk,
+either something has to be done to avoid the consequences, or then the option
+
+can be chosen not to do anything and simply accept the consequences. It is not
+
+always a bad or negative decision to ignore a risk. If the analysis has been done
+properly and the impacts of the risk can be accepted, it can sometimes be
+
+20
+
+economically profitable to ignore the risk and, for example, accept the
+increased scrapping costs.
+
+2. Reduce the probability or the consequences
+If there is a high risk that something will go wrong, the managers often try to
+reduce the probability of it happening. This can be an alternative when the cost
+
+of completely removing the risk is too high, but the consequences need to be
+prevented. This is a more cost-productive solution, but the risk is still there.
+
+Instead of reducing the probability, the consequences can be minimized.
+Waters (2011) uses an example of reducing the lead time from a supplier. This
+
+means that the consequences will be reduced if there is a material shortage, but
+the likelihood of it happening is still the same as before.
+3. Transfer, share or deflect the risk
+Move the risk from one organization to another. Sometimes another
+organization has better knowledge or better possibilities to take care of
+
+different risks and, in these cases, it needs to be considered if a transfer could
+be the solution to make the supply chain stronger.
+4. Make contingency plans
+This is a plan done before the risk occurs to be able to react quickly enough.
+This is also called a plan B. As an example, Waters uses the freight mode. If
+everything goes well according to the plan, low-cost road transport can be used
+
+but as soon as issues are faced the transportation can be changed to air freight.
+5. Adapt to it
+This is a passive response similar to contingency plans. The focus is to make
+the process agile, which means the risks can be countered with small changes.
+
+21
+
+6. Oppose a change
+When a major change is being made by a large company or by the government,
+organizations can try to prevent the change. Through different types of
+campaigns and price increases, a major change sometimes can be prevented or
+modified.
+
+7. Move to another environment
+An extreme response is to completely move to another environment. This is
+
+generally a decision made from a business perspective and can, for example,
+mean that a company completely changes its business environment. Waters
+(2011) uses ICI as an example. In the 1990’s, they changed their business
+strategy from making bulk chemicals to more rare chemicals because of a risky
+industry.
+
+2.7.7 Logistics risk management
+
+When dealing with risk management for logistics, there are some methods that are
+
+widely used. These methods should always be considered when facing different
+challenges regarding the supply chain. It is also important to remember that many of
+
+the risks are directly connected to other sections, which means that some risks need
+more attention because of their wider impact area. Continuing this topic, some of the
+most important methods will be presented below.
+
+In Supply Chain Risk Management (2011), there are two main ideas when focusing on
+low-risk supply chains. The first step is to always have a layout of the supply chain
+
+where parallel paths are possible. This is a method to prevent complete disasters. An
+example of this type of thinking is to always have alternative transport routes.
+
+Artsiomchyk and Zhivitskaya (2013) have pointed out the priority of this type of
+
+design in their article “Designing Supply Chain with Robustness Analysis”. There is
+no need to have parallel paths in the supply chain if there is one point where there is
+only one source. One critical example could be raw material.
+
+22
+
+Step number two is to use a shorter supply chain. This means that the suppliers are
+closer to the organization, which means the transport time is reduced.
+
+Another option is to reduce variability. This section connects two main areas in the
+
+organization, logistics and quality. When reducing variability Waters (2011) points out
+that the quality increases. This means that a minimized variability should always be
+
+aimed for. Regarding the logistics variables, a good example is the lead time. There is
+no need to receive the materials too early because then there will not be enough stock
+
+capacity. However, neither is it desirable to receive the materials too late, because the
+on-time delivery will suffer. (Waters, 2011)
+
+Waters (2011) describes the approach of keeping stock as simple as the higher the
+stock level is, the greater will the risk be. To keep a production running continuously
+it is necessary to use some sort of stock. This is the most traditional way of reducing
+
+risks, but the trend is that today organizations focus on lean thinking and cost
+reduction. With this said, a large safety stock is not always the best way to minimize
+the risk because of its cost. In addition, there is always a risk that the materials on stock
+
+will not be accurate when needed in the production. Instead of growing the stock, the
+working capacity can be increased. This point is like the previous, but instead of
+
+keeping material on stock, there is extra capacity to be used when needed. This spare
+capacity can be needed when receiving large orders or when covering for unexpected
+incidents.
+
+As mentioned in chapter 2.8.6, it is a clear advantage to have a flexible organization.
+
+When the conditions are changing, it is possible to make quick responses and still have
+
+a process that delivers high-quality service. Examples of ways to improve agility could
+
+be cross-trained employees and alternative suppliers. Artsiomchyk and Zhivitskaya
+
+(2013:1) have indicated this in “Designing Supply Chain with Robustness Analysis”:
+
+“Modern supply chains face various challenges caused by uncertainty. On one hand,
+customers are more demanding than ever on service and product qualities. On the other
+
+hand, in light of highly volatile demands, many supply chain decisions involve a high
+degree of risk and channel members will suffer if the supply chain is not sufficiently
+robust.”
+
+23
+
+Moving on to collaboration and planning, Waters (2011) specifies a couple of elements
+
+that should always be considered. Depending on what type of business is managed, it
+should always be reflected how long a suitable forecast should be. Typical factors
+
+impacting this are how big variations are needed to be handled and how long lead times
+there are to work with. These types of considerations influence the collaboration
+
+between suppliers and can decrease risks. The key is to share as much information as
+possible to improve the visibility for both partners.
+
+To reduce the risk, it is often easier when there is a legal contract saying who is
+responsible for what part. This increases the liability for both partners and the
+information flow can have a boost due to the higher level of responsibility.
+
+2.8
+
+Green logistics
+
+In Green Logistics (2012:3), McKinnon, Browne and Whiteing describe the major
+outlook of logistics over the past 10-15 years as follows: “The prime objective has
+
+been to organize logistics in a way that maximizes the profitability”. This is an outlook
+
+changing and turning into an environmentally friendlier one, investing in sustainability
+and branding.
+
+Another one sharing same information is Ping. In her article “Strategy of Green
+Logistics and Sustainable Development” (2009:1), she is pointing out the importance
+
+of coordinating the relationship between the logistics and the environment: “The
+purpose of green logistics is to realize economic benefits of certain subject, and at the
+same time, to look after saving resources, protecting environment especially. The aim
+
+has both economic and social characteristics.” This is one way to achieve a more
+reasonable logistics through sustainable development.
+
+The constant growth of freight transport has made its impact and there is a crucial need
+
+of planning what transport mode should be used for each supply chain. McKinnon
+
+24
+
+(2012) has identified that the domestic freight transport in the UK has risen by 69
+percent from 1969 to 2010. This is an enormous increase that needs to be optimized.
+
+From picture 3, it can be noted that the transport sector is enormous when investigating
+
+the impact on the environment. This picture is from EU Transport in Figures,
+Statistical Pocketbook (2017) and tells how important this topic is. The sector has risen
+about 50% in the last 25 years.
+
+Figure 8 EU transport in figures (Statistical pocketbook, 2017)
+
+2.8.1 Strategic perspective of green logistics
+When discussing the strategical perspective of green logistic it is most often connected
+
+with the design of the network. According to McKinnon (2012), there are two typical
+
+strategies when trying to reduce the environmental impact. The first one, which is the
+more traditional one, is to develop the existing design as a straight-lined network.
+
+25
+
+Evaluations are made for each object and actions are made according to that. The
+second strategy is to design an extended supply chain. This means that it is a closedloop supply chain where reversed logistics can be used. Typical subjects when
+designing these kinds of networks are recycling and using environmentally friendlier
+packing methods.
+
+Figure 9 Extended supply chain (Beamon, 1999)
+
+Even though there are a few different aspects when designing an environmentally
+friendly logistics system, there are some factors that always need to be included.
+
+Energy consumption, emissions and waste are factors that need to be reduced.
+
+However, recycling and reusing need to be increased. Optimizing all these factors will
+help to achieve a greener supply chain. (McKinnon, 2012)
+
+Another point when discussing the strategy of green logistics is the sustainability. In
+
+the article The Interrelation between Sustainability and Green Logistics by Nagham
+
+El-Berishy, Ingrid Rügge and Bernd Scholz-Reiter (2013:1), a sentence from Hans
+Carl von Carlowitz has been quoted: “Do not fell more trees than could grow back.”
+
+26
+
+2.8.2 Greener transport modes
+The most interesting point when comparing the environmental effects of different
+
+transport modes is the CO2 emission. In this chapter, different freight modes will be
+
+explained and compared to each other. To summarize the chapter a graph with the CO2
+emissions of the most common freight modes will be presented.
+Road freight
+When comparing different road freight options to each other the most critical element
+is the size of the vehicle. In this chapter, heavy goods vehicles and vans will be
+
+separated to make it clearer. This is also the way Alan McKinnon has made his
+comparison in his article CO2 Emissions from Freight Transport in the UK (2007).
+
+In this article, McKinnon has stated some key facts needed to be mentioned. The first
+point is that road freight has had a stable increase from year to year, but at the same
+
+time, there have been reductions in empty running and improvements in fuel
+efficiency.
+
+According to the calculations McKinnon has used in his article, the result is that vans
+
+have had the CO2 emissions of 360 gram/tonne-km compared to heavy goods vehicles
+138 grams/tonne-km.
+Rail freight
+When measuring CO2 emissions from rail freight there is one aspect that needs to be
+
+estimated, the ratio of diesel rail freight compared to electric rail freight. According to
+Professor Alan McKinnon (2007), 90% of tonne-kms in the UK are hauled by diesel
+
+locomotives. McKinnon has also mentioned some ratios of CO2 suggested by IFEU
+
+(2005) for European rail freight. According to this comparison, electric rail freight has
+18 grams/tonne-km while diesel rail freight has 35 grams/tonne-km.
+
+Another study undertaken by the University of Leuven has reached the CO 2 result of
+33 grams/tonne-km. This summarizes that both McKinnon’s estimation and IFEU
+calculations are aligned.
+
+27
+
+Air freight
+Air Freight is the smallest sector when looking at total kg transported but when looking
+
+at CO2 emissions, this sector is number one. McKinnon (2007) has listed a couple of
+studies where estimations have been made for CO 2 emissions and the results are quite
+similar to each other. For short airfreight services (distance 425 – 500km), the results
+
+are 1420, 1580 and 1925 grams/tonne-km. For international air cargo services, where
+
+we have longer distances, the results have been 637, 800, 800 and 867 grams/tonnekm.
+
+Waterborne transport
+The last freight method to be compared is shipping. This method can also be divided
+into smaller sectors depending on the size of the ship.
+
+Small vessels produce about 60 grams CO2 per tonne-km, while the movement of a
+
+slightly bigger ship generates around 30-40 grams of CO2 per tonne-km. However,
+when discussing large bulk carriers good results can be reached, 7 grams/tonne-km.
+
+It needs to be added that the environment is also affecting the emissions. Usually, it is
+more efficient to transport materials through inland waterways where the conditions
+are not as tough as at coastal shipping.
+Comparison
+Below a comparison from a study done by Meiler-Maerks is presented. This study was
+
+conducted in 2014 which is one reason why some of the values differ from those
+presented by McKinnon. As mentioned, there has been much development for
+decreasing the emissions for different motorized vehicles and this can clearly be
+noticed here.
+
+One important point is that even though there have been improvements for CO2
+emissions for different vehicle types, we have to remember that all motorized vehicles
+cannot be renewed at once.
+
+28
+
+Figure 10 Comparison of CO2 emissions (Meiler-Maersk, 2014)
+
+2.8.3 Reverse logistics
+The most common way of improving the supply chain is to control the flow from
+
+supplier to customer but, in this chapter, the supply chain will be extended into a loop
+
+including reverse logistics. This is an alternative that provides the ability to manage
+the waste.
+
+In Green Logistics (2012:255), McKinnon describes the process of reverse logistics as
+follows: “Reverse logistics has been defined as the process of planning, implementing
+
+and controlling the efficient, cost-effective flow of raw materials, in-process inventory,
+finished goods, and related information from the point of consumption to the point of
+
+origin, for the purpose of recapturing value or proper disposal”. McKinnon also
+indicates that products do not necessarily need to be returned to the original point at
+
+the supply chain; there is also the possibility to return materials or waste to a point that
+in general can increase the sustainability of the supply chain.
+
+Regarding reverse logistics the network can be identified as four different structures.
+The first network is integrated outbound and returns network. This means that returns
+are back hauled with same vehicles that provide the deliveries from the suppliers. A
+
+network working this way is best suited for supply chains where the volumes and the
+delivery frequency are high.
+
+The second network type is the non-integrated outbound and returns network. This
+
+29
+
+structure has a separate process for the returns and the provider is typically a third
+party. The typical environment where this network works well is where the return
+volume is low.
+
+Third party returns management is the next network type to be described. This way of
+working can be compared to outsourcing. Practically, another company is paid to take
+care of the return’s management. The third party takes care of required technologies,
+refurbishments and disposition programs.
+
+The last type is return to suppliers. Here materials are exchanged back to the suppliers
+
+for credit. This is an easy process to handle, but the transportation costs may be
+expensive. (McKinnon, 2012)
+
+30
+
+3
+3.1
+
+MATERIAL AND METHODS
+Current logistics system
+
+To be able to analyze different stages and sections of a process it is crucial to have an
+
+accurate understanding of how the system in use is working and how different sections
+and stages are cooperating with each other. A proper visualization is needed to get
+
+going with the project and this is the reason why a process chart was created to support
+both the qualitative and the quantitative analyses.
+
+With this process chart as basis, the different working phases could be divided into
+
+sections that are affected similarly by different decisions. For example, both the goods
+reception and the forklift drivers are affected if the lot sizes are changed, as smaller lot
+sizes give higher inventory turnover but affect the workload for both working units.
+
+Continuing with analyses of the current logistics system the process map is urgent and
+this is the ground for the data collecting. Every step must be evaluated and the impacts
+from these steps are plotted and mapped according to importance. This will be the
+
+starting point for the project and according to this process map, the optimization will
+be done. The process map is presented below as figure 11.
+
+The next step is to find proper data that support the project and the main source for
+
+this will be the ERP system. Here data can be found for all departments mentioned in
+the process map. This will be further described in chapters 3.2 and 3.3.
+
+31
+
+Figure 11 Process chart of current logistics system
+
+32
+
+3.2
+
+Qualitative analysis
+
+When a proper logistics model is mapped and ready to be evaluated, it is important to
+have a priority list showing in which order the analysis should be done. To overcome
+this problem the qualitative analysis called FMEA will be used. This method is
+described in chapter 2.7.3 and is suitable for this project as the analyzing stage has just
+
+started, which means there is a critical need of finding information about where and
+how the optimization should start and proceed. As mentioned in chapter 2.7.3, the
+
+outcome of the FMEA analysis method will be a table which puts the risks in priority
+and gives the project manager hints where development of the current process can most
+easily be done. The complete FMEA will be presented in chapter 4, Results. One detail
+
+regarding this qualitative analysis method is that the result of the current FMEA can
+always be re-evaluated and used later to optimize the processes even further.
+
+The second qualitative analysis method used in this thesis is the five whys approach.
+
+As mentioned in the theory chapter, this is a root-cause analysis method and the idea
+when using it is to provide more depth to understanding why different problems occur
+and what the risks of these problems are.
+
+The third and last analysis model used for this freight optimization project is the
+
+fishbone model. The purpose of this qualitative analysis method is the same as for fivewhys, namely providing depth to understanding why something has happened.
+
+Important to notice is that with the fishbone method it is always checked if it somehow
+
+could relate to an area that was not discovered during the five-whys analysis. Common
+for these two root-cause analyses is that the check-ups were held in a group of
+specialists to gain influences from different departments. Represented departments
+
+were logistics, quality, maintenance and manufacturing. These check-ups are held
+
+every week to process all notifications presented by both customers and internal
+people. The result of these qualitative analyses is presented in chapter 4, results.
+
+33
+
+3.3
+
+Quantitative data analysis
+
+In this chapter, the focus is to collect proper data that can be the ground for the business
+case and evaluating how the current process is working. When we have this data
+available, we can easily compare the outcome of this thesis with the old process.
+
+Basically, the qualitative analysis is used to get going with the quantitative analysis
+that in turn is used to create the business case.
+
+When searching for ideas of how to optimize the logistics model the process map and
+the FMEA analysis were used as basis. Through these analyses, the collecting of data
+
+could start for every single step of the processes according to the process map. First, a
+short table was made with the most crucial points where data was needed for making
+further decisions. This table is presented below.
+Table 1 Quantitative data
+
+Point at
+process map
+1
+1
+2
+4
+4
+Overall
+Overall
+
+Quantitative data
+How many GRs per material per week?
+The quantity of each GR. Do we have variations?
+How often are the materials picked from the warehouse?
+How often is the material used?
+What quantities are used per day?
+Costs
+Environmental aspects
+
+When the strategy for quantitative data collecting was clear, the first step was to sort
+low-running materials away from the analyses. In appendix 4, we can clearly see that
+the variations are large, and this table is the first step towards our quantitative analyses.
+
+After choosing which materials to further analyze, the quantitative evaluation could
+continue according to table 1 presented above. All these data were summarized into a
+table that was the center for the implementation that will be presented in chapter 4,
+Results. The summarized data are presented as appendix 5, Quantitative data 2.
+
+34
+
+3.4
+
+Business case
+
+To be able to continue with the thesis, a business case had to be created. A positive
+
+business case shows the involved persons that this project is worth carrying out and
+
+fulfilling. Without a proper business case, no resources can be assigned for the project,
+which means the project will not proceed.
+
+The starting point of the business case is evaluating the costs and environmental effects
+of the current logistics system that was processed in chapter 3.1. This process map is
+
+connected with the data that were collected when making the quantitative analysis. At
+
+this stage, the business case is kept as simple as possible to give a clear overall picture
+of the possibilities for the project. Invoices were collected from year 2017 and these
+prices were used as the reference point for all calculations related to savings.
+
+The next step of the business case is presenting different ideas of how to improve the
+process. An estimation of the costs is added, and these costs are compared to the
+current costs that we have analyzed in chapter 3.3. An important point is to define in
+
+what order the implementation could be done and the most common way is to start
+with the point that has the biggest impact compared to the time used for
+
+implementation. The goal is to achieve lower costs with a more environmental
+logistics approach, which means this chapter is crucial.
+
+The last point for the business case is creating a time schedule. Depending on what
+
+resources are available, a rough time schedule needs to be plotted to give a hint when
+and how the implementation could take place.
+
+When all these steps and stages are done, the business case can be stated as finished.
+The sequences for how the project will continue is clear and the benefits of the project
+
+is pointed out once more, which is the most important point with the business case.
+This is needed to have the project accepted by the management and, in this way, earn
+the investments needed for continuing the project.
+
+35
+
+3.5
+
+Environmental comparison
+
+One of the targets with the thesis was to achieve a more environmentally friendly
+
+process and as the new process is still at the planning stage, there are possibilities to
+influence the process with all kinds of environmentally friendly methods. To be able
+to compare the old process with the new process, the available data regarding the
+
+routes for material shipped must be analyzed. According to these data, calculations can
+
+be done to show the result as CO2 per kilogram shipped material. This is the most
+relevant way to compare the two processes, because there can be large variations in
+
+shipping weight per month. When making calculations for the new method, the same
+measurement unit is needed, i.e. CO2 per kilogram shipped material.
+
+When having the result from both processes a proper comparison can be done to check
+how well we have optimized the new process compared to the old one. Some further
+improvements will also be mentioned.
+3.6
+
+Implementation of new logistics process
+
+Taking all the analyses into calculation, a new process will be presented and an
+implementation plan needs to be done. Important is that all partners involved and
+
+affected by this new process are aware of the changes. The information needs to be
+
+shared to everyone to make the change as quick as possible. Another factor to be
+considered is the time required before being able to use the new process. Risk
+management is crucial, which means that stock levels and other possible safety levels
+
+need to be at the highest possible point. When all possible stages are considered, the
+implementation date will be stated and the control part can start.
+
+3.7
+
+Control plan
+
+When it has been decided how the implementation will be done, plans for how the
+logistics process will be controlled and optimized in the future also need to be created.
+All analyses are used to make the control plan as wide as possible, covering all possible
+risks. The complete control plan will be presented in next chapter, Results.
+
+36
+
+4
+4.1
+
+RESULTS
+Result of analysis
+
+Our first method of analysis, FMEA, was chosen to provide information about where
+to start and which phases were the most critical ones. The complete FMEA is found as
+
+an attachment and the result of this analysis will be described below. As mentioned in
+chapter three, the whole process is analyzed which means all different phases are
+
+evaluated in order to find all potential failures. Some of the process stages are close to
+each other and those stages were combined to make the result clearer.
+
+The first point of the logistics process, beside raw-material suppliers, is the supplier
+
+delivering materials to the external warehouse or straight to the factory. At this point,
+there were two common issues regarding the logistics process, wrong packing method
+
+and wrongly marked materials. These issues are close to each other, and possibly even
+overlap each other, but still there was a need to keep them as two failure modes because
+
+of the big difference in severity. This difference in severity is due to different factors
+which result in different failures.
+
+Phase two, external warehouse, and phase three, receiving, have been combined in this
+analysis due to their similar working methods. These two points are the process phases
+
+where most potential failures are faced, but all of them usually have the same cause,
+material shortage. Two of the potential failure modes are associated with how the
+
+reception of the goods is done. The goods receipt process is a phase where mistakes
+
+can easily be made and listed in the analysis there are GR wrongly done and GR done
+too late. These two can sometimes be overlapped but are kept as single issues because
+the steps where the failure happens are at different stages of the process. The result is
+
+similar to a total point difference of 36. Another failure mode worth mentioning is
+material wrongly guided. This means there is a lack of information and unnecessary
+movement of the materials to the wrong warehouse.
+
+The next point at the logistics process evaluated is the warehouse and the picking area
+called supermarket. Here some ergonomic difficulties and complications at the picking
+
+37
+
+process are faced. These two phases are classified as individual failure modes because
+
+of the huge difference in severity. Ergonomic work is a topic needed to take seriously
+and because of that this has one of the highest severities of all failure modes in the
+FMEA.
+
+The last point in the FMEA analysis concerns supply chain management, more
+
+specifically how orders are placed to the suppliers. There has been a huge lack of
+reaching a smooth material flow for some of the components delivered by some
+suppliers. The reason for this is that the ERP system has been unable to use the forecast
+in an efficient way.
+
+Our second analysis method that will be presented is 5-whys. In this thesis, 5-whys
+analyses are made for two incidents connected to logistics even though they have
+different approaches. Both are found as attachment.
+
+The first analysis is called incorrect delivery of fuse links and is a root-cause analysis
+of why 35% of incorrect deliveries are connected to fuse links. Turning this around
+
+the same analysis can be used to improve the deliveries from the suppliers to the
+warehouse, which is important when planning a new logistics process.
+
+The next 5-whys analysis presented is a case where a customer received the wrong
+type of switch, as the customer had ordered a type D switch but received a type B
+switch. When doing the 5-whys analysis, it was detected that the root cause for this
+faulty delivery was an error in the warehouse management process. Even though the
+
+problem was a faulty delivery, this method of analysis is a good option when looking
+
+for detailed root cause information. The complete 5-whys analysis can be found in the
+appendices.
+
+The last qualitative method of analysis used for this thesis is the fishbone diagram.
+According to the FMEA analysis, the most common problem is that the factory will
+
+have a material shortage because of a delay of some sort. The fishbone analysis
+presented below will cover the risks for a delay caused by the transportation.
+
+38
+
+According to chapter 2.7.4, the fishbone diagram should contain the following bones:
+
+Machines, methods, people, materials, environment and measurements. In this case,
+the measurements were not relevant and, thus, not considered. Under the bone affected
+
+by people “harsh handling during transportation” can be found. As comments we have
+terminals and forwarder, both of these are typical places where this kind of problem
+
+has been observed. Another bone affected by the forwarder is “late loading”, because
+this typically happens because of the forwarder or the supplier.
+
+For this case the machine in use is the truck and, therefore, this bone will be “truck
+breakdown”. Typically, reasons are bad maintenance or an old vehicle.
+
+Regarding the environment, the risk is that there will be some problems because of a
+
+traffic congestion and generally the only option is to choose another route. Important
+when choosing the route is to make the plan according to green logistics. This will
+
+make the process environmentally friendlier and more economical when the diesel
+
+consumption decreases. Another subheading where we can involve green logistics is
+the materials. The recycling needs to be outlined and another factor is preparing
+packing instructions for the suppliers.
+
+Figure 12 Fishbone diagram of a late delivery
+
+With these qualitative analyses as ground the quantitative analyses could start and the
+
+39
+
+collection of information could begin. In the appendices, there are two tables with
+quantitative data where all sharable information is presented.
+
+The first table is a simple quantitative analysis of how many pieces the factory is using
+of high-running materials from two of our biggest suppliers located close to each other.
+This is a first step when aiming for a smaller scope.
+
+In the second table, the most high-running materials have been analyzed even further.
+
+The consumption at the final factory is analyzed on a weekly level and packing
+
+methods are added and compared to give hints of how big volume and mass is
+
+consumed per week. As a final step, it is investigated how big the load 80% would be.
+This would be a weekly baseload to cover the mass production. As a result, we have a
+weekly load of different materials added with the total mass and volume.
+
+4.2
+
+New logistics model
+
+When all aspects of the analyzes were summarized decisions had to be made. Through
+
+discussions with the P&L manager, the decision was made to start a milk run process.
+This process contained all the factors improving the stability of the supply chain.
+
+This new logistics model is a complete one-way route from supplier to factory
+
+including two loading points. This means there will not be any loadings at terminals
+
+causing damage to the materials. Another aspect worth mentioning is that this shortens
+the transport lead time with about two days per route.
+
+The milk run deliveries are made once a week, always the same materials and always
+
+the same quantity. The quantity is based on the average consumption calculated in the
+quantitative analysis. In the beginning, 80% of the total consumption would be
+included to the milk run. Peak consumptions will all be handled by regular
+
+transportations. This is also a great way to achieve cost savings if having the possibility
+to maximize the load. A higher load gives better price per kilogram, which means
+better profitability.
+
+40
+
+4.3
+
+Savings
+
+When calculating the savings, the unit is price per kilogram. This is the most evenhanded way to compare transportation costs when the volume is shifting from one year
+
+to another. Figure 13 below shows the result of our price comparison per month. For
+different reasons, the decision was made to present the price development as
+percentage of the original price 2017.
+
+It can be noted that the blue line (minimum price) is steady at 76%, which is the
+maximum amount of savings that can be reached using this new process. To achieve
+76% savings, it requires that the truck is loaded to its maximum weight capacity.
+
+When starting the process, savings slightly under 50% were achieved. The graph is
+then aiming towards the minimum price which is our target. During the year, the saving
+
+percentage has steadily increased except for two months, during which some quality
+issues were faced at the supplier.
+
+Savings (compared to 2017)
+80
+70
+
+Percentage
+
+60
+50
+40
+30
+20
+10
+0
+
+Minimum price
+
+Actual 2019
+
+Linear (Actual 2019)
+
+Figure 13 Savings from new logistics process
+
+41
+
+4.4
+
+Supply chain
+
+When implementing the new logistics model, the supply chain was updated with some
+new values for critical factors. These factors all have an impact on how to determine
+the most common preferences.
+
+Number one where everything starts is the lead time. With the old transport model, the
+transport lead time was 7-9 days. With the new transport method, the transport lead
+time has been shortened to 5-7 days. This means that the quickest possible transport
+
+time earlier is the slowest possible with the new model. On average, the lead time has
+been shortened by two days.
+
+Another aspect that is optimized with the new model is the material flow. According
+
+to the analyses, there were huge variations in quantities received per week. This variety
+matters when setting the safety stock level. With a shorter transport time, optimized
+
+material flow and the information of knowing that there is always one shipment
+incoming, the stock level could be decreased by 25%. When decreasing the stock level
+
+and still managing to deliver on time the inventory turnover increases, which was one
+of the aims of this project.
+
+Regarding the material flow, steps towards a more even flow can also be seen. In the
+comparison shown below, a blue line represents the new process and a red line
+
+represents the old process. It can clearly be noted that there is an increase of the weekly
+deliveries of this material to have it stabilized. There are still peaks when covering
+bigger orders and there is still room for optimizing the process even further. For
+example, from week 4 to week 11 there were no deliveries at all which resulted in a
+peak at week 12. This is a problem which needs to be adjusted.
+
+42
+
+Material flow
+1200
+
+Pcs/week
+
+1000
+800
+600
+400
+200
+0
+1 2 3 4 5 6 7 8 9 1011121314151617181920212223242526272829303132333435
+
+Week
+2019
+
+2018
+
+Figure 14 Material flow comparison
+
+4.5
+
+Environment
+
+When setting the frames for this thesis, it was clear that this project is not all about
+
+savings; there was a need to know how good the transportation methods are
+
+environmentally. Below are the calculations for the CO2 emissions of the new logistics
+process. For the calculations, the emission factors in chapter 2.8.2. have been used.
+
+It can clearly be seen that most of the route is transported by truck on the road; actually,
+this is 97.5% of the total route. Even though the road transport covers 97.5% of the
+
+total transport it covers 99.4% of the CO2 emissions. This is because road transport
+has higher emissions than transport on the water.
+Table 2 Emission calculation 1
+
+New process
+Supplier 1 - Supplier 2 - Vaasa
+Type
+Road
+Road
+Water
+Road
+
+Route
+Distance (km)
+Supplier 1 - Supplier 2
+170
+Supplier 2 - Harbor 1
+2766
+Harbor 1 - Harbor 2
+86
+Harbor 2 - Vaasa
+424
+tot.
+
+Kg CO2 / kg
+transported material
+405.3
+6594.4
+44.6
+1010.9
+8055.2 kg
+
+43
+
+These calculations have also been compared to an emission report done by the
+
+transport company. According to their calculations, the tank-to-wheel emission is
+
+4 928kg. This means that their transport vehicles are more environmentally friendly
+than average vehicles. Another factor that affects this result is that, with this new
+process, the load is full from start to finish, which has a positive effect on the
+environmental impact.
+
+Another comparison done is the new process by road transport compared to express
+
+delivery by air. The table below shows the calculations of the emissions of an express
+delivery of the same weight as in the new process.
+Table 3 Emission calculation 2
+
+Express delivery
+Supplier 1 - Supplier 2 - Vaasa
+Type
+Road
+Road
+Air
+Air
+Road
+
+Route
+Supplier 1 - Supplier 2
+Supplier 2 - Airport 1
+Airport 1 - Airport 2
+Airport 2 - Airport 3
+Airport 3 - Vaasa
+
+Distance
+(km)
+
+170
+133
+1610
+1514
+335
+tot.
+
+Grams CO2/kg
+405.3
+317.0
+17717.8
+16661.3
+798.7
+35870.1 kg
+
+This means that the express delivery has CO2 emissions multiplied by 4.5. The total
+
+length of this express route is 316km longer than the normal transportation route due
+to a more inefficient flight route.
+
+4.6
+
+Control plan
+
+The last step of this project was to make a control plan. Through this the optimizing
+
+can be done and the control plan needed to be as wide as possible to gain a positive
+
+development in the near future. The complete control plan can be found in the
+appendices and below the different points will be discussed.
+
+44
+
+The first point is savings and will be followed-up internally. As mentioned earlier, the
+calculations will be done with the unit price per kilogram. These will be calculated
+
+every month and documentation is saved under the project in OPEX, which is an
+internal program used for documentation.
+
+The next step is to re-evaluate the FMEA that has been done. Every sixth month this
+
+will be done, and the re-evaluated report will be saved in the internal logistics folder.
+This is one of the most important points of the process control plan, because it affects
+how safe the working site is.
+
+Point three and four are both connected to the supply chain, but these are divided into
+
+two different points because two different follow-ups are wanted, one internal and one
+together with the supplier. Both reports are updated once a month.
+
+The last point in the process control plan is reliability. This will give information of
+how well the new logistics system is working and can be compared to the old process
+
+as well. To gain a more objective view of this follow-up the decision was made to
+
+update this report once a quarter. This will provide more information and can also be
+compared more easily to last year’s seasonal differences.
+
+45
+
+5 DISCUSSION
+When defining the frame for the thesis it was clear that improvements were needed
+
+for the inbound freight concerning almost all aspects. A better process, with a more
+environmentally friendly approach was aimed for and through different methods of
+analysis the new process was defined.
+
+The most time-consuming part of this project was finding all information needed for
+the analysis methods chosen. Especially mapping the process at that point was time
+
+consuming and this was critical for being able to start the analyses. The following point
+when having the process mapped was searching for ways of receiving usable data from
+the ERP-system telling how good the process is working and what stages need most
+
+improvements. This was an interesting stage of the project when recognizing that the
+project is moving closer to finding solutions for the new way of working.
+
+When making the FMEA analysis it was important to be objective and try to compare
+
+the different valuations to each other. This is crucial when making the FMEA;
+
+otherwise the ranking system is unusable. Being fair and even-handed was the most
+difficult part for this method. It is also suitable to discuss different scenarios with
+
+people who have been involved in similar projects earlier. Discussing with
+
+experienced people was also the way to analyze the result of the 5-whys method. This
+helped to understand the working method and how not to end up into a closed loop
+
+when using this method of analysis. This problem is the most common mistake people
+do when searching for the root cause through the 5-whys method.
+
+Calculating emissions from different transport options and comparing these to each
+
+other is a good way of bench marking how good the transport process is and how big
+improvements can be achieved using other options.
+
+The result of the calculations shows that if there are no critical demands, there is no
+need for express deliveries. This means the environmental impact is minimal and the
+
+process can be considered environmentally friendly. Next step in the future is to
+develop the process so that reusable packing materials are used on a larger scale, which
+could also involve return loads to the suppliers. Another thing that could be considered
+
+46
+
+as an environmentally friendly step forward is the improvement of the supply chain. It
+
+cannot be stated at this point that it has affected the scrapping in a positive way yet but
+
+when having a supply chain using smaller stock quantities than before, it should result
+
+in smaller amounts of scrapped materials. Currently, as much materials as possible are
+recycled but, unfortunately, there are always some materials that cannot be recycled
+and thus affect the environment in a negative way.
+
+When creating a control plan it was important to keep the tasks on a level that can be
+operated, even if there are new inexperienced people at new positions. The idea behind
+
+the tasks were to give the controller a hint where to look for further improvements and
+
+what needs to be pointed out is that the most important point with the control plan was
+
+that it does not lock the process in some way in the future. The flexibility is important,
+and this is considered when creating the control plan.
+
+47
+
+6 CONCLUSIONS AND RECOMMENDATIONS
+At the beginning of the thesis project, there was a need for a better process with a
+
+more environmentally friendly approach. This made it slightly difficult not to expand
+the frame of the thesis. However, this leaves plenty of improvements for the future
+and numerous possibilities for future supply chains.
+
+One of the most interesting parts that was not involved in this particular process was
+the extended logistics chain, but this will be added in the near future and this will be
+
+a major point when comparing how environmentally friendly the process is. Making
+the transport process into a loop does not only minimize the amount of waste, it can
+also improve the ergonomics. The improvement of ergonomics is a hot topic at the
+moment, this makes the project improvements even more meaningful.
+
+Another interesting aspect of this new process is that it could be implemented to any
+transport route regardless the transport mode. The only criterion is that we have
+
+enough volume to find a pattern of deliveries. For the future, I would not be surprised
+if the process were implemented for Asia – Europe transports. One reason is that the
+transport price is high, and another reason is that the current process is not green at
+all. We need to improve our business in a sustainable way without causing
+
+unnecessary emissions. These emissions observed as unnecessary can surely be
+avoided with a well-planned process.
+
+Another aspect that has not been included in this thesis is the follow-up of the quality
+for material delivered. One of the reasons why the milk-run process was chosen was
+the quality aspect and this could be documented. The loading and reloading of
+
+materials have heavily decreased and this should result in better quality and smaller
+economic losses.
+
+Regarding the methods of analysis, there is one area which needs to be further
+investigated. The FMEA presented is made for the old process and now when we have
+
+a new process we not only need to update the values for different points, but we also
+need to investigate if we have found new phases in our process where potential failures
+
+can be found. This needs to be done during the control phase to secure the safe
+environment for involved persons.
+
+48
+
+As we can see above, there are many areas that can be developed even further. This is
+an important part of the project and also the reason why the control plan was made. In
+today’s business environment, people more often change functions and this will give
+everyone involved a better overview of what areas need to be followed up.
+
+49
+
+SVENSK SAMMANFATTNING
+Optimering av frakt
+Inledning
+Den globalt växande automatiseringen har gjort det viktigt för företag att effektivisera
+
+materialflöden för att kunna uppnå konkurrenskraft gentemot andra företag. Mängden
+
+importerade material mellan länder ökar ständigt och optimeringen av frakter blir allt
+viktigare när man fokuserar på en högkvalitativ leveranskedja.
+
+Logistikens betydelse har blivit allt mer uppmärksammad med otaliga studier kring
+ämnet. Studier visar att upp till 64 % av logistiska kostnader kommer direkt från
+transportkostnader och det är en av de främsta orsakerna till att ämnet intresserar
+företag. En annan aspekt är den ständigt växande kunskapen om miljötänk och så
+kallad grön logistik. Dessa kombinerat gör att ämnet intresserar många.
+
+Ovannämnda faktorer har även uppmärksammats vid ABB Oy, Smart Power, och
+därför togs beslutet att undersöka möjligheterna att utveckla de logistiska processerna.
+
+Smart Power är en högautomatiserad fabrik som tillverkar strömbrytare för olika
+behov. Fabriken är belägen i Vasa men produkterna säljs globalt. De senaste åren har
+
+produktionen effektiverats vilket har skapat ett behov för en effektivare logistisk
+process.
+
+Avhandlingen avgränsades till inkommande logistik med fokus på en högkvalitativ
+
+leverantörskedja. Målet var att skapa en effektiverad men samtidigt tillförlitlig process
+för inkommande material. Grön logistik låg i fokus för att skapa ett hållbart koncept.
+
+Material och metoder
+Det första steget för projektet var att få en helhetsbild av utgångsläget. Viktigt var att
+ha förståelse av hur olika avdelningar samarbetar och hur olika beslut påverkar
+
+processen. En visualisering var nödvändig för att komma vidare med projektet, och
+
+50
+
+därför var steg 1 att sammanställa ett schema för processen. Med visualiseringen av
+processen kunde analyserna börja. Först utfördes de kvalitativa analyserna och därefter
+de kvantitativa.
+
+Inledningsvis gjordes en feleffektsanalys, förkortat FMEA. Den här metoden är en
+ypperlig startpunkt för resultatet ger en rangordning där de mest kritiska bristerna
+finns. Den andra analysmetoden var five-whys-metoden. Här närmar man sig
+problemen från andra hållet. Metoden är nämligen en rotfelsanalys vilket betyder att
+
+något ska ha gått snett innan man kan använda sig av metoden. Den tredje kvalitativa
+analysmetoden var fishbone-metoden, även kallad Ishikawa. Här simulerar man vad
+som kan hända i en viss del av processen, till exempel vid transporten.
+
+De kvalitativa analyserna kunde därefter starta med ovannämnda analyser och
+
+processchemat som grund. Utifrån visualiseringen av processen valdes ett antal
+punkter där kvantitativa data skulle samlas in och analyseras. Detta sammanställdes i
+två separata tabeller som gav en referenspunkt för hur bra processen fungerat och var
+brister fanns.
+
+Med resultatet från analyserna planerades den nya processen och därefter gjordes de
+
+miljömässiga kalkylerna. Målet var att veta hur effektiva transportmetoderna är och
+jämföra olika alternativ. Här beräknades två olika rutter som jämfördes sinsemellan.
+
+Till sist gjordes en kontrollplan för att underlätta fortsatta optimeringar. Målsättningen
+med kontrollplanen var att omfatta så stor del av processen som möjligt för att kunna
+eliminera eller minimera framtida risker.
+
+Resultat och diskussion
+När alla analyser gjorts och resultatet från dem sammanställts kunde den nya processen
+planeras. Beslutet var att starta en så kallad mjölkrunda. Det här var ett alternativ som
+
+ansågs vara bästa möjliga med tanke på företagets ändamål. Den här processen innebär
+en veckovis transport som innehåller samma mängder material varje vecka. De främsta
+
+positiva aspekterna var förbättrad lönsamhet, bättre kvalitet och mindre svinn.
+Dessutom kunde ledtiden för transporten förkortas från ett medeltal på åtta dagar till
+
+51
+
+ett medeltal på sex dagar.
+När lönsamheten beräknades och priserna jämfördes användes enheten €/kg för att
+kunna jämföra olika tidsperioder. De maximala inbesparingarna kalkylerade enligt
+
+offerter var 76 % av transportkostnader. Den första månaden efter implementeringen
+var inbesparingen knappa 50 % och efter 10 månader knappa 70 %.
+
+En annan aspekt som analyserades var leverantörskedjans funktionalitet. Ett jämnare
+
+materialflöde eftersträvades och bättre optimerat för den interna logistiken. Även på
+denna punkt påvisar studien förbättringar. Här jämfördes veckovisa mottagna
+kvantiteter och målsättningen var att eliminera topp- och bottenvärden. Stora framsteg
+gjordes men fortsatta förbättringar kan göras.
+Angående
+
+de
+
+miljömässiga
+
+aspekterna
+
+gjordes
+
+utsläppskalkyler
+
+på
+
+transportprocesserna som visade hur viktigt det är att försöka optimera
+vägtransporterna för att undvika flygtransporter. För att säkerställa att beräkningarna
+var korrekta jämfördes de med transportbolagets beräkningar.
+
+Efter avslutat arbete kan man konstatera att målsättningen uppfylldes. Det finns rum
+för förbättringar och framförallt kan processen implementeras hos flera leverantörer.
+
+Ämnet är väldigt intressant med tanke på framtida utsläppsrestriktioner och satsningen
+på miljövänliga alternativ ständigt ökar. Man kan konstatera att den logistiska
+effektiveringen spelar en meningsfull roll i utvecklingen av produktionskedjorna hos
+stora företag.
+
+52
+
+REFERENCES
+Aktas, Bloemhof & Fransoo, 2018. Green Logistics Solutions. Springer US.
+Artsiomchyk, Y. & Zhivitskaya, H., 2013. Designing Supply Chain with Robustness
+Analysis. IFAC Proceedings Volumes.
+Amodeo, Chehade, Yalaoui A., Yalaoui F., 2012. Optimization of Logistics. Great
+Britain: John Wiley & Sons, Inc.
+Beamon, B., 1999. Designing the Green Supply Chain. MCB UP Ltd.
+Bravo & Vidal, 2013. Freight transportation function in supply chain optimization
+models – A critical review of recent trends. Colombia: Elsevier Ltd.
+Chen B, Yang Z & Chen L, 2013. Scenario Analysis and Path Selection of LowCarbon Transformation in China Based on a Modified IPAT Model. PLoS ONE.
+Ciofu, F., 2018. FMEA – Basic concept in product quality. Fiabilitate şi
+Durabilitate.
+Continuous delivery consulting, 2013. Economic batch size, Retrieved 08.09.2020
+from https://www.continuousdeliveryconsulting.com/blog/release-more-with-less/
+Divekar & Patil, 2014. Inventory Management Challenges For B2C – E-Commerce
+Retailers. Elsevier B.V.
+DuPont Analysis template, 2017. Return on investment, Retrieved 08.09.2020 from
+https://yourfreetemplates.com/free-dupont-analysis-template/
+El-Berishy, Rügge & Scholt-Reiter, 2013. The interrelation between sustainability
+and green logistics. Bremen: IFAQ.
+Ghiani, Laporte & Musmanno, 2013. Introduction to logistics system management,
+2nd edition. Chichester: John Wiley & Sons Ltd.
+Gourdin, K., 2001. Global Logstics Management – A Competitive Advantage for the
+New Millennium. Oxford: Blackwell Publishers Ltd.
+Harrison, Van Hoek & Skipworth, 2014. Logistics management and strategy –
+Competing through the supply chain, 5th edition. Harlow: Pearson Education Limited
+Janić, M., 2017. Transport Systems – Modelling, Planning and Evaluation. Boca
+Raton: Taylor and Francis group.
+Jonsson & Mattsson, 2016. Logistik – Läran om effektiva materialflöden. Lund:
+Studentlitteratur AB.
+
+53
+
+Lean six sigma definition, 2020. Fishbone diagram, Retrieved 08.09.2020 from
+https://www.leansixsigmadefinition.com/glossary/fishbone-diagram/
+Lichocik & Sadowski, 2013. Efficiency of supply chain management – Strategic
+and operational approach. Scientific journal of logistics.
+McKinnon, A., 2007. CO2 Emissions from Freight Transport in the UK. Edinburgh:
+Logistics research centre.
+McKinnon, Browne & Whiteing, 2012. Green Logistics – Improving the
+environmental sustainability of logistics. London: Kogan Page Limited.
+Meiler-Maersk, 2014. Comparison of typical CO2 emissions between different
+modes
+of
+transport.
+Retrieved
+08.09.2020
+from
+https://www.icsshipping.org/shipping-facts/environmental-performance/comparison-of-co2emissions-by-different-modes-of-transport
+Mesarc, P., 2018. Increase of efficiency of logistics flows in sharing economy
+conditions os a specific company. International scientific journal about logistics.
+Moresteam,
+FMEA,
+2018.
+Retrieved
+https://www.moresteam.com/toolbox/fmea.cfm
+
+08.09.2020
+
+from
+
+Ping, L., 2009, Strategy of Green Logistics and Sustainable Development. China:
+IEEE
+Purchase assist technology, 2020. Purchasing cycles, Retrieved 08.09.2020 from
+http://www.purchase-assist.com/highlights/
+Radulescu, Ioane, C., Ioane, F., Ioane, V., 2012. Increasing the Company´s
+Profitability Through Logistics Management. European integration – Realities and
+perspectives.
+Shayb, H., 2019, Risk Management – Identifying, Assessing and Responding to
+risks. Economica.
+Tzong-Ru, L., 2009, Powerful supply chain – Apply areas of social and science
+management to supply chain management to enhance the coordination of supply chain
+patricipants. Hong Kong: IEEE.
+Waters, D., 2011. Supply chain risk management – Vulnerability and resilience in
+logistics. Philadelphia: Kogan Page Limited.
+Waters & Rinsler, 2014. Global Logistics – New directions in supply chain
+management. London: Kogan Page Limited.
+Zhou, Chen & Shao, 2016. Study on the optimization of collection and distribution
+system of freight hub ports. Shanghai Elsevier B.V.
+
+54
+
+Zu, Wang, Gao, Wu, 2009. Research on the complex regional logistics network and
+its evolution mechanism. Wuhan: IEET.
+
+55
+
+APPENDICES
+APPENDIX 1 – FMEA ANALYSIS 1/3
+
+Process Phase
+
+Potential
+Failure
+Mode
+
+Potential
+Effect(s)
+of Failure
+
+S
+E
+V
+E
+
+In w hat w ays m ight the
+What is the effect of each
+process potentially fail to
+failure m ode on the
+According to
+m eet the custom er
+outputs and/or custom er
+table 3.1
+requirem ents and/or
+requirem ents?
+design intent?
+Wrong packing method
+
+- Wrong lot size
+- Wrong pallet size
+
+3
+
+Wrongly marked materials
+
+-Wrong materials
+-Wrong inventory quantity
+
+5
+
+2. External w arehouse /
+3. Receiving
+
+GR w rongly done
+
+- Wrong inventory quantity,
+material shortage
+- Invoices can´t be approved
+- New purchase orders
+w on´t be placed
+
+4
+
+2. External w arehouse /
+3. Receiving
+
+GR done too late
+
+- ERP-system not w orking
+correctly
+- Wrong report results
+
+5
+
+2. External w arehouse /
+3. Receiving
+
+Material guided w rong
+
+- Material at w rong
+w arehouse
+
+5
+
+4. Warehouse /
+5. Supermarket
+
+Difficult picking
+
+- Damaged materials
+- Slow w orking process
+
+4
+
+4. Warehouse /
+5. Supermarket
+
+Unergonomic w orking
+conditions
+
+- Hurting body
+- Slow er w orking process
+
+8
+
+6. Production
+
+Material shortage
+
+- Not able to deliver order on
+time
+
+7
+
+7. SCM - Ordering
+
+Not smooth flow of PO's
+
+Not smooth inventory flow
+
+4
+
+1. Supplier, packing
+
+1. Supplier, packing
+
+56
+
+APPENDIX 1 – FMEA ANALYSIS 2/3
+
+Potential
+Cause(s)
+of Failure
+
+O
+C
+C
+U
+
+How can the failure
+occur?
+Describe in term s of
+som ething that can be
+corrected or controlled.
+
+According
+to table 3.1
+
+- Material shortage
+- Not able to use material at
+automated line
+
+5
+
+Current
+Process
+Controls
+Prevention
+
+Current
+Process
+Controls
+Detection
+
+D
+E
+T
+E
+
+What are the existing
+What are the existing
+controls and procedures According to
+controls and procedures
+(inspection and test) that
+table 3.1
+that prevent occurrence?
+detect occurrence?
+
+R
+P
+N
+
+X
+
+- Using fixed lot size for
+orders
+- Using standard boxes
+
+- Quality check at goods
+reception
+
+6
+
+90
+
+7
+
+175
+
+- Material shortage
+- Wrong material delivered to
+customer
+
+5
+
+- Packing instructions
+
+- Quality check at goods
+reception
+- Quality gate at productionline
+
+- Material shortage
+
+6
+
+- Restrictions in ERP-system
+
+- Supplier reports
+
+6
+
+144
+
+- Material shortage
+
+6
+
+- No process control
+
+- Supplier reports
+
+6
+
+180
+
+- Material shortage
+- Longer leadtime
+
+4
+
+- Kanban orders
+
+- Kanban area, one bin for
+each material
+
+7
+
+140
+
+- Wrong materials at
+production line
+- Wrong quantity of materials
+at production line
+
+3
+
+- Picking lists
+
+- ERP-system, w arehouse
+management
+
+8
+
+96
+
+- Sick leave
+
+4
+
+- Ergonomic training
+
+5
+
+160
+
+Customer losses
+
+3
+
+- Check-up tw o times/w eek
+
+- ERP-system
+
+3
+
+63
+
+- Material shortage
+
+7
+
+- Forecast
+
+- ERP-system
+
+5
+
+140
+
+- Safety observations
+
+57
+
+APPENDIX 1 – FMEA ANALYSIS 3/3
+
+Corrective actions
+
+Responsible
+
+Target
+Com pletion
+Date
+
+What are the actions for reducing the
+occurrence, or im proving detection, or for
+identifying the root cause if it is unknow n?
+Should have actions only on high RPN's or
+easy
+
+Responsible person for
+the corrective actions
+(not a function)
+
+Target date w hen the
+corrective actions has
+been com pleted
+
+- Packing instructions needs to be done for all
+materials used at automated lines
+
+Tobias
+
+1.9.2019
+
+- Packing instructions needs to be done for all
+materials used at automated lines
+
+Tobias
+
+1.9.2019
+
+- Mutual w ays of w orking for external and
+internal w arehouse.
+- The usage of ERP-system at external
+w arehouse needs to be improved
+
+Tobias & Jaana
+
+1.9.2019
+
+- Mutual w ays of w orking for external and
+internal w arehouse.
+- The usage of ERP-system at external
+w arehouse needs to be improved
+
+Tobias & Jaana
+
+1.9.2019
+
+- Material guidance needs to be implemented for
+external w arehouse also
+
+Tobias
+
+1.9.2019
+
+- Continual improvement
+
+Logistics team
+
+- Packing methods needs to be calculated and
+planned for each material
+- Discussions w ith w orkers at picking process
+
+Tobias
+
+1.9.2019
+
+- Check-ups more often
+
+Tobias
+
+1.9.2019
+
+- Weekly deliveries
+
+Tobias
+
+1.9.2019
+
+58
+
+APPENDIX 2 – FIVE WHYS, CASE 1
+
+59
+
+APPENDIX 3 – FIVE WHYS, CASE 2
+
+60
+
+APPENDIX 4 – QUANTITATIVE DATA 1
+Material
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M
+N
+O
+
+Sum of GR quantity, 8 months
+Count of GR's done, 8 months
+289200
+94710
+61705
+18000
+15626
+8340
+6660
+5176
+4224
+2596
+2340
+2160
+576
+540
+528
+
+78
+65
+76
+31
+11
+35
+34
+30
+19
+20
+4
+10
+4
+8
+2
+
+61
+
+APPENDIX 5 – QUANTITATIVE DATA 2
+
+Material Consumption per week (35 weeks) Consumtion per week (last 17 weeks) Percentage from this supplier Weekly quantity needed
+50 %
+882
+829
+H
+50 %
+599
+566
+J
+100 %
+1193
+1697
+C
+100 %
+495
+560
+D
+100 %
+280
+226
+G
+70 %
+12460
+10600
+A
+100 %
+238
+251
+F
+70 %
+2876
+2943
+E
+100 %
+2037
+2086
+B
+
+3,84
+4,25
+1,32
+1,5
+1,5
+0,3
+6,41
+0,57
+1,35
+
+Tot weight of packed material
+1442,4
+1360,5
+1188,8
+760
+290
+3168
+1213,8
+1086,52
+2327,5
+
+2,9
+2,3
+4,5
+1,6
+1,2
+18,0
+3,2
+1,8
+4,9
+
+441
+300
+1193
+495
+280
+8722
+238
+2013
+2037
+
+1382,4
+1300,5
+1108,8
+720
+270
+2808
+1153,8
+1046,52
+2227,5
+
+Pallets/week, theoretical
+
+Supplier
+X
+X
+X
+Y
+Y
+Y
+Y
+Y
+Y
+
+Tot weight of material
+
+Weight/pc
+
+Material Quantity in weekly delivery (80%) Pcs/pallet
+353
+H
+240
+J
+954
+C
+396
+D
+224
+G
+9360,00
+A
+190
+F
+1610
+E
+1630
+B
+
+360
+306
+840
+480
+180
+9360
+180
+1836
+1650
+
+120
+102
+210
+240
+180
+520
+60
+918
+330
+
+Supplier
+X
+X
+X
+Y
+Y
+Y
+Y
+Y
+Y
+
+Quantity per week
+
+Material Choosen pallet quantity
+H
+J
+C
+D
+G
+A
+F
+E
+B
+
+3
+3
+4
+2
+1
+18
+3
+2
+5
+
+Supplier
+X
+X
+X
+Y
+Y
+Y
+Y
+Y
+Y
+
+62
+
+APPENDIX 6 – PROCESS CONTROL PLAN
+
+63
+
+

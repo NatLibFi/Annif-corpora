@@ -1,0 +1,2102 @@
+Molekyldynamisk undersökning om peptiders
+respons på elektriska fält
+
+Ville Järvinen, 38629
+Pro gradu-avhandling i fysik
+Handledare: prof. Outi Salo-Ahen och prof. Ronald Österbacka
+Fakulteten för naturvetenskaper och teknik
+Åbo Akademi
+25 juni 2020
+
+Ville Järvinen
+
+Abstrakt
+Förmågan att elektroniskt kunna styra bioaktiva peptiders affinitet till receptorer är
+av intresse inom biomimetik. I avhandligen undersöktes elektriskt laddade peptiders
+responser på applicerade elektriska fält med molekyldynamiska metoder. De
+studerade peptiderna har en sekvens aminosyror som är relevant i Notch-signalering
+[1]. Förändringar i konformationer och sekundärstruktur hos peptiderna vid
+olikriktade applicerade elektriska fält undersöktes. Detta gjordes för att styrka den
+teoretiska möjligheten att påverka affiniteten till Notch-receptorn och för att erhålla
+kvalitativa data för peptidernas responser till elektriska fält. Molekyldynamiska
+metoder valdes för att kunna observera strukturförändringar från jämvikt utan
+elektriska fält till jämvikt med applicerade positiva eller negativa elektriska fält.
+Simuleringar utfördes förutom med olikriktade elektriska fält också med tre peptider
+med olika aminosyrasekvenser (två med laddning och en utan). Strukturförändringar
+kunde observeras vid olika elektriska fält med hjälp av analys i medelavvikelse
+i atomkoordinater, vätebindnigsanalys och analys av peptidändens avstånd från
+en fixerad punkt. Peptiden utan laddning visade minimal respons på elektriska
+fält, vilket antydde lovande resultat som kontrollexperiment. Begränsningarna och
+bristerna i metoden och utförandet diskuterades för att klargöra pålitligheten hos
+och reproducerbarheten för simuleringarna.
+
+1
+
+Ville Järvinen
+
+Innehåll
+Inledning
+
+4
+
+1 Bakgrund
+1.1 Peptider . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.2 Modellsystemet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.3 Laddat dubbelskikt . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5
+5
+7
+8
+
+2 Molekyldynamik som metod
+2.1 Grundprincip och tillämpningar . . .
+2.2 Kraftfält . . . . . . . . . . . . . . . .
+2.2.1 Bundna interaktioner . . . . .
+2.2.2 Obundna interaktioner . . . .
+2.3 Simuleringsalgoritmen . . . . . . . .
+2.3.1 Initialkoordinater . . . . . . .
+2.3.2 Energiminimering . . . . . . .
+2.3.3 Beräkning av nya koordinater
+2.3.4 Termostater och barostater .
+2.4 Analysmetoder . . . . . . . . . . . .
+2.5 Antaganden och förenklingar . . . . .
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+3 Beräkningar och simuleringar
+3.1 Den elektriska potentialens avskärmning i det laddade
+3.2 Homologimodellering . . . . . . . . . . . . . . . . . .
+3.3 Parametrisering av biotinylerad peptid . . . . . . . .
+3.4 LV1-peptid med streptavidin . . . . . . . . . . . . . .
+3.5 SV1-peptid med streptavidin . . . . . . . . . . . . . .
+3.6 Kontroll-peptid med streptavidin . . . . . . . . . . .
+
+2
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+dubbelskiktet
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+11
+12
+12
+15
+16
+17
+17
+17
+18
+18
+19
+20
+
+.
+.
+.
+.
+.
+.
+
+22
+22
+23
+26
+27
+32
+34
+
+Ville Järvinen
+4 Resultat och diskussion
+37
+4.1 Simuleringar utan elektriska fält . . . . . . . . . . . . . . . . . . . . . 37
+4.2 Peptider i elektriska fält med olika styrkor . . . . . . . . . . . . . . . 42
+4.3 Peptider i elektriska fält med olika riktning . . . . . . . . . . . . . . . 44
+5 Slutsatser och sammanfattning
+
+52
+
+Litteraturförteckning
+
+55
+
+A Figurer
+
+59
+
+3
+
+Ville Järvinen
+
+Inledning
+Avhandlingen undersöker med molekyldynamiska metoder peptiders respons på
+applicerade elektriska fält. Peptider är kortare proteiner, bestående av tiotals
+aminosyror, och peptiderna går att syntetisera experimentellt. Beräkningar görs på
+ett system av peptider som är fästa vid en elektrodyta via biotin, streptavidin och
+ett självorganiserande monolager. Dessa molekyler har studerats tidigare [2] och är
+ofta förekommande när proteiner fästs vid ytor. Molekyldynamiksimuleringar utförs
+på en begränsad del av systemet, nämligen på peptiderna som är bundna till biotinen
+som i sin tur är bundna till streptavidin-proteinet.
+Undersökningen har gjorts inom spetsforskningsenheten bioelektronisk aktivering
+av cellfunktioner (BACE) vid Åbo Akademi, lett av prof. Ronald Österbacka och
+finansierat av Stiftelsen för Åbo Akademi.
+Peptiderna som studeras i avhandlingen har en aminosyrasekvens som efterliknar
+delen i proteinet Jagged1 som är nödvändig för att binda till Notch-receptorn
+[1]. Processen är central i Notch-signalering. Peptiderna innehåller också elektriskt
+laddade aminosyror och hela systemet är i en elektrolytlösning. Hypotesen är
+att dessa laddade delar av peptiderna kan attraheras till eller repelleras från en
+elektrodyta med en applicerad spänning. Tre kandidater för peptider för detta syfte
+undersöks och molekyldynamikstudierna förväntas ge detaljerade beskrivningar om
+peptidernas strukturer.
+Molekyldynamiken ger en bild av hur molekylstrukturerna beter sig såväl vid jämvikt
+som vid förändrade omständigheter såsom applicerade elektriska fält. Utgående från
+den erhållna informationen kan experimentella resultat styrkas. Nya kandidater för
+peptider kan också relativt enkelt och billigt undersökas i molekyldynamiken. Studien
+görs för att utöka förståelsen för laddade peptiders interaktion med elektriska fält
+men också för att undersöka streptavidin-peptid-systemets beteende utan elektriska
+fält.
+4
+
+Ville Järvinen
+
+Kapitel 1
+Bakgrund
+Elektroder med biologiska lager i kontakt med elektrolyter berör ämnesområdena
+biokemi, biofysik och elektrokemi. Teorin för de mest relevanta fenomen förklaras i
+detta kapitel och i simuleringarna implementeras de enligt möjlighet.
+Liknande studier har gjorts tidigare, där laddade peptider på elektroder i lösningar
+har styrts med elektrisk potential, både experimentellt [3] och med molekyldynamiska
+metoder [4][5]. Resultaten från dessa studier ger goda förutsättningar för hypotesen
+i denna avhandling att laddade peptider kan styras med hjälp av applicerad elektrisk
+potential på elektrodyta och legitimerar därmed användningen av metoden.
+
+1.1
+
+Peptider
+
+Peptiderna som behandlas i avhandlingen utgörs av, för det första, en sekvens som
+imiterar en del av Jagged1-proteinet som spelar en stor roll i bindningen till Notchreceptorn, för det andra, positivt laddade arginin-aminosyror och för det tredje,
+biotin i C-terminalen för att binda till streptavidin.
+Aminosyror binder till varandra med s.k. peptidbindningar där en aminosyras
+kväveatom i aminogruppen (-NH2 ) binder till en annan aminosyras kolatom i
+karboxylgruppen (-COOH). I processen frigörs en väteatom från aminogruppen
+och en hydroxylgrupp (OH) från karboxylgruppen och dessa bildar tillsammans
+en vattenmolekyl. En peptid har således oberoende antalet aminosyror alltid en
+N-terminal (aminogrupp) och en C-terminal (hydroxylgrupp). Se figur 1.1 för
+illustration av peptidbindningar.
+5
+
+Ville Järvinen
+Aminosyror är proteiners byggstenar och kan klassas som polära, opolära, basiska och
+sura. I fysiologisk pH 7,4 förekommer de basiska aminosyrorna arginin (R), histidin
+(H) och lysin (K) som positivt laddade aminosyror med laddningen q = +1e, där e
+är elementärladdningen. Däremot förekommer de sura aminosyrorna asparaginsyra
+(D) och glutaminsyra (E) med en negativ laddning q = −1e [6]. I regel är det
+fria aminogrupper som protoneras d.v.s. attraherar en vätekärna och får en extra
+positiv laddning (NH+
+3 ) och i motsats deprotoneras karboxylgrupper vilket leder till
+karboxylatgrupper (COO− ) med negativ laddning. Dessa processer gäller också för
+peptiders C- och N-terminal.
+
+Figur 1.1: Illustration av hur två aminosyror binder till varandra samt definition av
+N-terminal och C-terminal.
+
+Proteiners strukturer delas in i olika nivåer: primär-, sekundär-, tertiäroch kvartärstruktur. Den specifika aminosyrasekvensen beskriver proteinets
+primärstruktur medan vikningen beskriver sekundärstrukturen. De mest förekommande sekundärstrukturerna är alfa-helix och betaflak. Tertiärstruktur
+definieras som veckning av sekundärstrukturer medan kvartärstruktur definieras
+som tertiärstrukturens vikningar. Peptiderna har en primärstruktur enlig figur 1.2
+och sekundärstrukturen kan studeras i simuleringarna. Tre olika peptider med
+kallade LV1, SV1 och Kontroll skapas utgående från Jagged1-proteinets struktur
+och studeras med molekyldynamik.
+
+Figur 1.2: Primärstrukturen för peptiderna som modelleras. Biotinet är bundet till
+peptidernas C-terminal.
+6
+
+Ville Järvinen
+I proteiner spelar vätebindningar en viktig roll för stabiliteten och strukturen. En
+vätebindning kan bildas mellan en elektronegativ atom och en annan elektronegativ
+atom kovalent bundet till en väteatom. Den kovalent bundna väteatomen har
+en positiv partiell laddning och kan därmed attrahera starkt elektronegativa
+atomer såsom syre, kväve och fluor. I figur 1.3 syns några av vätebindningarna i
+bindningssekvensen. Bindningssekvensen innehåller också en disulfidbindning mellan
+två cystein-aminosyror som hjälper till att hålla strukturen stabil.
+
+Figur 1.3: Vätebindningar (gula streckade linjer) visualiserade i bindningssekvensen
+för Jagged1-kristallstrukturen (RCSB:ID 4CC1) [1]. Visualiserat i PyMOL [7] med
+licorice representationen.
+
+1.2
+
+Modellsystemet
+
+I molekyldynamiksimuleringarna studeras endast peptiderna som är förankrade i
+streptavidin-proteinet men resultaten relateras till ett system där streptavidinet
+är vidare bundet till ett självorganiserande monolager som är fäst via tiolgrupper
+till en elektrodyta. Det självorganiserande monolagret består av den längre
+molekylen 11-MUA och den kortare molekylen 3-MPA i ett 1:10 förhållande och är
+funktionaliserade på en guldyta. Lagret har tidigare studerats och karakteriserats
+[2][8]. Tjockleken på det självorganiserande monolagret är ca 4 Å och eftersom
+streptavidinet binder via någon aminogrupp på dess yta till karboxylgruppen på 11MUA-kedjan befinner sig också streptavidinet ca 4 Å från guldytan. Informationen
+är viktig för att kunna relatera simuleringarna till elektrodens elektriska fält.
+7
+
+Ville Järvinen
+Streptavidinet har en symmetrisk form och en diameter på ca 5 nm. Peptiderna
+befinner sig teoretiskt alltså på ett avstånd omkring 5 nm – 10 nm från elektrodytan
+beroende på deras specifika strukturer.
+I simuleringarna fixeras streptavidinet på fyra olika ställen undertill för att skapa
+en så realistisk förenkling som möjligt. Enligt en beräknad yttäthet för 11-MUA på
+ytan [2] täcker ett streptavidin ca tio 11-MUA-kedjor. Streptavidinet kan binda till
+en eller flera av dem och för simuleringarna valdes fyra, eftersom streptavidinet har
+fyra proteinkedjor och antalet gör att streptavidinet hålls stabilare och inte vinklas
+och vrids i det elektriska fältet.
+
+1.3
+
+Laddat dubbelskikt
+
+Ett laddat dubbelskikt uppkommer när en elektrisk potential appliceras mellan
+elektroder i en elektrolyt. Den elektriska potentialen skapar en ytladdning på
+elektrodytan och joner attraheras till eller repelleras från ytan beroende av
+deras polaritet enligt Coulombs växelverkan [9]. Joner med motsatt polaritet till
+elektrodytan samlas närmast ytan enligt figur 1.4 och avskärmar därmed en del av
+elektrodens elektriska potential varmed den snabbt avtar i elektrolyten då avståndet
+från ytan ökar. Den elektriska potentialen avskärmas alltså effektivt men samtidigt
+betyder det också att det elektriska fältet är mycket stort i närheten av ytan
+eftersom den elektriska fältstyrkan fås som den negativa gradienten av den elektriska
+potentialen enligt
+E = −∇ϕ.
+(1.1)
+
+8
+
+Ville Järvinen
+
+Figur 1.4: Anjonerna med negativ laddning och katjonerna med positiv laddning
+samlas vid elektroderna i en vätska och bidrar till den elektriska potentialens
+avskärmning.
+
+Det laddade dubbelskiktet används till fördel i jonmodulerade organiska fälteffekt
+transistorer som biosensorer [2]. Alternativt kan det laddade dubbelskiktet användas
+för att uppnå starka elektriska fält vid funktionaliserade elektrodytor för att
+manipulera molekylerna på ytan
+Det elektriska dubbelskiktet [10] har redan på 1850-talet modellerats av Helmholtz
+och enligt modellen samlas joner med motsatt laddning vid elektrodytan i ett lager
+och på så sätt avskärmar den elektriska potentialen så att den avtar linjärt med
+ökande avstånd från ytan. Senare har bl.a. Gouy och Chapman skapat en modell
+där lagret som bildas istället är ett diffust lager där den elektriska potentialen avtar
+exponentiellt. Flera andra modeller har utvecklats men här kommer beräkningar
+göras med Gouy-Chapmans modell.
+Den elektriska potentialens avståndsberoende ges som
+ϕ(x) = ϕ0 e−κx ,
+
+(1.2)
+
+där ϕ0 är den elektriska potentialen vid elektrodytan i förhållande till långt bort från
+ytan och
+√
+ϵr ϵ0 kB T
+(1.3)
+κ−1 = λD =
+2 · 103 NA e2 I
+är dubbelskiktets karakteristiska tjocklek s.k. Debyes avskärmningslängd [10], där
+ϵ0 är permittiviteten i vakuum, ϵr är vätskans relativa permittivitet, kB är
+
+9
+
+Ville Järvinen
+Boltzmanns konstant, T är temperaturen i Kelvin, NA är Avogadros konstant,
+). Debyes
+e är elementärladdningen och I är jonstyrkan i molaritet M eller ( mol
+l
+avskärmningslängd beskriver det avstånd från elektrodytan där den elektriska
+potentialen sjunkit till 1e av den ursprungliga. Jonstyrkan för en lösning beräknas
+enligt
+n
+1∑ 2
+I=
+ci z ,
+(1.4)
+2 i=1 i
+för en typ av jon och zi är jonens
+där ci är koncentrationen i molaritet M eller mol
+L
+laddning där summeringen sker över alla typer av joner i lösningen. I kapitel 3 görs
+beräkningar på den elektriska potentialens avskärmning.
+
+10
+
+Ville Järvinen
+
+Kapitel 2
+Molekyldynamik som metod
+Inom beräkningsfysiken används molekyldynamik som en metod för att studera
+atomers rörelse som i en större helhet simulerar molekylers samspel under ett
+tidsintervall. En simulering innebär ett försök att reproducera verkliga händelser i en
+kontrollerad miljö. I och med att datorernas beräkningskapacitet under de senaste
+årtiondena växt mycket snabbt har också intresset växt för att använda datorer för
+att tackla problem som experimentellt kan vara svåra att lösa. Molekyldynamiska
+simuleringar där hundratusentals atomer alla växelverkar med varandra kräver ett
+oerhört stort antal parallella beräkningar och snabbhet, vilket dagens processorer
+och grafikprocessorer har att erbjuda. Det är också tack vare röntgenkristallografi
+som många kristallstrukturer för proteiner finns tillgängliga och möjliggör därmed
+modellering av proteiner med exempelvis molekyldynamiska metoder.
+Metoden är ett effektivt redskap inom flera naturvetenskapliga områden. Inom
+det fasta tillståndets fysik kan intresset ligga i att simulera fasta materials
+kristallstrukturers deformering vid påfrestning medan det inom biokemin exempelvis
+ligger i biologiska proteinstrukturers mekanismer och funktioner. Inom farmacin
+används molekyldynamik vid studier av nya läkemedel som ska växelverka med och
+påverka någon specifik proteinstrukturs funktion.
+Detta kapitel beskriver både allmänt och i detalj hur molekyldynamikens algoritmer
+ser ut. Eftersom arbetet utförs med programpaketet GROMACS [11] fokuseras här
+på tillämpningarna i just det programpaketet. Utöver detta beskrivs också hurdana
+resultat som kan förväntas med metoden.
+
+11
+
+Ville Järvinen
+
+2.1
+
+Grundprincip och tillämpningar
+
+Varje atoms position, hastighet och acceleration i systemet beräknas iterativt med
+hjälp av Newtons rörelseekvationer. I den mening grundar sig beräkningarna i
+molekyldynamik på klassisk fysik, men parametrarna som beskriver atomernas
+växelverkningar är ändå erhållna med kvantmekaniska beräkningar. Kapitel 2.2
+upplyser vilka växelverkningar som beaktas och vilka fysikaliska grunder de bygger
+på.
+Eftersom tidsskalan för molekyldynamiska simuleringar är kort, hundratals
+nanosekunder till mikrosekunder, sätter det begränsningar på vilka processer som
+kan upptäckas. Intresset i denna avhandling ligger i peptidernas stabilitet och
+konformationsändringar som respons på elektriska fält. Dessa responser förväntas
+ske, och jämvikt förväntas nås, redan efter simuleringstider på tiotals nanosekunder
+och resultaten i kapitel 4 visar att det delvis stämmer.
+Två saker som är viktiga att skilja på är val av programpaket och val av
+kraftfält. Kraftfält utgör samlingar av accepterade och validerade parametrar för
+växelverkningar mellan atomer. Dessa samlingar är härledda och optimerade för
+olika ändamål och därför är det nödvändigt att fundera på hurdant system som ska
+modelleras, vilka molekyler som förekommer och vilka fenomen man vill återskapa.
+På basis av dessa resonemang och enligt tidigare studier väljs ett lämpligt kraftfält
+som kan beskriva systemet så bra som möjligt.
+När ett lämpligt kraftfält är valt bestäms ett programpaket som kan handskas med
+kraftfältet i fråga. Exempel på några programpaket är: LAMMPS, Materials Studio,
+NAMD, GROMACS och AMBER. De tre sistnämnda används ofta för att simulera
+biologiska system bestående av proteiner, DNA:n och joner. Samtliga simuleringar
+i denna avhandling är gjorda med kraftfältet GROMOS54a7 [12] i programpaketet
+GROMACS [11, 13, 14, 15, 16, 17, 18] och resonemanget bakom valet ges senare i
+kapitel 3.3.
+
+2.2
+
+Kraftfält
+
+Varje atom i en molekyl växelverkar med andra atomer på olika sätt
+beroende på elektronhöljets uppbyggnad, atomtalet, isotopen o.s.v. Parametrarna
+i molekyldynamiken som definierar växelverkningarnas natur representerar dessa
+12
+
+Ville Järvinen
+egenskaper hos atomerna.
+Ofta används fullständiga kraftfält (eng. all-atom force field) som beaktar
+molekylernas alla atomer men ifall systemen blir för stora eller processerna för långa
+kan kraftfält som grupperar atomer till representativa partiklar (eng. coarse-grained
+force field) användas och på så sätt förenkla systemen. Kraftfältet GROMOS54a7
+beaktar alla atomer förutom opolära väteatomer i molekylerna och är således ett
+typ av kraftfält som grupperar. Det är ändå i klass med andra vanliga kraftfält och
+lämpar sig bra för simuleringar med peptider och proteiner [12].
+Algoritmen för molekyldynamiksimuleringar [19] löser Newtons rörelseekvationer för
+ett system av N stycken växelverkande atomer enligt
+mi
+
+∂ 2 ri
+= Fi ,
+∂t2
+
+i = 1, ..., N
+
+(2.1)
+
+där mi är den i:te atomens massa, ri är den i:te atomens positionsvektor, t är
+tiden och Fi är kraften som verkar på den i:te atomen och beräknas som negativa
+gradienten av en potentialenergifunktion enligt
+Fi = −
+
+∂V(r1 , ..., rN )
+.
+∂ri
+
+(2.2)
+
+Potentialenergifunktionen beskriver varje atoms potentiella energi och beräknas
+för såväl bundna som obundna interaktioner mellan atomer och behandlas nedan
+i sektionerna 2.2.1 och 2.2.2. Figur 2.1 visar potentialkurvornas form för varje
+interaktionstyp och åskådliggör interaktionernas natur.
+
+13
+
+Ville Järvinen
+
+Figur 2.1: Potentialenergifunktionens form för de olika interaktionerna med
+illustration av deras natur. Bilderna är tagna ur GROMACS manualen [19].
+
+14
+
+Ville Järvinen
+
+2.2.1
+
+Bundna interaktioner
+
+Till potentialfunktionen i ekvation 2.2 bidrar varje kovalent bundet atompar,
+atomerna i och j, med en harmonisk potential
+Vb (r1 , ..., rN ) =
+
+)2
+1 b(
+kij rij − r0ij ,
+2
+bindningar
+∑
+
+(2.3)
+
+där kijb är koefficienten i andragradsekvationen eller fjäderkonstanten, rij är avståndet
+0
+0
+mellan atomerna och rij
+är avståndet för potentialens minimum. Värden för rij
+och
+kijb för varje atomtyp finns definierat i systemets topologi som beskriver kraftfältet.
+Förutom bindningar beaktas även vinkeln mellan tre bundna atomer, i, j och k, med
+en harmonisk potential
+Vv (r1 , ..., rN ) =
+
+∑ 1 (
+)
+0 2
+kθijk θijk − θijk
+,
+2
+vinklar
+
+(2.4)
+
+θ
+0
+där kijk
+är fjäderkonstanten, θijk är vinkeln som atomerna i, j och k bildar och θijk
+θ
+0
+är vinkeln vid potentialens minimum. Numeriska värden för kijk
+och θijk
+hittas även
+i topologin för varje tre bundna atomer.
+
+Tvåplansvinklar (eng. proper dihedral) beskriver enligt figur 2.1 torsionen mellan de
+två planen som atomerna i, j och k samt j, k och l definierar. Potentialen beskrivs
+som
+∑
+[
+(
+)]
+Vt (r1 , ..., rN ) =
+kϕ 1 + cos nϕ − ϕ0 ,
+(2.5)
+torsioner
+
+där kϕ förskjuter den periodiska potentialens amplitud, n är antalet toppar inom
+intervallet 0 till 2π och ϕ0 vinkeln för torsionen som motsvarar minimum för
+potentialen. Vinkeln ϕ = 0◦ motsvarar trans-konfigurationen d.v.s. atomerna i och l
+på motsatta sidor medan ϕ = 180◦ representerar cis-konfigurationen med i och l på
+samma sida.
+Oegentliga tvåplansvinklar (eng. improper dihedral) definieras enligt figur 2.1 som en
+vinkel mellan planen som atomerna i, j och k samt j, k och l definierar. Denna typ
+av potential implementeras för att hålla plana strukturer plana, såsom aromatiska
+ringar, men också för att unvika att en molekyl övergår till sin spegelbild [19]. Den
+
+15
+
+Ville Järvinen
+harmoniska potentialen för oegentliga tvåplansvinklar
+Votv (r1 , ..., rN ) =
+
+)2
+1 (
+0
+kξ ξijkl − ξijkl
+2
+oegentliga tvåplansviklar
+∑
+
+(2.6)
+
+0
+innehåller kξ för fjäderkonstanten, ξijkl för vinkeln mellan planen och ξijkl
+för
+jämviktsvinkeln.
+
+2.2.2
+
+Obundna interaktioner
+
+Oftast finns det överlägset flest obundna interaktioner eftersom varje atom i
+princip växelverkar med alla andra atomer i systemet. I praktiken används sfäriska
+avgränsningar (eng. cut-off radius) för att dramatiskt minska på beräkningsbördan
+utan att påverka slutresultatet märkbart. Radien för avgränsningen för de obundna
+interaktionerna brukar vara omkring 1 nm.
+Lennard-Jones potential beskriver interaktionen mellan par av obundna atomer och
+har formen
+[
+]
+∑ ( Cij )12 ( Cij )6
+VLJ (r1 , ..., rN ) =
+.
+(2.7)
+−
+r
+r
+ij
+ij
+i,j
+Parametrarna Cij12 och Cij6 är skilda för varje par av atomtyper. Lennard-Jones
+potential har sitt ursprung i både Paulis exklusionsprincip (den repulsiva r112 -termen)
+och van der Waals-krafter (den attraktiva - r16 -termen) [20].
+Den andra obundna interaktionstypen är Coulombs växelverkan mellan laddade
+partiklar. Potentialen beskrivs som
+VC (r1 , ..., rN ) =
+
+1 ∑ qi qj
+.
+4πϵ0 i,j rij
+
+(2.8)
+
+I topologifilen för molekyldynamiken har varje atom en s.k. partiell laddning
+som härstammar från molekylernas elektrondistributioner, som är beräknade med
+kvantmekaniska metoder för det specifika kraftfältet.
+Utöver dessa interaktioner kan både tidsberoende och tidsoberoende elektriska
+fält appliceras. Vid konstanta och homogena elektriska fält, får varje atom en
+kraftkomponent till enligt
+Fi = qi E.
+(2.9)
+
+16
+
+Ville Järvinen
+Dessutom kan positionsbegränsingar (eng. position restraints) definieras för atomer
+för att begränsa deras rörelse. Detta sker med en harmonisk potential av formen
+1
+Vpb (ri ) = kpb |ri − Ri |2 ,
+2
+
+(2.10)
+
+där |ri −Ri | beskriver atompositionens avlänkning från centret dit atomen begränsas.
+Summan av alla dessa komponenter i ekvationerna 2.3, 2.4, 2.5, 2.6, 2.7 och 2.8 ger
+den totala potentialenergifunktionen som i sin tur ger kraften på varje atom enligt
+ekvation 2.2.
+
+2.3
+2.3.1
+
+Simuleringsalgoritmen
+Initialkoordinater
+
+Startkoordinater definieras ofta från någon experimentellt bestämd kristallstruktur
+varefter initialhastigheter för varje atom beräknas med en slumptalsgenerator som
+följer Maxwell-Boltzmanns sannolikhetsfördelning för en definierad temperatur.
+Initialhastigheterna genereras enligt sannolikhetsfördelningen
+√
+p(vi ) =
+
+2.3.2
+
+( m v2 )
+mi
+i i
+exp −
+.
+2πkB T
+2kB T
+
+(2.11)
+
+Energiminimering
+
+Energiminimeringen använder sig av en metod där strukturen justeras i
+potentialenergifunktionens negativa gradients riktning. Som namnet säger minimeras
+alltså strukturens potentialenergi på basis av det implementerade kraftfältet. Det
+finns förstås ingen garanti för att det globala minimumet nås men ett lokalt minimum
+nås i varje fall. I GROMACS algoritmen beräknas nya koordinater med ekvationen
+rn+1 = rn +
+
+Fn
+hn ,
+max(|Fn |)
+
+(2.12)
+
+där r betecknar alla atomers positioner, n betecknar den senaste iterationen, hn
+betecknar den maximala förskjutningen i atompositionerna och max(|Fn |) betecknar
+den maximala kraften som en atom påverkas av vid iterationen n. Kraften beräknas
+för varje iteration enligt ekvation 2.2 och de nya koordinaterna accepteras ifall Vn+1 <
+17
+
+Ville Järvinen
+Vn och då sätts hn+1 = 1.2hn , däremot ifall Vn+1 ≥ Vn avvisas de nya koordinaterna
+och det sätts att hn = 0.2hn . Iterationerna fortsätter tills den maximala kraften
+minskar under ett definierat gränsvärde som typiskt ligger på 1000 molkJnm .
+
+2.3.3
+
+Beräkning av nya koordinater
+
+Samlingen rörelseekvationer med de beräknade potentialerna för varje atom löses
+numeriskt med små tidssteg på ∆t =2 fs enligt algoritmen som på engelska kallas
+leap-frog integrator
+1
+∆t
+1
+F(t)
+v(t + ∆t) = v(t − ∆t) +
+2
+2
+m
+1
+r(t + ∆t) = r(t) + ∆tv(t + ∆t).
+2
+
+(2.13)
+
+Systemets tillstånd sparas med regelbundna tidsintervall. Systemet iakttas under
+en tid och koordinaternas förändring i tiden representerar atomernas rörelsebanor.
+Systemet når oftast ett jämviktsläge efter initiala förändringar.
+Många optimeringar och implementeringar i algoritmerna existerar [21, 22, 23, 24,
+25] men behandlas inte i här.
+
+2.3.4
+
+Termostater och barostater
+
+Termostater är implementerade så att systemets temperatur beräknas och atomernas
+hastigheter skalas om för att justera temperaturen. Däremot fungerar barostaterna
+så att de beräknar trycket och skalar lådstorleken enligt behov för att hålla
+trycket konstant. Deras uppgifter är att se till att systemet följer de krav man
+ställt på ensemblen. Ifall termostat och barostat används simuleras systemet i
+en isobarisk och isotermisk (NPT) ensemble och ifall endast termostat används
+simuleras systemet i en kanonisk (NVT) ensemble. NPT ensemblen som används
+i simuleringarna i avhandlingen motsvarar experimentellt en vätska i en öppen
+behållare i rumstemperatur.
+
+18
+
+Ville Järvinen
+
+2.4
+
+Analysmetoder
+
+Atomernas rörelsebanor kan analyseras på flera olika sätt och GROMACS har många
+inbyggda analysmetoder. VMD [26] är ett mångsidigt program som kan användas vid
+visualisering av atombanorna och även där finns inbyggda redskap för analyser.
+Det kvadratiska medelvärdet för avvikelserna i atomkoordinater även känt som
+RMSD (eng. root mean square deviation), ger ett värde på den strukturella skillnaden
+till en referensstruktur, ofta startstrukturen. Strukturen vid varje tidpunkt anpassas
+till referensstrukturen med minstakvadratmetoden och RMSD-värdet beräknas enligt
+
+
+N
+1 ∑
+√
+2
+mi |ri (t) − rref
+RMSD(t) =
+i | ,
+M i=1
+
+(2.14)
+
+∑
+där M = N
+i=1 mi är summan av massorna för alla inblandade atomer, ri (t) är den
+i:te atomens positionsvektor vid tidpunkten t och rref
+i är positionsvektorn för den i:te
+atomen i referensstrukturen. RMSD-värden kan beräknas för ett proteins alla atomer
+eller så kan exempelvis endast proteinets ryggrad beaktas. Ett proteins ryggrad (eng.
+backbone) består av den längsta kedjan av kovalent bundna atomer i proteinet och
+består av kol- och kväveatomer i ordningen N-C-C-N-C-C-N-C-C.
+RMSF-värdet (eng. root mean square fluctuation) är ett mått på atompositionernas
+standardavvikelse från ett medelvärde för atompositionerna och kan ge en
+uppfattning om vilka aminosyrors atompositioner som fluktuerar mest. RMSF-värdet
+beräknas enligt
+
+
+T
+1 ∑
+2
+RMSFi = √
+|ri (tj ) − rref
+(2.15)
+i | ,
+T t =1
+j
+
+där T är den totala tiden.
+Analys av avstånd mellan valfria atomer eller grupper av atomer utgör en bra
+metod och här granskas avståndet mellan bottnet av streptavidinet och peptidernas
+N-terminal. Mera exakt är d avståndets y-komponent, som är parallell till det
+applicerade elektriska fältet. Hur detta avstånd varierar i tid beroende av riktningen
+av det applicerade elektriska fältet ger en god bild för hur de laddade aminosyrorna
+i ändan av peptiderna påverkas.
+Analys av antalet vätebindningar inom en viss struktur eller mellan två strukturer
+är en metod för att studera stabiliteten eller interaktionen mellan olika molekyler,
+19
+
+Ville Järvinen
+exempelvis mellan två proteiner. Minskning av antal vätebindningar inom ett protein
+tyder på att proteinet vecklas ut och ökning tyder på ett mer stabilt protein.
+Visualiseringsprogramet VMD innehåller ett redskap för vätebindningsanalys för
+atombanor. Utan att gå in på detaljer på klassificeringen av vätebindningar används
+kriterierna 4 Å för avskärningsradien (eng. cut-off radius) och vinkeln 20◦ för
+analyserna i VMD.
+
+2.5
+
+Antaganden och förenklingar
+
+En av de mest fundamentala approximationerna i klassisk molekyldynamik
+är Born-Oppenheimer-approximationen, som säger att atomkärnans rörelse kan
+beskrivas skilt från elektronerna p.g.a. den stora masskillnaden. Den andra viktiga
+approximationen är att atomkärnornas rörelser antas kunna beskrivas med Newtons
+rörelseekvationer. Trots att approximationerna är berättigade i de flesta fall kan
+det finnas scenarion där den klassiska mekaniken inte räcker till, exempelvis vid
+högfrekventa ocillationer med lätta väteatomer. Ifall sådana interaktioner är av
+intresse måste andra metoder användas.
+Ett antagande som klassiska kraftfält gör är att beskriva molekylernas
+laddningsdistributioner med statiska partiella laddningar för varje atom. I
+verkligheten är molekyler polariserbara vilket innebär att laddningsfördelningarna
+inte är statiska, utan dynamiska. Det existerar kraftfält för molekyldynamik som
+inkluderar molekylers polariserbarhet som har visats vara noggrannare modeller i
+fall där elektriska fält används. Studien som undersökte laddade peptiders respons
+på elektriska fält [4] använde sig av ett kraftfält som använder polariserbara molekyler
+i molekyldynamiken. Studien rapporterade svårigheter i att reproducera samma
+lyckade resultat med klassiska kraftfält. I denna avhandling används ändå klassiska
+kraftfält med statiska partiella laddningar hos molekylernas atomer. Om valet av
+kraftfält hittas i kapitel 3.
+Eftersom simuleringslådan som definieras har gränsytor till vakuum introduceras
+periodiska randvillkor för att undvika orealistiska effekter vid gränsytor. Det betyder
+att simuleringslådan upprepas åt alla håll så att den ursprungliga lådan är omringad
+av samma system och gränsytor elimineras. Periodiciteten som detta ger upphov till
+är endast ett problem i mindre system som oftast kan lösas med att göra systemet
+större. Avskärningsradien för obundna interaktioner kan maximalt vara halva lådans
+
+20
+
+Ville Järvinen
+storlek, för att ingen atom ska ha en interaktion med sin periodiska kopia.
+En laddad elektrodyta approximeras med ett konstant och homogent elektriskt
+fält. Det laddade dubbelskiktet som behandlades i kapitel 1.3 modelleras inte i
+simuleringarna men diskuteras i slutsatserna.
+
+21
+
+Ville Järvinen
+
+Kapitel 3
+Beräkningar och simuleringar
+Beräkningskapacitet för molekyldynamiksimuleringarna erbjöds av Finnish IT
+Center for Science (CSC) och FGCI project (Finland). Beräkningarna gjordes alltså
+på beräkningsklustren Titan, Dione och Puhti, där beräkningshastigheten kunde
+ökas 10 – 20-faldigt i jämförelse med en vanlig bordsdator. I detta kapitel förklaras
+beräkningarnas utförande och resultaten analyseras i nästa.
+
+3.1
+
+Den elektriska potentialens avskärmning i det
+laddade dubbelskiktet
+
+Beroende på elektrolytens jonstyrka avskärmas elektrodens elektriska potential olika
+starkt. I lösningar med låg jonstyrka sträcker sig den elektriska potentialen längre
+ifrån elektrodytan jämfört med lösningar med högre jonstyrka. Eftersom det är det
+elektriska fältet som ska påverka peptiderna, påverkar lösningens jonstyrka starkt
+det elektriska fältets profil.
+Den elektriska potentialens och det elektriska fältets profil beräknas med ett antal
+olika jonstyrkor för att få en översiktlig bild av storleksordningen på de elektriska
+fälten. Beräkningarna är gjorda för vatten i rumstemperatur, med ϵr = 80 och
+med en ytpotential på ϕ0 = 0, 25V som motsvarar potentialskillnaden 0.5 V
+mellan två elektroder i kontakt med samma vätska. Tabell 3.1 visar beräknade
+värden på Debyes avskärmningslängd som funktion av olika jonstyrkor. En typsik
+och inkluderas i
+jonstyrka för cellodlingsmedium (eng. cell culture media) är 163 mol
+L
+beräkningarna.
+22
+
+Ville Järvinen
+Tabell 3.1: Beräknade värden på Debyes avskärmningslängd vid olika jonstyrkor
+λD (nm)
+0,76
+0,97
+3,1
+9,7
+
+I (mM)
+163
+100
+10
+1,0
+
+(a)
+
+(b)
+
+Figur 3.1: (a) Den elektriska potentialen som funktion av avståndet från elektrodytan
+och (b) det motsvarande elektriska fältets styrka vid olika jonstyrkor.
+
+Figur 3.1 visar den elektriska potentialens avskärmning och det elektriska fältets
+avtagande som funktion av avståndet från elektrodytan, beräknat enligt ekvation 1.2
+och 1.1. Enligt modellen sjunker det elektriska fältet snabbare vid högre jonstyrkor
+men däremot uppnås starkare elektriska fält inom en till två nanometer från
+ytan. Trots att Debyes avskärmningslängd är kort för höga koncentrationer uppnås
+V
+ändå relativt starka elektriska fält flera nanometer från ytan. Fältstyrkan 4 · 102 m
+vid 10 nm för cellodlingsmedium är väldigt svagt och kan inte förväntas påverka
+laddade grupper på peptider märkbart i rumstemperatur. Däremot uppnås med lägre
+jonstyrkor högre elektriska fält som kunde tänkas vara tillräckligt starka. Figuren
+relateras till senare, i samband med resultaten i kapitel 4.3.
+
+3.2
+
+Homologimodellering
+
+Homologimodellering innebär i kort att skapa en tredimensionell modellstruktur för
+ett protein (vars struktur man inte känner till) på basis av en känd struktur för ett
+23
+
+Ville Järvinen
+relaterat (homologt) protein. Det okända proteinets sekvens inpassas med det kända
+proteinets sekvens. Även om sekvenserna har olikheter, antas de tredimensionella
+strukturerna av homologa proteiner vara likadana. Ju mer identiska sekvenserna är,
+desto pålitligare är modellstrukturen. Sekvensinpassningen används alltså för att
+bygga upp koordinaterna för en tredimensionell struktur för ett protein med okänd
+struktur på basis av den tredimensionella strukturen för ett modellprotein.
+Peptidernas sekundära struktur med vikningar och disulfidbindningar skapas enligt
+Jagged1-strukturen (RCSB:ID 4CC1) [1]. Programpaketet Modeller [27] användes
+för detta syfte och de skapade strukturerna granskades och hade mycket liknande
+konformationer vid bindningssekvensen som är identisk med en del av Jagged1proteinets aminosyrasekvens. Resten av aminosyrasekvensen (figur 1.2) är olik mellan
+peptiderna och Jagged1-proteinet. Figurerna 3.2, 3.3 och 3.4 visar slutresultaten och
+likheten mellan peptiderna och Jagged1-proteinet.
+
+(a)
+
+(b)
+
+Figur 3.2: LV1-peptidens struktur (röd) efter utförd homologimodellering lagt ovanpå
+Jagged1-proteinet (vit) för att jämföra likheten. Visualiserat med PyMOL med
+(a) cartoon representationen och (b) licorice representationen. Observera att i (b)
+visualiseras endast bindningssekvensen för peptiden och motsvarande sekvens för
+Jagged1-proteinet.
+
+24
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+Figur 3.3: SV1-peptidens struktur (röd) efter utförd homologimodellering lagt ovanpå
+Jagged1-proteinet (vit) för att jämföra likheten. Observera att i (b) visualiseras
+endast bindningssekvensen för peptiden och motsvarande sekvens för Jagged1proteinet.
+
+(a)
+
+(b)
+
+Figur 3.4: Kontroll-peptidens struktur (röd) efter utförd homologimodellering lagt
+ovanpå Jagged1-proteinet (vit) för att jämföra likheten. Observera att i (b)
+visualiseras endast bindningssekvensen för peptiden och motsvarande sekvens för
+Jagged1-proteinet.
+
+25
+
+Ville Järvinen
+
+3.3
+
+Parametrisering av biotinylerad peptid
+
+De vanligaste kraftfälten har vad som behövs för att simulera aminosyror, joner och
+olika lösningsmedel. Ifall en molekyl som ska simuleras är ny för kraftfältet måste
+interaktionsparametrar för molekylen genereras för att molekyldynamik ska kunna
+utföras. Det existerar automatiserade system för parametrisering som exempelvis
+Automated Topology Builder (ATB) [28]. ATB ger som output en topologifil på basis
+av en koordinatfil. För att simulera främmande molekyler i lösning med proteiner är
+det enkelt att följa instruktioner [29] men när den främmande molekylen är kovalent
+bundnen till proteinet är uppgiften mer krävande och instruktioner eller exempel är
+svåra att hitta.
+Peptidens C-terminal består av lysin och biotinet är kovalent bundet med en
+peptidbindning från biotnets karboxylgrupp till lysinets aminogrupp i sidokedjan.
+GROMACS kommandot gmx pdb2gmx konverterar en koordinatifil för peptiden
+till en topologifil för kraftfältet. Kommandot kan inte bygga topologin för okända
+molekyler. För att erhålla biotin-lysin parametrar kontaktades forskare som beräknat
+med biotin i simuleringar tidigare. Ett stort tack till dr Torsten John, vid Leibniz
+Institute of Surface Engineering, som delade med sig en topologifil innehållande
+interaktionsparametrar för en biotinylerad peptid från en av hans studier [30]. De
+erhållna interaktionsparametrarna var i format för kraftfältet GROMOS54a7 [12].
+Därtill behövdes kraftfältets parametrar kompletteras med atomtyperna i biotinet
+och filerna för ett modifierat kraftfält för GROMOS54a7 hämtades från ATB [28].
+Topologifilen innehöll det som behövdes men parametrarna måste manuellt
+omorganiseras för att skapa topologin för biotinylerat lysin eftersom den tidigare
+studien involverade biotinylerat glycin. Interaktionsparametrarna överfördes till
+peptidens topologifil och justerades för att gälla rätt atomer. När topologifilen efter
+några försök kunde lyckat användas i simuleringar i testningssyfte kunde det gås
+vidare till att inkludera streptavidinet. Figur 3.5 visar strukturen för biotinet bundet
+till lysinet.
+
+26
+
+Ville Järvinen
+
+Figur 3.5: Strukturen för biotinet bundet med peptidbindning till lysinets sidokedja.
+
+3.4
+
+LV1-peptid med streptavidin
+
+Streptavidinets struktur är taget enligt strukturen (RCSB:ID 1SWK) [31] och
+har valts p.g.a. det faktum att biotinmolekyler var tillgängliga i alla fyra
+bindningsfickorna. Den biotinylerade peptiden LV1 lades in i stället för två av
+streptavidinets biotin med hjälp av PyMOL. Energiminimering utfördes för att slippa
+överlappningar. I simuleringsprocessen följdes Justin A. Lemkuls instruktioner för
+utförandet av molekyldynamiksimuleringar [29].
+Storleken av lådan som definierar periodiska randvillkoren definierades till en kub
+med dimensionerna 13x13x13 nm med kommandot gmx editconf. Vattenmolekyler
+tillsattes med gmx solvate och eftersom systemets nettoladdning låg på +18e
+tillsattes 18 negativa kloridjoner med kommandot gmx genion. Jonerna ersätter
+slumpmässigt valda vattenmolekyler och det är i enlighet med normala protokoll för
+molekyldynamiksimuleringar eftersom algoritmerna kan fallera ifall totalladdningen
+är olik noll. Nu består systemet av totalt ca 200 000 atomer varav ungefär
+97 % är vatten. I detta skede kördes en energiminimering igen med jonerna och
+vattenmolekylerna för att säkerställa att själva simuleringen kan starta stabilt och att
+inga krafter är onaturligt stora p.g.a. t.ex. överlappande atomer. Energiminimeringen
+slutade när systemets största kraft mellan två atomer var under 1000 molkJnm .
+Till näst utfördes ekvilibrering bestående av 100 ps i en kanonisk ensemble (NVT) och
+27
+
+Ville Järvinen
+av 100 ps i isobarisk och isotermisk ensemble (NPT). Algoritmen för ekvilibreringen
+fixerar alla atomer med positionsbegränsningar förutom vattenmolekylerna och
+jonerna för att jämna ut endast deras rörelser. Efter ekvilibreringen startades den
+riktiga simuleringen och kördes i 25 ns i en NPT ensemble med termostat och
+barostat. Simuleringen förlängdes också med ytterligare 50 ns
+En viktig detalj i simuleringarna är att streptavidinet är positionsbegränsat, på fyra
+atomer undertill på proteinet. Begränsningarna är applicerade på fyra kväveatomer
+i fria aminogrupper för att imitera hur proteinet binder vid det självorganiserande
+monolagret. Figur 3.9 visar var dessa fyra atomer är. Figur 3.6 visar systemet vid
+olika simuleringstider utan applicerade elektriska fält. Figur 3.6 visar också betaflaksekundärstrukturen för peptiden som visas som röda pilar i strukturen. Peptiderna
+kan också ses ha vikit sig mot streptavidin-proteinet i simuleringarna utan elektriska
+fält.
+
+28
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+(c)
+Figur 3.6: LV1-peptidernas (blå, röd) struktur med streptavidinet (grön) (a) i början,
+(b) efter 25 ns och (c) efter 75 ns. Peptidernas struktur i början är resultatet från
+homologimodelleringen i en energiminimerad form. Vattenmolekylerna och jonerna
+är inte visualiserade för tydlighetens skull. Visualiserat i PyMOL.
+
+V
+Från strukturen vid 25 ns startdes simuleringar med olika fältstryrkor: 108 m
+,
+7 V
+7 V
+6 V
+5 V
+8 V
+5 · 10 m , 10 m , 10 m och 10 m . Fältstyrkan på 10 m ledde snabbt till lossnande
+av biotinet från streptavidinet och fältstyrkan utgör därmed en övre gräns för en
+applicerad fältstyrka. Figur 3.7 visar hur vätebindningarna mellan biotinet och
+streptavidinet sjunker till noll och kraften som det elektriska fältet utsätter peptiden
+för resulterar i biotinets lossnande. Förutom diskussionen i detta kapitel används
+
+29
+
+Ville Järvinen
+simuleringen inte i analyserna.
+Streptavidin-biotin komplexet är mycket studerat och det finns data på styrkan
+av deras interaktion med varandra. En studie visade experimentellt med AFM
+mätningar att vid dragkrafter över ca 150 pN lossnar biotinet [32]. I en annan
+studie där samma fenomen undersöktes [33] användes bland annat molekyldynamiska
+metoder och brottstyrkan beräknades att vara i storleksordningen 200 pN.
+Nettokraften som det elektriska fältet utgör på den laddade peptiden kan uppskattas
+V
+V
+enligt ekvation 2.9 till F = 10e · 108 m
+=160 pN vid ett elektriskt fält på 108 m
+V
+och 80 pN vid 5 · 107 m
+och eftersom separering skedde vid den högre fältstyrkan
+men inte den lägre har biotinet motsvarande bindningsaffinitet till streptavidinet i
+simuleringarna som i andra studier.
+
+(a)
+
+(b)
+
+Figur 3.7: (a) Biotinet på väg ut ur sin bindningsficka i streptavidinet som resultat
+av för starka elektriska fält. Visuliserat i PyMOL utan streptavidinets andra tre
+proteinkedjor samt utan vattenmolekyler och joner för tydlighetens skull. (b) Antalet
+vätebindningar mellan streptavidinet och biotinet som går till noll.
+
+30
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+Figur 3.8: Antalet vätebindningar mellan biotinet och streptavidinet i en stabilare
+simulering i systemet med SV1-peptiderna (a) utan elektriska fält och (b) med
+V
+.
+fältstyrkan 5 · 107 m
+Resultaten och analyserna från de 25 ns långa simuleringarna visas i resultatkapitlet
+V
+4.2. På basis av dessa resultat valdes fältstyrkan 5 · 107 m
+för att användas i resten av
+simuleringarna där fältstyrkans riktning varieras och simuleringarna varar dubbelt
+så lång tid. Med samma starstruktur som tidigare simuleringar i olika fältstyrkor
+V
+, d.v.s. två olika simuleringar med
+simulerades nu 50 ns med fältstyrkorna ±5 · 107 m
+olikriktade elektriska fält. Figur 3.9 visar hur peptiderna sträcker ut sig respektive
+böjer sig ner längs med y-riktningen parallellt med fältstyrkan. Figuren visar också ykomponenten av avståndet mellan bottnet av streptavidinet till peptidens N-terminal
+i den laddade ändan, avståndet d används senare i analyser i resultatdelen.
+
+31
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+Figur 3.9: LV1-systemets struktur efter 50 ns simulering med fältstyrkan (a)
+V
+V
+och (b) −5 · 107 m
+. De svarta ringarna indikerar var på streptavidinet
+5 · 107 m
+positionsbegränsningarna är applicerade och avståndet d är y-komponenten som är
+parallell med det applicerade elektriska fältet.
+
+3.5
+
+SV1-peptid med streptavidin
+
+För att byta ut LV1-peptiderna till SV1-peptider med färre laddade aminosyror
+kunde en hel del av det som gjorts med tidigare systemet utnyttjas. Topologin för
+den nya peptiden byggdes om och strukturen där de nya biotinylerade peptiderna
+är i streptavidinets bindningsfickor skapades. För SV1-peptiden utan biotin kunde
+topologin skapas med gmx pdb2gmx kommandot. LV1-peptidens topologi för biotinoch lysindel kopierades över till SV1 peptidens topologi och justerades för att
+atomindexen skulle vara korrekt. Här användes ett skript [34] för att numrera om
+atomerna. På detta sätt skapades filen sv1.itp som inkluderas i systemets topologifil
+topol.top. PyMOL användes för att binda biotinet till peptiden och således skapa
+koordinatfilerna för biotinylerade peptiderna. Peptiderna sattes in i streptavidinet
+med att överlappa peptidernas biotin med biotinet i streptavidinets kristallstruktur,
+detta också med hjälp av PyMOL.
+Proceduren för att simulera de två SV1-peptiderna med streptavidinet var samma
+som för LV1 peptiden och beskrivs noggrannare ovan. I korthet bestod proceduren av
+energiminimering i vakuum, tillsättande av vattenmolekyler och 12 negativt laddade
+
+32
+
+Ville Järvinen
+kloridjoner för att neutralisera systemet, enegiminimering i vattenlösning, 100 ps
+NVT och 100 ps NPT ekvilibrering efterföljt av simulering under 25 ns. Strukturerna
+visulaiseras i figur 3.10. Motsvarande som tidigare förlängdes denna simulering efteråt
+med 50 ns.
+
+(a)
+
+(b)
+
+(c)
+Figur 3.10: SV1-peptidernas (blå, röd) struktur med streptavidinet (grön) (a) i
+början, (b) efter 25 ns och (c) efter 75 ns. Peptidernas struktur i början är resultatet
+från homologimodelleringen i en energiminimerad form.
+Efter simuleringen utan elektriska fält applicerades ett elektriskt fält i y-riktning
+V
+med styrkan 5 · 107 m
+och systemet simulerades i 50 ns. Från samma utgångspunkt
+utfördes också en 50 ns simulering med fältstyrkan i negativ y-riktning. Resultaten
+33
+
+Ville Järvinen
+med jämförelse och analys hittas i kapitel 4.3 och strukturerna visualiseras i figur
+3.11.
+
+(a)
+
+(b)
+
+Figur 3.11: SV1-systemets struktur efter 50 ns simulering med fältstyrkan (a)
+V
+V
+5 · 107 m
+och (b) −5 · 107 m
+.
+
+3.6
+
+Kontroll-peptid med streptavidin
+
+Procedurerna för att byta ut peptiderna och för simuleringarna är identiska med
+beskrivningen i kapitlet 3.5 ovan. Systemet består nu av streptavidin med två
+biotinylerade Kontroll-peptider och proceduren igen likadan som i den tidigare
+sektionen, med exceptionen av att inga joner tillsattes p.g.a. systemet var neutralt.
+Figuren 3.12 visar strukturerna vid olika tidpunkter i simuleringarna utan elektriska
+fält och figur 3.11 visar hur elektriska fälten påverkar kontrollpeptiderna medan
+resultaten och analyser hittas i kapitel 4.3. Det är tydligt att Kontroll-peptiderna
+utan laddningar inte påverkas av det elektriska fältet.
+
+34
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+(c)
+Figur 3.12: Kontroll-peptidernas (blå, röd) struktur med streptavidinet (grön) (a) i
+början, (b) efter 25 ns och (c) efter 75 ns. Peptidernas struktur i början är resultatet
+från homologimodelleringen i en energiminimerad form.
+
+35
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+Figur 3.13: SV1-systemets struktur efter 50 ns simulering med fältstyrkan (a)
+V
+V
+och (b) −5 · 107 m
+.
+5 · 107 m
+
+36
+
+Ville Järvinen
+
+Kapitel 4
+Resultat och diskussion
+I detta kapitel har resultaten från simuleringarna samlats. Resultat och
+analyser diskuteras och tolkas här nedan för att sedan i avslutningen
+sammanfattas och vidareutvecklas. För att studera både hela peptiders och
+peptidernas bindningssekvensers stabilitet används RMSD-analys, RMSF-analys och
+vätebindningsanalys. Antalet vätebindningar mellan peptiderna och streptavidinet
+analyseras för att undersöka deras interaktion och systemets konvergering mot
+jämvikt. Peptidändens avstånd från undertill på streptavidinet mäts också för att få
+ett mått på hur den laddade peptidänden reagerar på elektriska fält som funktion
+av simuleringstid.
+
+4.1
+
+Simuleringar utan elektriska fält
+
+För varje enskilt system har 75 ns av simulering utan elektriskt fält utförts. Det visar
+sig att datan som dessa simuleringar har att ge är minst lika mycket värt som datan
+från simuleringarna med elektriska fält.
+Figur 4.1 visar avvikelserna från startstrukturen för peptidens ryggrad och RMSDvärdena är relativt stora men peptidernas flexibilitet leder till stora RMSD-värden
+och stora fluktuationer. RMSD-analyserna (figur 4.1 och figur 4.2) på peptiderna
+visar också att den initiala 25 ns simuleringen verkar lämplig och tillräckligt lång för
+att de initiala förändringarna i konformationer ska hinna hända. Alla tre system
+visar ett rätt så stabilt RMSD-värde efter 25 ns. RMSD-värdet för peptidernas
+bindningssekvens visar också liknande stabilitet efter ca 25 ns, förutom för SV1_2-
+
+37
+
+Ville Järvinen
+peptiden i figur 4.2 som har stora fluktuationer i avvikelsen.
+Simuleringarna utan elektriska fält lämpar sig till att beräkna RMSF-värden för
+peptiderna. Peptidernas RMSF-värden föreslår vilka aminosyror som fluktuerar
+mest från en medelstruktur och vilka minst. Figur 4.3 visar att peptidens laddade
+ända har den största standardavvikelsen och att bindningssekvensen har de lägsta
+fluktutionerna.
+
+(a)
+
+(b)
+
+(c)
+Figur 4.1: RMSD-värden för peptidens ryggrad under 75 ns utan elektriska fält för
+(a) LV1-peptiderna, (b) SV1-peptiderna och (c) Kontroll-peptiderna.
+
+38
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+(c)
+Figur 4.2: RMSD-värden för peptidens bindningssekvens ryggrad under 75 ns
+utan elektriska fält för (a) LV1-peptiderna, (b) SV1-peptiderna och (c) Kontrollpeptiderna.
+
+39
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+(c)
+Figur 4.3: RMSF-värden för peptidens ryggrad beräknat för 50 ns för (a) LV1peptiderna, (b) SV1-peptiderna och (c) Kontroll-peptiderna.
+
+Analys av antalet vätebindningar internt i bindningssekvensen för peptiderna visar
+också en stabil struktur under 75 ns och illustreras i figurerna A.1, A.2 och A.3 i
+bilagan. Antalet vätebindningar inom bindningssekvensen i dessa grafer kan relateras
+till antalet vätebindningar som motsvarande struktur i Jagged1-kristallstrukturen
+visar med samma analysmetod. Antalet vätebindningar i den strukturen var fem
+stycken. I samtliga grafer i bilagan fluktuerar antalet kring fem, med ett undantag i
+SV1_1-peptiden i figurerna A.2 och A.5. Orsaken till den sistnämnda avvikelsen
+är oklar och analysen dubbelkollades utan att hitta fel och den ända logiska
+förklaringen är att AV1_1-peptiden fått en drastiskt ändrad konformation vid
+energiminimeringen.
+
+40
+
+Ville Järvinen
+Undersöker man däremot vätebindningarna mellan peptiderna och streptavidinet
+(figur 4.4) så ökar de under de första 25 ns rätt så kraftigt men även under de
+följande 50 ns för samtliga simuleringssystem. Det innebär att peptiderna verkar
+komma i kontakt med streptavidinet mer och mer.
+
+(a)
+
+(b)
+
+(c)
+Figur 4.4: Antalet vätebindningar mellan peptiderna och streptavidinet under 75 ns
+för (a) LV1-systemet, (b) SV1-systemet och (c) Kontroll-systemet.
+
+Avståndsanalysen i figur 4.5 visar att peptidernas N-terminaler antingen hålls
+omkring samma höjd eller sjunker, d.v.s. kommer närmare streptavidinet som stöder
+det tidigare påståendet som baserade sig på vätebindningar. Alla peptiders Nterminaler visar sig stabilisera vid omkring 4 nm från streptavidinets botten. Det
+innebär att peptidernas laddade grupper befinner sig ca 5 nm från elektrodytan
+vid jämvikt och det elektriska fältet i figur 3.1 kan relateras till simuleringarna.
+41
+
+Ville Järvinen
+Fältstyrkan är således ungefär två storleksordningar större än enligt modellen för
+det laddade dubbelskiktet för cellodlingsmedium som lösning. Vid avståndet 10 nm
+har fältstyrkan sjunkit med ytterligare tre storleksordningar. Med andra ord finns
+det en stor risk att peptiderna inte kan styras i cellodlingsmedium med denna
+ytfunktionalisering. Däremot är möjligheterna större med lösningar med svagare
+jonstyrka.
+
+(a)
+
+(b)
+
+(c)
+Figur 4.5: Avståndet d från undertill på streptavidinet till peptidens N-terminal
+under 75 ns utan elektriska fält för (a) LV1-peptiderna, (b) SV1-peptiderna och (c)
+Kontroll-peptiderna.
+
+4.2
+
+Peptider i elektriska fält med olika styrkor
+
+V
+Det visar sig vara svårt att urskilja responser med svagare fältstyrkor än 5 · 107 m
+enligt figurerna 4.6, 4.7 och 4.8. En lösning vore att förlänga simuleringstiden men
+det skulle betyda exempelvis femdubbel ökning från de redan flera dagar långa
+
+42
+
+Ville Järvinen
+och eftersom strukturella
+simuleringarna. De enda responserna ses vid ±5 ·
+förändringar vill observeras användes den styrkan för resten av simuleringarna. En
+bidragande orsak till varför peptiderna verkar långsamma att reagera på applicerade
+krafter är vätebindningarna som bildats mellan peptiderna och streptavidinet som
+gör det svårt att skilja på dem i en kort 25 ns simulering. Det betyder att
+processerna kan ske i svagare elektriska fält men metodens begränsningar tillåter
+inte undersökning om det faktiskt är så.
+V
+107 m
+
+V
+Fältstyrkan 5 · 107 m
+lämpar sig för denna tidsskala på 25 ns och ifall tidsskalan skulle
+V
+skulle räcka men eftersom simuleringstiden
+förlängas till, säg, 500 ns kanske 1 · 107 m
+är begränsad kan processen försnabbas med en fältstyrka större än i verkligheten.
+
+(a)
+
+(b)
+
+Figur 4.6: RMSD-värden för peptidens ryggrad under 50 ns utan elektriska fält och
+under 25 ns med fyra olika fältstyrkor med identiska startstrukturer vid 25 ns. LV1_1peptiden i (a) och LV1_2-peptiden i (b).
+
+43
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+Figur 4.7: RMSD-värden för peptidens bindningssekvens ryggrad under 50 ns utan
+elektriska fält och under 25 ns med fyra olika fältstyrkor med identiska startstrukturer
+vid 25 ns. LV1_1-peptiden i (a) och LV1_2-peptiden i (b).
+
+(a)
+
+(b)
+
+Figur 4.8: Avståndet d från undertill på streptavidinet till peptidens N-terminal
+under 50 ns för fyra olika fältstyrkor och utan, för (a) LV1_1-peptiden och (b)
+LV1_2-peptiden
+
+4.3
+
+Peptider i elektriska fält med olika riktning
+
+RMSD-analysen för LV1-, SV1- och Kontroll-peptidernas ryggrad (figur 4.9) visar i
+vissa fall förändringar men antingen först mot slutet av simuleringstiden eller bara
+på en av de två peptiderna. Detta tyder på att tidsskalan inte riktitgt räckrer
+
+44
+
+Ville Järvinen
+till. Kontroll-peptiderna utan laddning visar som förväntat mycket små skillnader
+i avvikelser från startstruktur med olikriktade fältstyrkor.
+RMSD-analysen för ryggraden för peptidernas bindningssekvens (figur 4.10) visar
+ingen tydlig diskriminering mellan de olikriktade fältstryrkorna, vilket är ett bra
+tecken eftersom det tyder på att peptidens viktiga sekvens förblir stabil och
+strukturellt intakt. Eftersom värdet i sig inte nödvändigtvis säger så mycket är det
+man har att gå efter endast jämförelser med fallet utan elektriska fält.
+Antalet vätebindningar inom bindningssekvensen visar igen stabilitet i strukturen
+eftersom figurerna A.4, A.5 och A.6 i bilagan visar varken ökande eller minskande
+trender.
+
+45
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+(c)
+
+(d)
+
+(e)
+
+(f)
+
+Figur 4.9: RMSD-värden för peptidens ryggrad under 25 ns utan elektriska fält (svart)
+efterföljt av tre olika 50 ns simuleringar både utan elektriska fält och med fältstyrka
+V
+V
+på 5 · 107 m
+(röd) och −5 · 107 m
+(blå) med identiska startstrukturer vid 25 ns. LV1peptiderna i (a) och (b), SV1-peptiderna i (c) och (d) samt Kontroll-peptiderna i (e)
+och (f).
+
+46
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+(c)
+
+(d)
+
+(e)
+
+(f)
+
+Figur 4.10: RMSD-värden för peptidens bindningssekvens ryggrad under 25 ns utan
+elektriska fält (svart) efterföljt av tre olika 50 ns simuleringar både utan elektriska
+V
+V
+fält och med fältstyrka på 5 · 107 m
+(röd) och −5 · 107 m
+(blå) med identiska
+startstrukturer vid 25 ns. LV1-peptiderna i (a) och (b), SV1-peptiderna i (c) och
+(d) samt Kontroll-peptiderna i (e) och (f).
+
+47
+
+Ville Järvinen
+Figur 4.11 visar en minskning i vätebindningar mellan peptiderna och streptavidinet
+i elektriska fält applicerade i positiv y-riktning vilket indikerar att LV1-peptiderna
+vecklas ut från ytan av streptavidinet. Det samma kan inte sägas om SV1-systemet
+i figur 4.12 där ingen tydlig trend kan ses för varken positiva eller negativa
+elektriska fält. Men SV1-peptiden utsätts också för svagare krafter p.g.a. dess
+mindre laddning och samma tidsskala kanske inte räcker till. Kontroll-peptiderna
+kan enligt figur 4.13 konstateras antingen bilda en alltmera starkare interaktion
+med streptavidinet oberoende elektriska fält eller så behåller dem interaktionen som
+skapats under de första 25 ns (figur 4.4) utan elektriska fält som utgör startstrukturen
+för simuleringarna med elektriska fält.
+
+(a)
+
+(b)
+
+Figur 4.11: Antalet vätebindningar mellan LV1-peptiderna och streptavidinet under
+V
+V
+50 ns med elektriska fält med styrkan 5 · 107 m
+i (a) och −5 · 107 m
+i (b).
+
+48
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+Figur 4.12: Antalet vätebindningar mellan SV1-peptiderna och streptavidinet under
+V
+V
+50 ns med elektriska fält med styrkan 5 · 107 m
+i (a) och −5 · 107 m
+i (b).
+
+(a)
+
+(b)
+
+Figur 4.13: Antalet vätebindningar mellan Kontroll-peptiderna och streptavidinet
+V
+V
+under 50 ns med elektriska fält med styrkan 5 · 107 m
+i (a) och −5 · 107 m
+i (b).
+Avståndsanalysen i figur 4.14 visar den tydligaste responsen på olikriktade elektriska
+fält men responsen som syns som ökande avstånd är större än responsen som
+syns som minskande avstånd. Detta beror troligtvis på att streptavidinet är i
+vägen för peptidernas ändor att böja sig neråt ytterligare men ändorna är friare
+att röra sig uppåt. LV1-peptiderna visar tydligt ökande avstånd med det positiva
+elektriska fälte men mindre tydligt minskande avstånd med det negativa elektriska
+fältet. SV1-peptiderna visar responser för både positiva och negativa elektriska fält
+49
+
+Ville Järvinen
+men i jämförelse med Kontroll-peptidernas responser är skillnaderna ändå små,
+åtminstone för SV1_1-peptiden. Kontroll-peptiderna stabiliserar sig vid en viss höjd
+och fluktuerar inte mycket men utgör ett mått på vad som klassas som respons.
+Det är klart att variationerna mellan responserna mellan de två identiska peptiderna
+är stora. Längre simuleringar kunde definitivt minimera dessa variationer, också
+introducering av olika startkonfigurationer och flera simuleringar kunde göra
+resultaten tydligare.
+
+50
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+(c)
+
+(d)
+
+(e)
+
+(f)
+
+Figur 4.14: Avståndet d från undertill på streptavidinet till peptidens N-terminal
+under 25 ns utan elektriska fält (svart) efterföljt av tre olika 50 ns simuleringar både
+V
+V
+utan fältstyrka och med fältstyrkan 5 · 107 m
+(röd) och −5 · 107 m
+(blå) med identiska
+startstrukturer vid 25 ns. LV1-peptiderna i (a) och (b), SV1-peptiderna i (c) och (d)
+samt Kontroll-peptiderna i (e) och (f).
+
+51
+
+Ville Järvinen
+
+Kapitel 5
+Slutsatser och sammanfattning
+I början av avhandlingsarbetet var planen att simulera ett system bestående av flera
+grupper av streptavidin med peptider som är fästa ovanpå det självorganiserande
+monolagret som är bundet till en guldyta. Detta visade sig vara för tidskrävande och
+avancerat inom omfattningen av denna avhandling. Därför gjordes valet att fokusera
+på peptidernas samspel med streptavidin-proteinet. Eftersom tidigare studier [2] av
+det självorganiserande monolagret visat att det är väligt ordnat och tunt förväntas
+inga dramatiska fenomen som skulle påverka peptiderna direkt. Därför kan metoden
+med positionsbegränsningarna undertill på streptavidinet antas representera en del
+av den verkliga ytan med tillräcklig precision.
+Strukturanalyserna omfattade RMSD-analys för peptiderna, bindningssekvensen
+för peptiderna, antalet vätebindningar inom peptidernas bindningssekvens, antalet
+vätebindningar mellan peptiderna och streptavidinet men också peptidändens
+avstånd från undertill på streptavidinet. Analyserna åskådliggjorde det elektriska
+fältets inverkan på strukturen hos peptidernas bindningssekvens och kan konstateras
+ha minimal effekt på bindningssekvensensens struktur. Avståndsanalysen i figur 4.14
+visar däremot en tydlig differentiering i responsen som funktion av fältets riktning.
+Hypotesen var att peptider med positiv laddning i ändan kan sträckas ut eller böjas
+med elektriska fält riktade uppåt respektive nedåt och på basis av denna studie
+ser det ut som att hypotesen kan bekräftas för lösningar med lägre jonstyrka än
+cellodlingsmedium.
+Orsaken till att bindningssekvensens stabilitet och struktur är viktig och intressant är
+att peptiden ska kunna binda till Notch-receptorn även om en elektrisk potential är
+applicerad. Som resultaten visar verkar bindningssekvensens strukturella integritet
+52
+
+Ville Järvinen
+behållas vid varierande elektriska fält. Men eftersom studien inte undersökte
+interaktioner till receptorn kan det inte heller ges resultat om peptidernas affinitet
+till Notch-receptorn.
+Som resultaten i kapitel 4.1 visar interagerar peptiderna naturligt med ytan
+av streptavidinet och vätebindnigar formas mellan peptiderna och tillgängliga
+aminosyror på ytan av streptavidinet. Detta innebär att peptiderna påverkas mindre
+än förväntat av elektriska fält, eftersom de anpassar sig till hela komplexet och hittar
+en stabilare struktur.
+V
+Kapitel 4.2 visade att simuleringen med den elektriska fältstyrkan 108 m
+resulterade
+V
+i biotinets lossnande från streptavidinet. Vidare resulterade fältstyrkan på 5 · 107 m
+inte i samma destruktiva följd, vilket betyder att dissociering av biotin och
+V
+streptavidin sannolikt inte händer vid fältstryrkor mindre än 5 · 107 m
+. Samtidigt
+7 V
+påvisar resultaten för fältstyrkor mindre än eller lika med 10 m att inga tydliga
+V
+där
+strukturella förändringar sker. Detta leder till ett smalt område kring 5 · 107 m
+den elektriska fältstyrkan har en inverkan på peptiderna utan att förstöra strukturen.
+Det är ändå viktigt att komma ihåg att simuleringarna studerar systemet under en
+väldigt kort tid och en förlängd simuleringstid skulle ge mer tillförlitliga resultat.
+Ifall flera olika startstrukturer för peptiderna dessutom kunde implementeras skulle
+det kunna ge mer pålitliga resultat.
+
+Som beräkningarna för fältstyrkans profil i kapitel 3 demonstrerar, uppnås betydligt
+svagare fältstyrka i praktiken än vad som används i simuleringarna. Dessa
+beräkningar är viktiga för att validera resultaten från molekyldynamiken eftersom
+fältstyrkan är stor och tidsskalan liten i förhållande till experimentella uppställningar.
+Den viktiga poängen är att ju närmare elektrodytan peptidernas laddningar är desto
+starkare elektriska fält påverkas de av.
+Det är tydligt att metoderna i avhandlingen är lämpliga för att undersöka strukturella förändringar för ideala system och jämföra skillnader i konformationsändringarna
+mellan olika peptider. Däremot fallerar metoderna i att reproducera andra fenomen
+som är av stor vikt i verkliga experiment, såsom det laddade dubbelskiktet för
+att skapa ett exponentiellt avtagande elektriskt fält med avseende på avstånd
+från elektrodytan. En annan logisk brist hos metoden är att processer som sker
+under längre tid än hundratals nanosekunder förblir osedda på en tidsskala på
+100 ns. Ett exempel på en sådan process kan vara att uppnå jämviktsläge för
+peptidkonformationer i svagare fältstyrkor.
+
+53
+
+Ville Järvinen
+Diskussionen i kapitlet 2.5 behandlade likheter och olikheter mellan kraftfält med
+polariserbara molekyler och icke-polariserbara molekyler, och slutsatsen var att
+fortsatta studier på motsvarande system gjorda med kraftfält som implementerat
+polariserbarhet skulle ge en god översikt över likheter och olikheter mellan
+kraftfälten. Det skulle också ge en indikation på bristerna med modellering av dylika
+system med icke-polariserbara molekyler jämfört med polariserbara.
+
+54
+
+Ville Järvinen
+
+Litteraturförteckning
+[1] Chandramouli R. Chillakuri m. fl. ”Structural Analysis Uncovers Lipid-Binding
+Properties of Notch Ligands”. I: Cell Reports 5.4 (2013), s. 861–867. issn: 22111247. doi: https://doi.org/10.1016/j.celrep.2013.10.029.
+[2] Eleonora Macchia m. fl. ”Single-molecule detection with a millimetre-sized
+transistor”. I: Nature Communications 9 (2018).
+[3] Jun Li m. fl. ”Rationally Designed Peptide Interface for Potential Modulated
+Cell Adhesion and Migration”. I: Advanced Materials Interfaces 2.15 (2015),
+s. 1500335. doi: 10.1002/admi.201500335.
+[4] Eleonora Cantini m. fl. ”Electrically Responsive Surfaces: Experimental and
+Theoretical Investigations”. I: Accounts of Chemical Research 49.6 (2016).
+PMID: 27268783, s. 1223–1231. doi: 10.1021/acs.accounts.6b00132.
+[5] Yi Chen m. fl. ”Electrically Induced Conformational Change of Peptides on
+Metallic Nanosurfaces”. I: ACS Nano 6.10 (2012). PMID: 22897498, s. 8847–
+8856. doi: 10.1021/nn3027408.
+[6] Guoyo Wu. Amino Acids : Biochemistry and Nutrition. ProQuest Ebook Central https://ebookcentral.proquest.com/lib/abo-ebooks/detail.action?docID=1165871.
+Baton Rouge: Taylor och Francis Group, 2013.
+[7] Schrödinger, LLC. ”The PyMOL Molecular Graphics System, Version 1.8”.
+Nov. 2015.
+[8] Jung Wook Lee m. fl. ”Characterization of a self-assembled monolayer of
+thiol on a gold surface and the fabrication of a biosensor chip based on
+surface plasmon resonance for detecting anti-GAD antibody”. I: Biosensors
+and Bioelectronics 20.7 (2005), s. 1422–1427. issn: 0956-5663. doi: https :
+//doi.org/10.1016/j.bios.2004.04.017.
+[9] Reitz m. fl. Foundations of electromagnetic theory. 4. utg. Addison-Wesley,
+1992.
+
+55
+
+[10]
+
+[11]
+
+[12]
+
+[13]
+
+[14]
+
+[15]
+
+[16]
+
+[17]
+
+[18]
+[19]
+
+Ville Järvinen
+Ohshima och Hiroyouki. Electrical Phenomena at Interfaces and Biointerfaces
+: Fundamentals and Applications in Nano-, Bio-, and Environmental Sciences.
+4. utg. ProQuest Ebook Central https://ebookcentral.proquest.com/lib/aboebooks/detail.action?docID=818455. John Wiley och Sons, Incorporated,
+2012.
+Mark James Abraham m. fl. ”GROMACS: High performance molecular
+simulations through multi-level parallelism from laptops to supercomputers”.
+I: SoftwareX 1-2 (2015), s. 19–25. issn: 2352-7110. doi: https://doi.org/
+10.1016/j.softx.2015.06.001.
+Wei Huang, Zhixiong Lin och Wilfred F. van Gunsteren. ”Validation of the
+GROMOS 54A7 Force Field with Respect to -Peptide Folding”. I: Journal of
+Chemical Theory and Computation 7.5 (2011). PMID: 26610119, s. 1237–1243.
+doi: 10.1021/ct100747y.
+Szilárd Páll m. fl. ”Tackling Exascale Software Challenges in Molecular
+Dynamics Simulations with GROMACS”. I: Solving Software Challenges
+for Exascale. Utg. av Stefano Markidis och Erwin Laure. Cham: Springer
+International Publishing, 2015, s. 3–27.
+Sander Pronk m. fl. ”GROMACS 4.5: a high-throughput and highly parallel
+open source molecular simulation toolkit”. I: Bioinformatics 29.7 (febr. 2013),
+s. 845–854. issn: 1367-4803. doi: 10.1093/bioinformatics/btt055.
+Berk Hess m. fl. ”GROMACS 4: Algorithms for Highly Efficient, LoadBalanced, and Scalable Molecular Simulation”. I: Journal of Chemical Theory
+and Computation 4.3 (2008). PMID: 26620784, s. 435–447. doi: 10 . 1021 /
+ct700301q.
+David Van Der Spoel m. fl. ”GROMACS: Fast, flexible, and free”. I: Journal
+of Computational Chemistry 26.16 (2005), s. 1701–1718. doi: 10.1002/jcc.
+20291.
+H.J.C. Berendsen, D. [van der Spoel] och R. [van Drunen]. ”GROMACS: A
+message-passing parallel molecular dynamics implementation”. I: Computer
+Physics Communications 91.1 (1995), s. 43–56. issn: 0010-4655. doi: https:
+//doi.org/10.1016/0010-4655(95)00042-E.
+Lindahl m. fl. GROMACS 2019.6 Source code. Version 2019.6. Febr. 2020. doi:
+10.5281/zenodo.3685922.
+Lindahl m. fl. GROMACS 2019.6 Manual. Version 2019.6. Febr. 2020. doi:
+10.5281/zenodo.3685925.
+
+56
+
+[20]
+[21]
+
+[22]
+[23]
+
+[24]
+
+[25]
+
+[26]
+[27]
+
+[28]
+
+[29]
+[30]
+
+[31]
+
+Ville Järvinen
+Kittel C. och McEuen P. Introduction to solid State Physics. 8. utg. Hoboken,
+N.J: Wiley, 2005.
+Berk Hess m. fl. ”LINCS: A linear constraint solver for molecular simulations”.
+I: Journal of Computational Chemistry 18.12 (1997), s. 1463–1472. doi: 10.
+1002/(SICI)1096-987X(199709)18:12<1463::AID-JCC4>3.0.CO;2-H.
+Ulrich Essmann m. fl. ”A smooth particle mesh Ewald method”. I: The Journal
+of Chemical Physics 103.19 (1995), s. 8577–8593. doi: 10.1063/1.470117.
+Shuichi Miyamoto och Peter A. Kollman. ”Settle: An analytical version of
+the SHAKE and RATTLE algorithm for rigid water models”. I: Journal
+of Computational Chemistry 13.8 (1992), s. 952–962. doi: 10 . 1002 / jcc .
+540130805.
+Giovanni Bussi, Davide Donadio och Michele Parrinello. ”Canonical sampling
+through velocity rescaling”. I: The Journal of Chemical Physics 126.1 (2007),
+s. 014101. doi: 10.1063/1.2408420.
+Lindahl E., Hess B. och van der Spoel D. ”GROMACS 3.0: a package for
+molecular simulation and trajectory analysis.” I: J Mol Model 7 (2001), s. 306–
+317.
+William Humphrey, Andrew Dalke och Klaus Schulten. ”VMD – Visual
+Molecular Dynamics”. I: Journal of Molecular Graphics 14 (1996), s. 33–38.
+Andrej ali. ”Comparative protein modeling by satisfaction of spatial restraints”.
+I: Molecular Medicine Today 1.6 (1995), s. 270–277. issn: 1357-4310. doi:
+https://doi.org/10.1016/S1357-4310(95)91170-7.
+Alpeshkumar K. Malde m. fl. ”An Automated Force Field Topology Builder
+(ATB) and Repository: Version 1.0”. I: Journal of Chemical Theory and
+Computation 7.12 (2011). PMID: 26598349, s. 4026–4037. doi: 10 . 1021 /
+ct200196m.
+Justin A. Lemkul. Protein-Ligand Complex. url: http://www.mdtutorials.
+com/gmx/complex/index.html.
+Torsten John m. fl. ”Growth, Polymorphism, and Spatially Controlled
+Surface Immobilization of Biotinylated Variants of IAPP21–27 Fibrils”. I:
+Biomacromolecules 21.2 (2020). PMID: 31887030, s. 783–792. doi: 10.1021/
+acs.biomac.9b01466.
+Stefanie Freitag m. fl. ”Structural studies of binding site tryptophan mutants
+in the high-affinity streptavidin-biotin complex11Edited by I. A. Wilson”. I:
+Journal of Molecular Biology 279.1 (1998), s. 211–221. issn: 0022-2836. doi:
+https://doi.org/10.1006/jmbi.1998.1735.
+57
+
+Ville Järvinen
+[32] Magnus S. Bauer m. fl. ”Monomeric streptavidin: a versatile regenerative
+handle for force spectroscopy”. I: bioRxiv (2018). doi: 10.1101/276444.
+[33] Felix Rico m. fl. ”Heterogeneous and rate-dependent streptavidin–biotin
+unbinding revealed by high-speed force spectroscopy and atomistic
+simulations”. I: Proceedings of the National Academy of Sciences 116.14 (2019),
+s. 6594–6601. issn: 0027-8424. doi: 10.1073/pnas.1816909116.
+[34] Other software - Gromacs. url: http://www.gromacs.org/Downloads/User_
+contributions/Other_software.
+
+58
+
+Ville Järvinen
+
+Bilaga A
+Figurer
+
+(a)
+
+(b)
+
+Figur A.1: Antalet vätebindningar inom bindningssekvensen för peptiderna under
+50 ns utan elektriska fält för LV1_1-peptiden i (a) och LV1_2-peptiden i (b).
+
+59
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+Figur A.2: Antalet vätebindningar inom bindningssekvensen för peptiderna under
+50 ns utan elektriska fält för SV1_1-peptiden i (a) och SV1_2-peptiden i (b).
+
+(a)
+
+(b)
+
+Figur A.3: Antalet vätebindningar inom bindningssekvensen för peptiderna under
+50 ns utan elektriska fält för Kontroll_1-peptiden i (a) och Kontroll_2-peptiden i
+(b).
+
+60
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+(a)
+
+(b)
+
+Figur A.4: Antalet vätebindningar inom bindningssekvensen för LV1-peptiderna
+V
+V
+under 50 ns med elektriska fält med styrkan 5 · 107 m
+i (a) och (b) samt −5 · 107 m
+i
+(c) och (d).
+
+61
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+(a)
+
+(b)
+
+Figur A.5: Antalet vätebindningar inom bindningssekvensen för SV1-peptiderna
+V
+V
+under 50 ns med elektriska fält med styrkan 5 · 107 m
+i (a) och (b) samt −5 · 107 m
+i
+(c) och (d).
+
+62
+
+Ville Järvinen
+
+(a)
+
+(b)
+
+(a)
+
+(b)
+
+Figur A.6: Antalet vätebindningar inom bindningssekvensen för Kontroll-peptiderna
+V
+V
+under 50 ns med elektriska fält med styrkan 5 · 107 m
+i (a) och (b) samt −5 · 107 m
+i
+(c) och (d).
+
+63
+
+

@@ -1,0 +1,3556 @@
+FAKULTETSOMRÅDET FÖR
+NATURVETENSKAPER OCH TEKNIK
+
+Avhandling Pro Gradu
+Optimal stopping av Markovkedjor
+i diskret tid
+
+Skribent:
+Aleksi
+
+Faler
+
+Handledare:
+, 37892
+
+Paavo
+
+2022
+
+Salminen
+
+1
+
+INNEHÅLL
+
+Innehåll
+
+1 Introduktion
+
+2
+
+2 Grundläggande teori
+
+4
+
+2.1
+
+Stokastiska variabler . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4
+
+2.2
+
+Stopptider . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+8
+
+2.3
+
+Markovkedjor . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+13
+
+2.4
+
+Martingaler . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+
+2.5
+
+Gränsvärdessatser . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+17
+
+3 Ändlig horisont
+
+19
+
+3.1
+
+Beskrivning av problemet
+
+. . . . . . . . . . . . . . . . . . . . . .
+
+19
+
+3.2
+
+Värdefunktion och optimal stopptid . . . . . . . . . . . . . . . . .
+
+20
+
+3.3
+
+Bakåt induktion . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+24
+
+4 Oändlig horisont
+
+28
+
+4.1
+
+Excessiva funktioner . . . . . . . . . . . . . . . . . . . . . . . . .
+
+29
+
+4.2
+
+Värdefunktioner och optimala stopptider . . . . . . . . . . . . . .
+
+38
+
+4.3
+
+Modell med observationskostnad . . . . . . . . . . . . . . . . . . .
+
+41
+
+5 Problem av Darling, Liggett och Taylor
+
+47
+
+KAPITEL 1.
+
+2
+
+INTRODUKTION
+
+Kapitel 1
+
+Introduktion
+
+Observera en Markovkedja (Xn )n∈N0 . Vid varje tidpunkt n ∈ N0 nns en möjlighet att stanna eller fortsätta till följande observation. Beslutet att stanna fattas
+utifrån utförda observationer. Om man stannar vid tidpunkten n efter att ha observerat X0 = x0 , X1 = x1 , . . . , Xn = xn , får man vinsten g(xn ). Vinstfunktionen
+
+g antas vara icke-negativ. I allmänhet är tidpunkten var man stannar slumpmässig eftersom Markovkedjan är slumpmässig. Således betecknas denna tidpunkt
+med en stokastisk variabel τ kallad stopptid. Då är vinsten
+
+g(Xτ ) :=
+
+∞
+∑︂
+
+g(Xn )I{τ =n} + g(X∞ )I{τ =∞}
+
+n=0
+
+en stokastisk variabel. Händelsen {τ = ∞} betyder att man aldrig stannar och
+
+g(X∞ ) := lim sup g(Xn )
+n→∞
+
+är vinsten om man aldrig stannar.
+Beteckna mängden av alla stopptider med M. Givet att Markovkedjan startar
+från tillståndet X0 = x, kan man förvänta sig att vinna E[g(Xτ )|X0 = x] vid en
+stopptid τ ∈ M. Värdefunktionen
+
+V (x) := sup E[g(Xτ )|X0 = x]
+τ ∈M
+
+ger den största förväntade vinsten. En stopptid τ ∗ ∈ M för vilken gäller
+
+E[g(Xτ ∗ )|X0 = x] = V (x),
+kallas för en optimal stopptid. Vid ett optimal stopping-problem vill man hitta
+en beskrivning för värdefunktionen och för den optimala stopptiden.
+
+KAPITEL 1.
+
+3
+
+INTRODUKTION
+
+Stopptider och Markovkedjor denieras i det andra kapitlet tillsammans med
+några exempel. Andra nödvändiga denitioner och satser beskrivs också. Material
+från olika källor har använts i detta kapitel.
+I det tredje kapitlet betraktas optimal stopping-problem där det är tillåtet
+att endast göra ett begränsat antal observationer. Sådana problem kan lösas med
+rekursion och två olika lösningsmetoder presenteras. Presentationen följer kapitel
+2 i Shiryaev [7].
+I det fjärde kapitlet studeras excessiva funktioner och det visas att värdefunktionen är den minsta excessiva majoranten av vinstfunktionen g . Utöver den
+hittills betraktade modellen med vinsten g(Xτ ), presenteras också en modell där
+varje observation är förknippad med en kostnad. Då är
+τ
+
+β g(Xτ ) −
+
+τ −1
+∑︂
+
+β k c(Xk )
+
+k=0
+
+vinsten vid en stopptid τ . Konstanten 0 < β ≤ 1 gör att framtida värden är
+mindre värdefulla och funktionen c ger kostnaden för att göra en ny observation.
+Här följer presentationen också kapitel 2 i Shiryaev [7].
+Det femte kapitlet presenterar ett problem av Darling, Liggett och Taylor [2].
+Problemet handlar om optimal stopping av en partialsumma.
+
+KAPITEL 2.
+
+4
+
+GRUNDLÄGGANDE TEORI
+
+Kapitel 2
+
+Grundläggande teori
+
+2.1
+
+Stokastiska variabler
+
+I ett slumpförsök betecknar Ω mängden av alla elementära utfall och kallas för utfallsrummet. Inför också beteckningarna N0 := {0, 1, 2, . . . } och N := {1, 2, . . . }.
+
+Denition 2.1. Samlingen av alla delmängder av Ω kallas för en potensmängd
+och betecknas 2Ω ([4], s.7).
+Denition 2.2. Låt Ω vara en icke-tom mängd. En samling F av delmängder
+av Ω för vilken gäller
+(i) Ω ∈ F ,
+(ii) A ∈ F =⇒ Ac ∈ F ,
+(iii) A1 , A2 , . . . ∈ F =⇒
+
+⋃︁∞
+
+i=1
+
+Ai ∈ F ,
+
+kallas för en σ-algebra. Paret (Ω, F) kallas för ett mätbart rum. ([8], s.7).
+En delmängd av Ω som hör till F kallas för en händelse. Varje samling av
+delmängder av Ω ger upphov till en σ -algebra.
+
+Denition 2.3. Låt Ω vara en icke-tom mängd och A en samling av delmängder
+av Ω. Den minsta σ-algebran som A är en delmängd av är
+σ(A) :=
+
+⋂︂
+
+G
+
+G∈G
+
+där G är mängden av alla σ-algebror G som A är en delmängd av. Denna minsta
+σ -algebra kallas för en σ -algebra genererad av A. ([8], s.8).
+
+KAPITEL 2.
+
+5
+
+GRUNDLÄGGANDE TEORI
+
+Anmärkning 2.4. Mängden G innehåller åtminstone 2Ω och snittet av σ-algebror
+är en σ-algebra så den minsta σ-algebran σ(A) är alltid denierad ([4], s.7). Om
+A är en σ -algebra, är σ(A) = A.
+Denition 2.5. Betrakta Ω = R och låt A vara samlingen av alla öppna intervaller av R. Då kallas B(R) := σ(A) för Borel σ-algebra av R. Borel σ-algebra
+av Rn för n ∈ N är σ-algebran genererad av samlingen av alla öppna delmängder av Rn och betecknas B(Rn ). Elementen i B(Rn ) kallas för Borelmängder och
+(Rn , B(Rn )) utgör ett mätbart rum. ([8], s.8).
+Denition 2.6. Låt (Ω, F) vara ett mätbart rum. En följd F = (Fn )n∈N0 av
+σ -algebror för vilka gäller
+(i) Fn ⊆ F, ∀n ∈ N0 ,
+(ii) Fn ⊆ Fn+1 , ∀n ∈ N0 ,
+kallas för en ltration. ([8], s.31). Sätt F∞ := σ(
+
+⋃︁∞
+
+n=0
+
+Fn ) ([4], s.233).
+
+En ltration är alltså en icke-avtagande följd av σ -algebror. Oftast kan man
+tänka att Fn innehåller informationen upp till tidpunkten n och att informationen
+ökar med tiden.
+
+Denition 2.7. Låt (Ω, F) vara ett mätbart rum. En funktion P : F → [0, 1] för
+vilken gäller
+(i) P(Ω) = 1,
+(ii) A1 , A2 , . . . ∈ F, Ai ∩ Aj = ∅, i ̸= j, =⇒ P(
+
+⋃︁∞
+
+i=1
+
+Ai ) =
+
+∑︁∞
+
+i=1
+
+P(Ai ),
+
+kallas för ett sannolikhetsmått. Ett mätbart rum (Ω, F) försett med ett sannolikhetsmått P kallas för ett sannolikhetsrum och betecknas (Ω, F, P). ([8], s.78).
+Ett sannolikhetsrum (Ω, F, P) försett med en ltration F betecknas (Ω, F, F, P).
+
+Denition 2.8. Låt (V, V) och (U, U) vara mätbara rum. En funktion f : V → U
+för vilken gäller
+{v ∈ V : f (v) ∈ B} ∈ V,
+
+∀B ∈ U,
+
+kallas V -mätbar. Låt (Ω, F, P) vara ett sannolikhetsrum. En F -mätbar funktion
+X : Ω → Rn kallas för en stokastisk variabel då n = 1 och för en stokastisk vektor
+då n ≥ 2. ([4], s.47).
+
+KAPITEL 2.
+
+6
+
+GRUNDLÄGGANDE TEORI
+
+Mängden {v ∈ V : f (v) ∈ B} kan skrivas kortare som {f ∈ B} eller f −1 (B).
+Om X är en stokastisk variabel eller vektor, kallas {ω ∈ Ω : X(ω) ∈ B} = {X ∈ B}
+för en händelse.
+
+Denition 2.9. Låt (Ω, F, P) vara ett sannolikhetsrum och X1 , X2 , . . . , Xn stokastiska variabler där n ∈ N. Då kallas
+{︁
+}︁
+σ(X1 , X2 , . . . , Xn ) := {(X1 , X2 , . . . , Xn ) ∈ B} : B ∈ B(Rn )
+
+för en σ-algebra genererad av X1 , X2 , . . . , Xn . ([8], s.8).
+
+Anmärkning 2.10. En stokastisk variabel X1 är σ(X1 , X2 , . . . , Xn )-mätbar och
+den minsta σ-algebran som gör X1 en mätbar funktion är σ(X1 ) ([8], s.8).
+Man kan tolka σ(X1 , X2 , . . . , Xn ) som information om de stokastiska variablerna X1 , X2 , . . . , Xn . Ofta denieras Fn = σ(X1 , X2 , . . . , Xn ) så att (Fn )n∈N
+tillsammans med F0 = {Ω, ∅} utgör en ltration.
+
+Denition 2.11. Låt (Ω, F, P) vara ett sannolikhetsrum och I en godtycklig
+indexmängd.
+(i) Två händelser A1 och A2 för vilka gäller P(A1 ∩ A2 ) = P(A1 )P(A2 ), kallas
+oberoende. En samling (Ai )i∈I av händelser för vilken gäller
+(︄
+
+)︄
+⋂︂
+
+P
+
+Ai
+
+=
+
+i∈J
+
+∏︂
+
+P(Ai )
+
+i∈J
+
+för varje ändlig J ⊆ I , kallas oberoende.
+(ii) Två samlingar A1 och A2 av händelser sådana att P(A1 ∩ A2 ) = P(A1 )P(A2 )
+gäller för varje A1 ∈ A1 och A2 ∈ A2 , kallas oberoende. Samlingarna
+(Ai )i∈I för vilka gäller
+(︄
+P
+
+)︄
+⋂︂
+
+i∈J
+
+Ai
+
+=
+
+∏︂
+
+P(Ai )
+
+i∈J
+
+för varje ändlig J ⊆ I och för varje Ai ∈ Ai , kallas oberoende.
+(iii) De stokastiska variablerna (Xi )i∈I sägs vara oberoende om σ-algebrorna
+(︁
+)︁
+σ(Xi ) i∈I är oberoende.
+([4], s.15 & s.65).
+
+KAPITEL 2.
+
+GRUNDLÄGGANDE TEORI
+
+7
+
+Denition 2.12. Låt (Ω, F, P) vara ett sannolikhetsrum. En följd (Xn )n∈N0 där
+Xn är en stokastisk variabel för varje n ∈ N0 , kallas för en stokastisk process.
+([8], s.9).
+Låt (Xn )n∈N0 vara en stokastisk process. Oftast anses indexet n ange tid så
+att processens tillstånd vid tidpunkten n ges av Xn . Vanligtvis är de stokastiska
+variablerna i processen inte oberoende. Markovkedjor och martingaler, som denieras och studeras senare i kapitlet, är speciella typer av stokastiska processer.
+
+Denition 2.13. Låt (Ω, F, P) vara ett sannolikhetsrum.
+(i) Väntevärdet av en icke-negativ stokastisk variabel X är
+∫︂
+E(X) :=
+
+X(ω)P(dω)
+Ω
+
+där integralen är en Lebesgue integral med avseende på sannolikhetsmåttet
+P.
+(ii) Väntevärdet av en godtycklig stokastisk variabel X är
+E(X) := E(X + ) − E(X − )
+
+där X + = max{X, 0} och X − = max{−X, 0} är icke-negativa stokastiska
+variabler. Väntevärdet E(X) är odenierat om E(X + ) = E(X − ) = ∞ gäller. Annars sägs väntevärdet E(X) vara denierat. En stokastisk variabel
+X sägs ha ett ändligt väntevärde om E(|X|) = E(X + )+E(X − ) < ∞ gäller.
+([7], s.2).
+
+Sats 2.14 (Jensens olikhet). Låt X vara en stokastisk variabel med ett ändligt
+väntevärde. Om ϕ : R → R är en konvex funktion, är
+E[ϕ(X)] ≥ ϕ(E[X]).
+
+(2.1)
+
+([6], s.58).
+
+Denition 2.15. Låt (Ω, F, P) vara ett sannolikhetsrum och X en stokastisk
+variabel med ett ändligt väntevärde. Det betingade väntevärdet av X givet en
+σ -algebra G ⊂ F är en stokastisk variabel E(X|G) för vilken gäller
+(i) E(X|G) är G -mätbar,
+
+KAPITEL 2.
+
+GRUNDLÄGGANDE TEORI
+
+8
+
+(ii) E[E(X|G)IG ] = E[XIG ], ∀G ∈ G .
+Det betingade väntevärdet är nästan säkert entydigt. ([8], s.299).
+Följande proposition beskriver några egenskaper hos betingat väntevärde.
+
+Proposition 2.16. Låt (Ω, F, P) vara ett sannolikhetsrum, X och Y stokastiska
+variabler med ändliga väntevärden och G ⊂ F en σ-algebra.
+(i) Om X ≥ 0 gäller, är E(X|G) ≥ 0.
+(ii) För a, b ∈ R är E(aX + bY |G) = aE(X|G) + bE(Y |G).
+(iii) Om X ≥ Y gäller, är E(X|G) ≥ E(Y |G).
+(iv) Om X är oberoende av G , är E(X|G) = E(X).
+(v) Om X är G -mätbar, är E(X|G) = X .
+(vi) Om X är G -mätbar, är E(XY |G) = XE(Y |G).
+(vii) E[E(X|G)] = E(X).
+(viii) Om H ⊂ G är en σ-algebra, är E[E(X|G)|H] = E(X|H).
+([5], s.239 & [8], s.299300).
+
+2.2
+
+Stopptider
+
+Låt (Ω, F, F, P) vara ett sannolikhetsrum försett med en ltration. Följande resultat är från Jacod och Protter [4] s.212214 och s.217.
+
+Denition 2.17. En stokastisk variabel τ : Ω → N0 = N0 ∪ {+∞} för vilken
+gäller
+{τ = n} ∈ Fn ,
+
+∀n ∈ N0 ,
+
+kallas för en stopptid. En stopptid τ för vilken gäller
+P(τ < ∞) = 1,
+
+kallas för en ändlig stopptid. En stopptid τ för vilken gäller
+P(τ ≤ N ) = 1
+
+för någon konstant N ∈ N0 , kallas för en begränsad stopptid.
+
+KAPITEL 2.
+
+9
+
+GRUNDLÄGGANDE TEORI
+
+Kravet {τ = n} ∈ Fn betyder att beslutet att stanna vid tidpunkten n fattas
+utifrån informationen tillgänglig vid tidpunkten n.
+
+Anmärkning 2.18. Stopptiden τ kunde också denieras med kravet
+{τ ≤ n} ∈ Fn ,
+
+∀n ∈ N0 .
+
+De två kraven är ekvivalenta för å ena sidan är {τ ≤ n} = nk=0 {τ = k} och
+{τ ≤ ∞} = Ω, å andra sidan är {τ = n} = {τ ≤ n} \ {τ ≤ n − 1} och
+(︁⋃︁∞
+)︁C
+⋂︁
+{τ = ∞} = ∞
+{τ
+>
+n}
+=
+{τ
+≤
+n}
+.
+n=0
+n=0
+⋃︁
+
+Sats 2.19. Låt τ vara en stopptid. Då är
+{︁
+}︁
+Fτ := A ∈ F : A ∩ {τ = n} ∈ Fn , ∀n ∈ N0
+
+en σ-algebra.
+Bevis.
+
+Utfallsrummet Ω hör till Fτ för Ω ∩ {τ = n} = {τ = n} hör till Fn för
+
+varje n ∈ N0 . Om A hör till Fτ , är
+
+(︁
+)︁c (︂
+(︁
+)︁)︂c
+c
+A ∩ {τ = n} = {τ = n} ∩ A ∩ {τ = n} = {τ = n} ∪ A ∩ {τ = n}
+c
+
+ett element av Fn för varje n ∈ N0 . Därmed hör Ac till Fτ . Om A1 , A2 , . . . hör
+)︁
+)︁
+(︁⋃︁∞
+⋃︁∞ (︁
+till Fτ så är
+i=1 Ai ∩ {τ = n} =
+i=1 Ai ∩ {τ = n} ett element av Fn för
+⋃︁
+varje n ∈ N0 . Därmed hör ∞
+i=1 Ai till Fτ .
+Om Fn innehåller informationen upp till den givna tidpunkten n, innehåller
+
+Fτ informationen upp till den slumpmässiga tidpunkten τ .
+Låt (Xn )n∈N0 vara en stokastisk process. Processens tillstånd vid en stopptid
+
+τ ges av
+Xτ :=
+
+∞
+∑︂
+
+Xn I{τ =n} + X∞ I{τ =∞} .
+
+(2.2)
+
+n=0
+
+([1], s.42 & s.78). Termen X∞ kan denieras på olika sätt för olika processer.
+Om gränsvärdet limn→∞ Xn är denierat, är det en naturlig denition för X∞ .
+Annars kan X∞ denieras vara lim supn→∞ Xn eller en godtycklig konstant. Om
+stopptiden τ är ändlig eller begränsad, behöver man inte deniera X∞ .
+
+Exempel 2.20. Låt X1 , X2 , . . . vara oberoende stokastiska variabler med fördelningen P(Xj = 2j ) = 21 = P(Xj = −2j ). Deniera Sn = X1 + X2 + · · · + Xn
+och Fn = σ(X1 , X2 , . . . , Xn ) för varje n ∈ N samt S0 = 0 och F0 = {∅, Ω}.
+
+KAPITEL 2.
+
+10
+
+GRUNDLÄGGANDE TEORI
+
+För k ∈ N deniera stopptiden τk = inf{n ≥ k : Xn = 2n } där inmum av
+den tomma mängden är +∞. Stopptiden τk är tidpunkten för det första positiva
+värdet från och med tidpunkten k. Den är ändlig för varje val av k ty
+P(τk < ∞) = P({τk = k} ∪ {τk = k + 1} ∪ {τk = k + 2} ∪ · · · )
+∞
+∑︂
+=
+P(τk = n)
+=
+
+n=k
+∞
+∑︂
+
+P(Xk = −2k , Xk+1 = −2k+1 , . . . , Xn−1 = −2n−1 , Xn = 2n )
+
+n=k
+
+=
+
+∞ (︃ )︃n−k+1
+∑︂
+1
+n=k
+
+2
+
+= 1.
+
+Vid stopptiden τk har summan formen
+S τk =
+
+∞
+∑︂
+
+Sn I{τk =n} =
+
+∞ [︃
+∑︂
+
+X1 + · · · + Xk−1 −
+
+n=k
+
+n=k
+
+=
+
+∞
+∑︂
+
+n−1
+∑︂
+
+j
+
+n
+
+]︃
+
+2 + 2 I{τk =n}
+
+j=k
+
+[Sk−1 + 2k ]I{τk =n} = Sk−1 + 2k .
+
+n=k
+
+Exempel 2.21. Låt X1 , X2 , . . . vara oberoende stokastiska variabler med diskret
+likformig fördelning på mängden {1, 2, 3, 4, 5, 6}. Deniera Fn = σ(X1 , X2 , . . . , Xn )
+för varje n ∈ N och F0 = {∅, Ω}. Betrakta stopptiden τ = inf{n ∈ N : Xn = 6}
+där inmum av den tomma mängden är +∞. Stopptiden τ är tidpunkten för det
+första tärningskastet som ger en sexa. Den är ändlig ty
+P(τ < ∞) = P({τ = 1} ∪ {τ = 2} ∪ {τ = 3} ∪ · · · )
+∞
+∑︂
+=
+P(τ = n)
+n=1
+
+=
+
+∞
+∑︂
+
+P(X1 < 6, X2 < 6, . . . , Xn−1 < 6, Xn = 6)
+
+n=1
+∞ (︃ )︃n−1
+∑︂
+5
+1
+=
+= 1.
+6
+6
+n=1
+
+Från ovanstående kommer också fram att τ är i detta fall geometriskt fördelat.
+Därmed är E(τ ) = 6. Härnäst visas E(τ |X1 ∈ {2, 4}, . . . , Xτ −1 ∈ {2, 4}) = 3/2.
+Betrakta först
+P(τ = n|X1 ∈ {2, 4}, . . . , Xτ −1 ∈ {2, 4})
+=
+
+P(X1 ∈ {2, 4}, . . . , Xn−1 ∈ {2, 4}, Xn = 6)
+.
+P(X1 ∈ {2, 4}, . . . , Xτ −1 ∈ {2, 4})
+
+KAPITEL 2.
+
+11
+
+GRUNDLÄGGANDE TEORI
+
+Nämnaren kan räknas med hjälp av satsen om total sannolikhet. Då fås
+P(X1 ∈ {2, 4}, X2 ∈ {2, 4}, . . . , Xτ −1 ∈ {2, 4})
+∞
+∑︂
+=
+P(X1 ∈ {2, 4}, X2 ∈ {2, 4}, . . . , Xτ −1 ∈ {2, 4}, τ = k)
+=
+=
+
+k=1
+∞
+∑︂
+
+P(X1 ∈ {2, 4}, X2 ∈ {2, 4}, . . . , Xk−1 ∈ {2, 4}, Xk = 6)
+
+k=1
+∞ (︃
+∑︂
+k=1
+
+1
+3
+
+)︃k−1
+
+1
+1 3
+= · .
+6
+6 2
+
+Då är
+(︁ 1 )︁n−1
+P(τ = n|X1 ∈ {2, 4}, . . . , Xτ −1 ∈ {2, 4}) =
+
+3
+1
+6
+
+·
+
+3
+2
+
+1
+6
+
+(︃ )︃n−1
+1
+2
+=
+3
+3
+
+vilket betyder att τ |X1 ∈ {2, 4}, . . . , Xτ −1 ∈ {2, 4} är också geometriskt fördelat.
+Därmed är E(τ |X1 ∈ {2, 4}, . . . , Xτ −1 ∈ {2, 4}) = 3/2.
+
+Exempel 2.22. Låt X1 , X2 , . . . vara oberoende och likafördelade stokastiska variabler med fördelningen P(X1 = +1) = p = 1 − P(X1 = −1). Deniera
+Sn = X1 + X2 + · · · + Xn och Fn = σ(X1 , X2 , . . . , Xn ) för varje n ∈ N samt
+S0 = 0 och F0 = {∅, Ω}. För k ∈ N deniera τk = inf{n ≥ k : Sn = k} där inmum av den tomma mängden är +∞. Stopptiden τk är tidpunkten då summan
+får värdet k för första gången. För att nå k, måste summan först nå k − 1. För
+k ≥ 2 och n ≥ k − 1 är
+P(τk < ∞|τk−1 = n)
+(︄ ∞
+)︄
+⋃︂
+⃓
+=P
+τk = j ⃓τk−1 = n
+j=n+1
+
+(︄
+=P
+
+∞
+⋃︂
+
+Sk < k, Sk+1 < k, . . . , Sj−1
+
+)︄
+⃓
+< k, Sj = k ⃓τk−1 = n .
+
+j=n+1
+
+Inför beteckningen Ak,n = {Sk < k, Sk+1 < k, . . . , Sn < k}. Då är
+(︄
+P
+
+∞
+⋃︂
+
+Sk < k, Sk+1 < k, . . . , Sj−1
+
+)︄
+⃓
+< k, Sj = k ⃓τk−1 = n
+
+j=n+1
+
+(︁
+)︁
+= P {Ak,n , Sn+1 = k} ∪ {Ak,n , Sn+1 < k, Sn+2 = k} ∪ · · · |τk−1 = n
+(︁
+)︁
+= P {Ak,n , Xn+1 = 1} ∪ {Ak,n , Xn+1 < 1, Xn+1 + Xn+2 = 1} ∪ · · · |τk−1 = n .
+
+KAPITEL 2.
+
+GRUNDLÄGGANDE TEORI
+
+12
+
+Eftersom händelsen {τk−1 = n} ∈ Fn är en delmängd av händelsen Ak,n och
+X1 , X2 , . . . är oberoende och likafördelade, är
+(︁
+)︁
+P {Ak,n , Xn+1 = 1} ∪ {Ak,n , Xn+1 < 1, Xn+1 + Xn+2 = 1} ∪ · · · |τk−1 = n
+(︁
+)︁
+= P {Xn+1 = 1} ∪ {Xn+1 < 1, Xn+1 + Xn+2 = 1} ∪ · · ·
+(︁
+)︁
+= P {S1 = 1} ∪ {S1 < 1, S2 = 1} ∪ {S1 < 1, S2 < 1, S3 = 1} ∪ · · ·
+= P(τ1 < ∞).
+
+Med hjälp av satsen om total sannolikhet fås
+P(τk < ∞) =
+
+∞
+∑︂
+
+P(τk < ∞|τk−1 = n)P(τk−1 = n) +
+
+n=k−1
+
+P(τk < ∞|τk−1 = ∞)P(τk−1 = ∞)
+=
+
+∞
+∑︂
+
+P(τ1 < ∞)P(τk−1 = n) = P(τ1 < ∞)P(τk−1 < ∞).
+
+n=k−1
+
+Detta medför P(τk < ∞) = [P(τ1 < ∞)]k för varje k ∈ N. Det alltså räcker att
+beskriva P(τ1 < ∞). Givet att X1 får värdet +1, är τ1 < ∞. Annars är
+P(τ1 < ∞|X1 = −1)
+(︁
+)︁
+= P {S1 = 1} ∪ {S1 < 1, S2 = 1} ∪ {S1 < 1, S2 < 1, S3 = 1} ∪ · · · |X1 = −1
+(︁
+)︁
+= P {−1 = 1} ∪ {−1 < 1, X2 = 2} ∪ {−1 < 1, X2 < 2, X2 + X3 = 2} ∪ · · ·
+(︁
+)︁
+= P {X2 + X3 = 2} ∪ {X2 + X3 < 2, X2 + X3 + X4 = 2} ∪ · · ·
+(︁
+)︁
+= P {S2 = 2} ∪ {S2 < 2, S3 = 2} ∪ {S2 < 2, S3 < 2, S4 = 2} ∪ · · ·
+= P(τ2 < ∞).
+
+Därmed är
+P(τ1 < ∞) = P(τ1 < ∞|X1 = 1)P(X1 = 1) + P(τ1 < ∞|X1 = −1)P(X1 = −1)
+= p + [P(τ1 < ∞)]2 (1 − p)
+)︁
+(︁
+⇐⇒ P(τ1 < ∞)[1 − P(τ1 < ∞)] = p 1 − [P(τ1 < ∞)]2
+(︁
+)︁
+⇐⇒ P(τ1 < ∞) = p 1 + P(τ1 < ∞)
+∨ P(τ1 < ∞) = 1
+p
+⇐⇒ P(τ1 < ∞) =
+∨ P(τ1 < ∞) = 1.
+1−p
+
+Slutligen fås
+
+⎧
+1
+⎪
+⎪
+p≥
+⎨1,
+2
+)︃k
+.
+P(τk < ∞) = (︃
+p
+1
+⎪
+⎪
+⎩
+, p<
+1−p
+2
+
+KAPITEL 2.
+
+2.3
+
+GRUNDLÄGGANDE TEORI
+
+13
+
+Markovkedjor
+
+Låt (Ω, F, F, P) vara ett sannolikhetsrum försett med en ltration.
+
+Denition 2.23. Låt (E, E) vara ett mätbart rum där E är en delmängd av R.
+En följd (Xn )n∈N0 av stokastiska variabler Xn : Ω → E för vilka gäller
+(i) Xn är Fn -mätbar för varje n ∈ N0 ,
+(ii) P(Xn+1 ∈ B|Fn ) = P(Xn+1 ∈ B|Xn ) för varje B ∈ E och n ∈ N0 ,
+kallas för en Markovkedja. En Markovkedja (Xn )n∈N0 för vilken gäller
+P(Xn+1 ∈ B|Xn = x) = P(X1 ∈ B|X0 = x)
+
+för varje B ∈ E , x ∈ E och n ∈ N0 , kallas tidshomogen. ([1], s.102 & [7], s.18).
+Mängden E är mängden av alla möjliga värden eller tillstånd för en Markovkedja. Med informationen tillgänglig vid tidpunkten n vet man vilket tillstånd
+Markovkedjan är i vid tidpunkten n, men framtida tillstånd är oberoende av
+föregående tillstånd givet det nuvarande tillståndet. För tidshomogena Markovkedjor hålls sannolikheten att övergå från ett tillstånd till ett annat konstant
+med tiden.
+
+Exempel 2.24. Låt X0 , X1 , . . . vara oberoende stokastiska variabler och deniera Fn = σ(X0 , X1 , . . . , Xn ) för varje n ∈ N0 .
+a) Följden (Xn )n∈N0 är en Markovkedja ty
+P(Xn+1 ∈ B|Fn ) = P(Xn+1 ∈ B) = P(Xn+1 ∈ B|Xn ).
+
+b) Deniera summan Sn = X0 + X1 + · · · + Xn för varje n ∈ N0 . Följden
+(Sn )n∈N0 är en Markovkedja ty
+P(Sn+1 ∈ B|Fn ) = P(Sn + Xn+1 ∈ B|Fn ) = P(Sn+1 ∈ B|Sn ).
+
+c) Deniera Yn = max{X0 , X1 , . . . , Xn } för varje n ∈ N0 . Följden (Yn )n∈N0
+är en Markovkedja ty
+P(Yn+1 ∈ B|Fn ) = P(max{Yn , Xn+1 } ∈ B|Fn ) = P(Yn+1 ∈ B|Yn ).
+
+På ett liknande sätt visas att Zn = min{X0 , X1 , . . . , Xn } också skapar en
+Markovkedja.
+
+KAPITEL 2.
+
+14
+
+GRUNDLÄGGANDE TEORI
+
+Följande beteckningar och resultat är från Shiryaev [7] s.1819 och s.21.
+Inför beteckningen Px (Xn+1 ∈ B) := P(Xn+1 ∈ B|X0 = x) och för väntevärdet beteckningen Ex (Xn+1 ) := E(Xn+1 |X0 = x). Med tidshomogena Markovkedjor används beteckningen PXn (X1 ∈ B) := P(Xn+1 ∈ B|Xn ) och för väntevärdet
+beteckningen EXn (X1 ) := E(Xn+1 |Xn ).
+Egenskap
+
+(ii) i denition 2.23 kallas för Markovegenskapen. Om den givna
+
+tidpunkten n ersätts med en ändlig stopptid τ , fås den starka Markovegenskapen
+
+Px (Xτ +1 ∈ B|Fτ ) = Px (Xτ +1 ∈ B|Xτ ) för varje B ∈ E och x ∈ E.
+
+(2.3)
+
+Varje Markovkedja i diskret tid har den starka Markovegenskapen.
+Låt (Xn )n∈N0 vara en tidshomogen Markovkedja. För m ∈ N0 deniera operatorn θm som Xn (θm ω) := Xn+m (ω). Om Y är en stokastisk variabel, denieras
+
+θm Y (ω) := Y (θm ω). På ett liknande sätt denieras θτ där τ är en ändlig stopptid.
+(︁
+)︁
+Om τ är en ändlig stopptid och Y en σ (Xn )n∈N0 -mätbar stokastisk variabel
+med ett ändligt väntevärde, är
+
+Ex (θτ Y |Fτ ) = Ex (Y |Xτ ),
+
+∀x ∈ E,
+
+(2.4)
+
+en ekvivalent formulering av den starka Markovegenskapen (2.3). Om Z är en
+
+Fτ -mätbar stokastisk variabel med ett ändligt väntevärde och Ex (|Zθτ Y |) < ∞
+gäller för varje x ∈ E , följer från likheten (2.4)
+
+Ex (Zθτ Y ) = Ex [ZEx (Y |Xτ )].
+
+2.4
+
+(2.5)
+
+Martingaler
+
+Låt (Ω, F, F, P) vara ett sannolikhetsrum försett med en ltration. Följande resultat är från Rosenthal [6] s.161165 och s.105.
+
+Denition 2.25. En följd (Xn )n∈N0 av stokastiska variabler för vilka gäller
+(i) Xn är Fn -mätbar för varje n ∈ N0 ,
+(ii) E(|Xn |) < ∞,
+
+∀n ∈ N0 ,
+
+(iii) E(Xn+1 |Fn ) = Xn ,
+
+∀n ∈ N0 ,
+
+KAPITEL 2.
+
+15
+
+GRUNDLÄGGANDE TEORI
+
+kallas för en martingal. Om (ii) ersätts med
+(︁ )︁
+(︁ )︁
+E Xn+ < ∞ eller E Xn− < ∞,
+
+∀n ∈ N0 ,
+
+kallas (Xn )n∈N0 för en generaliserad martingal ([7], s.16). Om (iii) ersätts med
+E(Xn+1 |Fn ) ≤ Xn ,
+
+∀n ∈ N0 ,
+
+kallas (Xn )n∈N0 för en supermartingal. Om (iii) ersätts med
+E(Xn+1 |Fn ) ≥ Xn ,
+
+∀n ∈ N0 ,
+
+kallas (Xn )n∈N0 för en submartingal.
+
+Exempel 2.26. Låt Y0 , Y1 , Y2 , . . . vara oberoende och likafördelade stokastiska variabler med fördelningen P(Y0 = +1) = p = 1 − P(Y0 = −1). Deniera
+Sn = Y0 + Y1 + · · · + Yn och Fn = σ(Y0 , Y1 , . . . , Yn ) för varje n ∈ N0 . Då är
+E(|Sn |) ≤ E(|Y0 | + |Y1 | + · · · + |Yn |) = n + 1
+
+och enligt egenskaperna (ii), (v) och (iv) i proposition 2.16 är
+E(Sn+1 |Fn ) = Sn + E(Yn+1 ) = Sn + 2(p − 1/2).
+
+Följden (Sn )n∈N0 är en martingal för p = 1/2, en supermartingal för p < 1/2 och
+en submartingal för p > 1/2.
+Om följden (Xn )n∈N0 är en martingal, är (Xn )n∈N0 både en supermartingal
+och en submartingal. Om (Xn )n∈N0 är en submartingal, är (−Xn )n∈N0 en supermartingal. Det alltså räcker att betrakta bara supermartingaler för att undersöka
+egenskaper hos supermartingaler och submartingaler.
+Om (Xn )n∈N0 är en supermartingal, är E(Xn+1 ) ≤ E(Xn ) ≤ · · · ≤ E(X0 ).
+Följande sats visar att olikheten gäller också för begränsade stopptider.
+
+Sats 2.27. Låt (Xn )n∈N0 vara en supermartingal och τ1 ≤ τ2 begränsade stopptider. Då är
+(2.6)
+
+E(Xτ2 ) ≤ E(Xτ1 ).
+
+Anta att stopptiderna τ1 och τ2 är begränsade av N ∈ N0 . Då är
+(︄ N
+)︄
+N
+N
+∑︂
+∑︂
+∑︂
+E(|Xτ2 |) = E
+|Xn |I{τ2 =n} =
+E(|Xn |I{τ2 =n} ) ≤
+E(|Xn |) < ∞
+
+Bevis.
+
+n=0
+
+n=0
+
+n=0
+
+KAPITEL 2.
+
+GRUNDLÄGGANDE TEORI
+
+16
+
+vilket betyder att väntevärdena E(Xτ1 ), E(Xτ2 ) och E(Xτ2 − Xτ1 ) är ändliga.
+Händelsen {τ1 < n + 1 ≤ τ2 } = {τ1 ≤ n} ∩ {τ2 ≤ n}C hör till Fn . Därmed är
+(︄ τ −1
+)︄
+2
+∑︂
+E(Xτ2 − Xτ1 ) = E
+Xn+1 − Xn
+n=τ1
+
+(︄N −1
+)︄
+∑︂
+=E
+(Xn+1 − Xn )I{τ1 <n+1≤τ2 }
+n=0
+
+=
+
+=
+
+N
+−1
+∑︂
+n=0
+N
+−1
+∑︂
+
+[︁
+]︁
+E (Xn+1 − Xn )I{τ1 <n+1≤τ2 }
+(︂(︁
+)︂
+)︁
+E E[Xn+1 |Fn ] − Xn I{τ1 <n+1≤τ2 } ≤ 0
+
+n=0
+
+vilket bevisar satsen.
+
+Korollarium 2.28. Låt τ1 ≤ τ2 vara begränsade stopptider. Om (Xn )n∈N0 är
+en submartingal så är E(Xτ2 ) ≥ E(Xτ1 ). Om (Xn )n∈N0 är en martingal så är
+E(Xτ2 ) = E(Xτ1 ).
+Denition 2.29. En följd (Xn )n∈N0 av stokastiska variabler för vilken gäller
+(︁
+)︁
+lim sup E |Xn |I{|Xn |≥α} = 0,
+α→∞ n∈N0
+
+kallas likformigt integrerbar.
+Följande satserna är från Shiryaev [7] s.1617.
+
+Sats 2.30.
+(i) Låt (Xn )n∈N0 vara en supermartingal som uppfyller supn∈N0 E(Xn− ) < ∞.
+Då är gränsvärdet X∞ = limn→∞ Xn ändligt med sannolikheten ett. Därtill
+−
+är E(X∞
+) < ∞.
+(ii) Låt (Xn )n∈N0 vara en likformigt integrerbar supermartingal som uppfyller supn∈N0 E(Xn− ) < ∞. Då är också (Xn )n∈N0 en supermartingal. Alltså
+X∞ = limn→∞ Xn är F∞ -mätbar, E(|X∞ |) < ∞ gäller och för varje n ∈ N0
+är E(X∞ |Fn ) ≤ Xn .
+(iii) Låt (Xn )n∈N0 vara en generaliserad supermartingal. För nästan varje ω sådan att inf sup E(Xn− |Fm ) < ∞ gäller, är gränsvärdet limn→∞ Xn ändligt
+m∈N0 n∈N0
+eller lika med +∞.
+
+KAPITEL 2.
+
+17
+
+GRUNDLÄGGANDE TEORI
+
+Sats 2.31. Låt X vara en stokastisk variabel.
+(i) Om E(|X|) < ∞ gäller så skapar Xn = E(X|Fn ) en martingal som är
+sådan att gränsvärdet limn→∞ E(X|Fn ) är denierat med sannolikheten ett.
+Därtill är limn→∞ E(X|Fn ) = E(X|F∞ ).
+(ii) Om E(X + ) < ∞ gäller så är gränsvärdet limn→∞ E(X|Fn ) denierat med
+sannolikheten ett. Därtill är limn→∞ E(X|Fn ) ≤ E(X|F∞ ).
+
+Sats 2.32. Låt τ1 ≤ τ2 vara stopptider och Y en stokastisk variabel med ett
+ändligt väntevärde. Om (Xn )n∈N0 är en supermartingal som för varje n ∈ N0
+uppfyller Xn ≥ E(Y |Fn ) så har Xτ1 och Xτ2 ändliga väntevärden och därtill är
+E(Xτ2 |Fτ1 ) ≤ Xτ1 . Ett specialfall är att om (Xn )n∈N0 är en likformigt integrerbar
+martingal så är E(Xτ2 |Fτ1 ) = Xτ1 .
+2.5
+
+Gränsvärdessatser
+
+Följande resultat är från Shiryaev [7] s.3.
+
+Sats 2.33 (Monotona konvergenssatsen). Låt (Xn )n∈N vara en följd av stokastiska variabler sådan att Xn n.s.
+→ X gäller. Om både Xn ≤ Xn+1 för varje n ∈ N
+−
+och E(X1 ) < ∞ gäller så är
+)︂
+(︂
+lim E(Xn ) = E lim Xn .
+
+n→∞
+
+(2.7)
+
+n→∞
+
+Om både Xn ≥ Xn+1 för varje n ∈ N och E(X1+ ) < ∞ gäller så gäller (2.7).
+
+Sats 2.34 (Fatous lemma). Låt (Xn )n∈N och Y vara stokastiska variabler. Om
+både Xn ≥ Y för varje n ∈ N och E(Y ) > −∞ gäller så är
+(︂
+)︂
+E lim inf Xn ≤ lim inf E(Xn ).
+n→∞
+
+n→∞
+
+(2.8)
+
+Om både Xn ≤ Y för varje n ∈ N och E(Y ) < ∞ gäller så är
+(︃
+
+)︃
+
+lim sup E(Xn ) ≤ E lim sup Xn .
+n→∞
+
+n→∞
+
+(2.9)
+
+Sats 2.35 (Dominerade konvergenssatsen). Låt (Xn )n∈N vara en följd av stop
+kastiska variabler sådan att Xn → X gäller och Y en stokastisk variabel med ett
+ändligt väntevärde sådan att |Xn | ≤ Y gäller för varje n ∈ N. Då är E(|X|) < ∞
+och
+lim E(|Xn − X|) = 0.
+
+n→∞
+
+(2.10)
+
+KAPITEL 2.
+
+GRUNDLÄGGANDE TEORI
+
+18
+
+Anmärkning 2.36. I de föregående satserna kan väntevärdet ersättas med betingat väntevärde.
+
+KAPITEL 3.
+
+19
+
+ÄNDLIG HORISONT
+
+Kapitel 3
+
+Ändlig horisont
+
+Presentationen i detta kapitel följer Shiryaev [7] s.2535.
+Låt (Ω, F, F, P) vara ett sannolikhetsrum försett med en ltration. Betrakta
+en tidshomogen Markovkedja (Xn )n∈N0 med värden i tillståndsrummet (E, E) och
+en E -mätbar funktion g : E → [0, ∞].
+
+3.1
+
+Beskrivning av problemet
+
+Ett optimal stopping-problem sägs ha en ändlig horisont om det är tillåtet att
+högst göra ett begränsat antal N ∈ N0 observationer. Eftersom man måste stanna
+senast vid tidpunkten N , räcker det att betrakta begränsade stopptider.
+Låt M vara mängden av alla stopptider denierade i sannolikhetsrummet
+
+(Ω, F, F, P). Deniera mängden av alla stopptider begränsade av N som
+{︁
+}︁
+MN := τ ∈ M : τ (ω) ≤ N , ∀ω ∈ Ω .
+
+(3.1)
+
+Om τ hör till mängden MN , är
+
+g(Xτ ) :=
+
+N
+∑︂
+
+g(Xn )I{τ =n}
+
+(3.2)
+
+n=0
+
+vinsten vid stopptiden τ . Eftersom g är en icke-negativ funktion, är väntevärdet
+
+Ex [g(Xτ )] denierat för varje τ ∈ MN och x ∈ E . Detta väntevärde kallas för en
+förväntad vinst vid en stopptid τ .
+Deniera värdefunktionen V N : E → [0, ∞] som
+
+V N (x) := sup Ex [g(Xτ )].
+τ ∈MN
+
+(3.3)
+
+KAPITEL 3.
+
+20
+
+ÄNDLIG HORISONT
+
+Värdefunktionen ger den största förväntade vinsten för olika starttillstånd x ∈ E .
+En begränsad stopptid τ N ∈ MN för vilken gäller
+
+Ex [g(Xτ N )] = V N (x),
+
+∀x ∈ E,
+
+(3.4)
+
+kallas för en optimal stopptid. Det optimal stopping-problemet med horisonten
+
+N är att hitta en beskrivning för V N (x) och τ N .
+
+3.2
+
+Värdefunktion och optimal stopptid
+
+Sats 3.3 nedan visar att varje problem med ändlig horisont är i princip lösbar
+med rekursion. För att bevisa satsen behöver ett par mellanresultat bevisas först.
+Deniera operatorn Q som
+
+(Qg)(x) := max{g(x), Ex [g(X1 )]}.
+
+(3.5)
+
+Från olikheten g(x) ≤ (Qg)(x) följer Ex [g(X1 )] ≤ Ex [(Qg)(X1 )]. Upprepad användning av operatorn Q ger därmed
+
+(︁
+)︁
+(Q2 g)(x) = Q(Qg) (x)
+= max{(Qg)(x), Ex [(Qg)(X1 )]}
+= max{g(x), Ex [g(X1 )], Ex [(Qg)(X1 )]}
+= max{g(x), Ex [(Qg)(X1 )]}.
+Med induktion kan man visa att för varje n ∈ N gäller
+
+(Qn g)(x) = max{g(x), Ex [(Qn−1 g)(X1 )]}
+
+(3.6)
+
+där (Q0 g)(x) := g(x).
+
+Lemma 3.1. För varje n ∈ N0 den förväntade vinsten vid varje stopptid τ ∈ Mn
+uppfyller
+Ex [g(Xτ )] ≤ (Qn g)(x),
+Bevis.
+
+∀x ∈ E.
+
+För n = 0 är τ ≡ 0 det enda elementet i M0 så då är
+
+Ex [g(Xτ )] = g(x) = (Q0 g)(x).
+För n > 0 och τ ∈ Mn är
+
+{τ = n} = {τ ≤ n − 1}C ∈ Fn−1
+
+(3.7)
+
+KAPITEL 3.
+
+21
+
+ÄNDLIG HORISONT
+
+så då är
+
+Ex [g(Xτ )] = Ex [g(Xτ )I{τ ≤n−1} + g(Xτ )I{τ =n} ]
+= Ex [g(Xτ ∧(n−1) )I{τ ≤n−1} ] + Ex [g(Xn )I{τ =n} ]
+(︂
+)︂
+= Ex [g(Xτ ∧(n−1) )I{τ ≤n−1} ] + Ex I{τ =n} Ex [g(Xn )|Fn−1 ]
+(︂
+)︂
+= Ex [g(Xτ ∧(n−1) )I{τ ≤n−1} ] + Ex I{τ =n} EXn−1 [g(X1 )]
+(︂
+)︂
+= Ex g(Xτ ∧(n−1) )I{τ ≤n−1} + I{τ =n} EXτ ∧(n−1) [g(X1 )]
+≤ Ex [max{g(Xτ ∧(n−1) ), EXτ ∧(n−1) [g(X1 )]}]
+= Ex [(Qg)(Xτ ∧(n−1) )].
+Av detta följer
+
+Ex [g(Xτ )] ≤ Ex [(Qg)(Xτ ∧(n−1) )]
+≤ Ex [(Q2 g)(Xτ ∧(n−2) )] ≤ · · · ≤ Ex [(Qn g)(Xτ ∧0 )] = (Qn g)(x)
+vilket bevisar lemmat.
+En direkt följd av lemma 3.1 är att för varje n ∈ N0 uppfyller värdefunktionen
+n
+
+V (x)
+V n (x) ≤ (Qn g)(x),
+
+∀x ∈ E.
+
+(3.8)
+
+Lemma 3.2. För varje n ∈ N0 deniera stopptiden
+σ n := min{0 ≤ k ≤ n : g(Xk ) = (Qn−k g)(Xk )}.
+
+(3.9)
+
+För varje n ∈ N0 är den förväntade vinsten vid stopptiden σn
+Ex [g(Xσn )] = (Qn g)(x),
+Bevis.
+
+∀x ∈ E.
+
+(3.10)
+
+För n = 0 är σ 0 ≡ 0 så då är
+
+Ex [g(Xσ0 )] = g(x) = (Q0 g)(x).
+Anta att ekvationen (3.10) gäller för n = m och visa att den gäller för n = m + 1.
+Fixera ett tillstånd x ∈ E . Om Px (σ m+1 = 0) = 1 gäller så enligt ekvationen
+(3.9) är
+
+(︂
+)︂
+(︂
+)︂
+1 = Px (σ m+1 = 0) = Px g(X0 ) = (Qm+1 g)(X0 ) = P g(x) = (Qm+1 g)(x) .
+
+KAPITEL 3.
+
+22
+
+ÄNDLIG HORISONT
+
+Alltså funktionsvärdena g(x) och (Qm+1 g)(x) är lika med varandra. Därmed är
+
+Ex [g(Xσm+1 )] = g(x) = (Qm+1 g)(x).
+Om Px (σ m+1 = 0) < 1 gäller så är
+(︂
+)︂
+m+1
+m+1
+Px (σ
+= 0) = P g(x) = (Q
+g)(x) = 0
+eftersom g(x) och (Qm+1 g)(x) är deterministiska funktionsvärden. Därmed är
+
+Px (σ m+1 ≥ 1) = 1. Härnäst visas att i detta fall kan σ m+1 skrivas som
+σ m+1 = 1 + θ1 σ m .
+Enligt denitionen av operatorn θ1 är
+
+{︁
+(︁
+)︁ (︁
+)︁(︁
+)︁}︁
+θ1 σ m (ω) = θ1 min 0 ≤ k ≤ m : g Xk (ω) = Qm−k g Xk (ω)
+{︁
+(︁
+)︁ (︁
+)︁(︁
+)︁}︁
+= min 0 ≤ k ≤ m : g Xk (θ1 ω) = Qm−k g Xk (θ1 ω)
+{︁
+(︁
+)︁ (︁
+)︁(︁
+)︁}︁
+= min 0 ≤ k ≤ m : g Xk+1 (ω) = Qm−k g Xk+1 (ω)
+{︁
+(︁
+)︁ (︁
+)︁(︁
+)︁}︁
+= min 0 ≤ k ≤ m : g Xk+1 (ω) = Qm+1−(k+1) g Xk+1 (ω) .
+Detta tillsammans med resultatet Px (σ m+1 ≥ 1) = 1 ger
+
+{︁
+(︁
+)︁ (︁
+)︁(︁
+)︁}︁
+1 + θ1 σ m (ω) = min 1 ≤ k + 1 ≤ m + 1 : g Xk+1 (ω) = Qm+1−(k+1) g Xk+1 (ω)
+{︁
+(︁
+)︁ (︁
+)︁(︁
+)︁}︁
+= min 1 ≤ l ≤ m + 1 : g Xl (ω) = Qm+1−l g Xl (ω)
+= σ m+1 (ω).
+Från ekvationen (3.6) följer (Qm+1 g)(x) = Ex [(Qm g)(X1 )] vilket tillsammans
+med induktionsantagandet ger
+m+1
+
+(Q
+
+(︂
+)︂
+(︂
+[︁
+]︁)︂
+m
+g)(x) = Ex (Q g)(X1 ) = Ex EX1 g(Xσm )
+= Ex [θ1 g(Xσm )] = Ex [g(X1+θ1 σm )] = Ex [g(Xσm+1 )].
+
+Därmed är lemmat bevisat.
+För att lösa ett optimal stopping-problem med horisonten N , måste man först
+lösa det med horisonten n = 0, 1, . . . , N − 1.
+
+Sats 3.3. Värdefunktionen har formen
+V 0 (x) = g(x)
+
+(3.11)
+
+KAPITEL 3.
+
+23
+
+ÄNDLIG HORISONT
+
+och
+V n (x) = max{g(x), Ex [V n−1 (X1 )]},
+
+n = 1, 2, . . . , N.
+
+(3.12)
+
+En optimal stopptid är
+τ N := min{0 ≤ n ≤ N : g(Xn ) = V N −n (Xn )}.
+Bevis.
+
+(3.13)
+
+Stopptiden σ n denierad i lemma 3.2 hör till mängden Mn för varje
+
+n ∈ N0 . Enligt lemmana 3.1 och 3.2 är
+Ex [g(Xσn )] ≤ V n (x) ≤ (Qn g)(x) = Ex [g(Xσn )]
+vilket betyder att för varje n ∈ N0 och x ∈ E är
+
+Ex [g(Xσn )] = V n (x) = (Qn g)(x).
+Därmed är σ n en optimal stopptid i mängden Mn för varje n ∈ N0 och stopptiden
+
+τ N = σ N en optimal stopptid i mängden MN . Ekvationen (3.6) ger rekursionen
+(3.12).
+En analytisk lösning till V N (x) kan vara svårt att hitta men med den rekursiva
+ekvationen (3.12) kan man alltid hitta en numerisk lösning.
+
+Exempel 3.4. Låt X0 , X1 , . . . vara oberoende stokastiska variabler med diskret
+likformig fördelning på mängden {1, 2, 3, 4, 5, 6}. För varje n ∈ N0 deniera
+Fn = σ(X0 , X1 , . . . , Xn ). Då är (Xn )n∈N0 en tidshomogen Markovkedja.
+En tärning får kastas högst tre gånger och när man slutar är vinsten lika med
+antalet prickar som tärningen visar. Härnäst visas den optimala spelstrategin.
+Utfallet för det första tärningskastet kan tänkas vara starttillståndet för Markovkedjan. Då har man ett optimal stopping-problem med horisonten 2 och med
+vinstfunktionen g(x) = x. Värdefunktionen kan i detta fall skrivas som
+V n (x) = max{g(x), Ex [V n−1 (X1 )]} = max{x, E[V n−1 (X1 )]}.
+
+För n = 0, 1, 2 har V n (x) formen
+V 0 (x) = x,
+V 1 (x) = max{x, E(X1 )} = max{x, 3.5}
+
+och
+V 2 (x) = max{x, E[max{X1 , 3.5}]} = max{x, 4.25}.
+
+Om första kastet, X0 , är 5 eller 6 så slutar man. Annars kastar man på nytt.
+Om andra kastet är 4, 5 eller 6 så slutar man. Annars kastar man ännu en sista
+gång.
+
+KAPITEL 3.
+
+3.3
+
+24
+
+ÄNDLIG HORISONT
+
+Bakåt induktion
+
+För 0 ≤ n ≤ N deniera mängden av alla stopptider som stannar tidigast vid
+tidpunkten n och senast vid tidpunkten N som
+
+{︁
+}︁
+N
+MN
+n := τ ∈ M : n ≤ τ (ω) ≤ N , ∀ω ∈ Ω .
+
+(3.14)
+
+Deniera värdefunktionen VnN : E → [0, ∞] som
+
+VnN (x) := sup Ex [g(Xτ )].
+
+(3.15)
+
+τ ∈MN
+n
+
+En stopptid τnN ∈ MN
+n för vilken gäller
+
+)︁]︁
+[︁ (︁
+Ex g XτnN = VnN (x),
+
+∀x ∈ E,
+
+(3.16)
+
+är en optimal stopptid i mängden MN
+n.
+Vid tidpunkten N måste man stanna och då får man vinsten g(XN ). Eftersom
+N
+stopptiden τNN ≡ N är det enda elementet i mängden MN
+N , är τN en optimal
+
+stopptid i MN
+N.
+Vid tidpunkten N − 1 efter att ha observerat X0 , X1 , . . . , XN −1 kan man
+stanna och få vinsten g(XN −1 ) eller fortsätta och [︂använda
+stopptid
+]︂
+(︂
+)︂⃓en optimal
+N
+i mängden MN och förvänta sig att få vinsten Ex g XτNN ⃓FN −1 . Om vinsten
+
+g(XN −1 ) är minst lika stor som den förväntade vinsten, lönar det sig att stanna.
+En optimal stopptid i mängden MN
+N −1 är alltså
+]︂
+[︂ (︂
+)︂⃓
+⎧
+⎨N − 1, g(XN −1 ) ≥ Ex g Xτ N ⃓FN −1
+N
+[︂ (︂
+)︂⃓
+]︂ .
+τNN−1 =
+⎩τ N ,
+⃓
+N
+g(X
+)
+<
+E
+g
+X
+F
+N
+−1
+x
+N
+−1
+τN
+N
+Med hjälp av egenskaperna (v), (vi) och (ii) i proposition 2.16 fås
+{︂
+[︂ (︂
+)︂⃓
+]︂}︂
+(Qg)(XN −1 ) = max g(XN −1 ), Ex g XτNN ⃓FN −1
+[︂ (︂
+)︂⃓
+]︂
+⃓
+= g(XN −1 )I{τ N =N −1} + Ex g XτNN FN −1 I{τ N >N −1}
+N −1
+N −1
+[︂ (︂
+)︂⃓
+]︂
+= Ex g XτNN−1 ⃓FN −1 .
+Stopptiden τNN−1 kan nu skrivas i formen
+⎧
+⎨N − 1, g(XN −1 ) = (Qg)(XN −1 )
+τNN−1 =
+⎩N,
+g(XN −1 ) < (Qg)(XN −1 )
+{︁
+}︁
+= min N − 1 ≤ k ≤ N : g(Xk ) = (QN −k g)(Xk ) .
+
+KAPITEL 3.
+
+25
+
+ÄNDLIG HORISONT
+
+Liknande motiveringar visar att en optimal stopptid i mängden MN
+N −2 är
+[︂ (︂
+)︂⃓
+]︂
+⎧
+⎨N − 2, g(XN −2 ) ≥ Ex g Xτ N ⃓FN −2
+N −1
+[︂ (︂
+)︂⃓
+]︂ .
+τNN−2 =
+⎩τ N ,
+⃓
+N
+g(X
+)
+<
+E
+g
+X
+F
+N
+−2
+x
+N
+−2
+τN −1
+N −1
+Med hjälp av egenskaperna
+
+(viii), (v), (vi) och (ii) i proposition 2.16 fås
+
+(Q2 g)(XN −2 ) = max{g(XN −2 ), Ex [(Qg)(XN −1 )|FN −2 ]}
+{︂
+[︂ (︂
+)︂⃓
+]︂}︂
+= max g(XN −2 ), Ex g XτNN−1 ⃓FN −2
+[︂ (︂
+)︂⃓
+]︂
+⃓
+= g(XN −2 )I{τ N =N −2} + Ex g XτNN−1 FN −2 I{τ N >N −2}
+N −2
+N −2
+[︂ (︂
+)︂⃓
+]︂
+= Ex g XτNN−2 ⃓FN −2 .
+Stopptiden τNN−2 kan nu skrivas i formen
+
+τNN−2 =
+
+⎧
+N − 2, g(XN −2 ) = (Q2 g)(XN −2 )
+⎪
+⎪
+⎨
+
+N − 1, g(XN −2 ) < (Q2 g)(XN −2 ) ∧ g(XN −1 ) = (Qg)(XN −1 )
+
+⎪
+⎪
+⎩
+
+N,
+g(XN −2 ) < (Q2 g)(XN −2 ) ∧ g(XN −1 ) < (Qg)(XN −1 )
+{︁
+}︁
+= min N − 2 ≤ k ≤ N : g(Xk ) = (QN −k g)(Xk ) .
+Genom att rekursivt lösa (QN −k g)(Xk ) för k = N, N − 1, . . . , 0 hittar man en
+N
+optimal stopptid i mängden MN
+0 = M . Följande sats visar att bakåt induktio-
+
+nen faktiskt ger en optimal stopptid.
+
+Sats 3.5. För 0 ≤ n ≤ N är
+VnN (x) = Ex [(QN −n g)(Xn )].
+
+(3.17)
+
+En optimal stopptid i mängden MNn är
+{︁
+}︁
+τnN := min n ≤ k ≤ N : g(Xk ) = (QN −k g)(Xk ) .
+Bevis.
+
+(3.18)
+
+På ett liknande sätt som i beviset för lemma 3.1 kan man visa att för
+
+varje τ ∈ MN
+n gäller
+
+Ex [g(Xτ )|Fn ] ≤ (QN −n g)(Xn ).
+Med hjälp av egenskap
+
+(vii) i proposition 2.16 fås
+Ex [g(Xτ )] ≤ Ex [(QN −n g)(Xn )]
+
+KAPITEL 3.
+
+26
+
+ÄNDLIG HORISONT
+
+för varje τ ∈ MN
+n och därmed är
+
+sup Ex [g(Xτ )] = VnN (x) ≤ Ex [(QN −n g)(Xn )].
+
+τ ∈MN
+n
+
+För att bevisa den omvända olikheten betrakta stopptiden
+
+{︁
+}︁
+τ N −n := min 0 ≤ k ≤ N − n : g(Xk ) = V N −n−k (Xk ) .
+Då är
+
+)︁
+(︁
+g XτnN = g(θn Xτ N −n ) = θn g(Xτ N −n )
+och enligt egenskaperna hos operatorn θn och sats 3.3 är
+
+[︁ (︁
+)︁ ]︁
+Ex g XτnN |Fn = Ex [θn g(Xτ N −n )|Fn ]
+= EXn [g(Xτ N −n )]
+= V N −n (Xn ) = (QN −n g)(Xn ).
+Med hjälp av egenskap
+
+(vii) i proposition 2.16 fås
+[︁ (︁
+)︁]︁
+Ex g XτnN = Ex [(QN −n g)(Xn )]
+
+och eftersom τnN hör till MN
+n är
+
+[︁ (︁
+)︁]︁
+Ex g XτnN = Ex [(QN −n g)(Xn )] ≤ VnN (x).
+Därmed är
+
+[︁ (︁
+)︁]︁
+Ex g XτnN = VnN (x) = Ex [(QN −n g)(Xn )]
+och τnN är alltså en optimal stopptid i mängden MN
+n.
+Följande exempel är från Ferguson [3] s.2.8.
+
+Exempel 3.6. Låt X0 , X1 , . . . vara oberoende U(a, b), b > 0, fördelade stokastiska variabler. Då är (Xn )n∈N0 en tidshomogen Markovkedja. För att lösa det
+optimal stopping-problemet med horisonten N och vinstfunktionen g(x) = x+ ,
+vill man hitta en beskrivning för
+(QN −k g)(Xk ) = max{Xk+ , Ex [(QN −k−1 g)(Xk+1 )|Xk ]},
+
+k = N − 1, N − 2, . . . , 0.
+
+Eftersom X0 , X1 , . . . är oberoende, är
+Ex [(QN −k−1 g)(Xk+1 )|Xk ] = E[(QN −k−1 g)(Xk+1 )]
+
+KAPITEL 3.
+
+27
+
+ÄNDLIG HORISONT
+
+en konstant. Då kan (QN −k g)(Xk ) skrivas i formen
+(QN −k g)(Xk ) = max{Xk+ , CN −k },
+
+k = N − 1, N − 2, . . . , 0.
+
+Från XN+ ≥ a+ följer C0 = a+ och för k = N − 1, N − 2, . . . , 0 är
++
+CN −k = E[(QN −k−1 g)(Xk+1 )] = E[max{Xk+1
+, CN −k−1 }].
+
+Av detta följer Cj ≥ 0 för j = 0, 1, . . . , N så för k = N − 1, N − 2, . . . , 0 är
++
+E[max{Xk+1
+, CN −k−1 }] = E[max{Xk+1 , 0, CN −k−1 }] = E[max{Xk+1 , CN −k−1 }].
+
+Låt X ∼ U(a, b) vara oberoende av X0 , X1 , . . . . Eftersom X, X0 , X1 , . . . är lika
+fördelade, är
+CN −k = E[max{Xk+1 , CN −k−1 }] = E[max{X, CN −k−1 }],
+
+k = N −1, N −2, . . . , 0.
+
+Om a ≤ CN −k−1 ≤ b gäller, är a ≤ CN −k ≤ b. Eftersom C0 = a+ är mellan a och
+b, är a ≤ Cj ≤ b för j = 0, 1, . . . , N . Med hjälp av U ∼ U(0, 1) kan X skrivas i
+formen X = a + (b − a)U och eftersom Cj är en konstant kan den också skrivas
+i formen Cj = a + (b − a)Cj′ för j = 0, 1, . . . , N . För k = N − 1, N − 2, . . . , 0 är
+CN −k = E[max{X, CN −k−1 }] = a + (b − a)E[max{U, CN′ −k−1 }].
+
+Från a ≤ Cj ≤ b följer 0 ≤ Cj′ ≤ 1 för j = 0, 1, . . . , N . För k = N −1, N −2, . . . , 0
+har CN′ −k = E[max{U, CN′ −k−1 }] formen
+E[max{U, CN′ −k−1 }]
+
+=
+
+CN′ −k−1 P(U
+
+∫︂
+
+≤
+
+CN′ −k−1 )+
+
+1
+
+u du =
+′
+CN
+−k−1
+
+]︁
+1 [︁
+1+(CN′ −k−1 )2 .
+2
+
+Då fås rekursionerna
+C0′ =
+
+a−
+,
+b−a
+
+CN′ −k =
+
+]︁
+1 [︁
+1 + (CN′ −k−1 )2 ,
+2
+
+k = N − 1, N − 2, . . . , 0,
+
+och
+(QN −k g)(Xk ) = max{Xk+ , a + (b − a)CN′ −k },
+
+k = N, N − 1, . . . , 0.
+
+KAPITEL 4.
+
+28
+
+OÄNDLIG HORISONT
+
+Kapitel 4
+
+Oändlig horisont
+
+Presentationen i detta kapitel följer Shiryaev [7] s.2728, s.3957 och s.93100.
+Låt (Ω, F, F, P) vara ett sannolikhetsrum försett med en ltration. Betrakta
+en tidshomogen Markovkedja (Xn )n∈N0 med värden i tillståndsrummet (E, E) och
+en E -mätbar funktion g : E → [0, ∞]. Ett optimal stopping-problem sägs ha en
+oändlig horisont om det är tillåtet att göra ett obegränsat antal observationer.
+Låt M vara mängden av alla stopptider denierade i sannolikhetsrummet
+
+(Ω, F, F, P). Då är
+g(Xτ ) :=
+
+∞
+∑︂
+
+g(Xn )I{τ =n} + g(X∞ )I{τ =∞}
+
+(4.1)
+
+n=0
+
+vinsten vid en stopptid τ ∈ M där händelsen {τ = ∞} betyder att man aldrig
+stannar och
+
+g(X∞ ) := lim sup g(Xn )
+n→∞
+
+(4.2)
+
+är vinsten om man aldrig stannar. Eftersom g är en icke-negativ funktion, är den
+förväntade vinsten Ex [g(Xτ )] denierad för varje τ ∈ M och x ∈ E .
+Deniera värdefunktionen V : E → [0, ∞] som
+
+V (x) := sup Ex [g(Xτ )].
+
+(4.3)
+
+τ ∈M
+
+En optimal stopptid i mängden M är τ ∗ ∈ M för vilken gäller
+
+Ex [g(Xτ ∗ )] = V (x),
+
+∀x ∈ E.
+
+(4.4)
+
+Om man vill stanna inom ändlig tid, betraktar man stopptider från mängden
+
+}︁
+{︁
+M := τ ∈ M : Px (τ < ∞) = 1, ∀x ∈ E .
+
+(4.5)
+
+KAPITEL 4.
+
+29
+
+OÄNDLIG HORISONT
+
+Då är
+
+g(Xτ ) :=
+
+∞
+∑︂
+
+(4.6)
+
+g(Xn )I{τ =n}
+
+n=0
+
+vinsten vid en ändlig stopptid τ ∈ M.
+Deniera värdefunktionen V : E → [0, ∞] som
+(4.7)
+
+V (x) := sup Ex [g(Xτ )].
+τ ∈M
+
+Eftersom mängden M är en delmängd av M, är V (x) ≤ V (x). En optimal
+stopptid i mängden M är τ ∗ ∈ M för vilken gäller
+
+Ex [g(Xτ ∗ )] = V (x),
+
+4.1
+
+(4.8)
+
+∀x ∈ E.
+
+Excessiva funktioner
+
+Excessiva funktioner används för att beskriva värdefunktioner och optimala stopptider. Härnäst denieras dessa funktioner, deras egenskaper studeras och nödvändiga resultat gällande stopptider och excessiva funktioner härleds.
+
+Denition 4.1. En E -mätbar funktion f : E → [0, ∞] för vilken gäller
+Ex [f (X1 )] ≤ f (x),
+
+∀x ∈ E,
+
+kallas för en excessiv funktion med avseende på Markovkedjan (Xn )n∈N0 .
+Följande proposition beskriver några egenskaper hos excessiva funktioner.
+
+Proposition 4.2.
+(i) En icke-negativ konstant funktion är excessiv.
+(ii) Om funktionerna f och h är excessiva och konstanterna a och b är ickenegativa så är af + bh en excessiv funktion.
+(iii) Låt fn (x) n∈N vara en icke-avtagande följd av excessiva funktioner. Då är
+funktionen f (x) := limn→∞ fn (x) excessiv.
+(︁
+
+)︁
+
+(iv) Om f är en excessiv funktion så är f (Xn )
+martingal.
+(︁
+
+)︁
+n∈N0
+
+en generaliserad super-
+
+KAPITEL 4.
+
+30
+
+OÄNDLIG HORISONT
+
+(v) Låt f vara en excessiv funktion. Då är funktionen fm (x) := Ex [f (Xm )] excessiv för varje m ∈ N och för m ≥ n är fm (x) ≤ fn (x).
+(vi) Låt f och h vara excessiva funktioner. Då är funktionen f ∧ h := min{f, h}
+excessiv.
+(vii) Om f är en excessiv funktion så är gränsvärdet limn→∞ f (Xn ) denierat
+med Px -sannolikheten ett.
+Bevis.
+
+(i) Betrakta en konstant c ≥ 0 och funktionen f : E → {c}. Då är
+Ex [f (X1 )] = c = f (x).
+
+(ii) Eftersom funktionerna f och h är excessiva och konstanterna a och b är
+icke-negativa, är
+
+Ex [af (X1 ) + bh(X1 )] = aEx [f (X1 )] + bEx [h(X1 )] ≤ af (x) + bh(x).
+
+(iii) Följden fn (x)
+
+är icke-avtagande så gränsvärdet limn→∞ fn (x) är de(︁
+)︁
+nierat. Eftersom funktionerna fn (x) n∈N är icke-negativa, är f (x) också
+
+(︁
+
+)︁
+
+n∈N
+
+en icke-negativ funktion. Med hjälp av monotona konvergenssatsen 2.33 fås
+[︂
+]︂
+[︂
+]︂
+[︂
+]︂
+Ex f (X1 ) = Ex lim fn (X1 ) = lim Ex fn (X1 ) ≤ lim fn (x) = f (x).
+n→∞
+
+n→∞
+
+n→∞
+
+(iv) Eftersom (Xn )n∈N0 är en tidshomogen Markovkedja och f en excessiv funktion, är
+
+E[f (Xn+1 )|Fn ] = E[f (Xn+1 )|Xn ] = EXn [f (X1 )] ≤ f (Xn ).
+
+(v) Funktionen f är icke-negativ så väntevärdet Ex [f (Xm )] är denierat och
+icke-negativt för varje m ∈ N och x ∈ E . Eftersom f är en excessiv funktion
+och (Xn )n∈N0 en tidshomogen Markovkedja, är f1 (x) ≤ f (x) och
+
+f2 (x) = Ex [f1 (X1 )] ≤ Ex [f (X1 )] = f1 (x).
+Det allmänna fallet bevisas med induktion.
+
+KAPITEL 4.
+
+31
+
+OÄNDLIG HORISONT
+
+(vi) Från olikheterna (f ∧ h)(x) ≤ f (x) och (f ∧ h)(x) ≤ h(x) följer
+Ex [(f ∧ h)(X1 )] ≤ min{Ex [f (X1 )], Ex [h(X1 )]}.
+Eftersom f och h är excessiva funktioner, är
+
+min{Ex [f (X1 )], Ex [h(X1 )]} ≤ min{f (x), h(x)} = (f ∧ h)(x).
+
+(vii) Resultatet följer från egenskap (iv) och sats 2.30.
+
+Lemma 4.3. Låt f vara en excessiv funktion och stopptiderna τ1 och τ2 sådana
+att Px (τ1 ≤ τ2 ) = 1 gäller för varje x ∈ E . Då är
+Ex [f (Xτ2 )|Fτ1 ] ≤ f (Xτ1 ),
+
+∀x ∈ E.
+
+(4.9)
+
+En direkt följd av olikheten (4.9) är
+Ex [f (Xτ2 )] ≤ Ex [f (Xτ1 )] ≤ f (x),
+Bevis.
+
+Enligt egenskap
+
+∀x ∈ E.
+
+(4.10)
+
+(vii) i proposition 4.2 är gränsvärdet limn→∞ f (Xn )
+
+denierat och enligt (4.2) är f (X∞ ) = limn→∞ f (Xn ). Om f uppfyller kravet
+[︃
+]︃
+Ex sup f (Xn ) < ∞, ∀x ∈ E,
+n∈N0
+
+(︁
+)︁
+är f (Xn ) n∈N0 en supermartingal och enligt sats 2.32 gäller olikheten (4.9).
+(︁
+
+Annars kan man betrakta en konstant c ≥ 0 och funktionen (f ∧c)(x). Följden
+)︁
+(f ∧ c)(x) c≥0 är icke-avtagande så gränsvärdet limc→∞ (f ∧ c)(x) är denierat.
+
+(i) och (vi) i proposition 4.2 är (f ∧ c)(x) en excessiv funktion. Enligt egenskap (vii) i proposition 4.2 är gränsvärdet limn→∞ (f ∧ c)(Xn )
+Enligt egenskaperna
+
+denierat och enligt (4.2) är (f ∧ c)(X∞ ) = limn→∞ (f ∧ c)(Xn ). Funktionen upp(︁
+)︁
+fyller också kravet ovan så (f ∧ c)(Xn ) n∈N0 är en supermartingal. Enligt sats
+2.32 är
+
+Ex [(f ∧ c)(Xτ2 )|Fτ1 ] ≤ (f ∧ c)(Xτ1 ).
+Genom att ta lim inf c→∞ av båda sidorna av olikheten fås med hjälp av Fatous
+lemma 2.34
+
+[︂
+⃓ ]︂
+Ex lim (f ∧ c)(Xτ2 )⃓Fτ1 ≤ lim (f ∧ c)(Xτ1 )
+c→∞
+
+ty limc→∞ (f ∧ c)(x) = lim inf c→∞ (f ∧ c)(x).
+
+c→∞
+
+KAPITEL 4.
+
+32
+
+OÄNDLIG HORISONT
+
+Slutligen är
+
+lim (f ∧ c)(Xτ1 ) = lim (f ∧ c)(Xτ1 )I{τ1 <∞} + lim (f ∧ c)(X∞ )I{τ1 =∞}
+
+c→∞
+
+c→∞
+
+c→∞
+
+= f (Xτ1 )I{τ1 <∞} + lim lim (f ∧ c)(Xn )I{τ1 =∞}
+c→∞ n→∞
+
+= f (Xτ1 )I{τ1 <∞} + lim lim (f ∧ c)(Xn )I{τ1 =∞}
+n→∞ c→∞
+
+= f (Xτ1 )I{τ1 <∞} + lim f (Xn )I{τ1 =∞}
+n→∞
+
+= f (Xτ1 )I{τ1 <∞} + f (X∞ )I{τ1 =∞} = f (Xτ1 )
+och på samma sätt är limc→∞ (f ∧ c)(Xτ2 ) = f (Xτ2 ).
+Det föregående lemmat används för att beskriva värdefunktioner och följande
+korollarium visar en tillämpning av lemmat.
+
+Korollarium 4.4. Anta att vinstfunktionen g är excessiv. Då är
+g(x) = V (x) = V (x)
+
+(4.11)
+
+och τ ∗ ≡ 0 en optimal stopptid.
+Bevis.
+
+Påståendena följer direkt från lemma 4.3. Enligt olikheten (4.10) är
+
+Ex [g(Xτ )] ≤ Ex [g(X0 )] = g(x)
+för varje stopptid τ ∈ M. Därmed är V (x) ≤ V (x) ≤ g(x). Eftersom τ ∗ ≡ 0 hör
+till mängden M, är g(x) ≤ V (x) ≤ V (x). Därmed är g(x) = V (x) = V (x) och
+
+τ ∗ ≡ 0 en optimal stopptid.
+
+Denition 4.5. Låt h : E → [0, ∞] vara en E -mätbar funktion. En excessiv
+funktion f för vilken gäller
+f (x) ≥ h(x),
+
+kallas för en excessiv majorant av h. En excessiv majorant som är mindre än eller
+lika med alla andra excessiva majoranter är den minsta excessiva majoranten.
+Om f är en excessiv majorant av h, är
+
+max{h(x), Ex [f (X1 )]} ≤ f (x).
+
+(4.12)
+
+Följande lemma visar att olikheten blir en likhet om f är den minsta excessiva
+majoranten av h.
+
+KAPITEL 4.
+
+33
+
+OÄNDLIG HORISONT
+
+Lemma 4.6. Låt h : E → [0, ∞] vara en E -mätbar funktion. Om v är den minsta
+excessiva majoranten av h, är
+v(x) = max{h(x), Ex [v(X1 )]}.
+Bevis.
+
+(4.13)
+
+Från olikheten (4.12) följer
+[︂
+]︂
+Ex max{h(X1 ), EX1 [v(X1 )]} ≤ Ex [v(X1 )].
+
+Denna olikhet tillsammans med olikheterna
+
+Ex [v(X1 )] ≤ max{h(x), Ex [v(X1 )]} och h(x) ≤ max{h(x), Ex [v(X1 )]}
+medför att max{h(x), Ex [v(X1 )]} är en excessiv majorant av h(x). Eftersom v(x)
+är den minsta excessiva majoranten av h(x), är v(x) ≤ max{h(x), Ex [v(X1 )]}.
+Därmed är v(x) = max{h(x), Ex [v(X1 )]}.
+Varje funktion f som löser ekvationen
+
+f (x) = max{h(x), Ex [f (X1 )]}
+behöver inte vara den minsta excessiva majoranten av h. Till exempel om h är
+en begränsad funktion, h(x) ≤ C < ∞, är f (x) ≡ K en lösning för varje K ≥ C .
+Följande lemma visar en annan metod för att hitta den minsta excessiva majoranten.
+
+Lemma 4.7. Låt h : E → [0, ∞] vara en E -mätbar funktion. Den minsta excessiva majoranten av h(x) är
+v(x) = lim (Qn h)(x).
+n→∞
+
+Bevis.
+
+(4.14)
+
+Från likheten
+
+(Qn h)(x) = max{(Qn−1 h)(x), Ex [(Qn−1 h)(X1 )]}
+(︁
+)︁
+följer att följden (Qn h)(x) n∈N0 är icke-avtagande så gränsvärdet limn→∞ (Qn h)(x)
+är denierat. Därmed är v(x) ≥ h(x).
+Från likheten följer också (Qn h)(x) ≥ Ex [(Qn−1 h)(X1 )] så med hjälp av monotona konvergenssatsen 2.33 fås
+
+[︂
+]︂
+v(x) = lim (Qn h)(x) ≥ lim Ex (Qn−1 h)(X1 )
+n→∞
+n→∞
+[︂
+]︂
+[︂
+]︂
+n−1
+= Ex lim (Q h)(X1 ) = Ex v(X1 ) .
+n→∞
+
+KAPITEL 4.
+
+OÄNDLIG HORISONT
+
+34
+
+Därmed är v en excessiv majorant av h.
+Låt f vara en godtycklig excessiv majorant av h. Då är f (x) ≥ h(x) vilket medför Ex [f (X1 )] ≥ Ex [h(X1 )]. Denna olikhet tillsammans med olikheten
+
+f (x) ≥ Ex [f (X1 )] medför
+f (x) ≥ (Qh)(x) = max{h(x), Ex [h(X1 )]}.
+Med induktion kan man visa att för varje n ∈ N0 gäller f (x) ≥ (Qn h)(x). Då är
+
+f (x) ≥ v(x) och därmed är v den minsta excessiva majoranten av h.
+Enligt det föregående lemmat är den minsta excessiva majoranten av vinstfunktionen g denierad. Den används för att beskriva värdefunktioner.
+
+Lemma 4.8. Låt h : E → [0, ∞] vara en E -mätbar funktion och f en excessiv
+majorant av h som uppfyller
+f (x) = max{h(x), Ex [f (X1 )]}.
+
+(4.15)
+
+För ε ≥ 0 deniera stopptiden
+τε = inf{n ∈ N0 : f (Xn ) ≤ h(Xn ) + ε}.
+
+Om för något tillstånd x′ ∈ E gäller f (x′ ) < ∞ så för varje n ∈ N0 är
+f (x′ ) = Ex′ [f (Xτε ∧n )].
+Bevis.
+
+(4.16)
+
+Eftersom f (x′ ) är ett ändligt värde, är också alla väntevärden i ekvatio-
+
+nen
+
+f (x′ ) = Ex′ [f (X0 )] = Ex′ [f (X0 )I{τε =0} + f (X0 )I{τε >0} ]
+= Ex′ [f (X0 )I{τε =0} ] + Ex′ [f (X0 )I{τε >0} ]
+ändliga. Händelsen {τε > 0} ∈ F0 betyder att f (X0 ) > h(X0 ) gäller vilket enligt
+ekvationen (4.15) ger
+
+f (X0 ) = EX0 [f (X1 )] = Ex′ [f (X1 )|X0 ] = Ex′ [f (X1 )|F0 ].
+Egenskaperna
+
+(vi) och (vii) i proposition 2.16 ger
+
+[︂
+]︂
+f (x′ ) = Ex′ [f (X0 )I{τε =0} ] + Ex′ Ex′ [f (X1 )|F0 ]I{τε >0}
+= Ex′ [f (Xτε )I{τε =0} ] + Ex′ [f (X1 )I{τε >0} ]
+= Ex′ [f (Xτε )I{τε =0} ] + Ex′ [f (X1 )I{τε =1} ] + Ex′ [f (X1 )I{τε >1} ]
+= Ex′ [f (Xτε )I{τε ≤1} ] + Ex′ [f (X1 )I{τε >1} ].
+
+KAPITEL 4.
+
+35
+
+OÄNDLIG HORISONT
+
+Händelsen {τε > 1} ∈ F1 medför f (X1 ) > h(X1 ) vilket ger f (X1 ) = Ex′ [f (X2 )|F1 ].
+Genom att upprepa liknande räkningar fås
+
+f (x′ ) = Ex′ [f (Xτε )I{τε ≤1} ] + Ex′ [f (X1 )I{τε >1} ]
+= Ex′ [f (Xτε )I{τε ≤2} ] + Ex′ [f (X2 )I{τε >2} ]
+..
+.
+= Ex′ [f (Xτε )I{τε ≤n} ] + Ex′ [f (Xn )I{τε >n} ]
+= Ex′ [f (Xτε ∧n )]
+vilket bevisar lemmat.
+
+Lemma 4.9. Låt h : E → [0, ∞] vara en E -mätbar funktion som uppfyller
+[︃
+]︃
+Ex sup h(Xj ) < ∞,
+
+∀x ∈ E.
+
+j≥0
+
+Beteckna den minsta excessiva majoranten av h med v och för ε ≥ 0 deniera
+stopptiden
+τε = inf{n ∈ N0 : v(Xn ) ≤ h(Xn ) + ε}.
+
+Med Px -sannolikheten ett är
+lim sup v(Xn ) = lim sup h(Xn ),
+n→∞
+
+∀x ∈ E,
+
+n→∞
+
+(4.17)
+
+och för ε > 0 hör τε till mängden M.
+Bevis.
+
+För varje n ∈ N0 är v(Xn ) ≥ h(Xn ) så då är
+
+lim sup v(Xn ) ≥ lim sup h(Xn ).
+n→∞
+
+n→∞
+
+För att bevisa den omvända olikheten, xera ett tillstånd x ∈ E och deniera
+
+ψn := sup h(Xj )
+j≥n
+
+och
+
+φn := Ex (ψn |Fn ).
+
+Eftersom (Xn )n∈N0 är en tidshomogen Markovkedja, är
+
+φn = Ex (ψn |Fn ) = Ex (ψn |Xn ) = EXn (ψ0 ) = φ(Xn )
+där φ(x) := Ex (ψ0 ). Med Px -sannolikheten ett gäller ψ0 ≥ h(X0 ) vilket medför
+
+Ex (ψ0 ) = φ(x) ≥ h(x) = Ex [h(X0 )] och enligt egenskap (vii) i proposition 2.16
+är
+
+Ex [φ(X1 )] = Ex [Ex (ψ1 |X1 )] = Ex (ψ1 ) ≤ Ex (ψ0 ) = φ(x).
+
+KAPITEL 4.
+
+36
+
+OÄNDLIG HORISONT
+
+Därmed är φ en excessiv majorant av h. Eftersom v är den minsta excessiva
+majoranten av h, är v(x) ≤ φ(x).
+Låt m vara ett xt heltal och n ≥ m ett annat heltal. Då är
+
+v(Xn ) ≤ φ(Xn ) = Ex (ψn |Fn ) ≤ Ex (ψm |Fn )
+och således är
+
+lim sup v(Xn ) ≤ lim sup Ex (ψm |Fn ).
+n→∞
+
+n→∞
+
+Enligt sats 2.31 är Ex (ψm |Fn )
+
+(︁
+
+)︁
+n≥m
+
+en martingal för varje m ∈ N0 . Enligt samma
+
+satsen är gränsvärdet limn→∞ Ex (ψm |Fn ) denierat och uppfyller
+
+lim Ex (ψm |Fn ) = Ex (ψm |F∞ ).
+
+n→∞
+
+Den stokastiska variabeln ψm är F∞ -mätbar så då är
+
+lim Ex (ψm |Fn ) = ψm .
+
+n→∞
+
+Alltså för varje m ∈ N0 är
+
+lim sup v(Xn ) ≤ ψm
+n→∞
+
+så då är
+
+lim sup v(Xn ) ≤ inf ψm = inf sup h(Xj ) = lim sup h(Xn ).
+m∈N0
+
+n→∞
+
+n→∞
+
+m∈N0 j≥m
+
+Därmed är lim supn→∞ v(Xn ) = lim supn→∞ h(Xn ).
+Härnäst bevisas att för ε > 0 hör τε till M. Händelsen {τε = ∞} betyder att v(Xn ) > h(Xn ) + ε gäller för varje n ∈ N0 vilket i sin tur medför
+
+lim supn→∞ v(Xn ) > lim supn→∞ h(Xn ). Detta är en motsägelse och dessutom
+(︁
+)︁
+är Px lim supn→∞ h(Xn ) < ∞ = 1 för varje x ∈ E . Därmed är Px (τε = ∞) = 0
+för varje x ∈ E och ε > 0.
+Det sista resultatet som behövs för att beskriva värdefunktioner och optimala
+stopptider följer från de två föregående lemmana.
+
+Korollarium 4.10. Låt h : E → [0, ∞] vara en E -mätbar funktion som uppfyller
+]︃
+Ex sup h(Xj ) < ∞,
+[︃
+
+j≥0
+
+∀x ∈ E.
+
+KAPITEL 4.
+
+37
+
+OÄNDLIG HORISONT
+
+Beteckna den minsta excessiva majoranten av h med v och för ε ≥ 0 deniera
+stopptiden
+τε = inf{n ∈ N0 : v(Xn ) ≤ h(Xn ) + ε}.
+
+För ε > 0 är
+Bevis.
+
+(4.18)
+
+∀x ∈ E.
+
+Ex [v(Xτε )] = v(x),
+
+Enligt lemma 4.6 gäller v(x) = max{h(x), Ex [v(X1 )]} och som det
+
+visades i beviset för lemma 4.9 är
+
+[︃
+
+]︃
+v(x) ≤ φ(x) = Ex sup h(Xj ) < ∞,
+
+∀x ∈ E.
+
+j≥0
+
+Alltså lemma 4.8 kan användas och då för varje n ∈ N0 är
+
+Ex [v(Xτε ∧n )] = v(x),
+
+∀x ∈ E.
+
+För att visa att Ex [v(Xτε )] = v(x) gäller, betrakta termen
+
+Ex [v(Xτε ∧n )I{τε >n} ] = Ex [v(Xn )I{τε >n} ].
+Från olikheten
+
+[︃
+
+⃓ ]︃
+⃓
+v(Xn ) ≤ φ(Xn ) = Ex sup h(Xj )⃓Fn
+j≥n
+
+följer, med hjälp av egenskaperna (vi) och (vii) i proposition 2.16,
+[︃
+]︃
+[︃ [︃
+]︃
+⃓ ]︃
+⃓
+Ex v(Xn )I{τε >n} ≤ Ex Ex sup h(Xj )⃓Fn I{τε >n}
+j≥n
+[︃
+]︃
+[︃
+]︃
+= Ex sup h(Xj )I{τε >n} ≤ Ex sup h(Xj )I{τε >n} .
+j≥n
+
+j≥0
+
+Enligt lemma 4.9 hör τε till M för ε > 0 så med hjälp av Fatous lemma 2.34 fås
+[︃
+]︃
+lim sup Ex [v(Xn )I{τε >n} ] ≤ lim sup Ex sup h(Xj )I{τε >n} ≤ 0.
+n→∞
+
+n→∞
+
+j≥0
+
+Eftersom väntevärdet Ex [v(Xn )I{τε >n} ] är icke-negativt för varje n ∈ N0 , är
+
+lim inf Ex [v(Xn )I{τε >n} ] ≥ 0.
+n→∞
+
+Därmed är limn→∞ Ex [v(Xn )I{τε >n} ] = 0. Detta tillsammans med monotona konvergenssatsen 2.33 och likheten
+
+v(x) = Ex [v(Xτε ∧n )]
+= Ex [v(Xτε )I{τε ≤n} ] + Ex [v(Xn )I{τε >n} ]
+bevisar korollariet.
+
+KAPITEL 4.
+
+4.2
+
+38
+
+OÄNDLIG HORISONT
+
+Värdefunktioner och optimala stopptider
+
+Den första satsen beskriver värdefunktioner och den andra optimala stopptider.
+
+Sats 4.11. Beteckna den minsta excessiva majoranten av vinstfunktionen g med
+v . Då är
+v(x) = V (x) = V (x)
+
+(4.19)
+
+och för b ≥ 0 är
+(︁
+)︁
+(︁
+)︁
+V (x) = lim lim Qn (g ∧ b) (x) = lim lim Qn (g ∧ b) (x).
+n→∞ b→∞
+
+Bevis.
+
+b→∞ n→∞
+
+(4.20)
+
+För varje n ∈ N0 är v(Xn ) ≥ g(Xn ) så då är
+
+lim sup v(Xn ) ≥ lim sup g(Xn ).
+n→∞
+
+n→∞
+
+Detta betyder att v(Xτ ) ≥ g(Xτ ) gäller för varje τ ∈ M och i så fall är också Ex [v(Xτ )] ≥ Ex [g(Xτ )] för varje τ ∈ M och x ∈ E men enligt lemma 4.3 är
+
+v(x) ≥ Ex [v(Xτ )] för varje τ ∈ M och x ∈ E . Därmed är
+v(x) ≥ V (x) ≥ V (x).
+För att bevisa den omvända olikheten, anta att g uppfyller
+[︃
+]︃
+Ex sup g(Xj ) < ∞, ∀x ∈ E.
+
+(4.21)
+
+j≥0
+
+Enligt lemma 4.9 hör stopptiden
+
+τε = inf{n ∈ N0 : v(Xn ) ≤ g(Xn ) + ε}
+till M för ε > 0 och enligt korollarium 4.10 är v(x) = Ex [v(Xτε )] för ε > 0.
+Därmed är
+
+v(x) = Ex [v(Xτε )] ≤ Ex [g(Xτε )] + ε ≤ V (x) + ε
+för varje ε > 0. Denna olikhet tillsammans med den tidigare bevisade olikheten
+
+v(x) ≥ V (x) medför v(x) = V (x).
+Om g inte uppfyller (4.21), kan man betrakta en konstant b ≥ 0 och funktionen g ∧ b. Beteckna den minsta excessiva majoranten av g ∧ b med vb och deniera värdefunktionen Vb (x) := supτ ∈M Ex [(g ∧ b)(Xτ )]. Funktionen g ∧ b uppfyller
+(4.21) så enligt det som bevisades tidigare är vb (x) = Vb (x).
+
+KAPITEL 4.
+
+39
+
+OÄNDLIG HORISONT
+
+Enligt egenskap
+
+(iii) i proposition 4.2 är v∗ (x) := limb→∞ vb (x) en excessiv
+
+funktion. För varje b ≥ 0 är vb (x) ≥ (g ∧ b)(x) så då är v∗ (x) ≥ g(x). Alltså
+
+v∗ är en excessiv majorant av g . Låt f vara en godtycklig excessiv majorant av
+g . Då är f också en excessiv majorant av g ∧ b för varje b ≥ 0. Eftersom vb
+är den minsta excessiva majoranten av g ∧ b för varje b ≥ 0, är v∗ (x) ≤ f (x).
+Alltså v∗ är den minsta excessiva majoranten av g så då är v∗ (x) = v(x). För
+varje b ≥ 0 är V (x) ≥ Vb (x) = vb (x) så då är V (x) ≥ v∗ (x) = v(x). Därmed är
+
+v(x) = V (x) = V (x).
+Enligt det som bevisades tidigare och lemma 4.7, är
+
+(︁
+)︁
+V (x) = v(x) = lim (Qn g)(x) = lim lim Qn (g ∧ b) (x)
+n→∞
+
+n→∞ b→∞
+
+och
+
+(︁
+)︁
+V (x) = v(x) = lim vb (x) = lim lim Qn (g ∧ b) (x)
+b→∞
+
+b→∞ n→∞
+
+vilket slutför beviset.
+
+Korollarium 4.12. Om stopptiden τ ∈ M är sådan att den förväntade vinsten
+f (x) = Ex [g(Xτ )] är en excessiv majorant av g(x) så är f (x) = V (x) och τ en
+optimal stopptid i mängden M.
+Bevis.
+
+Enligt sats 4.11 är V den minsta excessiva majoranten av g så då är
+
+V (x) ≤ f (x). Detta tillsammans med f (x) ≤ V (x) ger f (x) = V (x).
+Den optimala stopptiden τ ∈ M från det föregående korollariet behöver inte
+vara en optimal stopptid i mängden M. Följande sats beskriver optimala stopptider noggrannare men har ett ytterligare krav jämfört med sats 4.11.
+En stopptid τ ∈ M för vilken gäller
+
+Ex [g(Xτ )] ≥ V (x) − ε,
+
+∀x ∈ E,
+
+(4.22)
+
+för något ε > 0, kallas för en ε-optimal stopptid. På ett liknande sätt denieras
+
+ε-optimala stopptider i mängden M.
+
+Sats 4.13. Anta att vinstfunktionen g uppfyller
+[︃
+]︃
+Ex sup g(Xj ) < ∞,
+
+∀x ∈ E.
+
+j≥0
+
+Beteckna den minsta excessiva majoranten av g med v och för ε ≥ 0 deniera
+stopptiden
+τε = inf{n ∈ N0 : v(Xn ) ≤ g(Xn ) + ε}.
+
+(4.23)
+
+KAPITEL 4.
+
+40
+
+OÄNDLIG HORISONT
+
+För ε > 0 är τε en ε-optimal stopptid i mängden M och τ0 är en optimal stopptid
+i mängden M. Om τ0 hör till M, är τ0 en optimal stopptid i M. Om mängden
+E är ändlig så hör τ0 till M.
+Bevis.
+
+Enligt lemma 4.9 hör τε till M för varje ε > 0 och enligt korollarium
+
+4.10 är v(x) = Ex [v(Xτε )] för varje ε > 0. Därmed är
+
+v(x) = Ex [v(Xτε )] ≤ Ex [g(Xτε )] + ε
+för varje ε > 0 vilket tillsammans med resultatet v(x) = V (x) från sats 4.11
+medför att τε är en ε-optimal stopptid i M.
+Enligt lemma 4.6 gäller v(x) = max{g(x), Ex [v(X1 )]} och som det visades i
+beviset för lemma 4.9 är
+
+]︃
+v(x) ≤ φ(x) = Ex sup g(Xj ) < ∞,
+[︃
+
+∀x ∈ E.
+
+j≥0
+
+Alltså lemma 4.8 kan användas. Med hjälp av egenskaperna
+
+(vi) och (vii) i pro-
+
+position 2.16 fås då för varje n ∈ N0
+
+v(x) = Ex [v(Xτ0 )I{τ0 <n} ] + Ex [v(Xn )I{τ0 ≥n} ]
+≤ Ex [v(Xτ0 )I{τ0 <n} ] + Ex [φ(Xn )I{τ0 ≥n} ]
+[︃ [︃
+]︃
+⃓ ]︃
+⃓
+= Ex [v(Xτ0 )I{τ0 <n} ] + Ex Ex sup g(Xj )⃓Fn I{τ0 ≥n}
+j≥n
+[︃
+]︃
+= Ex [v(Xτ0 )I{τ0 <n} ] + Ex sup g(Xj )I{τ0 ≥n}
+j≥n
+[︃
+]︃
+≤ Ex [v(Xτ0 )I{τ0 <n} ] + Ex sup g(Xj )I{n≤τ0 <∞}
+j≥0
+[︃
+]︃
++ Ex sup g(Xj )I{τ0 =∞} .
+j≥n
+
+Med hjälp av Fatous lemma 2.34 fås
+
+[︃
+]︃
+v(x) ≤ Ex [v(Xτ0 )I{τ0 <∞} ] + Ex lim sup g(Xn )I{τ0 =∞} .
+n→∞
+
+Enligt (4.23) är
+
+Ex [v(Xτ0 )I{τ0 <∞} ] = Ex [g(Xτ0 )I{τ0 <∞} ]
+så då fås
+
+v(x) ≤ Ex [g(Xτ0 )].
+
+KAPITEL 4.
+
+41
+
+OÄNDLIG HORISONT
+
+Enligt sats 4.11 är v(x) = V (x) så därmed är τ0 en optimal stopptid i M.
+Om τ0 hör till M så är
+
+[︃
+
+]︃
+
+v(x) ≤ Ex [g(Xτ0 )I{τ0 <∞} ] + Ex lim sup g(Xn )I{τ0 =∞}
+n→∞
+[︃
+]︃
+≤ Ex [g(Xτ0 )I{τ0 <∞} ] + Ex sup g(Xn )I{τ0 =∞}
+n≥0
+
+= Ex [g(Xτ0 )I{τ0 <∞} ] = Ex [g(Xτ0 )].
+Enligt sats 4.11 är v(x) = V (x) så därmed är τ0 en optimal stopptid i M.
+För ε ≥ 0 betrakta mängden Aε := {x ∈ E : v(x) ≤ g(x) + ε}. Då är A0 ⊆ Aε
+och limε→0 Aε = A0 . Stopptiden τε kan skrivas som
+
+τε = inf{n ∈ N0 : Xn ∈ Aε }.
+Om mängden E är ändlig så existerar det ett ε′ sådant att Aε = A0 gäller för
+varje ε ≤ ε′ . Enligt lemma 4.9 hör τε till M för varje ε > 0 och för ε ≤ ε′ är
+
+τε = τ0 . Därmed hör τ0 till M.
+
+4.3
+
+Modell med observationskostnad
+
+Om varje observation som man gör har en kostnad eller om vinsten g(x) är mer
+värdefull nu än vad samma vinsten är värd senare i framtiden, vill man inte göra
+observationer allt för länge. Låt 0 < β ≤ 1 vara en konstant och c : E → [0, ∞)
+en E -mätbar funktion. Anta nu att om man stannar vid tidpunkten n ∈ N efter
+att ha observerat X0 = x0 , X1 = x1 , . . . , Xn = xn , får man vinsten
+
+β n g(xn ) −
+
+n−1
+∑︂
+
+β k c(xk )
+
+(4.24)
+
+k=0
+
+och vid tidpunkten n = 0 får man vinsten g(x0 ). Konstanten β gör att framtida
+värden är mindre värdefulla och funktionen c(x) ger kostnaden för att göra en
+ny observation vid tillståndet x ∈ E .
+Anta också att vinstfunktionen g är begränsad, g(x) ≤ C < ∞, och att c
+uppfyller Ex [c(Xn )] < ∞ för varje n ∈ N0 och x ∈ E . Den förväntade vinsten
+[︄
+]︄
+τ −1
+∑︂
+Ex β τ g(Xτ ) −
+β k c(Xk )
+(4.25)
+k=0
+
+KAPITEL 4.
+
+42
+
+OÄNDLIG HORISONT
+
+vid en stopptid τ ∈ M är antingen ändlig eller lika med −∞ så vid stopptider
+från mängden
+
+{︄
+Mβ,c :=
+
+τ ∈ M : Ex
+
+[︄ τ −1
+∑︂
+
+]︄
+
+}︄
+
+β c(Xk ) < ∞, ∀x ∈ E
+k
+
+(4.26)
+
+k=0
+
+är den förväntade vinsten ändlig. Deniera värdefunktionen Vβ,c : E → [0, C] som
+[︄
+]︄
+τ −1
+∑︂
+Vβ,c (x) := sup Ex β τ g(Xτ ) −
+β k c(Xk ) .
+(4.27)
+τ ∈Mβ,c
+
+k=0
+
+Fastän den förväntade vinsten (4.25) inte behöver vara icke-negativ vid varje
+stopptid τ ∈ Mβ,c , är Vβ,c (x) ≥ 0 för stopptiden τ ≡ 0 hör till Mβ,c och då är
+
+Vβ,c (x) ≥ g(x) ≥ 0.
+Stopptiden τ ∗ ∈ Mβ,c är ε-optimal om för något ε > 0 gäller
+[︄
+]︄
+∗ −1
+τ∑︂
+∗
+Ex β τ g(Xτ ∗ ) −
+β k c(Xk ) ≥ Vβ,c (x) − ε, ∀x ∈ E,
+
+(4.28)
+
+k=0
+
+och optimal om
+
+[︄
+τ∗
+
+Ex β g(Xτ ∗ ) −
+
+∗ −1
+τ∑︂
+
+]︄
+β k c(Xk ) = Vβ,c (x),
+
+∀x ∈ E,
+
+(4.29)
+
+k=0
+
+gäller.
+Resultat från tidigare kan användas för att hitta beskrivningar av värdefunktionen och optimala stopptider men de kräver lite modiering.
+
+Denition 4.14. En E -mätbar funktion f : E → [0, ∞] för vilken gäller
+βEx [f (X1 )] − c(x) ≤ f (x),
+
+∀x ∈ E,
+
+kallas för en (β, c)-excessiv funktion med avseende på Markovkedjan (Xn )n∈N0 .
+Låt h : E → [0, ∞] vara en E -mätbar funktion. En (β, c)-excessiv funktion f för
+vilken gäller
+f (x) ≥ h(x),
+
+kallas för en (β, c)-excessiv majorant av h. En (β, c)-excessiv majorant som är
+mindre än eller lika med alla andra (β, c)-excessiva majoranter är den minsta
+(β, c)-excessiva majoranten.
+Följande lemman är motsvarigheter av lemmana 4.6 och 4.7.
+
+KAPITEL 4.
+
+43
+
+OÄNDLIG HORISONT
+
+Lemma 4.15. Låt h : E → [0, ∞] vara en E -mätbar funktion. Om vβ,c är den
+minsta (β, c)-excessiva majoranten av h, är
+(4.30)
+
+vβ,c (x) = max{h(x), βEx [vβ,c (X1 )] − c(x)}.
+Bevis.
+
+Bevisas på ett liknande sätt som lemma 4.6.
+
+Lemma 4.16. Låt h : E → [0, ∞] vara en E -mätbar funktion. Deniera operatorn Qβ,c som
+(Qβ,c h)(x) := max{h(x), βEx [h(X1 )] − c(x)}.
+
+(4.31)
+
+Den minsta (β, c)-excessiva majoranten av h(x) är
+(4.32)
+
+vβ,c (x) = lim (Qnβ,c h)(x).
+n→∞
+
+Bevis.
+
+Bevisas på ett liknande sätt som lemma 4.7.
+
+Enligt det föregående lemmat är den minsta (β, c)-excessiva majoranten av
+vinstfunktionen g denierad.
+Lemmana 4.8 och 4.9 har också sina motsvarigheter.
+
+Lemma 4.17. Låt h : E → [0, ∞] vara en E -mätbar funktion och f en (β, c)excessiv majorant av h som uppfyller
+f (x) = max{h(x), βEx [f (X1 )] − c(x)}.
+
+För ε ≥ 0 deniera stopptiden
+τε = inf{n ∈ N0 : β n f (Xn ) ≤ β n h(Xn ) + ε}.
+
+Om för något tillstånd x′ ∈ E gäller f (x′ ) < ∞ så för varje n ∈ N0 är
+[︄
+f (x′ ) = Ex′ β τε ∧n f (Xτε ∧n ) −
+
+(τε ∧n)−1
+
+∑︂
+
+]︄
+β k c(Xk ) .
+
+(4.33)
+
+k=0
+Bevis.
+
+Bevisas på ett liknande sätt som lemma 4.8.
+
+Lemma 4.18. Låt h : E → [0, ∞] vara en E -mätbar funktion som uppfyller
+[︃
+]︃
+Ex sup h(Xj ) < ∞,
+j≥0
+
+∀x ∈ E.
+
+KAPITEL 4.
+
+44
+
+OÄNDLIG HORISONT
+
+Beteckna den minsta (β, c)-excessiva majoranten av h med vβ,c och för ε ≥ 0
+deniera stopptiden
+τε = inf{n ∈ N0 : β n vβ,c (Xn ) ≤ β n h(Xn ) + ε}.
+
+Med Px -sannolikheten ett är
+lim sup β n vβ,c (Xn ) = lim sup β n h(Xn ),
+n→∞
+
+∀x ∈ E,
+
+n→∞
+
+(4.34)
+
+och för ε > 0 hör τε till mängden M.
+Bevisas på ett liknande sätt som lemma 4.9 men istället denieras
+∑︁
+k
+ψn := supj≥n {β j h(Xj ) − j−1
+k=0 β c(Xk )}.
+Bevis.
+
+Följande sats beskriver värdefunktionen och optimala stopptider.
+
+Sats 4.19. Beteckna den minsta (β, c)-excessiva majoranten av vinstfunktionen
+g med vβ,c och för ε ≥ 0 deniera stopptiden
+τε = inf{n ∈ N0 : β n vβ,c (Xn ) ≤ β n g(Xn ) + ε}.
+
+(4.35)
+
+vβ,c (x) = Vβ,c (x)
+
+(4.36)
+
+Då är
+och för ε > 0 är τε en ε-optimal stopptid. Om τ0 hör till mängden M, är τ0 en
+optimal stopptid. Om
+Px
+
+(︄ ∞
+∑︂
+
+)︄
+β k c(Xk ) = ∞
+
+= 1,
+
+∀x ∈ E,
+
+(4.37)
+
+k=0
+
+gäller så hör τ0 till M.
+Bevis.
+
+Eftersom g antas vara en begränsad funktion, är vβ,c också en be-
+
+gränsad funktion för f (x) ≡ C är en (β, c)-excessiv majorant av g(x). Följden
+(︁
+)︁
+vβ,c (Xn ) n∈N0 är en (β, c)-supermartingal. Alltså vβ,c (Xn ) är Fn -mätbar för varje
+
+n ∈ N0 och olikheterna Ex [|vβ,c (Xn )|] < ∞ och
+βEx [vβ,c (Xn+1 )|Fn ] − c(Xn ) ≤ vβ,c (Xn )
+gäller för varje n ∈ N0 och x ∈ E . Olikheten
+[︄
+]︄
+(τ ∧n)−1
+∑︂
+Ex β τ ∧n vβ,c (Xτ ∧n ) −
+β k c(Xk ) ≤ vβ,c (x)
+k=0
+
+KAPITEL 4.
+
+45
+
+OÄNDLIG HORISONT
+
+är en (β, c)-supermartingal olikhet som gäller för varje τ ∈ M och n ∈ N0 . Eftersom β och c är icke-negativa och τ ∧ n är mindre än eller lika med τ , är
+[︄
+]︄
+τ −1
+∑︂
+τ ∧n
+k
+Ex β vβ,c (Xτ ∧n ) −
+β c(Xk ) ≤ vβ,c (x).
+k=0
+
+Med hjälp av dominerade konvergenssatsen 2.35 fås
+[︄
+]︄
+τ −1
+∑︂
+Ex β τ vβ,c (Xτ ) −
+β k c(Xk ) ≤ vβ,c (x)
+k=0
+
+och på grund av olikheten g(x) ≤ vβ,c (x) är
+[︄
+]︄
+τ −1
+∑︂
+τ
+k
+Ex β g(Xτ ) −
+β c(Xk ) ≤ vβ,c (x).
+k=0
+
+Därmed är Vβ,c (x) ≤ vβ,c (x).
+Enligt lemma 4.17 gäller
+[︄
+
+]︄
+
+vβ,c (x) = Ex β τε ∧n vβ,c (Xτε ∧n ) − Ex
+
+[︄(τε ∧n)−1
+∑︂
+
+]︄
+(4.38)
+
+β k c(Xk )
+
+k=0
+
+[︄
+
+[︄
+
+]︄
+
+≤ Ex β τε ∧n vβ,c (Xτε ∧n ) − Ex I{τε <n}
+
+τ∑︂
+ε −1
+
+]︄
+β k c(Xk )
+
+k=0
+
+för varje n ∈ N0 . Eftersom vβ,c är en begränsad funktion, följer från ovanstående
+olikheten
+
+[︄
+Ex I{τε <n}
+
+τ∑︂
+ε −1
+
+]︄
+β k c(Xk ) ≤ C
+
+k=0
+
+för varje n ∈ N0 . Enligt lemma 4.18 hör τε till M för ε > 0 så med hjälp av
+monotona konvergenssatsen 2.33 fås
+[︄τ −1
+]︄
+ε
+∑︂
+Ex
+β k c(Xk ) ≤ C
+k=0
+
+vilket betyder att för ε > 0 hör τε till mängden Mβ,c .
+Från likheten (4.38) följer, med hjälp av dominerade konvergenssatsen 2.35
+och (4.35),
+
+[︄
+vβ,c (x) = Ex β τε vβ,c (Xτε ) −
+[︄
+≤ Ex β τε g(Xτε ) −
+
+τ∑︂
+ε −1
+
+β k c(Xk )
+
+k=0
+τ∑︂
+ε −1
+k
+
+]︄
+
+β c(Xk ) + ε
+
+k=0
+
+≤ Vβ,c (x) + ε
+
+]︄
+
+KAPITEL 4.
+
+46
+
+OÄNDLIG HORISONT
+
+för varje ε > 0. Denna olikhet tillsammans med den tidigare bevisade olikheten
+
+vβ,c (x) ≥ Vβ,c (x) medför vβ,c (x) = Vβ,c (x). Därmed är τε en ε-optimal stopptid.
+Enligt lemma 4.17 för varje n ∈ N0 är
+(τ0 ∧n)−1
+
+[︄
+vβ,c (x) = Ex β τ0 ∧n vβ,c (Xτ0 ∧n ) −
+
+∑︂
+
+]︄
+β k c(Xk )
+
+k=0
+
+och enligt lemma 4.18 är lim supn→∞ β n vβ,c (Xn ) = lim supn→∞ β n g(Xn ) så med
+hjälp av Fatous lemma 2.34 och (4.35) fås
+[︄
+]︄
+[︄
+]︄
+τ∑︂
+τ∑︂
+0 −1
+0 −1
+vβ,c (x) ≤ Ex β τ0 vβ,c (Xτ0 ) −
+β k c(Xk ) = Ex β τ0 g(Xτ0 ) −
+β k c(Xk ) .
+k=0
+
+k=0
+
+Enligt det som bevisades tidigare är vβ,c (x) = Vβ,c (x) så om τ0 hör till Mβ,c , är
+
+τ0 en optimal stopptid. Eftersom g och vβ,c är begränsade funktioner, följer från
+ovanstående olikheten
+
+Ex
+
+[︄τ −1
+0
+∑︂
+
+]︄
+k
+
+β c(Xk ) ≤ C.
+
+k=0
+
+Därmed om τ0 hör till M så hör τ0 också till Mβ,c och är en optimal stopptid.
+Anta att för något x′ ∈ E gäller såväl (4.37) som Px′ (τ0 = ∞) > 0. Då är
+
+vβ,c (x′ ) ≤ −∞ vilket är en motsägelse eftersom vβ,c är en icke-negativ funktion.
+
+KAPITEL 5.
+
+PROBLEM AV DARLING, LIGGETT OCH TAYLOR
+
+47
+
+Kapitel 5
+
+Problem av Darling, Liggett och
+Taylor
+
+Presentationen i detta kapitel följer Darling, Liggett och Taylor [2] s.13631365.
+Låt (Ω, F, P) vara ett sannolikhetsrum och X, X1 , X2 , . . . oberoende och likafördelade stokastiska variabler. För varje n ∈ N deniera Sn = X1 + X2 + · · · + Xn
+och Fn = σ(X1 , X2 , . . . , Xn ). Deniera också S0 = 0 och F0 = {∅, Ω}. Då är
+
+F = (Fn )n∈N0 en ltration och (Sn )n∈N0 en Markovkedja.
+Låt M vara mängden av alla stopptider denierade i sannolikhetsrummet
+
+(Ω, F, F, P), 0 < β ≤ 1 en konstant och g en icke-negativ funktion. Då är
+β τ g(x + Sτ ) :=
+
+∞
+∑︂
+
+β n g(x + Sn )I{τ =n} + 0 · I{τ =∞}
+
+(5.1)
+
+n=0
+
+vinsten vid en stopptid τ ∈ M. Eftersom vinsten är en icke-negativ stokastisk
+variabel, är den förväntade vinsten E[β τ g(x + Sτ )] denierad för varje τ ∈ M.
+Om X1 , X2 , . . . tolkas som dagliga prisändringar av en aktie, ger x+Sn aktiens
+pris på dag n. Problemet är då att bestämma den optimala tidpunkten att sälja
+aktien.
+
+Denition 5.1. En icke-negativ funktion f för vilken gäller
+βE[f (x + X)] ≤ f (x)
+
+för varje x, kallas för en β -excessiv funktion med avseende på Markovkedjan
+(Sn )n∈N0 . Låt h vara en icke-negativ funktion. En β -excessiv funktion f för vilken
+gäller
+f (x) ≥ h(x),
+
+KAPITEL 5.
+
+PROBLEM AV DARLING, LIGGETT OCH TAYLOR
+
+48
+
+kallas för en β -excessiv majorant av h.
+
+Lemma 5.2. Låt h vara en icke-negativ funktion. Om f är en β -excessiv majorant av h, är
+f (x) ≥ E[β τ h(x + Sτ )]
+
+(5.2)
+
+för varje x och τ ∈ M.
+Bevis.
+
+Eftersom f är en β -excessiv funktion, är
+
+βE[f (x + Sn + X)|Sn ] ≤ f (x + Sn )
+för varje n ∈ N0 . Av detta följer
+
+β n+1 E[f (x + Sn+1 )|Fn ] ≤ β n f (x + Sn )
+för varje n ∈ N0 och med hjälp av egenskap
+
+(vii) i proposition 2.16 fås
+
+E[β n+1 f (x + Sn+1 )] ≤ E[β n f (x + Sn )].
+(︁
+)︁
+Då är E[β n f (x + Sn )] ≤ f (x) för varje n ∈ N0 . Därmed är β n f (x + Sn ) n∈N0 en
+supermartingal. Enligt sats 2.27 är
+
+f (x) ≥ E[β τ ∧n f (x + Sτ ∧n )]
+≥ E[β τ ∧n h(x + Sτ ∧n )]
+≥ E[β τ h(x + Sτ )I{τ ≤n} ]
+för varje n ∈ N0 och τ ∈ M. Med hjälp av monotona konvergenssatsen 2.33 fås
+(5.2).
+Betrakta fallet då β = 1 och g(x) = x+ . Anta också att −∞ < E(X) < 0 och
+
+E(X 2 ) < ∞ gäller. Deniera M := max{S0 , S1 , . . . }. Den optimala stopptiden
+visas vara
+
+τ ∗ = min{n ∈ N0 : x + Sn ≥ E(M )}
+
+(5.3)
+
+och den största förväntade vinsten visas vara
+
+E[(x + M − E[M ])+ ].
+
+(5.4)
+
+Följande sats från Ferguson [3] s.4.184.19 visar att funktionen
+
+f (x) = E[(x + M − E[M ])+ ]
+är väldenierad.
+
+(5.5)
+
+KAPITEL 5.
+
+PROBLEM AV DARLING, LIGGETT OCH TAYLOR
+
+49
+
+Sats 5.3. Beteckna E(X) = µ och Var(X) = σ2 . Då är
+σ2
+.
+E(M ) ≤
+−2µ
+Bevis.
+
+(5.6)
+
+Deniera Mn := max{S0 , S1 , . . . , Sn } för varje n ∈ N0 . Eftersom de
+
+stokastiska variablerna X, X1 , X2 , . . . är oberoende och likafördelade, gäller det
+att
+
+(X + Mn )+ = max{X + Mn , 0}
+= max{max{X + S0 , X + S1 , . . . , X + Sn }, 0}
+= max{0, X + S0 , X + S1 , . . . , X + Sn }
+och Mn+1 har samma fördelning. Från likheten
+
+X + Mn = (X + Mn )+ − (X + Mn )−
+följer
+
+E[(X + Mn )− ] = E[Mn+1 ] − µ − E[Mn ]
+och
+
+(X + Mn )2 = [(X + Mn )+ ]2 + [(X + Mn )− ]2 .
+Från den föregående likheten följer
+
+(︁
+)︁
+2
+E [(X + Mn )− ]2 = E(X 2 ) + 2µE(Mn ) + E(Mn2 ) − E(Mn+1
+).
+Då är
+
+0 ≤ Var[(X + Mn )− ]
+(︁
+)︁ (︁
+)︁2
+= E [(X + Mn )− ]2 − E[(X + Mn )− ]
+2
+= σ 2 + 2µE(Mn+1 ) − [E(Mn+1 ) − E(Mn )]2 − [E(Mn+1
+) − E(Mn2 )]
+
+≤ σ 2 + 2µE(Mn+1 ).
+Därmed är E(Mn+1 ) ≤ σ 2 /(−2µ) för varje n ∈ N0 . Med hjälp av monotona
+konvergenssatsen 2.33 fås (5.6).
+Med hjälp av Jensens olikhet 2.14 fås
+
+f (x) = E[(x + M − E[M ])+ ] ≥ x+ = g(x).
+
+KAPITEL 5.
+
+50
+
+PROBLEM AV DARLING, LIGGETT OCH TAYLOR
+
+Eftersom X, X1 , X2 , . . . är oberoende och likafördelade, har
+
+(X + M )+ = max{X + M, 0}
+= max{max{X + S0 , X + S1 , . . . }, 0}
+= max{0, X + S0 , X + S1 , . . . }
+samma fördelning som M . Med hjälp av egenskap
+
+(vii) i proposition 2.16 fås
+
+f (x) = E[(x + (X + M )+ − E[M ])+ ]
+≥ E[(x + X + M − E[M ])+ ]
+(︁
+)︁
+= E E[(x + X + M − E[M ])+ |X]
+(︁
+)︁
+= E f (x + X) .
+Funktionen f är alltså en excessiv majorant av g . Enligt lemma 5.2 gäller olikheten f (x) ≥ E[(x + Sτ )+ ] för varje τ ∈ M.
+Stopptiden τ ∗ är en optimal stopptid om f (x) = E[(x + Sτ ∗ )+ ] gäller. För att
+bevisa detta, betrakta först uttrycket
+
+E[(x + M )I{τ ∗ <∞} ] = E[(x + Sτ ∗ + M − Sτ ∗ )I{τ ∗ <∞} ]
+= E[(x + Sτ ∗ )I{τ ∗ <∞} ] + E[(M − Sτ ∗ )I{τ ∗ <∞} ].
+Den sista termen kan skrivas som
+[︄
+
+E[(M − Sτ ∗ )I{τ ∗ <∞} ] = E (M − Sτ ∗ )
+
+∞
+∑︂
+
+(5.7)
+
+]︄
+I{τ ∗ =n}
+
+n=0
+
+=
+
+∞
+∑︂
+
+E[(M − Sn )I{τ ∗ =n} ]
+
+n=0
+
+=
+
+∞
+∑︂
+
+E[max{S0 − Sn , . . . , Sn − Sn , Xn+1 , . . . }I{τ ∗ =n} ].
+
+n=0
+
+Händelsen
+
+{τ ∗ = n} = {x + S0 < E(M ), . . . , x + Sn−1 < E(M ), E(M ) ≤ x + Sn } ∈ Fn
+medför Sk − Sn < 0 för k < n. Med hjälp av egenskaperna
+
+(vii), (vi) och (iv) i
+
+KAPITEL 5.
+
+PROBLEM AV DARLING, LIGGETT OCH TAYLOR
+
+51
+
+proposition 2.16 fås
+
+E[(M − Sτ ∗ )I{τ ∗ <∞} ] =
+=
+
+∞
+∑︂
+n=0
+∞
+∑︂
+
+E[max{0, Xn+1 , Xn+1 + Xn+2 , . . . }I{τ ∗ =n} ]
+(︁
+)︁
+E E[max{0, Xn+1 , Xn+1 + Xn+2 , . . . }I{τ ∗ =n} |Fn ]
+
+n=0
+∞
+∑︂
+(︁
+)︁
+=
+E I{τ ∗ =n} E[M ]
+n=0
+
+= E[M ]P(τ ∗ < ∞).
+Händelsen {τ ∗ < ∞} medför
+
+x + M ≥ x + Sτ ∗ ≥ E(M ) ≥ 0.
+Då är x + Sτ ∗ ≥ 0 och x + M − E(M ) ≥ 0. Händelsen {τ ∗ = ∞} betyder att för
+varje n ∈ N0 är x + Sn < E(M ). Då är x + M − E(M ) ≤ 0 och enligt (5.1) är
+
+(x + Sτ ∗ )+ I{τ ∗ =∞} = 0. Därmed är
+E[(x + Sτ ∗ )+ ] = E[(x + Sτ ∗ )I{τ ∗ <∞} ]
+= E[(x + M )I{τ ∗ <∞} ] − E[M ]P(τ ∗ < ∞)
+= E[(x + M − E[M ])I{τ ∗ <∞} ]
+= E[(x + M − E[M ])+ ]
+och τ ∗ är en optimal stopptid.
+
+52
+
+LITTERATURFÖRTECKNING
+
+Litteraturförteckning
+
+[1] Chow, Y.S., Robbins, H. & Siegmund, D.
+
+Great Expectations: The Theory
+
+of Optimal Stopping. Boston Houghton Miin, 1971.
+[2] Darling, D.A., Liggett, T. & Taylor, H.M.
+
+Optimal Stopping for Partial
+
+Sums. The Annals of Mathematical Statistics 43 (4) 13631368, 1972.
+[3] Ferguson, T.S.
+
+Optimal Stopping and Applications.
+
+https://www.math.ucla.edu/∼tom/Stopping/Contents.html (27.10.2021)
+[4] Jacod, J. & Protter, P.
+
+Probability Essentials. Springer Berlin Heidelberg,
+
+2004.
+[5] Lamberton, D. & Lapeyre, B.
+
+Introduction to Stochastic Calculus Applied
+
+to Finance. Chapman & Hall, 2008.
+[6] Rosenthal, J.S.
+
+A First Look At Rigorous Probability Theory. World Scien-
+
+tic Publishing Company, 2006.
+[7] Shiryaev, A.N.
+[8] Øksendal, B.
+
+Optimal Stopping Rules. Springer Berlin Heidelberg, 2007.
+
+Stochastic Dierential Equations: An Introduction with Appli-
+
+cations. Springer Berlin Heidelberg, 2010.
+
+

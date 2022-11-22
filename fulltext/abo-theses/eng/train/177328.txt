@@ -1,0 +1,3454 @@
+Techno-economic assessment of three thermal energy
+storage technologies
+Oskar Norrgård
+
+Master’s thesis
+Supervisor: M. Sc. Peter Knookala, Wärtsilä Oyj
+Examinator: Prof. Margareta Björklund-Sänkiaho
+Energy Technology, Vasa
+Study programme in Chemical Engineering
+Faculty of Science and Engineering
+Åbo Akademi University
+May 4, 2020
+
+ABSTRAKT
+Den aktuella klimatkrisen har medfört målsättningar och krav för alla energisektorer.
+För att motverka klimatförändringen bör energisektorerna övergå till rena och hållbara
+energikällor. För värmesektorn anses denna övergång vara svår att genomföra, vilket
+är ett problem i och med att värmesektorn utgör den största energisektorn. Det finns
+dock teknologier som anses ha stor potential för detta, av vilka några framstående är
+fjärrvärme, kraftvärme och värmelagring. I och med att värmelagring kan användas
+för att separera produktionen av värme och el i kraftvärmeverk, anses denna teknologi
+ha stor potential för att korrigera skillnader i behov av el och värme.
+Huvudsyftet med denna avhandling är att identifiera faktorer som begränsar
+användningen av en viss värmelagringsmetod för ett system. För identifieringen av
+dessa utförs en tekno-ekonomisk utvärdering av tre värmelagringsmetoder vilka anses
+vara mest relevanta för uppdragsgivaren. Utvärderingen genomförs i huvudsak på
+basen av en grundlig litteraturgenomgång. Systemet till vilket värmelagret inkopplas
+anses i avhandlingen vara ett kraftvärmeverk som producerar fjärrvärme. De
+värmelagringsmetoder som behandlas i utvärderingen är tre olika alternativ för lagring
+av vatten i tank.
+Det konstaterades att de viktigaste faktorerna som kan begränsa användningen av
+lagringmetod är temperatur, tryck och kostnader. I resultaten presenteras gränsvärden
+för dessa faktorer. Utöver dessa presenteras även designrekommendationer och
+begränsningar gällande inkoppling av värmelagret till systemet. Som enskild del av
+resultaten presenteras även kostnadsuppskattningar för de tre teknologierna, samt ett
+verktyg som har utformats för att undersöka hur ett system med värmelagring beter sig
+i olika driftlägen.
+Verktyget, som är uppbyggt i Excel, beräknar för flöden, tryck och differentialtryck i
+systemet vid olika driftlägen. Det är dock enbart möjligt att utföra statiska beräkningar
+med verktyget. Det främsta utvecklingsförslaget är således att överföra verktyget till
+ett program som är anpassat för dynamiska simuleringar.
+Nyckelord: Tekno-ekonomisk utvärdering, värmelagring, fjärrvärme
+
+I
+
+ABSTRACT
+In order to counteract climate change, the energy sectors need to transition to more
+clean, efficient and sustainable technologies. While the transition proceeds at good
+rates within the power sector, the progress within the heating and cooling sector is
+considered inadequate. As the heating and cooling represents the largest energy sector,
+it is of utmost importance to decarbonize it along with the other energy sectors.
+Technologies with great potential for this include district heating, combined heat and
+power and thermal energy storage. The last is considered as an important technology,
+as it can be utilized to decouple the heat and power production in a CHP plant, thus
+correcting potential mismatches in the heat and power demand.
+The purpose of this thesis is to identify factors that will limit the suitability of using a
+certain TES system for a process. In order to do this, a techno-economic assessment
+needs to be conducted, taking the TES technologies deemed most relevant for the
+commissioner into consideration. For this thesis, the process of interest is an ICE CHP
+plant producing and supplying heat to a district heating network. The TES technologies
+considered for the assessment are one-zone, two-zone and pressurized storage, which
+are variants of tank TES, using water as the storage medium.
+Through a thorough literature review it was concluded that the most important factors
+to consider when selecting a thermal storage system are temperature, pressure and cost.
+In the results, suggested values for these are presented for the three technologies, along
+with recommendations regarding design and integration of the storage system to a
+district heating network. In addition to these, the cost estimations have been prepared
+for the technologies. Furthermore, it was deemed important to study how a system
+with thermal storage behaves in different operating modes. For this, a tool was
+prepared in Microsoft Excel, which calculates pressures, differential pressures and
+flows in a system in different operating scenarios.
+Further work could focus on the tool prepared for studying operating modes. Currently,
+it is only possible to perform static calculations with the tool. The tool could be further
+improved if it were transferred to a program suited for dynamic simulations.
+Key words: Techno-economic assessment, thermal energy storage, district heating
+
+II
+
+TABLE OF CONTENTS
+ABSTRAKT ..................................................................................................................I
+ABSTRACT ................................................................................................................ II
+ACKNOWLEDGEMENTS ........................................................................................ V
+LIST OF SYMBOLS AND ABBREVIATIONS .......................................................VI
+1
+
+2
+
+INTRODUCTION ................................................................................................ 1
+1.1
+
+Purpose and demarcation ............................................................................... 4
+
+1.2
+
+Structure of the thesis .................................................................................... 5
+
+BACKGROUND AND LITERATURE REVIEW............................................... 7
+2.1
+
+2.1.1
+
+Rapid growth of variable renewable energy........................................... 8
+
+2.1.2
+
+Challenges with integrating high shares of VRE ................................. 10
+
+2.1.3
+
+Increased need for flexibility in the power sector ................................ 12
+
+2.2
+
+Strategies for redesigning the heating sector ........................................ 17
+
+2.2.2
+
+Challenges regarding the targets for redesigning the heating sector .... 20
+
+2.2.3
+
+Exploiting synergies between the heating and the power sector .......... 23
+
+Thermal energy storage ............................................................................... 26
+
+2.3.1
+
+Methods for thermal energy storage ..................................................... 27
+
+2.3.2
+
+Sensible thermal energy storage with water ......................................... 30
+
+2.3.3
+
+High temperature thermal energy storage with water .......................... 32
+
+2.4
+
+4
+
+Current state of and outlook for the heating sector...................................... 16
+
+2.2.1
+
+2.3
+
+3
+
+Current state of and outlook for the power sector ......................................... 7
+
+Tank thermal energy storage ....................................................................... 34
+
+2.4.1
+
+Technologies for tank thermal energy storage ..................................... 35
+
+2.4.2
+
+Design aspects for tank thermal stores ................................................. 39
+
+2.4.3
+
+Integration of tank thermal stores to district heating networks ............ 39
+
+MATERIAL AND METHODS .......................................................................... 47
+3.1
+
+Technical assessment ................................................................................... 47
+
+3.2
+
+Economic assessment .................................................................................. 49
+
+3.3
+
+Tool for studying operating modes .............................................................. 52
+
+RESULTS ........................................................................................................... 54
+4.1
+
+Techno-economic assessment ...................................................................... 54
+
+4.2
+
+Tool for studying operating modes .............................................................. 58
+
+III
+
+5
+
+ASSESSMENT OF RESULTS ........................................................................... 60
+
+6
+
+CONCLUSIONS AND RECOMMENDATIONS ............................................. 63
+
+SVENSK SAMMANFATTNING – SWEDISH SUMMARY .................................. 64
+REFERENCES ........................................................................................................... 69
+APPENDICES ............................................................................................................ 76
+
+IV
+
+ACKNOWLEDGEMENTS
+This Master’s thesis has been conducted for Wärtsilä Oyj. I would like to thank my
+supervisor Peter Knookala for excellent support and rewarding discussions during the
+thesis, which have helped shape the thesis immensely. Furthermore, I would like to
+thank Krister Lindqvist for giving me the opportunity of doing a thesis with such a
+relevant and interesting subject.
+I would also like to express my gratitude to Professor Margareta Björklund-Sänkiaho
+for the great support during the thesis. Through her support I have been able to improve
+my thesis further, and her guidance has been very valuable.
+Lastly, I would like to thank my fiancée, family and friends for the support they have
+provided during my studies. Their support carries the utmost importance for me, and
+it has been the most vital factor for this achievement.
+
+Vaasa, May 3, 2020
+Oskar Norrgård
+
+V
+
+LIST OF SYMBOLS AND ABBREVIATIONS
+𝐴
+
+Area
+
+𝑐𝑝
+
+Heat capacity
+
+𝐸
+
+Energy
+
+𝑚
+
+Mass
+
+𝑚̇
+
+Mass flow
+
+𝑛
+
+Shaft speed
+
+𝑝
+
+Pressure
+
+𝑄
+
+Thermal energy
+
+𝜌
+
+Density
+
+𝑇
+
+Temperature
+
+𝑈
+
+Heat transfer coefficient
+
+𝑉
+
+Volume
+
+𝑉̇
+
+Volume flow
+
+ATES
+
+Aquifer thermal energy storage
+
+BTES
+
+Borehole thermal energy storage
+
+CHP
+
+Combined heat and power
+
+CO2
+
+Carbon dioxide
+
+COP
+
+Coefficient of performance
+
+EC
+
+European Commission
+
+EN
+
+European norm
+
+EU
+
+European Union
+
+ICE
+
+Internal combustion engine
+
+PCM
+
+Phase changing material
+
+PED
+
+Pressure equipment directive
+
+PTES
+
+Pit thermal energy storage
+
+PV
+
+Photovoltaic
+
+RES
+
+Renewable energy sources
+
+TES
+
+Thermal energy storage
+
+TTES
+
+Tank thermal energy storage
+
+VRE
+
+Variable renewable energy
+
+VI
+
+1
+
+INTRODUCTION
+
+During the past decades, the global energy demand has increased significantly. There
+are several reasons for this, but driving causes are stated to be increased population
+and changing living standards in middle- and low-income countries. According to IEA
+(2019) the pace at which the demand increases gains speed as well, driven by increased
+heating and cooling needs as well as a robust global economy. Increased energy
+demand inevitably leads to increased demand for, and consumption of fuels. With
+fossil fuels holding the major share of energy production, the increased energy demand
+has also led to increased carbon dioxide emissions. The CO2 emissions are considered
+as one of the driving causes for climate change, which is why strategies have been
+developed in order to phase out fossil fuels and to transform the energy sector into a
+sustainable sector based on renewable energy sources.
+As the transition to RES gains speed globally, something that often seems to be
+overlooked is the heating and cooling sector. It is considered unclear how meeting the
+European Unions’s goals on decarbonizing and energy efficiency will be achieved in
+that part of the larger energy system. In a report by Patronen et al. (2017), it is stated
+that in 2017, half of the EU’s energy consumption would consist of heating and cooling
+in buildings and industry. Adding to that, it is stated that as much as 75% of the heating
+and cooling in the EU would be fossil fuel-based, while 16% would be generated from
+RES. This data provides an insight into the need of decarbonizing the heating and
+cooling sector, and while there are clear objectives for decarbonizing the power sector
+in Europe, the objectives are still unclear for heating and cooling (Paardekooper, et al.,
+2018).
+As a step towards solving the aforementioned problem, the European Commission
+presented the first strategy for optimizing the European heating and cooling sector in
+2016 (European Commission, 2016a). The strategy identifies the main problems for
+the inefficient heating and cooling sector to be a high amount of old buildings in
+Europe, a too small portion of renewables and the fact that too much energy is being
+wasted. These points create the base for an inefficient heating and cooling sector and
+need to be amended in order to transition to a smart, sustainable and efficient system.
+
+1
+
+When focusing on the wasted energy, it is stated that the amount of wasted heat, mainly
+from industrial processes, would likely be enough to cover the entire heating needs in
+residential and tertiary buildings in the EU (European Commission, 2016a). The reuse
+of this waste energy would mean a remarkable improvement of the heating and cooling
+sector’s energy efficiency. According to the EC, there are some solutions that can be
+implemented in order to reuse the wasted energy. These include infrastructure
+development, cooling via cogeneration and chillers and with direct feed via district
+heating systems, which is already quite broadly practiced, both on a global scale as
+well as within Europe.
+In the article International Review of District Heating and Cooling (2017), the author
+Sven Werner states that there are over 80 000 installed district heating systems
+globally, out of which about 6 000 are located in Europe. It is stated that major district
+heating systems appear in large cities, such as Moscow, Beijing and New York outside
+Europe, and Helsinki, Paris and Prague within Europe. Werner continues by
+identifying the main user categories of district heating, which are industries and
+buildings. It is stated that the two users bought a total of 11.5 EJ of heat in the energy
+sector distributed by district heating in 2014. Out of this total number the EU, China
+and Russia accounted for 85%.
+Although district heating can be considered a mature technology, its utilization is still
+considered low. The total heat use globally in 2014 was 74 EJ, and out of that district
+heating accounted for 11.5 EJ. Additionally, the EU’s share of the 74 EJ is stated to
+have been 10 EJ (Werner, 2017). It is further told that district heating provided 9% of
+the EU’s heating in 2016, with the production of district heating being highly reliable
+on fossil fuels (European Commission, 2016b). This once again highlights the need
+for decarbonization. Even though district heating can be used to integrate various
+energy sources, there are barriers that pose problems for doing this. These barriers
+include lack of awareness, information, heat networks, cooperation and inadequate
+business models. These problems stand in the way of transforming the sector into the
+smart, sustainable and energy efficient heating and cooling sector that is needed.
+Currently, the main sources of energy for district heating, and for heat production in
+general, are oil and coal. However, trends show a rapid decrease in the use of these
+
+2
+
+fuels for baseload power generation, which in turn means that actions need to be taken
+in the heating and cooling sector as well. The current situation indicates that a large
+amount of the energy in the heating and cooling sector is produced by baseload fossil
+fuels, and the declination of these indicates that there will be a substantially lower
+amount of baseload heat available in the future. This brings forth the need for increased
+flexibility in the heating and cooling sector, as well as in the energy sector as a whole.
+Adding to this, Heat Roadmap Europe 4 indicates that the share of district heating in
+the heating and cooling sector in Europe is expected to increase from 9% to 46% by
+2050, further highlighting the need for flexible heat generation (Paardekooper, et al.,
+2018).
+It is predicted that combined heat and power generation will play an important role in
+increasing the flexibility of both the heating and the power sector. Predictions show a
+rapid increase in highly flexible power stations consisting of gas turbines and internal
+combustion engines. In most cases these power stations are realized as CHP plants,
+which means that the stations can produce both heat and power according to demand.
+However, variations and mismatch in the heat and power demand require balancing by
+utilizing additional technologies. Thermal energy storage is considered an important
+technology for this, as it can be utilized to store heat when the demand is low and to
+discharge when required.
+TES as a technology is very mature, and the technology has already been developing
+during the past five decades. This means that there are also many different technologies
+for TES readily available, with different technologies suiting different purposes.
+According to Gibb et al. (2018), one of the main challenges with integrating TES to a
+process is identifying the advantages and disadvantages of the various concepts. It is
+stated that these need to be identified in order to match the most beneficial thermal
+storage to the process in question. As Gibb et al. (2018) state that there is no ‘one-sizefits-all’ for TES, Sørensen & Schmidt (2018) also point out that it is required to
+conduct a technical-economic assessment of the possible storage concepts in order to
+find the best solution. Furthermore, Gibb et al. (2018) state that evaluation needs to be
+done based on detailed characterization of three features, which are the storage system
+the process, and the benefits of integrating the storage within the process.
+
+3
+
+1.1
+
+Purpose and demarcation
+
+The main purpose of this thesis is to identify key factors that will limit the suitability
+of using a certain thermal storage system for a process. As stated by Gibb et al. (2018),
+these need to be determined in order to select a suitable storage system for a process.
+This is of relevance to the commissioner, as it will facilitate the procedure of selecting
+a suitable storage system in line with defined process parameters. This is in turn
+expected to make the execution of future projects with thermal energy storage more
+efficient.
+The process of interest in this case is an ICE CHP plant producing heat which is
+supplied to a district heating network. These highly flexible power plants consist of
+one or more internal combustion engines, producing electricity and heat through the
+combustion of gas or fuel oil. The size range for these power plants is very vast,
+depending on the number of engines in the plant and the generation capacity of each
+engine, and can range from below 10 MW to over 400 MW. Despite the wide size
+range, the focus is henceforth set on plants below 100 MW, as this is most often the
+case for plants used for the purpose of correcting mismatches between demand and
+production.
+It needs to be determined what thermal storage technologies are most suited for these
+types of applications. Furthermore, it is considered important to study what
+recommendations and limits are set on a thermal storage system when integrated to an
+ICE CHP plant that is connected to a district heating network. In addition to this,
+estimating the costs of the storage systems is deemed important. The economic
+assessment can be considered as the most important part of a project, as it determines
+the feasibility of the project. Furthermore, it is deemed important to study how a
+system with thermal storage behaves in different operating modes. Calculating
+pressures and flows for a process with heat storage at different operating scenarios is
+considered important for the execution of a project with heat storage. It is expected
+that the calculation results can be used as a starting point for dynamic simulations,
+which makes the project execution phase more streamlined.
+
+4
+
+As the topic of the thesis is very vast, the thesis is limited to TES with water as the
+heat storage medium. The reason for this is that water is the most common heat transfer
+medium in district heating systems. Thermal storage with water is also considered the
+most relevant for the commissioner. Despite this, other TES technologies are also
+presented and discussed briefly.
+Even as the heat storage medium is limited to water, there are several technologies
+available for consideration, which is why the thesis is further limited to a specific
+storage technology known as tank thermal energy storage. TTES is also regarded as
+the technology with the most relevance to the commissioner. TTES is stated to be
+suitable for short-term storage and is often the technology of choice for covering
+demand variations. As for TTES, there are three main technologies available, which
+are presented and discussed in depth. Each of the technologies have their own benefits
+and drawbacks, which are identified and discussed in the thesis. The size range for
+TTES is very wide, ranging from some hundred to several ten thousand cubic meters.
+The size of the storage system depends to some extent on the selected technology, but
+mainly on the required storage capacity. Despite the wide size range, the range is not
+limited as the required storage capacity depends largely on the capacity of the CHP
+plant the storage is integrated into, which is limited to 100 MW.
+The thesis also presents a comprehensive background regarding the current energy
+transition in the energy sector. In this section of the thesis strategies and possible
+challenges and solutions for decarbonizing the energy sector are presented and
+discussed. This is considered relevant for the thesis, as it highlights the need for an
+increased amount of co-generation of heat and power combined with TES in the future,
+also providing an insight into the benefits of integrating thermal storage within an ICE
+CHP plant.
+1.2
+
+Structure of the thesis
+
+The thesis is divided into six main chapters. The thesis starts with an introduction
+presenting the current energy transition and the need for flexible heat and power
+generation in brief. After this the purpose and demarcation of the thesis are presented.
+Chapter two consists of a comprehensive background presenting the changes currently
+
+5
+
+taking place in the energy sector in order to further emphasize the need for flexible
+heat and power generation and particularly TES. Chapter two is then continued with a
+literature review for TES. The focus of the literature review is set on three storage
+technologies that have been deemed the most relevant for the commissioner, which are
+tank thermal energy storage with one-zone, two-zone and pressurized tanks. In chapter
+three materials and methods used to conduct the thesis are presented, while the main
+results achieved through the thesis are presented and discussed in chapter four. The
+thesis is then continued with an assessment of the results in chapter five and ended
+with conclusions in chapter six.
+
+6
+
+2
+
+BACKGROUND AND LITERATURE REVIEW
+
+While the share of renewables in the energy sector increases at an accelerated rate, the
+intermittent nature of many of these energy sources poses challenges for achieving a
+balanced and efficient power sector. Adding to this, trends show a rapid decrease in
+the use of fossil fuels such as coal, oil and gas in the future, as can be expected.
+However, these fossil fuels are currently the main source of heat, and they supplied
+75% of the total heating and cooling demand in Europe in 2017 (Patronen, et al., 2017).
+This creates additional challenges in the whole energy sector, and in this chapter these
+challenges and possible strategies to undertake them are also addressed.
+According to Dinçer & Rosen (2011) a wide range of technologies will be required in
+order to compensate for variations in supply and demand in the future. Thermal energy
+storage is considered as a technology with great potential for this. The technology has
+been developing during the past five decades, which has resulted in it being a readily
+available and mature technology. However, this also means that there are several
+methods available for TES, each with their own advantages and disadvantages.
+Identifying these is necessary in order to be able to select the most beneficial thermal
+storage technology for a process.
+2.1
+
+Current state of and outlook for the power sector
+
+Ever since industrial revolution the fossil fuel consumption has increased rapidly
+(Ediger, 2019). The appeal and benefits of fossil fuels have been many, including
+affordability, increased employment rates, and energy security to name a few.
+However, challenges such as environmental deterioration and a decreasing supply of
+resources has shifted the focus from fossil fuels to more sustainable options. In
+IRENA’s report Global Energy Transformation: A Roadmap to 2050 (2019) IRENA’s
+Director-General Francesco La Camera begins his foreword by stating that the global
+energy transformation is currently under way, which means that the energy sector is
+currently in a transitioning phase into a sustainable system with significantly lower
+carbon emissions. La Camera states that the transformation is crucial in order to limit
+climate change and to foster sustainable growth. Furthermore, he states the
+transformation has been enabled by declining costs of renewable energy, improved
+
+7
+
+possibilities regarding energy efficiency and smarter technology, among other things.
+However, in order to meet the global climate objectives, such as the ones set by the
+Paris Agreement in 2015 (UN, 2015), the transition needs to take place faster. La
+Camera predicts that in order to meet the set objectives, the deployment rate for
+renewable energy must increase six-fold from the current rates.
+The Paris Agreement is a legally-binding framework which was adopted in 2015
+during the UN Framework Convention on Climate Change. Through the Paris
+Agreement 196 parties agreed to undertake climate change. The key points of the Paris
+Agreement include limiting the global temperature increase to below 2 °C and
+reaching the peak of greenhouse gas emissions as soon as possible. The latter of these
+is needed in order to reach net-zero emissions by the second half of the 21st century.
+According to La Camera (IRENA, 2019), the key solution to creating the sustainable
+and clean system would be to pair the electrification of the energy sector with the
+production of clean electricity. It is stated that electricity’s share in the total energy use
+would have to increase to nearly 50% by the half of the century in order to meet the
+goals, with the current share being 20%. If that was the case, renewables would atone
+for 86% considering power generation and nearly 70% considering total energy
+consumption. Combining renewable power generation with an electrified energy
+sector in such a manner could then possibly reduce carbon dioxide emissions by 60%.
+This, however, also has its challenges. Electrifying the energy sector to such extents
+would for instance require the demand to occur at times when the conditions for
+renewable energy generation are favorable.
+2.1.1
+
+Rapid growth of variable renewable energy
+
+Currently, the global energy system is 85.5% fossil fuel dependent on average, with
+the shares varying from 32.1 – 100% depending the country (Ediger, 2019). The
+highest shares are found in India and Japan, with fossil fuel dependencies of 92.5%
+and 90.8 % respectively, while the average of the EU is 75.4%. However, the share of
+fossil fuels in the energy sector is rapidly decreasing, with the power generation sector
+leading the way (IRENA, 2019). The rapid growth of renewables in the power
+generation sector is proven by the increased share of renewable energy from
+approximately 25% to 34% during the year 2017 alone, by the end of which the
+
+8
+
+installed capacity had reached 2 337 GW. The installed capacity can be dissected into
+54% hydropower, 22% wind power, and 17% solar photovoltaic, out of which wind
+and solar PV are expected to increase at accelerated rates. This indicates that wind and
+solar PV power, or variable renewable energy technologies as IRENA calls them, play
+a central role in the energy transformation.
+IRENA (2019) predicts that the capacity of VRE will rise from the current 900 GW to
+13 000 GW by 2050, with VRE technologies thus being the leading party in the energy
+transition. It is stated that these technologies will account for around 60% of the total
+power generation by that point, tripling and doubling the annual wind and solar
+capacity respectively from the levels in 2017. This has also been predicted by the
+business and financial data company Bloomberg in their New Energy Outlook report
+(EB Business Intelligence, 2019). Bloomberg predicts the same growth rate for
+annually installed wind and solar power capacity by the year 2030, as can be seen in
+Figure 1. This would mean that the annually installed wind capacity, consisting of both
+on- and offshore wind, would increase from 49 GW in 2018 to 162 GW by 2030, while
+the annually installed solar capacity, consisting of small and utility-scale PV and solar
+thermal power, would increase from 109 GW to 208 GW during the same time frame.
+
+220
+
+180
+
+GW
+
+140
+
+100
+
+60
+
+20
+2018
+
+2020
+
+2022
+
+2024
+Wind
+
+2026
+
+2028
+
+2030
+
+Solar
+
+Figure 1. Predicted annual capacity addition for wind and solar power by 2030 (EB Business Intelligence, 2019;
+modified)
+
+9
+
+Integrating such high shares of VRE would require contained costs for power systems
+and that the systems in question are malleable to design changes, which means that the
+power system must be up to date with on-going trends regarding electrification,
+decentralization and digitalization (IRENA, 2019). Adding to these, the power systems
+will require increased flexibility, due to the fact that VRE technologies are nondispatchable, which means that they have an intermittent nature (Kroposki, 2017). The
+outlook predicted by Bloomberg (2019) shows that several energy production and
+storage methods need to be implemented in order to reach the required levels of
+flexibility. These methods need to work together in manners different from today in
+order to keep the energy sector steady and balanced despite the intermittent nature of
+the VRE technologies.
+2.1.2
+
+Challenges with integrating high shares of VRE
+
+One of the main challenges with integrating high shares of VRE stems from the
+intermittent nature of the energy sources categorized under that term (Kroposki, 2017).
+The sources being intermittent means that they can only produce power when
+conditions are favorable, which means that wind power cannot produce power unless
+there is wind and solar power unless there are solar resources. Figures 2 and 3 indicate
+power generation by wind and solar power in Germany during a winter and a summer
+week in 2019, based on data provided by Agora Energiewende (2020). As the curves
+show, wind power peaks at above 40 GW during the winter week, while it peaks
+between 20 – 25 GW during the summer week. Through this it can be concluded that
+power generation by wind is more favorable during the winter months. Solar power,
+on the other hand, is far more favorable during the summer with peaks above 30 GW,
+compared to 12 GW during the winter week.
+The curves also indicate a more unpredictable nature for wind power, with more
+variation compared to solar power. This makes wind power harder to predict compared
+to solar power, as solar power has less variation. The intermittency of VRE
+technologies and the growing capacity of these underline an increased need for flexible
+generation, as on-demand power generation becomes harder to achieve. (Kroposki,
+2017)
+
+10
+
+Power Generation (GW)
+
+50
+
+40
+
+30
+
+20
+
+10
+
+0
+0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00
+Wind
+
+Solar
+
+Figure 2. VRE power generation during week 6, 2019, in Germany (Agora Energiewende, 2020)
+
+Power Generation (GW)
+
+40
+
+30
+
+20
+
+10
+
+0
+0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00
+Wind
+
+Solar
+
+Figure 3. VRE power generation during week 30, 2019, in Germany (Agora Energiewende, 2020)
+
+Previously used conventional energy sources, such as fossil fuels, have not had this
+challenge as they are dispatchable (Kroposki, 2017). This means that on-demand
+generation is possible to meet the demand needs. Another important feature of the
+conventional energy sources is that they use synchronous generators as the grid
+connection point. This makes stable operation possible, as the generator is able
+produce a steady AC current at 50 or 60 Hz frequencies to the grid. The use of this AC
+current has also made long distances between power plants and load centers possible,
+as AC power is easily transmitted over long distances at high voltages and low
+
+11
+
+currents. This poses another challenge for VRE technologies, due to output variations
+and an asynchronous interconnection to the grid, and it is stated that while there are
+technologies available to tackle these challenges to some extent, additional solutions
+need to be implemented as well.
+In order to ensure reliable and stable operation of an AC power system, correct voltage
+and frequency needs to be maintained, and electrical power delivered to loads always.
+This is one of the main technical challenges with VRE technologies. As the electrical
+load varies, the power generation system must be able to meet the demand, which then
+needs to be done by power generation or storage. VRE technologies can counteract
+load variations to some extent, but it is expected that additional power generation and
+storage technologies are needed if the predicted amounts of VRE is to be integrated in
+the power system.
+2.1.3
+
+Increased need for flexibility in the power sector
+
+Flexibility has always been an important part of power systems, and for the smooth
+operation of these, as the electricity demand is highly variable on daily and seasonal
+bases (IRENA, 2019). Meeting the demand is not a problem with conventional energy
+sources, but with variable energy sources inadequate flexibility can possibly lead to
+load shedding or VRE curtailment. These are a result of mismatch between supply and
+demand, through overproduction or insufficient ramp up capacity. In other words, if
+demand is higher than generation the system might not be able to ramp down if the
+conditions are favorable, leading to an overproduction of power. If demand on the
+other hand is high but the conditions are not favorable for VRE generation, the ramp
+up capacity is insufficient, and the demand is not met.
+In Figures 4 and 5 it can be seen how much of the electricity consumption in Germany
+during the weeks 6 and 30 was covered by VRE generation (Agora Energiewende,
+2020). As can be seen, the curve indicating VRE generation in Figure 4 has less
+variation, but the nature of the variation is far more unpredictable compared to the one
+in Figure 5. This indicates that wind power holds the larger share of the generated
+power, as is also seen in Figure 2, with solar power adding peaks to the curve. The
+curve in Figure 5, on the other hand, has large but predictable variations. This indicates
+a large share of solar power in the VRE generation, as can also be seen in Figure 3.
+
+12
+
+The figures also show the daily and seasonal variations of the electricity demand.
+Fluctuations of around 20 GW can be seen depending on the time of the day, and a 10
+GW overall increase in consumption can be noted when comparing the consumption
+curve in Figure 4 with Figure 5.
+
+Power Generation and Consumption
+(GW)
+
+100
+
+80
+
+60
+
+40
+
+20
+
+0
+0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00
+Consumption
+
+Generation by VRE
+
+Figure 4. VRE generation and power consumption during week 6, 2019, in Germany (Agora Energiewende, 2020)
+
+Power Generatuon and Consumption
+(GW)
+
+80
+
+60
+
+40
+
+20
+
+0
+0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00
+Consumption
+
+Generation by VRE
+
+Figure 5. VRE generation and power consumption during week 30, 2019, in Germany (Agora Energiewende, 2020)
+
+13
+
+If the annual capacity of wind and solar generation would triple and double, as IRENA
+(2019) and Bloomberg (2019) predict, the curves for VRE generation against
+consumption would be as in Figures 6 and 7, assuming the same consumption as in
+2019. The coverage compared to 2019 has obviously increased, but the variations still
+pose a problem. In Figure 6 overproduction is clearly visible, while the
+underproduction is a more eminent problem in Figure 7. Flexible solutions need to be
+introduced in order to counteract these problems and to ensure a stable power sector.
+
+Power Generation and Consumption
+(GW)
+
+160
+
+120
+
+80
+
+40
+
+0
+0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00
+Consumption
+
+Generation by VRE
+
+Figure 6. VRE generation and power consumption during a winter week in a 2050 scenario (Agora Energiewende,
+2020; modified)
+
+Power Generation and Consumption
+(GW)
+
+120
+
+80
+
+40
+
+0
+0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00 12:00 0:00
+Consumption
+
+Generation by VRE
+
+Figure 7. VRE generation and power consumption during a summer week in a 2050 scenario (Agora Energiewende,
+2020; modified)
+
+14
+
+Solving the issue of flexibility can be done in many ways, and there are several
+methods available to achieve the flexible power system that is needed. Some of these
+include the encouragement of demand-side flexibility, grid development, including
+energy storage and by including additional flexible generation (Agora Energiewende,
+2017). These technologies would be used to stabilize the generation curve seen in
+Figures 6 and 7 to better meet the demand curve. In these scenarios storage
+technologies could be introduced to the system in order to make use of the VRE
+curtailment, seen in Figure 6. Peaking generation could on the other hand be
+introduced in order to compensate for low production periods seen in both Figure 6
+and 7.
+As the share of VRE technologies in the energy sector keeps growing, it is predicted
+that flexible solutions will grow rapidly as well in order to increase the flexibility of
+the power sector. Bloomberg (2019) predicts that annual capacity additions for battery
+storage and gas-fired peaking plants will grow by factors of 13 and 14 respectively by
+2030 compared to 2018, as can be seen in Figure 8.
+50
+40
+
+GW
+
+30
+20
+10
+0
+2018
+
+2020
+
+2022
+
+2024
+
+2026
+
+2028
+
+Peaker gas
+
+Battery Storage
+
+Linear (Peaker gas)
+
+Linear (Battery Storage)
+
+2030
+
+Figure 8. Annual capacity trends for gas peakers and battery storage (EB Business Intelligence, 2019; Modified)
+
+There is a clear competition for market share between battery storage and gas-fired
+peaking plants, with peaking plants currently forecasted to hold the bigger share.
+Battery storage costs are however declining fast, making the competition for keeping
+the power sector in balance a more even one (IEA, 2018). Despite this, gas-fired
+
+15
+
+peaking plants, including plants with natural gas combustion turbines and internal
+combustion engines, are predicted to lead the flexibility market until 2030 (EB
+Business Intelligence, 2019). Benefits such as fast ramp rates, good control and
+response capabilities, as well as low minimum generation levels and cycling costs all
+speak in favor of increased capacity for this type of flexible power generation (Bird,
+et al., 2013).
+2.2
+
+Current state of and outlook for the heating sector
+
+The presented statistics and figures indicate a transformation of the power sector into
+a highly flexible sector that is highly dependent on VRE technologies. While these
+technologies and flexible solutions are currently implemented to the power sector at
+rapid rates, the heating and cooling sector still faces challenges regarding
+decarbonization (Paardekooper, et al., 2018) . There is a need for a smart, sustainable
+and clean heating and cooling sector, but it is considered unclear how to achieve this.
+Furthermore, the heating and cooling sector represents the largest energy sector, which
+means that it is of vital importance to decarbonize the sector along with the power
+sector, in order to meet the objectives set in the Paris agreement.
+Currently, the European heating and cooling sector is highly dependent on fossil fuelbased generation, and it is said that developing a strategy in order to ensure an efficient
+and sustainable heating and cooling sector in Europe is a priority for the Energy Union
+(European Commission, 2016b). Along with the EU’s strategy on heating and cooling,
+other strategies are being developed as well, including the Heat Roadmap Europe
+project, which aims to support the transition to a low-carbon heating and cooling sector
+(Paardekooper, et al., 2018). By building evidence that supports decarbonization and
+redesigning the energy sector, the Heat Roadmap Europe project supports the
+transition into the heating and cooling sector that is needed.
+However, it is stated that the heating and cooling sector is the most difficult energy
+sector to decarbonize, and uncertainties regarding how the decarbonization should be
+executed present challenges for the execution itself (Chaudry, et al., 2015). Despite
+challenges, the need to redesign the European heating and cooling sector is obvious.
+
+16
+
+Even though the heating and cooling sector covers both heating and cooling, it can be
+concluded that the dominating part of these two is heating. It is expected that the
+cooling demand will increase as well, and even double from the levels today.
+Furthermore, 20% of the share of the thermal energy demand in 2050 is predicted to
+be held by cooling (Paardekooper, et al., 2018). Despite this, focus is henceforth set
+on heating, as it is considered the major part of the sector.
+2.2.1
+
+Strategies for redesigning the heating sector
+
+High fossil fuel dependency and low energy efficiency due to old buildings and large
+amounts of wasted heat are the most important factors that indicate the need for
+redesigning the heating sector according to the EU’s strategy on heating and cooling,
+presented by the EC in 2016. In the strategy the importance of decarbonizing buildings
+and industries is underlined, as inefficiency due to these are two of the main reasons
+for the low energy efficiency of the whole sector. The strategy brings forth the need to
+transform the heating sector by renovating buildings and making better use of waste
+heat from industries. Adding to this, the share of renewables in the sector should be
+increased remarkably, as the European heating sector is currently 75% fossil fuelbased. In 2016 renewables accounted for only 16% of the heating sector, and a larger
+share of renewables is said to complement energy efficiency. The three key focus
+points for redesigning the heating sector according to the EU’s strategy on heating and
+cooling are thus the inefficiency of space heating, a too small share of renewables and
+the fact that a too large amount of energy is being wasted (European Commission,
+2016a). This means that actions need to be taken on both the supply and demand side
+and increasing the energy efficiency for both parts is necessary to achieve the goals
+for decarbonizing the heating and cooling sector (Paardekooper, et al., 2018).
+In both the EU’s strategy on heating and cooling (2016b) and Heat Roadmap Europe
+4 (2018), the importance of renovating buildings, and heating equipment related to
+them, is accentuated in order to support decarbonization and increase energy
+efficiency. The large amount of old buildings in Europe are considered a significant
+cause for the low energy efficiency and reducing the energy demand of space heating
+would help in increasing the efficiency of the sector. In order to stay on track with
+current targets, set to 2050, end use savings in delivered energy would have to increase
+
+17
+
+by 25%, meaning a reduction of delivered energy by one fourth. Reaching this means
+a required renovation rate of 0.7 – 1%. In Heat Roadmap Europe 4 (Paardekooper, et
+al., 2018), a more ambitious level is also presented by suggesting a 30% reduction of
+delivered energy. This would require a 1.5 – 2% renovation rate, which is a significant
+increase from the 0.6% level today. In addition to higher renovation rates, the heating
+equipment in almost half of the European buildings would also have to be renovated
+or replaced. These equipment, such as boilers, have almost all outlived their technical
+lifetime and have efficiency rates of below 60%, highlighting the need for renovation
+(European Commission, 2016a).
+Adding to higher renovation rates, there is also great potential to increase the energy
+efficiency by making better use of heat wasted from the industry and by cogeneration
+of heat and power (European Commission, 2016b). According to the EU’s strategy on
+heating and cooling (2016b), the European industry accounted for 25% of the total
+energy consumption in the EU in 2012, out of which nearly three fourths was used for
+heating and cooling. This indicates that the European industry is very intense when it
+comes to energy consumption, and while the industry is cutting its energy intensity
+quite rapidly, the potential is still significant (European Commission, 2016b). Some of
+these industries generate heat as a secondary product. This waste heat could be utilized
+for space heating by implementing higher levels of district heating.
+District heating is a heat distribution technology which is used for heat transfer in cities
+and areas with dense population (Frederiksen & Werner, 2014). Through coupling of
+consumers and producers with piping, heat can be transferred efficiently from the
+producers to a network of consumers. The heat transfer is made possible through the
+use of a heat carrier, which is usually pressurized water. As the technology has
+developed, the preferred heat carrier has also changed. According to Werner (2017),
+the development of district heating can be divided into three generations. The
+technology has developed from the first generation, using steam as the heat carrier, to
+the more efficient third generation which is used today. According to Lund, et al.
+(2014), the transition to a fourth generation of district heating is also ongoing. The
+main goal with fourth generation district heating is a more energy efficient system
+integrated as a part of smart energy systems, such as smart electricity grids.
+
+18
+
+In Heat Roadmap Europe 4 (Paardekooper, et al., 2018), it is stated the share of district
+heating would have to increase to 46% from the current 9% by 2050 in order to ensure
+deep decarbonization of the heating sector. Adding to this cogeneration of heat and
+power is also advocated, and there is large potential to increase energy efficiency there
+as well. According to the 2050 scenario presented in Heat Roadmap Europe 4, CHP
+generation will hold the largest share of heat production for district heating at 35% by
+that time. According to the scenario, the thermal capacity of CHP generation will
+increase from 87.5 GWth in 2015 to 103.7 GWth by 2050 (Paardekooper, et al., 2018).
+The final key factor presented in the EU’s strategy of heating and cooling (2016b) is
+to increase the share of renewables in the heating and cooling sector, which is likely
+to be forced to some extent as the share of renewables is being increased in the power
+sector. According to the EU’s strategy on heating and cooling, each member state of
+the EU has already adopted a target for increasing the share of renewables in the
+heating and cooling sector, and most of them are on track to achieve these targets. In
+2016, it is stated that biomass held the largest share for heat production by renewables,
+accounting for 90% of all renewable heating, but according to Heat Roadmap Europe
+4 (Paardekooper, et al., 2018), the mix will become more varied by 2050. It is predicted
+that electrification of the heating sector will increase, and heat pumps using electricity
+produced by renewable energy are expected to account for 30% of district heat
+production in the Heat Roadmap 2050 scenario. Adding to this, renewables such as
+geothermal and solar thermal heating are expected to account for 5% of the district
+heat production.
+In Heat Roadmap Europe 4 (Paardekooper, et al., 2018), it is stated that it is possible
+to redesign the European heating and cooling sector using only market available and
+proven technologies. Furthermore, it is told that end-use savings can be combined with
+heat pumps and district heating, energy efficiency and RES in order to keep the
+temperature increase below 2 °C. Reducing costs and decarbonizing is then made
+possible by replacing fossil fuels with renewable energy and energy efficiency. In
+addition to creating a clean, efficient and sustainable system this would also improve
+balance of payments and increase the employment rate in Europe. However, the targets
+set in Heat Roadmap Europe 4 and the EU’s strategy on heating and cooling are very
+optimistic and will most likely be very difficult to reach (Savolainen, 2019).
+
+19
+
+2.2.2
+
+Challenges regarding the targets for redesigning the heating sector
+
+Although strategies have been developed, the most difficult task for transforming the
+heating and cooling sector is still at hand, which is carrying out the strategies. Even as
+the tools and solutions presented both in the EU’s strategy on heating and cooling and
+by the Heat Roadmap Europe 4 project are available and proven, there are many
+challenges with reaching the targets. Many of these challenges stem from unseen
+shares and rates, which can be very difficult to achieve (Savolainen, 2019). For
+instance, the suggested increase in renovation rates from the current 0.6% per year to
+1.5 – 2% is very optimistic, as such renovation levels have never been seen nor
+maintained. The building renovation rates are not the only overly optimistic
+predictions presented in the strategies, and challenges regarding increasing the share
+of district heating and the electrification of the heating sector are also to be expected.
+As for the problems with electrification of the heating sector, one of the main
+challenges is the need for a sufficient foundation of renewable power generation
+(Simon, 2019). Heating and cooling represent the largest energy sector and when
+added to the power sector the energy consumption reaches around 70% in most
+European countries. When compared to the current rate of electrification the demand
+factor would increase by 2.5 times if the heating and cooling sector was to be
+electrified to suggested extents. This would require a major increase in the current
+deployment rate of renewables. Adding to this the demand for heating and cooling is
+five to ten times higher during the winter in many European countries, making it
+difficult to find a sustainable electricity source which could balance the heating needs.
+The currently inefficient district heating systems pose problems as well (Lund, et al.,
+2014). In the 2050 scenario presented in Heat Roadmap Europe 4 (Paardekooper, et
+al., 2018), heat pumps are presented to hold a 30% share of the heat production.
+However, implementing high shares of large-scale heat pumps to the heating sector is
+not currently feasible due to the characteristics of the currently installed district heating
+systems (Lund, et al., 2014). Both Heat Roadmap Europe 4 and the EU’s strategy on
+heating and cooling state that district heating will play a central role in implementing
+sustainable energy systems (Paardekooper, et al., 2018; European Commission,
+
+20
+
+2016b). In order to do this however, the district heating systems would need to change
+into low-temperature systems interacting with low-energy buildings, which is a change
+that can be considered radical (Lund, et al., 2014). The current third generation district
+heating systems, as they are called, have relatively high operating temperatures, which
+means that the heat production source needs to be able to produce high temperature
+heat. In many cases these temperatures are outside the limits of efficient heat pump
+production.
+By using a heat pump low grade heat can be raised to a utilizable temperature (Sinnott,
+2005). In an electrified heating sector this would mean that a heat pump would
+consume surplus power in order to increase the temperature of a medium used for
+heating to a required temperature (Averfalk, et al., 2017). For the heat pump to work
+as efficiently as possible, however, a favorable temperature range is required (Lund,
+et al., 2014). This is due to the fact that the efficiency of the heat pump is highly
+dependent on the working temperatures, as can be seen in Equation (1), where COP is
+the denomination for the efficiency of the heat pump, Eout is the energy delivered at
+higher temperature and Ein is the energy input to the heat pump (Sinnott, 2005).
+
+𝐶𝑂𝑃 =
+
+𝐸𝑜𝑢𝑡
+𝐸𝑖𝑛
+
+(1)
+
+In Figure 9 the dependency of COP and the working differential temperature of a
+system can be seen. The figure indicates a decrease in COP as differential temperature
+ΔT increases, meaning that higher working temperatures will inevitably lead to
+decreased heat pump efficiency. The secondary Y-axis in the figure shows the
+investment cost index of the heat pump as a function of the working temperature. The
+figure shows that the investment cost factor increases, almost linearly, as the working
+temperature increases.
+
+21
+
+8.0
+
+250%
+
+7.0
+
+COPh
+
+5.0
+
+150%
+
+4.0
+100%
+
+3.0
+2.0
+
+Investment cost index
+
+200%
+6.0
+
+50%
+1.0
+0.0
+
+0%
+30
+
+50
+
+70
+
+90
+
+110
+
+130
+
+150
+
+ΔT (°C)
+Figure 9. Heat pump efficiency and investment cost factor depending on working temperature (Andersson &
+Knookala, 2019)
+
+As the working temperature of the current third generation district heating system is
+almost exclusively set around 100°C, efficient use of large-scale heat pumps in the
+current district heating systems can be deemed challenging (Andersson & Knookala,
+2019). Lowering the supply temperature and thus minimizing the temperature
+difference between the supply and return flows would however ensure more efficient
+operation, which is one of the goals for the future fourth generation district heating
+systems (Lund, et al., 2014).
+Achieving a so called fourth generation district heating system would require
+accomplishing the key points in the strategies presented by the EU’s strategy on
+heating and cooling and Heat Roadmap Europe 4 (European Commission, 2016b;
+Paardekooper, et al., 2018). According to Lund, et al. (2014), studies investigating the
+feasibility of fourth generation district heating conclude that district heating has a
+significant role in the future energy system. However, it is further stated that the
+current district heating technologies will require further development in order to make
+full use of the low-temperature heat production units, such as heat pumps. This
+development should be focused on decreasing grid losses and exploiting synergies, in
+other words decreasing the consumer demand, making use of waste heat and
+integrating renewables. It is emphasized that exploitation of synergies is a key factor,
+
+22
+
+as this enables efficient usage of heat as well as integration of renewables. In order to
+efficiently make use of synergies between sectors an effort needs to be made for
+developing the needed fourth generation district heating. Fourth generation district
+heating would support the implementation of a sustainable energy system based on
+RES and a lower space heating demand. To summarize, a fourth-generation district
+heating system is required in order to ensure deep decarbonization of the heating
+sector, but in order to make this possible the three key points presented in the strategies
+need to be carried out.
+2.2.3
+
+Exploiting synergies between the heating and the power sector
+
+The exploitation of synergies between the different energy sectors is of utmost
+importance if a sustainable energy sector is to be achieved (Lund, et al., 2014). This
+requires coupling of various energy carriers for different end uses, including power
+generation, heating and industry. In other words, exploiting synergies means the
+integration of different energy sources and reaping the benefits of the combined use of
+these. Studies, such as the EU’s strategy on heating and cooling (European
+Commission, 2016b) and Heat Roadmap Europe 4 (Paardekooper, et al., 2018),
+underline the importance of making use of the synergies in the energy sector.
+Renewable energy in combination with conservation of energy and CHP generation
+are considered essential factors for making use of synergies, and together these factors
+can be considered the foundation for the future fourth generation district heating
+system (Lund, et al., 2014). All sectors must work together, creating a complete and
+smart energy system.
+CHP generation is predicted to have significant importance in the future heating and
+cooling sector. According to the 2050 scenario presented in Heat Roadmap Europe 4
+(Paardekooper, et al., 2018), CHP generation is expected to hold the largest share of
+district heat production at 35%. The benefits of CHP generation are several, including
+the fact that CHP generation enables significant savings in energy and carbon dioxide
+compared to separate generation of heat and power (Lund, et al., 2014; Paardekooper,
+et al., 2018).
+
+23
+
+CHP generation is a mature technology that has been widely used to combine fossil
+fuel-based electricity production and heat production. As fossil fuels are being phased
+out CHP generation can however be expected to change. As the use of coal and oil
+decreases, CHP generation with bio-fuels, waste incineration and gas can be expected
+to increase. While the strategies presented by the EU and Heat Roadmap Europe both
+suggest phasing out gas as it is a fossil fuel, Ediger (2019) states that this will not be
+possible. According to Ediger, gas is considered to play an important role in the energy
+transition and it is considered a bridge fuel during the transition. Bloomberg predicts
+that gas will be hard to replace as it is a cheaper alternative to other technologies, and
+they also predict a significant increase of gas-fired peaking plants.
+As increased shares of VRE technologies are deployed in the energy sectors it is
+essential to meet the challenge of their intermittent energy production (IRENA, 2019).
+This is especially important in the power sector, as the balance between supply and
+demand needs to be exact at any time (Kroposki, 2017). The best possibilities for
+maintaining this balance is through power and CHP stations, that are found in the
+surrounding supply system (Lund, et al., 2014). The energy transition, not only for the
+power sector but for the whole energy system, needs be carried out while considering
+the intermittent nature of VRE. The whole system needs to be able to cope with the
+fluctuations that large-scale deployment of VRE technologies brings with it. This
+means that a change in operation is required for power and CHP stations, a change
+from baseload operation to more flexible operation, providing output only when
+sources with lower emissions are not available (Kettig, 2016). As a result of this, it is
+predicted that CHP generation needs to become more flexible and more gridinteractive (Forni, 2018). These types of flexible CHP plants are currently being
+advocated and boosted, supported by the increasing trend for gas-fired peaking plants
+(Kettig, 2016). Compared to the traditional, inflexible CHP plants, these new
+generation plants are capable of real time response to grid needs, providing electricity,
+frequency regulation and capacity based on demand.
+Despite increased fluctuations in the electricity price due to high shares of renewable
+energy and reduced operation hours for CHP plants as a result of that, the potential is
+still high for CHP plants (Kettig, 2016). Redesigned operating patterns with ICE power
+plants enable possibilities for operation of the plant at its maximum efficiency, coping
+
+24
+
+with load variations and providing savings. Ultra-fast ramping enables the ICE CHP
+plant to start in less than a minute and reach full load within five minutes, ensuring
+flexible operation when it is profitable regarding electricity production. However,
+fluctuations in the electricity price and demand does not mean fluctuations in the heat
+price and demand, and the operational changes for CHP plants based on electricity
+demand will also inevitably affect the heat production of CHP plants.
+There have been different approaches to finding a solution for this. In Germany for
+instance, a CHP Act has been developed, promoting the expansion and renewing of
+CHP plants by providing funding and support for new and existing CHP plants
+(Gailfuss, 2016). With climate protection as the driving cause, owners of highly
+efficient CHP plants receive temporary funding for the electricity their plants produce.
+This has ensured an increasing amount of installed and modernized CHP plants, while
+also ensuring a stable heat production meeting the demand. Several countries have
+implemented these types of so-called feed-in tariffs, not only for co-generation plants
+but to ensure a higher deployment rate of renewables as well (Flinkerbusch, 2010).
+While the CHP bonus benefits the deployment of CHP plants and supports cleaner
+energy, there are disadvantages to the feed-in tariff as well as it affects the operating
+profiles of the plants significantly and makes production profitable even as the
+electricity price is low (E.A., 2015). As many of the modern CHP plants are operated
+on natural gas, it is suggested that the feed-in tariff leads to an excessive use of fossil
+fuels, otherwise used to cover peak demand periods. In Denmark, where similar tariffs
+were introduced for CHP plants in the early 2000’s, it was noticed that the tariffs led
+to problems regarding the integration of renewables. As the tariff made operation
+profitable at low electricity prices, the integration and profitable operation of wind
+power was hindered. This led to a change in regulations in 2006, forcing all CHP plants
+above 5 MW to settle at regular market prices. Furthermore, the feed-in tariffs that are
+still in use are set for a given time period, meaning that the support ceases after that
+period. Once the support ceases, the plant needs to operate according to standard
+prices, which in many cases leads to uncertainty regarding efficient and profitable
+operation of the plant (Gailfuss, 2016).
+
+25
+
+In order to ensure more profitable and highly efficient operation of CHP plants even
+at regular market prices, CHP plants can be combined with TES (Kettig, 2016). This
+ensures heat supply to some extent despite variable operation of the plant. Adding an
+accumulator for TES enables the plant to store energy as heat during operation and
+discharge when the heat demand is high but lower electricity prices make operation
+unattractive. In addition to heat supply, this also ensures more efficient operation of
+the plant.
+2.3
+
+Thermal energy storage
+
+As the energy transition receives more and more focus, the conservation of energy is
+deemed increasingly important. While approximate predictions of future availability,
+demand and energy price are possible, they are often imprecise (Dinçer & Rosen,
+2011). This highlights the importance of having a wide range of technologies available,
+making it possible to meet the future energy needs. Adding to this, the increased
+importance of energy security, efficiency and environmental quality makes
+development of technologies important.
+Currently, methods for energy storage are receiving more attention. Processes yielding
+recoverable waste energy are being coupled with energy storage, resulting in fuel
+savings and thus more efficient processes and systems. One of the methods receiving
+attention is TES used for space and water heating, air-conditioning and cooling, among
+other thermal applications (Dinçer & Rosen, 2011).
+TES as a technique has already been developing during the past four to five decades,
+meaning that there are a variety of methods available. Energy storage through TES can
+be achieved by heating, cooling, changing the phase of a selected medium or through
+thermochemical reactions. The method can be selected to best suit the purpose of the
+application. TES systems are stated to have enormous potential to increase the efficient
+use of thermal energy equipment and to ensure economic viability for large-scale
+energy substitutions. The stated enormous potential stems from the fact that a large
+amount of energy is wasted as heat. One of the most important benefits of TES is that
+it makes decoupling of power and heat production possible, and thus corrects the
+energy supply and demand mismatch.
+
+26
+
+2.3.1
+
+Methods for thermal energy storage
+
+The core concept of TES is the temporary storage of high- or low-temperature energy
+that can then be used according to demand. The storage process involves three steps at
+the least, which are charging, storing and discharging. A depiction of the three steps
+can be seen in Figure 10. Although the steps are pictured separately in the figure some
+of them can happen simultaneously, for instance charging and storing. These steps
+make up the basic principle of all TES applications, which is that energy is stored for
+later use.
+
+Figure 10. Basic TES storage cycle (Dinçer & Rosen, 2011; modified)
+
+Even as the basic principle is the same, there are variations in TES applications through
+different scales of storage and variety in the used storage method. There are three main
+storage methods for TES, which are sensible, latent, and thermochemical heat storage.
+Sensible heat storage is storage by raising the temperature of a substance while latent
+heat storage is storage by causing a phase change in a substance. Thermochemical heat
+storage is achieved through reversible chemical reactions. The three main methods can
+further be divided by what medium or which chemical reaction is used. Selection of
+the method needs to be done properly according to the application purpose.
+As stated, sensible TES is storage of energy through change of temperature in a storage
+medium. The selection of storage media is vast, and includes water, oil, rock beds, air
+and soil, to name a few. The selection of the medium depends on the application
+purpose, but water is in many cases considered the most favorable option due to its
+good energy storage properties. Table 1 lists a variety of storage media for sensible
+
+27
+
+TES with their specific heat capacity and heat content per volume. From the table it is
+seen that water has the highest specific heat capacity and the highest heat content per
+volume of the listed media at ambient temperatures.
+Dinçer and Rosen (2011) state that there are in fact solids with a higher specific heat
+capacity than water as well, but water also has the advantage of being a liquid. This
+makes water easily transportable, through pumping for instance. Another advantage of
+using water as the storage medium are the good heat transfer rates it has. A
+disadvantage is the larger size requirements compared to solids with higher specific
+heat capacities, as these make more compact storage units possible. Solids or other
+liquids are also sometimes preferred when high temperature sensible storage is
+required, as the high temperatures cause the water to change phase unless pressurized.
+Table 1. Specific heat and heat content per volume for media used for sensible heat storage (Dinçer & Rosen, 2011;
+modified)
+
+Material
+
+Specific heat
+
+Heat content per volume
+
+𝑘𝐽
+𝑘𝑔 ∙ 𝐾
+
+𝑀𝐽
+𝑚3 ∙ 𝐾
+
+Water
+
+4.2
+
+4.2
+
+Oil
+
+2.0
+
+1.7
+
+Ice
+
+2.0
+
+1.8
+
+Sand
+
+0.8
+
+1.2
+
+Concrete
+
+0.8
+
+2.1
+
+Brick
+
+0.8
+
+1.2
+
+Steel
+
+0.5
+
+3.6
+
+The second main storage method is latent heat storage. Latent heat storage involves
+heat storage by causing the storage medium to change phase, by converting water to
+ice for instance, and it is receiving much attention as of late. When compared to
+sensible heat storage, latent heat storage has a distinct size advantage, as the latent heat
+change for a given medium is most often much higher than the sensible heat change.
+As for sensible heat storage there are several phase changing materials available for
+latent heat storage. The most practical systems are stated to involve solutions of salts
+
+28
+
+in water. These systems are however also associated with several problems such as
+unintentional supercooling of the PCM, agglomeration of various crystal sizes in the
+liquid and inability to completely reverse the system operation.
+The third main storage method is thermochemical heat storage. For thermochemical
+heat storage a chemical reaction with high energy is used for energy storage. In order
+to create the principle of charging and discharging, a reversible reaction is required. A
+reversible reaction makes it possible to store heat in the products of the reaction and
+to retrieve the stored heat when the reaction is reversed. Thermochemical heat storage
+is stated to be best suited for high temperature heat storage, at temperatures exceeding
+400 °C. According to Kalaiselvam & Parameshwaran (2014), thermochemical heat
+storage has been becoming increasingly popular, and method is seen as a new and
+attractive storage concept. However, it is not considered as a viable option for the
+applications considered in this thesis, as it is still considered to be under development
+and the suitable temperature range is too high.
+Dinçer & Rosen (2011) present an example comparing costs and required storage
+volume for the most favored media for sensible and latent thermal storage. The media
+considered in the example are water and rock, which are used for sensible thermal
+storage, and sodium sulfate decahydrate, which is a leading PCM for latent thermal
+storage. Through the example Dinçer & Rosen conclude that the cost for a system
+using sodium sulfate decahydrate for thermal storage would be nearly three times
+higher than the cost for the same system using water. Furthermore, the cost for the
+same system using rock for thermal storage would be up to four times higher.
+Price-wise, water is clearly the most appealing, but Dinçer & Rosen (2011) also state
+that the required volume for storage with water is four times higher than the required
+volume for storage with sodium sulfate decahydrate. Considering this it can be
+concluded that the choice of a storage medium depends on the purpose of the
+application.
+
+29
+
+2.3.2
+
+Sensible thermal energy storage with water
+
+Water is known to be a very suitable medium for heat storage, and today it is used
+almost exclusively as the heat storage medium in energy systems with operating
+temperatures from 0 °C to 100 °C (Cabeza, 2015). It is stated that using water as a heat
+storage medium has several benefits, including high heat storage densities and the facts
+that it is inexpensive, easy to handle and harmless.
+The amount of stored heat in a hot water store is directly dependent on the volume, the
+material characteristics of the medium, and the operating temperatures of the system
+and can be calculated with Equation (2), where 𝑄 is the thermal energy content, 𝜌 is
+the density of water, 𝑉 is the volume of the storage, 𝑐𝑝 is the heat capacity for water
+and ∆𝑇 is the temperature difference between the systems operating temperatures.
+𝑄 = 𝑚 ∗ 𝑐𝑝 ∗ ∆𝑇 = 𝜌 ∗ 𝑉 ∗ 𝑐𝑝 ∗ (𝑇2 − 𝑇1 )
+
+(2)
+
+If unknown, Equations (3) and (4) can be used to estimate the density and the specific
+heat of water at a given temperature, applicable up to 100°C.
+𝜌 = 1000.6 − 0.0128 ∗ 𝑇 1.76
+
+(3)
+
+𝑐𝑝 = 4209.1 − 132.8 ∗ 10−2 ∗ 𝑇 + 143.2 ∗ 10−4 ∗ 𝑇 2
+
+(4)
+
+Most of the material characteristics of water, such as the heat capacity and thermal
+conductivity, experience minor changes as the temperature increases from 0 °C to 100
+°C, but the kinematic viscosity and density are affected to a much larger extent. As
+density is reduced with increased temperature hot water will rise in the store, while
+colder water with a higher density will reside in the bottom part of the store. This
+creates a phenomenon called thermal stratification, depicted in Figure 11, through
+which there occurs distinct separation of hot water at the top of the store and cold water
+at the bottom. Cabeza (2015) states that stratification is one of the most important
+thermal characteristics for a hot water store, which means that a large temperature
+difference within the water in the store is beneficial for efficient use of the storage
+system.
+
+30
+
+Figure 11. Depiction of tanks with perfect stratification (left), realistic stratification (middle) and no stratification
+(right) (Wang, et al., 2017)
+
+As can be seen in Figure 11, stratification is when the water inside the tank is separated
+into three layers: the hot zone at the top, the thermocline in the middle and the cold
+zone at the bottom. The higher temperature differences between the zones make it
+possible to extract more heat from the heat source in the system and to deliver more
+heat to consumers in the system, enabling superior performance for stratified storage
+systems compared to mixed storage systems (Njoku, et al., 2014). The difference in
+temperature between stratified and fully mixed tanks can also be seen in Figure 11.
+The overall lower temperature in the cold zone creates a larger temperature difference
+between the water in the tank and the storage, which makes it possible to extract more
+heat. The higher temperature at the top of the store also enables a longer duration for
+heat delivery compared to mixed storage. These factors result in higher efficiencies for
+storage tanks with stratification, as a result of better use of the heat output from the
+heat source. Appropriate design of the storage vessel benefits the temperature
+difference in the vessel, ensuring strong thermal stratification and efficient storage
+(Cabeza, 2015).
+Cabeza states that the stratification achieved in a tank will inevitably diminish over
+time as a result of internal heat conduction and heat losses. Minimization of heat losses
+will however benefit keeping the stratification for a longer time period. The heat loss
+for a hot water store can be determined through Equation (5), where 𝑈 is the materials
+heat transfer coefficient, 𝐴 is the area for which the heat loss is calculated, and ∆𝑇 is
+the difference in temperature between the inside and outside of the hot water store.
+𝑄𝑙𝑜𝑠𝑠 = 𝑈 ∗ 𝐴 ∗ ∆𝑇 = 𝑈 ∗ 𝐴 ∗ (𝑇2 − 𝑇1 )
+
+(5)
+
+31
+
+As indicated in Equation (5), the heat loss is affected by the surface area of the thermal
+store. Appropriate design of the storage vessel is thus important in order minimize the
+surface area and to keep heat loss at a minimum. The heat loss can also be minimized
+by taking proper action through insulation and avoiding thermal bridges in the storage.
+Thermal bridges are points in the storage system where considerable heat loss occurs.
+These points can be caused by errors in insulation work, insufficient insulation
+thickness or by penetrations in the insulation, such as piping, or other equipment
+connected to the hot water store. In order to maintain good thermal stratification in the
+hot water store it is important to consider the aforementioned factors regarding heat
+losses.
+2.3.3
+
+High temperature thermal energy storage with water
+
+While water is in many cases considered the most favored heat storage medium, there
+are some factors that limit the use of water as the storage medium. One of the main
+factors is storage temperature. According to Abad et al. (2018), storage temperature is
+one of the most important factors of a TES system. It is stated that the temperature is
+a base parameter for definition of material, insulation, shape, volume, as well as charge
+and discharge cycles for the storage. The storage temperature is highly dependent on
+the temperature capability of the heat producer and the temperature requirement of the
+consumer. In case of CHP generation, the output temperature from the heat source can
+range from 40 °C to several hundred degrees Celsius, as heat can be recovered from
+various sources within the plant.
+In addition to the temperature capability of the heat source, the storage temperature is
+highly dependent on the required temperature of the consumers. This means that the
+heating system the TES system is integrated into needs to be analyzed, in order to
+ensure proper design of the TES system. As for district heating networks, Abad, et al.,
+(2018) state that normal operating temperatures are in the range of 70 – 90 °C for
+supply and 60 – 70 °C for return. However, according to Energiateollisuus (2006),
+inefficient district heating networks with long transfer distances will inevitably require
+higher supply temperatures due to high heat loss. This will also be affected by low
+ambient temperatures, which means that district heating networks in cold regions are
+likely to require higher supply temperatures. It is stated that the maximum supply
+
+32
+
+temperature is often within the range of 120 – 130 °C, but extreme cases with
+temperature requirements up to 150 °C are also known. This is often the case in eastern
+Europe, due to lacking advancement in district heating technology.
+By temporarily increasing the supply temperature it is also possible to utilize the
+district heating network for short term storage of thermal energy. This done by
+increasing the supply temperature 5 – 15 °C above the demand temperature. The
+thermal energy stored in the network is then discharged as the higher temperature
+water reaches the consumers. This method is most often used in combination with
+demand predictions in order to counter sudden increases in demand. The method is
+stated to be suitable for short peaks in demand, with a charge duration of 2 – 3 hours.
+In order to maintain the liquid phase of a medium at temperatures exceeding the
+saturation temperature, pressurization is required. By increasing the pressure, the
+saturation temperature of the medium is increased. The medium is thus kept in a liquid
+phase at temperatures below the saturation temperature (Singh, 2008). In Figure 12,
+the relation between the saturation temperature and pressure for water can be seen. As
+indicated in the figure, a pressure of 5 bar is enough to maintain the liquid phase of
+water at 150 °C. This means that an overpressure of nearly 4 bars is required at a
+temperature of 150 °C.
+In district heating systems the saturation temperature is often maintained sufficiently
+above the required supply temperature by maintaining high network pressure levels
+(Frederiksen & Werner, 2014). However, the storage vessel will also require
+pressurization in accordance with the saturation temperature. This is the main reason
+why water is the most preferred medium in systems with operating temperatures below
+100 °C, while another medium with different thermal properties might be preferred for
+higher temperatures (Kalaiselvam & Parameshwaran, 2014). According to Kulkarni,
+Kedare & Bandyopadhyay (2008), mineral oils have been used for storage at
+temperatures above 100 °C. However, challenges such as high costs as well as cracking
+and oxidation in the storage limit the applicability of these oils. Development of
+storage technologies has also facilitated the usage of water even in high temperature
+thermal storage. These technologies make storage with water a feasible option even at
+temperatures above 100 °C (Christidis, 2019).
+
+33
+
+160
+
+Saturation temperature [°C]
+
+150
+140
+130
+120
+110
+100
+90
+80
+1
+
+1.5
+
+2
+
+2.5
+
+3
+
+3.5
+
+4
+
+4.5
+
+5
+
+Pressure [bar]
+Figure 12. The saturation temperature of water depending on pressure (Lervik, 1994; modified)
+
+2.4
+
+Tank thermal energy storage
+
+According to Cabeza (2015), heat storage with water is today based on water contained
+in various containers, such as tanks of steel, concrete or plastic or in envelopes made
+of watertight materials. Storage concepts include aquifer (ATES), borehole (BTES),
+pit (PTES) and tank thermal energy storage (TTES). According to Sørensen & Schmidt
+(2018), each of these have different capability regarding storage capacity, and the
+suitability of these concepts is largely dependent on the required storage duration,
+which can be divided into short-term and long-term storage. Long-term storage is
+considered seasonal, as the storage can be charged during one season and discharged
+during another (Kalaiselvam & Parameshwaran, 2014). This type of storage requires
+a large storage volume, which makes a storage concept such as ATES suitable (Dinçer
+& Rosen, 2011). Short-term storage is on the other hand utilized to compensate for
+demand variations, which means that the duration of storage is significantly shorter.
+Dinçer & Rosen (2011) further state that short-term storage is utilized to cover peak
+demand periods, which makes it a suitable concept to be combined for CHP peaking
+plants.
+
+34
+
+According to Thomsen & Overbye (2016), TTES is the most common storage concept
+for district heating and CHP solutions. It is stated that the stores are realized as above
+ground tanks, which are used for short-term storage. It is further mentioned that large
+scale TTES is also common in combination with district heating (Thomsen & Overbye,
+2016), and according to Bilfinger Industrial Services GmbH (2020h), tanks with
+storage volumes up to 45 000 m3 have been realized. The tank design varies depending
+on temperature requirements for the system. This will affect the utilizable volume as
+well as the cost of the storage system. (Herwig, et al., 2018). Thomsen & Overbye
+(2016) mention that the use of seasonal storage in the district energy sector has also
+increased. However, it is most common in combination with solar energy, realized for
+instance as solar ponds.
+2.4.1
+
+Technologies for tank thermal energy storage
+
+There are three main technologies available for tank thermal energy storage
+(Christidis, 2019). These technologies are storage in one-zone, two-zone and
+pressurized tanks. According to Herwig, Umbreit and Rühling (2018), storage in tanks
+with one-zone is the most common of the three technologies, realized in over 100 heat
+storage cases during the past decades.
+The concept for one-zone storage is based on hot water storage in a tank at atmospheric
+pressure, limited to storage temperatures of 98 °C and below. Herwig, Umbreit, &
+Rühling state that this is the most common type of hot water storage, with the tanks
+being built as pressure-less, standing steel cylinders. The design of the storage tank is
+told to be optimized for 2 000 m3 to several 10 000 m3. The tank, depicted in Figure
+13, includes two radial diffusers at the top and at the bottom of the tank, spreading out
+the flows entering the tank. During charging, warm water enters through the radial
+diffuser at the top, while cold water leaves through the radial diffuser at the bottom.
+As for discharging, the process of charging is reversed. The design ensures formation
+of thermal stratification in the tank, granted that the operating temperatures are well
+defined.
+
+35
+
+Figure 13. General layout of a one-zone thermal storage tank (Herwig, Umbreit & Rühling, 2018; modified)
+
+Opposed to the one-zone tank, the two-zone tank, seen in Figure 14, is divided into
+two zones by an insulated floor, shaped like a dome. The two zones are each equipped
+with two radial diffusers at the top and the bottom of both zones. They are also
+connected by an open ended, vertical compensation pipe that serves as a hydraulic
+connection between the zones. This compensation pipe ensures permanent exchange
+of fluid between the zones, ensuring correct filling level in the upper storage zone and
+serving as a safeguard against overpressure as well as negative pressure in the lower
+storage zone.
+According to Herwig, Umbreit & Rühling (2018), the hydraulic coupling of the two
+zones serves another purpose as well, that can be considered as the most important.
+The hydraulic coupling, combined with the fixed intermediate floor, makes it possible
+to store water at temperatures above 100 °C in the lower storage zone. This is due to
+the higher level of pressure in the lower storage zone, which is a result of the
+hydrostatic pressure of the water column in the upper storage tank. In a one-zone tank,
+the high temperature water rises to the top of the tank due to its lower density. This is
+
+36
+
+prevented in a two-zone tank, as the intermediate floor is fixed. In other words, the
+higher temperature water rises only to the height of the intermediate floor. This enables
+storage temperatures above 100 °C, and storage temperatures up to 120 °C are
+currently in use.
+
+Figure 14. General layout of a two-zone storage tank. (Herwig, Umbreit & Rühling, 2018; modified)
+
+All in all, the two-zone storage tank, does not vary that much from the one-zone
+storage tank. However, the possibility of higher storage and supply temperatures
+makes the two-zone technology more appealing for applications that require higher
+temperatures. In addition to this, it is stated that the volume-specific heat capacity is
+higher for the two-zone tank compared to a same sized one-zone tank. This means that
+the higher amount of energy stored in a two-zone tank can compensate for the higher
+total investment cost compared to a one-zone tank.
+
+37
+
+Similar to the two-zone technology, the concept of the pressurized tank, enables the
+possibility of higher storage temperatures through increased pressure in the tank
+(Christidis, 2019). Depending on the application purpose, pressurized tanks can be a
+beneficial selection, as they can in many cases be integrated directly into the network
+and utilized as an expansion vessel (Thomsen & Overbye, 2016). The maximum
+allowed temperature span for pressurized storage is stated to be larger for pressurized
+storage tanks than for one-zone or two-zone storage, usually ranging from 50 – 55 °C
+(Guelpa & Verda, 2019). An installation of six pressurized storage tanks in Turin,
+Italy, can be seen in Figure 15.
+
+Figure 15. Pressurized storage tanks in Turin, Italy (IREN, 2014)
+
+Even with high storage temperatures, possibility of direct integration and a larger
+temperature span the suitability of pressurized storage can in many cases be limited
+due to economic and constructional reasons. According to Kraft (2018) the specific
+investment cost for pressurized storage can be up to three times higher than the specific
+investment cost for one-zone storage, and twice as high as the investment cost for twozone storage. The reason for the higher costs can be traced to the stricter directives set
+on construction of pressurized vessels as well as physical constraints regarding
+pressurization of large tanks (Thomsen & Overbye, 2016). This means that high
+pressures require distribution over several tanks in case of large storage volumes
+(Christidis, 2019).
+
+38
+
+2.4.2
+
+Design aspects for tank thermal stores
+
+Even as tank design is largely determined by geographic constraints of the tank
+erection site, there are some general recommendations as to how the storage tank
+should be dimensioned and designed. While these are more freely formed for one-zone
+and two-zone storage tanks, pressurized tanks follow more standardized guidelines as
+there are additional criteria set on pressure vessels (Christidis, 2019).
+For one- and two-zone storage tanks the dimensioning is often expressed as a ratio
+between height and diameter. This ratio is determined according to a suitable relation
+between heat loss and minimizing the volume of the transition layer between the hot
+and the cold zone in the tank. According to Petersen & Aagaard (2004), a height to
+diameter ratio of 1.5 to 1 is beneficial in terms of minimizing the transitions zone,
+while an optimal height to diameter ratio for minimizing heat loss is considered to be
+1 to 1 (Christidis, 2019). The height to diameter ratio can thus be selected quite freely,
+but according to Christidis it is usually selected within the range of 2 – 0.5 to 1.
+There is no specific height to diameter recommendation for pressurized storage
+vessels. However, Christidis points out that the dimensioning for these is highly
+dependent on acceptable dimensions for transport. The reason for this is that
+pressurized vessels are not manufactured at site and will thus need to be transported to
+the site by for instance road or railroad. Previous realizations of pressurized storage by
+Bilfinger Industrial Services GmbH (2020u; 2020v; 2020w; 2020x; 2020y; 2020z)
+indicate a median height to diameter ratio of 2.76, which is significantly higher than
+the recommendations for one- and two-zone storage vessels. This indicates the effect
+that the transport requirements have on dimensioning of pressurized storage vessels.
+2.4.3
+
+Integration of tank thermal stores to district heating networks
+
+While the selection of storage method is highly dependent of the required storage
+temperature, another key factor is the pressure level of the system (Petersen &
+Aagaard, 2004). Thomsen & Overbye (2016) also identify operational characteristics,
+flows and pressure levels as important factors when designing a TES system. The
+pressure level of a district heating network can in many cases be the determining factor
+regarding system selection, depending on the selected method for integrating the
+storage to the network. There are three options for how the storage can be integrated
+
+39
+
+to the network. These are hydraulically coupled integration, hydraulically decoupled
+integration and indirect integration (Energiateollisuus, 2006; Thomsen & Overbye,
+2016).
+Hydraulically coupled integration of the storage to the network can be seen illustrated
+in Figure 16. As can be seen, heat is supplied to the heat consumer by means of a
+network pump, while a production pump is used to circulate water through the heat
+producer. Both pumps are regulated to meet certain system requirements. The network
+pump is regulated to overcome the network pressure drop and to keep the differential
+pressure over the last customer constant while the production pump is regulated to
+overcome the pressure drop over the heat producer.
+
+Figure 16. Hydraulically coupled integration of a thermal storage tank (Thomsen & Overbye, 2016)
+
+Direct connection of a thermal storage tank into a heating network enables the
+possibility of using the storage as an expansion vessel. An expansion vessel is a
+necessary component in a heating network, as temperature changes will lead to
+variations in the volume of the water in the network. By utilizing the thermal store to
+compensate for these changes in volume, the need for separate expansion vessel is
+removed, making the solution more cost-effective and simpler.
+Thomsen & Overbye describe the function of a hydraulically coupled heat storage as
+automatic. It is stated that it is the differential pressure between the stores return line
+connection point and the supply line connection point that controls the charging and
+
+40
+
+discharging cycles for the storage. If the pressure in the two points is the same, the
+differential pressure is zero, which means that no charging or discharging takes place.
+However, if the pressure in the supply line connection point increases, creating a
+positive differential pressure, there will be a flow through the storage to the return line.
+This means that high temperature water will enter the store from the supply line while
+low temperature water will exit the storage, thus charging the storage. Discharging
+fucntions similarily, but will require a negative differential pressure, which means that
+the pressure in the supply line connection point will have to be lower than the the
+pressure in the return line connection point.
+In case of hydraulically decoupled integration the thermal store is separated from the
+network by means of pumps and valves, which can be seen illustrated in Figure 17.
+Through hydraulically decoupled integration the storage tank will be decoupled from
+the network pressure, meaning that an expansion vessel will be needed to compensate
+for the volumetric variations in the network. As compared to hydraulically coupled
+integration, the charging and discharging of the storage tank is also no longer achieved
+automatically. In turn, a pump and valve configuration is incorporated to the system,
+controlling the flows in and out of the storage tank during charging and discharging.
+
+Figure 17. Hydraulically decoupled integration of a thermal storage tank (Thomsen & Overbye, 2016)
+
+41
+
+It is always important to maintain a proper level of control if hydraulically decoupled
+integration is used. Thomsen & Overbye state that the amount of water in the store
+should be maintained at a constant level on a mass basis at all times, which is
+accomplished through proper control of the charging and discharging pumps. For this
+control, one of the pumps can be considered as a primary pump, controlled according
+to the desired flow in or out of the tank. The other pump would then be controlled to
+mirror the operation of the primary pump, thus keeping the amount of water in the
+storage tank constant.
+Compared to hydraulically coupled integration Thomsen & Overbye note that
+hydraulically decoupled integration is a more complex solution from a technical
+perspective, also making it a more costly solution. In large networks, however, it can
+in many cases be the only viable solution due to large level variations in the network.
+These level variations can be compensated by pre-pressurization of the network,
+setting the static pressure to a certain level through elevation or by using pumps. This
+makes hydraulically coupled integration possible to some extent, but large networks
+with large level variations can require pre-pressurization up to 25 bar, which often
+makes hydraulically decoupled integration more viable due to economic reasons.
+In addition to the above-mentioned integration methods, it is also possible to integrate
+the thermal store with the charging and discharging flows completely separated from
+the flow in the network. This is done by incorporating a heat exchanger for heat
+transfer between the fluid in the storage tank and the fluid in the network, making the
+storage system a closed circuit. In reference to Figure 17, the heat exchanger would
+replace the pump and valve configuration between the storage and the network.
+Separating the storage system by using a heat exchanger will however lead to
+additional heat losses, reducing storage capacity. It is also stated that possible
+temperature mismatches between the storage and the network will complicate the
+operation of the system.
+Determining the suitable integration method for the storage depends on the network
+pressure levels. For pressure-less storage vessels, Thomsen & Overbye state that
+hydraulically coupled integration is possible in smaller networks with a static pressure
+up to 7 bar. This means that integration into networks with higher static pressures
+
+42
+
+would require hydraulically decoupled integration or pressurization of the storage
+vessel. This is also the case according to Petersen and Aagaard (2004), who also point
+out that when the network static pressures exceed technical tank heights hydraulically
+decoupled integration is required if one-zone storage is used.
+The static pressure in a district heating network is set to a suitable level in accordance
+with saturation pressure and the system design pressure, as can be seen in Figure 18.
+This is done by pre-pressurizing the network, either by using pumps or through
+changing the elevation. In Figure 18 an example network with 5 km of piping is prepressurized to 4 bar in order to always keep the network pressure within the limiting
+pressures, also taking variations in elevation into consideration.
+
+Figure 18. Pressure curve for a district heating network (Frederiksen & Werner, 2014; modified)
+
+For the network depicted in Figure 18 the static pressure is then 4 bar, which is constant
+regardless of variations in heat demand, as indicated in Figure 19 (Euroheat & power,
+2008). According to Euroheat & Power, the network heat supplier controls supply
+according to the differential pressure in the last substation in the network. This
+differential pressure is to be kept constant regardless of demand, and as increased
+demand leads to increased differential pressure, the supplier increases the flow into the
+network and thus increasing the amount of heat supplied while keeping the differential
+pressure constant.
+
+43
+
+In Figure 19 network pressure curves for two operating modes are illustrated. The
+curves show that increased demand during the winter requires an increased supply
+pressure to ensure the required differential pressure of 0.1 MPa (1 bar) at the last
+substation. Increased network flow inevitably leads to increased pressure drop, which
+is why the curve indicating operation during the winter is steeper than the curve
+indicating operation during the summer. Regardless of variation in supply, Figure 19
+suggests that the static pressure in the network is kept constant while the supply
+pressure is changed.
+
+Figure 19. Network pressure drop depending on flow (Euroheat & power, 2008)
+
+The change in pressure drop in a district heating network, such as the one depicted in
+Figure 19, can be explained through the affinity laws for pumps. The affinity laws
+explain how variables such as head, differential pressure, flow and shaft speed are
+related to each other (Energiateollisuus, 2006). The relation between these is expressed
+in Equation (6), where ∆𝑝 is differential pressure, 𝑉̇ is volume flow, 𝑚̇ is mass flow
+and 𝑛 is shaft speed.
+∆𝑝1
+∆𝑝2
+
+𝑉̇
+
+2
+
+2
+
+𝑚̇
+
+𝑛
+
+= ( 1̇ ) = ( ̇ 1) = ( 1)
+𝑉
+𝑚
+𝑛
+2
+
+2
+
+2
+
+(6)
+
+2
+
+44
+
+Equation (6) can be applied to recalculate given variables according to condition
+changes in the system. The pressure drop indicated during winter operation in Figure
+19 can for instance be recalculated according to the reduced flow during summer
+operation by applying Equation (6) as according to Equation (7).
+𝑉̇
+
+2
+
+∆𝑝1 = ∆𝑝2 ∗ (𝑉1̇ )
+2
+
+(7)
+
+Even as Figure 19 indicates constant static pressure, this is not necessarily always the
+case. According to Energiateollisuus (2006), the control of differential pressure is
+maintained only by one producer at a time in case of several producers supplying heat
+to the same network. This is also illustrated by Frederiksen and Werner (2014), who
+suggest that an decreased supply from a producer will lead to an decreased return
+pressure to another producer in the same network, while the network static pressure is
+kept constant at the main producer. This can be seen in Figure 20, where two
+production scenarios are illustrated.
+
+Figure 20. Pressure depending on flow in a network with two producers (Frederiksen & Werner, 2014; modified)
+
+Figure 20 suggests that a decreased supply from the main producer will lead to a
+decreased return pressure to the second producer in case of constant supply for that
+part. As stated by Energiateollisuus (2006), simultaneous control of differential
+
+45
+
+pressure is not acceptable for the plants, meaning that the second producer would have
+to adjust according to demand after the main producer. This suggests that there is no
+guaranteed static pressure for the second producer in the plant, as the return pressure
+is prone to variation due to varying operation of the main producer. The main producer
+will however have a constant static pressure through the pressurization, as depicted in
+Figures 18, 19 and 20.
+Through Figures 18, 19 and 20 it is concluded that hydraulically decoupled integration
+is recommended if there is no guaranteed static pressure for the district heating
+network into which the storage is integrated. This might be the case if the storage
+system is integrated to a secondary producer in a network, as presented in Figure 20.
+If the pressure in the network is prone to fluctuations unintentional charging or
+discharging is likely to occur if the storage is integrated as hydraulically coupled. This
+can then be counteracted by separating the storage from the district heating network
+with pumps and valves. The control of the storage cycles is then carried out through
+the operation of the pumps on a constant mass basis (Thomsen & Overbye, 2016).
+
+46
+
+3
+
+MATERIAL AND METHODS
+
+The way this thesis has been carried out can be divided into three parts. These parts
+were the technical assessment, the economic assessment, and the construction of a tool
+for studying operating modes. The material used for the thesis consists mainly of
+previous studies as well as the equations presented in the previous chapters. In addition
+to this, projects previously realized by Bilfinger Industrial Services GmbH (2020a;
+2020b; …; 2020z) were studied in order to gain a better picture of the technologies in
+practice.
+By methodologically reviewing previous work regarding thermal storage, the available
+technologies were narrowed to the three technologies that were considered the most
+relevant for the commissioner: One-zone, two-zone and pressurized storage. Based on
+literature, it was concluded that these were the leading technologies for short-term
+thermal storage with water. As the commissioner requested that thermal storage
+technologies that can be applied to district heating should be studied, and as the heat
+transfer fluid in the current district heating networks is water, it was concluded that
+these three technologies should be covered in the thesis. The techno-economic
+assessment was then conducted with the focus set on these three technologies.
+3.1
+
+Technical assessment
+
+The technical assessment of the three thermal storage technologies covered in the
+thesis has been carried out through a thorough literature review. The main purpose of
+the literature review was to identify design recommendations as well as factors that
+limit the use of the technologies. In addition to this, it was considered important to
+investigate how the thermal storage should be integrated to a district heating network,
+and to identify recommendations regarding this.
+Regarding the design recommendations, it was considered important to clarify what
+potential construction and design requirements need to be considered for the three
+technologies. As an example, pressurized storage vessels need to be designed in
+accordance with the pressure equipment directive. This means that more strict
+directives need to be applied when designing and constructing a pressurized storage
+
+47
+
+vessel. Another factor that was considered important for design was the dimensioning
+of the storage vessel. Based on the literature review, recommendations for the height
+to diameter ratio were gathered. In addition to this, the height to diameter ratio of
+previously realized projects by Bilfinger Industrial Services GmbH (2020a; 2020b; …;
+2020z) was calculated. Furthermore, the median value of these was calculated which
+provides indication as to what the typical height to diameter ratio is. The final factor
+that was considered important for the design recommendations was the suitable
+temperature differential for the storages. The reason why this was considered
+important is that a too high temperature difference in the storage will lead to increased
+stress and possibly a shorter lifetime for the storage vessel. In the results, the
+parameters presented as design recommendations have been compiled based on
+literature by Petersen & Aagaard (2004), Thomsen & Overbye (2016), Christidis
+(2019), Guelpa & Verda (2019), and Bilfinger Industrial Services GmbH (2020a;
+2020b; …; 2020z).
+Through the literature review it was concluded that the limiting factors that should be
+considered for the results were temperature, pressure, and cost. It was concluded that
+these are the factors that can possibly rule out the use of a technology entirely. The
+limiting values for temperature and pressure were determined based on
+recommendations in literature. While costs are not really a limiting factor, they were
+considered as such as it is most often the result of an economic assessment that will be
+the determining factor if the use of a given technology is feasible. In the results, the
+parameters presented as limiting factors have been compiled based on
+recommendations by Petersen & Aagaard (2004), Energiateollisuus (2006), Dinçer &
+Rosen (2011), Cabeza (2015), Thomsen & Overbye (2016), Herwig, et al. (2018),
+Kraft (2018), and Christidis (2019).
+As for the integration method, it was concluded that two alternatives should be
+considered for the results. These were hydraulically coupled integration and
+hydraulically decoupled integration. Hydraulically decoupled integration with
+complete separation of the storage fluid and the heat transfer fluid was not considered
+important in this case. This is due to the fact that both the storage fluid and the heat
+transfer fluid is considered to be water in the systems covered in this thesis. The
+suggestions on how the storage should be integrated were gathered based on the
+
+48
+
+literature review. In the results, the conclusions regarding the integration methods have
+been made based on suggestions by Frederiksen & Werner (2014) and Thomsen &
+Overbye (2016)
+3.2
+
+Economic assessment
+
+The economic assessment has been done based on previous cost indications for the
+storage technologies covered in the thesis. As the one-zone storage technology is more
+widely realized than the two other technologies, previous cost indications for that
+technology were considered the most reliable of the three. Previous cost indications
+for one-zone storage were thus used as a reference for estimating costs for two-zone
+storage.
+The one-zone storage costs based on which the cost estimations have been prepared
+had been provided to the commissioner by a consulting agency in 2014. These costs
+can be seen in Figure 21. The figure presents storage cost as a function of volume,
+which means that specific costs per cubic meter can be read from the figure. It was
+decided that the cost estimates for two-zone and pressurized storage should be
+presented as specific costs as well, in order to ensure consistency in the results.
+
+450
+400
+
+Specific investment [€/m3]
+
+350
+300
+250
+200
+150
+100
+50
+0
+0
+
+5,000
+
+10,000
+
+15,000
+
+20,000
+
+25,000
+
+30,000
+
+Accumulator size [m3]
+Figure 21. Specific investment cost for one-zone storage (Andersson, 2014)
+
+49
+
+Considering that the costs presented in Figure 21 have been prepared in 2014, the costs
+have most likely been affected by inflation and fluctuations in material costs. However,
+it is considered a difficult task to estimate the affect of such factors as there are so
+many factors that should be taken into consideration if exact estimations are to be
+prepared. For the commissioner, indicative costs are considered sufficient, which is
+why the change in costs from 2014 is not taken into consideration.
+The cost estimates for two-zone storage were done based on two budgetary offers for
+two-zone storage systems that the commissioner had received from a supplier in 2017.
+The two offers had been prepared for two different supply temperatures, which were
+135 °C and 115 °C, while the storage capacity was the same for both offers. The most
+relevant information provided in the offers can be seen in Table 2. Due to
+confidentiality reasons, the costs indicated in the offers are not presented.
+
+Table 2. Two-zone storage tanks; technical data provided in the offers.
+
+Parameter
+
+Unit
+
+Offer 1
+
+Offer 2
+
+Operating temperature
+
+°C
+
+135
+
+115
+
+Diameter
+
+m
+
+23
+
+25
+
+Cylindrical height
+
+m
+
+59.0
+
+43.5
+
+Height of middle roof
+
+m
+
+25.5
+
+28.5
+
+Based on the tank dimensions indicated in the offers, the total volume and the volume
+of the lower storage zone was calculated through Equation (8), where 𝑑 is the diameter
+and ℎ is the height. The calculated volumes can be seen in Table 3.
+
+𝑉=
+
+𝜋∗𝑑 2
+4
+
+∗ℎ
+
+(8)
+
+Table 3. Two-zone storage tanks; volumes calculated based on the data in Table 2.
+
+Parameter
+
+Unit
+
+Offer 1
+
+Offer 2
+
+Vtotal
+
+m3
+
+24 500
+
+21 350
+
+Vlower
+
+3
+
+10 600
+
+14 000
+
+m
+
+50
+
+It was decided that the costs should be prepared based on the utilized volume, which
+means that three separate curves have been prepared for two-zone storage; one for only
+utilizing the lower storage zone at 135 °C, one for only utilizing the lower storage zone
+at 115 °C and one for utilizing the entire volume regardless of temperature. The
+specific cost of the total volume and the volume of the lower storage zone was
+calculated for both offers, after which the specific costs for one-zone storage at the
+corresponding volumes were read from Figure 21. The costs of one-zone storage at the
+corresponding volumes can be seen in Table 4.
+
+Table 4. One-zone storage tanks; Cost of one-zone storage at volumes corresponding to the budgetary offers.
+
+Volume
+
+One-zone storage cost
+
+10 600 m3
+
+168 €/m3
+
+14 000 m3
+
+145 €/m3
+
+21 350 m3
+
+125 €/m3
+
+24 500 m3
+
+123 €/m3
+
+A cost factor was then calculated for each of the volumes, which indicates how much
+more expensive two-zone storage is compared to one-zone storage at the given
+volumes. The cost factors were then applied to each point in Figure 21, which resulted
+in three curves indicating costs for two-zone storage.
+The cost estimations for pressurized storage were also prepared based on two
+budgetary offers that the commissioner had received from a supplier in 2016. Similarly
+to the two-zone cost estimation, the cost per volume was calculated for this technology
+as well. Based on the budgetary offers the specific costs for the storage volumes 3000
+m3 and 350 m3 were determined. The pressure level specified in the offers was 5.5 bar.
+For the results, it was considered that the specific costs for pressurized storage should
+be presented as a limit which can be compared to the cost of the other two technologies
+in order to determine the feasibility of these. Through this, it can be determined when
+it would be feasible to select pressurized storage instead of one-zone or two-zone
+storage.
+
+51
+
+3.3
+
+Tool for studying operating modes
+
+The tool for studying operating modes has been constructed in Microsoft Excel. The
+structure of the tool is based on a similar calculation prepared for the commissioner by
+a consulting agency. By applying Equations (2) and (6) the tool calculates pressures,
+pressure differentials and flows in a process with thermal storage. Furthermore,
+Equations (3) and (4) are applied to calculate the properties of water required for the
+calculations.
+The tool performs calculations based on design data for the process, which are
+specified by the user. The data required as user input are categorized as heat producer
+data, heat consumer data and storage data. The heat producer data includes heat
+production unit output, number of production units, supply and return temperature as
+well as design pressure loss over the heat producers and the plant header. The heat
+consumer data includes heat demand, network pressure loss, required differential
+pressure over the last customer and the network static pressure. The data for the storage
+includes the storage capacity and the pressure loss over the storage.
+The tool has been prepared to perform calculations for nine cases. The cases covered
+by the tool are considered as the most relevant off-design operating scenarios for a
+system with thermal storage. The cases include essential operating scenarios, such as
+design production at design demand, no production at design demand, design
+production at no demand, and minimum production at no demand. Additional cases
+that were deemed to be of interest were included as well. The calculation results are
+presented both as a table and as a flow chart. The flow chart was prepared based on
+the process indicated in Figure 16. It has been made possible for the user to select
+which case that is portrayed in the flow chart. Through the flow chart it is depicted
+how the system behaves in the different operating scenarios.
+For the results, a calculation has been prepared based on the design data presented in
+Table 5. The design data used for the calculation example has been estimated based on
+one of budgetary offers that the commissioner had received in 2017. The offer used
+for the example is for a two-zone storage system with a required supply temperature
+of 135 °C and a return temperature of 60 °C. The storage capacity is stated to be 750
+MWh, with a charging and discharging capacity of 60 MW. Based on the specified
+
+52
+
+charging and discharging capacity, the required output of the heat producer is
+estimated to be 60 MW as well. The output heat producer is divided over six 10 MW
+units, considering that the example represents and ICE CHP plant. Furthermore, the
+pressure drops over the header and heat producer are based on legitimate assumptions
+for an ICE CHP plant. As for the network pressures, a static pressure of 5.5 bar was
+stated in the offer. The network pressure loss is assumed to be 6 bar, while the required
+differential pressure over the last consumer is assumed to be 0.6 bar, according to
+suggestions by Euroheat & Power (2008). Finally, a pressure loss of 2 bar over the
+storage is assumed. The design data as filled into the tool can be seen in Appendix 1.
+Table 5. Design data used in the calculation example.
+
+Heat producer
+
+Heat consumer
+
+Storage
+
+Production unit output
+
+10 MW
+
+Number of production units
+
+6
+
+Supply temperature
+
+135 °C
+
+Return temperature
+
+60 °C
+
+Header pressure loss
+
+1 bar
+
+Producer pressure loss
+
+5 bar
+
+Demand
+
+60 MW
+
+Network pressure loss
+
+6 bar
+
+Δp over final consumer
+
+0.6 bar
+
+Static pressure
+
+5.5 bar
+
+Storage capacity
+
+750 MWh
+
+Pressure loss over storage
+
+2 bar
+
+53
+
+4
+
+RESULTS
+
+The review of the storage system technologies resulted in a table consisting of
+suggestions and limitations affecting the suitability of the storage technologies for
+different purposes. In addition to this, an Excel tool has been prepared for studying
+operational modes and more specifically how pressure levels and flows in the system
+are affected by how the system is operated.
+4.1
+
+Techno-economic assessment
+
+The key findings from the storage system review have been summarized in Table 6.
+The table presents general design suggestions, limiting factors as well as limitations
+for integration of the thermal storage. The purpose of the table is to give an overview
+of the three storage technologies studied, which will ease the selection of a storage
+technology. As the process parameters and requirements of the system that the storage
+is integrated into are known, the table can be used to eliminate certain technologies.
+Comments have also been added to some points in the table, for which further
+clarifications were deemed necessary.
+Even as the table presents clear suggestions, and in some cases limits, the design or
+suitability of a technology is not always completely clear. This means that while one
+factor would eliminate the use of a technology, it can be counteracted by incorporating
+the use of another solution. As stated in Table 6, hydraulically coupled integration is
+for instance only possible through use of pressurized storage if the network static
+pressure exceeds 7 bar or is prone to fluctuations. This can, however, be counteracted
+by using hydraulically decoupled integration, which then enables the possibility of
+using one-zone and two-zone storage in high pressure networks.
+Another similar case is the maximum storage temperature. A one-zone storage tank at
+atmospheric pressure is limited to the boiling temperature of water at the given
+pressure, which means that this technology is only suitable to store water at around 98
+°C and below. Even as this is a very clear limitation it can be counteracted by bypassing the storage and thus regulating the temperature of the flow entering the storage
+tank to 98 °C. Another solution for this is to incorporate an additional heat source to
+
+54
+
+the system, such as a fuel fired boiler, increasing the temperature to a desired level
+after the storage. These solutions are however considered feasible only in cases where
+the supply temperature requirement exceeds 98 °C during short periods of time. If this
+is not the case, the use of one-zone storage will most likely result in a more
+uneconomical solution.
+Considering this, it is important to treat the factors presented in Table 6 as indicative.
+They are to be used as guidelines for selection while keeping an open mind for different
+options, such as a solution combined with a peaking boiler. It is also considered
+important to cross-check the suggestions in the table, as the factors depend on each
+other in some cases.
+Something that is considered important but is not completely clear in the table is how
+the storage can handle potential pressure fluctuations in a district heating network. As
+presented in Figure 20, the return pressure to a secondary heat producer in a network
+is prone to fluctuations, which means that there is no guaranteed static pressure for the
+secondary producer. As a storage integrated as hydraulically coupled functions
+through the differential pressure between the supply and return line, a varying pressure
+in the return line would likely lead to unintentional charging and discharging. Due to
+this, the conclusion was made that hydraulically coupled integration is not
+recommended if there is a possibility for varying pressure in the return line to the heat
+producer.
+All things considered it can be concluded that the storage system selection will
+eventually come down to the result of an economic evaluation of the system. Even as
+the solutions can in many cases be combined to achieve a functioning system, the
+economical aspect of the solution is also affected greatly. If the use of a one-zone
+storage system, as an example, would require hydraulically decoupled integration due
+to high network pressure levels or an additional by-pass due to occasionally high
+supply temperature it could be more economical to use a pressurized storage system
+instead. The use of this technology would in many cases make the mentioned problems
+irrelevant.
+
+55
+
+Table 6. Techno-economic assessment; Table for comparison of storage systems.
+
+Storage technology
+One-zone
+storage
+Designed as
+
+Design
+
+Limiting
+factors
+
+Integration
+method
+
+Two-zone
+storage
+
+Pressurized
+storage
+
+Pressure-less vessel
+
+Pressure-less vessel
+
+Pressurized vessel
+
+In accordance with EN14015
+
+In accordance with EN14015
+
+In accordance with PED
+
+Optimal h/dratio
+
+2:1 – 1:2
+
+2:1 – 1:2
+
+3:1 – 1:2
+
+Reference plant median:
+1.95:1
+
+Reference plant median:
+1.76:1
+
+Reference plant median:
+2.75:1
+
+Suitable ΔT
+
+30 – 40 °C
+
+30 – 40 °C
+75 °C [1]
+
+50 – 55 °C
+
+Temperature
+
+< 98 °C
+
+Upper zone < 98 °C
+Lower zone < 135 °C
+
+< 160 °C
+
+Pressure
+
+Atmospheric
+
+Atmospheric
+Pressurized [2]
+
+Pressurized [3]
+Feasibility in
+accordance with
+one-zone and twozone systems
+Possible
+regardless of
+network pressure
+level
+Recommended for
+networks with
+fluctuating
+pressure
+
+Cost
+
+Feasible for stores
+> 2 500 m3
+
+Hydraulically
+coupled
+integration
+
+Possible in small
+networks with low
+and constant static
+pressure
+
+Feasible for stores [4]
+> 2 500 m3
+> 4 200 m3
+> 6 000 m3
+Possible in small
+networks with low
+and constant static
+pressure
+
+Hydraulically
+decoupled
+integration
+
+Recommended for
+networks with
+varying or static
+pressure over 7 bar
+
+Recommended for
+networks with
+varying or static
+pressure over 7 bar
+
+[1] Suitable ΔT based on a budgetary offer received for a two-zone storage system.
+[2] Lower storage zone is pressurized in relation to the tank height
+[3] Pressurized based on required temperature or network static pressure.
+[4] Depends on utilization of the storage volume as well as the required storage temperature.
+References: Petersen & Aagaard (2004), Energiateollisuus (2006), Dinçer & Rosen (2011), Frederiksen & Werner
+(2014), Cabeza (2015), Thomsen & Overbye (2016), Kraft (2018), Herwig, et al., (2018), Christidis (2019), Guelpa
+& Verda (2019), and Bilfinger Industrial Services GmbH (2020a; 2020b; …;2020z)
+
+56
+
+The result of the economic assessment can be seen in Figure 22. The curves in the
+figure indicate specific costs for all three storage technologies. This makes it possible
+to estimate the cost of a storage system based on the required storage volume. In
+addition to this, it is also indicated at what volume the cost for two-zone storage
+exceeds the cost for pressurized storage. This makes it possible to evaluate the
+feasibility of the technologies at low storage volumes.
+
+Figure 22. Specific costs for the three thermal storage technologies covered in the thesis. Assumptions: One-zone
+storage (Andersson, 2014); two-zone storage will be 1.8 times more expensive than one-zone storage if the entire
+storage volume is utilized; two-zone storage will be 2.2 times more expensive than one-zone storage when only
+utilizing the lower storage zone for storage at 115 °C; two-zone storage will be 2.7 times more expensive than onezone storage when only utilizing the lower storage zone for storage at 135 °C
+
+In Figure 22 the cost for the two-zone storage technology is presented as three separate
+curves. The curves represent the specific cost when utilizing the entire volume, the
+specific cost when utilizing the lower storage volume at 115 °C and the specific cost
+when utilizing the lower storage volume at 135 °C. The costs are presented as such
+due the fact that the utilization of the storage depends on the temperature requirement
+of the system that the storage is integrated into. This means that if there is no need for
+98 °C water, which is the maximum storage temperature of the upper storage zone, it
+is only possible to make use the lower storage zone. However, if there is use for the
+98 °C water as well, utilization of the entire volume is possible. It is thus concluded
+that if the utilization of the entire storage volume is possible, the cost per volume will
+be lower, as indicated in Figure 22.
+
+57
+
+While previous cost estimates for two-zone storage have been prepared, it is
+considered difficult to determine what the cost estimates presented in Figure 22 are
+comparable to. In the budgetary offers based on which the estimates have been
+prepared, the scope of supply is well specified. It is thus known what is included into
+the cost of the storage system. However, figuring out what is included in the scope of
+supply for costs indicated in literature is difficult. Most often there is no mention of
+this, which makes it difficult to compare the results of the cost estimation in this thesis
+to costs indicated in literature.
+4.2
+
+Tool for studying operating modes
+
+The results of three essential cases calculated with the tool for studying operating
+modes can be seen in Table 7. The cases presented in the table are operation at design
+production and design demand, design production and no demand and no production
+and design demand. Additional calculations can be found in Appendix 2.
+Based on the design data from the budgetary offers as well as legitimate estimations
+of pressure losses, the tool calculates flows and pressures for the predetermined offdesign cases. The cases are categorized as charging and discharging, with five different
+off-design cases each. A case with calculations at design conditions has also been
+added, which is categorized as stable, as no charging or discharging occurs. In Table
+7, cases 1, 2 and 8 are presented. Flow charts for four off-design cases that are
+considered essential can be found in Appendix 3. In addition to cases 1, 2 and 8, which
+are presented in Table 7, case 4 is also considered essential. Case 4 represents
+minimum production at no demand. These four cases form the cornerstones of the
+operating modes, which is why they are considered essential.
+
+58
+
+Table 7. Three essential cases calculated with the tool prepared for studying operating modes.
+
+Case 1
+
+Case 2
+
+Case 8
+
+Design production
+Design demand
+
+Design production
+No demand
+
+No production
+Design demand
+
+Production units in
+operation
+
+6
+
+6
+
+0
+
+Production unit load
+
+100 %
+
+100 %
+
+0%
+
+Produced heat
+
+60 MW
+
+60 MW
+
+0 MW
+
+Heat load
+
+100 %
+
+0%
+
+100 %
+
+Heat demand
+
+6 MW
+
+0 MW
+
+60 MW
+
+Plant production flow
+
+173.2 kg/s
+
+173.2 kg/s
+
+0 kg/s
+
+Production flow per
+unit
+
+28.9 kg/s
+
+28.9 kg/s
+
+0 kg/s
+
+Heat consumer flow
+
+173.2 kg/s
+
+0 kg/s
+
+173.2 kg/s
+
+Storage flow
+
+0.0 kg/s
+
+173.2 kg/s
+
+-173.2 kg/s
+
+Net. pump inlet
+pressure
+
+5.50 bar
+
+7.50 bar
+
+3.50 bar
+
+Net. pressure loss
+
+6.60 bar
+
+0.00 bar
+
+6.60 bar
+
+Net. pump Δp
+
+6.60 bar
+
+0.00 bar
+
+8.60 bar
+
+Net. pump outlet
+pressure
+
+12.10 bar
+
+0.00 bar
+
+12.10 bar
+
+Header pressure loss
+
+1.00 bar
+
+1.00 bar
+
+0.00 bar
+
+Prod. pump inlet
+pressure
+
+4.50 bar
+
+4.50 bar
+
+0.00 bar
+
+Production pump Δp
+
+6.00 bar
+
+8.00 bar
+
+0.00 bar
+
+Prod. pump outlet
+pressure
+
+10.50 bar
+
+12.50 bar
+
+0.00 bar
+
+Plant pressure loss
+
+5.00 bar
+
+5.00 bar
+
+0.00 bar
+
+5.50 bar
+
+5.50 bar
+
+5.50 bar
+
+5.50 bar
+
+7.50 bar
+
+3.50 bar
+
+0.00 bar
+
+2.00 bar
+
+2.00 bar
+
+Return line connection
+point pressure
+Supply line connection
+point pressure
+Storage Δp
+
+59
+
+5
+
+ASSESSMENT OF RESULTS
+
+Even as the results are largely based on previous research and recommendations in
+literature, the topic of the thesis is regarded as one that requires some own
+interpretation. There is always some uncertainty when it comes to the selection of the
+most suitable storage system, and as usual the technologies have their own benefits
+and drawbacks. The question of one of these outweighing the other is considered
+project specific, as certain traits can be of higher importance depending on the project.
+As an example, some might consider a perfectly functioning system of higher
+importance than the most economic one. While these two combined would obviously
+be the optimal outcome, it is not necessarily the case as there are so many factors to
+take into consideration when selecting the suitable technology.
+There also seems to be some inconsistency between sources regarding some of the
+factors presented in Table 6. The most significant is the maximum storage temperature
+for two-zone storage, stated in Table 6 to be 135 °C for the lower storage zone. The
+maximum storage temperature of 135 °C has been suggested in a budgetary offer
+provided to the commissioner by a supplier in 2017. However, Herwig, et al. (2018)
+indicates a maximum storage temperature of 125 °C , while Kraft (2018) presents the
+maximum storage temperature as above 100 °C for two-zone storage. Furthermore,
+references by Bilfinger Industrial Services GmbH (2020q; 2020r; 2020s; 2020t)
+indicate realized storage temperatures of 115 °C, while Kraft (2018) states that projects
+have been realized with storage temperatures of 120 °C. These types of inconsistencies
+make it difficult to determine what the correct temperature is. At some point, however,
+physical constraints will inevitably limit the maximum storage temperature, as
+increased temperature requires increasing the height of the upper storage zone.
+Nevertheless, it seems that realizing a project with a storage temperature of 135 °C is
+possible based on the budgetary offer, which is why the maximum storage temperature
+is presented accordingly in Table 6.
+Despite the aforementioned, the overview presented through Table 6 and Figure 22 is
+considered to aid the selection process immensely. The technical and economic
+information presented in the results provides an insight on the applicability of the three
+technologies assessed. It is considered that this satisfies the main purpose of the thesis,
+
+60
+
+which was to identify factors that will limit the suitability of using a certain storage
+system for a process. Proper definition of the process of interest and proper
+demarcation of the subject area also ensured that the technologies with the most
+relevance for the commissioner were considered for the assessment.
+As for the estimation of costs, it is considered to provide good indication as to how the
+storage system cost varies with the required storage volume. However, the costs
+indicated in Figure 22 should not be considered as absolute. The main reasons for this
+are variations in costs during time, caused for instance by inflation and variations in
+material costs. Furthermore, the way in which storage system costs are presented in
+literature also varies greatly depending on the source. While some might indicate costs
+for the storage system only, others might include additional costs such as groundwork,
+engineering and additional equipment. Christidis (2019), for instance, presents costs
+for the three technologies based on six previously realized projects. Christidis
+calculates the specific costs for the technologies based on the total investment cost for
+the project in question. This results in cost ranges of 280 – 640 €/m3 for one-zone
+storage, 360 – 440 €/m3 for two-zone storage and 1 120 – 1 170 €/m3 for pressurized
+storage. Kraft (2018) on the other hand, suggests that the cost ranges for the three
+technologies are approximately 300 – 500 €/m3 for one-zone storage, 400 – 700 €/m3
+for two-zone storage and 800 – 1 200 €/m3 for pressurized storage. However, it is not
+mentioned over what volume range these costs are spread, or what the scope of supply
+is for the indicated costs. The fact that it is often not mentioned what is included in the
+indicated costs makes it difficult to prepare cost estimates. This also makes assessing
+the correctness of the cost estimation very difficult, as it is hard to determine what
+previous cost estimations the ones prepared in this thesis can be compared to. Despite
+this, the costs presented in Figure 22 are considered to be in the same range as costs
+indicated by Christidis and Kraft.
+Kraft (2018) also presents a two-zone storage project in Heidelberg, Germany, for
+which the investment cost is stated to be approximately € 15 million. Furthermore, it
+is told that the storage vessel with groundwork represent approximately 30% of the
+total investment cost, resulting in € 4 500 000. The total volume of the storage is 20
+000 m3, which means that the specific cost of the storage vessel is 225 €/m3 if the entire
+volume is utilized. In Figure 21 it can be seen that the specific cost of one-zone storage
+
+61
+
+at the corresponding volume is 125 €/m3. By multiplying this specific cost with the
+calculated cost factor for two-zone storage when utilizing the entire storage volume,
+the same specific cost of 225 €/m3 is achieved. This can also be read from Figure 22.
+The tool for studying operating modes is considered a useful tool for preliminary
+project specific calculations. The tool provides good indication as to how the system
+behaves depending on changes in heat production and demand. This will prove to be
+useful during project execution, as process parameters for essential operating scenarios
+are easily calculated. The tool is thus considered to fulfil its intended purpose. More
+precise simulations, such as dynamic modelling of the system, can then be carried out
+with a more suitable program as projects proceed.
+Calculations performed with the tool are considered a good starting point for dynamic
+simulations. However, it is important to note that the tool represents a storage system
+that is integrated as hydraulically coupled. Despite this, it is to some extent also
+considered possible to perform calculations for a hydraulically decoupled system with
+the tool as well. As stated by Thomsen & Overbye (2016), the main difference between
+hydraulically coupled and hydraulically decoupled integration is the pump and valve
+configuration between the storage and the network supply and return lines. Regardless
+of the integration method, the function of the storage will be the same, with the
+difference being two additional pumps charging and discharging the storage according
+to demand. The most relevant process parameters are thus considered to be the same
+regardless of the integration method.
+The calculations performed with the tool are considered reliable provided that
+legitimate design data are used. As all calculations are carried out based on these,
+imprecise design data will inevitably result in errors in the calculations. There is also
+a small uncertainty in the calculations for density and specific heat of water in case a
+supply temperature of above 100 °C is used. As stated by Cabeza (2015), Equations
+(3) and (4) are applicable for water up to 100 °C. The error at temperatures exceeding
+100 °C is however considered negligible. In order to reach this conclusion, calculations
+were performed at temperatures up to 150 °C and compared to table values for water
+up to 150 °C. The comparison indicated a deviation of 3 kg/m3 for density at 150 °C
+and a deviation of 0.02 kJ/kg*K for specific heat at 150 °C.
+
+62
+
+6
+
+CONCLUSIONS AND RECOMMENDATIONS
+
+All in all, the results achieved through this thesis are regarded as a good starting point
+for the commissioner to carry out future projects with thermal storage. The
+summarized review of storage technologies can be expected to result in significant
+time savings, ensuring smoother project planning. In addition to this, the tool for
+studying operating modes can be expected to ease the project execution phase of
+projects with thermal storage.
+It is important to heed possible uncertainties regarding some points in the summary,
+as the ones discussed, and to keep an open mind for other solutions in addition to the
+ones presented. As more projects with thermal storage emerge, the knowledge around
+the subject will also develop. It is thus recommended to review the results presented
+in the thesis from time to time, in order to streamline the suggestions and limitations.
+Even as tank thermal storage is a mature technology, which means that factors such as
+costs are unlikely to improve with time, different suppliers of storage systems might
+also have different suggestions. This means that while one supplier might recommend
+a certain solution, another supplier might find another solution more suitable. This
+further highlights the need to keep an open mind regarding the selection of a storage
+technology, and possibly to review them according to supplier suggestions.
+Regarding the tool for studying operating profiles, an important development
+suggestion would be to transfer it to a program more suitable for simulations of this
+type. Preparing a model of the system in a tool such as Simulink would enable the
+possibility of dynamic simulations, giving insight into how the system behaves with
+varied operation during time. Currently, only static calculations are possible with the
+tool, which means that the transition period from one operating mode to another is not
+studied at all. However, when preparing the tool, it was considered that dynamic
+simulation would be carried out in the later stages of projects while the prepared tool
+is to be used to conduct preliminary calculations. In other words, the tool prepared for
+the thesis is intended for general calculations while dynamic simulations are
+considered more project specific.
+
+63
+
+SVENSK SAMMANFATTNING – SWEDISH SUMMARY
+Tekno-ekonomisk utvärdering av tre metoder för lagring av värme
+Inledning, ämnesmotivering och syfte
+Den aktuella klimatkrisen har medfört målsättningar och krav för att såväl minska
+koldioxidutsläpp som att öka energieffektiviteten för energisektorn. Ett av de främsta
+målen är att minska bruket av fossila bränslen för energiproduktion och ersätta dessa
+med förnybara energikällor. Trots att målsättningarna är väldefinierade för elsektorn
+är det oklart hur energiövergången ska genomföras inom värmesektorn. Värmesektorn,
+som sägs utgöra upp till hälften av den europeiska energiförbrukningen, bestod år 2017
+till 75% av fossila bränslen, medan andelen förnybara energikällor enbart var 16%.
+Detta ger en inblick i hur viktigt det är att fokus även sätts på värmesektorn gällande
+minskning av koldioxidutsläpp. Strategier för att omstrukturera värmesektorn har
+tagits fram av bland annat Europeiska kommissionen, men hinder såsom ovisshet och
+bristfällig information försvårar verkställandet av dessa.
+I strategierna framhävs sammankoppling av värme- och elsektorerna som en viktig
+åtgärd i energiövergången. Det sägs att mängden slösad värme för tillfället är för stor,
+och åtgärder för att minska detta är en av huvudpunkterna som lyfts fram av den
+Europeiska kommissionen. En av de främsta existerande teknologierna för detta är
+fjärrvärme, som redan används i stor utsträckning. Fjärrvärmens andel i värmesektorn
+förväntas även ökas ytterligare, med upp till 50% fram till 2050 från det nuvarande
+9%. Kravet på en ökning av andelen förnybar energi inom både el- och värmesektorn
+kan dock medföra svårigheter att utöka bruket av fjärrvärme.
+För tillfället produceras fjärrvärme till stor del av kraftverk vars typ av produktion kan
+kallas baskraft. En stor del av dessa använder till exempel kol som huvudsakligt
+bränsle, vilket strider mot målsättningen att minska användningen av fossila bränslen.
+Genom att denna kolkraft fasas ut minskar då även potentialen för kontinuerlig
+produktion av fjärrvärme, vilket kan ses som ett betydande problem inom
+värmesektorn. Kravet på ökad mängd förnybar energi leder även till problem inom
+elsektorn. Energikällor såsom vind- och solkraft är starkt varierande till sin natur,
+vilket medför att elproduktion endast kan garanteras under gynnsamma förhållanden.
+
+64
+
+Detta leder till ett ökat behov av flexibel reservkraft i form av till exempel
+snabbstartade och effektiva motorer och gasturbiner. Mängden installerade kraftverk
+såsom dessa förväntas öka 13-faldigt fram till 2050.
+Dessa nya kraftverk har även stor potential att användas till produktion av värme och
+kan till viss del kompensera för avvecklade kraftverk som använder fossila bränslen.
+De nya kraftverken producerar dock ofta elektricitet och värme enligt topp-laster och
+under perioder med lägre produktion från förnybara energikällor. Detta leder i sin tur
+till ytterligare svårigheter, i och med att el- och värmebehovet i många fall inte följs
+åt. Det krävs således ytterligare teknologier för att kompensera för skillnader i behov.
+En teknologi som har stor potential för detta är värmelagring, vilket innebär tillfällig
+lagring av värme.
+Värmelagring som teknologi har utvecklats märkbart under de senaste decennierna,
+vilket innebär att det finns ett flertal olika metoder för lagring av värme. De olika
+metoderna delas ofta upp enligt huvudkategorierna sensibel värmelagring, latent
+värmelagring och kemisk värmelagring. Inom dessa huvudkategorier finns ytterligare
+ett flertal metoder, såsom vattenlagring i tank och värmelagring genom fasförändring.
+Även om teknologin bakom de olika metoderna i huvudsak är densamma är
+tillämpningsområdena olika. En viss metods lämplighet styrs till stor del av systemet
+till vilket värmelagret integreras. En utmaning är att identifiera för- och nackdelar med
+de olika metoderna, vilket bör göras för att kunna välja den mest lönsamma metoden
+för systemet ifråga. Ingen metod för värmelagring kan sägas passa alla ändamål bäst,
+och en tekno-ekonomisk utvärdering rekommenderas för att möjliggöra valet av rätt
+metod för rätt ändamål.
+Huvudsyftet för denna avhandling är att identifiera viktiga faktorer som begränsar
+användningen av en viss lagringsmetod för ett system. Detta är av intresse för
+uppdragsgivaren och förväntas underlätta planeringen och genomförandet av framtida
+projekt med värmelagring. Systemet av intresse är ett kraftvärmeverk bestående av
+förbränningsmotorer. Kraftverk med förbränningsmotorer kan storleksmässigt variera
+från under 10 MW upp till över 400 MW, men kraftvärmeverk av denna typ är oftast
+under 100 MW. Detta är således avgränsningen som har beaktats i avhandlingen.
+
+65
+
+Utöver det förnämnda har det även ansetts viktigt att undersöka hur ett system med
+värmelagring beter sig under olika driftlägen, med andra ord under varierande behov
+och produktion av värme. Eftersom värmelagring är ett väldigt brett koncept har
+avhandlingen avgränsats till den värmelagringsmetod som är mest relevant för
+uppdragsgivaren; sensibel värmelagring med vatten som lagringsmedium.
+Material och metoder
+Identifieringen av de faktorer som begränsar en lagringsmetods lämplighet har till
+största delen gjorts genom en grundlig litteraturöversikt. Det framkom vid ett tidigt
+skede att de för uppdragsgivaren relevanta metoderna inom sensibel värmelagring
+gällde kortsiktig lagring av vatten i olika typer av tankar. Utgående från detta
+identifierades tre olika teknologier som är de främsta för denna typ av lagring; lagring
+i tank med en zon, lagring i tank med två zoner och lagring i trycksatt tank. Utgående
+från de tre teknologierna utfördes en ingående undersökning av eventuella
+begränsningar, rekommendationer och för- och nackdelar.
+I och med att valet av lagringsmetod bör göras utgående från en teknisk och ekonomisk
+utvärdering utfördes även kostnadsuppskattningar för de tre främsta teknologierna. I
+och med att lagring i tank med en zon för tillfället är den vanligaste metoden användes
+tidigare
+
+kostnadsberäkningar
+
+för
+
+den
+
+teknologin
+
+som
+
+utgångspunkt
+
+för
+
+kostnadsuppskattningen. Kostnader för lagring i tank med två zoner och lagring i
+trycksatt tank uppskattades då genom en beräknad faktor med referens till lagring i
+tank med en zon.
+Undersökningen av olika driftlägen genomfördes genom att konstruera ett verktyg för
+beräkningar i Excel. Verktyget beräknar flöden, tryck och differentialtryck i systemet.
+Verktyget gör detta utgående från inmatade designdata för systemet samt från aktuellt
+värmebehov och mängden producerad värme. Detta ger en överblick över hur
+systemets tryck och flöden påverkas av ändringar i behov och produktion.
+
+66
+
+Resultat
+Resultaten av undersökningen sammanfattas i tabellform. I sammanfattningen
+framkommer designrekommendationer, begränsande faktorer och begränsningar
+gällande inkoppling av värmelagret. Som designrekommendationer presenteras
+särskilda
+
+designdirektiv
+
+för
+
+lagren,
+
+optimal
+
+dimensionering
+
+och
+
+lämplig
+
+temperaturskillnad i lagret. Som begränsande faktorer identifierades maximal
+lagringstemperatur, tryck och kostnader. Gällande inkoppling av värmelagret
+behandlas två olika metoder, direkt inkoppling och indirekt inkoppling, för vilka
+begränsningar presenteras.
+Informationen i sammanfattningen möjliggör framförallt en smidigare process vid
+valet av lagringsmetod. När krav och parametrar för ett system till vilket värmelagret
+ska kopplas är kända kan sammanfattningen användas för att utesluta en eller två av
+lagringsmetoderna. I vissa fall är det dock möjligt att undvika begränsningarna utan
+att utesluta en lagringsmetod. Ett exempel på detta är den maximala
+lagringstemperaturen som är begränsad till 98 °C för lagring i tank med en zon. Detta
+innebär att en metod med möjlighet för högre lagringstemperatur är lämpligare ifall
+den krävda lagringstemperaturen är över 98 °C. Trots att detta är en tydlig begränsning
+kan det undgås genom att tillfälligt förbikoppla lagret. Detta rekommenderas dock
+endast om den krävda temperaturen överskrider 98 °C endast under korta tidsperioder.
+Eftersom kostnaden oftast är den främsta avgörande faktorn vid valet av lagringsmetod
+sammanställdes kostnadsuppskattningarna även som en separat del av resultatet.
+Kostnaderna presenteras som specifik kostnad per enhet lagringsvolym och
+uppskattningarna visar lägre kostnader när lagringsvolymen ökar. Utgående från
+kostnadsuppskattningarna är det möjligt att uppskatta lönsamheten för en
+lagringsmetod vid en krävd lagringsvolym jämfört med de andra lagringsmetoderna.
+Trots att kostnadsuppskattningen ger bra indikation på lagringsmetodernas specifika
+kostnad är det viktigt att betrakta dem med viss försiktighet. Orsaken till detta är att
+kostnader som framkommer i källor ofta är angivna på olika sätt, vilket gör det svårt
+att jämföra kostnadsuppskattningar i föreliggande arbete med tidigare uppskattningar.
+Verktyget som skapades för att undersöka olika driftlägen är ett bra verktyg för att
+utföra preliminära beräkningar på ett system med värmelagring. Verktyget ger en bra
+
+67
+
+bild över hur systemet beter sig vid ändrad drift, vilket är till nytta under utförandet av
+ett projekt med värmelagring. Det är dock enbart möjligt att utföra statiska beräkningar
+med verktyget, vilket innebär att dynamiska simuleringar vid behov bör göras med ett
+program anpassat för det. Vidare utveckling av arbetet kunde fokuseras på detta. Om
+verktyget överfördes till ett program anpassat för dynamiska simuleringar kunde dessa
+utföras utan statiska simuleringar. Genom detta skulle det bli ett mellansteg mindre
+vid utförandet av projekt.
+Med hjälp av resultaten i föreliggande arbete är möjligheterna till lyckade
+värmelagringsprojekt i framtiden goda för uppdragsgivaren. Informationen i
+sammanfattningen av lagringsmetoderna och kostnadsberäkningarna kan förväntas
+resultera i sparad tid, i och med att de underlättar utförandet av projekt med
+värmelagring märkbart. Utöver detta förväntas verktyget för undersökning av
+driftlägen även underlätta utförandet av projekt med värmelagring. Det är viktigt att
+även beakta andra möjliga lösningar än de som presenterats i avhandlingen och att
+uppdatera resultaten enligt dessa. När fler projekt med värmelagring utförs ökas även
+kunskapen inom området.
+
+68
+
+REFERENCES
+Abad, F. et al., 2018. D2.1 Report on Storage Materials and Systems, Barcelona: WP2,
+84 pp.
+Agora Energiewende, 2017. Flexibility in thermal power plants - With a focus on
+existing coal-fired power plants, Berlin: Agora Energiewende, 115 pp.
+Agora
+Energiewende,
+2020.
+Recent
+electricity
+data.
+[Online]
+Available
+at:
+https://www.agora-energiewende.de/en/service/recent-electricitydata/chart/power_generation/ [Accessed 7 November 2019]
+Andersson, J., 2014. Thermal storage for hot water, [Internal slide presentation]
+Vaasa: Wärtsilä Finland Oy, 11 pp.
+Andersson, J. & Knookala, P., 2019. Wärtsilä Energy Business in a Decarbonised
+Future. [Internal slide presentation] Vaasa: Wärtsilä Finland Oy, 42 pp.
+Averfalk, H. et al., 2017. Large heat pumps in Swedish district heating systems.
+Renewable and Sustainable Energy Reviewes, pp. 1275-1284.
+Bilfinger Industrial Services GmbH, 2020a. Heat accumulator Bruneck 1 und 2/Italy.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-bruneck/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020b. Heat accumulator Linz/Austria. [Online]
+Available
+at:
+https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-linzaustria/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020c. District heating accumulator
+Wels/Austria.
+[Online]
+Available
+at:
+https://bisaustria.bilfinger.com/en/references/energy-and-distribution/heat-accumulators/heataccumulator-wels/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020d. Heat accumulator Saarbrücken/Germany.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-saarbruecken/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020e. Heat accumulator Jena/Germany.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-jena-south-germany/
+[Accessed 17 January 2020].
+
+69
+
+Bilfinger Industrial Services GmbH, 2020f. Heat accumulator Salzburg/Austria.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-salzburg/
+[Accessed 17 January 2020].
+Bilfinger
+Industrial
+Services
+GmbH,
+2020g.
+Laas/Italy.
+[Online]
+Available
+at:
+https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-laas/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020h. Heat accumulator Mannheim/Germany.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulatur-mannheim/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020i. Heat accumulator Freiberg/Germany.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-freiberg/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020j. Heat accumulator Ritten/Italy. [Online]
+Available
+at:
+https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-ritten/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020k. Heat accumulator Bochum/Germany.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-bochum/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020l. Heat accumulator Düsseldorf. [Online]
+Available
+at:
+https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-duesseldorf/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020m. Heat accumulator Bozen/Italy. [Online]
+Available
+at:
+https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-bozen/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020n. Heat accumulator Torun/Poland.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-torun/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020o. Heat accumulator Gaisburg/Germany.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-gaisburg/
+[Accessed 17 January 2020].
+
+70
+
+Bilfinger
+Industrial
+Services
+GmbH,
+2020p.
+Heat
+accumulator
+Küssnacht/Switzerland.
+[Online]
+Available
+at:
+https://bisaustria.bilfinger.com/en/references/energy-and-distribution/heat-accumulators/heataccumulator-kuessnacht/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020q. Heat accumulator Nürnberg/Germany.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-nuernberg/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020r. Heat accumulator Kiel/Germany. [Online]
+Available
+at:
+https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/district-heating-accumulator-kiel/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020s. Heat accumulator and pumps station
+Duisburg/Germany.
+[Online]
+Available
+at:
+https://bisaustria.bilfinger.com/en/references/energy-and-distribution/heat-accumulators/heataccumulator-duisburg/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020t. Heat accumulator Heidelberg atmospheric 2-zone accumulator. [Online] Available at: https://bisaustria.bilfinger.com/en/references/energy-and-distribution/heat-accumulators/heataccumulator-heidelberg/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020u. Heat accumulator Bad Goisern/Austria.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/heat-accumulator-holzwaerme-bad-goysern/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020v. Pressure accumulator Graz/Austria.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/pressure-accumulator-graz/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020w. Heat accumulator AMAG
+Ranshofen/Austria.
+[Online]
+Available
+at:
+https://bisaustria.bilfinger.com/en/references/energy-and-distribution/heat-accumulators/heataccumulator-amag-ranshofen/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020x. Pressure accumulator Simmering/AT.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/pressurized-accumulators/pressure-accumulatorsimmering-at/
+[Accessed 17 January 2020].
+
+71
+
+Bilfinger Industrial Services GmbH, 2020y. Pressure accumulator Ulm/DE. [Online]
+Available
+at:
+https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/pressurized-accumulators/pressure-accumulator-ulmde/
+[Accessed 17 January 2020].
+Bilfinger Industrial Services GmbH, 2020z. Pressure accumulator Diemen/NL.
+[Online] Available at: https://bis-austria.bilfinger.com/en/references/energy-anddistribution/heat-accumulators/pressurized-accumulators/pressure-accumulatordiemen-nl/
+[Accessed 17 January 2020].
+Bird, L., Milligan, M. & Lew, D., 2013. Integrating Variable Renewable Energy:
+Challenges and Solutions, Golden: National Renewable Energy Laboratory, 14 pp.
+Cabeza, L. F. (ed.), 2015. Advances in Thermal Energy Storage Systems: Methods and
+Applications, Cambridge: Woodhead Publishing, 612 pp.
+Chaudry, M. et al., 2015. Uncertainties in decarbonising heat in the UK. Energy Policy
+87, pp. 623-640.
+Christidis, A. C., 2019. Termische Speicher zur Optimierung des Betriebs von
+Heizkraftwerken in der Fernwärmeversorgung. Berlin: Technischen Universität
+Berlin, 194 pp.
+Dinçer, İ. & Rosen, M. A., 2011. Thermal Energy Storage: Systems And Applications,
+Second Edition, Chichester: John Wiley & Sons, Ltd, 602 pp.
+E.A., 2015. The Danish Experience with Integrating Variable Renewable Energy, 62
+p.
+[Online]
+Available
+at:
+https://www.agoraenergiewende.de/fileadmin2/Projekte/2015/integration-variabler-erneuerbarerenergien-daenemark/Agora_082_Deutsch-Daen_Dialog_final_WEB.pdf
+EB Business Intelligence, 2019. Bloomberg NEF: New Energy Outlook 2019 report
+summary, [Internal document] Helsinki: Wärtsilä Oyj. 27 pp.
+Ediger, V. S., 2019. An integrated review and analysis of multi-energy transition from
+fossil fuels to renewables. Energy Procedia, pp. 2-6.
+Energiateollisuus, 2006. Kaukolämmön käsikirja. Helsinki: Adato Energia, 566 pp.
+Euroheat & Power, 2008. Guidelines for district heating substations, Brussels:
+Euroheat & Power, 68 pp.
+European Commission, 2016a. Towards a smart, efficient and sustainable heating and
+cooling sector, Brussels: European Commission, 4 pp.
+European Commission, 2016b. An EU Strategy on Heating and Cooling, Brussels:
+European Commission, 13 pp.
+
+72
+
+Flinkerbusch, K., 2010. Bonus payments for electricity production from renewable
+energy sources and the impact on the market participants' capacity choice, Münster:
+Centrum für Angewandte Wirtschaftsforschung Münster, 11 pp.
+Forni, A., 2018. The Future of CHP is More Flexible and Grid-Interactive, Chicago:
+Guidehouse Inc., [Online] Available at: https://guidehouseinsights.com/news-andviews/the-future-of-chp-is-more-flexible-and-grid-interactive
+[Accessed 19 December 2019]
+Frederiksen, S. & Werner, S., 2014. Fjärrvärme och fjärrkyla. Lund: Studentlitteratur
+Ab, 573 pp.
+Gailfuss, M., 2016. Germany's new CHP Act explained. Power Engineering
+International.
+[Online]
+Available
+at:
+https://www.powerengineeringint.com/decentralized-energy/districtenergy/germany-s-new-chp-act-explained/
+[Accessed 11 December 2019]
+Gibb, D. et al., 2018. Process integration of thermal energy storage systems Evaluation methodology and case studies. Applied Energy 230, pp. 750-760.
+Guelpa, E. & Verda, V., 2019. Thermal energy storage in district heating and cooling
+systems: A review. Applied Energy 252, pp. 1-22.
+Herwig, A., Umbreit, L. & Rühling, K., 2018. Measurement-based modelling of large
+atmospheric heat storage tanks. Energy Procedia 149, pp. 179-188
+IEA, 2018. World Energy Outlook 2018, Chicago: International Energy Agency, 661
+pp.
+IEA, 2019. Global energy demand rose by 2.3% in 2018, its fastest pace in the last
+decade. [Online] Available at: https://www.iea.org/news/global-energy-demand-roseby-23-in-2018-its-fastest-pace-in-the-last-decade
+[Accessed 28 April 2020].
+IREN, 2014. The heat storage in district heating systems: From environmental and
+cost savings to higher flexibility of CHP plants - the Turin DH system, [Slide
+presentation] Turin: IREN, 33 pp.
+IRENA, 2019. Innovation Landscape for a Renewable-powered Future: Solutions to
+Integrate Variable Renewables, Abu-Dhabi: International Renewable Energy Agency,
+164 pp.
+Joint Research Centre, 2016. The EU Strategy on heating and cooling. SETIS
+magazine, pp. 11-13.
+Kalaiselvam, S. & Parameshwaran, R., 2014. Thermal Energy Storage Technologies
+for Sustainability: Systems design, assessment, and applications. Oxford: Elsevier,
+444 p.
+
+73
+
+Kettig, F., 2016. Unlocking Optimum CHP Performance in Future Power Systems.
+[Online] Available at: https://www.wartsila.com/twentyfour7/in-detail/unlockingoptimum-chp-performance-in-future-power-systems
+[Accessed 19 December 2019]
+Kraft, A., 2018. Großwärmespeicher - Bausteine der Energiewende, [Slide
+presentation] Dresden: EEB ENERKO GmbH, 33 pp.
+Kroposki, B., 2017. Integrating high levels of variable renewable energy into electric
+power systems. Journal of Modern Power Systems and Clean Energy, pp. 831-837.
+Kulkarni, G. N., Kedare, S. B. & Bandyopadhyay, S., 2008. Design of solar thermal
+systems utilizing pressurized hot water storage for industrial applications. Solar
+Energy 82, pp. 686-699.
+Lervik, P., 1994. Värmetekniska tabeller, Turku: Åbo Akademi, 34 pp.
+Lund, H. et al., 2014. 4th Generation District Heating (4GDH) Integrating smart
+thermal grids into future sustainable energy systems. Energy, pp. 1-11.
+Njoku, H., Ekechukwu, V. & Onyegegbu, S., 2014. Analysis of stratified thermal
+storage systems: An overview. Heat and Mass Transfer 50, pp. 1017-1030
+Paardekooper, S. et al., 2018. Heat Roadmap Europe 4: Quantifying the Impact of
+Low-Carbon Heating and Cooling Roadmaps. Aalborg: Aalborg Universitetsforlag,
+97 pp.
+Patronen, J., Kaura, E. & Torvestad, C., 2017. Nordic heating and cooling: Nordic
+approach to EU's Heating and Cooling Strategy. Copenhagen: Rosendahls, 110 pp.
+Petersen, M. K. & Aagaard, J., 2004. Heat accumulators. News from DBDH 1/2004,
+pp. 4-7.
+Savolainen, J., 2019. Personal communication with business analyst, 28 October, 2019
+Simon, F., 2019. Solar CEO: 'Heating electrification is one of the biggest mistakes of
+the
+energy
+transition'
+[Online]
+Available
+at
+https://www.euractiv.com/section/energy/interview/solar-ceo-heating-electrificationis-one-of-the-biggest-mistakes-of-the-energy-transition/
+[Accessed 3 December 2019]
+Singh, O., 2008. Applied Thermodynamics. Kanpur: New Age International Ltd., 965
+pp.
+Sinnott, R. K., 2005. Chemical Engineering Design. Oxford: Elsvier ButterworthHeinemann, 1065 pp.
+
+74
+
+Sørensen, P. A. & Schmidt, T., 2018. Design and construction of large scale heat
+storages for district heating in Denmark. 14th International Conference on Energy
+storage, 25-28 April, Adana: PlanEnergi, 15 pp.
+Thomsen, P. & Overbye, P., 2016. Energy storage for district energy systems. In:
+Avanced district heating and cooling (DHC) systems. Amsterdam: Elsevier Ltd., pp.
+145-166.
+UN, 2015. Paris Agreement. United Nations Framework Convention on Climate
+Change. Decision 1/CP 21 in Paris. 36 p. [Online] Available at:
+https://unfccc.int/sites/default/files/resource/docs/2015/cop21/eng/10a01.pdf
+Wang, Z. et al., 2017. Experimental and numerical research of thermal stratification
+with a novel inlet in a dynamic hot water storage tank. Renewable Energy, pp. 353371.
+Werner, S., 2017. International review of district heating and cooling. Energy, pp. 617631.
+
+75
+
+APPENDICES
+Appendix 1. Design data for example calculation
+
+76
+
+Appendix 2. Off-design case calculations performed based on design data
+
+77
+
+78
+
+79
+
+Appendix 3. Flow charts for four essential off-design cases
+
+80
+
+81
+
+82
+
+83
+
+

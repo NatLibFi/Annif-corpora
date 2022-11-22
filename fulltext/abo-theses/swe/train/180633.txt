@@ -1,0 +1,1471 @@
+Inbyggd spänning i MIM-dioder
+med olika katodmaterial
+
+Kaj Jansson
+35747
+Avhandling pro gradu i fysik
+Handledare
+FM Staffan Dahlström
+FD Mathias Nyman
+Fakulteten för naturvetenskaper vid Åbo Akademi
+2021
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+Ämne: Fysik
+Skribent: Kaj Peter Jansson
+
+Matrikelnummer: 35747
+
+Arbetets titel: Inbyggd spänning i MIM-dioder med olika katodmaterial
+Handledare: Staffan Dahlström
+
+Handledare: Mathias Nyman
+
+Abstrakt:
+Elektroniska anorndingar baserade på organiska halvledare, såsom organiska solceller,
+har studerats aktivt under de senaste årtiondena, eftersom de kan bli en kandidat till att
+producera förnybar energi till en låg kostnad. Ett exempel på en elektronisk anordning
+är organiska MIM-dioder. Man har utvecklat och utnyttjat olika metoder för att
+karaktisera elektroniska anordningar med syftet att förbättra dem i framtiden.
+För undersökning av relevanta elektroniska egenskaper, såsom inbyggd spänning och
+mobilitet, i organiska MIM-dioder har man använt MIM-CELIV-metoden. Syftet med
+avhandlingen är att mäta inbyggd spänning i MIM-dioder med MIM-CELIV-metoden
+för att optimera katomaterial för organiska solceller.
+Resultat från MIM-CELIV-metoden visade att signalen var låg och störningar
+omfattande. Detta leder till att osäkerheten varierar i resultaten och därmed blir den
+inbyggda spänningen inte exakt. Dessutom diskuteras andra problem i resultaten, som
+har påverkat analysen av den inbyggda spänningen.
+Nyckelord: Organisk solcell, MIM-diod, arbetsfunktion, inbyggd spänning,
+MIM-CELIV
+Datum: 11/02/2021
+
+Sidoantal: 30
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+INNEHÅLLSFÖRTECKNING
+FÖRKORTNINGAR .................................................................. 1
+INTRODUKTION ...................................................................... 2
+1. TEORI ...................................................................................... 4
+1.1 Halvedande polymerer.................................................................4
+1.2 MIM-dioden ................................................................................5
+1.3 Arbetsfunktion, elektronaffinitet och jonisationspotential ..........6
+1.4 Ferminivåutjämning ....................................................................7
+1.5 Inbyggd spänning ........................................................................8
+1.6 MIM-CELIV-metoden ................................................................10
+
+2. EXPERIMENT ..................................................................................15
+2.1 Provtillverkning ...........................................................................15
+2.2 Den experimentella laboratorieutrustningen ...............................16
+2.3 Dataanalys ...................................................................................18
+
+3. RESULTAT OCH DISKUSSION ...............................................21
+3.1 En jämförelse mellan teorin och experimenten ...........................21
+3.2 Diskussion ...................................................................................24
+
+LITTERATURHÄNVISNINGAR ...................................................29
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+FÖRKORTNINGAR
+Arbetsfunktion
+
+𝜙
+
+Boltzmanns konstant
+
+𝑘
+
+Elementarladdning
+
+𝑒
+
+Energi:
+
+𝐸
+
+- Bandgap
+Mobilitet:
+
+𝐸𝑔
+𝜇
+
+- Elektroner
+
+𝜇𝑒
+
+- Hål
+
+𝜇ℎ
+
+Permittivitet:
+
+𝜀
+
+- Vakuum
+
+𝜀𝑜
+
+- P3HT
+
+𝜀𝑃3𝐻𝑇
+
+Resistans
+
+𝑅
+
+Spänning:
+
+𝑉
+
+- inbyggd spänning
+
+𝑉𝑏𝑖
+
+- offset spänning
+
+𝑉𝑜𝑓𝑓
+
+- spänningsamplitud
+
+𝑉𝑚𝑎𝑥
+
+- spänningspuls
+
+𝑉(𝑡)
+
+Spänningslutning
+
+𝐴
+
+Strömtransient
+
+𝑗(𝑡)
+
+Ström-spänning
+
+𝐼−𝑉
+
+Tjocklek
+
+𝑑
+
+1
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+2
+
+INTRODUKTION
+Organisk elektronik är ett forskningsområde där man utnyttjar organiska material, såsom
+halvledande organiska molekyler och polymerer [1], inom dagens och framtida
+elektronik. Organisk elektronik har studerats aktivt över trettio år och efterfrågan har ökat
+under senaste åren. Orsaken till det ökade intresset har varit samhällets strävan efter att
+hitta miljövänligare elektronik med låga produktionkostnader i syfte att ersätta
+traditionella oorganiska elektroniska apparater samt lösa dagens energikris.
+De första framgångsrika kommersiella organiska elektronikprodukterna har varit
+organiska ljusemitterade dioder, dvs. OLED, som har utnyttjats inom belysnings−
+elektronik och för mobiltelefon- och televisionbildskärmar [2]. Till annan organisk
+elektronik hör bl.a. organiska (fältefftekt) transistorer och organiska solceller med en
+lovande utveckling under de senaste årtiondena. Den organiska solcellseffektiviteten var
+under 4,0 % i början av 2000-talet och har nu nått rekordhögt till 18,2 % vid Shangai Jiao
+Tong University och Beihang Univerity (SJTU/BUAA) enligt National Renewable
+Energy Laboratory [3].
+Fördelarna med organiska material i elektronik är att de är flexibla och miljö−
+vänliga och förbereds i låga processtemperaturer eller från lösning som kräver låg
+energikonsumption. Däremot är det problem med stabilitet hos organiska material då de är
+kortlivade. Dessutom har organiska material en låg laddningsbärarmobilitet, vilket
+begränsar den organiska anordningens effektivitet i många tillämpningar [4].
+Dessutom finns det en brist på god förståelse (och kontroll) av de elektroniska
+egenskaperna i organisk elektronik, vilket har betydelse för anordningarnas effektivitet
+och prestanda. En egenskap som är betydelsefull för de organiska dioderna, men har varit
+utmanande att utforska, är inbyggd spänning. Till exempel de mest allmänt använda
+metoderna inom mätning av organiska solceller, såsom 𝐼 − 𝑉-karakterisering, kan man
+med hjälp av mätresultaten uppskatta den inbyggda spänningen, men att mäta dess värde
+direkt är svårt.
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+3
+
+Nuförtiden kan inbyggd spänning undersökas med hjälp av MIM-CELIV−
+metoden (Metal-Insulator-Metal-Charge extraction by a Linear Increasing Voltage, dvs.
+laddningsextraktionsmetod för MIM-dioder med en linjärt ökande spänning), som är en
+utbyggd version av standarden CELIV-metoden av Juška [5]. Den största nyttan med
+MIM-CELIV-metoden är dess förmåga att experimentellt mäta inbyggd spänning (och
+laddningsbärarmobilitet) direkt i organiska MIM-dioder [6].
+Syftet med avhandlingen är att karakterisera inbyggd spänning i organiska MIMdioder med olika katodmaterial. Genom mätning av inbyggd spänning kan man få en
+bättre kunskap om optimering av katodmaterial för organiska solceller. Den andra
+målsättningen med avhandlingen är att tillverka och mäta organiska MIM-dioder med
+kalciumkatod i fysikens laboratorier vid Åbo Akademi. Kalcium har en låg arbets−
+funktion, vilket leder till en hög inbyggd spänning i MIM-dioder (om de har ett anod−
+material med en hög arbetsfunktion) enligt teorin.
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+4
+
+1. TEORI
+1.1 Halvledande polymerer
+De flesta halvledande polymerer, som används i organiska halvledande anordningar, är
+konjugerade polymerer [7] [8]. Konjugerade polymerer karakteriseras av kolbaserade
+material vars kedja består av omväxlande enkel- och dubbelbindningar mellan kolatomer.
+Inom polymermolekylens dubbelbindningar kommer kolatomers 𝑝𝑧 -atomorbital (av
+𝑠𝑝2 -hybridisering) att överlappa och skapa ett konjugerat 𝜋-elektronsystem [7] [8].
+𝜋-elektronbindningar är betydligt svagare än 𝜎-bindningar. Detta leder till att 𝜋 −
+elektroner inte är lokaliserade kring överlappande orbitaler. Dessa 𝜋-elektroner leder till
+konjugation i halvledande polymerers kedja, som påverkar organiska halvledares
+elektroniska egenskaper.
+Halvledande polymerers bandstruktur illustreras i figur 1. Där kan man se att
+överlappning av 𝑝𝑧 - atomorbital leder till två skilda energinivåer s.k. ockuperade bundna
+molekylära 𝜋 -orbitaler och oockuperade antibundna molekylära 𝜋 ∗ -orbitaler
+[1]. Då antalet konjugationer ökar i kedjan (dvs. icke-lokaliserade längden ökar) kommer
+energinivåerna bli tätare packade. Detta leder en liknande energibandtransport som i
+oorganiska halvledare [7]. Vid oändligt antal konjugationer finns den lägsta elektroniska
+excitationen, dvs. bandgapet 𝐸𝑔 , mellan valensband och ledningsband av konjugerade
+polymerer. Valensband och ledningsband i halvledande polymerer består av ett oändligt
+antal energinivåer av 𝜋-orbitaler respektive 𝜋 ∗ - orbitaler. Därmed kallas valensbandet och
+ledningsbandet i halvledande polymerer högsta ockuperade molekylorbitaler (HOMO)
+respektive lägsta oockuperade molekylobitaler (LUMO).
+I avhandlingen används en halvledande polymeren poly(3-hexyltiofen),
+dvs. P3HT. P3HT är den halvledande konjugerad p-typs polymer i de organiska
+anordningarna. P3HT är en av de mest använda materialen inom organiska solcellsstudier
+p.g.a. en enkel syntes, hög laddningsbärarmobilitet, god bearbetbarhet, osv. [8].
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+5
+
+𝜋 ∗-antibindning
+LUMO
+HOMO
+
+𝜋-bindning
+
+∞
+
+Figur 1: Formation av bandstruktur i halvledande polymer. Figuren illustreras på basis av
+Meera Stephen [7], Amitabh Banerji [9] och Cameron Danesh [10].
+
+1.2 MIM-dioden
+MIM-dioder (dvs. metal-isolator-metal-diod) är likriktande elektroniska anordningar som
+har undersökts sedan 1960-talet [11]. Inom en så kallad asymmetrisk MIM-diod är det lätt
+att injicera laddningar i ena riktningen med extern spänning, men inte i andra riktningen.
+En asymetrisk MIM-diod kan tillverkas genom att elektroderna, dvs. anoden och katoden,
+har olika arbetsfunktioner [12]. I avhandlingen består de experimentella proverna av
+organiska tunnfilmsdioder med en MIM-struktur, dvs. organiska MIM−
+dioder, vilka består av en intrinsisk halvledare inklämt mellan ett hålinjicerande
+anodmaterial och olika katodmaterial [13].
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+6
+
+1.3 Arbetsfunktion, elektronaffinitet och jonisationspotential
+Ett schematiskt banddiagram av en organisk MIM-diod illustreras i figur 2.
+I banddiagrammet visas anodens och katodens arbetsfunktioner, 𝜙𝑎𝑛𝑜𝑑 respektive 𝜙𝑘𝑎𝑡𝑜𝑑 ,
+samt halvledarens jonisationspotential 𝐽𝐸 och elektronaffinitet 𝐸𝑎 .
+
+Figur 2: Ett banddiagram med energinivåerna för materialen i en organisk MIM-diod.
+Arbetsfunktionen 𝜙 är den minimienergi som behövs för att avlägsna en elektron från
+elektrodmaterialet [1]. Arbetsfunktionerna kallas också för materialens effektiva
+fermienergi [8]. Jonisationspotential 𝐽𝐸 är den energin som krävs för att avlägsna en
+elektron från en neutral atom, dvs. jonisera de neutrala molekylerna [15] inom halv−
+ledaren. Elektronaffinitet 𝐸𝑎 är däremot den energin som frigörs vid tilläggning av en
+extra elektron till en neutral molekyl, vilket blir en anjonmolekyl [15]. Om HOMO− och
+LUMO-nivåerna behandlas som singletnivådistributioner i organiska MIM-diodernas
+halvledare, definieras jonisationspotentialen och elektronaffiniteten som HOMO-nivån
+respektive LUMO-nivån. I MIM-dioders banddiagram används vakuumnivån som en
+referensnivå för arbetsfunktionerna, jonisationspotentialen och elektronaffiniteten.
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+7
+
+1.4 Ferminivåutjämning
+Ett schematiskt banddiagram över den organiska MIM-dioden, där en organisk halvledare
+kopplas till ett elektrodmaterial såsom metall med en arbetsfunktion 𝜙𝑀𝑒𝑡𝑎𝑙𝑙 , illustreras i
+figur 3. Om metallens arbetsfunktion är mindre än LUMO-nivån eller närmare till
+vakuumnivån än LUMO-nivån, dvs. 𝜙𝑀𝑒𝑡𝑎𝑙𝑙 < 𝐿𝑈𝑀𝑂, kommer gränsytan mellan
+metallen och halvledaren, dvs. 𝜍𝑀𝑒𝑡𝑎𝑙𝑙/𝐻𝑎𝑙𝑣𝑙𝑒𝑑𝑎𝑟𝑒 , att ha en ferminivånutjämning i LUMOnivån. Detta betyder att elektroner börjar spontant flyta från metallen till halvledarens
+LUMO-nivå vid 𝜍𝑀𝑒𝑡𝑎𝑙𝑙/𝐻𝑎𝑙𝑣𝑙𝑒𝑑𝑎𝑟𝑒 tills ferminivåerna blir utjämnade.
+Om metallens arbetsfunktion är däremot mellan LUMO-nivån och HOMO-nivån,
+dvs. 𝐿𝑈𝑀𝑂 < 𝜙𝑀𝑒𝑡𝑎𝑙𝑙 < 𝐻𝑂𝑀𝑂, kommer 𝜍𝑀𝑒𝑡𝑎𝑙𝑙/𝐻𝑎𝑙𝑣𝑙𝑒𝑑𝑎𝑟𝑒 att ha en s.k. vakuum−
+nivånutjämning (eller Schottky-Mott-gräns [8]), vilket betyder att elektroner kommer inte
+flyta från eller till metallen vid 𝜍𝑀𝑒𝑡𝑎𝑙𝑙/𝐻𝑎𝑙𝑣𝑙𝑒𝑑𝑎𝑟𝑒 . Med andra ord kommer metallen att ha
+en injektionsbarriär vid 𝜍𝑀𝑒𝑡𝑎𝑙𝑙/𝐻𝑎𝑙𝑣𝑙𝑒𝑑𝑎𝑟𝑒 , som stoppar spontan laddningsöverföring vid
+𝜍𝑀𝑒𝑡𝑎𝑙𝑙/𝐻𝑎𝑙𝑣𝑙𝑒𝑑𝑎𝑟𝑒 då systemet går mot jämviktstillstånd [1]. Om metallens arbets−
+funktion är högre än HOMO-nivån, dvs. 𝜙𝑀𝑒𝑡𝑎𝑙𝑙 > 𝐻𝑂𝑀𝑂, kommer hål att flyta från
+metallen till halvledarens HOMO-nivån vid 𝜍𝑀𝑒𝑡𝑎𝑙𝑙/𝐻𝑎𝑙𝑣𝑙𝑒𝑑𝑎𝑟𝑒 .
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+(A)
+
+(B)
+
+8
+
+(C)
+
+Figur 3: Ett banddiagram över den organiska MIM-dioden, där en organisk halvledare
+kopplas till en metallkatod med en arbetsfunktion 𝜙𝑀𝑒𝑡𝑎𝑙𝑙 .
+(A) Vid 𝜙𝑀𝑒𝑡𝑎𝑙𝑙 < 𝐿𝑈𝑀𝑂 överförs elektroner från metallen till halvledarens LUMO-nivå.
+(B) Vid 𝐿𝑈𝑀𝑂 < 𝜙𝑀𝑒𝑡𝑎𝑙𝑙 < 𝐻𝑂𝑀𝑂 har metallen en injektionbarriär som stoppar
+spontan laddningsöverföring.
+(C) Vid 𝐻𝑂𝑀𝑂 < 𝜙𝑀𝑒𝑡𝑎𝑙𝑙 överförs hål från metallen till halvledarens HOMO-nivå.
+
+1.5 Inbyggd spänning
+I figur 4 (A) visas ett banddiagram med energinivåerna för materialen i en organisk
+MIM-diod. I figur 4 (B) är MIM-dioden i termisk jämvikt, dvs. ingen spänning är
+applicerad över MIM-dioden, därmed kommer ingen ström att flyta igenom MIM-dioden.
+Skillnaden i arbetsfunktion mellan anoden och katoden leder till en elektrostatisk
+potentialskillnad över halvledaren som kallas inbyggd spänning 𝑉𝑏𝑖 :
+1
+
+𝑉𝑏𝑖 ≡ 𝑞 [𝜙𝑎𝑛 − 𝜙𝑐𝑎𝑡 ] [1.1]
+då metallelektroderna är i kontakt med MIM-diodens halvledare (se figur 4 (B)). Denna
+skillnad är väsentlig för organiska fotovoltaiska anordningar, eftersom den ger drivkraft
+för laddningstransporten och extraktionsprocessen [8].
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+9
+
+Ekvation [1.1] gäller en tunn elektrod-halvledare-elektrod-(solcells)film [13].
+Observera att ekvation [1.1] är det så kallade enkla fallet av den inbyggda spänningen,
+dvs. den högsta möjliga inbyggda spänningen. Katoden ska därmed ha en låg arbets−
+funktion och anoden en hög arbetsfunktion för att den inbyggda spänningen ska vara så
+stor som möjlig. Då man iakttar ferminivåutjämning i MIM-dioden blir inbyggd
+spänningen i verkligheten lägre än skillnaden mellan arbetsfunktioner i ekvation [1.1].
+Solceller konstrueras med en inbyggd spänning för att elektroner och hål ska
+separera inom det inre fältet [8]. Detta fält har en motsatt polaritet mot den externa
+spänningen, vilket leder till en kraftgenerering. Det inre fältet är jämnt fördelad över den
+intrinsiska halvledaren i en MIM-diod [14].
+Man kan uppskatta den inbyggda spänningen med konventionella metoder, t.ex.
+IV-karakterisering, men det är svårt att experimentellt mäta inbyggda spänningen direkt
+från MIM-dioderna. Därmed behövs en metod som har egenskapen att analysera den
+inbyggda spänningen i MIM-dioderna, såsom MIM-CELIV-metoden.
+
+(A)
+
+(B)
+
+Figur 4: (A) Ett banddiagram med energinivåerna för materialen i en organisk MIM-diod.
+(B) Ett banddiagram av en organisk MIM-diod i termisk jämvikt [16].
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+10
+
+1.6 MIM-CELIV-metoden
+Inom experimentell mätning av organiska halvledare och solceller är det nödvändigt att
+använda lämpliga metoder som kan mäta dessa anordningar och som bestämmer värde för
+de eftersträvade parametrarna [6]. I avhandlingen används så kallad CELIV-metoden eller
+mer specifikt dess utbyggda version, dvs. MIM-CELIV-metoden, eftersom den kan mäta
+den inbyggda spänningen (och laddningsbärarmobilitet) direkt i organiska MIM−
+dioder. MIM-CELIV-metoden behandlas på basis av Staffan Dahlströms et al. artikel [6].
+CELIV (Charge extraction by a linearly increasing voltage) är en metod som
+introducerades av Juška et al. för tjugo år sedan [5]. CELIV-metoden användes att studera
+laddningstransport i mikrokristallin kisel och blev senare applicerad på konjugerade
+organiska system. CELIV-metoden är en enkel metod som behöver en anspråkslös
+laboratorieutrustning för mätningarna.
+MIM-CELIV-metoden är den utbyggda versionen av standard CELIV-metoden
+då den ursprungliga CELIV-metoden inte kan tillämpas för odopade anordningar med
+icke-blockerande kontakter. Orsaken för detta är att de odopade anordningarna består av
+en olikformig laddningsbärardistribution p.g.a. laddningsbärardiffusion vid kontakterna.
+Bland annat organiska tunnfilmanordningar såsom organiska MIM-dioder är odopade
+anordningar. Dessutom kan MIM-CELIV-metoden bestämma samtidigt både inbyggd
+spänning och laddningbärarmobilitet från de experimentella mätningarna av MIM−
+dioderna.
+I avhandlingen används MIM-CELIV-metoden i organiska MIM-dioder där det
+aktiva lagret består av ett lager av intrinsisk (odopad) organisk halvledare inklämt mellan
+en hålinjicerande anodmaterial och olika katodmaterial. Anordningarna utsätts för en
+linjärt ökande spänning i form av en triangelpuls, dvs. 𝑉(𝑡) = −𝐴𝑡 + 𝑉𝑜𝑓𝑓 , där 𝑉𝑜𝑓𝑓 är en
+liten offset-spänning i jämviktstillstånd och 𝐴 är den linjära ökande spänningslutningen
+(se figur 6 (A)). Lutningen 𝐴 ges som det applicerade transienta spänningmaximumet
+𝑉𝑚𝑎𝑥 dividerat med spänningpulslängden 𝑡𝑝𝑢𝑙𝑠𝑒 ,
+dvs. 𝐴 = 𝑉𝑚𝑎𝑥 /𝑡𝑝𝑢𝑙𝑠𝑒 .
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+11
+
+Den linjära ökande spänningpulsen 𝑉(𝑡) appliceras i spärriktning för att extrahera
+laddningsbärare, som är termiskt genererade i jämvikt, och undvika ströminjektion under
+extraktionprocessen (se figur 5 (B)). Offset-spänningen 𝑉𝑜𝑓𝑓 appliceras däremot i
+framriktning för att öka antalet laddningsbärare i mörkret, dvs. mörka laddningsbärare,
+för exktraktionprocessen (se figur 5 (A)). I avhandlingen utförs mätningarna i mörker,
+vilket innebär att extraherade laddningsbärare är endast från diffusion eller injektion från
+elektrodkontakter.
+Moblitieten 𝝁 relateras till extraktionströmmens tidsmaximum 𝑡𝑚𝑎𝑥 genom
+𝜇 = 𝑒(𝑉
+
+𝑑2
+
+𝑘𝑇
+
+2
+𝑏𝑖 −𝑉𝑜𝑓𝑓 ) 𝐴(𝑡𝑚𝑎𝑥 )
+
+för 𝑉𝑜𝑓𝑓 < 𝑉𝑏𝑖 −
+
+4𝑘𝑇
+𝑒
+
+, dvs. 𝑉𝑏𝑖 − 𝑉𝑜𝑓𝑓 >
+
+4𝑘𝑇
+𝑒
+
+[1.2]
+
+≈ 0,1 𝑉 vid rumstemperatur (𝑇 ≈ 20°𝐶).
+
+Tidsmaximumet 𝑡𝑚𝑎𝑥 mäts från MIM-CELIV-metodens strömtransient 𝑗(𝑡)
+(se figur 6 (B)). Halvledarens tjocklek 𝑑 i MIM-dioderna räknas enligt formeln
+𝑑=
+
+𝜀𝑃3𝐻𝑇 ∙𝜀0 ∙𝐴
+𝑗0
+
+[1.3],
+
+där 𝜀𝑃3𝐻𝑇 är P3HT:s permittivitet (𝜀𝑃3𝐻𝑇 ≈ 3), 𝜀0 vakuumpermittivitet och förskjutnings−
+strömmen 𝑗0 givet av den geometriska kapasitansresponsen [6]. Ekvation [1.2] förutspår
+ett linjärt beroende mellan (𝑡𝑚𝑎𝑥 )−2 och 𝑉𝑜𝑓𝑓 :
+𝑒𝐴𝜇
+
+(𝑡𝑚𝑎𝑥 )−2 = 𝑘𝑇𝑑2 (𝑉𝑏𝑖 − 𝑉𝑜𝑓𝑓 ) [1.4]
+Vid plottning av (𝑡𝑚𝑎𝑥 )−2 som en funktion av 𝑉𝑜𝑓𝑓 (då andra parametrar lämnas fixerade)
+kan man få en approximation av den inbyggda spänningen 𝑉𝑏𝑖 direkt från den extra−
+polerade lutningslinjen, dvs. slope, som genomskär 𝑉𝑜𝑓𝑓 -axeln (se figur 6 (C)). Därmed
+kan ekvationen [1.2] omskrivas som
+𝜇=
+
+𝑘𝑇
+𝑒
+
+∙ 𝑠𝑙𝑜𝑝𝑒 ∙
+
+𝑑2
+𝐴
+
+[1.5].
+
+I avhandlingen består de organiska MIM-dioderna av p-typs polymeren P3HT, vilket
+betyder att laddningstransporten i MIM-dioderna blir håldominerad. Därmed blir
+mobiliteten 𝜇 håldominerad, dvs. hålmobiliteten 𝜇𝑝 .
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+12
+
+Observera att 𝑹𝑪-tidskonstanten (dvs. externa kretsresistansen 𝑅 multiplicerad
+med den geometriska anordningskapacitansen 𝐶) är en viktig faktor inom MIM-CELIV−
+metoden, eftersom laddningsbärarna befinner sig nära metallkontakterna. 𝑅𝐶-tids−
+konstanten kan begränsa lutningen på den transienta strömresponsen i mätningen.
+Mobiliteten kan därmed begränsas av RC-tidskonstanten. Staffan Dahlström et al. har
+konstaterat att konstantens påverkan på mobilitetensanalysen kan korrigeras genom att
+ersätta 𝑡𝑚𝑎𝑥 med (𝑡𝑚𝑎𝑥 − 3𝑅𝐶) i ekvation [1.2] (då 𝑡𝑚𝑎𝑥 > 5𝑅𝐶) [6].
+
+(A)
+
+(B)
+
+Figur 5: Ett banddiagram av en MIM-diod. I (A) visas hur en låg offset spänning 𝑉𝑜𝑓𝑓 i
+framriktning hjälper laddningsbärare att diffundera in i det aktiva lagret.
+I (B) visas hur den linjärt ökande spänningen i spärriktning extraherar laddningsbärarna
+från det aktiva lagret. Figurerna illustreras på basis av Staffan Dahlström et al. [6].
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+(A)
+
+(B)
+
+(C)
+𝑠𝑙𝑜𝑝𝑒
+
+Figur 6: (A) En schematisk graf av linjärt ökande spänning i CELIV. [6]
+(B) En schematisk graf av strömtransient som funktion av tid. [6]
+(C) (𝑡𝑚𝑎𝑥 )−2 som funktion av 𝑉off.
+
+13
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+14
+
+2. EXPERIMENT
+2.1 Provtillverkning
+MIM-diodproverna tillverkades av glassubstrat med indiumtennoxid, dvs. ITO-glassubstrat
+(2,5 cm x 2,5 cm, 10 st), där hälften av ITO-ytan etsades bort med saltsyra (𝐻𝐶𝑙). Andra
+halvan av substratet skyddades med genomskinlig tejp, som används specifikt för HCl−
+etsning. Efter etsningen av ITO, rengjordes proverna med destillerat och avjoniserat vatten.
+Sedan rengjordes proverna med en tvättlösning som innehöll 75 𝑚𝑙 avjoniserat vatten,
+15 𝑚𝑙 väteperoxid (𝐻2 𝑂2) och 15 𝑚𝑙 ammoniumlösning (ammoniak 25%) i ett ultraljuds−
+bad vid 60°𝐶 i 30 minuter. Slutligen torkades proverna med kvävegas.
+För rotationsbestrykning av poly(3,4-etylendioxitiofen) med poly(styrensulfonat),
+dvs. PEDOT:PSS, av proverna användes hastigheten: 5000
+2500
+
+𝑣𝑎𝑟𝑣
+𝑠2
+
+𝑣𝑎𝑟𝑣
+𝑠
+
+, accelerationen:
+
+och tiden: 45 s. Efteråt torkades PEDOT:PSS på glassidan av proverna med en
+
+bomullspinne (fuktad med avjoniserat vatten), eftersom PEDOT:PSS är ledande och kan
+kortsluta provet ifall toppelektroderna kommer i kontakt med PEDOT:PSS filmen.
+Därefter värmebehandlades proverna på värmeplatta vid 120°𝐶 i 10 minuter i ett
+laminärflödesskåp. I ett handskskåp med kväveatmösfär rotationsbeströks proverna med
+120 𝜇𝑙 P3HT lösning från klorbensen (30 mg/ml), som kommer att vara det aktiva lagret i
+proverna (se figur 7 (A)). Proverna rotationsbeströks i 1 minuter och 30 sekunder med
+hastigheten 1000
+
+𝑣𝑎𝑟𝑣
+𝑠
+
+. Sedan värmebehandlades proverna på värmeplatta vid 120°𝐶 i 10
+
+minuter.
+Slutligen förångades över 65,0 nm tunt aluminium (Al) lager på alla proverna
+genom en mask. Aluminium lager var katodmaterialet, dvs. Al-katod, för proverna I
+(se figur 7 (B)). Dessutom förångades 0,8 nm tunt litiumfluorid (LiF) lager och 10,0 nm
+kalcium (Ca) lager för proverna 7, 9 och 12 (dvs. proverna II) respektive proverna 2 och 3
+(dvs. proverna III) så att lagret överlappade Al-katoden (se figur 7 (C) och (D)). Vid
+ändan av MIM-diodernas katodmaterial har man en punkt som kallas till pixel
+(se figur 7 (A)).
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+15
+
+(A)
+
+(B)
+
+(C)
+
+(D)
+
+Figur 7: (A) En organisk MIM-diod från ovan och sidan.
+(B) Proverna I: ITO/PEDOT:PSS/P3HT/Al
+(C) Proverna II: ITO/PEDOT:PSS/P3HT/LiF/Al
+(D) Proverna III: ITO/PEDOT:PSS/P3HT/Ca/Al
+
+2.2 Den experimentella laboratorieutrustningen
+För MIM-CELIV-mätningar användes ett oscilloskop (Tektronix TDS 680B) tillsammans
+med en funktionsgenerator (DS345) och pulsgenerator (DG 535) (se figur 8). Funktions−
+generatorn genererar den linjära ökade spänningen V(t) som en triangulär puls och
+pulsgeneratorn ger information till funktionsgeneratorn när den ska ge spänningspulsen,
+dvs. hur långt tidsintervall det går mellan pulserna. Oscilloskåpet mäter transient−
+strömmen som funktion av tid och sparar mätdata i form av en Excelfil.
+De organiska MIM-diodproverna sattes i en kryostat och en vakuumpump
+användes, som är kopplad till kryostaten, för att proverna inte ska degradera under
+mätningarna. För att kontakta provens anod och katodens pixlar användes silvermålfärg.
+Programmet ”All in one_1.vi” i Labview användes, för att kontrollera funktionerna i
+oskilloskåpet, funktionsgeneratorn och pulsgeneratorn (se figur 9).
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+MIM-diodprov
+
+Figur 8: En förenklad bild av den experimentella laboratorieutrustningen.
+
+Figur 9: En bild av ”All in one_1.vi” programmet i Labview.
+
+16
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+(A)
+
+17
+
+(B)
+
+Figur 10: Schematiska bilder av proverna II:s kopplingsschema. I (A) injicerar 𝑉𝑜𝑓𝑓 −
+spänning laddningsbärare såsom hål i framriktning från anoden intill aktiva lagret. I (B)
+extraherar V(t)-spänning hål i spärriktning från aktiva lagret till anoden.
+
+2.3 Dataanalys
+En grafisk presentation av mätresultat från min projektlaborations MIM-diodprov visas i
+figur 11. Figuren föreställer ett idealt exempel på ett mätresultat från en MIM-diod genom
+MIM-CELIV-metoden som är acceptabel för analysen. Observera att i projekt−
+laborationens MIM-diodprov består av poly(3-hexyltiofen) med fullerenderivaten [6,6]−
+fenyl C61 butansyra metylester, dvs. P3HT:PCBM-material, i stället för P3HT−
+material. Projektlaborationens mätresultat kommer därmed att skilja sig från av−
+handlingens mätresultat, eftersom P3HT:PCBM-dioderna har en lägre inbyggd spänning
+än P3HT-dioderna.
+Man mäter först en strömtransient som funktionen av tiden vid 𝑉𝑜𝑓𝑓 = 0,0 𝑉. För
+en organisk odopad MIM-diod bör strömtransient ha en rak kvadratisk form vid
+𝑉𝑜𝑓𝑓 = 0,0 𝑉. Om en ”kula”, dvs. en låg topp, uppstår vid början av strömtransient−
+kurvan har MIM-dioden ytterligare laddningsbärarna i initialtillståndet. Med andra ord har
+MIM-dioden blivit svagt dopad eller störd efter tillverkningsprocessen.
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+18
+
+Om däremot en ökning i strömmen uppstår vid sluten av transientströmkurvan har MIM−
+dioden en läckström. I båda fallen anses MIM-diodproven vara dålig och bör därmed inte
+analyseras.
+Då strömtransienten ser bra ut vid 𝑉𝑜𝑓𝑓 = 0,0 𝑉 mäts andra strömtransienter vid
+0 < 𝑉𝑜𝑓𝑓 < 𝑉𝑏𝑖 i intervall mellan 𝑉𝑜𝑓𝑓 = + 0,1 𝑉 (se figur 11 (A)). Alltför stora 𝑉𝑜𝑓𝑓 −
+värden bör inte mätas eftersom den inbyggda spänningen och mobiliteten i ekvation [1.2]
+är analyserbar för 𝑉𝑜𝑓𝑓 < 𝑉𝑏𝑖 −
+
+4𝑘𝑇
+𝑒
+
+enligt MIM-CELIV-metoden. Dessutom finns det risk
+
+för att MIM-dioden kan kortslutas vid höga 𝑉𝑜𝑓𝑓 , vilket gör den oanalyserbar.
+Vid tillräckligt höga 𝑉𝑜𝑓𝑓 -värden bör man se en tydlig förändring i ström−
+transienternas tidsmaximum 𝑡𝑚𝑎𝑥 inom ett bestämt intervallområde, dvs. regim, av
+0 < 𝑉𝑜𝑓𝑓 < 𝑉𝑏𝑖 . Utifrån denna förändring i tidsmaximum ska man mäta ström−
+transienterna noggrannare, från initialpunkten av förändingen till ett par tiotals 𝑉𝑜𝑓𝑓 −
+värden i intervall mellan 𝑉𝑜𝑓𝑓 = + 0,02 𝑉 (se figur 11 (B)).
+Från varje strömtransient mäts 𝑡𝑚𝑎𝑥 manuellt i ett grafiskt program, t.ex. Origin,
+och plottas som (𝑡𝑚𝑎𝑥 )−2 i funktionen av 𝑉𝑜𝑓𝑓 . Tidsmaximumpunkterna i (𝑡𝑚𝑎𝑥 )−2 −
+grafen bör linjärt avta längs en trendlinje inom tillräckliga höga 𝑉𝑜𝑓𝑓 -värden tills
+gränsvärdet för 𝑉𝑜𝑓𝑓 < 𝑉𝑏𝑖 −
+
+4𝑘𝑇
+𝑒
+
+(se figur 11 (C)).
+
+Enligt MIM-CELIV-metoden bestäms den inbyggda spänningen 𝑉𝑏𝑖 direkt från
+den extrapolerade lutningslinjen slope som genomskär 𝑉𝑜𝑓𝑓 . Till exempel i figur 11 (C)
+blir den inbyggda spänningen i projektlaborationens MIM-diodprov 𝑉𝑏𝑖 ≈ 0,74 𝑉 enligt
+lutningslinjen slope. Från slope-värden kan man också bestämma den konstanta
+mobiliteten i MIM-dioden med hjälp av ekvation [1.5].
+Man ska mäta åtminstone en pixel för analysen, men det är önskvärt att mäta även
+andra pixlar för mera statistik och ett noggrannare resultat eller om någon uppmätt pixel
+orsakar problem under mätningen.
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+(A)
+
+19
+
+(B)
+
+(C)
+
+𝑠𝑙𝑜𝑝𝑒
+
+Figur 11: En grafisk presentation av strömtransienter i funktion av tiden vid olika
+𝑉off −värden, dvs. (A) skillnaden i 𝑉𝑜𝑓𝑓 = + 0,1 𝑉 och (B) 𝑉𝑜𝑓𝑓 = + 0,02 𝑉. I (C) visas
+(𝑡𝑚𝑎𝑥 )−2 som funktion av 𝑉off . Resultatet är från projektlaboratoriets experiment från
+pixel 2 i prov 1, som har en struktur av ITO/PEDOT:PSS/P3HT:PCBM/LiF/Al.
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+20
+
+3. RESULTAT OCH DISKUSSION
+3.1 En jämförelse mellan teorin och experimenten
+Inbyggda spänningar och andra nödvändiga pararmetrar från proverna presenteras i
+tabeller 01, 02 och 03 (se sidor 22 och 23). Från de analyserade experimentresultaten för
+proverna I blev medelvärdet och standardavvikelsen av den inbyggda spänningen
+𝑉𝑏𝑖 ≈ 1,34 𝑉 ± 0,14 𝑉. Likaså blev medelvärdet och standardavvikelsen av den inbyggda
+spänningen 𝑉𝑏𝑖 ≈ 1,47 𝑉 ± 0,18 𝑉 i proverna II och 𝑉𝑏𝑖 ≈ 1,74 𝑉 ± 0,28 𝑉 i
+proverna III. I figur 12 visas grafiska presentationer av resultat från prov 1 i tabell 01,
+prov7 i tabell 02 och prov2 i tabell 03.
+Man kan jämföra teorin och avhandlingens experimentresultat på basis av katod−
+materialens arbetsfunktion och ekvation [1.1]. Litteraturvärdet för katodmaterialens
+arbetsfunktioner såsom aluminiumets och kalciumets arbetsfunktioner är 𝜙𝐴𝑙 = 4,20 𝑒𝑉
+respektive 𝜙𝐶𝑎 = 2,87 𝑒𝑉 [17]. Då kalciumkatoden överlappar med aluminiumkatoden
+via förångningen bör kalciumet sänka aluminiumets arbetsfunktion enligt teorin, dvs.
+𝜙𝐶𝑎/𝐴𝑙 < 𝜙𝐴𝑙 .
+Observera att litiumfluoridens arbetsfunktion har hittills ingen definitiv
+litteraturvärde. Detta beror på att litiumfloridens LUMO- och HOMO-nivåerna är
+𝐿𝑈𝑀𝑂𝐿𝑖𝐹 = −3 𝑒𝑉 respektive 𝐻𝑂𝑀𝑂𝐿𝑖𝐹 = + 11 𝑒𝑉. Med andra ord har litiumfloriden ett
+stort bandgap, vilket har försvårat undersökning av litiumfloridens exakta effektiva
+fermienergi. Däremot har flera studier bevisat att ett tunn lager av litiumflorid (mindre än
+1,0 𝑛𝑚) betydligt minskar arbetsfunktionen (eller barriärhöjd) av katoden, särskilt
+aluminiumkatoden [18]. Däremot har ren litium en arbetsfunktionsvärde av
+𝜙𝐿𝑖 = 2,93 𝑒𝑉, som är högre än kalcium, dvs. 𝜙𝐶𝑎 < 𝜙𝐿𝑖 [17]. I avhandling ges
+litteratur− värde av litiumfloridens arbetsfuntion därmed som 𝜙𝐶𝑎/𝐴𝑙 < 𝜙𝐿𝑖𝐹/𝐴𝑙 < 𝜙𝐴𝑙
+(se figur 13 (A)).
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+21
+
+Genom att insätta litteraturvärdena för katodmaterialiens arbetsfunktioner i
+ekvation [1.1] fås de teoretiska värdena (dvs. de högsta möjliga värdena) av inbyggda
+spänningar för olika katodmaterial. Provernas anod består av ITO- och PEDOT:PSS−
+material, som har en arbetsfunktionvärde 𝜙𝐼𝑇𝑂/𝑃𝐸𝐷𝑂𝑇:𝑃𝑆𝑆 ≈ 5,1 𝑒𝑉 (då 𝜙𝐼𝑇𝑂 = 4,7 − 5,0 𝑒𝑉
+och 𝜙𝑃𝐸𝐷𝑂𝑇:𝑃𝑆𝑆 = 5,1 − 5,4 eV [1]). Inbyggd spänning med t.ex. aluminiumets arbets−
+funktion 𝜙𝐴𝑙 blir alltså:
+𝑉𝑏𝑖 ≡
+→ 𝑉𝑏𝑖,
+
+𝐴𝑙
+
+≡
+
+1
+[𝜙 − 𝜙𝑐𝑎𝑡 ]
+𝑞 𝑎𝑛
+
+1
+[𝜙
+− 𝜙𝐴𝑙 ]
+𝑞 𝐼𝑇𝑂/𝑃𝐸𝐷𝑂𝑇:𝑃𝑆𝑆
+
+↔ 𝑉𝑏𝑖,
+
+𝐴𝑙
+
+= 0,90 𝑉 .
+
+Likaså blir den inbyggda spänningen med kalciumets arbetsfunktion 𝑉𝑏𝑖,
+
+𝐶𝑎
+
+= 2,23 𝑉,
+
+medan den inbyggda spänningen med litiumfloridens arbetsfunktion är mellan 𝑉𝑏𝑖,
+𝑉𝑏𝑖,
+
+𝐴𝑙
+
+och
+
+𝐶𝑎 .
+
+I figur 13 visas ett grafiskt värdediagram av de teoretiska värdena och de
+experimentella värdena på basis av arbetsfunktionsvärden. I figuren 12 är HOMO-nivån i
+P3HT-polymeren ca 5,0 𝑒𝑉. Då P3HT-polymerens bandgap är 𝐸𝑔 ≈ 1,9 𝑒𝑉 [8] bör
+LUMO-nivån i P3HT-polymeren existera vid 3,1 𝑒𝑉.
+En tydlig likhet märks inom de teoretiska värdena och de experimentella värdena av
+inbyggda spänningar. Både teorin och experimenten visar att inbyggd spänning ökar då
+man använder en katodmaterial med en lägre arbetsfunktion. Till exempel, 𝜙𝐶𝑎 < 𝜙𝐴𝑙 leder
+till 𝑉𝑏𝑖,
+
+𝐶𝑎
+
+> 𝑉𝑏𝑖,
+
+𝐴𝑙 .
+
+Däremot avviker de teoretiska värdena av inbyggda spänningar från
+
+de experimentella värdena med ∆𝑉𝑏𝑖,
+
+𝐴𝑙
+
+≈ ± 0,44 V och ∆𝑉𝑏𝑖,
+
+𝐶𝑎
+
+≈ ± 0,49 V.
+
+I kapitlet 1.5 observerades att inbyggda späninngar inom experiment ska i verkligheten bli
+lägre än de teoretiska värdena från ekvation [1.1] p.g.a. ferminivåutjämningnen. Trots
+denna faktum har experimenten haft en antal problem.
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+22
+
+Tabell 01 : De analyserade resultaten i proverna I (ITO/PEDOT:PSS/P3HT/Al)
+Prov
+
+Pixel
+
+𝜇
+[10−5
+
+𝑠𝑙𝑜𝑝𝑒
+𝑐𝑚2
+𝑉𝑠
+
+]
+
+[1011
+
+1
+]
+𝑉𝑠 2
+
+𝑉𝑏𝑖
+
+𝑑
+
+𝐴
+
+[V]
+
+[𝑛𝑚]
+
+[105 𝑠 ]
+
+𝑉
+
+𝑗0
+
+𝐴𝑟𝑒𝑎𝑙𝑀𝑒𝑡𝑎𝑙𝑙
+
+[𝑚 2 ]
+
+𝐴
+
+[𝑚𝑚2 ]
+
+2
+
+0,92
+
+1,20
+
+1,40
+
+214
+
+1,50
+
+18,58
+
+3,70
+
+4
+
+1,29
+
+1,64
+
+1,27
+
+217
+
+1,50
+
+18,36
+
+3,70
+
+5
+
+0,84
+
+0,76
+
+1,42
+
+258
+
+1,50
+
+15,46
+
+3,70
+
+1
+
+4,02
+
+5,52
+
+1,08
+
+209
+
+1,50
+
+19,07
+
+5,19
+
+2
+
+1,91
+
+2,54
+
+1,30
+
+213
+
+1,50
+
+18,75
+
+5,19
+
+4
+
+2,09
+
+2,27
+
+1,19
+
+235
+
+1,50
+
+16,94
+
+5,19
+
+5
+
+2,31
+
+2,83
+
+1,15
+
+221
+
+1,50
+
+18,02
+
+5,19
+
+3
+
+9,38
+
+13,78
+
+1,47
+
+202
+
+1,50
+
+19,72
+
+3,59
+
+4
+
+9,40
+
+13,31
+
+1,47
+
+206
+
+1,50
+
+19,35
+
+3,59
+
+5
+
+3,53
+
+4,58
+
+1,52
+
+215
+
+1,50
+
+18,53
+
+3,59
+
+1
+
+7,88
+
+8,74
+
+1,42
+
+233
+
+1,50
+
+17,13
+
+3,70
+
+Medelvärde
+
+3,96
+
+1,34
+
+Standardavikelse
+
+±3,18
+
+±0,14
+
+1
+
+5
+
+8
+
+10
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+23
+
+Tabell 02 : De analyserade resultaten i proverna II (ITO/PEDOT:PSS/P3HT/LiF/Al)
+Prov
+
+Pixel
+
+𝜇
+[10−5
+
+𝑠𝑙𝑜𝑝𝑒
+𝑐𝑚2
+𝑉𝑠
+
+]
+
+[1011
+
+1
+]
+𝑉𝑠 2
+
+𝑉𝑏𝑖
+
+𝑑
+
+𝐴
+
+[V]
+
+[𝑛𝑚]
+
+[105 𝑠 ]
+
+𝑉
+
+𝑗0
+
+𝐴𝑟𝑒𝑎𝑙𝑀𝑒𝑡𝑎𝑙𝑙
+
+[𝑚2 ]
+
+𝐴
+
+[𝑚𝑚2 ]
+
+2
+
+2,35
+
+3,74
+
+1,43
+
+194
+
+1,50
+
+20,54
+
+4,02
+
+4
+
+6,87
+
+8,58
+
+1,47
+
+219
+
+1,50
+
+18,18
+
+4,02
+
+5
+
+2,96
+
+4,50
+
+1,43
+
+199
+
+1,50
+
+20,06
+
+4,02
+
+3
+
+0,43
+
+0,25
+
+1,72
+
+265
+
+1,00
+
+10,01
+
+4,85
+
+5
+
+0,62
+
+0,40
+
+1,62
+
+247
+
+1,00
+
+10,74
+
+4,85
+
+4
+
+2,43
+
+1,00
+
+1,14
+
+312
+
+1,00
+
+8,51
+
+4,79
+
+Medelvärde
+
+2,61
+
+1,47
+
+Standardavvikelse
+
+±2,12
+
+±0,18
+
+7
+
+9
+12
+
+Tabell 03 : De analyserade resultaten i proverna III (ITO/PEDOT:PSS/P3HT/Ca/Al)
+Prov
+
+Pixel
+
+𝜇
+
+𝑠𝑙𝑜𝑝𝑒
+𝑐𝑚2
+
+𝑉𝑏𝑖
+[V]
+
+𝑑
+[𝑛𝑚]
+
+𝐴
+𝑉
+[105 𝑠 ]
+
+𝑗0
+
+𝐴𝑟𝑒𝑎𝑙𝑀𝑒𝑡𝑎𝑙𝑙
+
+[𝑚2 ]
+
+[𝑚𝑚2 ]
+
+1,63
+
+135
+
+1,50
+
+29,41
+
+5,38
+
+𝐴
+
+2
+
+0,91
+
+1
+]
+𝑉𝑠 2
+2,99
+
+3
+
+0,97
+
+3,38
+
+1,52
+
+131
+
+1,50
+
+30,34
+
+5,38
+
+4
+
+0,86
+
+2,55
+
+1,60
+
+142
+
+1,50
+
+27,98
+
+5,38
+
+4
+
+0,54
+
+1,06
+
+2,22
+
+174
+
+1,50
+
+22,85
+
+4,10
+
+Medelvärde
+
+0,82
+
+1,74
+
+Standardavvikelse
+
+±0,17
+
+±0,28
+
+[10−5
+
+2
+
+3
+
+𝑉𝑠
+
+]
+
+[1011
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+24
+
+(A)
+
+(B)
+
+(C)
+
+Figur 12: Grafiska presentationer av strömtransienter i funktion av tid och (𝑡𝑚𝑎𝑥 )−2 som
+funktion av 𝑉off från (A) pixel 5 i prov 1, (B) pixel 2 i prov 7 och (C) pixel 4 i prov 2.
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+(A)
+
+25
+
+(B)
+
+Figur 13: Ett grafiskt värdediagram av MIM-diod med olika katodmaterial. I (A) visas de
+teoretiska värdena av katodmaterials arbetsfunktioner medan det i (B) är de
+experimentella värden.
+
+3.2 Diskussion
+Ett av de upprepande problem inom experimenten har varit strömtransientkurvorna.
+Strömtransientkurvorna i experimentresultat är bredare och lägre jämfört med den ideala
+strömtransientkurvan (se figur 11 och figur 14). Det blir följaktligen en stor utmaning att
+direkt hitta den korrekta regimen i strömtransientkurvorna. Bland annat i analysen av
+pixlar i prov 1 hittades en lutningslinje vid låga 𝑉𝑜𝑓𝑓 ≤ −0,60 𝑉, som skulle ge en lägre
+inbyggd spänning än den inbyggda spänningen som analyserades noggrannare vid
+𝑉𝑜𝑓𝑓 ≥ −0,80 𝑉 (se figur 15). Denna lutningslinjen kan indikera att man har förmodligen
+mätt fel regim i prov 1. Under experimenten märktes inte det här, p.g.a. att förändringen i
+strömtransientkurvonas maximum inte var lika märkbar vid 𝑉𝑜𝑓𝑓 ≤ −0,70 𝑉 jämfört med
+𝑉𝑜𝑓𝑓 ≥ −0,80 𝑉.
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+(A)
+
+26
+
+(B)
+
+Figur 14: Låga och breda transientströmkurvor, där (A) är från pixel 4 i prov 1 och (B) är
+från pixel 1 i prov 10.
+
+(A)
+
+(B)
+
+(C)
+
+Figur 15: (𝑡𝑚𝑎𝑥 )−2 i funktion av 𝑉off från (A) pixel 2, (B) pixel 4 och (C) pixel 5 i prov 1.
+En alternativ lutningslinje hittades vid låga 𝑉𝑜𝑓𝑓 ≤ 0,60 𝑉.
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+27
+
+Någon gång kan strömtransientkurvor ha för många störningar under mätningen så
+att den kan orsaka negativa utmaningar i analysen. I figur 16 visas hur störningar i ström−
+transientkurvan (vid pixel 4 i prov 2) ökar osäkerheten för 𝑡𝑚𝑎𝑥 -värdet. Dessutom har
+några prover såsom prov 9 och prov 12 en läckström, som har en effekt på ström−
+transientkurvorna (se figur 17). Fastän det sägs i kapitel 2.3 att MIM-diodprover med en
+läck− ström bör inte analyseras, bestämdes ändå att tillsätta dem i resultat (se tabell 02).
+Orsaken är att man ändå kan uppskatta inbyggd spänning från resultat och utnyttja dess
+värde i ytterligare forskning, även om värde på den inbyggda spänningen inte blir exakt.
+Observera att låga och breda strömtransientkurvor (samt andra problem i
+resultatet) kan också förekomma i felfria MIM-diodprover. Det bör påpekas att 𝑉𝑏𝑖 och
+andra parametrar inte blir lika exakta som i det ideala fallet. Det behöver också observeras
+att man inte kan visa på orsaken till problemet i MIM-diodproverna utifrån problem i
+experimentresultaten. Brister i MIM-diodproverna, som kan ha effekt på inbyggd
+spänning och dess exakta värden, kan endast undersökas i en separat uppföljning av
+forskningen.
+
+(A)
+
+(B)
+
+Figur 16: Ett analysfall av 𝑡𝑚𝑎𝑥 vid 𝑉𝑜𝑓𝑓 = −0,96 𝑉 inom pixel 4 i prov 2. I (A) är
+strömtransientkurvan i sin ursprungliga proportion medan i (B) har strömtransientkurvans
+proportion bearbetats för att kunna analysera 𝑡𝑚𝑎𝑥 -värdet enklare. I (B) visas också hur
+störningar i strömtransientkurvan ökar osäkerheten av 𝑡𝑚𝑎𝑥 -värdet.
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+(A)
+
+28
+
+(B)
+
+Figur 17: En grafisk presentation av läckströmmar vid (A) pixel 5 i prov 9 och (B) pixel 4
+i prov 12.
+Sammanfattningsvis bevisar experimenten med hjälp av MIM-CELIV-metoden att man
+har en hög inbyggd spänning i MIM-dioder då man använder en katodelektrod, som har
+en låg arbetsfunktion. Bland annat proverna III har en högre inbyggd spänning än
+proverna I och II, eftersom kalcium har en lägre arbetsfunktion än aluminium och
+litiumflorid. Detta faktum är betydelsefullt för optimering av katodmaterial för organiska
+solceller. Däremot ger experimenten inte det exakta värdet av inbyggd spänning för
+selektivt katodmaterial, eftersom resultatet inte föreställer det idela fallet av MIM−
+CELIV-metoden. Brister i MIM-diodprover kan inte bevisas enbart från resultat, utan det
+krävs en separat uppföljning av forskningen.
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+29
+
+LITTERATURHÄNVISNINGAR
+[1] S. Braun, W. R. Salaneck, M. Fahlman, Energy Level Alignment at Organic/Metal and
+Organic/Organic Interfaces, Advanced Materials, 200802893 (2009)
+[2] ChemViews, Organic Electronics: Recent Developments, Wiley-VCH Verlag GmbH
+& Co, Weinheim (2015),
+https://www.chemistryviews.org/details/ezine/7914801/Organic_Electronics_Recent_Dev
+elopments.html, Hämtat 2020-10-07
+[3] The National Renewable Energy Laboratory, Best Research-Cell Efficiency Chart,
+U.S. Department of Energy, https://www.nrel.gov/pv/cell-efficiency.html,
+Hämtat 2021-02-10
+[4] Achim Schöll, Frank Schreiber, Thin films of organic molecules: interfaces and
+epitaxial growth, Molecular Beam Epitaxy, B978-0-12-387839-7.00026-9 (2013)
+[5] Juška et al., New Method of Study of Charge Transport, Phys. Rev.Lett. 84, 4946
+(2000)
+[6] S. Dahlström, O. J. Sandberg, M. Nyman, R. Österbacka, Determination of
+Charge-Carrier Mobility and Built-In Potential in Thin-Film Organic M-I-M Diodes from
+Extraction-Current Transients, Physical Review Applied 10, 054019 (2018)
+[7] M. Stephen, K. Genevičius, G. Juška, K. Arlauskas, R.C. Hiorns, Charge transport
+and its characterization using photo-CELIV in bulk heterojunction solar cells, Polymer
+International, 5274 (2016)
+[8] L. Dou, J. You, Z. Hong, Z. Xu, G. Li, R. A. Street, Y. Yang, 25th Anniversary
+Article: A Decade of Organic/Polymeric Photovoltaic Research, Advanced Materials,
+201302563 (2013)
+[9] A. Banerji, Ann-K. Schönbein, L. Halbrügge, Teaching Organic Electronics: The
+Synthesis of the Conjugated Polymer MEH-PPV in a Hands-on Experiment for
+Undergraduate Students, World Journal of Chemical Education, 6-1-9 (2018)
+[10] C. D. Danesh, Surfactant Formulations for Water-based Processing of Polythiophene
+Derivatives, California Polytechnic State University, San Luis Obispo, July 2013
+
+Inbyggd spänning i MIM-dioder med olika katodmaterial
+
+30
+
+[11] B. J. Eliasson, Metal-Insulator-Metal Diodes For Solar Energy Conversion, Ph.D.
+dissertation, University Colorado, Boulder, 2001
+[12] S. Grover, G. Moddel, Applicability of Metal/Insulator/Metal (MIM) Diodes to Solar
+Rectennas, IEEE Journal of Photovoltaics vol. 1, 2160489 (2011)
+[13] Oskar J. Sanberg, Charge collection in thin film devices based on low-mobility
+semiconductors: Theory, simulation, and applications to organic solar cells, Åbo
+Akademi University (2018)
+[14] H. Hoppe, N. S. Sariciftci, Organic solar cells: An overview, Journal of Materials
+Research, 0252 (2004)
+[15] W. Tress, Organic Solar Cells: Theory, Experiment, and Device Simulation, Springer
+International Publishing, Switzerland (2014),
+ISBN 978-3-319-10096-8
+[16] C. H. Kim, O. Yaghmazadeh, D. Tondelier, Y. B. Jeong, Y. Bonnassieux, G.
+Horowitz, Capacitive behavior of pentacene-based diodes: Quasistatic dielectric constant
+and dielectric strength, Journal of Applied Physics, 3574661 (2011)
+[17] D. R. Lide, CRC Handbook of Chemistry and Physics: A Ready-Reference Book of
+Chemical and Physical Data, CRC Press, Taylor & Francis Group, LLC, United States of
+America (2008), s. 119,
+ISBN 978-1-4200-6679-1
+[18] B. F. Bory, H. L. Gomes, R. A. J. Janssen, D. M. de Leeuw, S. C. J. Meskers,
+Electrical conduction of LiF interlays in organic diodes, Journal of Applied Physics 117,
+4917461 (2015)
+
+

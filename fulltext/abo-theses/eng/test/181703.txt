@@ -1,0 +1,2623 @@
+Novel design of a flow-through
+potentiometric sensing device
+
+Åbo Akademi University
+Faculty of Science and Engineering
+
+Luca Guagneli
+
+Master’s programme in Excellence in Analytical Chemistry
+Degree project in Analytical chemistry, 30 credits
+Supervisor:
+
+Johan Bobacka (Åbo Akademi)
+
+Cosupervisors: Zekra Mousavi (Åbo Akademi)
+Ivo Leito (University of Tartu)
+August, 2021
+
+Luca Guagneli
+
+Preface
+This Master Thesis is part of the Erasmus Mundus Joint Master’s Degree Programme EACH Excellence in Analytical Chemistry, an EU-funded Programme in collaboration with Åbo Akademi University (FIN), University of Tartu (EST), University Claude Bernard Lyon 1 (FRA),
+and Uppsala University (SWE). The work was performed at the Laboratory of Molecular Science and Engineering at Åbo Akademi University during spring 2021.
+I would like to express my gratitude to my supervisor and project conceiver Prof. Johan Bobacka, and my co-supervisor Docent Zekra Mousavi, who followed and supported me during
+the entire project. Your direct guidance and thorough feedbacks have shaped my scientific
+mind. You pushed me to give the best during these months.
+I would like to express my gratitude to my co-supervisor Prof. Ivo Leito, my supervisor Johan
+Bobacka, and all the people involved in the EACH Programme. You helped me to reach my life
+goals. I will treasure every single teaching that I have received during these two years.
+I would like to express my gratitude to my classmates and friends, who have supported me
+during these years and helped me through every issue.
+2020 and 2021 have been years of sacrifices. We, humans, are naturally inclined to give closeness to those who need support. And this was my biggest sacrifice: being far from those who
+needed support during these hard times. The diligence and the sacrifices that accompanied my
+work are dedicated to my family, who deserves my biggest gratitude, and to those that I will
+not meet when I will be back home.
+
+I
+
+Luca Guagneli
+
+Table of Contents
+Preface ......................................................................................................................................... I
+List of symbols and abbreviations ............................................................................................ IV
+Abstract ...................................................................................................................................VII
+1
+
+Introduction ......................................................................................................................... 1
+
+2
+
+Theoretical background....................................................................................................... 3
+2.1
+
+Chemical sensing ......................................................................................................... 3
+
+2.2
+
+Potentiometry............................................................................................................... 4
+
+2.2.1
+2.3
+
+Conventional Ion-Selective Electrodes .............................................................. 10
+
+2.3.2
+
+Polyvinyl Chloride (PVC)-based Ion-Selective Membranes ............................. 11
+
+2.3.3
+
+Potassium ion-selective electrode ...................................................................... 14
+
+2.3.4
+
+Solid Contact Ion Selective Electrodes .............................................................. 14
+
+Reference electrodes .................................................................................................. 16
+
+2.4.1
+
+Silver/Silver Chloride reference electrode ......................................................... 16
+
+2.4.2
+
+Solid-State Reference Electrodes ....................................................................... 18
+
+2.5
+
+4
+
+Ion Selective Electrodes .............................................................................................. 7
+
+2.3.1
+
+2.4
+
+3
+
+Activity and the Debye-Hückel theory................................................................. 6
+
+Electrochemical Impedance Spectroscopy (EIS) ...................................................... 20
+
+Experimental ..................................................................................................................... 23
+3.1
+
+Chemicals and materials ............................................................................................ 23
+
+3.2
+
+Design of the planar solid-contact K+-ISE ................................................................ 23
+
+3.3
+
+Design of the planar solid-state reference membranes .............................................. 26
+
+3.3.1
+
+Design of the TBA-TBB-based solid-state reference electrode ......................... 28
+
+3.3.2
+
+Design of the Ag/AgCl/KCl-composite solid-state reference electrode ............ 29
+
+3.3.3
+
+Design of the Ag/AgCl/NaCl-PVB solid-state reference electrode ................... 31
+
+3.4
+
+Design of the full potentiometric system ................................................................... 32
+
+3.5
+
+Experimental setup .................................................................................................... 33
+
+3.5.1
+
+Potentiometric measurements ............................................................................ 33
+
+3.5.2
+
+EIS ...................................................................................................................... 35
+
+Results and discussion ...................................................................................................... 36
+4.1
+
+Characterization of the planar K+-SCISE .................................................................. 36
+
+4.1.1
+
+Determination of the linear range and performance ........................................... 36
+
+4.1.2
+
+Water layer test ................................................................................................... 40
+
+4.1.3
+
+Selectivity coefficients 𝐾𝑖,𝑗 ................................................................................ 41
+
+4.1.4
+
+Inter-day calibration ........................................................................................... 43
+II
+
+Luca Guagneli
+4.1.5
+
+Impedance study of the K+-SCISE ..................................................................... 44
+
+4.2
+
+TBA-TBB-based solid-state reference electrode ....................................................... 48
+
+4.3
+
+Ag/AgCl/KCl-composite solid-state reference electrode .......................................... 51
+
+4.4
+
+Ag/AgCl/NaCl-PVB solid-state reference electrode ................................................. 52
+
+5
+
+Conclusions ....................................................................................................................... 55
+
+6
+
+Bibliography ..................................................................................................................... 58
+
+7
+
+Appendixes ....................................................................................................................... 63
+
+III
+
+Luca Guagneli
+
+List of symbols and abbreviations
+a, b
+
+Inner and outer diameter of the membranes, respectively
+
+𝐴, 𝐵
+
+Constants of the Debye-Hückel theory
+
+Ag/AgCl
+
+Silver/Silver Chloride
+
+𝑎𝑖
+
+Activity of the ion 𝑖
+
+𝑎𝑘𝑗𝑒𝑙
+
+Kjelland parameter
+
+BGE
+
+Background electrolyte
+
+𝐶
+
+Capacitance
+
+C+, A-
+
+Cation, anion
+
+CC
+
+Carbon cloth
+
+CE
+
+Counter electrode
+
+𝑐𝑖 or [𝑖]
+
+Concentration of 𝑖
+
+CP
+
+Conducting polymer
+
+CWE
+
+Coated wire electrode
+
+D1, …, D5 Day 1, …, day 5
+DJ
+
+Double junction
+
+DMPP
+
+2,2-dimethoxy-2-phenylacetophenone
+
+DOS
+
+Dioctyl sebacate, bis(2-ethylexyl)sebacate
+
+𝐸
+
+Potential
+
+𝑒
+
+Excitation signal (electrochemical impedance spectroscopy)
+
+𝐸0
+
+Standard potential
+
+E1, … E3
+
+Electrode 1, …, electrode 3
+
+𝐸𝑐𝑒𝑙𝑙
+
+Cell potential
+
+𝐸𝑖𝑛𝑑
+
+Indicator electrode potential
+
+EIS
+
+Electrochemical impedance spectroscopy
+
+𝐸𝑗
+
+Junction potential
+
+𝐸𝑟𝑒𝑓
+
+Reference potential
+
+𝐹
+
+Faraday constant
+
+𝑓
+
+Frequency
+
+GC
+
+Glassy carbon
+
+IS
+
+Impedance spectroscopy
+
+ISE
+
+Ion-selective electrode
+IV
+
+Luca Guagneli
+ISM
+
+Ion-selective membrane
+
+K+-ISE
+
+Potassium ion-selective electrode
+
+K+-ISM
+
+Potassium ion-selective membrane
+
+K+-SCISE
+
+Potassium solid-contact ion-selective electrode
+
+𝐾𝑖,𝑗
+
+Selectivity coefficient for 𝑖 (preferred ion) in the presence of 𝑗 (interfering ion)
+
+KTFPB
+
+Potassium tetrakis[3,5-bis(trifluoromethyl)phenyl]borate
+
+LiOAc
+
+Lithium acetate
+
+OCP
+
+Open circuit potential
+
+o-NPOE
+
+2-Nitrophenyl octyl ether
+
+PC
+
+Polycarbonate
+
+PEDOT
+
+Poly(3,4-ethylenedioxythiophene)
+
+POT
+
+Poly(3-octylthiophene)
+
+PVAc
+
+Polyvinyl acetate
+
+PVB
+
+Polyvinyl butyral
+
+PVC
+
+Polyvinyl chloride
+
+𝑅
+
+Universal gas constant, Resistance
+
+R1, …, R3
+
+Reference electrode 1, …, reference electrode 3
+
+RE
+
+Reference electrode
+
+SCISE
+
+Solid-contact ion-selective electrode
+
+SHE
+
+Standard hydrogen electrode
+
+SSM
+
+Separate solution method
+
+SS-RE
+
+Solid-state reference electrode
+
+SD
+
+Standard deviation
+
+𝑇
+
+Temperature
+
+𝑡
+
+Time
+
+TBA-TBB
+
+Tetrabutylammonium tetrabutylborate
+
+THF
+
+Tetrahydrofuran
+
+VAc
+
+Vinyl acetate
+
+WE
+
+Working electrode
+
+𝑍
+
+Impedance
+
+𝑍⃗
+
+Impedance vector
+
+𝑍′
+
+Real component of impedance
+
+𝑍′′
+
+Imaginary component of impedance
+V
+
+Luca Guagneli
+𝑧𝑖
+
+Charge of the ion 𝑖
+
+𝛾𝑖
+
+Activity coefficient of the ion 𝑖
+
+𝜀𝑇
+
+Permittivity, dielectric constant
+
+𝜙
+
+Phase shift
+
+𝜔
+
+Angular frequency
+
+VI
+
+Luca Guagneli
+
+Abstract
+An innovative design of planar electrodes for flow-through potentiometric sensing
+devices is presented in this thesis. A planar and concentric potassium solid-contact
+ion-selective electrode (K+-SCISE) has been designed. The K+-SCISE is composed of a valinomycin-based potassium ion-selective membrane (K+-ISM), carbon cloth (CC) as ion-to-electron transducer, and a gold wire as electronic conductor. Three K+-SCISEs have been prepared and characterized. The electrodes
+showed stabile and reproducible response with short equilibration time. The
+slopes of the K+-SCISEs, calibrated in the range log[𝐾 + ] = -1 to -4, were 57.3 ±
+0.6 and 56.3 ± 0.4 mV/dec (average ± SD, n = 3) without background electrolyte
+(BGE) and with 0.1 M NaCl as BGE, respectively. The slopes of three electrodes
+during five consecutive days were between 56.2 and 59.6 mV/dec in the range
+log[𝐾 + ] = -1 to -4, with 0.1 M NaCl as BGE. The water layer test showed that the
+ion-selective membrane/carbon cloth interface is not subject to the formation of a
+water layer. The selectivity coefficients log 𝐾𝑖,𝑗 for 𝑗 = Ca(II), Li(I), Mg(II), Na(I)
+were -4.29 ± 0.14, -3.21 ± 0.09, -4.68 ± 0.05, and -3.34 ± 0.08 (average ± SD, n =
+3), respectively. The electrochemical impedance spectroscopy (EIS) study
+showed that the resistance 𝑅 of the membrane depends on its width and thickness.
+The resistance was in the order of 45-275 MΩ for several electrodes, with different
+geometries. Three different approaches of innovative planar solid-state reference
+electrodes (SS-REs) have been explored. Three SS-REs based on tetrabutylammonium tetrabutylborate (TBA-TBB) were tested. The reproducibility of the potential was not satisfactory. A commercial chloride ion-selective electrode (Cl--ISE)
+was calibrated versus the novel reference electrodes. The slopes of three calibration plots were -63.1, -61.8, and -58.5 mV/dec in the range log[𝐶𝑙 − ] = -1 to -4. It
+was not possible to calibrate the novel K+-SCISE versus the SS-RE based on TBATBB, due to the loss of performances of the K+-SCISE when in close contact with
+the reference electrode. Two SS-REs based on silver/silver chloride (Ag/AgCl)
+approach were designed, one containing a polyvinyl acetate/potassium chloride
+(PVAc/KCl) composite membrane and the other containing a polyvinyl butyral/sodium chloride (PVB/NaCl) membrane. The layer of the PVAc/KCl composite membrane was too thick and irregular, and it did not meet the requirements
+VII
+
+Luca Guagneli
+of the sensing device. The PVB/NaCl membrane was too hard, and this complicated the cutting process. The two reference membranes did not ensure the isolation between the sensor and the analyte solution.
+Keywords: potentiometric sensor, solid-contact ion-selective electrode, planar electrode, potassium ion-selective electrode, solid-state reference electrode.
+
+VIII
+
+Luca Guagneli
+
+1 Introduction
+Potassium was selected as the primary ion for this study due to its clinical importance. Potassium plays a critical role in the health status of living organisms1, and monitoring its level is
+part of routine medical analysis. Indeed, potassium monitoring is part of the Chem 7 test, a
+common clinical analysis that aims to monitor the principal health markers in human body2.
+Physical exercise and sweating cause the loss of several electrolytes and biomolecules3, including potassium. Monitoring the amount of potassium in sweat is an important practice to estimate
+the amount of electrolyte lost during physical exercise. Potentially, the amount of potassium in
+sweat can be used as an indicator to estimate the internal electrolyte environment4. The high
+importance of electrolyte monitoring in sweat has pushed the research towards miniaturized
+wearable chemical sensors5.
+Chemical sensors6 are a class of important devices that are used to convert the concentration of
+an analyte in a sample into a measurable signal such as thermal, mass, optical or electrochemical
+signal. The group of sensors based on electrochemical transduction plays a very important role
+in our everyday analysis and research environment. One type of these sensors is the potentiometric sensor7,8, in which the information about the activity of an ion in the measured sample is
+transformed into a potentiometric signal, that can be measured against a reference electrode.
+Selective sensing performed using ion-selective electrodes (ISEs)9 is nowadays an important
+field of chemical analysis. The ISEs allow performing selective measurements in a multi-ionic
+matrix, giving good selectivity. ISEs are used for a wide range of applications. In principle,
+they allow selective measurements of ions in environmental samples10 (soils, natural waters,
+and leachates), food samples11, and biological samples12.
+In general, the ISE is a useful tool for personal health monitoring. Health monitoring systems
+should allow fast and reliable measurements. The amount of biological samples sometimes is
+very low, and this adds the necessity to measure low amount of samples as a requirement for
+potentiometric wearable devices.
+The research topic of ISEs is an ongoing field that has seen fast growth during the last century.
+Up to now, it is possible to find in literature ISEs for determining around 60 analytes13, although
+not all of these electrodes are commercially available. To achieve the production of easy-to-use
+reliable sensors, new technologies and new sensor geometries are required.
+1
+
+Luca Guagneli
+This project is focused on the development of novel geometries of electrodes for an innovative
+sensing platform. The novel design of electrodes presented in this thesis allows the flow of
+sample solution through the electrode, for fast solution replacement in continuous monitoring.
+The first part of the project is focused on the preparation and characterization of the indicator
+electrode, a planar and concentric potassium solid-contact ion-selective electrode (K+-SCISE).
+In principle, any other ion can be measured by changing the composition of the ion-selective
+membrane (ISM). The second part of the project explores the possibility of implementing the
+device with a solid-state reference electrode (SS-RE).
+The presence of SCISE and SS-RE gives high robustness to the system and opens the possibility
+for miniaturization. The volume of the measuring cell is < 10 µL, and it would allow electrolyte
+monitoring using small sample volumes. The scope of this project is to develop a novel sensing
+platform, which could be implemented to obtain a flexible and robust potentiometric sensing
+device, for monitoring the level of electrolytes in sweat.
+
+2
+
+Luca Guagneli
+
+2 Theoretical background
+2.1 Chemical sensing
+Sensors are devices that transform changes in the environment into measurable signals. Sensors
+are used in diverse fields of applications, and are present in our life as part of several common
+devices.
+Chemical sensing6,14 is the ability to transform changes in chemical properties of a system, such
+as the activity or the partial pressure of a chemical specie, into a measurable signal. A chemical
+sensor is composed of two functional parts: the receptor and the transducer (Figure 1). The
+receptor functions as the recognition site. In the receptor, the chemical property is transformed
+into an energy source that is measured by the transducer. The transducer is capable to transform
+such energy source into a measurable signal that is sent to an appropriate measuring device.
+The transducer does not show selectivity. The selectivity of a chemical sensor comes from the
+receptor, which should be designed to respond solely to the analyte of interest. The recognition
+process in chemical sensors may involve different mechanisms6:
+•
+
+physical receptors: no reaction occurs at the receptor. The receptor is sensitive to
+changes in physical properties such as absorbance or refractive index.
+
+•
+
+Chemical receptors: the receptor is the site of a chemical interaction and/or reaction.
+
+•
+
+Biochemical receptors: a sub-class of chemical receptors, where a biochemical process
+occurs at the receptor. Examples of biochemical receptors are those that involve antibody/antigen or enzymes/substrate recognition processes.
+
+The transducer transforms the energy source of the receptor into a readable signal or a measurable change of a property. Transducers belong to four separate groups (Figure 1). The four
+transduction processes are:
+•
+
+Electrochemical: a change in an electrochemical property of the material, such as the
+potential (potentiometric sensors), current, amount of charge, or resistance.
+
+•
+
+Mass: a change in the mass of the sensor, for example due to the adsorption of the analyte.
+
+•
+
+Optical: may include changes in the absorbance or reflectance of the material, or a process that involves luminescence.
+
+•
+
+Thermal: a change in the temperature of the material, which can be measured for example as a change of its electrical properties.
+3
+
+Luca Guagneli
+
+Figure 1: General scheme of chemical sensors and chemical sensing processes.
+
+2.2 Potentiometry
+Potentiometry8 is a non-destructive electroanalytical technique where the potential difference
+between the indicator electrode(s)15 and a reference electrode16 is measured. In this case, the
+measured potential signal is given by the following equation:
+𝐸𝑐𝑒𝑙𝑙 = 𝐸𝑖𝑛𝑑 − 𝐸𝑟𝑒𝑓 + 𝐸𝑗
+
+(1)
+
+Where:
+•
+
+𝐸𝑐𝑒𝑙𝑙 is the measured potential
+
+•
+
+𝐸𝑖𝑛𝑑 and 𝐸𝑟𝑒𝑓 are the potentials of the indicator electrode and the reference electrode,
+respectively
+
+•
+
+𝐸𝑗 is the liquid-junction potential17, which is developed at the interface between two
+dissimilar solutions.
+
+The potential is measured with a potentiometer. Potentiometers are devices with high resistance
+so that the flowing current would be as low as possible. Potentiometric measurements are performed at equilibrium, and a high flowing current would disturb the system. Utilizing low currents means that the solution will not be affected by the measurement.
+
+4
+
+Luca Guagneli
+During a potentiometric measurement, the unknown potential of an indicator electrode immersed in the analyte solution is compared to the known potential of a standard reference electrode. The measured potential is dependent on the concentration (or better, the activity) of the
+analyte being measured. The potential (measured in Volts) is governed by the Nernst equation:
+𝐸 = 𝐸0 +
+
+𝑅𝑇
+𝑙𝑛 𝑎𝑖(𝑎𝑞)
+𝑧𝑖 𝐹
+
+(2)
+
+Where:
+•
+
+𝐸 is the measured potential
+
+•
+
+𝐸 0 is the standard potential
+
+•
+
+𝑅 is the universal gas constant given as 8.3144
+
+•
+
+𝑇 is the temperature in 𝐾
+
+•
+
+zi is the charge of the target ion 𝑖
+
+•
+
+𝐹 is the Faraday constant given as 96485.3
+
+•
+
+ai is the activity of the target ion 𝑖.
+
+𝐽
+𝑚𝑜𝑙 𝐾
+
+𝑠𝐴
+𝑚𝑜𝑙
+
+The large variety of samples that can be analyzed using potentiometry include natural waters10,
+food samples11, and biological fluids12, specimens that are naturally characterized by complex
+multi-ionic matrices. In a potentiometric measurement, the potential of one or more indicator
+electrodes is compared to the potential of a reference electrode. Using ISEs as measuring electrodes is the key to obtain selectivity in a potentiometric measurement. Due to the selectivity of
+the technique, samples with complex matrices require little or no pretreatment at all. Potentiometric analyses are also relatively fast and easy to perform. The instrumentation is relatively
+cheap if compared with other common analytical techniques, and it allows to perform on-site
+measurements. Figure 2 shows the scheme of the set-up used for potentiometric analysis.
+
+5
+
+Luca Guagneli
+
+Figure 2: The schematic illustration of a set-up for potentiometric analysis.
+
+2.2.1 Activity and the Debye-Hückel theory
+Equation (2) shows that the potential of the indicator electrode does not depend on the concentration of the measured analyte but rather on its activity. The activity 𝑎𝑖 of an ion 𝑖 in the solution depends on the concentration of the ion, the ionic strength of the solution and the size of
+the ion.
+As shown in Equation (3) below, the activity of an ion is proportional to the concentration of
+the ion:
+𝑎𝑖 = 𝛾𝑖 𝑐𝑖
+
+(3)
+
+Where:
+•
+
+𝑐𝑖 is the concentration of the ion 𝑖 in solution
+
+•
+
+𝛾𝑖 is the activity coefficient of the ion 𝑖.
+
+It is common practice to assume that 𝑎𝑖 = 𝑐𝑖 at low concentrations. This assumption is tolerable
+in cases where the concentration of the analyte is low, and the solution does not contain other
+ions at high concentrations. In fact, in this case the value of the activity coefficient is approximately one. When these conditions are not met or when a more accurate value is needed, activity
+should be calculated.
+The activity coefficient 𝛾𝑖 can be calculated using the Debye–Hückel equation9:
+
+𝑙𝑜𝑔𝛾𝑖 = −
+
+𝐴𝑧𝑖2 √𝐼
+
+(4)
+
+1 + 𝑎𝐾𝑗𝑒𝑙 𝐵√𝐼
+6
+
+Luca Guagneli
+Where:
+•
+
+𝑧𝑖 is the charge of the ion 𝑖
+
+•
+
+𝑎𝐾𝑗𝑒𝑙 is the Kjelland parameter, correlated to the hydrated ion radius (Table 1)
+
+•
+
+𝐼 is the ionic strength
+
+•
+
+𝐴 = 0.512 and 𝐵 = 0.328 in the case of aqueous solutions at 25 °C9.
+
+The ionic strength (𝐼) of a solution is an indicator of the concentration of all the ions present in
+that solution and can be calculated following the equation:
+𝐼=
+
+1
+∑(𝑐i 𝑧i2 )
+2
+
+(5)
+
+i
+
+Where:
+•
+
+𝑐i is the concentration of each ion in the solution
+
+•
+
+𝑧i is the charge of the ion.
+
+The values of 𝑎𝐾𝑗𝑒𝑙 for the ions studied in this work are listed in Table 1.
+Table 1: Values of the parameter 𝑎𝐾𝑗𝑒𝑙 for the studied ions9.
+
+Ion
+
+𝒂𝑲𝒋𝒆𝒍
+
+K+, Cl-
+
+3
+
+Na+
+
+4.5
+
+Li+, Ca2+
+
+6
+
+Mg2+
+
+8
+
+2.3 Ion Selective Electrodes
+An ion-selective electrode (ISE) is a tool used in the detection of an analyte. The ISE transduces
+the activity of the target ion in the solution into a measurable signal (potential) measured against
+a reference electrode. The principal characteristic of an ISE is the ability to obtain a signal
+which is selective to the ion of interest. This means that the sensor can be used to perform
+selective measurements in a multi-ionic sample.
+In potentiometric analysis, the potential of the ISE is used to determine the activity of the analyte. The first step in potentiometric analysis involves the calibration of the ISE, a procedure
+that links the activity of the analyte to the potential of the electrode. As shown in Equation (2),
+
+7
+
+Luca Guagneli
+the measured potential is not proportional to the activity of the analyte, but rather to its logarithm. Linear calibration plots are obtained by plotting the potential of the electrode (y-axis)
+versus the logarithm of the activity (x-axis).
+In an ideal situation, the calibration plot follows the Nernst equation (Equation (2)). Given
+𝑙𝑛 𝑎 = 2.303 𝑙𝑜𝑔 𝑎 , at 25 °C (298.15 K) the Nernst equation can be rewritten as
+𝐸 = 𝐸0 +
+
+𝑅𝑇
+0.05916
+𝑙𝑛 𝑎𝑖(𝑎𝑞) = 𝐸 0 +
+𝑙𝑜𝑔 𝑎𝑖(𝑎𝑞)
+𝑧𝑖 𝐹
+𝑧𝑖
+
+The slope of an ideal potentiometric calibration plot equals to +
+
+0.05916𝑉
+𝑧𝑖
+
+(6)
+
+, with 𝑧𝑖 being the
+
+charge of the analyte (Figure 3). The ideal slope of the linear part in a calibration plot for an
+electrode selective to a monovalent cation is ≈ + 59.2 mV/decade, and the slope in the case of
+an electrode selective to a divalent cation is ≈ + 29.6 mV/decade. Equation (6) shows that the
+calibration plots of anions have negative slopes. Therefore, the potential of anion-selective electrodes decreases when the activity of the analyte increases, in contrast to the opposite behavior
+which is seen for cation-selective electrodes.
+Slopes that follow Equation (6) are defined as Nernstian slopes. Slopes which exceed
+
+59.2
+𝑧𝑖
+
+mV/decades are called super-Nernstian slopes, while sub-Nernstian slopes are lower than the
+Nernstian value. These behaviors are rather common and depend strongly on the ion-binder
+interaction, as well as the composition of the matrix.
+
+Figure 3: Ideal calibration plots for an ISE selective to a) monovalent and b) divalent ions. The black calibration plots belong to cations Cn+ and the red calibration plots belong to anions A n-.
+
+The cell potential measured using an ISE is mainly governed by the activity of the ion of interest
+(primary ion). However, the response of the ISE will also be influenced by a contribution from
+8
+
+Luca Guagneli
+other ions in the sample (interfering ions). The selectivity of an ISE can be determined from the
+selectivity coefficient 𝐾𝑖,𝑗 18. The selectivity coefficient is a numerical description of the preferential response of an ISE to the ion of interest, 𝑖, in the presences of an interfering ion, 𝑗. It is
+defined as follows:
+𝐾𝑖,𝑗 =
+
+𝑟𝑒𝑠𝑝𝑜𝑛𝑠𝑒 𝑡𝑜 𝑖𝑜𝑛 𝑗
+𝑟𝑒𝑠𝑝𝑜𝑛𝑠𝑒 𝑡𝑜 𝑖𝑜𝑛 𝑖
+
+(7)
+
+If the coefficient is exactly 1, it means that the sensor gives the same response to the primary
+ion 𝑖 and interfering ion 𝑗. A coefficient lower than 1 means that the electrode preferentially
+responds to the primary ion, 𝑖. Thus, the Nernst equation can be generalized to obtain the socalled Nicolskij-Pungor-Eisenman equation, valid for ISEs19:
+𝑧𝑖
+
+2.303𝑅𝑇
+𝑧
+𝐸=𝐸 ±
+log (𝑎𝑖 + ∑ 𝐾𝑖,𝑗 𝑎𝑗 𝑗 )
+𝑧𝑖 𝐹
+0
+
+(8)
+
+Where:
+•
+
+𝐾𝑖,𝑗 is the selectivity coefficient for each interfering ion 𝑗
+
+•
+
+𝑎𝑖 and 𝑎𝑗 are the activities of the primary ion 𝑖 and the interfering ion 𝑗, respectively
+
+•
+
+𝑧𝑖 and 𝑧𝑗 are the charges of the primary ion 𝑖 and the interfering ion 𝑗, respectively.
+
+One of the methods used for determining the selectivity coefficient is the Separate Solution
+Method (SSM)18,20. In this method, the measured potential (𝐸1 ) of an ISE in a solution of the
+ion of interest 𝑖 with certain concentration, is compared to the potential (𝐸2 ) of the same electrode measured in a solution containing the interfering ion 𝑗 with similar concentration. The
+potentials 𝐸1 and 𝐸2 can be calculated using equations (9) and (10), respectively:
+𝐸1 = 𝐸 0 ±
+
+2.303𝑅𝑇
+log(𝑎𝑖 )
+𝑧𝑖 𝐹
+
+(9)
+
+𝑧𝑖
+
+2.303𝑅𝑇
+𝑧
+𝐸2 = 𝐸 ±
+log 𝐾𝑖,𝑗 𝑎𝑗 𝑗
+𝑧𝑖 𝐹
+
+(10)
+
+0
+
+By subtracting Equation (9) from Equation (10) and after some rearrangement we obtain:
+𝑙𝑜𝑔𝐾𝑖,𝑗 =
+
+(𝐸2 − 𝐸1 )𝑧𝑖 𝐹
++ log
+2.303𝑅𝑇
+
+𝑎𝑖
+𝑧𝑖
+𝑧𝑗
+(𝑎𝑗 )
+
+(11)
+
+9
+
+Luca Guagneli
+Where:
+•
+
+𝐸1 is the potential measured in a solution containing the ion of interest 𝑖
+
+•
+
+𝐸2 is the potential measured in a solution containing an interfering ion 𝑗
+
+•
+
+𝐹 is the Faraday constant given as 96485.3
+
+•
+
+𝑅 is the universal gas constant given as 8.3144 𝑚𝑜𝑙 𝐾
+
+•
+
+𝑇 is the temperature in 𝐾
+
+•
+
+𝑎𝑖 and 𝑎𝑗 are the activities of the analyte 𝑖 and the interfering ion 𝑗, respectively
+
+•
+
+𝑧𝑖 and 𝑧𝑗 are the charges of the analyte 𝑖 and the interfering ion 𝑗, respectively.
+
+𝑠𝐴
+𝑚𝑜𝑙
+𝐽
+
+Equation (11) will be used to estimate the selectivity coefficients in this work.
+
+2.3.1 Conventional Ion-Selective Electrodes
+The potentiometric sensors or ion-selective electrodes (ISEs) behave differently from the common metallic electrodes. In a metallic electrode (ex. Copper (Cu) wire immersed in Cu(II) solution), there is a redox process occurring at the electrode. Whereas, ISEs are composed of an
+ion-selective membrane where the potential is created by an interaction between the analyte
+and the ion recognition component in the membrane. This interaction is, ideally, completely
+selective towards the specific ion of interest.
+In conventional liquid-contact ISEs, the membrane is the contact point between the inner filling
+solution in the ISE and the sample solution. As an example, a general ionophore-based cationselective electrode will be used to explain the working principle of liquid-contact ISEs.
+A general liquid-contact ISE for a cation C+ is schematically presented in Figure 417. The membrane is composed of a hydrophobic polymer, commonly plasticized polyvinyl chloride (PVC,
+see section 2.3.2). This membrane contains a ligand L which is able to give selective interaction
+with the ion of interest, and the ion C+ at constant activity. Electroneutrality inside the membrane is ensured by a hydrophobic counterion R-, which is soluble in the membrane and insoluble in water. The inner filling solution of the electrode contains the ion C+ at constant activity
+and a counterion B-. The measuring solution contains the analyte C+ with unknown activity and
+a counterion A- (and, most likely, other cations and anions). The counterions A- and B- are not
+able to enter the membrane due to repulsion by R- in the membrane. This makes the membrane
+permselective for cations.
+The ion C+ in the membrane is almost entirely bound in the form of LC+. This complex is in
+equilibrium with a low amount of free ion C+, which is able to diffuse out of the membrane
+10
+
+Luca Guagneli
+towards the solution. In an ideal situation, C+ can diffuse out of the membrane, but the counterion R- cannot diffuse out. As soon as some ions C+ diffuse, there will be an excess of charge in
+the membrane, which opposes the diffusion process. This creates a potential difference at the
+two sides of the membrane. This potential can be measured by two electrodes, for example an
+outer Ag/AgCl reference electrode and an inner electrode inside the ISE.
+
+Figure 4: The schematic illustration of the general structure of a liquid-contact ISE17.
+
+2.3.2 Polyvinyl Chloride (PVC)-based Ion-Selective Membranes
+The most common ion-selective membranes (ISMs) used in ISEs are polyvinyl chloride (PVC)based membranes22,23. The ionophore, i.e. the binding molecule that interacts with the analyte,
+is contained in the polymeric matrix. Other components of ISMs are plasticizers and lipophilic
+salts. A typical composition of PVC-based ISMs is 33 wt% PVC, 66 wt% plasticizer, 1 wt%
+ionophore, and small amount of a lipophilic salt24. Each component has a specific purpose in
+the membrane.
+The matrix of the ISM is high molecular weight PVC (Figure 5).
+PVC is used to give the principal structure to the membrane. Its hydrophobic properties prevent the leakage of other membrane components from the membrane, and the absorption of external ions into
+Figure 5: structure of PVC
+
+the ISM.
+
+Pure PVC is a hard, plastic-like material at room temperature that has unsatisfactory physical
+and mechanical properties for ISMs. Therefore, a plasticizer is added in a mass ratio ≈ 2:1
+11
+
+Luca Guagneli
+(plasticizer : polymer) to enhance its flexibility. The choice of the plasticizer affects the permittivity, or dielectric constant 𝜀𝑇 , of the membrane24. Moreover, the plasticizer helps to facilitate
+the transport of ionophore and ion-ionophore complexes through the membrane. Two commonly used plasticizers are bis(2-ethylexyl)sebacate (DOS) and 2-nitrophenyl octyl ether (oNPOE), shown in Figure 6a and b, respectively.
+
+Figure 6: The structure of a) bis(2-ethylexyl)sebacate (DOS), and b) 2-nitrophenyl octyl ether (o-NPOE).
+
+The selectivity of the ISM is given mainly by the ion-binder interaction. The binder, or ionophore, is the chemical site that interacts with the analyte. Ideally, an ionophore can interact only
+with the analyte and this process is not affected by the presence of other interfering ions. The
+interaction between the ion and the ionophore creates the phase boundary potential, which is
+measured against a reference electrode. The ionophore may be a charged or neutral molecule.
+An example of a charged ionophore is didecyl phosphate anion (Figure 7a), used as selective
+ligand for Ca2+ ions25. Examples of neutral ionophores are crown ethers (e.g. 18-crown-6 shown
+in Figure 7b)26, and valinomycin (Figure 7c), used as ligand for K+ ion (see section 2.3.3).
+
+12
+
+Luca Guagneli
+
+Figure 7: Structures of a) didecyl phosphate/Ca2+ complex, b) 18-crown-6, and c) valinomycin27.
+
+A charged ionophore interacts solely with ions that have opposite charge. Whereas, in the case
+of an ISM based on neutral molecules, an ionic additive, i.e. lipophilic salt, is added to the
+components of the membrane to prevent the interference from counter ions. In addition, the
+ionic additive helps to decrease the membrane resistance, thus decreasing the response time.
+The molar amount of the lipophilic salt must be lower than the ionophore, since the ionic additive can function as ion exchanger. The structures of two common ionic additives are shown in
+Figure 8.
+
+Figure 8: Structure of a) potassium tetrakis[3,5-bis(trifluoromethyl)phenyl]borate (KTFPB) and b) potassium
+tetrakis(4-chlorophenyl)borate.
+
+13
+
+Luca Guagneli
+The components of ISMs are dissolved in a volatile organic solvent, commonly tetrahydrofuran
+(THF), which helps to ensure uniform composition of the mixture. The mixture of membrane
+components dissolved in THF is defined as membrane cocktail.
+
+2.3.3 Potassium ion-selective electrode
+Potassium ion-selective electrodes (K+-ISEs) are a class of potentiometric sensors used for selective measurement of potassium ions in a solution. Potassium selective electrodes have a long
+story behind. The first electrodes were glass-based ones. Glass-based electrodes which contain
+more than 1% in moles of Alumina are cation-sensitive28, and the sensitivity of the electrode
+towards different cations can be adjusted by changing the composition of the glass membrane.
+However, the selectivity towards potassium in comparison to sodium ion in this case is very
+low, only 5:1 or 10:129. This value is not good enough to perform everyday K+ measurements,
+since the analyzed samples (ex. biological samples) may have a high concentration of sodium
+ions.
+An innovative potassium-selective electrode based on valinomycin, as the binder for potassium
+ions, was presented in 197029. Valinomycin (Figure 7c) is an ionophore that exhibits high selectivity to potassium in presence of other cations. The selectivity towards potassium in respect
+to sodium ion has been reported to be 13000:1 with the valinomycin-based electrode proposed
+by Frant et al.29. It is easy to understand how innovative this new membrane was for this research field. Modern potassium selective electrodes are still based on valinomycin-potassium
+interaction.
+The potassium selective electrode follows the general Nernst equation (Equation (2)), rearranged for potassium as:
+𝐸 = 𝐸0 +
+
+𝑅𝑇
+ln 𝑎𝐾+ = 𝐸 0 + 0.05916 log 𝑎𝑘 +
+𝐹
+
+(12)
+
+2.3.4 Solid Contact Ion Selective Electrodes
+In conventional liquid-contact ISEs, an ion-selective membrane is usually attached to the end
+of a tube filled with an internal filling solution containing the ion to be measured. The internal
+filling solution functions as a charge carrier between the ion-selective membrane and the inner
+reference electrode. The presence of the solution in the structure of an ISE may cause problems
+for the reasons listed below:
+•
+
+the electrode needs maintenance.
+
+14
+
+Luca Guagneli
+•
+
+The filling solution needs to be in contact with the measuring solution through the membrane. This means that the electrode has to be used vertically, and moving it will cause
+the disconnection of the circuit.
+
+•
+
+The presence of the inner solution limits the possibilities of the electrode miniaturization.
+
+•
+
+The inner solution limits the possibility of using the electrode in high pressure and temperature conditions.
+
+The solution to these problems was the elimination of the inner filling solution and the introduction of different types of all-solid-state ISEs. The first all-solid-state ISE was the so-called
+coated wire electrode (CWE) which is made by depositing an ion-selective membrane directly
+onto a metallic wire30,31. The CWEs have a relatively simple structure and are robust and easy
+to prepare and use. However, the configuration of CWE causes some crucial drawbacks and
+problems such as long-term potential drift and irreproducibility of the standard potential32. The
+structure of a CWE is illustrated in Figure 9a.
+To improve the potential stability of the CWE, solid-contact ion-selective electrodes (SCISEs,
+schematically illustrated in Figure 9b) were introduced. In this type of sensor, an intermediate
+layer (solid contact) with suitable redox and ion-exchange properties is introduced between the
+electronic conductor and the ionically conducting ISM to act as the ion-to-electron transducer.
+Different materials can act as solid contact in SCISEs7. Some examples include conducting
+polymers (CPs)33,34, carbon nanotubes (CNTs)35 and carbon cloth36,37.
+
+Figure 9: Schematic representation of a) a CWE and b) a SCISE.
+
+15
+
+Luca Guagneli
+SCISEs are robust and reliable tools that have overcome some of the drawbacks of conventional
+electrodes with inner filling solution. SCISEs and solid-state reference electrodes (section
+2.4.2) can be utilized in miniaturized systems38,39, where the geometry of the sensor can be
+easily modified40–42. In this way, we can obtain new systems and adapt the geometry and properties of the sensors to specific applications.
+
+2.4 Reference electrodes
+As the potential of a single electrode cannot be measured as absolute value, potentiometric
+analyses are performed by measuring the potential of the indictor electrode (ISE) versus a reference electrode (RE) with stable and known potential. The scale of potentials has an arbitrary
+zero-potential. The value 0 is given conventionally to the standard hydrogen electrode (SHE)43.
+The SHE is defined as primary reference electrode and it is not commonly used due to the
+difficulties in its preparation and use.
+The second class of reference electrodes is the secondary reference electrodes. These electrodes
+have a potential which is different from 0, but it is well-known and stable. Silver/silver chloride
+(Ag/AgCl) and the calomel reference electrodes44 belong to this class of reference electrodes.
+As the presence of calomel (Hg2Cl2) causes toxicity problems, the Ag/AgCl reference electrode
+is the most commonly used reference electrode.
+The most important characteristic of a reference electrode is a stable and reproducible potential.
+This can be achieved by using a redox system in which the activities of the species are kept
+constant. Examples of these systems are the SHE, where the pressure of H2 is kept constant and
+the solution is buffered, or using saturated solutions as in the Ag/AgCl and calomel reference
+electrodes. Other prerequisites for a reference electrode are robustness, chemical stability, inert
+behavior in the measuring solution, and easiness of manufacturing and handling.
+
+2.4.1 Silver/Silver Chloride reference electrode
+The silver/silver chloride (Ag/AgCl) reference electrode is probably the most widely used reference electrode in electroanalytical chemistry. Its robustness, potential stability, and low toxicity make it a very useful tool that became part of everyday laboratory analysis. It belongs to
+the group of secondary REs, meaning that it has a potential that is different from 0 V.
+The Ag/AgCl reference electrode can be seen as a special silver electrode. It is built by immersing an Ag wire, coated with a paste of AgCl, in a solution containing Cl- at constant activity.
+AgCl has low solubility in water, and the presence of solid salt ensures that the inner filling
+16
+
+Luca Guagneli
+solution is saturated with AgCl. The potential of the Ag/AgCl RE follows the Nernst equation
+(Equation (2)), adapted as45:
+0
+𝐸 = 𝐸𝐴𝑔/𝐴𝑔𝐶𝑙
+−
+
+𝑅𝑇
+𝑙𝑛𝑎𝐶𝑙−
+𝑧𝐹
+
+(13)
+
+0
+The value of 𝐸𝐴𝑔/𝐴𝑔𝐶𝑙
+(AgCl(s) + e- ⇄ Ag(s) + Cl-) equals to + 0.222 V17 against the SHE. This
+
+standard potential is valid only when the electrode is immersed in a solution with 𝑎𝐶𝑙− = 1.
+This is not valid in the case of different concentrations of KCl, since the activity of Cl- ions is
+different from 1. The potential of a Ag/AgCl/sat KCl RE is reported as + 0.197 V17 against the
+SHE.
+The structure of a single-junction Ag/AgCl reference electrode is shown in Figure 10a. One of
+the drawbacks of this electrode is the presence of high concentration of KCl in the inner filling
+solution. This solution is in contact with the measuring sample through a porous frit, from which
+some KCl will leak into the sample. This should be avoided especially when measuring low
+concentrations of K+ or Cl- ions. This problem can be overcome by adding a second external
+compartment to the electrode. This compartment is in electrical contact with the measuring
+solution and the inner filling solution and contains a saline solution, different from KCl, called
+outer filling solution. This electrode is known as a double-junction (DJ) reference electrode
+(Figure 10b). The outer filling solution in a DJ reference electrode is a saline solution where
+the salt may vary depending on the measured sample. Lithium Acetate (LiOAc) solution is
+similar to KCl solution in terms of difference in the mobility of ions. During the dissociation in
+aqueous systems, the LiOAc produces Li+ and OAc- ions that have similar mobility, as shown
+in Table 2. The similar ion mobility ensures low junction potential (𝐸𝐽 ).
+Table 2: Values of mobility of ions in solution17.
+
+Ion
+
+Mobility [m2/(s∙V)]
+
+K+
+
+7.62∙10-8
+
+Cl-
+
+7.91∙10-8
+
+Li+
+
+4.01∙10-8
+
+OAc- 4.24∙10-8
+
+17
+
+Luca Guagneli
+
+Figure 10: Schematic representation of a) conventional single-junction Ag/AgCl reference electrode, and b)
+double-junction reference electrode containing LiOAc as outer filling solution.
+
+During this project, the commercial single-junction Ag/AgCl/3M KCl and the double-junction
+Ag/AgCl/3M KCl/1M LiOAc reference electrodes were used.
+
+2.4.2 Solid-State Reference Electrodes
+As stated before, the most important feature of a reference electrode is a stable and reproducible
+potential from day-to-day and electrode-to-electrode. Good reference electrodes must also have
+low cost and adequate lifetime. In conventional reference electrodes, stable potentials can be
+obtained by ensuring constant activity of the ions in the inner filling solution. As in the case of
+conventional ISEs, conventional REs have some drawbacks due to the presence of the inner
+filling solution (see section 2.3.4). To solve the problems caused by the presence of inner filling
+solution, several types of solid-state reference electrodes (SS-REs) have been developed.
+The first SS-REs were based on the Ag/AgCl reference electrode approach. To obtain solidstate electrodes, the chloride ions present in the inner filling solution of conventional Ag/AgCl
+reference electrode had to be immobilized in solid or solid-like materials. The first reference
+electrodes were prepared by immobilizing the Cl- ions in materials such as silicone46, silicone
+rubber47 or agar-based hydrogels48,49. However, such reference electrodes did not show good
+performances. This was due to the dissolution of the thin layer of AgCl and the limited amount
+of Cl- ions, that could easily diffuse out of the electrode50.
+The first promising approach was the one proposed by Diamond, Desmond et al., where the
+Ag/AgCl/KCl(aq) system was protected with a vinylester-KCl resin junction, which minimized
+18
+
+Luca Guagneli
+the leaking of chloride ions outside of the reference electrode51,52. Another attempt was made
+by fabricating reference electrodes based on polymer/inorganic salt composite and a silver/silver chloride reference element using the chemical polymerization53, and injection moulding54
+methods. The SS-REs proposed by Mousavi et al. maintained a stability of ± 0.5 mV for more
+than two months.
+An interesting approach to overcome the need of developing a SS-RE, is to use an ion-selective
+electrode as reference electrode. This approach was used by Kounaves et al., who built a reference electrode using a Li+-ISE55. The activity of Li+ was kept constant in the analyte solution.
+Other interesting approaches can be found in literature. Examples of reference membranes containing lipophilic salts, such as quaternary ammonium and borate salts, have been presented by
+Mattinen et al.56, and will be further discussed in this thesis.
+A general scheme of the common SS-REs can be seen in Figure 1157. Figure 11a shows a conventional RE. Figure 11b shows an improved version of conventional REs where the inner filling solution is substituted by a gel-like material. This material contains the salt which would be
+dissolved in the inner filling solution of conventional REs. Figure 11c shows a SS-RE where
+the inner filling solution is substituted by a block of the salt that contains the related anion. This
+can be produced by melting the salt and adding the melt in the encapsulation body of the electrode. Figure 11d shows an all-solid-state RE where the Ag/AgCl substrate is substituted by an
+all-solid-state reference element.
+
+Figure 11: Schematic representation of SS-REs (e.g. Ag/AgCl RE) in comparison with conventional REs. a) conventional RE, b) gel-based SS-RE, c) solid-melt SS-RE, d) all-solid-state RE. 1 metal (e.g. Ag), 2 sparingly solu-
+
+19
+
+Luca Guagneli
+ble metal salt (e.g. AgCl), 3 aqueous solution containing the related anion (e.g. KCl), 4 hydrogel-trapped solution containing the related anion (e.g. KCl), 5 solid melt of the metal salt (e.g. KCl), 6 junction, 7 all-solid reference element, 8 insulating encapsulation material57.
+
+2.5 Electrochemical Impedance Spectroscopy (EIS)
+Electrochemical impedance spectroscopy (EIS) is an analytical technique used to study electrochemical processes in which ionic conduction dominates. EIS is used to obtain information
+about the kinetics and the mechanisms of electrochemical processes. EIS is a sub-category of
+impedance spectroscopy (IS). EIS is popular as an analytical technique for electrochemical processes but IS can be useful in material science as well, where it is used to determine electrical
+properties of materials or electrical components.
+EIS is based on studying the response of an electrochemical system when applying an alternating sinusoidal excitation signal, 𝑒:
+(14)
+
+𝑒 = 𝐸𝑠𝑖𝑛(𝜔𝑡)
+Where:
+•
+
+𝐸 is the amplitude of the applied potential
+
+•
+
+𝜔 = 2𝜋𝑓 is the angular frequency, given the frequency 𝑓 in Hz
+
+•
+
+𝑡 is the time.
+
+The response signal 𝑖 is a sinusoidal alternating current, which will have a phase shift due to
+the electrochemical process:
+(15)
+
+𝑖 = 𝐼𝑠𝑖𝑛(𝜔𝑡 + 𝛷)
+Where:
+•
+
+𝐼 is the amplitude of the measured signal
+
+•
+
+𝛷 is the phase shift between the applied potential and the resulting current.
+
+If we consider both the potential excitation signal and the current response signal as rotating
+vectors, the two vectors will be rotating with the same angular frequency 𝜔 and will show a
+phase shift 𝛷. The impedance 𝑍 is expressed as a complex number (Figure 12):
+𝑍 = 𝑍 ′ − 𝑗𝑍′′
+
+(16)
+
+Where:
+•
+
+𝑍′ (real part) is the impedance at 𝛷 = 0
+
+•
+
+−𝑍′′ (imaginary part) is the impedance at 𝛷 =
+
+𝜋
+2
+
+= 90°
+20
+
+Luca Guagneli
+•
+
+𝑗 = √−1 is the imaginary number.
+
+Figure 12: A graphical representation of the EIS response.
+
+The impedance given by each measurement can be seen as a vector 𝑍⃗ with real and imaginary
+parts. A complete EIS measurement is done by measuring the real and imaginary parts of the
+impedance while changing the frequency 𝑓 of the excitation signal. The result can either be
+represented in a Nyquist plot where −𝑍′′ is plotted against 𝑍′, or in a Bode plot where both the
+log 𝑍 and the phase shift 𝛷 are plotted against the logarithm of frequency 𝑓. The Bode plot
+does not explicitly give information about the real and imaginary parts of the impedance, while
+the Nyquist plot does not give info about the frequency of each data point.
+Potentiometric measurements use a two-electrode cell composed of a working electrode (WE)
+and a reference electrode (RE). In this configuration, the RE works as counter electrode (CE)
+at the same time. This means that the potential difference and the flow of current are between
+the WE and RE. The problem with this configuration is that the current flowing through the RE
+may cause slight changes in the activity of the reference species. This variation brings to an
+alteration of its potential. The current flowing through a potentiometer is very low, hence the
+two-electrode layout is acceptable. Contrariwise in EIS it is preferred to use the three-electrode
+cell. In this system, the potential difference is applied between the WE and RE, while the current
+flows between the WE and CE.
+
+21
+
+Luca Guagneli
+The spectra of ISMs are usually modeled using a Randles-type of equivalent circuit58. Figure
+13 shows the Randles equivalent circuit and an ideal impedance spectrum of an ISM. The equivalent circuit contains four elements:
+•
+
+𝑅𝑠 : the resistance due to the diffusion of the ions in the solution, usually negligible
+
+•
+
+𝐶𝑔 : the geometric capacitance established at the ISM
+
+•
+
+𝑅𝑏 : the bulk resistance of the ISM
+
+•
+
+𝑍𝑑 : the impedance associated with the ion-to-electron transduction process, with possible contributions from diffusion processes in the ISM.
+
+Figure 13: The ideal impedance spectrum of an ISM and the Randles equivalent circuit. The spectrum was obtained with 𝑅𝑠 = 5 kΩ, 𝐶𝑔 = 1 pF, 𝑅𝑏 = 100 kΩ, and a Warburg coefficient for 𝑍𝑤 of 0.5. Source: adapted from
+reference58.
+
+22
+
+Luca Guagneli
+
+3 Experimental
+3.1 Chemicals and materials
+The chemicals were used as received without further purification. Polyvinyl acetate (PVAc)
+powder was obtained from Wacker (Vinnapas B60 Finely ground). Sodium chloride was purchased from VWR. Magnesium chloride hexahydrate and potassium chloride were purchased
+from Merck. Calcium chloride dihydrate was purchased from Fluka Chemicals. Lithium chloride, lithium acetate (LiOAc, 98%), Iron(III) chloride hexahydrate (> 98%), potassium ionophore I (valinomycin), potassium tetrakis[3,5-bis(trifluoromethyl)-phenyl]borate (KTFPB),
+bis(2-ethylhexyl)sebacate (DOS, ≥97%), high molecular weight polyvinyl chloride (PVC), polyvinyl butyral (PVB), vinyl acetate monomer (VAc, ≥99%), photo-initiator 2,2-dimethoxy-2phenylacetophenone (DMPP, 99%) and tetrahydrofuran (THF, ≥99.5%) were obtained from
+Sigma Aldrich. Deionized water (ELGA Purelab Ultra, resistivity 18.2 MΩcm) was used for
+preparing the aqueous solutions. Silver paste was purchased from Electrolube. Carbon cloth
+(Kynol® activated carbon fabric ACC-5092-20) was purchased from Kynol Europa GmbH,
+Hamburg. Gold wire (24 carats, diameter 1 mm) was purchased from City Gold, Turku (FI).
+
+3.2 Design of the planar solid-contact K+-ISE
+An innovative design of planar sensors was developed for this project. The novel design is a
+solid-contact (SC) planar electrode that allows the flow of analyte solution through the membrane. The geometry of the system is planar and concentric. An illustration of the electrode and
+a comparison with conventional SCISEs is shown in Figure 14.
+
+23
+
+Luca Guagneli
+
+Figure 14: Schematic representation of the novel K+-SCISE prepared and studied in this project. a = 2.5 mm,
+b = 4 mm, c = 20 mm.
+
+Carbon cloth (CC), here used as solid contact, is a cloth-like material, which contains carbon
+fibers. Due to the presence of carbon-based fibers, CC shows high electrical conductivity. Carbon cloth is used for several applications such as supercapacitors59,60, energy storage and conversion61,62, and fuel cells63. Due to the cloth-like structure, it is a highly flexible material, easy
+to cut and shape. The flat, flexible, and easy to cut texture of CC, together with the good electrical properties and high specific surface area, were the reasons behind choosing this material
+in the preparation of the novel K+-SCISE.
+The K+ ion-selective membrane (ISM) cocktail was prepared according to the work by Mattinen
+et al.36. The composition of the cocktail used during the project is shown in Table 3. The substances were weighed in a glass vial and THF was added to obtain a cocktail with 20% dry
+mass. The cocktail was vigorously shaken for some minutes, mixed overnight, and then stored
+in the refrigerator.
+Table 3: Composition of the K+ ISM cocktail.
+
+Substance
+
+% w/w
+
+Valinomycin
+
+1.03
+
+KTFPB
+
+0.51
+
+DOS
+
+65.2
+
+PVC
+
+33.3
+
+24
+
+Luca Guagneli
+Three K+-SCISEs were prepared and characterized. The electrodes will be called E1, E2 and
+E3. The ISMs were applied using the drop-casting method in an innovative way (Figure 15b
+and c). First, a piece of carbon cloth with dimensions of ≈ 35x35 mm was cut. Then a round
+hole with a 4 mm diameter was cut in the middle using the hole punch tool shown in Figure
+15a. The CC piece was fixed on a clean PTFE surface using rubber bands.
+The drop-casting steps used to apply the K+-ISM are shown in Figure 16. The carbon cloth is
+made of tiny fibers that can easily detach from the cloth. If these electrically conducting fibers
+end up incorporated in the membrane, the performances of the membrane may be influenced.
+Compressed air was blown inside the hole before starting the drop-casting process to remove
+any of the loose threads. The first addition was made using 50 µL of the K+-ISM cocktail in the
+area around the hole (Figure 16a). This was done to ensure that the threads around the hole
+would stay attached to the cloth. After 45 minutes air was blown again in the middle of the hole
+to remove all the remaining loose threads. Then a sequence of additions of 4x50 µL was made
+into the hole (Figure 16b). Each addition was followed by 45 minutes of drying time. After the
+fourth addition, the membrane was left to dry for 4 hours. Subsequently, the CC piece was
+turned around and the PTFE support was cleaned. One last addition of 50 µL was made on the
+bottom side of the membrane, ensuring that the cocktail spread towards the carbon cloth (Figure
+16c). This last addition was performed to ensure that the CC fibers would stay attached to the
+material also on the bottom side.
+The membranes were left to dry overnight at room temperature under a cover to protect them
+from dust and other impurities.
+
+Figure 15: a) The hole punch tool used to cut the holes in CC and in the membranes. b) and c) pictures taken
+during the drop-casting process.
+
+25
+
+Luca Guagneli
+
+Figure 16: Schematic representation of the drop-casting process used to cast the K+-SCISEs. a) 50 µL addition
+around the hole, b) 50 µL additions in the middle of the hole, c) 50 µL addition on the opposite side of the membrane after turning around the CC piece.
+
+After drying the membrane, the hole punch tool shown in Figure 15a was used to cut a hole of
+2.5 mm diameter in the membrane. The CC piece with the K+-ISM was then placed inside a
+polycarbonate (PC) support designed and made for this purpose (Figure 17). An Au wire was
+used as electrical contact. One side of the wire was flattened and inserted in the support to be
+in contact with the CC substrate, and the other side was used during the measurements to connect the K+-ISE to the potentiometer. The cell was closed and sealed with screws (Figure 17).
+The sample solution was stored in a small container inserted in the upper hole. The lower hole
+was closed during the measurements using a pipette tip sealed with plastic film. The K+-SCISEs
+were stored dry when not in use.
+
+Figure 17: The final setup of the measuring cell with the K+-ISE.
+
+3.3 Design of the planar solid-state reference membranes
+Different approaches were considered for preparing membranes that can be used in the planar
+solid-state reference electrode of the sensing device. The aim was to design solid-state reference
+electrodes with concentric geometry, similarly to the K+-SCISE.
+
+26
+
+Luca Guagneli
+The first approach tested during this project is based on the SS-RE proposed by Mattinen et al.56, where lipophilic salts were used as additives in
+the reference membrane. The salts are composed of organic quaternary
+ammonium cation, and organic quaternary borate anion. An example of
+this salt is tetrabutylammonium tetrabutylborate (TBA-TBB) shown in
+Figure 18. The electrode is schematized in Figure 19a. TBA-TBB is composed of two lipophilic ions with similar behavior in terms of mobility,
+which can diffuse to a little extent from the membrane to the analyte soluFigure 18: The structure of TBA-TBB salt.
+
+tion. The working principle of this electrode is thought to be due to this
+diffusion. The TBA+ and TBB- ions which diffuse into the measuring so-
+
+lution are in equilibrium with the ions present in the membrane. Since the reference electrode
+is the only source of TBA+ and TBB- ions, its potential does not depend on the composition of
+the solution50. The membrane was cast on a conducting substrate. The conducting material was
+either glassy carbon/poly(3,4-ethylenedioxythiophene) (GC/PEDOT)56, Ag/AgCl56, Au39 or
+carbon cloth36.
+Mattinen et al. showed a comparison between two different possibilities for SS-REs based on
+lipophilic salts56. One possibility is to produce a Ag/AgCl/KCl-type electrode. This can be done
+by using an approach based on two separate salts (i.e. double salt approach), where the quaternary ammonium is used as chloride salt and the quaternary borate is used as potassium salt.
+When the two salts are mixed in the cocktail, they will react and some KCl will be produced.
+The membrane was drop-cast on a Ag/AgCl substrate. The other possibility was based on TBATBB as a single salt (i.e. single salt approach). The membrane cocktail based on TBA-TBB
+was drop-cast directly on a conducting substrate. The studies showed that the single salt approach gave the best results.
+The second approach was based on the so-called solid-state composite reference electrode manufactured and characterized earlier by a research group from the laboratory of Analytical Chemistry at Åbo Akademi university53,54. The electrode is schematized in Figure 19b. In this type
+of reference electrode, a polymer/inorganic salt (polyvinyl acetate/KCl) composite is used instead of the filling solution in a conventional reference electrode. As reference element, a
+Ag/AgCl wire is imbedded in the polymeric matrix. This SS-RE behaves as a common
+Ag/AgCl/KCl electrode, where the activity of Cl- ions is kept constant in the Polyvinyl acetate
+/KCl composite.
+
+27
+
+Luca Guagneli
+The third approach was based on the solid-state reference electrode proposed by Guinovart et
+al.64–66, and Parrilla et al.67. The electrode is schematized in Figure 19c. The reference electrode
+presented by the authors was a planar electrode, developed to be used in wearable sensors. The
+reference electrode is a Ag/AgCl/NaCl system. NaCl is incorporated into a polyvinyl butyral
+(PVB) membrane deposited onto a Ag/AgCl layer.
+
+Figure 19: Schematic illustrations of the SS-REs which inspired the REs built during this project. a) the lipophilic quaternary ammonium-quaternary borate-based approach, b) the Ag/AgCl/KCl SS-RE based on composite membrane, and c) the Ag/AgCl/NaCl electrode based on PVB membrane.
+
+3.3.1 Design of the TBA-TBB-based solid-state reference electrode
+The cocktail of the reference membranes was based on tetrabutylammonium tetrabutylborate
+(TBA-TBB). The amount of the lipophilic salt was chosen according to the indications given
+by Mattinen et al56, who had optimized it in a previous study. Mattinen et al. suggested that
+12.5% w/w of the lipophilic salt in the membrane gives the best results in terms of signal stability and reproducibility56. The other components were PVC, as the membrane matrix, and
+DOS, as plasticizer. The composition of the cocktail is shown in Table 4. The components were
+weighed in a glass vial and THF was added to obtain a cocktail with 20% dry mass.
+Table 4: The composition of the cocktail used for the reference membrane based on TBA-TBB.
+
+Substance
+
+% w/w
+
+TBA-TBB
+
+12.5
+
+PVC
+
+29.6
+
+DOS
+
+57.9
+
+28
+
+Luca Guagneli
+Three membranes were cast following the procedure used for preparing the K+-ISEs as shown
+in Figure 16 and explained in section 3.2. The three electrodes will be called R1, R2 and R3.
+The structure of the reference electrode is shown in Figure 20. The inner hole of the membranes
+was cut with the hole punch tool shown in Figure 15a. The electrodes were inserted in the
+polycarbonate support shown in Figure 17.
+
+Figure 20: Schematic representation of the TBA-TBB-based SS-RE. a = 2.5 mm, b = 4 mm, c = 20 mm.
+
+The SS-REs were stored in 0.1 M KCl solution when not in use.
+
+3.3.2 Design of the Ag/AgCl/KCl-composite solid-state reference electrode
+The components used to prepare the composite in wt% were 49.5% KCl, 0.5% photoinitiator
+(DMPP), 20% Polyvinyl acetate (PVAc), 30% Vinyl Acetate (VAc). The substances were
+weighed in a glass vial. The vial was covered with Aluminum foil and left mixing overnight.
+The composite was stored in the fridge and vigorously shaken before using.
+A schematic representation of the steps designed for preparing the composite SS-RE is shown
+in Figure 21 and the steps are explained below. The electrode, as it was designed, is shown in
+Figure 22.
+•
+
+Step a: the initial piece of carbon cloth (CC)
+
+•
+
+Step b: deposition of a 10 mm diameter layer of Ag paste.
+
+•
+
+Step c: addition of 1 M FeCl3 solution on top of the Ag paste layer to electrochemically
+produce AgCl on the top of Ag (Ag + FeCl3 → AgCl + FeCl2).
+
+•
+
+Step d: cutting a 4 mm hole in the middle of the CC piece.
+
+29
+
+Luca Guagneli
+•
+
+Step e: applying the mixture, used for preparing the composite, in the 4 mm hole and
+partially onto the Ag/AgCl substrate. The PVAc/KCl composite was prepared by chemical polymerization using a UV lamp.
+
+•
+
+Step f: cutting a 2.5 mm inner hole.
+
+•
+
+Step g: inserting the electrode in the support and connecting the Au wire.
+
+Figure 21: Schematic representation of the procedure designed for preparing the Ag/AgCl/KCl-composite reference electrode.
+
+Figure 22: Schematic representation of the Ag/AgCl/KCl-composite SS-RE.
+
+30
+
+Luca Guagneli
+
+3.3.3 Design of the Ag/AgCl/NaCl-PVB solid-state reference electrode
+This electrode was built with a polymeric membrane in contact with the Ag/AgCl substrate.
+The polymeric membrane is based on PVB and contains NaCl as source of Cl- ions. The membrane is produced by drop casting.
+The steps used for preparing the Ag/AgCl/NaCl-PVB solid-state reference electrode are explained below. The only difference between the building procedures of the Ag/AgCl/KCl-composite SS-REs and the Ag/AgCl/NaCl-PVB electrodes is the absence of photopolymerization
+in the latter (step e).
+•
+
+Step a: the initial piece of carbon cloth (CC).
+
+•
+
+Step b: deposition of a layer of Ag paste.
+
+•
+
+Step c: addition of FeCl3 1 M to produce electrochemically a layer of AgCl on the top
+of the layer of Ag (Ag + FeCl3 → AgCl + FeCl2).
+
+•
+
+Step d: cutting of the outer hole of the electrode.
+
+•
+
+Step e: drop-casting of the PVB-based membrane containing NaCl.
+
+•
+
+Step f: cutting of the inner hole of the electrode
+
+•
+
+Step g: insertion of the electrode in the support and connection of the Au wire.
+
+The cocktail used to cast the membranes was composed of 10% w/w PVB in methanol. NaCl
+was added in excess to obtain a saturated solution (solubility = 0.238 mol/kg at 298.15 K68).
+The cocktail was vigorously shaken and left in an ultrasonic bath for 45 minutes (VWR Ultrasonic Cleaner, 80W) and then stored in the fridge. The cocktail remains stable up to 2 weeks64.
+The membranes were cast following an innovative procedure (Figure 23). Firstly, 7 additions
+of 30 µL were made in the center, waiting 45 minutes between each addition. Secondly, 5 further additions of 20 µL were made in the center, until an appropriate thickness was obtained.
+The membranes were left to dry overnight and the following day 30 µL of cocktail was added
+on the bottom side of the membranes, ensuring that the cocktail spread towards the carbon cloth.
+The inner hole was then cut, and the electrode was inserted in the polycarbonate support shown
+in Figure 17. Figure 24 shows pictures of the preparation steps.
+
+31
+
+Luca Guagneli
+
+Figure 23: Schematic representation of the drop-casting process used to cast the Ag/AgCl/NaCl-PVB SS-REs. a)
+30 µL additions in the hole, b) 20 µL additions in the hole, c) 30 µL addition on the opposite side of the membrane after turning around the CC piece.
+
+Figure 24: Manufacturing of the Ag/AgCl/NaCl-PVB SS-RE. From left to right: Ag layer, AgCl layer, PVB/NaCl
+membrane, final view in the PC device.
+
+3.4 Design of the full potentiometric system
+The K+-SCISE and the reference electrode were assembled to form the full potentiometric system (Figure 25a). The two electrodes were inserted in a double-cell polycarbonate (PC) support,
+designed and made for this purpose similarly to the single-cell support. The new device had an
+interlayer between the K+-SCISE and the reference membrane composed of a PVC disc, with a
+thickness of 1 mm. The PVC disc had the function of insulating the two membranes. In the
+PVC disc there is an inner hole to allow the flow of solution, and a little hole for the Au wire
+coming from the lower membrane (the K+-SCISE). Figure 25b shows a picture of the whole
+potentiometric device and the three different layers of the device are shown in Figure 26. As
+shown in the pictures, the upper membrane (i.e. the reference membrane) has an external hole
+positioned around the Au wire connected to the K+-SCISE. This hole was made to avoid the
+electrical connection (short circuit) between the two electrodes.
+
+32
+
+Luca Guagneli
+
+Figure 25: a) Schematic view of the full potentiometric system. 1 K+-SCISE, 2 PVC insulator disc used as separator, 3 reference membrane, 4 Au wire connected to the reference, 5 Au wire connected to the K +-SCISE, 6 Polycarbonate (PC) support. b) a picture of the double-cell system.
+
+Figure 26: The three layers used for constructing the device. From left to right: K+-SCISE, separator, and SSRE.
+
+3.5 Experimental setup
+3.5.1 Potentiometric measurements
+Potentiometric measurements were performed using a 16-channel millivoltmeter (Lawson Labs
+EMF16 Interface system) with high input impedance of 1015 Ω and L-EMF DAQ 3.0 software.
+In the calibration test carried out using different concentrations, the measurement was performed for ≈ 5 minutes in each concentration, or until a stable potential was reached. The value
+used to build the calibration lines was obtained by averaging the last 5 values of the measurement.
+Unless otherwise specified, the potentiometric measurements were conducted using a commercial Double Junction Ag/AgCl Reference Electrode from Metrohm. The inner filling solution
+was 3 M KCl and the outer filling solution was 1 M LiOAc.
+
+33
+
+Luca Guagneli
+A commercial 9417BN Solid State Half-Cell Chloride-ISE from Orion Thermo Scientific was
+used to test the SS-REs by recording calibration lines for the electrode in KCl solutions.
+
+3.5.1.1 Water layer test
+A typical SCISE is not supposed to have any liquid in its structure. However, some water may
+diffuse between the ISM and the Solid Contact (SC) during the lifetime of the electrode69. This
+may create a thin layer of water between the ISM and the SC. This inner water layer can be
+seen as a low-volume inner solution that functions as electrical contact. A SCISE containing an
+inner liquid layer cannot be considered as a true SC electrode. Indeed it will behave similarly
+to a liquid-contact ISE (see section 2.3.1), which needs an inner reference electrode. The inner
+reference electrode of a liquid-contact ISE needs to have definite potential. Hence, in this situation, a mere solid-contact conducting material is not enough to ensure a stable potential
+readout70. Furthermore, changes in the composition of the liquid layer solution may occur and
+this will create further instability in the potential readout70. It has been shown elsewhere71 that
+the presence of the water layer in a SCISE causes instability of the potentiometric response. In
+particular, it can cause a drifting in the potential signal and extend the time needed to reach a
+stable potential.
+The water layer test is a potentiometric test proposed by Fibbioli et al.71 which aims to check
+the formation of the water layer between the ISM and the SC. The test is performed after complete conditioning of the ISM in a solution of the primary ion. The potential is registered for
+some time after complete conditioning. Then the electrode is immersed in a solution containing
+a different salt for a certain amount of time and the potential is monitored. Finally, the electrode
+is immersed again in the solution of the ion of interest and the potential is measured. The absence of the inner water layer does not cause any significant drift in the signal readout. The
+presence of an inner water layer will cause a drifting signal which, for cation-selective electrodes, will be:
+•
+
+from low potentials to high potentials when the electrode is immersed in the solution
+which does not contain the ion of interest
+
+•
+
+from high potentials to low potentials when the electrode is immersed again in the solution which contains the ion of interest.
+
+The test was performed using the same potentiometric setup as for other tests. The potential of
+the K+-ISM was measured against the Ag/AgCl/KCl/LiOAc reference electrode, both placed in
+34
+
+Luca Guagneli
+a Faraday Cage to minimize external interferences. The ISM was conditioned in 0.1 M KCl for
+24h before starting the test. The potential was measured as follows: 0.1 M KCl for 1.5 h, 0.1 M
+NaCl for 2 h, 0.1 M KCl for 4h.
+
+3.5.1.2 Selectivity coefficients 𝑲𝒊,𝒋
+The selectivity coefficients were measured for the K+-ISEs in presence of some common interfering ions. The K+-SCISE is intended for sweat monitoring and the most relevant interfering
+ion for this application is Na(I), followed by Ca(II) and Mg(II)72,73. The selectivity coefficients
+were measured in the presence of Ca(II), Mg(II), Na(I), and also Li(I) ions. All the interfering
+cations were used as chloride salts.
+The selectivity coefficients were measured using the separate solution method (SSM, see section 2.3). The test was performed by measuring the potential of the K+-SCISEs in 0.01 M KCl
+solution and then in a 0.01 M solution of each of the four interfering cations. The selectivity
+coefficients 𝐾𝑖,𝑗 were calculated using Equation (11). The activities of the ions were calculated
+following the Debye-Hückel theory (see section 2.2.1). The test was conducted on the three K+SCISEs E1, E2, and E3.
+The test was performed using the same potentiometric setup used for other tests and the
+Metrohm double junction Ag/AgCl/3 M KCl/1 M LiOAc was used as reference electrode.
+
+3.5.2 EIS
+EIS measurements were performed using the Autolab General Purpose Electrochemical System
+(AUT20.FRA2-Autolab, Eco Chemie, B.V., The Netherlands) and the Autolab Frequency Response Analyzer (FRA) software.
+The EIS measurements were performed under the following conditions:
+•
+
+Electrolyte solution: 0.1 M KCl.
+
+•
+
+Counter electrode: Glassy carbon (GC) rod.
+
+•
+
+Reference electrode: Metrohm single junction Ag/AgCl/3 M KCl.
+
+•
+
+Initial conditioning: 60 s at open circuit potential (OCP). The OCP was + 0.34 V for the
+K+-SCISEs.
+
+•
+
+EIS parameters: dc potential = OCP, ac amplitude = 100 mV, frequency range 100 kHz
+- 0.01 Hz.
+
+Before each measurement, nitrogen gas was bubbled in the electrolyte solution for 10 minutes
+to remove the dissolved oxygen. The results were plotted in a Nyquist plot.
+35
+
+Luca Guagneli
+
+4 Results and discussion
+4.1 Characterization of the planar K+-SCISE
+4.1.1 Determination of the linear range and performance
+The performance of the novel K+-SCISEs was evaluated. As a preliminary test, the potential of
+the cell, consisting of K+-SCISE as indicator electrode and the Metrohm double junction reference electrode, was measured in 1 M to 10-8 M KCl solutions. The test was performed without
+background electrolyte (BGE) and with 0.1 M NaCl as constant BGE. The results are shown in
+Figure 27, for the test performed without BGE, and Figure 28, for the test with the BGE. The
+potentiometric response against time is given as Appendix A.
+
+Figure 27: a) the potential signal recorded in 1 M to 10-8 M KCl solutions and b) the calibration line obtained
+plotting the points which showed a linear response.
+
+Figure 28: a) the potential signal recorded in 1 M to 10-8 M KCl solutions with 0.1 M NaCl as constant BGE and
+b) the calibration line obtained plotting the points which showed a linear response .
+
+36
+
+Luca Guagneli
+As the results show, the device gives a linear response over wide KCl concentration range (1
+M - 10-5 M KCl).
+A second conclusion coming from the test is that the electrode is selective to K+ in the presence
+of Na+ ions, showing that 0.1 M Na+ as BGE did not cause significant interferences. The effect
+of Na+ ions can be seen from the fact that the slope of the second set of data is lower (54.9 vs
+58.4 mV/dec). The reason for this is that the ISM is not an ideal membrane. The electrode gives
+a weak signal due to the high amount of Na+. This signal is not negligible when the concentration of K+ is low. We can consider 10-5 M KCl, where the same solution contains [Na+] = 104
+⨯ [K+]. In this situation, a fraction of the potential coming from the ion K+ is in effect given by
+the high amount of Na+. The high concentration of sodium causes the rising of the tail of the
+calibration line, which brings to a lower slope. The selectivity coefficient 𝐾𝐾,𝑁𝑎 (see section
+2.3) will be given in section 4.1.3.
+The test showed that the linear response of the K+-SCISE is in the range 1 M to 10-5 M. However, such wide range is not needed, considering the intended applications of this device. The
+concentration of potassium in sweat is generally in the order of 2-8 mmol/L73,74 (10-3 - 10-2 M).
+Therefore, the range of concentrations chosen for the characterization is 10-1 M to 10-4 M.
+The three K+-SCISEs E1, E2, and E3 were calibrated using the chosen range of concentrations
+to estimate the slopes of the device. The calibration was performed with and without 0.1 M
+NaCl as BGE. The calibration plots of E1 are shown in Figure 29. The plots of E2 and E3 are
+given as Appendix B.
+
+37
+
+Luca Guagneli
+
+Figure 29: Comparison between calibration lines obtained in KCl solutions without (black set) and with (red
+set) BGE.
+
+The average of slopes for the three K+-SCISEs were 57.3 ± 0.6 and 56.3 ± 0.4 mV/dec (average
+± SD, n = 3) without and with 0.1 M NaCl as BGE, respectively. The slopes were close to the
+expected Nernstian slope (see Equation (6)).
+The performances of the novel K+-SCISE are comparable to those used in sweat-monitoring
+instruments. Pirovano et al. presented a wearable system based on a conducting polymer (CP)
+as an ion-to-electron transducer to measure the amount of K+ in sweat72. The authors reported
+slopes of 45.7 ± 7.4 mV/decade and 54.3 ± 1.5 mV/decade, using Poly(3,4-ethylenedioxythiophene) (PEDOT) in the linear range log(a) = -4.0 to -0.5, and using Poly(3-octylthiophene) (POT) in the linear range log(a) = -4.0 to -1.0, respectively. Alizadeh et al. presented a
+wearable patch used to measure the amount of K+ in sweat75. The authors reported a sensitivity
+of ∼53.9 mV/dec for K+. Parrilla et al. presented a textile-based stretchable wearable sensor for
+monitoring the amount of K+ ions in sweat67, which showed a linear response in the range log(a)
+= -5.0 to -1.0 with a slope of 59.9 mV/dec. In another study, Parilla et al. presented a second
+sensor for monitoring K+ in sweat using a Polyurethane (PU) substrate which showed slope of
+56.8 ± 2.5 mV/dec for K+ in the range log(a) = -5.0 to -1.076. All the electrodes contained
+valinomycin as ionophore for K+. The linearity of the novel K+-SCISE is thus well in accordance with other electrodes intended for the same scope.
+
+38
+
+Luca Guagneli
+Further tests were conducted on the sensing device. One test was conducted by measuring the
+electrode potential in KCl solutions starting from low to high concentration and then back to
+low concentration (Figure 30a). A second test was conducted by measuring the potential of the
+electrode in KCl solutions with 3-decades different concentration (Figure 30b).
+
+Figure 30: The response obtained by measuring the potential of the electrode in KCl solutions a) from low to
+high concentration and then back to low concentration and b) with 3-decades different concentrations. The calibration plots are given as Appendix C.
+
+The potentiometric response of the device is reproducible. The test shows that the electrode has
+high signal stability over a timeframe of minutes. The equilibration time is 1-2 minutes. In some
+cases, no equilibration time is needed before obtaining a relatively stable signal. The long-time
+stability of the potentiometric signal will be discussed in a different section (see section 4.1.2).
+Although the response of the electrode is stable, Figure 30 shows some noise in the potential
+which may be due to the measurement instrument. In particular, it may depend on the structure
+of the prototype used to test the electrode. Figure 17 shows that the gold wire used to connect
+the electrode to the potentiometer is free in the air. This wire is sensitive to any electrical perturbation that may come from the environment. Examples of the perturbations noticed during
+the tests are the electrostatic charge of the gloves used by the operator, and the movement of
+air. Figure 31 shows that these interferences can be easily minimized by performing the measurements in a Faraday cage. However, the Faraday cage was not used during the tests, since it
+was possible to read the true signal even in presence of the interferences.
+
+39
+
+Luca Guagneli
+
+Figure 31: The signal obtained by carrying out the measurement in a Faraday cage, in KCl solutions from 10-4
+M (low potential) to 10-1 M (high potential). The signal registered in 0.01 M KCl is magnified to show the stability of the potential over a 5-minute timeframe.
+
+4.1.2 Water layer test
+The results of the water layer test are presented in Figure 32, for electrode E1, and in Appendix
+D, for the electrodes E2 and E3.
+
+Figure 32: a) Results from the water layer test performed using the K+-SCISE E1, and b) magnification of the
+resulted response. The measurements were done first in 0.1 M KCl, then in 0.1 M NaCl and finally in 0.1 M KCl
+solutions.
+
+The potentiometric responses of the electrodes were used to draw conclusions regarding the
+presence of the water layer. The signal of the K+-SCISE in 0.1 M KCl is stable and reproducible.
+40
+
+Luca Guagneli
+When the measuring solution is 0.1 M NaCl, it is possible to notice an initial drifting towards
+high potential for E1. In principle, this may be a sign of the presence of the water layer (see
+section 3.5.1.1). Examples of water layer tests can be found elsewhere39,70,71,77. The behavior
+of an ISE which contains the inner water layer is clearly defined by a drifting trend. The potential jump is usually around 50-100 mV. The potential obtained with the electrode E1 shows a
+rising trend followed by a decreasing curve, after which the signal starts to increase again. This
+is within a range of 10-15 mV. This would be uncommon if compared to the examples that can
+be found in literature and does not confirm the presence of the inner water layer. The responses
+of the electrodes E2 and E3 (Appendix D) show a higher potential jump. The behavior of these
+electrodes is more similar to the one of electrodes which contain the water layer.
+The second indicator of the presence of the water layer is the decreasing signal that the electrode
+shows when the ISM is immersed again in the solution containing the ion of interest. The examples that can be found in the literature show a clear decreasing trend followed by a stable
+readout. The jump is usually around 50-100 mV. The potential responses of the K+-SCISEs do
+not show such a decreasing trend. Instead, for E1, it is possible to see a slight rise of the potential, similarly to the initial response at t = 0, within a 5-mV jump. Here, there is no signal
+distortion. It is clear that the electrode does not have the typical response given by SCISEs with
+an inner water layer. The responses of electrodes E2 and E3 do not show the presence of the
+inner water layer either. Hence it is possible to state that the ISM-CC solid contact (SC) does
+not contain the water layer. A change in the composition of the analyte solution does not cause
+distortions in the potential.
+At the same time, Figure 32 shows that the potential obtained with the K+-SCISE is highly
+stable on a timeframe of hours.
+
+4.1.3 Selectivity coefficients 𝑲𝒊,𝒋
+The selectivity test was conducted using the three K+-SCISEs E1, E2, and E3. The potentiometric results of E1 are shown in Figure 33. The results of E2 and E3 are given as Appendix E.
+
+41
+
+Luca Guagneli
+
+Figure 33: The potentiometric response of E1. The measurements were done in 0.01 M KCl, CaCl2, LiCl, MgCl2,
+NaCl, and again in KCl solutions.
+
+Figure 33 shows that the electrode had a stable and reproducible response in 0.01 M KCl. When
+the measuring solution was one of the interfering ions, the response was less stable. Some of
+the interfering ions gave a drifting signal. Several fluctuations are present in the potential responses of the interfering ions.
+Results from the selectivity coefficients, 𝐾𝑖,𝑗 for E1, E2, and E3 are given in Table 5 as the
+average of the three values (n=3) of 𝑙𝑜𝑔𝐾𝑖,𝑗 ± the standard deviation (SD).
+Table 5: Results of the tests performed using 3 electrodes.
+
+𝒍𝒐𝒈𝑲𝒊,𝒋
+
+Ca(II)
+
+Average ± SD (n=3) -4.29 ± 0.14
+
+Li(I)
+
+Mg(II)
+
+Na(I)
+
+-3.21 ± 0.09
+
+-4.68 ± 0.05
+
+-3.34 ±0.08
+
+Table 6 shows a comparison of the selectivity coefficient values obtained in this study with the
+coefficients of K+-SCISEs presented in the literature.
+
+42
+
+Luca Guagneli
+Table 6: Comparison of selectivity coefficients with literature values that were measured using a = Separate Solution Method (SSM) or b = Fixed Interference Method (FIM).
+
+1, a
+
+276, a
+
+378, b
+
+465, b
+
+579, b
+
+672, b
+
+780, a
+
+𝑙𝑜𝑔 𝐾𝐾,𝐶𝑎
+
+-4.29 ± 0.14 -3.7 ± 0.1 -3.9 ± 0.1
+
+-4,6
+
+-4.7 ± 0.1
+
+-
+
+≈ -2
+
+𝑙𝑜𝑔 𝐾𝐾,𝐿𝑖
+
+-3.21 ± 0.09 -3.5 ± 0.0 -2.7 ± 0.1
+
+-4.4
+
+-4.4 ± 0.1
+
+-
+
+-
+
+-
+
+-4.9 ± 0.2
+
+-
+
+≈ -7
+
+𝑙𝑜𝑔 𝐾𝐾,𝑀𝑔 -4.68 ± 0.05 -3.9 ± 0.0 -4.1 ± 0.1
+𝑙𝑜𝑔 𝐾𝐾,𝑁𝑎
+
+-3.34 ± 0.08 -3.7 ± 0.0 -2.8 ± 0.1
+
+-3.6
+
+-3.2 ± 0.2 -2.1 ± 0.1 -4.36
+
+1 this study, 2 polyurethane (PU) based K+-SCISE using multiwalled carbon nanotubes (MWCNTs) as conducting
+material76, 3 paper-based K+-SCISE using CNTs as conducting material78, 4 cotton-yarn based K+-SCISE using
+CNTs as conducting material65, 5 Au-based K+-SCISE using MWCNTs as conducting material79, 6 wearable system using conducting polymer (CP) as conducting material72, 7 K+-SCISE using polyaniline (PANI) as conducting
+material80. All the electrodes contained valinomycin as ionophore for K+.
+
+The novel K+-SCISE presented in this project has selectivity coefficients that are in line with
+other K+-selective electrodes presented in the literature.
+
+4.1.4 Inter-day calibration
+The intended applications of the novel ISE would benefit from a reproducible and stable electrode potential, as well as a stable calibration in a timeframe of a few days. For this reason, the
+potentiometric performance of the three identical K+-SCISEs was measured during 5 consecutive days (D1 to D5). The test was performed by calibrating E1, E2 and E3 in 10-1 M to 10-4 M
+KCl solutions with 0.1 M NaCl as background electrolyte. The results are shown in Figure 34.
+
+Figure 34: Slopes (a), and standard potential values (b) obtained from the calibration lines recorded for electrodes E1, E2 and E3 during D1 to D5.
+
+43
+
+Luca Guagneli
+During the five days, the change in the slopes of E1, E2, and E3 was within ranges of 0.8, 2.6,
+and 2.8 mV/dec, respectively, and for the standard potential values was within a range of 5 mV
+for the three electrodes.
+Electrodes E2 and E3 seem to follow a similar behavior. The calibration plots obtained in D1
+with E2 and E3 had the highest slope, which diminished significantly on D2 to reach a more
+stable value after D3 with a slightly rising trend. The behavior of E2 and E3 is similar also in
+the trend of standard potential values, which became quite stable after D3. The electrode E1
+showed the highest stability of slope and standard potential values. The fluctuations can be
+attributed to random errors and there was no significant trend during the five days.
+
+4.1.5 Impedance study of the K+-SCISE
+Impedance measurements were done to study the effect of the inner and outer diameters of the
+K+-ISM. These diameters correspond to the dimensions a and b shown in Figure 14. A preliminary test was conducted at the first stage of the project to optimize the geometry of the electrode. In particular, the dimensions a and b were optimized. The dimensions of the first trial
+electrode were a = 3 mm, b = 5 mm. Two of the EIS spectra recorded for K+-SCISE with this
+geometry are shown as an example in Figure 35.
+The spectra of the K+-SCISE is comparable to the spectra of an ideal SCISE. The high-frequency semicircle, in this case, is attributed to the PVC-based K+-ISM (see section 2.5). The
+value of 𝑍’ at the point where the semicircle meets the x-axis corresponds to the bulk resistance
+of the ISM. The low-frequency impedance curve is due to the ion-to-electron transduction process. This impedance is highly dependent on the type of solid contact (SC) of the electrode, and
+is hard to model.
+The spectra show that the resistance of the PVC-based membrane is the main source of impedance. Commonly, the resistance of ISMs is 1 - 10 MΩ77,81–84. The resistance of the K+-ISM with
+the current geometry was higher. It laid in the range 100 - 275 MΩ (Figure 35 a and b, respectively) during repeated experiments.
+The higher resistance can be attributed to the area and thickness of the ISM. The ISMs in common ISEs are produced with lower amounts of cocktail, and their thickness is lower if compared
+to the ISM contained in the K+-SCISE studied in this work. In general, an ISM with high resistance is related to a higher noise level. Although the resistance of the membranes was high,
+the potentiometric response of the cell was highly satisfactory.
+
+44
+
+Luca Guagneli
+
+Figure 35: Examples of EIS spectra of the first trial K+-SCISE (a = 3 mm, b = 5 mm).
+
+As part of the preliminary optimization process, the diameters a and b were changed to a = 4
+mm, b = 5 mm. This was done to try to reduce the resistance of the K+-ISM.
+As can be seen from the impedance spectrum in Figure 36, increasing the inner diameter from
+3 mm to 4 mm caused a decrease in resistance. Indeed the resistance decreased from 275 MΩ
+(the highest value observed) to around 45 MΩ. The low-frequency impedance branch did not
+change. This means that the impedance given from the ion-to-electron transduction process is
+the same. It confirms that the impedance in the low-frequency side of the spectra depends on
+the solid contact (SC).
+
+Figure 36: EIS spectrum of the second trial K+-SCISE (a = 4 mm, b = 5 mm).
+
+45
+
+Luca Guagneli
+The EIS spectra recorded during the preliminary phase of the project confirmed that the resistance of the ISM depends on its width (i.e. the diameter b minus the diameter a) and thickness. The test showed also that the ISM is the main source of impedance, and that the ion-toelectron transduction process does not depend on the width of the membrane but solely on the
+SC.
+The K+-SCISE with a = 4 mm and b = 5 mm caused problems during the potentiometric measurements as shown in Appendix F. Since the inner diameter of the ISM was slightly bigger than
+the hole in the PC support, a small empty cavity could form in the flow channel. This space was
+filled with a small volume of analyte solution that could not be rinsed easily. For this reason
+the inner diameter a was changed to 2.5 mm and the outer diameter b to 4 mm. The diameter a
+was now the same as the hole of the PC support, and the diameter b was chosen so that the
+width of the membrane was not too big. This is the geometry shown in Figure 14 that was used
+for the rest of the project.
+EIS spectra were recorded using the three K+-SCISEs (E1, E2, and E3) prepared with the abovementioned geometry. The spectra for E1 and E3 are shown in Figure 37, and for E2 in Appendix
+G.
+Electrodes E1 and E2 have impedance spectra with similar shape. The spectra are similar to
+those obtained previously. They show again that the PVC-based ISM is the main source of
+impedance in respect to the ion-to-electron transduction process. The resistances of the ISMs
+of E1 and E2 are around 100 and 80 MΩ, respectively.
+The K+-SCISE E3 has a different impedance spectrum. The resistance of the ISM of E3 is lower,
+around 50 MΩ. As can be seen in Figure 37, there is a second semicircle with slightly higher
+impedance in the spectrum of this electrode. This could be obtained in a situation where the
+membrane has an electrical disconnection, or two distinct areas with different characteristics
+(thickness, width). The second semicircle could be modeled with a second parallel resistorcapacitor (RC) element in series with the first RC element. An ISM which presents two distinct
+areas, could be modeled with two RC elements in series, and it would give an EIS spectrum
+with two adjacent semicircles.
+
+46
+
+Luca Guagneli
+
+Figure 37: EIS spectra and pictures of the ISMs in E1 and E3.
+
+The three membranes were successfully calibrated during the potentiometric tests. Hence the
+differences in impedance between the membranes do not prevent their usage in the novel sensing device. Nevertheless, the difference in impedance is due to differences in the structure of
+the electrodes. These differences can be attributed to the drop-casting process. The membranes
+were cast using micropipettes. Although the casting process was followed step by step in the
+same way for all the membranes, there may be some differences since it is a manual procedure.
+A solution for this would be automatizing the process. Pirovano et al. presented K+-SCISEs
+which were prepared by drop-casting. The process was performed by a robotic arm, and this
+helped to minimize the differences between the membranes72.
+Other discrepancies between ISMs could be due to the position of the inner hole. If the inner
+hole is not perfectly centered, the paths that connect the analyte solution to the ISM are not
+uniform in all directions. This may lead to preferred paths, hence a non-uniform liquid transport
+and liquid contact to the ISM. The process of cutting the inner hole should be automatized as
+well to minimize the differences between ISMs.
+
+47
+
+Luca Guagneli
+
+4.2 TBA-TBB-based solid-state reference electrode
+Three reference membranes R1, R2, and R3 were cast as explained in section 3.3.1. The membranes were left conditioning in 0.1 M KCl solution. The potentiometric data were registered
+connecting the Au wire of the TBA-TBB reference electrode to the reference channel in the
+voltmeter. The Metrohm double junction reference electrode was used as the indicator electrode.
+The potentiometric response recorded during the conditioning process is shown in Figure 38. It
+should be noted, that the conditioning of the three electrodes was not done at the same time.
+The results are presented in a single graph for comparison purpose. The reproducibility of the
+potential of the three reference membranes, obtained with the configuration explained above
+and shown in Figure 38, was poor. The potentials of electrodes R1 and R3 were quite stable,
+while the potential of electrode R2 was noisy and did not reach a stable value within the time
+during which the potential was monitored. At the end of the measurement, the potential obtained
+with the configuration above mentioned was around + 530 mV, + 370 mV and + 470 mV for
+R1, R2, and R3, respectively, i.e. in a range of around 160 mV. It is important to remember that
+good repeatability is one of the requirements of a reliable reference electrode.
+
+Figure 38: The potential of the Metrohm double junction electrode versus the TBA-TBB-based solid-state reference electrodes R1, R2, and R3 during conditioning in KCl 0.1 M.
+
+The first step for testing the novel SS-REs was the calibration of an external ISE. For this purpose, a commercial Cl--ISE from Orion Thermo Scientific was used as the indicator electrode.
+48
+
+Luca Guagneli
+The Cl--ISE was calibrated in 10-1 M to 10-4 M KCl solutions using R1, R2, or R3 as the reference electrode. The results are shown in Figure 39, for the case where R1 was used as the
+reference electrode. Calibration curves recorded using R2, and R3 as reference electrode are
+given as Appendix H.
+The resulted calibration plots show that the novel TBA-TBB-based electrode was successfully
+used as a reference electrode with acceptable performance. However, the potential signal
+showed a drifting behavior with all three SS-REs.
+
+Figure 39: The calibration of a commercial Cl--ISE against the TBA-TBB reference electrode R1 in KCl solutions. a) potentiometric signal vs time, b) calibration plot.
+
+The second step was to test the K+-SCISE prepared in this work versus the novel SS-REs. The
+electrodes were inserted in the double-cell polycarbonate (PC) support as shown in Figure 25.
+The measured solutions were 10-1 M to 10-4 M KCl with 0.1 M NaCl as BGE. The results are
+shown in Figure 40, for the electrode R1, and in Appendix I, for the electrodes R2 and R3.
+The results show that the potential of the device increased, with increasing activity of K+ ions,
+and decreased, with decreasing activity of K+ ions, as expected. The change in the potential of
+K+-ISE should be constantly around + 59.2 mV/dec. The potential difference between decades
+of activity was not constant for the sensing device. The signal was unstable and not reproducible. It was not possible to plot a calibration line with the data obtained.
+The Metrohm double junction reference electrode was added as a second indicator electrode
+during the test conducted with the reference electrode R1 (red line in Figure 40), and further
+used with the electrodes R2 and R3. This set of data represents the signal of a stable electrode
+against the TBA-TBB reference, hence showing the stability of the RE of the sensor. With the
+49
+
+Luca Guagneli
+aid of the signal coming from the Metrohm double junction electrode it is possible to state the
+following:
+•
+
+the signal of the SS-RE is not stable. The behavior of the SS-RE does not show any
+correlation with the composition of the analyte solution and is unpredictable. The signal
+of the K+-SCISE follows the drift coming from the RE, hence the presence of the novel
+SS-RE causes signal instability in the system.
+
+•
+
+When the potential of the RE is stable, the potential of the K+-SCISE shows strong
+drifts. Therefore the presence of the TBA-TBB-based RE also causes a deterioration of
+the performance of the K+-SCISE.
+
+Figure 40: Potentiometric response of the K+-SCISE (black line) and the Metrohm double junction reference
+electrode (red line) against the TBA-TBB-based solid-state reference electrode R1.
+
+One reason for the observed problems may be the presence of TBA+ and TBB- ions. As previously stated, TBA-TBB is thought to diffuse towards the analyte solution and establish an equilibrium with the ions in the PVC-based reference membrane. These ions may diffuse into the
+PVC-based K+-ISM and permanently deteriorate it. Appendix J shows that the K+-SCISE was
+working after the test, thus the diffusion of TBA-TBB to the ISM did not cause any permanent
+damage to the ISM. However, the K+-ISM and the TBA-TBB-based membrane are close to
+each other. The volume of the measuring cell is small, < 10 μL. Interactions between TBA+ and
+50
+
+Luca Guagneli
+TBB- ions at the surface of the K+-ISM may be the cause of the loss of performances of the K+SCISE.
+It was not possible to obtain a good calibration plot using the signal of the novel K+-SCISE
+against the three TBA-TBB based SS-REs tested. However, the results obtained during the time
+available for this project do not exclude the possibility of using the TBA-TBB based SS-RE in
+the flow-through sensing device. It has been proven that the electrode can be used as RE and
+satisfying calibration plots were obtained for an external ISE. However, the signal showed drifts
+during the calibration of the external ISE, and the low reproducibility between the three electrodes was not acceptable. More research and more tests are needed to optimize the SS-RE for
+the flow-through potentiometric sensor.
+
+4.3 Ag/AgCl/KCl-composite solid-state reference electrode
+The first step in the production of the Ag/AgCl/KCl-composite solid-state reference electrode
+was the optimization of the chemical polymerization process for preparing the PVAc/KCl composite.
+During this optimization process, two design problems were noticed. The first problem is related to the thickness of the composite layer. The composite membrane is the part of the electrode that seals the device and ensures isolation between the analyte solution and the carbon
+cloth (CC). This is achieved, if the membrane spreads on both sides of the CC electrode. To
+ensure that the material will harden under UV light, the layer of composite should have a certain
+thickness. Figure 41a shows schematically that a thick layer of composite creates problems
+when such electrode is inserted in the support. The support does not close properly, and the Au
+wire is not pressed against the CC. Figure 41b and c show the obtained PVAc/KCl composite
+layer.
+The second problem is related to the surface of the membrane. Each imperfection on its surface
+creates a tiny channel. The analyte solution flows through these channels, and reaches the CC.
+It should be noted that if isolation is not ensured and the CC piece gets in contact with the
+sample solution, the device does not work properly.
+
+51
+
+Luca Guagneli
+
+Figure 41: a) Schematic lateral view of the composite-based SS-RE inside the polycarbonate (PC) support. 1 Au
+wire, 2 PC support, 3 carbon cloth, 4 PVAc/KCl composite membrane, 5 analyte solution, 6 empty space. b) and
+c) pictures of the composite membrane.
+
+The design of the Ag/AgCl/KCl-composite SS-RE was not suitable for the flow-through sensing device. The composite layer should be flawless and thin enough to ensure, at the same time,
+good solution isolation and good contact between the CC and the Au wire.
+
+4.4 Ag/AgCl/NaCl-PVB solid-state reference electrode
+The reference membrane in the Ag/AgCl/NaCl-PVB solid-state reference electrode is deposited
+by drop-casting. This step helps to obtain a neat smooth surface, which helps to eliminate the
+problems encountered with the previous composite-based membrane. Moreover, the thickness
+of the membrane can be adjusted by modifying the sequence of additions.
+Guinovart et al., who presented the PVB/NaCl membrane as SS-RE, suggested that the membrane should be conditioned in 3 M KCl for 12 hours66. The membrane was left conditioning
+in 3 M KCl, and the potential was measured for 24 h. The results are shown in Figure 42. The
+Ag/AgCl/NaCl-PVB SS-RE was used as indicator electrode and the potential was measured
+against the Metrohm double junction reference electrode. The device was put inside a Faraday
+cage, to avoid external interferences.
+
+52
+
+Luca Guagneli
+
+Figure 42: The potential of the SS-RE against the Metrohm double junction reference electrode during the conditioning process.
+
+The results show an initial increase in the potential during the first hours. The potential reaches
+a maximum at + 22.5 mV, and then starts to decrease. After 5.5 h the signal of the SS-RE
+reaches a rather stable potential value which is maintained until the end of the test. The final
+potential, after 24 h, is + 1.4 mV versus the Metrohm double junction electrode, which is fully
+acceptable. Here, a potential close to 0 is, in principle, a good sign since it indicates that the
+potential of the RE and the indicator electrode are similar. The DJ RE is based on the
+Ag/AgCl/Cl- configuration, as well as the tested SS-RE. The potential depends on the activity
+of the chloride ion in the inner solution, for the DJ RE, and in the membrane, for the SS-RE.
+The presence of the outer filling solution of the DJ RE (i.e. LiOAc 1 M) can add some millivolts
+of difference in the potential. Interestingly, the potential difference between the two electrodes
+was only 1.4 mV.
+After the conditioning process, while removing the electrode from the Faraday cage, the solution spread to the CC disk. The electrode was soaking in the solution (Figure 43).
+The same problem was noticed during repeated test. For other identical reference electrodes,
+the solution diffused to the carbon cloth almost immediately after loading the solution in the
+device.
+
+53
+
+Luca Guagneli
+
+Figure 43: The device containing the soaked electrode.
+
+One possible reason may be that the membrane thickness is affected by the cutting process.
+PVB is a resin-like polymer, and without plasticizer it is a hard material. The drop-casting process produces a membrane that is thick enough to ensure proper insulation. However, when the
+inner hole of the membrane was cut, the remaining part of the PVB-based membrane appeared
+compressed around the cutting point. Perhaps, this has influenced the thickness of the membrane and had an impact on the insulation.
+
+54
+
+Luca Guagneli
+
+5 Conclusions
+The scope of this project was designing and testing a new solid-state sensing device with planar
+concentric geometry. Studies performed with such geometry are not available in literature, and
+this makes this project a starting point for the development of an innovative device. The device
+allows the flow of sample solution through a small inner hole, while still providing a large
+contact area between the ion-selective membrane (ISM) and the solid contact. This means that
+the sample volume can be kept small while still having a large solid contact, providing good
+potential stability. Furthermore, this approach allows a large volume of ISM to be used, which
+is beneficial for the electrode lifetime. The sensor produces reliable results with short equilibration time and small sample volumes. Its scope is intended for wearable applications. It can
+be implemented to develop a wearable sensor that can measure the activity of ions in sweat, for
+example.
+The system has been built and assembled, and preliminary tests have been performed to start
+the characterization of its performance. This project was performed using a K+-selective electrode, but in principle, the measuring system could be extended to other solid-state ion-selective
+electrodes, by changing the composition of the ISM. The indicator electrode is composed of a
+K+-ISM drop-cast in a hole of a piece of carbon cloth (CC). The electrode is inserted in a polycarbonate body and connected to an Au wire. The electrode has a diameter of 20 mm. The loopshaped ISM lays in the center of the electrode. It has an outer diameter of 4 mm and an inner
+diameter of 2.5 mm.
+Overall, the preliminary results of the indicator electrode were highly promising. The potential
+response of the potassium solid-contact ion-selective electrode (K+-SCISE) had high stability
+and reproducibility, with a low equilibration time. The slopes of three K+-SCISEs, calibrated in
+the range log[𝐾 + ] = -1 to -4, were 57.3 ± 0.6 and 56.3 ± 0.4 mV/dec (average ± SD, n = 3)
+without BGE and with 0.1 M NaCl as BGE, respectively. The slopes of three electrodes, measured every day for five consecutive days, were between 56.2 and 59.6 mV/dec in the range
+log[𝐾 + ] = -1 to -4, with [Na+] = 0.1 M as BGE. The water layer test, performed on solid-contact
+ISEs to inspect the presence of a water layer between the ISM and the solid contact, showed
+that the novel K+-SCISE is not subject to water layer formation. The selectivity coefficients
+(log 𝐾𝑖,𝑗 ) were -4.29 ± 0.14, -3.21 ± 0.09, -4.68 ± 0.05, and -3.34 ± 0.08 (average ± SD, n = 3)
+for 𝑗 = Ca(II), Li(I), Mg(II), and Na(I), respectively.
+55
+
+Luca Guagneli
+The electrochemical impedance spectroscopy (EIS) study showed that the resistance 𝑅 of the
+membrane depends on its width and thickness. The highest source of impedance is the resistance of the ISM, while the ion-to-electron transduction process gives a small contribution
+to the total impedance. The resistance was in the order of 45-275 MΩ. This value is higher if
+compared to EIS results found in literature, due to the planar concentric geometry used here.
+High membrane resistance is usually associated with a noisy signal. However, all the K+SCISEs were successfully calibrated during potentiometric tests without strong interferences.
+The membranes were produced by drop-casting. This manual process causes some differences
+between the membranes. Ideally, the electrodes of a fully-developed and commercialized sensing device should be produced by an automated processes, for example drop-casting performed
+with a dispenser on a robotic arm.
+The second step of the project dealt with the reference electrode (RE) of the system. The aim
+was to develop a solid-state reference electrode (SS-RE) using the same planar, flow-through
+geometry. For this purpose, three different approaches were explored.
+The first approach was based on a plasticized PVC membrane containing tetrabutylammonium
+tetrabutylborate as the electrolyte. The design of the electrode was the same as for the K+SCISE. Three membranes were drop cast following the same procedure as for the K+-ISM. The
+membranes were conditioned in 0.1 M KCl overnight. The potential of the three membranes
+differed by ca 160 mV after the conditioning process. A commercial chloride ion-selective electrode (Cl--ISE) was successfully calibrated versus the solid-state reference electrodes. The
+slopes were -63.1, -61.8, and -58.5 mV/dec in the range log[𝐶𝑙 − ] = -1 to -4 using the three
+electrodes. The novel SS-RE and the novel K+-SCISE were inserted in a double-cell polycarbonate support, where the volume of the measuring cell was < 10 µL. The signal of the K+SCISE versus the novel SS-RE followed the difference of 𝑎𝐾+ , but the response was not linear.
+When the electrodes were in close contact, the K+-SCISE lost its performance. The results did
+not exclude the possibility of using the TBA-TBB-based SS-RE in the flow-through sensing
+device, but further tests and optimization are needed.
+The second approach was based on silver/silver chloride (Ag/AgCl) reference electrodes. The
+substrate of the SS-RE contained a layer of AgCl deposited onto a layer of Ag, in turn deposited
+on carbon cloth. The reference membrane was a polyvinyl acetate/potassium chloride
+
+56
+
+Luca Guagneli
+(PVAc/KCl) composite. The resulted membrane was too thick and irregular. There was no isolation between the interior of the sensor and the analyte solution.
+The third approach was based on the same Ag/AgCl configuration. The design of the substrate
+was the same as in the previous approach. A polyvinyl butyral (PVB)-based membrane was
+drop-cast in the hole made in the substrate. The PVB-based membrane contained NaCl. The
+membrane was conditioned in 3 M KCl. After 5.5 h the potential was rather stable. After 24 h,
+the potential of one membrane, measured against a commercial double junction reference electrode, was +1.4 mV. However, the membrane did not insulate the carbon cloth from the solution, and the electrode was wet after the test. The soaking problem was observed in repeated
+tests.
+The results obtained in this work are very promising and open the possibility for further development. The K+-SCISE showed good performance, when compared with other electrodes intended for the same scope. The novel geometry of ISEs presented in this thesis has the potential
+to be tested in flow-through potentiometric wearable sensors. However, the research for a suitable reference electrode should continue. The reference membrane should have appropriate mechanical properties. A plasticized polymer should be used as matrix for the reference membrane. The membrane should be produced via drop-casting to ensure a neat surface. In this way
+the membrane is easy to cut, neat and its thickness can be easily adjusted and controlled. Moreover, the membranes should be produced with an automatic and reproducible process, to minimize the differences in their structure.
+Once the reference membrane is optimized, the sensing device should undergo a preliminary
+testing procedure. The sensor can be implemented with as many ISMs as the analytes to monitor.
+
+57
+
+Luca Guagneli
+
+6 Bibliography
+(1) Weaver, C. M. Potassium and Health. Adv. Nutr. 2013, 4 (3), 368S-377S.
+https://doi.org/10.3945/an.112.003533.
+(2) Young, C. C. Evolution of Blood Chemistry Analyzers Based on Ion Selective Electrodes.
+J. Chem. Educ. 1997, 74 (2), 177. https://doi.org/10.1021/ed074p177.
+(3) Watabe, A.; Sugawara, T.; Kikuchi, K.; Yamasaki, K.; Sakai, S.; Aiba, S. Sweat Constitutes Several Natural Moisturizing Factors, Lactate, Urea, Sodium, and Potassium. J. Dermatol. Sci. 2013, 72 (2), 177–182. https://doi.org/10.1016/j.jdermsci.2013.06.005.
+(4) Vairo, D.; Bruzzese, L.; Marlinge, M.; Fuster, L.; Adjriou, N.; Kipson, N.; Brunet, P.;
+Cautela, J.; Jammes, Y.; Mottola, G.; Burtey, S.; Ruf, J.; Guieu, R.; Fenouillet, E. Towards
+Addressing the Body Electrolyte Environment via Sweat Analysis:Pilocarpine Iontophoresis Supports Assessment of Plasma Potassium Concentration. Sci. Rep. 2017, 7 (1),
+11801. https://doi.org/10.1038/s41598-017-12211-y.
+(5) Liu, Y.; Pharr, M.; Salvatore, G. A. Lab-on-Skin: A Review of Flexible and Stretchable
+Electronics for Wearable Health Monitoring. ACS Nano 2017, 11 (10), 9614–9635.
+https://doi.org/10.1021/acsnano.7b04898.
+(6) Hulanicki, A.; Geab, S.; Ingman, F. Chemical Sensors - Definitions and Applications.
+Pure & App. Chem. 1991, 63 (9), 1247–1250.
+(7) Bobacka, J.; Ivaska, A.; Lewenstam, A. Potentiometric Ion Sensors. Chem. Rev. 2008, No.
+108, 2, 329–351.
+(8) Isildak, Ö.; Özbek, O. Application of Potentiometric Sensors in Real Samples. Crit. Rev.
+Anal. Chem. 2020, 0 (0), 1–14. https://doi.org/10.1080/10408347.2019.1711013.
+(9) Mikhelson, K. N. Ion-Selective Electrodes; Lecture Notes in Chemistry; Springer-Verlag:
+Berlin Heidelberg, 2013. https://doi.org/10.1007/978-3-642-36886-8.
+(10) De Marco, R.; Clarke, G.; Pejcic, B. Ion-Selective Electrode Potentiometry in Environmental
+Analysis.
+Electroanalysis
+2007,
+19
+(19–20),
+1987–2001.
+https://doi.org/10.1002/elan.200703916.
+(11) Gallardo, J.; Alegret, S.; del Valle, M. Application of a Potentiometric Electronic Tongue
+as a Classification Tool in Food Analysis. Talanta 2005, 66 (5), 1303–1309.
+https://doi.org/10.1016/j.talanta.2005.01.049.
+(12) Kruse-Jarres, J. Ion-Selective Potentiometry in Clinical Chemistry. A Review. - Abstract
+- Europe PMC. Medical Progress Through Technology 1988, 13 (3), 107–130.
+(13) Bühlmann, P.; Pretsch, E.; Bakker, E. Carrier-Based Ion-Selective Electrodes and Bulk
+Optodes. 2. Ionophores for Potentiometric and Optical Sensors. Chem. Rev. 1998, 98 (4),
+1593–1688. https://doi.org/10.1021/cr970113+.
+(14) Cattrall, R. W. Chemical Sensors; 1997.
+(15) Koryta, J. Theory and Applications of Ion-Selective Electrodes. Part 8. Anal. Chim. Acta
+1990, 233, 1–30. https://doi.org/10.1016/S0003-2670(00)83457-1.
+(16) Handbook of Reference Electrodes; Inzelt, G., Lewenstam, A., Scholz, F., Eds.; SpringerVerlag: Berlin Heidelberg, 2013. https://doi.org/10.1007/978-3-642-36188-3.
+(17) Harris, D. C. Quantitative Chemical Analysis, 6th Ed.
+(18) Umezawa, Y.; Bühlmann, P.; Umezawa, K.; Tohda, K.; Amemiya, S. Potentiometric Selectivity Coefficients of Ion-Selective Electrodes. Part I. Inorganic Cations (Technical Report).
+Pure
+Appl.
+Chem.
+2000,
+72
+(10),
+1851–2082.
+https://doi.org/10.1351/pac200072101851.
+(19) Gadzekpo, V. P. Y.; Christian, G. D. Determination of Selectivity Coefficients of IonSelective Electrodes by a Matched-Potential Method. Anal. Chim. Acta 1984, 164, 279–
+282. https://doi.org/10.1016/S0003-2670(00)85640-8.
+58
+
+Luca Guagneli
+(20) Sokalski, T.; Maj-Żurawska, M.; Hulanicki, A. Determination of True Selectivity Coefficients of Neutral Carrier Calcium Selective Electrode. Microchim. Acta 1991, 103 (5),
+285–291. https://doi.org/10.1007/BF01243265.
+(21) Bakker, E. Selectivity of Liquid Membrane Ion-Selective Electrodes. Electroanalysis
+1997, 9 (1), 7–12. https://doi.org/10.1002/elan.1140090103.
+(22) Armstrong, R. D.; Horvai, G. Properties of PVC Based Membranes Used in Ion-Selective
+Electrodes. Electrochimica Acta 1990, 35 (1), 1–7. https://doi.org/10.1016/00134686(90)85028-L.
+(23) Mikhelson, K. N. Ion-Selective Electrodes in PVC Matrix. Sens. Actuators B Chem. 1994,
+18 (1), 31–37. https://doi.org/10.1016/0925-4005(94)87051-9.
+(24) Mousavi, Z. Ion Sensing Based on the Conducting Polymer Poly(3.4-Ethylenedioxythiophene), 2009.
+(25) Ross, J. W. Calcium-Selective Electrode with Liquid Ion Exchanger. Science 1967, 156
+(3780), 1378–1379. https://doi.org/10.1126/science.156.3780.1378.
+(26) Bakker, E.; Bühlmann, P.; Pretsch, E. Polymer Membrane Ion-Selective Electrodes–What
+Are
+the
+Limits?
+Electroanalysis
+1999,
+11
+(13),
+915–933.
+https://doi.org/10.1002/(SICI)1521-4109(199909)11:13<915::AIDELAN915>3.0.CO;2-J.
+(27) Su, Z.; Mrdenovic, D.; Sek, S.; Lipkowski, J. Ionophore Properties of Valinomycin in the
+Model Bilayer Lipid Membrane 1. Selectivity towards a Cation. J. Solid State Electrochem. 2020, 24 (11), 3125–3134. https://doi.org/10.1007/s10008-020-04777-x.
+(28) Eisenman, G.; Rudin, D. O.; Casby, J. U. Glass Electrode for Measuring Sodium Ion.
+Science 1957, 126 (3278), 831–834. https://doi.org/10.1126/science.126.3278.831.
+(29) Frant, M. S.; Ross, J. W. Potassium Ion Specific Electrode with High Selectivity for Potassium over Sodium. Science 1970, 167 (3920), 987–988. https://doi.org/10.1126/science.167.3920.987.
+(30) Cattrall, R. W.; Freiser, Henry. Coated Wire Ion-Selective Electrodes. Anal. Chem. 1971,
+43 (13), 1905–1906. https://doi.org/10.1021/ac60307a032.
+(31) Cunningham, L.; Freiser, H. Coated-Wire Ion-Selective Electrodes. Anal. Chim. Acta
+1986, 180, 271–279. https://doi.org/10.1016/0003-2670(86)80009-5.
+(32) Michalska, A. All-Solid-State Ion Selective and All-Solid-State Reference Electrodes.
+Electroanalysis 2012, 24 (6), 1253–1265. https://doi.org/10.1002/elan.201200059.
+(33) Bobacka, J. Conducting Polymer-Based Solid-State Ion-Selective Electrodes. Electroanalysis 2006, 18 (1), 7–18. https://doi.org/10.1002/elan.200503384.
+(34) Bobacka, J.; Ivaska, A. Chemical Sensors Based on Conducting Polymers. In Electropolymerization;
+John
+Wiley
+&
+Sons,
+Ltd,
+2010;
+pp
+173–187.
+https://doi.org/10.1002/9783527630592.ch9.
+(35) Crespo, G. A.; Macho, S.; Rius, F. X. Ion-Selective Electrodes Using Carbon Nanotubes
+as Ion-to-Electron Transducers. Anal. Chem. 2008, 80 (4), 1316–1322.
+https://doi.org/10.1021/ac071156l.
+(36) Mattinen, U.; Rabiej, S.; Lewenstam, A.; Bobacka, J. Impedance Study of the Ion-to-Electron Transduction Process for Carbon Cloth as Solid-Contact Material in Potentiometric
+Ion
+Sensors.
+Electrochimica
+Acta
+2011,
+56
+(28),
+10683–10687.
+https://doi.org/10.1016/j.electacta.2011.07.082.
+(37) Cincy, J.; Milja, T. E.; Prathish, K. P. Fabrication of a Flexible Carbon Cloth Based Solid
+Contact Iodide Selective Electrode. Anal. Methods 2017, 9 (20), 2947–2956.
+https://doi.org/10.1039/C7AY00733G.
+(38) Zhang, X.; Ogorevc, B.; Wang, J. Solid-State PH Nanoelectrode Based on Polyaniline
+Thin Film Electrodeposited onto Ion-Beam Etched Carbon Fiber. Anal. Chim. Acta 2002,
+452 (1), 1–10. https://doi.org/10.1016/S0003-2670(01)01435-0.
+59
+
+Luca Guagneli
+(39) Anastasova-Ivanova, S.; Mattinen, U.; Radu, A.; Bobacka, J.; Lewenstam, A.; Migdalski,
+J.; Danielewski, M.; Diamond, D. Development of Miniature All-Solid-State Potentiometric Sensing System. Sens. Actuators B Chem. 2010, 146 (1), 199–205.
+https://doi.org/10.1016/j.snb.2010.02.044.
+(40) Bendikov, T. A.; Harmon, T. C. A Sensitive Nitrate Ion-Selective Electrode from a Pencil
+Lead. An Analytical Laboratory Experiment. J. Chem. Educ. 2005, 82 (3), 439.
+https://doi.org/10.1021/ed082p439.
+(41) Vázquez, M.; Bobacka, J.; Ivaska, A.; Lewenstam, A. Small-Volume Radial Flow Cell for
+All-Solid-State Ion-Selective Electrodes. Talanta 2004, 62 (1), 57–63.
+https://doi.org/10.1016/S0039-9140(03)00408-9.
+(42) Vázquez, M.; Danielsson, P.; Bobacka, J.; Lewenstam, A.; Ivaska, A. Solution-Cast Films
+of Poly(3,4-Ethylenedioxythiophene) as Ion-to-Electron Transducers in All-Solid-State
+Ion-Selective Electrodes. Sens. Actuators B Chem. 2004, 97 (2), 182–189.
+https://doi.org/10.1016/j.snb.2003.08.010.
+(43) Hills, G. J.; Ives, D. J. G. The Hydrogen Electrode. Nature 1949, 163 (4156), 997–997.
+https://doi.org/10.1038/163997a0.
+(44) Zhang, J. X. J.; Hoshino, K. Electrical Transducers: Electrochemical Sensors and Semiconductor Molecular Sensors. In Molecular Sensors and Nanodevices (Second Edition);
+Zhang, J. X. J., Hoshino, K., Eds.; Micro and Nano Technologies; Academic Press, 2019;
+pp 181–230. https://doi.org/10.1016/B978-0-12-814862-4.00004-1.
+(45) Janz, G. J.; Ives, D. J. G. Silver, Silver Chloride Electrodes. Ann. N. Y. Acad. Sci. 1968,
+148 (1), 210–221. https://doi.org/10.1111/j.1749-6632.1968.tb20350.x.
+(46) Suzuki, H.; Hirakawa, T.; Sasaki, S.; Karube, I. Micromachined Liquid-Junction Ag/AgCl
+Reference Electrode. Sens. Actuators B Chem. 1998, 46 (2), 146–154.
+https://doi.org/10.1016/S0925-4005(98)00110-5.
+(47) Kwon, N.-H.; Lee, K.-S.; Won, M.-S.; Shim, Y.-B. An All-Solid-State Reference Electrode Based on the Layer-by-Layer Polymer Coating. Analyst 2007, 132 (9), 906–912.
+https://doi.org/10.1039/B706905G.
+(48) Liao, W.-Y.; Chou, T.-C. Fabrication of a Planar-Form Screen-Printed Solid Electrolyte
+Modified Ag/AgCl Reference Electrode for Application in a Potentiometric Biosensor.
+Anal. Chem 2006, 4219–4223. https://doi.org/10.1021/ac051562+.
+(49) Simonis, A.; Lüth, H.; Wang, J.; Schöning, M. J. New Concepts of Miniaturised Reference
+Electrodes in Silicon Technology for Potentiometric Sensor Systems. Sens. Actuators B
+Chem. 2004, 103 (1), 429–435. https://doi.org/10.1016/j.snb.2004.04.072.
+(50) Mattinen, U. Solid-State Reference and Ion-Selective Electrodes - Towards Portable Potentiometric Sensing. PhD Thesis; 2015.
+(51) Diamond, D.; McEnroe, E.; McCarrick, M.; Lewenstam, A. Evaluation of a New SolidState Reference Electrode Junction Material for Ion-Selective Electrodes. Electroanalysis
+1994, 6 (11–12), 962–971. https://doi.org/10.1002/elan.1140061108.
+(52) Desmond, D.; Lane, B.; Alderman, J.; Glennon, J. D.; Dermot Diamond; Arrigan, D. W.
+M. Evaluation of Miniaturised Solid State Reference Electrodes on a Silicon Based Component. Sens. Actuators B Chem. 1997, 44 (1), 389–396. https://doi.org/10.1016/S09254005(97)00231-1.
+(53) Mousavi, Z.; Granholm, K.; Sokalski, T.; Lewenstam, A. An Analytical Quality SolidState Composite Reference Electrode. Analyst 2013, 138 (18), 5216–5220.
+https://doi.org/10.1039/C3AN00852E.
+(54) Granholm, K.; Mousavi, Z.; Sokalski, T.; Lewenstam, A. Analytical Quality Solid-State
+Composite Reference Electrode Manufactured by Injection Moulding. J. Solid State Electrochem. 2014, 18 (3), 607–612. https://doi.org/10.1007/s10008-013-2294-x.
+
+60
+
+Luca Guagneli
+(55) Kounaves, S. P.; Hecht, M. H.; West, S. J.; Morookian, J.-M.; Young, S. M. M.; Quinn,
+R.; Grunthaner, P.; Wen, X.; Weilert, M.; Cable, C. A.; Fisher, A.; Gospodinova, K.; Kapit, J.; Stroble, S.; Hsu, P.-C.; Clark, B. C.; Ming, D. W.; Smith, P. H. The MECA Wet
+Chemistry Laboratory on the 2007 Phoenix Mars Scout Lander. J. Geophys. Res. 2009,
+114, E00A19. https://doi.org/10.1029/2008JE003084.
+(56) Mattinen, U.; Bobacka, J.; Lewenstam, A. Solid-Contact Reference Electrodes Based on
+Lipophilic
+Salts.
+Electroanalysis
+2009,
+21
+(17–18),
+1955–1960.
+https://doi.org/10.1002/elan.200904615.
+(57) Guth, U.; Gerlach, F.; Decker, M.; Oelßner, W.; Vonau, W. Solid-State Reference Electrodes for Potentiometric Sensors. J. Solid State Electrochem. 2009, 13 (1), 27–39.
+https://doi.org/10.1007/s10008-008-0574-7.
+(58) Anderson, E. L.; Bühlmann, P. Electrochemical Impedance Spectroscopy of Ion-Selective
+Membranes: Artifacts in Two-, Three-, and Four-Electrode Measurements. Anal. Chem.
+2016, 88 (19), 9738–9745. https://doi.org/10.1021/acs.analchem.6b02641.
+(59) Mishra, A.; Shetti, N.; Basu, S.; Reddy, K.; Aminabhavi, T. Carbon Cloth-Based Hybrid
+Materials as Flexible Electrochemical Supercapacitors. ChemElectroChem 2019, 6 (23),
+5771–5786. https://doi.org/10.1002/celc.201901122.
+(60) Wang, G.; Wang, H.; Lu, X.; Ling, Y.; Yu, M.; Zhai, T.; Tong, Y.; Li, Y. Solid-State
+Supercapacitor Based on Activated Carbon Cloths Exhibits Excellent Rate Capability.
+Adv. Mater. 2014, 26 (17), 2676–2682. https://doi.org/10.1002/adma.201304756.
+(61) Shi, H.; Wen, G.; Nie, Y.; Zhang, G.; Duan, H. Flexible 3D Carbon Cloth as a HighPerforming Electrode for Energy Storage and Conversion. Nanoscale 2020, 12 (9), 5261–
+5285. https://doi.org/10.1039/C9NR09785F.
+(62) Wang, H.; Deng, J.; Xu, C.; Chen, Y.; Xu, F.; Wang, J.; Wang, Y. Ultramicroporous Carbon Cloth for Flexible Energy Storage with High Areal Capacitance. Energy Storage Mater. 2017, 7, 216–221. https://doi.org/10.1016/j.ensm.2017.03.002.
+(63) Liu, J.; Qiao, Y.; Guo, C. X.; Lim, S.; Song, H.; Li, C. M. Graphene/Carbon Cloth Anode
+for High-Performance Mediatorless Microbial Fuel Cells. Bioresour. Technol. 2012, 114,
+275–280. https://doi.org/10.1016/j.biortech.2012.02.116.
+(64) Guinovart, T.; Bandodkar, A. J.; Windmiller, J. R.; Andrade, F. J.; Wang, J. A Potentiometric Tattoo Sensor for Monitoring Ammonium in Sweat. Analyst 2013, 138 (22), 7031–
+7038. https://doi.org/10.1039/C3AN01672B.
+(65) Guinovart, T.; Parrilla, M.; Crespo, G. A.; Rius, F. X.; Andrade, F. J. Potentiometric Sensors Using Cotton Yarns, Carbon Nanotubes and Polymeric Membranes. The Analyst
+2013, 138 (18), 5208–5215. https://doi.org/10.1039/c3an00710c.
+(66) Guinovart, T.; Crespo, G. A.; Rius, F. X.; Andrade, F. J. A Reference Electrode Based on
+Polyvinyl Butyral (PVB) Polymer for Decentralized Chemical Measurements. Anal.
+Chim. Acta 2014, 821, 72–80. https://doi.org/10.1016/j.aca.2014.02.028.
+(67) Parrilla, M.; Cánovas, R.; Jeerapan, I.; Andrade, F. J.; Wang, J. A Textile-Based Stretchable Multi-Ion Potentiometric Sensor. Adv. Healthc. Mater. 2016, 5 (9), 996–1001.
+https://doi.org/10.1002/adhm.201600092.
+(68) Li, M.; Constantinescu, D.; Wang, L.; Mohs, A.; Gmehling, J. Solubilities of NaCl, KCl,
+LiCl, and LiBr in Methanol, Ethanol, Acetone, and Mixed Solvents and Correlation Using
+the LIQUAC Model. Ind. Eng. Chem. Res. 2010, 49 (10), 4981–4988.
+https://doi.org/10.1021/ie100027c.
+(69) Cha, G. Sig.; Liu, Dong.; Meyerhoff, M. E.; Cantor, H. C.; Midgley, A. Rees.; Goldberg,
+H. D.; Brown, R. B. Electrochemical Performance, Biocompatibility, and Adhesion of
+New Polymer Matrixes for Solid-State Ion Sensors. Anal. Chem. 1991, 63 (17), 1666–
+1672. https://doi.org/10.1021/ac00017a003.
+
+61
+
+Luca Guagneli
+(70) Lindner, E.; Gyurcsányi, R. E. Quality Control Criteria for Solid-Contact, Solvent Polymeric Membrane Ion-Selective Electrodes. J. Solid State Electrochem. 2009, 13 (1), 51–
+68. https://doi.org/10.1007/s10008-008-0608-1.
+(71) Fibbioli, M.; Morf, W. E.; Badertscher, M.; Rooij, N. F. de; Pretsch, E. Potential Drifts of
+Solid-Contacted Ion-Selective Electrodes Due to Zero-Current Ion Fluxes Through the
+Sensor
+Membrane.
+Electroanalysis
+2000,
+12
+(16),
+1286–1292.
+https://doi.org/10.1002/1521-4109(200011)12:16<1286::AID-ELAN1286>3.0.CO;2-Q.
+(72) Pirovano, P.; Dorrian, M.; Shinde, A.; Donohoe, A.; Brady, A. J.; Moyna, N. M.; Wallace,
+G.; Diamond, D.; McCaul, M. A Wearable Sensor for the Detection of Sodium and Potassium in Human Sweat during Exercise. Talanta 2020, 219, 121145.
+https://doi.org/10.1016/j.talanta.2020.121145.
+(73) Montain, S. J.; Cheuvront, S. N.; Lukaski, H. C. Sweat Mineral-Element Responses during
+7 h of Exercise-Heat Stress. Int. J. Sport Nutr. Exerc. Metab. 2007, 17 (6), 574–582.
+https://doi.org/10.1123/ijsnem.17.6.574.
+(74) Schwartz, I. L.; Thaysen, J. H. Excretion of Sodium and Potassium in Human Sweat. J.
+Clin. Invest. 1956, 35 (1), 114–120. https://doi.org/10.1172/JCI103245.
+(75) Alizadeh, A.; Burns, A.; Lenigk, R.; Gettings, R.; Ashe, J.; Porter, A.; McCaul, M.; Barrett, R.; Diamond, D.; White, P.; Skeath, P.; Tomczak, M. A Wearable Patch for Continuous Monitoring of Sweat Electrolytes during Exertion. Lab. Chip 2018, 18 (17), 2632–
+2641. https://doi.org/10.1039/c8lc00510a.
+(76) Parrilla, M.; Ortiz-Gómez, I.; Cánovas, R.; Salinas-Castillo, A.; Cuartero, M.; Crespo, G.
+A. Wearable Potentiometric Ion Patch for On-Body Electrolyte Monitoring in Sweat: Toward a Validation Strategy to Ensure Physiological Relevance. Anal. Chem. 2019, 91 (13),
+8644–8651. https://doi.org/10.1021/acs.analchem.9b02126.
+(77) Mousavi, Z.; Bobacka, J.; Lewenstam, A.; Ivaska, A. Poly(3,4-Ethylenedioxythiophene)
+(PEDOT) Doped with Carbon Nanotubes as Ion-to-Electron Transducer in Polymer Membrane-Based Potassium Ion-Selective Electrodes. J. Electroanal. Chem. 2009, 633 (1),
+246–252. https://doi.org/10.1016/j.jelechem.2009.06.005.
+(78) Novell, M.; Parrilla, M.; Crespo, G. A.; Rius, F. X.; Andrade, F. J. Paper-Based Ion-Selective Potentiometric Sensors. Anal. Chem. 2012, 84 (11), 4695–4702.
+https://doi.org/10.1021/ac202979j.
+(79) Zhu, J.; Li, X.; Qin, Y.; Zhang, Y. Single-Piece Solid-Contact Ion-Selective Electrodes
+with Polymer–Carbon Nanotube Composites. Sens. Actuators B Chem. 2010, 148 (1),
+166–172. https://doi.org/10.1016/j.snb.2010.04.041.
+(80) Tran, T. N. T.; Qiu, S.; Chung, H. Potassium Ion Selective Electrode Using Polyaniline
+and Matrix-Supported Ion-Selective PVC Membrane. IEEE Sens. J. 2018, 18 (22), 9081–
+9087. https://doi.org/10.1109/JSEN.2018.2871001.
+(81) Bobacka, J. Potential Stability of All-Solid-State Ion-Selective Electrodes Using Conducting Polymers as Ion-to-Electron Transducers. Anal. Chem. 1999, 71 (21), 4932–4937.
+https://doi.org/10.1021/ac990497z.
+(82) Mousavi, Z.; Teter, A.; Lewenstam, A.; Maj‐Zurawska, M.; Ivaska, A.; Bobacka, J. Comparison of Multi-Walled Carbon Nanotubes and Poly(3-Octylthiophene) as Ion-to-Electron Transducers in All-Solid-State Potassium Ion-Selective Electrodes. Electroanalysis
+2011, 23 (6), 1352–1358. https://doi.org/10.1002/elan.201000747.
+(83) Ping, J.; Wang, Y.; Wu, J.; Ying, Y. Development of an All-Solid-State Potassium IonSelective Electrode Using Graphene as the Solid-Contact Transducer. Electrochem. Commun. 2011, 13 (12), 1529–1532. https://doi.org/10.1016/j.elecom.2011.10.018.
+(84) Joon, N. K.; He, N.; Ruzgas, T.; Bobacka, J.; Lisak, G. PVC-Based Ion-Selective Electrodes with a Silicone Rubber Outer Coating with Improved Analytical Performance.
+Anal. Chem. 2019, 91 (16), 10524–10531. https://doi.org/10.1021/acs.analchem.9b01490.
+62
+
+Luca Guagneli
+
+7 Appendixes
+
+Appendix A: Potentiometric response of the novel K+-SCISE in KCl solutions with [K+] ranging from 1 M (highest potential) to 10-8 M a) without BGE, and b) with 0.1 M NaCl as BGE.
+
+Appendix B: Calibration plots of the two K+-SCISEs a) E2 and b) E3. From low to high potentials: 10-4 to 10-1 M
+KCl, without background electrolyte (black plots) and with background electrolyte (red plots).
+
+63
+
+Luca Guagneli
+
+Appendix C: Calibration lines from the data in Figure 30.
+
+Appendix D: Results from the water layer test of electrodes a) E2 and b) E3. The measurement was carried out
+in 0.1 M KCl, then 0.1 M NaCl, and finally 0.1 M KCl solutions.
+
+Appendix E: Potentiometric response of a) E2 and b) E3 in 0.01 M KCl, CaCl2, LiCl, MgCl2, and NaCl solutions.
+
+64
+
+Luca Guagneli
+
+Appendix F: Potentiometric response of the K+-SCISE with diameters a = 4 mm, b = 5 mm in KCl solutions.
+
+Appendix G: EIS spectrum and picture of the electrode E2.
+
+65
+
+Luca Guagneli
+
+Appendix H: Calibration of a commercial Cl--ISE against the TBA-TBB-based solid-state reference electrodes a)
+R2 and b) R3. The measurements were done in 10-4 M (highest potential) to 10-1 M (lowest potential) KCl solution.
+
+Appendix I: Calibration of the novel K+-SCISE against the TBA-TBB-based solid-state reference electrodes a)
+R2 and b) R3. The solutions measured were KCl in concentrations from 10-4 to 10-1 M, from left to right, respectively. The red line represents the signal of the double-junction reference electrode (DJ-RE) against the solidstate reference electrode.
+
+66
+
+Luca Guagneli
+
+Appendix J: Results of the potentiometric response of the K+-SCISE after the test with the TBA-TBB solid state
+reference electrode. The ISE was calibrated against the Metrohm double-junction reference electrode.
+
+67
+
+

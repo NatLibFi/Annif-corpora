@@ -1,0 +1,1486 @@
+Evaluating the Influence of Character
+Realism on Avoidance Strategies in
+VR and a new method to generate
+virtual crowds using VR and motion
+capture
+
+Author : Stéven Picard
+Student number : 1901940
+Thesis Supervisor : Sébastien Lafond
+Åbo Akademi University
+2019-2020
+
+Abstract
+The MimeTIC team of the IRISA research lab has a long history of studying human
+behaviours in order to create more natural virtual humans. Multiple studies were
+done in order to understand how pedestrians avoid each other, whose insights were
+used to develop new crowd simulation models. Since studying these behaviours is
+extremely complex, conditions in experiments are usually simplified to interactions
+between two walkers and this fact leads to a general lack of knowledge about these
+avoidance strategies within ecological situations. One of the particularities of the
+work done in the MimeTIC team is to leverage the use of Virtual Reality in order
+to explore more complex situations in a fully controlled experimental environment
+(for instance we should be able to simulate a crowd and see how an individual might
+react). In particular, VR was used to evaluate locomotion interfaces, as well as individuals avoidance of groups. However, a problem arises since it is known that this
+technology also creates other experimental limitations in comparison to the same real
+situations, which can potentially affect our decisions (e.g. we tend to underestimate
+distances in VR). Therefore, such limitations may also affect user locomotion behaviours in the presence of real and virtual obstacles, hence the knowledge thereafter
+used to develop new crowd simulation models. That is why the MimeTIC team of
+IRISA is interested in exploring the influence of Character Realism on Avoidance
+Strategies in VR, in particular in relation to the realism of the displayed motions,
+trajectories, and visual representation. The technical objective of this master’s thesis
+is to replicate an experiment previously conducted in a real situation, but where both
+participants are immersed in the same virtual environment (VE).
+This first work has two goals:
+• Understanding the effect of immersing two persons in the same virtual environment on their collision avoidance strategies, compared to real situations.
+• Evaluating the influence of the degree of realism of the other person to interact
+with (in terms of body animation and global trajectories) on collision avoidance
+strategies.
+Since during this thesis work it wasn’t possible to complete this first study because
+of the COVID-19 crisis, another one is also described in this thesis. Some real life
+situations the MimeTIC team needs to analyse in VR might involve crowds, hence
+the need for realistic virtual crowds. However, creating these virtual crowds can be
+
+tedious, especially if we want those crowds to be realistic. This is why in this thesis
+we will try to see how the crowds generated in VR with an original method involving
+only one user and motion capture can be compared to crowds observed in real life
+experiments.
+
+Contents
+1
+
+Preface
+
+6
+
+2
+
+Introduction
+
+7
+
+2.1
+
+Background . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+2.1.1
+
+Inria Rennes . . . . . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+2.1.2
+
+MimeTIC team . . . . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+2.2
+
+Definition of what VR is and why it can help in this context . . . . .
+
+8
+
+2.3
+
+Presentation of the first study . . . . . . . . . . . . . . . . . . . . .
+
+8
+
+2.4
+
+Presentation of the second study . . . . . . . . . . . . . . . . . . .
+
+9
+
+3
+
+Related Works
+
+10
+
+3.1
+
+Collision avoidance in real life . . . . . . . . . . . . . . . . . . . .
+
+10
+
+3.2
+
+Collision avoidance in VR . . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+3.3
+
+How these related works about collision avoidance can be linked with
+this thesis? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+
+Works related to the "multiplicative crowds" experiment . . . . . .
+
+14
+
+3.4
+4
+
+Existing situation on the first experiment
+
+17
+
+4.1
+
+CrowdMP . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+17
+
+4.2
+
+Existing work on the experiment . . . . . . . . . . . . . . . . . . .
+
+17
+
+5
+
+Design of the first experiment
+
+18
+
+6
+
+Technical design of the first experiment
+
+19
+
+6.1
+
+21
+
+The client application . . . . . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+8
+
+9
+
+6.2
+
+The server application . . . . . . . . . . . . . . . . . . . . . . . . .
+
+22
+
+6.3
+
+Hardware and software used . . . . . . . . . . . . . . . . . . . . .
+
+23
+
+6.3.1
+
+Qualisys
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+23
+
+6.3.2
+
+Xsens MVN Link . . . . . . . . . . . . . . . . . . . . . . .
+
+24
+
+6.3.3
+
+MSI VR One Backpacks . . . . . . . . . . . . . . . . . . .
+
+25
+
+6.3.4
+
+Pimax 5K . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+25
+
+Building the experimental setup of the first experiment
+
+26
+
+7.1
+
+Non detailed contributions . . . . . . . . . . . . . . . . . . . . . .
+
+26
+
+7.2
+
+Custom trial system . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+26
+
+7.3
+
+Networking system . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+27
+
+7.4
+
+Internal functioning of the trials . . . . . . . . . . . . . . . . . . .
+
+28
+
+7.4.1
+
+Using simulated trajectories . . . . . . . . . . . . . . . . .
+
+28
+
+7.4.2
+
+Using the fake animation on the real trajectory . . . . . . .
+
+28
+
+7.4.3
+
+Animating the head so that it looks at the player . . . . . . .
+
+28
+
+7.4.4
+
+Mirroring the other player’s spawn and trajectory . . . . . .
+
+29
+
+7.4.5
+
+Making a player passive . . . . . . . . . . . . . . . . . . .
+
+29
+
+Methods of the first experiment
+
+30
+
+8.1
+
+Task . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+30
+
+8.2
+
+Experimental design . . . . . . . . . . . . . . . . . . . . . . . . .
+
+30
+
+8.3
+
+Data used . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+31
+
+8.3.1
+
+Extracted variables . . . . . . . . . . . . . . . . . . . . . .
+
+31
+
+8.3.2
+
+Data from previous works . . . . . . . . . . . . . . . . . .
+
+32
+
+Design of the second experiment
+
+33
+
+9.1
+
+The animation technique . . . . . . . . . . . . . . . . . . . . . . .
+
+33
+
+9.2
+
+The situations tested . . . . . . . . . . . . . . . . . . . . . . . . .
+
+33
+
+9.3
+
+Hardware used . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+35
+
+10 Building the experimental setup of the second experiment
+
+36
+
+10.1 Non detailed contributions . . . . . . . . . . . . . . . . . . . . . .
+
+36
+
+10.2 Saving and reloading the captured animation . . . . . . . . . . . . .
+
+36
+
+11 Methods of the second experiment
+
+37
+
+11.1 Participants . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+37
+
+11.2 Task . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+37
+
+11.3 Data used . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+38
+
+11.3.1 Extracted variables . . . . . . . . . . . . . . . . . . . . . .
+
+38
+
+11.4 Analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+38
+
+11.4.1 Bottleneck . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+38
+
+11.4.2 Pillar . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+39
+
+12 Conclusion
+
+41
+
+13 References
+
+43
+
+14 Appendices
+
+46
+
+1
+
+Preface
+
+This master thesis is submitted in the context of a double degree program with Åbo
+Akademi University (Finland) and INSA Rennes (France). I am submitting this version of the thesis/report in order to obtain a Engineering degree in computer science.
+The research and writing process went from December 2019 to June 2020.
+The research described in this master thesis was produced at the request of Inria
+Rennes (France) as part of an internship that took place from January 2020 to July
+2020. My research question "What features of Character Realism influence avoidance strategies in VR?" had been established with my supervisor at Inria Rennes, Ludovic Hoyet. Unfortunately, this research had encountered some hardships because
+of the COVID-19 crisis, which has especially prevented one of the experiments described in this thesis to be organized for more than 2 months. However, despite this
+unusual circumstances, I learned so much from doing this research and internship.
+This learning experience would not have been possible without a lot of people.
+That is why I would like to thank Ludovic Hoyet, Anne-Hélène Olivier and Julien
+Pettré, who were my internship supervisor and co-supervisors, for their incredible
+guidance and support. I also want to thank Sébastien Lafond, my supervisor at Åbo
+Akademi University, who was always available to answer my questions. I am also
+grateful to all my colleagues at Inria Rennes for both their cooperation and for making this internship a fun experience. Finally, I would like to thank my friends and
+family for keeping me motivated when facing hardships.
+I hope you enjoy your reading.
+
+Stéven Picard
+22/07/2020
+
+2
+
+Introduction
+
+2.1
+
+Background
+
+2.1.1
+
+Inria Rennes
+
+A pioneer of innovation and research (i.e. partner of MIT for the W3C in 1995), the
+Inria Group exists since 1967 (and was called "Iria" back then) when France wanted
+to link industrial and public research. Gaining a "n" to emphasis on the "national"
+aspect of the group in 1979, laboratories started to open through years all over the
+hexagon.
+I worked on my master thesis as part of an internship in the "Inria Rennes-Bretagne
+Altlantique Research Centre", which was established in 1980. It’s scientific priority
+areas are :
+• Secure digital society
+• Human-robot-virtual world interactions
+• Biology and digital health
+• Digital ecology
+With over 600 people doing activities in this center dispatched in 31 joint project
+teams, for my internship I joined the "MimeTIC" team.
+
+2.1.2
+
+MimeTIC team
+
+Since 2013, the MimeTIC team of the Inria/IRISA research lab is designing methods
+for simulating virtual humans that behave as realistically as possible. To be able to
+simulate realistic virtual humans, understanding how real people behave is necessary.
+While organizing real-life experiments to study humans’ behaviour takes a considerable amount of time and resources, the recent development of more accessible and
+usable Virtual Reality (VR) technologies makes it now possible for the research lab
+to use it in their experimentation. Still, it is important to point that research using
+VR to explore human behaviours has been conducted in the MimeTIC team (and
+Inria/IRISA research lab more generally) since the early 2000s [1].
+
+2.2
+
+Definition of what VR is and why it can help in this context
+
+Virtual Reality, according to the "Traité de la réalité virtuelle"[2] (translated from
+French) is defined as "a technical and scientific domain exploiting computer science
+and behavioural interfaces in order to simulate a virtual world made of 3D entities,
+that are interacting in real-time with themselves or with at least one user in pseudo
+natural immersion through sensory-motor canals".
+Thus, using this definition, VR allows its users to immerse themselves and interact
+with a virtual world. Recently, VR became popular with the development of VR
+headsets such as the "Oculus Rift" or the "HTC Vive", but it also exists in other
+forms, for instance virtual reality rooms (CAVE) like "Inria’s Immersia" (see Figure 1). The VR hardware used in this thesis is a Head Mounted Display (Pimax +
+MSI VR Backpack) and a real-time motion capture system (Xsens).
+
+Figure 1: Inria’s Immersia virtual reality room.
+
+2.3
+
+Presentation of the first study
+
+Now that we know what VR is, we can easily imagine how it can be used to perform
+experiments with the goal of expanding our knowledge of human behaviour: it is
+now possible to simulate numerous situations that are difficult to create in real life
+for an experiment and to re-use it as much as we want (i.e, involving a large group of
+people, in a situation that would be life-threatening in real conditions, ...). However,
+in this particular context of trying to understand humans’ behaviour through VR, a
+problem arises: VR affects our behaviour and decisions. It has been discovered
+
+that, while paths taken in VR and in real life by humans are qualitatively similar
+enough to justify the use of VR to study locomotion behaviour [3] and walkers’
+interactions with other walkers or crowds [4], quantitative differences in avoiding an
+obstacle in VR appear and there is as of now no definitive answer as to why these
+differences appear.
+Since VR has the effect of slightly altering our perceptions, we want to know how
+much it does affect our judgments and if it is possible or not to reduce this effect by
+tuning the Virtual Environment (VE) the users are interacting with. To this end, we
+designed an experiment that focuses on the task of collision avoidance and evaluates
+how close to real-life situation the participants were in different scenarios.
+
+2.4
+
+Presentation of the second study
+
+Since VR can be used to perform experiments in order to expand our knowledge of
+human behaviour including the interactions with crowds, there’s a need for methods to generate crowds that are realistic enough. One of the tools used to generate
+realistic virtual humans’ animation is motion capture, but doing motion capture on
+an entire crowd is too tedious to set up. However, doing motion capture on a single
+user is a lot easier. That is why we want to know if it is possible to generate realistic
+enough crowds in different situations by using only one user who, throughout the
+generation process, will play the role of each individual in the crowd.
+
+3
+
+Related Works
+
+3.1
+
+Collision avoidance in real life
+
+Multiple studies have been conducted in the past years to understand interactions
+involving human walkers: walkers walking side by side [5], following each other [6]
+and many involving collision avoidance. That last kind of interaction is the one we
+will focus on in this document. When it comes to collision avoidance in real life, it
+was theorized that people try to maintain a "personal space (PS)" which allows them
+to avoid others in different interactions. In year 2005, a study by Gérin-Lajoie et al.
+[7] suggested that the PS zone is maintained by walkers as an elliptic shape which
+provides sufficient time to adapt their path in case of the appearance of an obstacle.
+It also provides a measurement of that personal space of approximately 0.96 wide by
+2.11 m deep for a walking speed of 1.58 m/s.
+
+Figure 2: Representation of the PS Zone of a static person depending on his orientation with a moving obstacle entering it.
+
+Later in 2008, Gérin-Lajoie et al. [8] unveiled some characteristics of this PS
+zone :
+• during the avoidance of a static object, the size of the PS zone is not relative to
+the walking speed
+• while avoiding an obstacle, the PS zone seems to be asymmetrical
+• the PS zone is smaller on the dominant side of the participants (young adults)
+It is also important to note that their study involved two experiments, with one of
+these in VR. That experiment in VR showed that in the virtual environment, partici-
+
+pants had a slightly increased PS. To relate this PS to different avoidance strategies,
+an experiment performed by Olivier et al. [9] in 2012 suggested the use of a function
+denoted as "MPD(t)" ("Minimum Predicted Distance"). This function represents the
+distance at which two walkers would pass each other if they do not change their locomotion behaviour at time "t". Using this function, they showed that walkers adapt
+their motion only when required (usually when MPD is less than 1 meter, as found in
+studies about the PS) and defined three phases of avoidance that depend on MPD(t):
+observation, reaction and regulation.
+
+Figure 3: Evolution of the MPD in collision avoidance from a study done by Olivier
+et al. [10]. The phase at the left of the reaction phase is the observation phase and
+the phase at the right is the regulation phase.
+
+A later study, from 2013, by Olivier et al. [10] studied the role of each walker
+in controlling the MPD in the same situation. Their results showed that the walker
+giving way (the one who crosses after the other) will tend to contribute more to the
+avoidance, and that their proportion and types of adaptation differ from the walker
+passing first. Another interesting result is that the roles tend never to switch during
+the interaction. If we focus on the interaction between walkers, a study by Basten et
+al. [11] highlighted the influence of two real-world parameters (height of the walk-
+
+ers and their gender) on the clearance (minimum distance between the walkers) and
+collaboration (lateral distance between the walkers) in the interaction between two
+walkers walking side by side.
+
+3.2
+
+Collision avoidance in VR
+
+In past years, it has been discovered that if quantitative differences in avoiding an
+obstacle in VR exist, paths taken in VR and in real life by humans are qualitatively
+similar enough to justify the use of VR to study locomotion behaviour [3] and walkers’ interactions with other walkers or crowds [4]. On another note, Olivier et al.
+conducted a study in 2018 [12] investigating if locomotion tasks in VR between a
+real user and a virtual character preserved the small scales interactions that appears
+in real conditions. One of their conclusions was that a user’s perception in VR is
+accurate enough to expect realistic interactions in the situation involving a risk of
+collision with a moving character. Thus, we can find studies on what can affect one’s
+behaviour or experience in a virtual environment.
+Visual appearance of the environment can have a strong effect on one’s behaviour.
+For instance a study by Simeone et al. [13] showed how changing the appearance of
+the environment (one example being having a path or not in a grass field) is enough to
+influence the path taken by the participants. Similarly, Bönsch et al. [14] highlighted
+the influence of the virtual humans’ emotions in the virtual environment on the participants’ personal space. If we go back to the situation of avoiding someone else in
+VR, a study from 2015 by Argelaguet Sanz et al. [15] about the avoidance of both
+real and virtual static objects showed that the clearance distance can be influenced
+by:
+• the nature of the object (real or virtual)
+• the humanoid shape of the object (test subjects had a bigger clearance distance
+with humanoid obstacles than obstacles with a box-like appearance)
+• if the obstacle is humanoid, its orientation
+
+Figure 4: Experimental conditions showed in the study held by Argelaguet Sanz et
+al. [15].
+
+While evaluating collision avoidance behaviours in terms of trajectories is important to understand behavioural differences, other aspects of the interaction are also
+relevant to explore to further understand their contribution. For instance, a recent
+study by Berton et al. [16] showed that gaze behaviour during pedestrian interactions
+is qualitatively similar in VR to real-life conditions (especially with an HMD). An
+earlier study conducted by Lynch et al. [17] in 2018 on the effect of gaze in the same
+collision avoidance situation studied in this thesis highlighted that gaze behaviour
+did not affect the collision avoidance behaviour when avoiding either a passive or
+active virtual walker. However, recently in 2019, Mousas et al. [18] observed that
+in the task of avoiding a non-moving virtual human, the fact that this virtual human
+gazed at the participants or not had an effect on how much deviation they had on their
+trajectories. This study also highlighted the same effect of the participant having an
+avatar in VR on their trajectories.
+When it comes to the situation of mutual avoidance, a paper by Podkosova et
+al. [19] studied the collision avoidance behaviour of pairs of users in VR in two
+situations : colocated (both participants were in the same room physically and in
+VR) and distributed (participants were separated in real life but in the same room in
+VR). This study showed that the colocated situation led to slower walk speed and
+higher clearance distance. Additionally, the authors of this paper also noticed effects
+of pre-conditioning on the pairs of users who first started in the colocated scenarios:
+they were less likely to test how the system would react if there was a collision
+in the distributed scenario. Therefore, this study highlighted how the order of the
+scenarios and the real environment can affect how a participant might behave in a
+virtual environment.
+
+3.3
+
+How these related works about collision avoidance can be
+linked with this thesis?
+
+Seeing these related works, we can say that interactions between human walkers is
+a field that has been studied for decades and we already have qualitative data (e.g.
+elliptic shape of the PS zone [7]). Additionally, we have quantitative data as well
+as precise metrics (e.g. the MPD [10]) designed for specific situations such as the
+situation of collision avoidance.
+In past years, the use of VR to study these interactions has been justified as it conserves enough small scales interactions qualitatively but quantitative differences evaluated with the metrics mentioned earlier occurs ( [3], [4], [12]). Therefore, the big
+question is: why those quantitative differences occurs in experiments conducted in
+VR compared to the experiments conducted in the real world? If we want to answer
+this question for the situation of collision avoidance between two walkers specifically, we can find clues on what can affect humans’ behaviour in VR in similar
+situations. These clues seems to indicates that behaviour can change for in some
+experiments solely with the visual appearance of some specific elements during the
+experiments such as:
+• the appearance of the virtual environment ([13])
+• the virtual emotions displayed on virtual characters ([14])
+• the orientation of virtual characters ([15])
+• the eventual gaze of virtual characters ([18])
+The displayed virtual environment and its inhabitants seems to influence users a lot,
+this is why we want to evaluate the influence of character realism on avoidance strategies in VR.
+
+3.4
+
+Works related to the "multiplicative crowds" experiment
+
+For the second experiment of this thesis, I will not talk about works related to crowd
+animation generation but about situations involving crowd we are going to confront
+the generation method to. There are two situations that are planned to be tested :
+• Bottleneck : A crowd tries to pass through a small entrance
+
+• Pillar : A crowd tries to walk around a pillar
+The "bottleneck" situation is based on the study conducted by Seyfried et al. [20]
+where participants were placed on a room with one exit everyone had to take (See
+Figure 5). The contributions of this article were the observation between density,
+walk speed, space available and jams. However, in this master thesis we are mostly
+interested in the features observed in the experimental setup of the article, which are:
+• the presence of a zipper effect
+• formation of lanes
+
+Figure 5: Experimental setup of the study held by Seyfried et al. [20].
+
+As for the "pillar" situation, this one is based on the study written by Lemercier
+et al. [21] (see Figure 6). The contributions of this article are multiple but here we
+will focus only on what this paper tells us about the "pillar" situation in a real-life
+experiment. At a microscopic level, it tells us that the cross-correlation between a
+participant’s motion signals (speed, position and acceleration) and the motion signals
+of the human he is following exists and is higher with the density (the number of
+participants following each other). At a macroscopic level, it tells us that stopand-go waves to appear with higher density. However, in similar conditions, it was
+observed that these waves will either follow a reappearing pattern, damping pattern
+or be unstable.
+
+Figure 6: Experimental setup of the study held by Lemercier et al. [21].
+
+4
+
+Existing situation on the first experiment
+
+Before I arrived in Inria’s Mimetic team, some work used in this experiment was
+already done.
+
+4.1
+
+CrowdMP
+
+This master’s thesis uses an experimental framework for Unity called "CrowdMP"
+whose main purpose is to ease the implementation of experiments that require any
+kind of crowds. For instance, it can simulate crowds based on the RVO (Reciprocal
+Velocity Obstacles) algorithm [22], as used by the authors of CrowdMP in the study
+[23] but also provides a base framework to immerse participants into a virtual environment with a virtual crowd. It also provides many other tools and plugins to allow
+anyone to customize their own experiments.
+
+4.2
+
+Existing work on the experiment
+
+Another intern already worked on this experiment for six months from late 2018 to
+early 2019, where his main contributions were:
+• Making an add-on to CrowdMP that allows two users to connect from two
+different computers and see each other’s movements using an Xsens+Qualysis
+motion capture setup
+• Allowing a third machine to connect in order to control and monitor the experiments
+• Making a "Xsens simulator" that can stream pre-recorded Xsens motion capture data in real-time in order to ease local tests
+
+5
+
+Design of the first experiment
+
+The main goal of the experiment is to evaluate how the realism of the animation and
+trajectory used by a virtual walker in VR affects the behaviour of a user who needs
+to avoid them. To this end, this experiment is based on the protocol used by Olivier
+et al. [9], where participants are separated by walls and have to walk towards a goal.
+The walls ensure that participants can only see the other person after having reached
+their comfort speed, and therefore force any avoidance decision to depend on the
+relative movements of both persons. However, unlike the experiment in real life, we
+have more control over what the participants see, such as:
+• Seeing the other person coming from the other way (so that the participants do
+not know if the person is coming from their right or their left, see figure 7)
+• Seeing a generated trajectory or the trajectory done by the other participant
+• Seeing the real animation of the other subject or an animation generated with
+different level of details
+
+Figure 7: Exemple of control in the VR experiment : seeing the other player coming
+from the opposite direction than they really are coming from.
+
+In order to avoid real collisions between the participants (since they do not always
+
+see exactly where the other user is in VR), they are both de-localized in the real space
+(see figure 8).
+
+Figure 8: The real environment opposed to the virtual one, the de-localization permits
+to avoid collisions between subjects.
+
+For each trial and on each client machine, timestamped position and animation
+(rotations of every bone) data of each walker are collected multiple times per second. The parameters of the trial and the timestamp of the moment when the other
+participant becomes visible to this client’s user are also saved. The trial order was
+randomized for each session of the experiment.
+
+6
+
+Technical design of the first experiment
+
+To perform this experiment, I developed a client-server application, based on the
+prototype developed in a previous internship. This application enables the operator to
+control the experiment from the server, which also runs the Qualysis motion capture
+software, and a client to be running on each participant’s VR-ready backpack. Each
+participant is also wearing a Xsens motion capture suit, as well as a Pimax 5K HMD
+(Head Mounted Display).
+Here is an example of fully-equipped participant:
+
+Figure 9: Example of a fully equipped participant.
+
+This is how the application works between the different machines and software
+used in the experiment:
+
+Figure 10: Communication between the different hardware and software of the experiment.
+
+6.1
+
+The client application
+
+The application reads a parameter file to know the address of the server and the
+address of the Qualisys stream. It also defines a unique ID that is broadcasted to the
+other client and server. When launched, the user sees for each trial the position he
+should begin the trial on as blue and where he should go as red. The user is then
+instructed to start walking as soon as the goal becomes green (see figure 11).
+
+Figure 11: The user will see these walls and objectives, the blue square represents
+where he should start and when the red square becomes green he need to start walking.
+
+6.2
+
+The server application
+
+While the server is technically developed to be the same application as the client, the
+server configuration file possesses a few additional parameters. This application is
+used by the operator of the experiment as he can choose to prepare and start each trial
+while having information displayed about those. It also receives automatic messages
+from the clients to know if they are ready to start the new trial or if they finished it.
+Before the experiment starts, it is also used to prepare it by allowing the operator to
+change the participants’ HMDs’ calibration, their associated walking speed...
+
+Figure 12: The interface seen by the operator of the trial.
+
+6.3
+6.3.1
+
+Hardware and software used
+Qualisys
+
+Qualisys is a motion capture system that uses infrared cameras. In this experiment
+this system is mostly used to know the position of the user in the experimental room.
+Since this master’s thesis was done in the "Inria" laboratory, for this experiment I had
+access to equipment that is part of Inrias’s "Immerstar" platform which includes an
+entire gymnasium (see figure 13) surrounded by 23 Qualisys cameras. The software
+associated to this system is Qualisys Tracker Manager (or "QTM"). Which allows
+capturing data from the Qualisys motion capture system but also to reread and stream
+this recorded data in real time. This tool was therefore used mainly for two purposes:
+• Testing Qualisys data’s reception by the developed application in the development phase
+• Reading the subjects’ positions during the experiment
+
+Figure 13: Photo of the gymnasium while it is used for an other experiment
+
+6.3.2
+
+Xsens MVN Link
+
+Referred to as "Xsens" in this document, the "Xsens MVN Link" is a suit equipped
+with multiple sensors that allows for a full body motion capture of a user. In this
+experiment it is mostly used to transcribe the real-life postures of the subjects in VR.
+
+Figure 14: Promotional picture of the Xsens MVN Link.
+
+6.3.3
+
+MSI VR One Backpacks
+
+The "MSI VR One Backpacks" are powerful computers that come in the form of a
+backpack in order to be used for VR applications as it allows a user to walk freely in
+a room without having to worry about the cables between headset and computer.
+
+6.3.4
+
+Pimax 5K
+
+The VR HMD used in this experiment is the "Pimax 5K" it has mainly three advantages here:
+• it is compatible with SteamVR and OpenVR, making it easy to use with a
+Unity application
+• unique 200 degrees field of view, which helps the immersion of the subjects
+• it is possible to add extensions to it, such as an eye-tracking device
+
+Figure 15: Promotional picture of the Pimax 5K.
+
+7
+
+Building the experimental setup of the first experiment
+
+7.1
+
+Non detailed contributions
+
+In this paper I want to focus on the systems and logic used to build the experiment, so
+I will not detail these purely technical contributions : updating the version of Unity
+used from 2017.4.2f2 to 2018.4.2f1, updating the version of CrowdMP used to one
+up to date, use XR/OpenVR in order to use the Pimax instead of the FOVE (which
+was used previously) as a VR headset.
+
+7.2
+
+Custom trial system
+
+One of the CrowdMP library’s strongest points is that it allows to structure the experimental flow (succession of trials) using xml files. These files enable both to specify
+the order of the trial and their content, such as what our fake "agents" are, how they
+behave, in what virtual environment the experiment is done... However, in the context of our experiment this structure was too heavy and caused problems related to
+the networking system: the Unity scene is reloaded at each trial (which breaks the
+network system used), the players already generated in the experiment are not taken
+into account by the trial system and the trial files need to be on each machine (which
+reduces the control of the "server" machine on the experiment).
+We therefore decided to use CrowdMP’s simulations at a lower level ("manually"
+updating the positions of the agents in the RVO simulator) and reset the data of the
+trial instead of the scene itself. As for the trials, ours are defined by 6 factors:
+• Is the animation used by the other character the animation captured by the
+Xsens system or an artificial one?
+• If it is an artificial one, is that character looking at the subject during the interaction?
+• Is the trajectory used by the other character the real trajectory of the other
+participant or an artificial one?
+• Is the trajectory of the other character "reversed" (so that the subject does not
+know if the other player is coming from his left or his right)?
+
+• Is the first player "passive" for the second one (the second player will not see
+any reaction from the first one during the avoidance)
+• Is the second player "passive" for the first one
+For this reason, our trials are only defined by six booleans which create two side
+effects :
+• We can now only read the trial file with the "server" machine as six booleans
+are relatively easy to send to the other two "client" machines
+• The trials are now easy to generate and randomize, this is the equivalent of
+writing the numbers from (000000)2 to (111111)2 in a random order with
+some numbers removed to avoid illogical trials.
+
+7.3
+
+Networking system
+
+Before I arrived, the project already had some networking features working which
+enabled:
+• Multiple clients to connect to a "server" machine
+• Every machine to connect to the same Qualisys machine in the network in
+order to obtain every player’s position
+• Every machine to receive data from the Xsens system in order to obtain every
+player’s animation
+It is important to note that there is little synchronization between the different "server"
+and "client" instances of the experiment’s program, most of the informations synchronized are the clients’ specific information (id, ports used for streaming the Xsens
+data, ...) when they connect to the server. Since our main goal is to do multiple trials
+in order to obtain data to analyze, a synchronization method using simple messages
+at specific moments is used with :
+• Messages sent from the server to the clients to tell what is the next trial and
+when to start the trial that was specified by the previous message
+• Messages sent from the client to the server to know when the client is ready to
+start the trial and when it has have finished the current trial
+
+7.4
+
+Internal functioning of the trials
+
+During trials, if the subject will see his avatar with their own animation all the time,
+the goal of the experiment is to analyze how he reacts to how the other walker is
+displayed. As seen earlier, we have different parameters that define a trial and as
+such, specific ways to display the other walker needed to be implemented. In this
+part we will see how.
+
+7.4.1
+
+Using simulated trajectories
+
+In order to use simulated trajectories, the RVO simulator of CrowdMP is used. Usually with CrowdMP the simulator is not directly used because a higher level of abstraction with trials is the common way to use it. However, as said in part 7.2, those
+were not adapted to the experiment. The simulator works as follows: at each step
+the agents generate a preferred velocity and direction and the simulator checks for
+potential collisions (with other agents or with obstacles) and changes the position
+of the agents according to that. The simulator also need to know the position of the
+players to enable the other simulated agents to avoid collisions with the player, so the
+players are linked to their own agent. However, since we do not want the simulator
+to change the trajectories of our players (or else it would not directly transcribe the
+users’ movement accordingly), these user agents bypasses the collisions check of the
+simulator to update their positions.
+
+7.4.2
+
+Using the fake animation on the real trajectory
+
+The CrowdMP project already has an animation system working for its generated
+agents using Unity’s "Animation Controller". Since this controller is a states machine
+that changes its state based on some conditions on some of its variables (such as the
+velocity of an agent). Using these animations for a user-generated trajectory was just
+a matter of updating these variables according to the user’s trajectory.
+
+7.4.3
+
+Animating the head so that it looks at the player
+
+There was already a script in CrowdMP that permits an agent to look at something
+and follow it with his head. However, in a situation of walkers crossing each other
+one does not always look at the other, so to generate something plausible the agent
+
+will follow a sequence the same way it was done by Lynch et al. in 2018 [17] : the
+agent will first look ahead and then, when the player is visible for 0.2 seconds, it will
+look towards his head for 1.5 seconds and then look ahead again.
+
+7.4.4
+
+Mirroring the other player’s spawn and trajectory
+
+Since we do not want the player to know from which side the other walker might
+come, we want to reverse the trajectory of that other walker. When the other uses a
+simulated agent it is quite simple since we just need to tell it to go from the expected
+goal to the start instead of the start to the goal. However, when the other walker is
+using the trajectory of a real player, the solution that was selected was to rotate and
+change the origin of that other player seen by the user of the current machine. Inside
+Unity the position of an object can be referred in two ways:
+• the global position (depending only on the scene)
+• the local position (depending on what is the global position and rotation of this
+object’s parent)
+Thus, here the solution was to mirror the orientation and position of the desired
+player’s parent object.
+
+7.4.5
+
+Making a player passive
+
+One of our parameters that might influence our behaviour in VR is the behaviour of
+the other walker, so we want to know how a subject might react if the other walker
+does not react to his presence. When it comes to simulating a walker it is fairly
+easy to tell it not to take into account the player, since we have full control of their
+trajectory. However, if we want to have a situation where a subject has to react to
+someone who does not react to his presence but still follows a real user’s trajectory
+then we need to find a workaround. The one we found is to have one parameter that
+is asymmetric between the two subjects and makes the other walker not visible for a
+trial but only on one machine. In that situation the other player will see someone walk
+toward him and not react to his presence even though it is not a generated trajectory.
+
+8
+
+Methods of the first experiment
+
+An experiment that evaluates the influence of the virtual environment’s parameters
+during a collision avoidance task on human behaviour was designed. However at the
+time this document was written, the experiment was not held due to the COVID-19
+crisis. The hypotheses are :
+• H1: Using a real trajectory over a generated one for the other walker leads to
+collision avoidance behaviour closer to real life conditions
+• H2: Using a real animation over a generated one for the other walker leads to
+collision avoidance behaviour closer to real life conditions
+• H3: Having the head animated for the other walker leads to collision avoidance
+behaviour closer to real life conditions
+• H4: Having to avoid an active walker to the subject’s trajectory rather than a
+passive one leads to collision avoidance behaviour closer to real life conditions
+
+8.1
+
+Task
+
+Each pair of participants will be placed in a virtual environment while wearing a
+Xsens suit and an HMD whose position will be tracked by a Qualisys system. In
+the virtual environment, they will be separated by walls and asked to walk towards a
+goal when its colour goes from red to green while avoiding another walker crossing
+their way in an orthogonal way. The other walker will either be the other participant
+of the pair or a virtual human. Sometimes assets of both the virtual human and the
+other participants will be combined. The walls will be placed in order to hide the
+other walker before the participants reach their comfort speed.
+
+8.2
+
+Experimental design
+
+Participants will be asked to perform that task under conditions that are the combination of the following factors :
+• [Real Trajectory | Generated Trajectory]: the trajectory of the other walker
+will either be taken from the path of the other participant or be a computer
+
+generated one. For either trajectory mode, the trajectory can be reversed so
+that the participant has no way to know if the other walker would appear from
+his left or from his right.
+• [Real Animation | Generated Animation]: the animation of the other walker
+will either be the real animation captured by the Xsens hardware or one computergenerated according to the other walker’s trajectory.
+• [Head Animated | not Animated]: the animation of the other walker’s head
+will either be blocked or not, in the case of a generated animation. If the head is
+animated, then it will look at the participant by following a specific sequence.
+• [Walker Passive | Active]: the other walker will react or not to the participant’s trajectory, in order to have a participant looking passive to the other then
+no other walker will appear for one of them.
+All pairs of participants will perform the task under every combination of these factors.
+
+8.3
+
+Data used
+
+Here will be explained the data we plan to use and extract from the experiment,
+however it might change by the time the experiment can be conducted.
+
+8.3.1
+
+Extracted variables
+
+In order to use the data collected during the experiment, we first need to process it
+into a usable form. These are the data collected on each trial of the experiment, on
+each rendered frame of the application of each participant:
+• the position of the participant
+• the position of the virtual human seen by the participant
+• if the virtual human is visible for the participant
+
+Figure 16: Example of raw data collected during trials.
+
+From this raw data (see Figure 16), we can extract the following variables:
+• tsee: the moment when the virtual human was visible for the participant during
+the trial
+• MPD(t) (Minimum Predicted Distance): the distance at which two walkers
+would pass each other if they do not change their locomotion behaviour at time
+"t", as defined by the study conducted by Olivier et al. [9]
+• WSpeed(a,t) (Walk Speed): the walking speed of the agent "a" (either the
+participant or the virtual human) at time "t" during the trial
+
+8.3.2
+
+Data from previous works
+
+In order to see if some factors induce behaviours that are similar to behaviours observed outside of VR, we need data that was collected outside of VR. Since the
+experiment conducted in this master thesis is based on the protocol used in the protocol used in the study done by Olivier et al. [9], we also used data from this study.
+Some data we needed was already processed such as :
+• tsee: the moment during the trial when participants are able to see each other
+• MPD(t) (Minimum Predicted Distance)
+
+9
+
+Design of the second experiment
+
+The main goal of the experiment is to test a technique for crowd animation generation
+and compare the animation (body movements and trajectories) obtained to real data.
+
+9.1
+
+The animation technique
+
+This technique originated from an idea of my co-supervisor Julien Pettré. The idea
+is simple: can we use only one person wearing a VR Head Mounted Display and
+a motion tracking suit to generate data sets of trajectories involving several persons
+interacting together, instead of needing to rely on complex real experiments involving
+simultaneously dozens of persons? For instance, to create a crowd going through a
+small entrance, we can ask someone to walk several times through that entrance.
+However, he also sees his past selves (body motions and trajectories), and therefore
+interact with them (see Figure 17).
+
+Figure 17: Each iteration makes the scene more crowded
+
+9.2
+
+The situations tested
+
+To test this animation technique, two situations with real life data available from
+previous studies [20, 21] have been considered.
+
+Bottleneck
+A crowd tries to pass through a small entrance. To generate that situation, the participant will have to do multiple travels from specific start points. Each time he does a
+
+new travel, a replay of his previous travels is made.
+
+Figure 18: Unity Scene of the bottleneck situation
+
+Pillar
+A crowd tries to walk around a pillar. Here the participant is duplicated with clones
+all around the pillar, each of these clones reproduce the participant’s movement but
+with a spacial and temporal offset.
+
+Figure 19: Unity Scene of the pillar situation from different angles
+
+9.3
+
+Hardware used
+
+In order to immerse the user in VR and capture their animation, this experiment uses
+a Pimax 4K VR headset, an MSI backpack and a Xsens motion capture suit. These
+are already introduced in part 6.3 of this document. However, to capture the position
+of the user in the environment in this experiment we can use standard Vive base
+stations as we do not need a tracking zone as big as the first experiment.
+
+10
+
+Building the experimental setup of the second experiment
+
+10.1
+
+Non detailed contributions
+
+In this paper I want to focus on the systems and logic to build the experiment, but
+I also want to focus on what is actually original in this experiment. This is why I
+will only talk about the core system behind the animation technique : saving and
+reloading the captured animation. As a result, I will not detail everything such as the
+conditions for each scene, the setup of each scene, generating random start positions,
+...
+
+10.2
+
+Saving and reloading the captured animation
+
+During this experiment, the system needs to save the trajectory and body animation
+performed by the user then use it to animate virtual characters. We will also need
+the trajectories in order to extract data from this experiment. To achieve this, we
+first save in different files timestamped positions of the users as well as the body
+rotations for each part of their 3D skeleton. When we need to replay this animation
+on a virtual character, we load these files and apply the nearest (time wise) position
+and body rotation each frame.
+
+11
+
+Methods of the second experiment
+
+An experiment that compares crowds generated by a new animation technique in VR
+to crowds from real life experiments. The hypotheses are:
+• H1 : with the animations generated in the "bottleneck" situation, we retrieve
+the zipper effect observed in Seyfried et al.’s study [20]
+• H2 : with the animations generated in the "bottleneck" situation, we retrieve
+the formation of lanes observed in Seyfried et al.’s study [20]
+• H3 : with the animations generated in the "pillar" situation, we retrieve the
+stop-and-go waves observed in Lemercier et al.’s study [21]
+
+11.1
+
+Participants
+
+As of now, the experiment could only performed on two users as part of a test of the
+application due to time constraints and COVID-19 policies. Participants were unpaid
+but not naive to the purpose of the experiment.
+
+11.2
+
+Task
+
+The participant was placed in virtual environments using a Pimax 4K and an MSI
+Backpack while wearing a Xsens suit. There was 2 different environments where the
+task was different:
+• Bottleneck : The user had to walk 20 times from a random starting point to
+a zone behind a door, on each iteration the user would see his past selves and
+was asked to avoid them. The random starting points are sorted so that the user
+goes from the nearest random starting point from the door to the farthest.
+• Pillar : The user was placed in a room with a pillar in its centre and was asked
+20 times to follow a virtual character for 30 seconds. For the first iteration, the
+user has to follow a default virtual character but for the next he follows his past
+selves. For each iteration, only the last 5 past walks of the user are displayed.
+
+11.3
+
+Data used
+
+11.3.1
+
+Extracted variables
+
+In order to use the data collected during the experiment, we first need to process it
+into a usable form. The data collected is, for each walk, in the form of timestamped
+positions in the Unity environment. From this we deduce multiple values:
+• 2D position : we can directly use the data by using only 2 coordinates and
+consider only 2D position over time to simplify the visualisation of the participants’ paths as we do not really need the Z-axis
+• Angular coordinate : for the pillar scene, since the participants walks around
+a pillar in a circular motion, we can simplify the visualisation of the participants’ paths using the angular coordinate over time instead of the 2D position
+• Speed : since we have access to timestamped positions, it is therefore possible
+to extract the speed over time during one walk or on average
+
+11.4
+
+Analysis
+
+As stated in the "participants" part, we only had 2 participants which makes it complicated to do statistical analysis, however we can still look at the data and get some
+first pre-experimental intuitions.
+
+11.4.1
+
+Bottleneck
+
+On the paths taken by the 2 participants (see Figure 20), we can observe the presence
+of the zipper effect toward the goal, however we see the appearance of lanes only
+with the paths generated by the second participant. All of this suggest that for the
+bottleneck situation, we can retrieve features that were observed in [20] thus suggesting a possible validation of H1 and H2 once we have more data.
+
+Figure 20: Speed coloured paths taken by both participants in bottleneck scene
+
+11.4.2
+
+Pillar
+
+As for the pillar situation, we unfortunately do not retrieve any stop-and-go wave on
+both participants’ generated animations (Figures 21 and 22) which suggests an invalidation of H3. What we observe instead is a progressive damping of the irregularity
+caused by the default first virtual character after each new walk (the lower the path
+in Figure 21, the fewer irregularities there is). This pattern might be explained by the
+absence of simulation of the density in this situation due to:
+• the default virtual character that might not do enough stop-and-go in his motions
+• the absence of instructions to force a maximum distance between the participant and the virtual character they need to follow
+
+Figure 21: Paths taken by both participants in pillar scene
+
+Figure 22: Speed of the entire jam for both participants in pillar scene
+
+12
+
+Conclusion
+
+To conclude on this thesis, we first designed an experiment to evaluate the influence
+of character realism on humans’ behaviour in VR. To be more specific, we wanted to
+evaluate the influence of several factors related to character realism on the situation
+of collision avoidance with a human character through an experiment. Unfortunately,
+due to an unexpected international health crisis, we could not conduct this experiment
+and gather data to test our hypotheses at the time I am writing these lines. However,
+as the experiment was ready to be conducted just as the international crisis started,
+our plan is to perform it as soon as experiments are allowed to be performed safely for
+both participants and experimenters. Furthermore, the experiment involves participants to wear both the Xsens motion capture suit and a HMD, which raises specific
+considerations to equip participants and disinfect devices. However, once it will be
+possible to run the experiment, our goal will then be to make the results of the experiment available to the community both by submitting a scientific paper to the relevant
+conferences (e.g., IEEE Virtual Reality).
+In terms of benefits these works bring to the research team, one of them is the development a framework usable for user studies in VR involving multiple users, with
+the possibility for the experimenter to fully control said experiments and studies.
+This framework will be used for this study but is also planned to be adapted by a
+PhD student for another experiment. These works will also permit to improve the
+knowledge on what factors influences avoidance strategies in VR. This knowledge
+will thereafter be used to understand what factors should be taken into account for
+future experiments (e.g. experiments involving virtual crowds and real users).
+As this master thesis is part of an internship and I had extra time to work on other
+projects, we also designed an experiment to test a new method to generate virtual
+crowds using VR and motion capture. This experiment is at the time I am writing
+these lines at a pre-experimental stage and the pre-experimental data seems promising but also suggests that we need to redesign the method for one of the situations
+studied.
+In terms of personal development, this internship has enabled me to progress on several aspects, such as:
+• Improving my Unity skills
+• Improving my skills for simplification
+• Learning the existence and how to use some unusual hardware
+
+• Learning how to understand and extract information from scientific articles
+• Learning how to prepare a user study
+And before ending this conclusion, I would like to put emphasis on the following.
+Thanks to this internship and the environment of this internship, I understood how
+much I like the idea of using computer skills for research and being able to constantly
+learn about a specific domain. All of that makes this internship a turning point for
+my future career.
+
+13
+
+References
+
+References
+[1] B. Bideau, R. Kulpa, S. Ménardais, L. Fradet, F. Multon, P. Delamarche, and
+B. Arnaldi, “Real handball goalkeeper vs. virtual handball thrower,” Presence,
+vol. 12, no. 4, pp. 411–421, 2003.
+[2] P. Fuchs, G. Moreau, A. Berthoz, and J.-L. Vercher, Traité de la Réalité Virtuelle,
+Troisième édition. Presses des Mines, 2006, vol. 1, ch. 1.
+[3] P. W. Fink, P. S. Foo, and W. H. Warren, “Obstacle avoidance during walking
+in real and virtual environments,” ACM Trans. Appl. Percept., vol. 4, no. 1,
+2–es, Jan. 2007, ISSN: 1544-3558. [Online]. Available: https://doi.org/
+10.1145/1227134.1227136.
+[4] A.-H. Olivier, J. Bruneau, G. Cirio, and J. Pettré, “A virtual reality platform to
+study crowd behaviors,” Transportation Research Procedia, vol. 2, pp. 114–
+122, 2014, The Conference on Pedestrian and Evacuation Dynamics 2014
+(PED 2014), 22-24 October 2014, Delft, The Netherlands, ISSN: 2352-1465.
+[Online]. Available: http://www.sciencedirect.com/science/article/
+pii/S2352146514000519.
+[5] J. Perrinet, A.-H. Olivier, and J. Pettré, “Walk with me: interactions in emotional walking situations, a pilot study,” in ACM Symposium on Applied Perception - 2013, Dublin, Ireland, Aug. 2013. [Online]. Available: https://
+hal.inria.fr/hal-00864270.
+[6] C. Appert-Rolland, P. Degond, S. Donikian, J. Fehrenbach, J. Hua, A. Jelic,
+J. Pettré, and R. Kulpa, “Realistic following behaviors for crowd simulation,”
+Computer Graphics Forum, vol. 31, no. 2, pp. 489–498, 2012. [Online]. Available: https://hal.archives-ouvertes.fr/hal-00817688.
+[7] M. Gérin-Lajoie, C. Richards, and B. McFadyen, “The negotiation of stationary and moving obstructions during walking: Anticipatory locomotor adaptations and preservation of personal space,” Motor control, vol. 9, pp. 242–69,
+Aug. 2005.
+[8] M. Gérin-Lajoie, C. L. Richards, J. Fung, and B. J. McFadyen, “Characteristics of personal space during obstacle circumvention in physical and virtual
+environments,” Gait & Posture, vol. 27, no. 2, pp. 239–247, 2008, ISSN: 0966-
+
+6362. [Online]. Available: http://www.sciencedirect.com/science/
+article/pii/S0966636207001026.
+[9] A.-H. Olivier, A. Marin, A. Crétual, and J. Pettré, “Minimal predicted distance: A common metric for collision avoidance during pairwise interactions
+between walkers,” Gait and Posture, vol. 36, no. 3, pp. 399–404, 2012. [Online]. Available: https://hal.inria.fr/hal-00759480.
+[10] A.-H. Olivier, A. Marin, A. Crétual, A. Berthoz, and J. Pettré, “Collision
+avoidance between two walkers: Role-dependent strategies,” Gait and Posture, 2013. [Online]. Available: https://hal.inria.fr/hal-00821854.
+[11] B. J. H. van Basten, S. E. M. Jansen, and I. Karamouzas, “Exploiting motion capture to enhance avoidance behaviour in games,” in Motion in Games,
+A. Egges, R. Geraerts, and M. Overmars, Eds., Berlin, Heidelberg: Springer
+Berlin Heidelberg, 2009, pp. 29–40, ISBN: 978-3-642-10347-6.
+[12] A. Olivier, J. Bruneau, R. Kulpa, and J. Pettré, “Walking with virtual people:
+Evaluation of locomotion interfaces in dynamic environments,” IEEE Transactions on Visualization and Computer Graphics, vol. 24, no. 7, pp. 2251–
+2263, 2018.
+[13] A. L. Simeone, I. Mavridou, and W. Powell, “Altering user movement behaviour in virtual environments,” IEEE Transactions on Visualization and Computer Graphics, vol. 23, no. 4, pp. 1312–1321, Apr. 2017, ISSN: 2160-9306.
+[14] A. Bönsch, S. Radke, H. Overath, L. M. Asché, J. Wendt, T. Vierjahn, U.
+Habel, and T. W. Kuhlen, “Social vr: How personal space is affected by virtual
+agents’ emotions,” in 2018 IEEE Conference on Virtual Reality and 3D User
+Interfaces (VR), Mar. 2018, pp. 199–206.
+[15] F. Argelaguet Sanz, A.-H. Olivier, G. Bruder, J. Pettré, and A. Lécuyer, “Virtual Proxemics: Locomotion in the Presence of Obstacles in Large Immersive Projection Environments,” in Proceedings of IEEE Virtual Reality Conference, Arles, France, Mar. 2015, pp. 75–80. [Online]. Available: https :
+//hal.inria.fr/hal-01149962.
+[16] F. Berton, A.-H. Olivier, J. Bruneau, L. Hoyet, and J. Pettré, “Studying Gaze
+Behaviour During Collision Avoidance With a Virtual Walker: Influence of
+the Virtual Reality Setup,” in VR 2019 - 26th IEEE Conference on Virtual
+Reality and 3D User Interfaces, Osaka, Japan: IEEE, Mar. 2019, pp. 717–725.
+[Online]. Available: https://hal.inria.fr/hal-02058360.
+
+[17] S. D. Lynch, J. Pettré, J. Bruneau, R. Kulpa, A. Crétual, and A. Olivier, “Effect of virtual human gaze behaviour during an orthogonal collision avoidance
+walking task,” in 2018 IEEE Conference on Virtual Reality and 3D User Interfaces (VR), Mar. 2018, pp. 136–142.
+[18] C. Mousas, A. Koilias, D. Anastasiou, B. Rekabdar, and C. Anagnostopoulos,
+“Effects of self-avatar and gaze on avoidance movement behavior,” CoRR,
+vol. abs/1903.06657, 2019. arXiv: 1903.06657. [Online]. Available: http:
+//arxiv.org/abs/1903.06657.
+[19] I. Podkosova and H. Kaufmann, “Mutual collision avoidance during walking
+in real and collaborative virtual environments,” in Proceedings of the ACM
+SIGGRAPH Symposium on Interactive 3D Graphics and Games, ser. I3D
+’18, Montreal, Quebec, Canada: Association for Computing Machinery, 2018,
+ISBN : 9781450357050. [Online]. Available: https://doi.org/10.1145/
+3190834.3190845.
+[20] A. Seyfried, T. Rupprecht, O. Passon, B. Steffen, W. Klingsch, and M. Boltes,
+New insights into pedestrian flow through bottlenecks, 2007. arXiv: physics/
+0702004 [physics.soc-ph].
+[21] S. Lemercier, A. Jelic, R. Kulpa, J. Hua, J. Fehrenbach, P. Degond, C. AppertRolland, S. Donikian, and J. Pettré, “Realistic following behaviors for crowd
+simulation,” Computer Graphics Forum, vol. 31, no. 2pt2, pp. 489–498, 2012.
+eprint: https : / / onlinelibrary . wiley . com / doi / pdf / 10 . 1111 / j .
+1467-8659.2012.03028.x. [Online]. Available: https://onlinelibrary.
+wiley.com/doi/abs/10.1111/j.1467-8659.2012.03028.x.
+[22] J. van den Berg, S. Guy, M. Lin, and D. Manocha, “Reciprocal n-body collision avoidance,” in. Apr. 2011, vol. 70, pp. 3–19.
+[23] J. Bruneau, A.-H. Olivier, and J. Pettré, “Going Through, Going Around: A
+Study on Individual Avoidance of Groups,” IEEE Transactions on Visualization and Computer Graphics, vol. 21, no. 4, p. 9, Apr. 2015. [Online]. Available: https://hal.inria.fr/hal-01149960.
+
+14
+
+Appendices
+• User manual of the experimental application . . . . . . . . . . . . . . . . . . 47-56
+
+User manual of the experimental
+application
+1 – Required hardware
+In order to use the application to do the experiment, you need three computers:
+•
+•
+
+1 “manager/server” machine that will be used to monitor the experiment
+2 “participant/client” machines that will run the application in VR: these computers
+should be backpack computers
+
+As for devices, you need:
+•
+•
+
+2 PCVR Headsets compatible with SteamVR for each client machine
+2 Xsens suits to capture the movements of each participant inside the application
+
+You will also need to be in a room using a Qualisys motion tracking system and place markers
+on each PCVR Headset.
+Finally, in order to have all these connected, you need a Wifi router and have all the
+computers connected to it.
+
+2 – Required software
+2.1 – On the “Manager” computer
+The manager computer will be the one receiving data from the Qualisys system and stream it
+to the other machines, so you need to have Qualisys Track Manager (QTM) on it.
+On either this manager, or another 4th computer, you need to install a VNC viewer of your
+choice to control the client machines without a screen.
+To generate trial files, you will need to have Python installed.
+
+2.2 – On the “Participant” computers
+First, you probably need to install SteamVR to use the VR Headset on these; depending on the
+headset you use you might need to install additional software to use them (for instance, PiTool
+for a Pimax).
+In order to use the Xsens suits and stream it to the other computers, you need to have MVN
+Animate on each computer.
+Since these machines will be used by the participants and they will “wear” them, you need to
+control these machines remotely. You need to install a VNC server of your choice that is
+compatible with the VNC Viewer you use with the machine that will remote control those.
+
+3 – Setting up the Unity application
+3.1 – Setting up the configPort.txt file
+The application can be used for the experiment in either build or editor mode. Using the build
+version for at least the client machines is recommended, if you want to use it with the source
+code in editor mode, you need Unity 2018.4.2f.
+The application should be installed in each computer, in the root folder of the build or source
+code (depending on the one you use). You should fill in the “configPort.txt” file on each
+machine (if it does not exists, create it). Here is an example of what it looks like:
+notDedicatedServer
+localhost
+Player2
+9760
+localhost
+4540
+F
+Now let us see line by line what it corresponds to:
+notDedicatedServer : either “DedicatedServer” or “notDedicatedServer”, put
+“DedicatedServer”: if it is the server machine
+localhost : the local address of the “server/manager” machine to connect to
+Player2 : identifier of the machine, should be either “Player1”, “Player2” or “Server”
+9760 : was used when the application used Vicon, leave it as it is
+localhost : the local address of the machine that streams the Qualisys data, usually the same
+as the “server/manager” machine
+4540 : the port used by the Xsens MVN animate to stream the data of this machine
+F : either “F” or “M”, use “F” if participants are female and “M” if they are male
+To know the address of the manager machine, use the “ipconfig” command in the windows
+powershell and use the displayed “IPv4” address.
+
+3.2 – Setting up the trial file
+You need to copy/paste a trial file to the folder of the application in the server/manager
+machine. To generate it, use the “TrialGen” python script: it should generate 100 trial files in a
+folder named “generated”. Just copy the one you intend to use for the trial then rename it
+“trials.txt”.
+
+4 – Setting up the Qualisys system
+Use QTM Manager on the “Manager” computer to calibrate the Qualisys system, then place
+the HMDs with their Qualisys markers placed inside the tracking zone.
+You need to create a “rigidbody” for each HMD, the rigidbodies need to be named “Player1”
+and “Player2”.
+<TODO : ADD PICTURES WHEN WE HAVE ACCESS TO KERLANN>
+
+5 – Setting up the Xsens suits
+Calibrate the Xsens with MVN Animate on each machine like you would for any other use, but
+make sure that the software streams the data to all of the 3 machines (use ipconfig on each
+machine to know the address to use) on the port specified in “configPort.txt”.
+<TODO : ADD PICTURES WHEN WE HAVE ACCESS TO KERLANN>
+You can launch the Unity application and connect it to itself so that the participant does not
+walk with nothing displayed during the Xsens calibration.
+
+6 – Connecting everything
+Once the config files are correctly setup + the Qualisys system is correctly set up, you can
+connect the 3 machines through the Unity application, launch it on the 3 machines (using VNC
+for the 2 client machines).
+To connect the machines, first on the manager/server machine click on the “host” button on
+the top left corner.
+
+Then, on the client machines, click on the “connect” button :
+
+7 – Calibrating inside of the Unity application
+Note: everything here is done through the Manager/Server machine
+
+7.1 – Calibrate the headset’s height position
+Ask the participant that is “Player1” to stand straight, then press the “OffsetP1HMD” button
+on the screen to automatically fix this participant’s height position. Do the same thing for
+“Player2”, but press “OffsetP2HMD” instead.
+
+7.2 – Calibrate the headset orientation
+Ask the participant that is “Player1” to stand straight and to look in front of him (to the
+direction he should follow in real life) then press the “Tare P1” button on the screen. Ask him
+to walk and if he feels comfortable, re-iterate the operation until he is comfortable while
+walking. Do the same thing for “Player2”, but press “Tare P2” instead.
+
+7.3 – Calibrate the walkers‘ speed
+We need to evaluate the walk speed of each participants so that the system can adjust the
+speed of the virtual walkers (so that their speed does not indicate that it is a virtual walker)
+and set up a delay for the fastest walker in order to increase collision avoidance situations.
+Ask the participants to go back to their original spawn
+
+Then ask them to walk toward their goal when it becomes green and when they are at their
+goal, to turn around and wait for the same thing but with their start.
+Press either “StartP1Setup” or “StartP2Setup”, depending on which participant you want to
+evaluate and wait for them to reach their goal. Do that a few times for each participant.
+
+You should see that there is a recommended offset for one of the players. Write it in the field
+of that player and press “SetP1Offset” or “SetP2Offset”
+
+7.4 – Set up the output folder name
+For each pair of participants of this experiment, it is easier to save the data in different folders.
+Specify the name you want in the “output folder” field and press the button next to it.
+
+8 – Monitoring the experiment
+Once everything is correctly set up, managing the experiment is straightforward: the manager
+just needs to navigate between trials and start them by using the “next/previous trial buttons”
+and the “start trial” one.
+
+Data about the current trial are displayed on the top right corner of the screen
+
+Data about the execution of the current trial are displayed at the bottom of the screen
+
+

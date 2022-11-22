@@ -1,0 +1,5252 @@
+Arthur Kauko
+
+Realoptionsvärdering av ett exempelfall med hjälp av
+datorprogram
+
+Pro gradu-avhandling i informationssystem
+Handledare: Doc. Markku Heikkilä
+Fakulteten för samhällsvetenskaper och ekonomi
+Åbo Akademi
+Åbo 2021
+
+ÅBO AKADEMI – FAKULTETEN FÖR SAMHÄLLSVETENSKAPER OCH EKONOMI
+Abstrakt för avhandling pro-gradu
+Ämne: Informationssystem
+Författare: Arthur Kauko
+Avhandlingens rubrik: Realoptionsvärdering av ett exempelfall med hjälp av datorprogram
+Handledare: Doc. Markku Heikkilä
+Abstrakt:
+Genom att göra en realoptionsvärdering av möjliga investeringsalternativ kan ett företag få information om
+möjligheter, resultat och nyttor som kan användas som stöd vid strategisk analys då beslut om att investera i
+en realoption fattas. Realoptioner är ofta inbäddade i strategiska investeringar. Realoptionsteorin möjliggör
+applicering av finansiella värderingsmetoder för att värdera realtillgångar. Man kan tänka att
+realoptionssynsättet använder den finansiella optionsteorin för att värdera reala tillgångar. I vissa fall kan
+vissa kapitalinvesteringstekniker huvudsakligen underskatta realoptionsvärdet.
+I denna avhandling används realoptionstankesättet för värdering genom att använda den s.k.
+nettonuvärdesmetoden, Black-Scholes-Merton -modellen med Monte Carlo -metod, Cox-Ross-Rubinstein binomialmodellen och den suddiga återbetalningsmetoden (SÅM, på engelska fuzzy pay-off method).
+Avhandlingens syfte är att förklara vilken betydelse realoptionsvärdering har för strategisk ledning, vad
+realoptionsvärdering innebär samt att presentera ett exempelfall på en realoptionsanalys, där de olika
+nämnda metoderna samt modellerna tillämpas.
+Under studien har det framkommit att nuvärdesmetoden värderar för lågt det möjliga investeringsalternativet,
+vilket ger möjlighet till spekulation om man borde påbörja eller avyttra ett projekt. BSM och CRR -modellerna
+tar risken i beaktande som volatilitet (sigma; standardavvikelse) och därför kan de vara lämpligare för
+realoptionsvärdering. CRR -modellens resultat närmar sig BSM -modellens resultat då antalet steg i CRR
+ökar och med båda modellerna kan köp- eller säljoptioner kalkyleras som kan användas för
+realoptionsvärdering. Resultatet som fås med SÅM kan jämföras med BSM och CRR resultaten. Vidare är
+SÅM väldigt informativ och kan beakta olika scenarier. Dessutom kan CRR och BSM -modellerna och SÅM
+resultaten informativt visualiseras.
+Det kunde göras mera forskning inom områden som t.ex. värdering av realoptioner och realoptionernas
+prestationsföljder. Särskilt kunde allmänna empiriska studier göras om kostnader som uppkommer då
+realoptioner skapas. För att visa skillnader i resultaten mellan praktiska och teoretiska studier kunde det göras
+praktiska studier i form av empiriska fallstudier gällande realoptionsimplementeringar. Vidare kunde
+empiriska studier göras om inlösning av realoptioner. Vad gäller affärssystem kunde det göras forskning om
+affärssystemens implementeringstider, grundinvesteringens storlek samt hurudana moduler som har
+tillämpats inom organisationerna.
+Nyckelord: Realoption, realoptionsteori, realoptionsvärdering, strategisk ledning, nettonuvärdesmetod,
+internräntemetod, Monte Carlo metod, BSM modell, CRR modell, suddig återbetalningsmetod, affärssystem.
+Datum: 24.04.2021
+
+Sidantal: 69
+
+INNEHÅLLSFÖRTECKNING
+1
+
+INTRODUKTION .................................................................................................... 1
+1.1
+
+Syfte och avgränsning ..................................................................................... 1
+
+1.2
+
+Empiriska analysen, forskningsfrågor och metod ....................................... 2
+
+2
+
+VAD ÄR EN REALOPTION? ................................................................................. 4
+
+3
+
+REALOPTIONER OCH STRATEGISK LEDNING ............................................... 7
+3.1
+
+4
+
+Betydelsen av realoptioner för strategisk ledning ...................................... 10
+
+OPTIONSBESLUTEN ........................................................................................... 13
+4.1
+
+Optionen att skjuta upp (optionen att vänta) ............................................. 14
+
+4.2
+
+Optionen att avyttra och byta ...................................................................... 14
+
+4.3
+
+Tillväxtsoptionen (optionen att expandera) ................................................ 15
+
+4.4
+
+Flerfasiga optionen ........................................................................................ 16
+
+4.5
+
+Avtalsoptionen ............................................................................................... 16
+
+4.6
+
+Optionen att lägga ned eller öka produktionen.......................................... 17
+
+4.7
+
+Optionen att ändra input eller output ......................................................... 17
+
+4.8
+
+Optionsinteraktioner .................................................................................... 17
+
+4.9
+
+Optionsportföljer .......................................................................................... 19
+
+4.10
+
+Konkurrens och investering ......................................................................... 19
+
+4.11
+
+Risk och osäkerhet ........................................................................................ 21
+
+4.12
+
+Beslutet att lämna marknaden och ekonomisk hysteresis ......................... 23
+
+4.13 Stöd för beslutsfattandet............................................................................... 25
+4.13.1 Strategiska handlingar ............................................................................. 25
+4.13.2 Omformning ............................................................................................ 26
+4.13.3 Implementering ....................................................................................... 27
+5
+
+6
+
+VÄRDERING AV REALOPTIONER ................................................................... 28
+5.1
+
+Realoptioner och prestation ......................................................................... 28
+
+5.2
+
+Investeringstiming ......................................................................................... 31
+
+ETT ILLUSTRATIVT EXEMPEL ........................................................................ 35
+6.1
+Metoderna, modellerna tillämpade i exemplet ........................................... 35
+6.1.1 Nuvärdesmetoden ........................................................................................ 36
+6.1.2 Black-Scholes-Merton modell och Monte Carlo metod ............................. 36
+6.1.3 Kvasi-slumptal ............................................................................................ 41
+6.1.4 Binomialmodellen ....................................................................................... 41
+6.1.5 Suddig logik ................................................................................................ 43
+6.1.6 Lagen av ett pris .......................................................................................... 44
+6.1.7 Voltmängdjustering för att nå besparingar .................................................. 45
+i
+
+6.2
+Data och förklaringar till kalkylerna .......................................................... 46
+6.2.1 Grundinvesteringen ..................................................................................... 46
+6.2.2 Kassaflöden och scenarier ........................................................................... 47
+6.2.3 Implementeringstid och ekonomisk livslängd ............................................ 48
+6.2.4 Realoptionerna ............................................................................................ 48
+6.2.5 Räntorna och avkastningskraven................................................................. 50
+6.3
+Exempelfallets resultat.................................................................................. 51
+6.3.1 Kassaflöden ................................................................................................. 51
+6.3.2 Nettonuvärde ............................................................................................... 53
+6.3.3 Black-Scholes-Merton modellen och Monte Carlo metod.......................... 55
+6.3.4 Binomialmodellen ....................................................................................... 57
+6.3.5 Suddiga återbetalningsmetoden .................................................................. 60
+6.4
+7
+
+Analys angående resultaten .......................................................................... 64
+
+DISKUSSION ......................................................................................................... 67
+7.1
+
+Diskussion angående forskningsfrågorna ................................................... 67
+
+7.2
+
+Forskningsförslag .......................................................................................... 69
+
+KÄLLFÖRTECKNING .................................................................................................. 70
+BILAGOR ....................................................................................................................... 73
+BILAGA 1 SÅV VBA MACRO SKRIPT ............................................................... 73
+BILAGA 2 BSM-MC OCH CCR MATLAB SKRIPT .......................................... 75
+BILAGA 3 BSM-MC FYLLNAD MATLAB FUNKTION ................................... 77
+BILAGA 4 BSM-MC KONTROLLVARIABEL MATLAB FUNKTION .......... 78
+BILAGA 5 BSM HALTON MATLAB FUNKTION ............................................. 79
+BILAGA 6 CCR MATLAB FUNKTION ............................................................... 80
+TABELLER
+Tabell 1 Tabell av ekvivalens ..................................................................................... 35
+Tabell 2 Kassaflöden projekt A med en realoption inkluderad ................................ 52
+Tabell 3 Kassaflöden projekt B utan realoptioner .................................................... 52
+Tabell 4 Avrundad kostnadsfördelning enligt projektet ........................................... 53
+Tabell 5 NNV projekt A .............................................................................................. 54
+Tabell 6 NNV projekt B .............................................................................................. 54
+Tabell 7 BSM modellen, projekt A:s resultat ............................................................ 56
+Tabell 8 BSM modellen, projekt B:s resultat ............................................................ 56
+Tabell 9 Projekt A:s CRR resultat i det normala scenariot ...................................... 59
+Tabell 10 Projekt B:s CRR resultat i det normala scenariot .................................... 59
+Tabell 11 CRR skillnaden mellan projekten. ............................................................ 60
+Tabell 12 Diskonterade nominella och riskjusterade kassaflöden ........................... 62
+ii
+
+FIGURER
+Figur 1 Triangulär suddig nummer varur SROV kan kalkyleras ........................... 43
+Figur 2 BSM - MC - ROV simulation med kontrollvariabel .................................... 57
+Figur 3 BSM - ROV med kvasi-slumptal (Haltonsekvenser) ................................... 57
+Figur 4 Variation kring BSM ROV projekt A i det normala scenariot ................... 59
+Figur 5 Triangulär SÅM var projekt A:s suddiga realoptionsvärde ........................ 63
+Figur 6 Projekt A:s och B:s återbetalningstider ....................................................... 63
+
+iii
+
+1 INTRODUKTION
+Realoptionsteori börjar med en motsvarighet i realoptioner och finansiella optioner (Tong
+& Reuer 2007:4–5). Begreppet realoptioner har utvecklats från Myers (1977; i Tong &
+Reuer
+
+2007:5)
+
+inflytelserika
+
+idé
+
+där
+
+man
+
+kan
+
+se
+
+företagets
+
+uppskattade
+
+investeringsmöjligheter som en köpoption på realtillgångar, på ett sätt som liknar hur en
+finansiell köpoption ger valrättigheter till finansiella tillgångar.
+En finansiell option är ett derivatinstrument vars värde är deriverat från karaktären av en
+annan underliggande finansiell tillgång (Tong & Reuer 2007:4–5). Realoptioner har som
+dess underliggande tillgång en realtillgång (Tong & Reuer 2007:5). Metoderna och
+modellerna som tillämpas för att värdera finansiella tillgångar kan utvidgas till att värdera
+realtillgångar, som t.ex. land, byggnader (fastigheter), fabriker (verk) och maskineri m.m.
+Realoptionerna är svåra att värdera med traditionella kapitalinvesteringstekniker (Hull
+2018:814).
+
+Realoptionssynsättet
+
+försöker
+
+betrakta
+
+problemet
+
+med
+
+optionsprissättningsteorier (Hull 2018:814).
+En realoptionsanalys värderar den framtida flexibiliteten i en realtillgångskontext
+(Carmichael 2020:31). Flexibiliteten är kopplad till framtida val mellan alternativ eller
+framtida inflytande på ett projekt eller initiativ (Carmichael 2020:31). Genom en
+investering minskar företaget sin strategiska flexibilitet (t.ex. att optimalt investera
+senare) och således minskar möjligheten för ekonomisk förlust (Li, Madhavan, &
+Mahoney 2007:39). Inom investeringsplanering och ledning är det rationellt att öka den
+planerade eller förvaltade tillgångens lönsamhet och produktivitet (García & Heikkilä
+2003:346). Med framtida val eller inflytande strävar man efter vinst och
+produktivitetsökning.
+
+Realoptioner
+
+har
+
+en
+
+stor
+
+betydelse
+
+för
+
+branscher,
+
+resursappliceringar, forskning och utveckling, patent och avtal m.m. (Carmichael
+2020:31).
+
+1.1 Syfte och avgränsning
+Avhandlingens syfte är att:
+1. beskriva praktisk realoptionsanalys både från realoptionsteorins och
+analysprocessens synvinklar (litteraturöversikt), och
+
+1
+
+2. demonstrera med ett exempelfall hur realoptionsanalys genomförs (empirisk del).
+Med litteraturöversikten skapar jag den allmänna förståelsen kring realoptionsanalysen som
+jag sedan behöver när jag formulerar frågorna för analysen av exempelfallet och när jag svarar
+på mina forskningsfrågor.
+Med exempelfallet siktar jag på att koncentrera mig på analysprocessens centrala frågor. Min
+avsikt i denna avhandling är inte att ta ställning till om vissa metoder eller modeller ger bättre
+eller sämre resultat än de andra. I stället vill jag ge en klar bild om analysprocessen, dess
+metoder och modeller och dess centrala steg samt vilka metoder och modeller kan vara
+lämpligare för realoptionsanalys.
+Jag kommer också att analysera mitt exempelfall. För detta behöver jag en referensram som
+jag har skapat med de analytiska frågorna om exempelfallet. Efter att jag tillämpat de
+analytiska frågorna i exempelfallet har jag som svaren till frågorna skapat en förståelse om
+hur en typisk realoptionsanalys framskrider som beslutstödande process. Svaren jag samlar
+från exempelfallet och litteraturöversikten ger mig material att svara på forskningsfrågorna
+jag ställer i det nästa avsnittet.
+
+1.2 Empiriska analysen, forskningsfrågor och metod
+Empirin i denna avhandling består av ett exempel om realoptionsanalys. Jag har
+specificerat följande frågor om realoptionsanalysen som jag ämnar besvara med mitt
+empiriska material. Avsikten med empirin är att beskriva och demonstrera hur man
+typiskt genomför realoptionsanalys. De här frågorna är avsedda att skapa referensramen
+för den empiriska analysen.
+1. Vilka datorprogram har tillämpats i värderingen?
+a. Hur ser modellernas källkod ut?
+2. Finns det metoder eller modeller som ger ett högre värde än de traditionella
+kapitalinvesteringsteknikerna?
+3. Vilka metoder eller modeller ger liknande värden?
+a. Vilka metoder eller modeller lämpar sig för realoptionsvärdering?
+4. Hurudana skillnader blir det i resultaten när realoptioner värderas med
+olika typer av realoptionsmetoder och modeller?
+5. Hur framkommer flexibilitet i materialet och resultaten?
+2
+
+6. Hurudana begränsningar har kapitalinvesteringstekniker och
+optionsprissättningsmodeller?
+Svaren på och diskussionen kring de analytiska frågorna presenteras i kap. 6.
+För att kunna redogöra hur realoptionsanalys typiskt genomförs har jag specificerat
+forskningsfrågor angående litteraturöversikten och empirin:
+1. Hurudana fördelar kan företagsledarna få om de tillämpar
+realoptionsmetoder och modeller?
+a. Vilka är de operativa fördelarna i praktiskt beslutsfattande?
+b. Vilka är de strategiska fördelarna?
+2. Hur värderar man realoptioner i praktiken?
+3. Vilka typer av datorprogram lämpar sig för realoptionsanalys?
+För att kunna svara på forskningsfrågorna tillämpar jag två forskningsmetoder. För det
+första skriver jag en litteraturöversikt om realoptioner och tillämpningen av realoptioner
+i operativa och strategiska investeringsbeslut. Med litteraturöversikten ämnar jag svara
+på forskningsfrågorna angående punkterna 1–2. För det andra kommer jag att
+demonstrera realoptionsvärdering med hjälp av datorprogram och därmed svara på
+forskningsfrågan 3. Forskningsfrågorna besvaras i kap. 7.
+
+3
+
+2 VAD ÄR EN REALOPTION?
+Enligt Amram och Kulatilaka (1999:5) är en option en rättighet som inte förpliktigar en
+förhandling i framtiden. Enligt Amram och Kulatilaka (1999:5) ger t.ex. ett optionsavtal
+på den finansiella marknaden köparen en möjlighet att köpa en aktie till ett specificerat
+pris under ett specificerat datum och används bara om aktiens pris till det datumet
+överstiger specificerat pris. Realoptionsvärderingar är i linje med finansiella
+marknadsvärderingar (Amram & Kulatilaka 1999:6).
+Enligt García och Heikkilä (2003:351–352) ger en köpoption rättigheten men förpliktigar
+inte att köpa en säkerhet till ett givet pris (inlösenpriset) under en viss tidsperiod
+(upphörandetiden). Om säkerhetens marknadspris är högre än inlösenpriset, inlöser
+optionsinnehavaren den och köper sålunda den underliggande tillgången till inlösenpriset,
+och får på detta sätt en vinst ur skillnaden (García & Heikkilä 2003:352). Enligt García
+och Heikkilä (2003:352) finns som motsats till köpoption, säljoptioner, en säljoption ger
+rättigheten men förpliktigar inte att sälja en säkerhet till ett givet pris (inlösenpriset) under
+en viss tidsperiod (upphörandetiden). Om säkerhetens marknadspris är lägre än
+inlösenpriset, inlöser optionshavaren den och säljer således den underliggande tillgången
+till inlösenpriset, och får på detta sätt en skillnad, alltså en vinst (García & Heikkilä
+2003:352). Enligt García och Heikkilä (2003:352) ger en amerikansk option dess
+innehavare en möjlighet att inlösa rättigheten vid eller före upphörandetiden medan en
+europeisk option endast kan lösas in vid upphörandetiden. När amerikanska optioner
+hanteras bör man också ta i beaktande att determinera den optimala inlösentiden (García
+& Heikkilä 2003:352).
+Enligt Amram och Kulatilaka (1999:6) är optioner avhängiga av (beroende av) beslut. En
+option är en möjlighet att vid ett tillfälle att fatta ett beslut efter att man ser hur
+händelserna utvecklas (Amram & Kulatilaka 1999:6). På beslutsdatumet kan man om
+händelserna har varit gynnsamma fatta ett beslut, medan om händelserna har varit
+ogynnsamma kan man fatta ett annat beslut (Amram & Kulatilaka 1999:6). Detta betyder
+att lönsamheten för en option är icke-lineär – den ändras enligt fattade beslut (Amram &
+Kulatilaka 1999:6). Icke-lineära värderingar kan också vara formgivande metoder, som
+t.ex. att minska osäkerhet eller öka gynnsamma slutresultat (Amram & Kulatilaka
+1999:6–7). I motsats till icke-lineära optioner, har fasta beslut (icke avhängiga) lineär
+4
+
+lönsamhet, d.v.s. oberoende av vad som skulle hända skulle samma beslut fattas (Amram
+& Kulatilaka 1999:6).
+Enligt Amram och Kulatilaka (1999:6) är realoptionssättet en utvidgning av den
+finansiella optionsteorin till reala (inte finansiella) tillgångar. Ifall finansiella optioner
+detaljeras i avtal, bör realoptioner inbäddade i strategiska investeringar identifieras och
+specificeras (Amram och Kulatilaka 1999:6). Enligt Amram och Kulatilaka (1999:6) att
+flytta från finansiella optioner till realoptioner kräver ett tankesätt som för disciplinen
+från finansiella marknader till interna strategiska investeringsbeslut.
+En irreversibel investeringsmöjlighet är som en finansiell köpoption medan optionerna
+att lägga ned, avyttra och byta är som finansiella säljoptioner (García & Heikkilä
+2003:352), för optionsbesluten se vidare rubrik 4 optionsbesluten. Enligt Amram och
+Kulatilaka (1999:5) skapar många strategiska investeringar möjligheter som kan utnyttjas
+i ett senare skede, och således kan investeringsmöjligheten ses som ett kassaflöde plus en
+serie av optioner. En realoption är som en finansiell option men den har som
+underliggande tillgång en realtillgång (García & Heikkilä 2003:352). Realoptionen
+skapas när ett företag med en investeringsmöjlighet har optionen att spendera pengar i
+nutid inom upphörandetiden emot en realtillgång, t.ex. påbörjande av ett projekt (García
+& Heikkilä 2003:352). Dessutom kan det finnas skuggoptioner, där informationen är
+gömd, vilka blir realoptioner när den möjliga ursprungliga underliggande realtillgången
+tas i bruk (t.ex. projektet har påbörjas) (Bowman & Hurry 1993:764–765).
+Realoptionstankesättet använder input och koncept för komplexa värderingar över alla
+typer av reala tillgångar (Amram & Kulatilaka 1999:6). Detta möjliggör jämförelsen av
+t.ex. ledningsmöjligheter, finansiella marknadsalternativ, interna investeringsmöjligheter
+och
+
+transaktionsmöjligheter
+
+(Amram
+
+&
+
+Kulatilaka
+
+1999:6).
+
+Således
+
+kan
+
+realoptionstankesätt användas för att proaktivt formge och planera strategiska
+investeringar (Amram & Kulatilaka 1999:6).
+Per definition, en finansiell option ger dess innehavare rättigheten men förpliktigar inte
+att köpa eller sälja den underliggande tillgången på en fastslagen tidpunkt, t.ex. på
+förfallodagen (Tong & Reuer 2007:5). I motsvarighet har en realoption som sin
+underliggande tillgång det totala projektvärdet av förväntade operativa kassaflöden, dess
+inlösenpris (förverkligade pris) är den investering som behövs för att få dess
+underliggande tillgång, och tiden tills optionen förfaller är den period under vilken
+5
+
+beslutstagaren kan skjuta upp investeringen innan investeringsmöjligheten går ut (Tong
+& Reuer 2007:5). Formellt sett är realoptioner investeringsoptioner i realtillgångar, i
+motsats till finansiella optioner, medan båda ger företaget rättigheten men förpliktigar
+inte en handling i framtiden (Tong & Reuer 2007:5).
+
+6
+
+3 REALOPTIONER OCH STRATEGISK LEDNING
+Realoptionstillvägagångsätt, att värdera och göra beslut genom att ta i beaktande
+osäkerhet och tid tilltalar många och bygger på samma frågor som gäller företagsstrategi
+(Amram & Kulatilaka 1999:7). Realoptionstillvägagångssätt skapar ett sätt att särskilja
+sig från förfluten prestation för att den skiljer osäkerheten från framtida gynnsamma
+insatser (Amram & Kulatilaka 1999:7). Realoptionstillvägagångsättet expanderar
+ledningens strategiska alternativ så att ledningen kan identifiera och värdera
+avtalsmöjligheter på finansiella marknaden och produktmarknaden (Amram & Kulatilaka
+1999:7–8). Dessutom skapar det två länkar mellan strategiska investeringar: på
+projektnivå och inom företagets strategiska vision (Amram & Kulatilaka 1999:8). Enligt
+Amram och Kulatilaka (1999:8) försöker realoptionstillvägagångssättet svara på
+frågorna: Hurudana värdeskapande möjligheter är unika för företaget? Vilken mängd och
+av hurudan typ måste risken vara för att skapa det planerade värdet? Vilka risker kan
+slopas? Om man ser på saken omvänt ger realoptionssynsättet ett ramverk i vilket man
+kan samla ihop projektets värde, risk och struktur för att hantera den risk som företaget
+utsätts för (Amram & Kulatilaka 1999:8). Då ser man dessutom hur osäkerhet berör
+värderingen på projektnivå (Amram & Kulatilaka 1999:8).
+I allmänhet brukar företag påbörja forskning och utveckling för att strategiskt förbereda
+sig för investeringar som kan ge tillväxt vid gynnsamma marknadsvillkor (McGrath 1997;
+i Li et al. 2007:37). På liknande sätt brukar företag i allmänhet göra investeringar i förväg
+på nya främmande marknader för att få möjlighet att expandera i framtiden (Chang 1995;
+Kogut 1983; i Li et al. 2007:37).
+När strategiska investeringar har substantiell förebyggande effekt kan de ge investerare
+strategiska fördelar som t.ex. sänkta kostnader och större marknadsandelar (Kulatilaka &
+Perotti 1998; i Li et al. 2007:39). Å andra sidan när investeringen ger en liten strategisk
+nytta kan den potentiella avkastningen vara mindre kopplad till investeringens kostnader
+(Li et al. 2007:39).
+Ett fundamentalt problem i ämnet strategisk ledning har att göra med företagens
+strategiska beslut (Rumelt et al. 1994; i Tong & Reuer 2007:3). Ifall besluten innefattar
+interna investeringar eller externa utvecklingsaktiviteter har de generellt att göra med
+framtida initiativ under osäkerhet (Tong & Reuer 2007:3). Detta resulterar i att
+7
+
+osäkerheten har fått en uppmärksammad roll i forskning kring strategi och det har funnits
+återkommande intresse i hur företag bättre kan hantera strategiskt beslutsfattande under
+osäkerhet (Tong & Reuer 2007:3).
+Ursprungligen uppstod intresset för realoptioner i strategisk ledning i början av 1980talet, när ledningsforskare först började uttrycka missnöje mot traditionella finansiella
+tekniker som t.ex. att nettonuvärdesmetoden (NNV) tillämpades för resursallokering och
+strategiskt beslutsfattande (Hayes & Garvin 1982; Tong & Reuer 2007:7). En syn som
+också delas av Myers (1984) och Kester (1984) är att NNV gör det svårt att betrakta
+uppföljande investeringsmöjligheter eller ledningens flexibilitet i deras beslut gällande
+marknads- och teknologisk osäkerhet, vilka är ofta inkluderade i investeringsprojekt (i
+Tong & Reuer 2007:7).
+Kogut (1991; i Tong & Reuer 2007:8) har gett teoretiska argument och empiriska bevis
+om att gemensamma projekt (joint venture) ger företag realoptioner som möjliggör
+sekventiell tillväxt (expandering) inom osäkra marknader. Enligt Tong och Reuer
+(2007:8) ger investering i gemensamma projekt företag en möjlighet till att begränsa
+förluster till en början (begränsad förbindelse) och det ger också möjligheten att
+positionera för tillväxt (expandering), men enbart om framtida tillstånd visar sig vara
+gynnsamma. I linje med teorin fann Kogut (1991; i Tong & Reuer 2007:8) att när
+efterfrågan i gemensamma projekt ökar börjar företag att öka tillväxten genom att lösa in
+optionen genom att köpa upp dess delägare, men när efterfrågan i gemensamma projekt
+minskar fortsätter företag att hålla fast vid deras investeringar i gemensamma projekt.
+Chi (2000) och McGuire (1996) har med formella modeller forskat under vilka
+omständigheter optionen att köpa upp eller sälja ett gemensamt projekt ger positivt
+ekonomiskt värde för delägare (i Tong & Reuer 2007:8). Dessutom har Chi (2000) och
+McGuire (1996) forskat kring förutsättningarna under vilka företag behåller rättigheterna
+till optionerna samt analyserat styrningsstrukturproblem, t.ex. allokering av eget kapital
+mellan delägare (i Tong & Reuer 2007:8). Reuer och Tong (2005, 2007) och Tong et al.
+(2008) har forskat i realoptioner i varierade inneslutna typer av gemensamma projekt och
+fann att gemensamma projekt ökar värdet av tillväxtsoptionen i företag (i Tong & Reuer
+2007:7). Folta (1998; i Tong & Reuer 2007:8) har studerat företagens beslutstagande när
+det gäller gemensamma projekt gentemot företagsförvärv genom att se dessa projekt som
+optioner att skjuta upp och som optioner med sekventiella resursåtaganden, och fann att
+8
+
+företag mer sannolikt investerar i gemensamma projekt än i företagsförvärv när
+osäkerheten är hög.
+Folta och Miller (2002) har forskat vidare kring Koguts (1991) forskning i lösenbeslut (i
+Tong & Reuer 2007:8). Dessutom forskade de vidare på investeringar i
+minoritetsintressen (i Tong & Reuer 2007:8). Miller och Folta (2002), Folta och O’Brien
+(2004) och Folta et al. (2006) fortsatte på det som Folta (1998) hade fokuserat på då han
+forskade i optionen att skjuta upp och undersökte företagens inträde på marknaden och
+presenterade resultat som stämde överens med realoptionsteorin (i Tong & Reuer 2007:8).
+Enligt Tong och Reuer (2007:8) har den kollektiva mängden av empiriska bevis börjat
+utvecklas mot en realoptionsteori om företagets styrning och inträde på marknaden. Enligt
+Tong och Reuer (2007:8) har detta resulterat i följande befintliga teorier: Företagens
+inträde på marknaden avviker i sina egenskaper (attribut) och svarar på osäkerheten på
+olika sätt. Vidare enligt Tong och Reuer (2007:8) varierar företagens inbäddade optioner,
+vilket leder till att företag använder optionerna skilt från varandra för att bättre kunna
+strukturera deras investeringar.
+Vid ungefär samma tid som Koguts (1991; i Tong & Reuer 2007:8–9) arbete utfördes,
+arbetade Bowman och Hurry (1987; i Tong & Reuer 2007:8–9; 1993:760–782) med ett
+optionsteoribaserat synsätt i strategisk ledning. Bowman och Hurry (1993:760) har
+föreslagit att optionerna ska ses som en strategi för erfarenhetsbaserade tekniker som kan
+användas för problemlösning samt inlärning och upptäckt av optioner; detta för att få
+möjlighet att förstå sekventiella resursåtaganden vid osäkerhet. Bowman och Hurry
+(1993:760, egen översättning) påpekar att optionerna ”erbjuder en ekonomisk logik för
+beteendeprocessen av en inkrementell resursinvestering”. McGrath (1997; i Tong &
+Reuer 2007:9) utvidgade teknologioptionernas realoptionslogik genom att föreslå att
+företag kan göra investeringar i förväg för att påverka osäkerheten till investerarens
+fördel. McGrath (1999; i Tong & Reuer 2007:9) utvecklade i en senare artikel inblicken
+att initiativ tagna av entreprenörer kan ses som realoptioner och föreslog att de skulle
+ledas enligt realoptionsresonemang. Kogut och Kulatilaka (1994b, 2001, 2003; i Tong &
+Reuer 2007:9) siktade på att integrera i realoptionslitteraturen att realoptionsteorin
+erbjuder ett möjligt ramverk för erfarenhetsbaserat problemlösningssätt; inlärning och
+upptäckt i vilket man ser förmågorna som genererande plattformar för att bemöta framtida
+osäkra möjligheter.
+9
+
+Under förutsättningen att strategivetenskap har intresse för att försöka förstå företagens
+aktuella beteende är det inte överraskande att jämfört med realoptionsforskning inom
+finansiering och ekonomi har forskning i strategi gett mera uppmärksamhet åt de problem
+som framkommer då realoptioner implementeras (Rumelt et al. 1994; i Tong & Reuer
+2007:9). Den principiella realoptionsteorin kan användas för att evaluera resurser och
+strategiska investeringar som inte kan handlas publikt (Kogut & Kulatilaka 2004; i Tong
+& Reuer 2007:9). Det har redan länge framkommit varierade utmaningar kring både
+värdering och implementering (t.ex. skapande, underhåll och inlösen) av realoptioner
+inom företag (Mason & Merton 1985; i Tong & Reuer 2007:9). Kogut (1985; i Tong &
+Reuer 2007:9) betonade svårigheterna som ledarna kan ha att känna igen värdefulla
+optioner inbäddade i företagets investeringar, ett synsätt som också delas av Bowman och
+Hurry (1993:775–777). Kogut (1989; i Tong & Reuer 2007:9) och Kogut och Kulatilaka
+(1994a, 1994b; i Tong & Reuer 2007:9) nämner dessutom att bara för att ett företag
+känner igen inbäddade optioner innebär det inte att det har lednings- och
+organisationssystem som stöder deras implementering. Ledarna använder kanske inte
+korrekt information för att värdera realoptioner, alternativt evaluerar de dem inkorrekt på
+grund av brist på befogenheter (Bowman & Moskowitz 2001; Miller & Shapira 2004; i
+Tong & Reuer 2007:9). Slutligen kan lednings- och organisationsfaktorer förändra sättet
+att välja och underhålla optioner eller inlösenbesluten: ledarna kan vara benägna till ett
+ökat åtagande (förpliktelse), de kanske inte följer optimala inlösenpolicyn på grund av
+problem som skapas av belöning, ytterligare kan de ha svårt att följa de komplexa drag
+som skapas i inlösenfasen på grund av begränsad rationalitet (Kogut 1991; Garud et
+al.1998; McGrath 1999; Coff & Laverty 2001; Adner & Levinthal 2004; i Tong & Reuer
+2007:9).
+
+3.1 Betydelsen av realoptioner för strategisk ledning
+Enligt Tong och Reuer (2007:10) erbjuder realoptionsteorin en mängd analytiska
+generella strategier och metoder för att behandla osäkerheten gällande strategiska beslut.
+Rumelt et al. (1994:26; i Tong & Reuer 2007:10) har identifierat osäkerheten hos de fem
+vanligaste faktorerna inom forskningen som avvek från det neoklassiska företagets teori
+och som har hjälpt till att skapa ämnet strategisk ledning. Givet rollen av osäkerheten i
+strategiska beslut föreslår Tong och Reuer (2007:10) att en ökad betydelse av
+10
+
+realoptionsteorin för strategisk ledning kan förklaras med åtminstone tre faktorer, vilka
+också tydliggör varför realoptionsteorin är unik.
+Första faktorn enligt Tong och Reuer (2007:10) är att realoptionsteorin kräver studier och
+forskning i ämnet för att kunna användas med vishet. Enligt Tong och Reuer (2007:10)
+erbjuder den då unika prognosmöjligheter för företagets beslutstagande vid många typer
+av strategiska val under osäkerhet. Tong och Reuer (2007:10) nämner tre exempel.
+Exempel 1 enligt Tong och Reuer (2007:10): Realoptionssynsättet utmanar de
+traditionella perspektiven i kontinuerliga gemensamma projekt där långsiktighet och
+stabilitet har varit nycklarna för framgång. Enligt Tong och Reuer (2007:10) kan företag
+utifrån realoptionsteorin nå framgång genom att gemensamma projekt avslutas och skjuts
+upp.
+Exempel 2 enligt Tong och Reuer (2007:10): Direkta investeringar från utlandet har länge
+övervägts som en lösning på substantiella transaktionskostnader vilka ingår vid utbyte av
+teknologi och tillgångar. Enligt Tong och Reuer (2007:10) betonar realoptionsteorin
+uppnåendet av resultat genom företagets dynamiska effektivitetsökning, riskreducering
+och förmåga att ta tillvara möjligheten att agera vid värdekedjans aktivitetsförändringar
+som motrespons till osäkerhet.
+Exempel 3 enligt Tong och Reuer (2007:10): Generellt sett ger realoptionsteorin nya
+regler
+
+för
+
+resursinvesteringar
+
+genom
+
+att
+
+föreslå
+
+att
+
+realoptioner
+
+flyttar
+
+investeringströskeln bort från NNV = 0 -kriteriet. Den insikt som realoptionsanalysen ger
+kan enligt Tong och Reuer (2007:10–11) konkretiseras enligt följande: ett företag kan
+sänka investeringströskeln och besluta sig för att investera även om NNV är negativt, om
+optionerna är gynnsamma. Enligt Tong och Reuer (2007:10–11) kan ett företag som
+kontrast höja investeringströskeln och besluta sig för att inte investera även om NNV är
+positivt och optionen att skjuta upp är tillräckligt värdefull, samt att kostnaden för
+investeringsmöjligheten är betydelsefull.
+Andra faktorn enligt Tong och Reuer (2007:11) är att realoptionsteorin förutsätter på ett
+unikt sätt en asymmetrisk avkastningsstruktur (nytta) för investeringar som genom
+inbäddade optioner möjliggör realiserade realoptioner och således minskar negativa
+risker och öppnar möjligheter för företag. Enligt Tong och Reuer (2007:11) är
+asymmetriska prestandautkomster beroende av de beslutsrättigheter som optionerna
+11
+
+skapar, t.ex. rätten att välja enbart gynnsamma utkomster i framtiden. Bowman och Hurry
+(1993: 771–774) och Hull (2018:356) påpekar att i motsats till andra teorier, ju högre
+osäkerhet, desto högre blir den potentiella avkastningen för optionsinnehavaren, under
+förutsättning att investeringen och förlusterna är begränsade. Vidare enligt Bowman och
+Hurry (1993: 771–774) och Hull (2018:356) innebär det att osäkerheten ökar de risker
+som är förknippade med investeringen. Enligt Tong och Reuer (2007:11) är en annan
+aspekt som understryks i realoptionsteorin är att bevarandet av flexibilitet under osäkerhet
+har ett optionsvärde och värdet kan stå för en stor andel i många investeringar. Enligt
+Tong och Reuer (2007:11) föreslår både realoptionsteorin och empiriska resultat att
+optionsvärden varierar enligt företag och branscher. Enligt Kester (1984) och Tong och
+Reuer (2006) är det därmed ur ledningens strategiska synvinkel viktigt att veta vilken
+heterogenitet som finns och hur optionsvärdet påverkar företagets strategiska val och
+resursallokeringspolicy (i Tong & Reuer 2007:11).
+Tredje faktorn enligt Tong och Reuer (2007:11) är att realoptionsteorin förklarar
+företagets resursallokeringsprocesser i strategiska beslut. Enligt Tong och Reuer
+(2007:11) har man inom ämnet strategisk planering länge medfört oro angående
+möjligheter, inkrementell resursallokering och sekventiell ledningsinformation samt
+osäkerhet, vilka alla är centrala för företagets strategi. Enligt Tong och Reuer (2007:11)
+kan realoptionsteorin hjälpa till att förbättra det strategiska beslutsfattandet genom att
+inkludera finansiell disciplin i kvalitativa strategiska planeringsverktyg. Dessutom enligt
+Trigeorgis (1996) och Amram och Kulatilaka (1999) kan realoptionsteorin inkludera
+strategiska insikter i traditionella kapitalbudgeteringsmodeller, vilka inte explicit hanterar
+det möjliga värdet som fås av flexibilitet eller ledningens misstro (i Tong & Reuer
+2007:11).
+
+12
+
+4 OPTIONSBESLUTEN
+Huvudsakligen används i investeringsbesluten realoptionerna: optionen att skjuta upp,
+avyttra, byta samt optionen för tillväxt (Li et al. 2007:35).
+Företag gör kapitalinvesteringar för att skapa och dra nytta av lönsamma möjligheter (Li
+et al. 2007:35). Dessa möjligheter kan kallas realoptioner – rättigheter som inte
+förpliktigar till en handling i framtiden (Li et al. 2007:35). På detta sätt är realoptioner
+liknande som finansiella optioner (Li et al. 2007:35). En enkel finansiell option ger dess
+innehavare eller ägare en icke förpliktigande rättighet att köpa eller sälja en fastslagen
+mängd av underliggande tillgångar till ett fastslaget pris, t.ex. inlösenpris, till ett i förväg
+fastslaget förfallodag (Li et al. 2007:35). En realoption ger företaget en rättighet, men
+förpliktigar inte, till en viss handling i framtiden (Li et al. 2007:35). Optionen är ”real”
+eftersom underliggande tillgångar vanligtvis är fysiska och humana tillgångar inte
+finansiella värdepapper (Li et al. 2007:35). Enligt Merton (1998:339):
+The future is uncertain (if it were not, there would be no need to create options because
+we know now we will do later) and in a uncertain environment, having the flexibility
+to decide what to do after some of that uncertainty is resolved definitely has value.
+
+Trots att termen realoption ofta används i finansiell ekonomi och ledning är en
+nyckelegenskap att realoptionen skapar ekonomiskt värde genom att generera framtida
+beslutsrättigheter (McGrath et al. 2004; i Li et al. 2007:35). Mera exakt ger den ledningen
+flexibilitet att agera utifrån ny information så att ekonomiska fördelar tillvaratas trots att
+nackdelarna kvarstår (Trigeorgis 1996; i Li et al. 2007:35). Kapitalinvesteringar baserar
+i princip på realoptioner (Dixit & Pindyck 1995; i Li et al. 2007:35). Enligt traditionell
+investeringsteori borde investeringar göras då investeringsmöjlighetens enkla NNV är
+lika med eller större än noll eller inte alls (Li et al. 2007:35). Med ett sådant
+förhållningssätt missar man att ledningen kan adaptera och revidera strategierna som svar
+på oväntade förändringar på marknaden eller i tekniken i det förväntade kassaflödet (Li
+et al. 2007:35). De traditionella kapitalinvesteringstillvägagångssätten ignorerar således
+möjligheten att kapitalinvesteringar kan ske vid andra tidpunkter (Li et al. 2007:35).
+
+13
+
+4.1 Optionen att skjuta upp (optionen att vänta)
+Realoptionsteori ger en teoretisk grund till varför företag inte förmår investera utifrån den
+traditionella kapitalinvesteringsteorin (Li et al. 2007:35). I en osäker värld, där
+investeringar helt enkelt inte kan dras tillbaka, kan en realoption vara ekonomiskt mer
+värdefull än direktinvestering eller direkt engagemang då denna option erbjuder
+ledningen strategisk flexibilitet genom att skjuta upp investeringen tills mera information
+finns tillgänglig (Li et al. 2007:35–36). Företaget kan besluta att investera när
+marknadsvillkoren är gynnsamma eller att dra sig undan om de är ogynnsamma (Li et al.
+2007:36). Om företaget å andra sidan väljer att investera genast avstår de från optionen
+att investera i framtiden när det finns mer information (Li et al. 2007:36). Realoptionen
+att investera borde således inte lösas in genast när den är ekonomiskt gynnsam (”in-themoney”), trots att NNV har ett positivt värde (Li et al. 2007:36). Istället måste också
+nuvärdet av kassaflödet överstiga kostnaderna för att hålla investeringsoptionen öppen
+(Dixit 1989; McDonald & Siegel 1986; i Li et al. 2007:36). När exogen osäkerhet ökar
+medför det att värdet på optionen att skjuta upp stiger, medan när tiden löper minskar
+exogena osäkerheten, därför är det enligt realoptionsteorin en strategisk följd att höjd
+exogen osäkerhet reducerar investeringar i optionen att skjuta upp (Li et al. 2007:36).
+Riktiga investeringar har oftast flera nivåer och innefattar inte bara optionen att skjuta
+upp utan också framtida möjligheter baserade på optionen för tillväxt och optionen att
+avyttra när investeringen inletts (Li et al. 2007:36). Att välja den kostnadsfria möjligheten
+att skjuta upp utesluter framtida tillväxtsoptionen medan ett fullt irreversibelt val
+eliminerar säljoptionen som skapas av optionen att avyttra (Dixit & Pindyck 2000; i Li et
+al. 2007:36).
+
+4.2 Optionen att avyttra och byta
+Den enkla NNV-regeln i företagsfinansiering möjliggör inget tillfälle att avyttra ett
+investeringsprojekt eller att byta marknadsvillkoren om dessa blir ogynnsammare än
+förväntat (Li et al. 2007:36). När ett företag anskaffar en tillgång som senare kan
+återsäljas eller alternativt användas skaffar företaget en säljoption med andra ord
+möjligheten att avyttra eller byta om de framtida förutsättningarna skulle vara alltför
+negativa (Li et al. 2007:36–37). När man jämför med den vanliga finansiella analysen av
+restvärdet, föreslår realoptionsteorin att säljoptionens strategiska värde (genom att avyttra
+14
+
+eller byta) ökar med restvärdet och framtida osäkerhet (Berger et al. 1996; Myers & Majd
+1990; i Li et al. 2007:37). Denna positiva effekt av avyttrande eller byte är viktig vid
+investeringsbesluten som berör flera nivåer (Chi & Nystrom 1995; Schwartz 2003; i Li et
+al. 2007:37). Under förutsättning att avyttrandet sker innan projektet blir klart sparas en
+del
+
+av
+
+den
+
+totala
+
+investeringskostnaden.
+
+Den
+
+förväntade
+
+kostnaden
+
+under
+
+implementeringsfasen måste vara lägre än den totala investeringskostnaden om det
+existerar en gynnsam möjlighet att projektet kan avyttras innan den blir klart (Li et al.
+2007:37). För optionen att avyttra i ogynnsamma marknadssituationer är tröskelvärdet för
+ett optimalt beslut generellt mindre än de totala inkrementella kostnaderna (Li et al.
+2007:37). När investeringar helt kan återhämtas eller omplaceras utan kostnader (om
+marknadsvillkoren skulle bli värre än antaget) kan företaget fritt välja att investera eller
+avstå eftersom den ekonomiska förlusten är helt begränsad (Li et al. 2007:37). Eftersom
+reala tillgångar är typiskt företagsspecifika eller branschspecifika eller utsatta för
+marknadens ofullkomligheter kan reala tillgångar dock inte återtas till en viss grad (Dixit
+& Pindyck 1994; Rivoli & Salorio 1996; i Li et al. 2007:37). När oåterkalleligheten ökar
+minskar det utgångsvärdet och således minskar värdet på optionen att avyttra (Li et al.
+2007:37).
+
+4.3 Tillväxtsoptionen (optionen att expandera)
+Realinvesteringar sker ofta inte enbart för att öka det omedelbara kassaflödet utan också
+(möjligen
+
+primärt)
+
+för
+
+att
+
+öka
+
+det
+
+ekonomiska
+
+värdet
+
+av
+
+påföljande
+
+investeringsmöjligheter (Li et al. 2007:37). Sådana investeringsmöjligheter i framtiden
+kallas tillväxtoptioner (Kester 1984; Pindyck 1988; Trigeorgis 1988; i Li et al. 2007:37).
+Enligt McGrath (1997; i Li et al. 2007:37) påbörjar företag investeringar i forskning och
+utveckling för att positionera sig mera strategiskt i förhållande till det ekonomiska värde
+som skapas av kommersialism (när marknadsvillkoren blir gynnsamma). Chang (1995)
+och Kogut (1983) nämner att företag gör ofta investeringar för att etablera sig på nya
+utländska marknader (i Li et al. 2007:37). Sådana tillväxtorienterade investeringar kan
+verka oekonomiska när man ser på dem i en isolerad omgivning men kan möjliggöra
+framtida tillväxtmöjligheter (Li et al. 2007:37). Flerfasiga projekt är prototypiska
+investeringsfall som innefattar tillväxtoptioner (Li et al. 2007:38). Flerfasiga
+investeringsmöjligheter kan betecknas som enkla köpoptioner (Li et al. 2007:38). En
+flerfasig investeringsmöjlighet kan t.ex. vara att i första fasen betala kostnaderna för
+15
+
+forskning och utveckling och därefter i andra fasen betala kostnaderna för
+kommersialisering (McGrath 1997; i Li et al. 2007:38). Sådana flerfasiga
+investeringsmöjligheter kan också betecknas som sammansatta optioner (Li et al.
+2007:38). Att t.ex. påbörja forskning och utveckling för att utveckla teknologin kan ses
+som att lösa ut den ursprungliga optionen att investera, vilket i sin tur kan skapa andra
+realoptioner, som optionen att kommersialisera eller optionen att avyttra eller byta (Li et
+al. 2007:38). Angående investeringsbesluten är fördelen genom att se tillväxtoptionerna
+som enkla köpoptioner vid investeringsbeslut, att det är vanligare att enkla optioner
+analyseras medan konceptualisering av investeringsmöjligheter med flera faser, som t.ex.
+sammansatta optioner, har unik nytta av optionerna att avyttra och byta, vilka är viktiga i
+flerfasiga projekt (Schwartz 2003; i Li et al. 2007:38). Tillväxtsoptioner kan anses vara
+s.k. sammansatta optioner (García & Heikkilä 2003:350).
+
+4.4 Flerfasiga optionen
+Tillväxtoptioner kan i vissa fall ses som flerfasiga optioner. I regel kan projektets
+kostnader delas in i delar eller perioder så att de framkommer i flera faser (García &
+Heikkilä 2003:350). Informationens tillgänglighet kan påverka optionsbesluten eller öka
+eller minska framtida kostnader (García & Heikkilä 2003:351). T.ex. i tillväxtoptioner
+kan varje fas ses som köpoption i nästa, vilket formar en mängd påföljande köpoptioner,
+en sammansatt option (García & Heikkilä 2003:350).
+
+4.5 Avtalsoptionen
+Som motsats till tillväxtoptionen (optionen att expandera) består avtalsoptionen av
+möjligheten att minska kapaciteten eller verksamhetsnivåer om marknadsvillkoren blir
+ogynnsamma eller sämre än förväntat (García & Heikkilä 2003:351). Således skulle den
+spara en del av investeringskostnaden eller anskaffningsutgiften (García & Heikkilä
+2003:351). Den flexibilitet som minskar förlusterna kan värderas som en säljoption
+(García & Heikkilä 2003:351).
+
+16
+
+4.6 Optionen att lägga ned eller öka produktionen
+Traditionell budgeteringsanalys utgår från att projektet pågår i varje period inom dess
+ekonomiska livslängd men reellt sett behöver projektet inte vara aktivt i varje period
+(García & Heikkilä 2003:351). När intäkterna inte räcker till för att täcka rörliga
+kostnader inom den aktuella perioden kan produktionen tillfälligt upphöra (García &
+Heikkilä 2003:351). Om marknadssituationen blir gynnsam och kassaflödena ökar
+tillräckligt kan verksamheten startas upp igen (García & Heikkilä 2003:351). Optionen
+att lägga ner eller öka produktionen kan värderas som en köpoption (García & Heikkilä
+2003:351).
+
+4.7 Optionen att ändra input eller output
+Ju bredare den alternativa inputen är desto större värde ger optionen att ändra input eller
+output (García & Heikkilä 2003:351). Teknologi som ger processflexibilitet möjliggör
+maximering av positiva kassaflöden genom att ändra (modifiera) output och minimerar
+kostnaderna genom att ändra input enligt marknadssituationen. Företaget bör vara villigt
+att investera i en sådan teknologi för att uppnå flexibilitet men det kan också nås genom
+att uppehålla relationerna med olika leverantörer genom att input och output ändras enligt
+prisvariationen (García & Heikkilä 2003:351). Denna typ av option kan värderas som en
+sammansatt köpoption med olika input och output som maximerar intäkterna och
+minimerar kostnaderna (García & Heikkilä 2003:351).
+
+4.8 Optionsinteraktioner
+Investeringsprojektens ekonomiska värde ökar inte alltid genom att introducera
+additionella optioner; det inkrementella värdet av varje adderad option är inte ofta
+ekvivalent med dess ekonomiska värde (Trigeorgis 1993; i Li et al. 2007:38–39).
+Det inkrementella bidraget av en additionell option till projektvärdet kan inverka
+dämpande när det gäller en substitutoption eller en komplementär option (Kulatilaka
+1995; i Li et al. 2007:39). Enligt Li et al. (2007:39) är optionen att skjuta upp och optionen
+att tillfälligt lägga ner substitutoptioner. Dessutom enligt Bowman & Hurry (1993:764–
+765) kan det existera s.k. skuggoptioner när informationen är dold. Vidare enligt
+17
+
+(Bowman & Hurry 1993:764–765) då tillgången tas i bruk sker det interaktion efter vilket
+skuggoptionen realiseras till en realoption. På så sätt kan en skuggoption också anses
+vara en inbäddad option i investeringsmöjligheten.
+Optionen att tillfälligt lägga ner minskar framtida kassaflöden och således minskar den
+värdet på optionen att skjuta upp (Li et al. 2007:39). Å andra sidan möjliggör optionen att
+tillfälligt lägga ner för företaget att begränsa ekonomiska förluster under förlustperioder,
+medan det ger företaget fördelen att kunna starta upp när förutsättningarna är bättre (Li et
+al. 2007:39).
+Trots att värdet av optionen att inte investera ökar med stigande osäkerhet, kan värdet av
+tillväxtoptionen stiga ännu mer (Li et al. 2007:39). Av detta kan man dra slutsatsen att
+med stigande osäkerhet stiger optionsvärdet av optioner som baserar på tillväxt, vilket
+innebär att investeringar med större risk i vissa fall möjligen ger en större avkastning (Li
+et al. 2007:39).
+En ökad volatilitet ökar värdet på optionen att inte investera och således höjs tröskeln att
+investera i en tillväxtoption (Li et al. 2007:39). Förluster är begränsade till ursprunglig
+investering medan de ekonomiska fördelarna kan öka genom strategiska handlingar (Li
+et al. 2007:39). Vid extremt hög osäkerhet kan en fortsatt ökning av osäkerhetsnivån
+gynna strategiska investeringar (Li et al. 2007:39). Lin och Kulatilaka (2007; i Li et al.
+2007:39) föreslår därför en icke-monoton osäkerhetseffekt på investeringen vid strategisk
+tillväxt. Lin och Kulatilaka (2007; i Tong & Reuer 2007:40) har genom att simulera
+kommit fram till att vid en hög osäkerhetsnivå dominerar strategiska tillväxtoptioner
+istället för optionen att skjuta upp, vilket har medfört en sänkt investeringströskel.
+Dessa teoretiska förutsägelser gällande relationen mellan osäkerhet och investering har
+attraherat flera ledningsstudier (Li et al. 2007:39). Realoptionsteorin förutspår en negativ
+interaktion mellan optionen att investera och påföljande optionen att avyttra (Li et al.
+2007:40). Bruket av optionen att avyttra hindrar framtida kassaflöden och därmed
+reduceras det ekonomiska värdet av optionen att skjuta upp (Li et al. 2007:40). Företaget
+som värdesätter optionen att avyttra eller byta har större tendens att investera än företaget
+som vid osäkerhet gör bruk av optionen att skjuta upp (Li et al. 2007:40). Eftersom
+oåterkalleligheten minskar värdet på optionen att skjuta upp, förstärks sannolikt effekten
+av osäkerheten (Li et al. 2007:40).
+18
+
+4.9 Optionsportföljer
+Enligt Bowman & Hurry (1993:770–771) har företag vanligtvis många projekt och
+företagens strategiska beslut kan uppfattas som en bunt av realoptioner. Enligt Merton
+(1973; Li et al. 2007:40–41) som föreslagit att det är ekonomiskt mer värdefullt att ha en
+portfölj av optioner än att ha en option på en portfölj och anta att optionen skulle ha
+identiska villkor och kopplingar till samma underliggande tillgång. Enligt Li et al.
+(2007:40–41) får ett företag vanligtvis större strategisk flexibilitet (t.ex. möjlighet till
+vinstmaximering eller förlustminimering) genom att ha separata optioner. Enligt Li et al.
+(2007:41) är det därför viktigt att allokera lämpliga och tillräckliga resurser för att hantera
+en portfölj av realoptioner i företaget. MacMillan och McGrath (2002; i Li et al. 2007:41)
+nämner hur man kan förvalta företagets forskning och utveckling-projektportfölj som en
+portfölj av optioner. MacMillan och McGrath (2002; i Li et al. 2007:41) påpekar att
+företaget kan rikta sin strategi enligt tillgängliga resurser genom att gruppera forskning
+och utvecklingsprojekt i kategorier beroende på dess natur och grad av osäkerhet.
+McGrath och Nerkar (2004; i Li et al. 2007:41) har undersökt portföljens effekt på
+patenteringstendens och de menar att på grund av minskning i avkastning för varje
+adderad option och för behovet att skapa och inlösa existerande optioner är det mindre
+sannolikt att de företag som redan har en portfölj med öppna optioner skapar nya
+optionsportföljer.
+
+4.10
+
+Konkurrens och investering
+
+Vid ett tilltänkt investeringsbeslut engagerar sig ett företag i ett spel inte enbart mot
+naturen (t.ex. exogen inverkan av omgivningens osäkerhet), utan också mot konkurrenter
+(Li et al. 2007:41). Enligt Li et al. (2007:41) komplicerar konkurrensen
+investeringsbesluten. Enligt Kester (1984) och Smit och Ankum (1993) överväger ett
+företag i konkurrens sin marknadsposition, branschstruktur, konkurrensdynamik och de
+realoptioner som inkluderas i beslutsfattandet (i Li et al. 2007:41). Smit och Trigeorgis
+(2004, 1996; i Li et al. 2007:41) har kommit fram till att företag gör en avvägning mellan
+flexibiliteten och vikten av det värde som fås av att handlingarna görs tidigt. Smit och
+Ankum (1993; i Li et al. 2007:41–42) påpekar att medan det vanligtvis är mer gynnsamt
+under osäkerhet att skjuta upp så kan uppskjutandet vid konkurrens medföra en förlust i
+19
+
+det förväntade projektvärdet eftersom förväntat intrång ökar med projektvärdet. I ett
+monopol har det dominerande företaget investeringsmöjligheter som inte är tillgängliga
+för konkurrenter och lider därför inte av förluster av att skjuta upp. Därför finns det enligt
+Li et al. (2007:42) större tendens att skjuta upp i en monopolställning än vid perfekt
+konkurrens, förutom om projektet har högt förväntat NNV. Enligt Li et al. (2007:42) kan
+företag bara koordinera under oligopol. De tenderar att skjuta upp projekt som har lågt
+NNV och osäker marknadsefterfrågan (Li et al. 2007:42). Vid ett antagande om ett
+investeringsprojekt med två faser måste företaget besluta om och när man ska göra
+investeringar i första och andra fasen (Li et al. 2007:42). Bortsett från optionen att skjuta
+upp kan man skapa tillväxtoptioner genom uppskattade investeringar (Kogut &
+Kulatilaka 1994a; i Li et al. 2007:42). Enligt Li et al. (2007:42) kan första fasens
+investering i en sekventiell investeringsprocess skapa en tillväxtoption medan andra fasen
+kan innebära inlösande av tillväxtoptioner.
+Vad gäller andra fasens investeringar eller inlösen av tillväxtoptioner uppger Kester
+(1984; i Li et al. 2007:42) att ett företag tenderar att lösa in sin tillväxtoption tidigt om
+konkurrensen inom branschen är intensiv eller om tillväxtoptionen är delad mellan
+konkurrenterna. Ett punktligt åtagande före ett annat kan minska inträdet av konkurrenter
+eller minska projektvärdet (Li et al. 2007:42). Ett företag kan skjuta upp investeringen i
+en tillväxtoption utan förlust i projektvärdet tills kompletterande information finns
+tillgänglig (Li et al. 2007:42). Guiso och Parigi (1999; i Li et al. 2007:42) uppger att
+osäkerhet troligen har större avskräckande effekt på investeringsmotivationen när företag
+har större makt, innehar ägandeoptioner eller har mindre intensiv konkurrens. Folta och
+Miller (2002; i Li et al. 2007:42) har funnit empiriskt att medan ett större antal aktieägare
+allmänt har en negativ effekt på anskaffning av ytterligare aktiekapital (eget kapital), finns
+det också en positiv interaktionseffekt mellan antalet aktieägare och osäkerheten att
+anskaffa mera aktiekapital. Detta tyder på att mindre mängd äganderättsoptioner inlöses
+i snabbare takt då högre osäkerhet gäller (Li et al. 2007:42). Enligt Smit och Trigeorgis
+(2004; i Li et al. 2007:42) är investeringsbesluten i första fasens investeringar beroende
+av företagets marknadsposition och konkurrensdynamikens natur m.m. Kulatilaka och
+Perotti (1998; i Li et al. 2007:42) har kommit fram till att när förköp är möjliga i andra
+fasen och strategiska fördelar kan skapas och underhållas ökar drivkraften att inlösa första
+fasens optioner oberoende av osäkerheten. Även om det resulterar i en strategisk fördel
+kan dock en tidig investering såra konkurrenterna som kan välja att reagera aggressivt,
+20
+
+vilket kan leda till priskrig (Li et al. 2007:42). I så fall har företaget mer nytta av att inte
+investera (Li et al. 2007:42–43). Vidare har Smit och Trigeorgis (2004; i Li et al. 2007:43)
+kommit fram till att på liknande sätt om företaget inte kan göra uteslutande förköp och
+således få rättigheter och skapa tillväxtoptioner och om konkurrenterna skulle reagera
+aggressivt borde företaget under första fasen använda sig av en strategi där man väntar på
+framtida investeringsmöjligheter. Genom att skjuta upp investeringar i första fasen
+förhindrar företaget konkurrenterna att växa på dennes kostnad (Li et al. 2007:43). Smit
+och Trigeorgis (2004; i Li et al. 2007:43) har kommit fram till att när investering i första
+fasen skulle vara gynnsam för företaget och dess konkurrenter i senare faser, men
+konkurrenterna skulle svara med en motsvarande handling kan företaget tillägna sig en
+strategi som är harmlös när den gör investeringen.
+McGrath och Nerkar (2004; i Li et al. 2007:43) påstår att konkurrensmässigt inträde till
+ett visst område inte enbart är en ekonomiskt lockande signal utan också gör den
+underliggande teknologin mera ekonomiskt värdefull genom att öka investeringens totala
+kunskap och minska osäkerheten. McGrath och Nerkar (2004; i Li et al. 2007:43) har
+observerat en positiv effekt på ett konkurrensmässigt inträde till ett nytt tekniskt område
+och tendensen att skapa nya patent. Li et al. (2007:43) sammanfattar att ett integrerat
+realoptions- och spelteoretiskt perspektiv innebär att det ekonomiska värdet på strategiska
+tillväxtoptioner inte enbart beror på den potentiella tillväxten inom branschen utan också
+på tillväxtoptionernas äganderätt och de gynnsamma strategiernas uthållighet. Enligt Li
+et al. (2007:43) när ett företag kan behålla en äganderättslig tillväxtoption eller göra
+förköp för att nå strategiskt inträde genom första fasens investering tenderar företag att
+välja att investera tidigare även om avkastningen är osäker. Vidare enligt Li et al.
+(2007:43) minskar effekterna av osäkerheten på investeringsdrivkraften vid användandet
+av strategiska tillväxtoptioner. Li et al. (2007:43) anser den förväntade aggressiva
+konkurrensmässiga responsen ökar sannolikheten för en strategi där man väntar inför
+framtida möjligheter, vilket är mera gynnsamt inom projekt med osäker avkastning.
+
+4.11
+
+Risk och osäkerhet
+
+Enligt Li et al. (2007:57) har man inte kommit till enighet gällande det empiriska måttet
+på osäkerhet. I realoptionsteorin innebär osäkerhet risker med andra ord t.ex. framtida
+osäkra kassaflöden innebär risker (Luehrman 1998:4–13; García & Heikkilä 2003:352–
+21
+
+353).
+
+Enligt
+
+García
+
+och
+
+Heikkilä
+
+(2003:352–353)
+
+i
+
+realoptionsanalys
+
+kan
+
+standardavvikelsen vara ett mått på risk av osäkra framtida kassaflödesrörelser
+(volatiliteten). Vidare en risk är känd och kan kvantitativt beräknas medan i osäkerheten
+ingår information som är svår att mäta. Med att försöka mäta all tillgänglig osäker
+information utöver att enbart mäta känd information kan ge ett beskrivande och
+avslöjande mått på osäkerhet som innebär risker.
+Enligt Pindyck (1993) och Weitzman et al. (1981) kan osäkerheten i förhandlingarna vara
+exogen eller endogen (i Li et al. 2007:43). Enligt Li et al. (2007:43) minskar exogen
+osäkerhet av sig själv med tiden, medan endogen osäkerhet minskar genom strategiska
+investeringar. Enligt Sanchez (1993) och Sanchez och Mahoney (1996) kan ledningen
+göra ett beslut att investera med avsikten att minska den endogena osäkerheten och gynna
+dess omgivning (i Li et al. 2007:43). Medan båda typerna av osäkerhet ökar
+realoptionernas ekonomiska värde, skapar de motsatt press på investeringsbesluten (Li et
+al. 2007:43–44). Exogen osäkerhet medför en väntan på att osäkerheten ska avta innan en
+investering görs (Li et al. 2007:43–44). Enligt Weitzman et al. (1981; i Li et al. 2007:44)
+tyder endogen osäkerhet på möjligheter för inlärning och kan i sig uppmuntra till
+investeringar. Roberts och Weitzman (1981; i Li et al. 2007:44) visar att det kan vara
+lönsamt att investera i tidiga projektfaser även om projektets förväntade NNV är negativt.
+Detta gäller i sekventiella investeringar där investeringsprocessen minskar både den
+förväntade kostnaden av att slutföra projektet, kostnadsvariansen samt stoppande av
+projektet halvvägs (Li et al. 2007:44). Smit och Trigeorgis (2004; i Li et al. 2007:44) har
+visat att ökad kunskap generellt sätter igång investeringar i tidigare skede och minskar
+framtida produktionskostnader, vilket minskar värdet på optionen att skjuta upp.
+Vidare Pindyck (1993; i Li et al. 2007:44) nämner detaljerat följderna för
+investeringsprojekt med två typer av kostnadsosäkerheter i långvariga projekt. Enligt
+Pindyck (1993; i Li et al. 2007:44) är den första (endogena) kostnadsosäkerheten teknisk
+kostnadsosäkerhet t.ex. kring svårigheter att slutföra ett projekt samt hur mycket tid, möda
+och material det krävs för att genomföra projektet. Enligt Pindyck (1993; i Li et al.
+2007:44) är denna osäkerhet endogen och löser sig endast när projektet framskrider, men
+kan i stort sett breddas (diversifieras, decentraliseras). Enligt Pindyck (1993; i Li et al.
+2007:44) är den andra (exogena) kostnadsosäkerheten inputkostnadsosäkerhet t.ex.
+osäkerheten kring implementeringskostnaderna och lagar som påverkar dessa. Denna
+22
+
+osäkerhet är exogen för företaget och kan i stort sett inte breddas (diversifieras,
+decentraliseras) (Pindyck 1993; i Li et al. 2007:44).
+Vidare Pindyck (1993; i Li et al. 2007:44) har visat att både teknisk osäkerhet och
+kostnadsosäkerhet som baserar sig på input ökar investeringsmöjlighetens värde. Dessa
+påverkar dock investeringsbesluten på olika sätt, då teknisk osäkerhet gör investeringen
+mer attraktiv; investeringen avslöjar information om kostnader och denna information fås
+enbart då investeringen ska ske medan osäkerhet kring inputkostnader inte uppmuntrar
+att investera för att inputkostnaderna varierar oberoende av om investering sker eller om
+optionen att skjuta upp investeringen skapar ökat värde (Li et al. 2007:44).
+McGrath (1997; i Li et al. 2007:44) påpekar att varje företag har sin osäkerhetsprofil i
+teknologiutveckling och kommersialisering, och att företag kan göra förstärkande
+förinvesteringar som påverkar osäkerheten och ökar det ekonomiska värdet eller
+lämpligheten av teknologioptioner. Enligt Trigeorgis och Reuer (2017:57) betonar
+realoptionsteorin att företag borde vara flexibla och anpassa deras planer för framtida
+möjligheter när osäkerheten och flertydigheten är hög. Detta möjliggörs så att företag
+strategiskt inte låter vinstminskande osäkerhet realiseras när investeringsbesluten görs
+trots att större osäkerhet kan tyda på att investeringens lönsamhet är hög på grund av
+möjligheten till högre avkastning.
+
+4.12
+
+Beslutet att lämna marknaden och ekonomisk
+hysteresis
+
+Enligt Li et al. (2007:44) har realoptionsteorin strategiska följder inte enbart för
+investeringsbesluten utan också för desinvesteringsbesluten. Enligt Li et al. (2007:44) att
+hålla optionerna öppna under osäkerhet lämpar sig för både investering och beslutet att
+lämna marknaden. I den traditionella investeringsteorin beter sig ett företag irrationellt
+om det inte lämnar marknaden då NNV blir negativt (Li et al. 2007:44–45). Enligt
+realoptionsteorin om man inte tar i beaktande psykologiska faktorer, som att skjuta upp
+beslutet eller att lämna beslutet kan det vara en rationell reaktion om investeringen inte
+kan återtas och om den är osäker (Li et al. 2007:45). Enligt Li et al. (2007:45) optionen
+att skjuta upp med beslutet att lämna även under omständigheter då avkastningen är
+negativ har värde eftersom det finns en möjlighet att marknadssituationen blir gynnsam i
+framtiden, vilket ger anledning att fortsätta projektet. Enligt Li et al. (2007:45) förstärks
+23
+
+tendensen att skjuta upp med beslutet att lämna då en omstart av projektet kan medföra
+kostnader efter en temporär nedläggning. Enligt Li et al. (2007:45) ökar dessa kostnader
+då åtgärden är irreversibel och upprepas då projektet startas om. Enligt Li et al. (2007:45)
+tenderar därför företag att hålla optionen att avyttra och skjuta upp öppen med beslutet
+att lämna. Kogut och Kulatilaka (2001; i Li et al. 2007:45) menar att teknologin i ett
+företag kan vara en källa för kostnader som inte kan återtas och tenderar att uppmuntra
+att hålla fast vid gamla investeringssätt. Enligt Li et al. (2007:45) kan ledningen tveka att
+göra radikala förändringar inom företaget för att de troligen hoppas att framtiden ger mer
+gynnsamma förutsättningar. Kogut och Kulatilaka (2001; i Li et al. 2007:45) nämner att
+en trög förändring uppmuntras i volatila omgivningar där förändring kostar. Chi och
+Nyström (1995; i Li et al. 2007:45) nämner att en annan rationell förklaring till att skjuta
+upp förändringen kan vara större endogen osäkerhet som t.ex. beteendetendenser; en
+förhöjd inlärningspotential som skapas genom samarbete, vilket kan medföra att man
+inom företaget fortsätter på samma sätt ända tills kostnaderna blir tyngre än nyttan. Ofta
+sker kanske ingen investering förrän avkastningen överskrider optionens ekonomiska
+kostnader; en liknande investering kan fortsätta tills ekonomiska förluster överskrider
+värdet på optionen att fortsätta (Li et al. 2007:45). Därmed ger realoptionsteorin en
+rationell förklaring till ekonomisk hysteresis: när underliggande orsaker ändras (t.ex. att
+avkastningen blir lägre än de rörliga kostnaderna) kan investeringsbesluten misslyckas
+(t.ex. företaget kan besluta att fortsätta projektet) (Baldwin 1988; Dixit 1992; i Li et al.
+2007:45). Vidare enligt Li et al. (2007:45) kan ekonomisk hysteresis förklaras så att
+mellan nivån på ekonomisk avkastning, vilket sätter igång investeringen, och nivån på
+ekonomisk förlust, vilket sätter igång utgången, finns ett trögrörligt område i vilket
+företagsverksamheten står stilla. Bragger et al. (1998; i Li et al. 2007:46) har gjort flera
+experiment i vilka de testade realoptionernas prognoser gällande uppskjutning av
+utgången. Bragger et al. (1998; i Li et al. 2007:46) fann att i ett datorsimulerat
+marknadsföringsscenario, där deltagarna fick varierad respons, sköts utgångsbesluten upp
+längre och investeringar skedde oftare än bland de deltagare som fick mindre varierande
+respons. De deltagare som inte hade möjlighet att köpa information sköt upp
+utgångsbesluten längre och investerade oftare än de deltagare som hade möjlighet att köpa
+information (Bragger et al. 1998; i Li et al. 2007:46). Enligt Li et al. (2007:46) blir
+informationen mer värdefull under osäkerhet. Bragger et al. (1998, 2003) och Staw (1981)
+samt Staw och Ross (1989) har noterat att det har gjorts mycket forskning gällande
+eskalering av åtaganden inom social- och organisationspsykologin med strävan att lösa
+24
+
+varför individerna handlar irrationellt och gör felaktiga beslut och fler misslyckade
+investeringar (i Li et al. 2007:46). Enligt Li et al. (2007:46) eskalerar åtaganden med
+större sannolikhet när beslutsfattarna har mottagit mångtydig respons. Enligt Li et al.
+(2007:46) fokuserar realoptionsteorin mera på overksamhet eller fortsatt investering gjord
+under negativ avkastning än på individens åtagande under misslyckande.
+
+4.13
+
+Stöd för beslutsfattandet
+
+Nedan behandlas viktiga saker som har att göra med beslutsfattandet och som kan
+framkomma då investeringsbesluten görs och kan användas till stöd när beslut fattas.
+
+4.13.1
+
+Strategiska handlingar
+
+Amram och Kulatilaka (1999:7) delar in strategisk ledning av realoptioner i tre steg.
+Dessa steg kan användas i beslutsprocessen. 1) är att identifiera och värdera optionerna i
+en strategisk investering (Amram & Kulatilaka 1999:7). 2) är att omforma investeringen
+för att bättre dra nytta av optionerna (Amram & Kulatilaka 1999:7). 3) är att leda proaktivt
+igenom investeringen genom de formade optionerna (Amram & Kulatilaka 1999:7).
+Vilka är nyckelbesluten?
+Ofta är inte ledningen entydig eller av samma åsikt och gör iakttagelser eller
+observationer: Att söka efter ursprungliga och senare beslutskällor är ofta första fasen i
+beslutstagandet (Amram & Kulatilaka 1999:207–208).
+Vilka källor av osäkerhet skulle ändra besluten?
+Ledningen blir ofta förvirrad av ursprunglig osäkerhet, vilket inverkar på deras arbete,
+och
+
+investeringsbesluten
+
+(Amram
+
+&
+
+Kulatilaka
+
+1999:208).
+
+Succéfulla
+
+realoptionsappliceringar inkluderar få osäkerhetsresurser det är därför kritiskt att börja
+genom att lista osäkerheter som har samband med osäkerhetsresurserna (Amram &
+Kulatilaka 1999:208).
+Hur kan finansiella marknaders information användas (tillämpas)?
+Analytikerna kan emellanåt bygga strukturella modeller med flera osäkerhetskällor,
+kassaflödeskällor och optionsvärderingar (Amram & Kulatilaka 1999:208). I vissa
+25
+
+situationer behövs det tidigare nämnda men i flera fall efter att modellens stomme har
+skapats är det lönsamt att se bakåt i tiden och jämföra om det finns tillgångar på
+marknaden som har likande osäkerhet som modellen (Amram & Kulatilaka 1999:208).
+Hurudana risker innebär investeringen och hur inverkar det på företaget?
+Företag måste godkänna besluten som de gör och vissa högt värderade
+investeringsstrategier är helt enkelt för potentiellt riskabla för vissa företag (Amram &
+Kulatilaka 1999:208). Man borde ta i beaktande hur risker
+
+inverkar på
+
+investeringsstrategin och hur den flyttas framåt eller lindras samt hur företaget kan
+hantera möjliga risker (Amram & Kulatilaka 1999:208).
+Är optionen tillgänglig billigare på finansiella marknader?
+Generellt för att finansiella marknader är sofistikerade och effektiviteten av finansiella
+marknader gentemot pris och risk är hög och verksamhets- och investeringsoptioner om
+de inte baserar sig på finansiella avtal (Amram & Kulatilaka 1999:208–209). Detta
+innebär att innovationsutvecklingen är snabb på finansiella marknader och därför lönar
+det sig att jämföra realoptionerna med optioner på finansiella marknader (Amram &
+Kulatilaka 1999:208–209).
+Är värderingsresultatet trovärdigt?
+Det är lönsamt att analysera om värderingsresultatet är trovärdigt (Amram & Kulatilaka
+1999:209). Det kan finnas kritiska antaganden som borde beaktas och inkluderas i
+värderingen (Amram & Kulatilaka 1999:209).
+
+4.13.2
+
+Omformning
+
+Kan optionsvärdet ökas och riskerna minskas genom att omforma?
+I vissa fall är realoptioner avtal som kan förhandlas och därför är det viktigt att jämföra
+hur riskerna kan ändras gentemot avtalsvillkoren (Amram & Kulatilaka 1999:209). En
+granskning av villkoren kan medföra ökat realoptionsvärde på grund av att när man ändrar
+om och går igenom alternativen finner en mera värdefull möjlighet (Amram & Kulatilaka
+1999:209).
+
+26
+
+4.13.3
+
+Implementering
+
+Vem ska få optionens beslutsrättigheter?
+Den som äger optionens beslutsrättigheter gör ofta exekutiva beslut. Alla beslut görs inte
+med enhetligt samtycke och det kan påverka investeringsstrategin för ofta finns det många
+beslut som ska fattas inom olika faser (Amram & Kulatilaka 1999:209). Besluten borde
+inte göras enbart på basis av en viss ansvarig person (Amram & Kulatilaka 1999:209).
+Besluten borde göras genom att ta i beaktande företagets processer (Amram & Kulatilaka
+1999:209).
+Vilka ändringar i företagets processer behövs?
+Möjligheterna och värdet av många investeringar påverkar företagets processer (Amram
+& Kulatilaka 1999:210). Det kan handla om att avveckla eller utöka företagets processer,
+vilka i sin tur kan leda till additionella investeringsmöjligheter, realoptioner som påverkar
+investeringsstrategin (Amram & Kulatilaka 1999:210). Enligt Amram och Kulatilaka
+(1999:210) borde besluten gällande företagets processer göras i samarbete
+Vilka ändringar behövs i en organisation?
+Generellt för att företaget skulle dra nytta av realoptioner borde organisationen vara
+flexibel att starta nya projekt och avveckla och avyttra projekt (Amram & Kulatilaka
+1999:210). Ändringar inom organisationen berör alla som är medlemmar i organisationen
+oberoende hurudan organisationsstrukturen är (t.ex. nätverks, hierarkisk, eller linje
+organisation) (Amram & Kulatilaka 1999:210).
+
+27
+
+5 VÄRDERING AV REALOPTIONER
+Enligt Li et al. (2007:50) är realoptionsteorin fundamentalt sett en teori om ekonomisk
+värdering. På basis av Miller och Modigliani (1961) och Myers (1977) forskning har man
+antagit att det ekonomiska värdet av ett företag är deriverat från dess tillgångar men också
+dess framtida uppskattade möjligheter eller tillväxtsoptioner (i Li et al. 2007:50). Enligt
+Li et al. (2007:50) kan värdet av tillväxtoptioner vara substantiella (konkret materiella).
+Myers (1984; i Li et al. 2007:50) har betonat att det är svårt att med den traditionella
+NNV-metoden eller genom att diskontera kassaflöden göra strategisk planering. Då man
+med enbart diskontering inte kan evaluera interaktioner i tidsserier mellan investeringar
+som innefattar immateriella tillgångar (Myers 1984; i Li et al. 2007:50). Enligt Li et al.
+(2007:50) betraktar realoptionsteorin flexibilitetens strategiska värde, vilket ger möjlighet
+till alternativa handlingar inom tiden. Enligt Li et al. (2007:50–51) är sådana handlingar
+t.ex. att skjuta upp investeringen, investera sekventiellt i tillväxtoptioner samt avyttra
+investeringen eller byta investering.
+Traditionell NNV-analys redogör inte ordentligt för realoptioner som är inbäddade i
+investeringsprojekt, företagsverksamhet och företag (Li et al. 2007:54). Grundat på
+realoptionsteorin påverkas investerings- och utgångsbeslut inte enbart av förväntade
+NNV utan också av värdet på optionsdrivaren, t.ex. strategiska faktorer vilka bestämmer
+det ekonomiska värdet på realoptionerna som är inbäddade i investeringar (Li et al.
+2007:54–55).
+
+5.1 Realoptioner och prestation
+Enligt Li et al. (2007:51) har de flesta studier i strategisk ledning fokuserat på hur företag
+kan dra nytta av skapande och inlösen av realoptioner; speciellt tillväxtoptioner, vilka är
+inbäddade i projekt, företagsverksamhet och företag. Bowman och Hurry (1993:767–770)
+påpekar att sådana företag som startar ny företagsverksamhet och går in på nya marknader
+så att efter mindre optioner följer stora inlösen presterar bättre än sådana som inträder
+med enbart små (diskreta) eller stora investeringar. Vidare har Bowman och Hurry
+(1993:767–770) kommit fram till att företag förväntas prestera bäst om de löser in
+optioner i rätt tid och prestation determineras utifrån optionens förfallodag och de
+28
+
+tillgängliga möjligheterna. Enligt Li et al. (2007:51) har det i många studier undersökts
+om och under vilka förutsättningar investerarna värderar företag med inbäddade optioner.
+Levitas och Chi (2001; i Li et al. 2007:52) uppger att patent ger positiva tecken om
+företagets framtida strategiska möjligheter eller realoptioner, men ger samtidigt
+tvivelaktig och potentiellt negativ information ur andra synvinklar vilka mäter företagets
+värde. I linje med standardoptionssynsättet att optionens ekonomiska värde stiger med
+osäkerhet har Levitas och Chi (2001; i Li et al. 2007:52) observerat att företag som
+informerat om att de innehar patent som signalerar teknologisk kompetens har större
+marknadsvärde i mera volatila omgivningar.
+Tong et al. (2008; i Li et al. 2007:52) har undersökt om och när internationella
+gemensamma projekt ger värdefulla tillväxtoptioner för företag. Enligt Li et al. (2007:52)
+är internationella gemensamma projekt attraktiva för multinationella företag som
+överväger ett internationellt marknadsinträde inte enbart på grund av deras förmåga att
+minska risker utan också för att de möjliggör stegvis tillväxt när ny information om
+osäkerheten blir tillgänglig. Tong et al. (2008; i Li et al. 2007:52) diskuterar tre situationer
+där delägarna i internationella gemensamma projekt kan hantera osäkerheten och använda
+en hävstångseffekt vid olika möjligheter. 1) En lägre ägarandel minskar företagets
+ogynnsamma risker medan den ändå tillåter företaget att dra nytta av projektets
+gynnsamma möjligheter. 2) Tillväxtoptioner är märkligare i nya aktiviteter för att de kan
+förvaltas och de antyder en förhöjd osäkerhet. 3) Högre osäkerhetsnivåer inom
+tillväxtekonomier eller tillväxtmarknader kan höja tillväxtoptionens värde i gemensamma
+projekt. De empiriska resultaten visar att internationella gemensamma projekt ökar
+multinationella företagens tillväxtoptionsvärde (Li et al. 2007:52). Kester (1984) och
+Myers (1977) har undersökt om och hur marknadsvärdet och fortlevnaden (ongoing
+concern) möjligen kan förbättras genom att pröva framtida möjligheter utöver tillgången
+(i Li et al. 2007:52).
+Berger et al. (1996; i Li et al. 2007:52) har prövat om marknadsinvesterare värderar ett
+företags option att avyttra. Som förväntat fann Berger et al. (1996; i Li et al. 2007:52) att
+företag med större utgångsvärde men mindre specialiserade tillgångar är av större värde
+för investerarna efter att de har tagit i beaktande nuvärdet av förväntade kassaflöden.
+Vidare har Berger et al. (1996; i Li et al. 2007:52) kommit fram till att värdet av optionen
+att avyttra förväntas stiga med sannolikheten att optionen inlöses. Vidare har Li et al.
+(2007:52) kommit fram till att om det inte är sannolikt att optionen att avyttra inlöses,
+29
+
+borde inte information om utgången ge värde åt investerarna och när optionen säkert ska
+inlösas borde ett utgångsvärde öka marknadsvärdet exakt lika mycket. Berger et al. (1996;
+i Li et al. 2007:53) utgår därför från att ju mer sannolikt det är att optionen att avyttra
+inlöses desto större variationseffekt har utgångsvärdet för företagets marknadsvärde.
+Enligt Li et al. (2007:53) med andra ord: optionens inlösenssannolikhet borde påverka
+företagets marknadsvärde. Li et al. (2007:53) har visat empiriska resultat på att företag
+med hög sannolik finansiell stress eller planerat avyttrande av projekt har utgångsvärden
+som är mera känsliga för variation.
+Att avsluta gemensamma projekt inom osäkra branscher skulle enligt Li et al. (2007:53)
+skapa mindre värde eftersom det är lönsamt att hålla optionerna öppna under osäkerhet.
+Kumar (2005; i Li et al. 2007:53) har funnit att avslutandet av gemensamma projekt
+skapar en negativ relation mellan osäkerhet och företagets värde mätt som skillnaden
+mellan förväntad och faktisk avkastning innan det gemensamma projektets avslutande
+läggs fram. Li et al. (2007:53) tillägger att optionens värde stiger med tiden tills optionen
+förfaller, men optionerna som fås av gemensamma projekt löper troligen ut tidigare då
+det finns konkurrens. Enligt Li et al. (2007:53) uppstår därför en negativ effekt på
+konkurrensen under avyttring. Enligt Li et al. (2007:53) visar empiriska resultat att
+avslutandet av gemensamma projekt skapar mindre värde när det finns mindre
+konkurrens.
+Enligt Li et al. (2007:53) är flexibilitet enligt realoptionsteorin ekonomiskt värdefull
+under osäkerhet och tyder på att investeringarna som förstärker flexibilitet under
+osäkerhet ökar det ekonomiska värdet för dem som innehar optionerna. Enligt Kogut
+(1983) samt Kogut och Kulatilaka (1994b) brukar t.ex. multinationella företag äga
+optioner som inte är tillgängliga för inhemska företag eftersom multinationella företag
+kan byta aktiviteter i värdekedjan inom sina dotterbolagsnätverk och skapa
+produktionsflexibilitet över gränserna (i Li et al. 2007:53). Miller och Reuer (1998; i Li
+et al. 2007:53) har funnit vid genomskärningsanalyser att utländska direktinvesteringar
+minskar vid kraftiga förändringar i valutakurserna. Om företag följer realoptionsteorin
+borde de som är mest utsatta för valutakursrörelserna förvalta sin utsatthet på ett sådant
+sätt att man drar nytta av kursförändringarna, vilket i sin tur skulle öka företagets värde
+(Li et al. 2007:53).
+
+30
+
+Enligt Li et al. (2007:53) inkluderar potentiell nytta av optionsstrategier både
+tillväxtmöjligheter och riskeliminering. I tillägg till multinationalitet som möjliggör
+produktionsflexibilitet ger internationella gemensamma projekt för företag möjligheten
+att inkrementellt göra investeringar om marknaden eller teknologin visar sig vara
+gynnsam (Li et al. 2007:53). Reuer och Leibleins (2000; i Li et al. 2007:53–54)
+presenterar en hypotes om att företagens multinationalitet och investeringar i
+internationella gemensamma projekt minskar företagets ekonomiska risker. Empiriska
+resultat stöder dock inte denna hypotes (Li et al. 2007:54). Enligt Reuer och Leiblein
+(2000; i Li et al. 2007:54) kan det empiriska resultatet förklaras på minst två sätt. 1)
+Strategierna som är konsistenta med realoptionsteorin (och andra teorier) resulterar inte i
+överlägsen ekonomisk prestanda. Enligt Li et al. (2007:54) kan det bero på att den
+potentiella strategiska flexibilitet som ett projekt möjliggör inte kan realiseras på grund
+av organisatoriska och andra orsaker eller för att det inte är av ekonomiskt värde då
+osäkerheten inte är signifikant. Enligt Li et al. (2007:54) tyder detta på att det är viktigt
+att identifiera möjliga händelser som determinerar realoptionernas ekonomiska värde. 2)
+Nedbrutna investeringar är troligen inte motiverade av den potentiella tillväxtoptionen
+eller optionen att byta, vilka är inbäddade i företagsverksamheten, vilket tyder på att
+internationella gemensamma projekt troligen är motiverade av efterfrågan och
+konkurrenskopplade faktorer. Enligt Li et al. (2007:54) är det få studier inom ämnet
+strategisk ledning som har tillämpat optionsprissättningsmodeller direkt för att värdera
+projekt, verksamhet eller företag. Enligt Li et al. (2007:54) har de flesta forskningsstudier
+undersökt om och när skapande och inlösen av optioner är nyttiga för dem som innehar
+optioner, oberoende av om nyttan är i form av värdet på tillväxtoptionerna eller
+skyddandet (hedging) från utländska investeringar. Enligt Li et al. (2007:54) har de
+tidigare nämnda forskningsstudierna ibland gett blandade empiriska bevis av den
+strategiska nyttan gällande realoptionsteorin.
+
+5.2 Investeringstiming
+Enligt Reuer och Tong (2007:149) börjar forskning kring investeringssannolikhet och
+investeringstiming med observationen om företagets beslut att investera i en marknad,
+teknologi, m.m. Enligt Reuer och Tong (2007:149) kan en enkel illustration göras genom
+att anta att ett företag försöker att bredda sig och göra sig mångsidigare på en växande
+produktmarknad. Denna möjlighet kräver investeringar i speciella tillgångar som kunde
+31
+
+vara svåra att omplacera till annan användning inom företaget eller att sälja på
+marknaden. Enligt Dixit och Pindyck (1994; i Reuer & Tong 2007:149) innebär
+kombinationen av osäkerhet och oåterkallelighet det lämpligt för företaget att binda värde
+i att skjuta upp investeringen och se hur produktmarknadens osäkerhet löser sig. Om
+optionen att skjuta upp är tillräckligt värdefull brukar företaget skjuta upp investeringen
+även om den har ett positivt NNV vid evalueringstidpunkten (Reuer & Tong 2007:149).
+I andra fall skapar investeringar i nya marknader värdefulla fortsättningsoptioner som
+t.ex. att expandera till nya geografiska områden (Reuer & Tong 2007:149). Även om
+NNV är negativt i sådana situationer kan ett företag investera rationellt om dessa tillväxteller köpoptioner är värdefulla (Reuer & Tong 2007:149). Med andra ord är investeringen
+värdeökande för ägarna om NNV + Optionsvärdet > 0, oberoende av faktumet att NNV
+< 0 (Reuer & Tong 2007:149). Värdeändringarna hos dessa tillväxtoptioner och optioner
+att skjuta upp kan ändra investeringssannolikheten eller timingen av företagets
+investeringar (Reuer & Tong 2007:149).
+Att explicit värdesätta tillväxtoptioner och optioner att skjuta upp kan vara svårt i enstaka
+investeringsprojekt även då detaljerad data finns tillgänglig (Reuer & Tong 2007:149).
+Därför blir optionsvärdering mera problematisk i empiriska analyser där man analyserar
+företagets genomskärning med stora sampel (Reuer & Tong 2007:149). För att undersöka
+tillväxtoptioner har mycket forskning sökt värderingsinformation från aktiemarknaden
+(Reuer & Tong 2007:149). Detta betraktelsesätt skapar dock utmaningar t.ex.
+analysproblem och faktumet att aktiepriserna reflekterar tillgångarnas värde. Enligt Reuer
+och Tong (2007:149) är det svårt att värdesätta optionen att skjuta upp. Enligt Dixit och
+Pindyck (1994; Reuer & Tong 2007:149) noteras i tidigare forskning att ledningen
+värderar approximativt de tidigare nämnda optionerna för att de i investeringsvärderingar
+använder kalkylräntefötter som är högre än företagets kapitalkostnad. Detta kan leda till
+undervärdering av optionen.
+För att förklara de tidigare nämnda svårigheterna har man inom strategiforskning
+statistiskt beaktat de underliggande faktorer som man vet att står i förhållande till
+optionsvärdet (Reuer & Tong 2007:149–150).
+Enligt Reuer och Tong (2007:150) är det inte heller lätt att bedöma inverkan av
+osäkerheten på sannolikheten eller timingen. Enligt Trigeorgis (1996; i Reuer & Tong
+2007:150) uppstår denna komplexitet på grund av att många optioner som kan befrämja
+32
+
+eller begränsa investeringen kan vara tillgängliga för ett givet investeringsbeslut och den
+ökade osäkerheten kan påverka optionsvärdet. Enligt Reuer och Tong (2007:150) kan
+svårigheten för forskarnas falsifieringssträvan illustreras med ett exempel: om man
+undersöker en statistisk modell, vilken uppvisar en positiv relation mellan osäkerhet och
+marknadsinträde skulle denna effekt framkomma då tillväxtoptioner är tillgängliga i
+investeringskontexten, men om det istället är en negativ relation mellan osäkerhet och
+marknadsinträde kan denna relation också vara konsistent med tillgängliga värdefulla
+optioner att skjuta upp, vilka i sin tur skulle motarbeta marknadsinträdet. Enligt Reuer
+och Tong (2007:150) kan även då relationen mellan osäkerheten och marknadsinträdet är
+omärklig, möjliga tillgängliga optioner inte avvisas för att det kan finnas tillväxtsoptioner
+och optioner att skjuta upp vilka kompenserar varandra i värde. Sådana positiva, negativa
+och omärkliga relationer mellan osäkerhet och marknadsinträde kan vara konsistenta då
+en eller flera optioner är tillgängliga (Reuer & Tong 2007:150). Enligt Kulatilaka och
+Perotti (1998) och Lin och Kulatilaka (2007) behövs det en mängd additionella variabler
+för att kunna skilja dessa optioner och förstå vilka som är mer eller mindre värdefulla och
+således ökar eller minskar sannolikheten av marknadsinträde (i Reuer & Tong 2007:150).
+Vissa optionsvärderingsmetoder- och modeller försöker att ta i beaktande flera variabler
+för att lösa det tidigare nämnda problemet.
+Problemet med flera optioner som lurar bakom strategiska investeringar är ett vanligt
+problem vilket märks i flera appliceringar av realoptionsteorin oavsett om det erkänns
+eller inte (Reuer & Tong & Reuer 2007:150-151). Folta och O’Brien (2004; i Reuer &
+Tong
+
+2007:151)
+
+har
+
+tacklat
+
+detta
+
+problem
+
+på
+
+två
+
+sätt
+
+i
+
+kontexten
+
+av
+
+produktmarknadsinträde:
+1) de uppger att olik optionslogik dominerar på varierade osäkerhetsnivåer (Folta &
+O’Brien 2004; i Reuer & Tong 2007:151). De föreslog t.ex. att det maximala värdet av
+optionen att skjuta upp är bunden till den totala sänkta kostnaden då inträdet till en
+bransch sker och tillväxtoptionens värde således sannolikt når sin högsta osäkerhetsnivå.
+Deras empiriska resultat bekräftade en icke-monoton relation mellan osäkerhet och
+inträde: på låga nivåer av osäkerhet minskar osäkerheten sannolikheten av inträde och
+dess effekt blir positiv vid höga osäkerhetsnivåer men inte förrän 94-percentilen nås
+(Folta & O’Brien 2004; i Reuer & Tong 2007:151).
+
+33
+
+2) de undersökte också ett antal faktorer vilka kan försvaga relationen mellan osäkerhet
+och marknadsinträde och de hittade vissa potentiella händelser som hjälper till att skilja
+mellan optionerna (Folta & O’Brien 2004; i Reuer & Tong 2007:151). Folta & O’Brien
+(2004; i Reuer & Tong 2007:151) inkluderade flera mått för oåterkallelighet och fann att
+osäkerhet och oåterkallelighet interagerar med varandra, vilket minskar sannolikheten för
+marknadsinträden.
+
+34
+
+6 ETT ILLUSTRATIVT EXEMPEL
+För att kunna testa och exemplifiera teorierna, metoderna samt modellerna har ett
+illustrativt exempel skapats. Exempelfallet har att göra med realoptionsvärdering av en
+affärssystemimplementering i ett företag. Exempelfallets avsikt är endast att exemplifiera
+ett fall där realoptionskalkyler kan tillämpas och därmed illustrera beräkningarnas resultat
+m.m. Exemplets data grundar sig på vetenskaplig kunskap. I exempelfallet har tillämpats
+Microsoft® Office Excel® 2013 och MATLAB® R2017b. Se vidare bilagorna 1–6 för
+källkod (vba och m).
+
+6.1 Metoderna, modellerna tillämpade i exemplet
+Enligt García och Heikkilä (2003:346) bör under kalkyleringsprocessen förutspås
+kassaflöden (kostnaderna och intäkterna) och diskonteringsräntan. Enligt García och
+Heikkilä (2003:346) finns det inte ett unikt och bästa sätt att få fram projektets
+kassaflöden och det är ganska vanligt att använda de bästa, de normala och de sämsta
+scenarier.
+Enligt Luehrman (1998) och García & Heikkilä (2003:353) kan en ekvivalenstabell göras
+där variablerna som tillämpas i ekvationerna och realoptionskalkylen ställs upp enligt
+följande:
+
+Tabell 1 Tabell av ekvivalens.
+INVESTERINGSMÖJLIGHET
+Nuvärdet av projektets kassaflöden
+Grundinvestering
+Väntetid (i år)
+Tidsvärde av pengar (årlig)
+
+VARIABEL
+S
+X
+t
+r
+
+Risk, volatilitet; standardavvikelsen
+av kassaflödesförändringarna (årlig)
+
+σ
+
+(Luehrman 1998:4–13; García & Heikkilä 2003:353).
+
+35
+
+KÖPOPTION
+Aktiepris
+Inlösenpris
+Tid tills optionen förfaller (i år)
+Riskfri ränta (årlig)
+Osäkerhet, volatilitet; standardavvikelsen av
+aktieprisförändringarna (årlig)
+
+6.1.1 Nuvärdesmetoden
+Nettonuvärdeskalkylerna och kassaflödeskalkylerna har gjorts med Microsoft® Office
+Excel® 2013.
+Enligt García och Heikkilä (2003:346) för att evaluera konkurrerande projekt använder
+de flesta företag en blandning av olika sätt att närma sig, vilka kan grupperas mellan
+formella (teorier och modeller) och informella (tumregel eller ledning). Enligt García och
+Heikkilä (2003:346) styrs företagets investeringsbeslut traditionellt av regeln att
+maximera NNV där strömmen av förväntade framtida kassaflödena måste diskonteras till
+NV (Nu Värde) med diskonteringsräntan och grundinvesteringen som krävs för att börja
+projektet med riskfria räntan, genom att kalkylera skillnaden mellan det tidigare nämnda
+får man NNV, och projektet med största positiva värdet borde traditionellt lösas in. Jones
+och Smith (1982:106) förklarar NNV ekvationen och den kan formas på följande sätt:
+
+[1]
+
+där t är tid, Kt är totala nettokassaflöden (nominella nettokassaflöden) i tid t och rr är
+riskjusterad ränta (diskonteringsränta i detta fall). Det bör noteras att grundinvesteringens
+kassaflöde är negativt och att möjliga grundinvesteringen och restvärdets NV bör
+inkluderas till NNV kalkylen. Man kan också räkna NNV ur riskjusterade kassaflöden
+men då behöver man använda riskfria räntan r.
+
+6.1.2 Black-Scholes-Merton modell och Monte Carlo metod
+I BSM - MC simulationen tillämpas källkod skriven av Leclercq (2020). För BSM - MC
+och BSM - MC kontrollvariabeltillämpning se bilagorna 2-4 för MATLAB® kod.
+Enligt Luehrman (1998) används i BSM -modellen fem variabler vilka står för nuvärdet
+av projektets kassaflöden = S, grundinvestering = X, väntetid = t, tidsvärde av pengar = r
+och projektets risk = σ. Enligt Reuer och Tong (2007:150) är det viktigt att notera att
+realoptionerna ofta skiljer sig ifrån enkla finansiella köpoptioner på grund av många
+viktiga aspekter t.ex. inlösenpriset kan korrelera med värdet av den underliggande
+tillgången speciellt om inlösenpriserna är förhandlade efteråt och inte avtalsenligt i
+förväg; finansieringskostnader kan formas då man håller optionen öppen tills tiden tills
+36
+
+maturitet nås fast det är fråga om liknande fall som ett finansiellt köp, därför kan det vara
+svårt att fastställa strategin.
+Enligt Hull (2018:332) är Monte Carlo metoden en stokastisk process, en procedur som
+baserar sig på slumpmässiga sampel för processen. Enligt Glasserman (2004:1) baserar
+Monte Carlo metoderna på analogi mellan sannolikhet och volym. Vidare enligt
+Glasserman (2004:1) i Monte Carlo metoden kalkyleras volymen av en mängd genom att
+interpretera volymen som sannolikhet. Vidare enligt Glasserman (2004:1) innebär det att
+dra sampel slumpmässigt från en rymd av sannolika utkomster och att ta en delmängd av
+slumpmässiga samplet som ett estimat av mängdens volym. Vidare enligt Glasserman
+(2004:1) garanterar de stora talens lag att estimatet konvergerar till korrekta värdet när
+antalet drag ökar.
+Black-Scholes-Merton modellen som också kallas Black-Scholes modellen var utvecklad
+av Fischer Black och Myron Scholes som sedan modifierades av Robert Merton (Black
+& Scholes 1973; Leslie & Michaels 1997:6). Stewart Myers observerade att BlackScholes-Merton -modellen kan användas också för värdering av investeringsmöjligheter
+på reala marknader – marknader för produkter och tjänster (Leslie & Michaels 1997:6).
+Enligt Hull (2018:296, 331) är den underliggande uppfattningen att priserna följer
+slumpvandring (Brownsk rörelse):
+
+[2]
+
+Där µ är förväntad avkastningsgrad, i en riskneutral värld är den lika med årliga riskfria
+räntan r och σ är risk (eller standardavvikelse av avkastning på aktier).
+Enligt Hull (2018:354) är Black-Scholes-Merton differentialekvationen följande:
+
+[3]
+
+Där r är riskfria räntan, f är optionens pris och S är underliggande egendomen.
+37
+
+Enligt Hull (2018:331) är den diskreta tidsmodellen av den geometriska Brownska
+rörelsen följande:
+
+[4]
+
+där ∆S är förändring i pris inom tidsintervallet ∆t och ϵ är standardnormaldistributionen
+N(0,1) och i stället för µ avkastningsgrad på investerat kapital har placerats i stället
+riskfria räntan r (räntan i riskfria världen), denna ekvation bör används vid Monte Carlo
+metoden.
+Black-Scholes-Merton differentialekvationen kan deriveras enligt vad Black och Scholes
+(1973) och Hull (2018:353–355) nämner och köpoptionen kan tillämpas enligt Black och
+Scholes (1973), García och Heikkilä (2003:352–353), Hull (2018:357–358), Leslie och
+Michaels (1997:4–22) och Luehrman (1998) samt Mauboussin (1999) i formen:
+
+[5]
+
+där:
+-
+
+t är tiden hur länge optionen är öppen tills den förfaller.
+
+-
+
+S är underliggande tillgångens värde, optionens köpepris, ekvivalent i real termer;
+summan av projektets förväntade diskonterade kassaflöden (positiv input).
+
+-
+
+X är inlösenpriset, värdet vilket tillgången köps för optionen inlöses, ekvivalent i
+real termer; summan av investeringskostnaderna (grundinvesteringen, positiv
+input).
+
+-
+
+σ är aktieprisets årliga volatilitet; ekvivalent i real termer; projektets risk mätt som
+standardavvikelsen av kassaflödesrörelserna (volatilitet)
+
+-
+
+r är riskfria räntan, ränta på ränta av en säker tillgång med samma förfallodag.
+
+38
+
+-
+
+δ är dividenden, summor betalade av ägaren, ekvivalent i realtermer; värdet på
+läckage, med andra ord kostnader för att hålla optionen (hyror, licenser m.m.).
+
+-
+
+N(d) är kumulativa normaldistributionen.
+
+-
+
+N(d1) är proportionen av tillgångar som behövs för att replikera köpoptionen.
+
+-
+
+N(d2) är sannolikheten att köpoptionen inlöses på förfallodagen.
+
+Då blir enligt Hull (2018:493) underliggande egendomens nästa steg i Monte Carlo
+metoden:
+
+[6]
+
+där i stället för
+
+är r; den förväntade avkastningsgraden i en riskneutral värld (riskfria
+
+räntan), ϵ är slumpmässigt sampel från normaldistributionen med medelvärdet noll och
+standardavvikelsen 1.0, S är underliggande tillgångens värde. Om T och σ är konstanta
+kan ∆t ändras till T och S(t) till S(0) för att öka beräkningshastigheten i den föregående
+ekvationen har ∆t ändrats till T och S(t) till S(0) = S.
+Enligt Leclercq (2020) och Glasserman (2004:4) får man väntevärdet i Monte Carlo
+metoden ur:
+
+[7]
+
+Leclercq
+
+(2020)
+
+och
+
+Glasserman
+
+(2004:2)
+
+förklarar
+
+om
+
+simuleringen
+
+och
+
+estimeringstekniken (vilket baserar på stor mängd slumpmässiga variabler) att man kan
+betrakta den som funktionen:
+
+[8]
+
+Vidare nämner Leclercq (2020) och Glasserman (2004:2) att medelvärdet fås enligt:
+
+39
+
+[9]
+
+där Ui ären likformig slumpmässig variabel U~(0,1).
+Vidare enligt Leclercq (2020) och Häggström (2004:237) samt Glasserman (2004:3)
+utifrån de (starka) stora talens lag, sannolikhet 1 gäller när medelvärdet så småningom
+(när antalet variabler ökar) ”svänger in mot väntevärdet µ”:
+
+[10]
+
+Dessutom nämner Leclercq (2020) att variansen fås ur:
+
+[11]
+
+Enligt Djupsjöbacka Angela (2020: Personlig kommunikation) är principen i
+variansreduktionen att betinga X på Y:
+
+[12]
+
+Medan:
+
+[13]
+
+Enligt Ross (2013:162–163) och Glasserman (2004:186) fås variansminimerande
+kontrollparametern c* ur:
+
+40
+
+[14]
+
+där X och Y är enligt Boyle et al. (1997:1274–1276) diskonterade optionsavkastningar för
+en enstaka simulationsstig av den underliggande tillgången.
+Enligt Leclercq (2020) tillämpas kontrollvariabeln enligt följande:
+
+[15]
+
+där c* är kontrollparametern.
+
+6.1.3 Kvasi-slumptal
+I kalkylerna har använts källkod skriven av skriven av Leclercq (2020). För kvasislumptal MATLAB® källkod se vidare bilaga 5.
+Enligt Hull (2018:500) är lågdiskrepanssekvenser även kallade kvasi-slumptal sekvenser
+av representativa sampel från en sannolikhets distribution. I praktiken kan man generera
+kvasi-slump Haltonsekvenser med en slumptalsgenerator, t.ex. där X är n × d, var d är
+dimensionen av punkternas mängd (MATLAB®: Documention; net).
+
+6.1.4 Binomialmodellen
+Den generella approachen för konstruerande av binomialträd i exempelfallet baserar på
+CRR modellen som Cox, Ross och Rubinstein formaliserade år 1979 (Cox et al. 1979).
+I CRR kalkyler har använts källkod (algoritm) skriven av Goddard Phil (2020: Personlig
+kommunikation, e-post). Goddard Phil (2020: Personlig kommunikation, e-post) har
+accepterat att hans kod tillämpas och publiceras i denna pro gradu-avhandling, se vidare
+för CRR MATLAB® källkod i bilaga 6. CRR MATLAB® algoritmen producerar ett
+effektiverat CRR resultat. I CRR felprocentfiguren har tillämpats källkod skriven av Chen
+(2020). För CRR felprocentsfiguren (variation kring BSM ROV projekt A) se Figur 4.
+
+41
+
+Enligt Hull (2018:296) innefattar en användbar och populär teknik för prissättning av
+optioner för att skapa binomialträd. Under varje tidssteg rör sig priset antingen uppåt (u)
+eller neråt (n) (Hull 2018:304). Enligt Hull (2018:299) kan följande ekvation tillämpas
+när rörelsen gäller binomialträd med ett steg:
+
+[16]
+
+där Optionsvärdet är optionens nuvärde i trädet, fu är optionen uppåt, fn är optionen neråt,
+r är riskfria räntan, T är livslängden av optionen (tiden).
+Enligt Hull (2018:304) man kan tillämpa en generaliserad ekvation för träd med flera
+tidssteg. Den generaliserade ekvationen ser ut enligt följande (Hull 2018:304):
+
+[17]
+
+där Optionsvärde är optionens nuvärde i trädet, fu är optionen uppåt, fn är optionen neråt,
+r är riskfria räntan, ∆t är tidsstegen, u är optionen uppåt och n är optionen neråt.
+Enligt Hull (2018:310) när tidsstegens längd i en binomialträd är ∆t borde det följande
+motsvara volatiliteten:
+[18]
+och
+[19]
+
+där u är optionen uppåt, n är optionen neråt, ∆t är antalet tidssteg och σ är osäkerheten av
+framtida rörelser (volatiliteten) mätt som standardavvikelsen av tillväxtraten; projektets
+risk.
+42
+
+Enligt Glasserman (2004:4) fås optionens slutliga värde i noden ur:
+
+[20]
+
+6.1.5 Suddig logik
+I SÅV (ROV) kalkylerna har använts källkod skriven av Heikkilä Markku (2020:
+Personlig kommunikation, e-post). Heikkilä Markku (2020: Personlig kommunikation, epost) har accepterat att hans kod tillämpas och publiceras i denna pro-gradu avhandling,
+se vidare för SÅV MATLAB® källkod i bilaga 1.
+Zadeh (1965) introducerade suddig logik (fuzzy logic) år 1965 med sitt banbrytande
+arbete och har blivit ett stort forskningsområde. Enligt Tarrazo (1997; i Collan et al. 2012)
+fördunklar metoder som baserar sig på suddig logik den traditionella linjen mellan
+kvalitativa och kvantitativa analys, för att modelleringen kan reflektera mera på typen av
+tillgänglig information snarare än forskarens preferens. Vidare enligt Collan et al. (2012)
+kan suddig logik också tillämpas även vid realoptionsvärdering.
+I Figur 1 presenteras en triangulär suddig nummer, bör noteras att Enligt Collan (2012:20)
+är α = distansen mellan a och (a - α) och att β = distansen mellan a - (a + β). Vidare i
+Figur 1 presenteras värden mellan (a - α) och 0 som 0 (Collan et al. 2012).
+
+Figur 1 Triangulär suddig nummer varur SROV kan kalkyleras (Collan et al. 2012).
+
+Enligt Collan (2012:32) suddiga återbetalningsvärdet (realoptionsvärdet) fås ur:
+
+43
+
+[21]
+
+Enligt Collan (2012:33) om A = (a, α, β) och den är triangulär, och hela distributionen är
+ovanför noll; 0 < (a – α):
+
+[22]
+
+Vidare enligt Collan (2012:34) om distributionen är delvis ovanför noll så att noll är
+mellan NNV minimum och bästa NNV; (a – α) < 0 < a:
+
+[23]
+
+Vidare enligt Collan (2012:34) om distributionen är delvis ovanför noll så att noll är lika
+med bästa NNV eller mellan bästa NNV och maximala NNV; (a < 0 < a + β):
+
+[24]
+
+Vidare enligt Collan (2012:35) när hela distributionen är under noll:
+
+[25]
+
+6.1.6 Lagen av ett pris
+Enligt Heikkilä Markku (2020: Personlig kommunikation, e-post) ”realoptionsteori [sic!]
+[...] [grundar] sig på riskneutralitet, vilket kräver att [...] riskjusterade kassaflöden [...]
+44
+
+diskonteras med en riskfri diskonteringsränta”. Vidare enligt Heikkilä Markku (2020:
+Personlig kommunikation, e-post) ”i den effektiva marknaden [kan man] endast ha ett
+pris för varje tillgång”. Vidare enligt Heikkilä Markku (2020: Personlig kommunikation,
+e-post) således ”värdet av riskfria [nominella] kassaflöden [...] med [...] riskjusterad ränta
+[...] måste vara lika som [...] riskjusterade kassaflöden med riskfira [sic!] ränta”. Man bör
+notera skillnaden i betydelsen av riskjusterad ränta och riskjusterade kassaflöden. Till
+riskjusterade räntan inkluderas risker medan när riskjusterade räntan används som
+diskonteringsränta minskar de riskfria nominella kassaflödenas värde vilka blir
+riskjusterade efter att de har diskonterats. Enligt Heikkilä Markku (2020: Personlig
+kommunikation, e-post) då är ”värdet [V] av tillgången”;
+
+[26]
+
+där K = kassaflöde, r = riskfri ränta och rr = riskjusterad ränta.
+Man kan justera kassaflöden enligt t.ex.:
+
+[27]
+
+där K = kassaflöde, r = riskfri ränta, rr = riskjusterad ränta och t = perioden. Vidare man
+kan tillämpa det riskjusterade kassaflödet i realoptionskalkylerna.
+
+6.1.7 Voltmängdjustering för att nå besparingar
+För att förstå energikonsumtionen av en centralprocessor är det viktigt att förstå hur
+kretsarna konsumerar energi. Växelspänning omvandlas till likspänning av strömkällan.
+Två plattor i kondensatorn belastas med likspänning (-q på ena sidan +q på andra sidan),
+på grund av av det uppstår kapacitans mellan dem sedan lagras kapacitansen i
+kondensatorerna (Serway & Jewett 2014:777–798; Laux 1985:472–474). Den lagrade
+energin i kondensatorn möjliggör transistorernas brytningsfrekvens (Weste & Harris
+2011:42–43). Desto snabbare brytningsfrekvens transistorn har desto snabbare frekvens
+kan logiska grindar belastas med (Weste & Harris 2011:42–43). Enligt Patterson och
+45
+
+Hennessy (2012:39) beror den dynamiska effekten på kapacitansbelastningen av varje
+transistor och den använda voltmängden samt brytningsfrekvensen. Enligt Patterson och
+Hennessy (2007:18) är den krävda effekten per transistor proportionell mot produkten av
+kapacitansbelastning, voltmängd i kvadrat och brytningsfrekvens. Det menar att
+procentuell justering i voltmängden resulterar i samma procentuella ändring i
+brytningsfrekvensen (Patterson & Hennessy 2012:40). Därmed enligt Patterson och
+Hennessy (2012:40) kan förändringen av den dynamiska effekten kalkyleras enligt:
+
+[28]
+
+där Pdyn.
+
+kvot
+
+är den sökta dynamiska effektens förhållande efter att volt och -
+
+kapacitansmängden har justerats, C är kapacitansbelastningen, U är voltmängden, f är
+brytningsfrekvensen och p är justeringen i procent.
+Det bör noteras att till totala energikonsumtionen inkluderas också energikonsumtion som
+beror på statiskt effektläckage (Patterson & Hennessy 2007:19). Patterson och Hennessy
+(2007:19) nämner att ett mål för framtiden är att statisk effekt ansvarar för ungefär 25 %
+av processorernas totala effekt.
+
+6.2 Data och förklaringar till kalkylerna
+Nedan presenteras förklaringar till kalkylen som inte förklaras i resultaten eller i
+diskussionsdelen. I förklaringarna framkommer på vilka grunder inputdata till kalkylerna
+har skapats.
+
+6.2.1 Grundinvesteringen
+Olson (2004:23) uppskattar att det är svårt att implementera ett affärssystem med under
+5 miljoner $ investerat kapital för mindre affärssystemprojekt medan större projekt har
+kostat över 100 miljoner $ investerat kapital. Mabert, Soni och Venkataramanan
+(2001:69) nämner att implementering av ett affärssystem kan ta flera år att genomföra
+och kosta tiotals miljoner $ i ett företag med moderat storlek och uppåt från 300–500
+miljoner $ för stora multinationella företag. Enligt Mabert, Soni och Venkataramanan,
+(2000:52)
+
+kan
+
+implementeringen
+
+resultera
+46
+
+i
+
+höga
+
+licens-,
+
+konsult-
+
+och
+
+utbildningskostnader, vilket höjer de totala kostnaderna. I kalkylerna har beaktats
+undersökningen som Olson (2004:23) och Mabert et al. (2000:52, 2001:69) har gjort och
+därför har för exemplets skull grundinvesteringen med höjda kostnader antagits som ≈
+10,00 % av en antagen omsättning på 1000 miljoner €, alltså en grundinvestering på 100
+miljoner € före realoptionerna och diskontering i båda projekten.
+Det bör noteras att i undersökningen gjord av Olhager och Selledin (2003) är de
+undersökta företagen mindre i storlek (omsättning och antal anställda) jämfört med
+undersökningen som har gjorts av Mabert et al. (2003). Därför kan grundinvesteringarna
+vara lägre i undersökningen gjord av Olhager och Selledin (2003) jämfört med
+undersökningen gjord av Mabert et al. (2003).
+
+6.2.2 Kassaflöden och scenarier
+I båda projektens kassaflöden används faktorerna 0,8, 1,0, 1,25 respektive det sämsta, det
+normala och det bästa scenariot. Det har gjorts antaganden att i projekt A:s och B:s
+kassaflöden inkluderas ett positivt restvärde på 5 miljoner € i scenarierna (normala och
+bästa) med faktorerna 1 och 1,25 i de två sista perioderna och endast i den sista perioden
+i det sämsta scenariot med faktorn 0,8. Kalkylerna uppfyller lagen om ett pris (Heikkilä
+Markku 2020: Personlig kommunikation, e-post). I kalkylerna har tillämpats
+Ekvationerna [26-27] för att uppfylla lagen om ett pris. När diskontering har gjorts har
+beaktats en väntetid (irreversibel option att skjuta upp) på tre kvartal (t = +0,75 år).
+Det bör noteras att kassaflödena i projekt A och B inte har samma vikt, till projekt A
+inkluderas större kostnader. Detta för att kunna exemplifiera hur i det normala scenariot
+projekt A:s realoptionsvärde kan överskrida projekt A:s negativa och projekt B:s positiva
+NNV. Angående kassaflödena bör nämnas att det antas att kostnaderna stiger i gen efter
+halva ekonomiska livslängden när den ekonomiska livslängden närmar sitt slut. Detta
+enligt antagandet att underhåll blir dyrare och uppdateringar borde göras. Olhager och
+Selledin (2003:365) har gjort en undersökning av implementering av affärssystem i
+Sveriges produktionsbolag. Olhager och Selledin (2003:369) konstaterar att vissa stora
+företag inte fastslog den totala implementeringskostnaden. Implementeringsbudgeten
+överskrids ofta (se t.ex. Tabell 6 i Mabert, Soni & Venkataramanan 2003:309). Därför
+kan de antagna kostnaderna intäkterna realistiskt vara högre än indikerat. I
+undersökningen som Olhager och Selledin (2003:373) har gjort nämns att affärssystem
+47
+
+inte har minskat på informationsteknologikostnader men har ökat på integrering och
+tillgänglighet av information samt ökat på kvaliteten på information inom företaget.
+Kostnaderna och intäkterna kan läsas ur Tabell 2 och 3.
+Dessutom har Olhager och Selledin (2003:369) i sin undersökning kommit fram till att
+affärssystemets kostnadskomponenter delas så att mjukvaran ansvarar för 24,2 %,
+hårdvaran ansvarar för 18,5 %, konsultering ansvarar för 30,1 %, skolning ansvarar för
+13,8 %, arbetskraft ansvarar för 12 % och diverse kostnader ansvarar för 1,4 % vilka
+presenteras (avrundat) i Tabell 4.
+Det bör noteras att i undersökningen gjord av Olhager och Selledin (2003) är de
+undersökta företagen mindre i storlek (omsättning och antal anställda) jämfört med
+undersökningen som har gjorts av Mabert et al. (2003). Därför kan kostnaderna vara lägre
+i undersökningen gjord av Olhager och Selledin (2003) jämfört med undersökningen
+gjord av Mabert et al. (2003).
+
+6.2.3 Implementeringstid och ekonomisk livslängd
+På basis av en undersökning gjord av Olhager och Selledin (2003:369) tog det under 6
+månader för 13,0 % av installationerna, 7–12 månader för 24,7 % av installationerna, 13–
+18 månader för 36,9 % av installationerna, 19–24 månader för 11,6 % av installationerna,
+25–36 månader för 8,0 % av installationerna, 37–48 månader för 4,4 % av installationerna
+och mer än 48 månader för resterande 1,4 % av installationerna.
+Vidare, på basis av en undersökning gjord av Olhager och Selldin (2003:368) är de
+estimerade affärssystemens livslängd mindre än tre år för 3,7 %, 3–5 år för 21,5 %, 5–7
+år för 27,5 %, 7–10 år för 22,8 % och mer än 10 år för 24,8 %.
+På basis av undersökningen gjord av Olhager och Selldin (2003:369) har i kalkylen tagits
+i beaktande att implementeringstiden är en period på två år (t = 0,75–2,75). Vidare på
+basis av undersökningen gjord av Olhager och Selldin (2003:368) har i kalkylen antagits
+att affärssystemets ekonomiska max. livslängd är 10 år (t = 10).
+
+6.2.4 Realoptionerna
+Det har blivit billigare att producera teknik och tekniken har utvecklats, vilket har medfört
+en ökning i processeffektivitet och en möjlighet att köpa mera processeffektiv teknik eller
+48
+
+äldre teknik billigare. Gordon Moore (1965) gjorde en uppskattning där han kom fram till
+att transistorkvantiteten som kan installeras på en krets fördubblas på 24 månader (Moore
+1965). På grund av den föregående uppskattningen kan antas att då det har blivit möjligt
+att producera mera kompakta komponenter sjunker priset på denna teknik snabbare än
+om kompaktheten skulle vara oförändrad. Om man gör ett ceteris paribus-antagande, där
+man antar att allt annat förblir lika, och att teknik föråldras när en nyare teknik träder in
+på marknaden, sänker det tillbörjan priserna på äldre teknik. Patterson och Hennessy
+(2007:25) nämner att då datorerna har kommersialiserats har marginalen minskat mellan
+priset på en produkt och produktionskostnaden av en produkt. Patterson och Hennessy
+(2007:19) nämner också att ett stort ämne inom datorbranschen har varit förbättringen av
+teknologin för att nå kostnadssänkningar och öka prestationen. Patterson och Hennessy
+(2007:19) nämner vidare att textböcker ofta ignorerar kostnadsprestationen för att
+kostnaderna ändras. Vidare förklarar Patterson och Hennessy (2007:19) att kostnaden av
+tillverkade datorkomponenter minskar med tiden, även utan stora utvecklingar i
+basimplementeringsteknologin.
+Ett antagande som gjorts i kalkylerna är att nya teknikens anskaffningspris sjunker med
+5 % inom tredje kvartalen vilket ger en möjlighet till en irreversibel option att skjuta upp.
+Det har gjorts ett antagande utifrån forskningsresultaten som Dixit och Pindyck (2000; i
+Li et al. 2007:36) har kommit fram till: riktiga investeringar är mera komplexa t.ex. i
+implementeringsfasen kan användas optionen att avyttra eller tillväxtoptionen och att
+skjuta upp implementeringen ofta medför kostnader. Antagandet som har gjorts är att
+grundinvesteringen i projekt A inkluderar kostnaden av att skjuta upp som uppgår till 1,5
+miljoner € efter att informationen om att teknikprisernas sänkning på 5 % har beaktats.
+1,5 miljoner € kostnader adderat till projekt A efter teknikprisernas sänkning: (100
+miljoner € / 1,05) + 1,5 miljoner € för underhållskostnader av gamla systemet under tre
+kvartals väntetid (optionen att skjuta upp), tills t = 0,75 vilket sänker projekt A:s
+grundinvestering före diskontering till 96,74 och efter diskontering (med total ränta på 17
+%) till ungefär 85,99 miljoner €, medan projekt B:s grundinvestering utan realoptioner
+uppgår till 100,00 miljoner €.
+Som exempel på en skuggoption i kalkylerna är den möjliga sänkningen av kapacitansen
+(t.ex. på grund av inträde av ny teknologi som möjliggör det) och voltmängden vilket
+sänker processorernas brytfrekvens, som kan leda till marginell besparing och en
+realoption när skuggoptionen realiseras. Genom att sänka centralprocessorns dynamiska
+49
+
+effekt med 15 % enligt Ekvation [28]: (0,854)U ≈ 0,52 %, kan sänkta
+elenergikostnadssänkningen
+
+estimeras.
+
+Justeringen
+
+minskar
+
+proportionellt
+
+klockfrekvensen (t.ex. 0,85 × klockfrekvensen). Möjliga elenergikostnadssänkningen
+genererar ökat rörelsekapital och kapital till investeringar. Ett antagande har gjorts där
+processorernas voltmängd antas vara 1 volt för dynamiska effekten. Bör noteras att till
+totala effektkonsumtionen bildas av dynamisk och statisk effekt men affärssystemet antas
+vara i konstant användning. Effektsänkningen har räknats enbart utifrån dynamiska
+effekten. I kalkylen estimeras en total effektsänkning på (1 - 0,52) ≈ -47,80 %. Det
+tidigare nämnda kassaflödet som fås ur effektsänkningen är en realiserad skuggoption.
+Elpriset för kWh har estimerats till 0,055 € för kWh, vilket medför en total elkostnad på
+≈ 1 257,60 × 365 ≈ 605 909,39 tusen € i året för ≈ 9674 processorer (5 % av projekt A:s
+grundinvestering: 96,74 × 0,05 ≈ 4,83 miljoner € med en styckkostnad på 500 €) som
+konsumerar ca 130 Wh, alltså ≈ 30 182,29 kWh i dygnet, en total besparing på ≈ 207
+810,24 tusen € i året med diskontering börjande från t = 1,75. I bästa fallet sänks inte
+dynamiska effekten medan i normala fallet sänks dynamiska effekten ända tills t = 5,75
+och i sämsta fall sänks effekten för hela ekonomiska livstiden. Justering av kapacitans
+och voltmängd kan leda till en annan möjlig skuggoption, nämligen möjlig
+värmesänkning som minskar ventilationsbehovet. Ventilationsbehovet behandlas inte i
+denna avhandling.
+
+6.2.5 Räntorna och avkastningskraven
+Enligt en undersökning gjord av Olhager och Selledin (2003:368) har 38 % av företagen
+förväntat en avkastning på 5–15 % medan 16,5 % av företagen förväntat en avkastning
+på < 5 %.
+På basis av undersökningen gjord av Olhager och Selledin (2003:368) har gjorts ett
+moderat antagande att affärssystemet skapar en ny potentiell produktionsnivå och den
+borde därför inhämta årliga positiva kassaflöden på 3,50 % av omsättningen på 1000
+miljoner €, huvudsakligen på grund av besparingar samt processeffektiveringar. I
+kalkylerna har beaktats en riskprocent på = 14 % (som inkluderar avkastningskravet = 14
+% - 10,50 % = 3,50 %) och riskfri ränta på = 3 %, en total riskjusterad ränta på = 17 %.
+För att kunna jämföra BSM -modellens och CCR -binomialmodellens resultat krävs enligt
+Hull (2018:331) och Heikkilä Markku (2020: Personlig kommunikation, e-post) att riskfri
+
+50
+
+ränta används i en riskneutral värld. Därför har också i SÅM använts riskfria räntan 3 %
+då riskjusterade kassaflöden har diskonterats.
+Det bör noteras att i undersökningen gjord av Olhager och Selledin (2003) är de
+undersökta företagen mindre i storlek (omsättning och antal anställda) jämfört med
+undersökningen som Mabert et al. (2003) har gjort. Därför kan avkastningarna vara större
+i undersökningen gjord av Mabert et al. (2003) medan avkastningarna kan vara större i
+förhållande till omsättningarna i undersökningen gjord av Olhager och Selledin (2003).
+
+6.3 Exempelfallets resultat
+Först presenteras kassaflödena, nettonuvärden och efter det presenteras BSM kalkylernas
+resultat (inkluderat BSM modellen och MC metoden) varefter presenteras
+binomialmodellens resultat och till sist presenteras suddiga återbetalningsmetodens
+resultat. Dessutom visualiseras den framkommande flexibiliteten. Kalkylernas valuta
+presenteras som miljoner €.
+
+6.3.1 Kassaflöden
+Under båda projekten antas företagets omsättning vara 1000 miljoner € i året.
+Grundinvesteringen i båda projekten före realoptionerna är 100 miljoner €. Den
+realiserade skuggoptionen (som blir en realoption) att sänka centralprocessorns
+dynamiska effekt med 15 % till 85 % av det ursprungliga kalkyleras enligt Ekvation [28].
+Den realiserade skuggoptionen har tagits i beaktande i projekt A:s kassaflöden enligt
+35,21 - 35,00 ≈ totalt besparing på 207 810,24 tusen € per period (t = 1) från och med t
+= 1,75 i normala fallet tills t = 5,75 och i sämsta fallet tills t = 10,75 och i bästa fallet
+inget alls. I projekt A beaktas optionen att skjuta upp i NNV kalkylerna (se underrubrik
+6.3.2 nettonuvärde). I projekt B har inte inkluderats realoptioner. För varsitt projekt A
+och B har gjorts tre scenarier: det sämsta, det normala och det bästa scenariot. Restvärdet
+av affärssystemet på 5 miljoner € har inkluderats till faktorerna 1 och 1,25 i två sista
+perioderna medan i faktorn 0,8 inkluderas restvärde endast i sista perioden. Kostnaden på
+optionen att skjuta upp i nio månader har inkluderats till grundinvesteringen av projekt
+A: kostnaden uppgår till 1,5 miljoner €.
+
+51
+
+Kassaflödenas skillnader i det sämsta, det normala och det bästa scenariot bör noteras i
+vartdera projektet, de kan läsas ur Tabell 2 och 3. I Tabell 2 och 3 presenteras
+kassaflödena: i Tabell 2 presenteras projekt A:s kassaflöden med realoptionerna och i
+Tabell 3 presenteras projekt B:s kassaflöden utan realoptioner. Dessutom kan ur Tabell 2
+läsas internräntan av nominella kassaflöden och restvärden. Ur Tabell 4 kan läsas
+kostnadsfördelningen enligt nominell grundinvestering.
+
+Tabell 2 Kassaflöden projekt A med en realoption inkluderad.
+rr
+
+17,00 %
+0,75
+
+Faktor
+1,25
+1
+0,8
+
+Bästa
+Normala
+Sämsta
+df
+Kostn. Besp.
+Kumul. Besp.
+IR
+-
+
+0,8889
+
+85,99
+
+rf
+
+3,0 %
+
+r
+
+14,00 %
+
+1,75
+
+2,75
+
+3,75
+
+4,75
+
+5,75
+
+6,75
+
+7,75
+
+8,75
+
+9,75
+
+10,75
+
+43,75
+35,21
+28,17
+
+43,75
+35,21
+28,17
+
+43,75
+35,21
+28,17
+
+43,75
+35,21
+28,17
+
+43,75
+35,21
+28,17
+
+43,75
+35,00
+28,17
+
+43,75
+35,00
+28,17
+
+43,75
+35,00
+28,17
+
+48,75
+40,00
+28,17
+
+48,75
+40,00
+33,17
+
+- 10,00
+- 20,00
+- 40,00
+
+- 10,00
+- 20,00
+- 40,00
+
+- 5,00
+- 10,00
+- 20,00
+
+5,00
+10,00
+20,00
+
+- 5,00
+- 10,00
+- 15,00
+
+- 5,00
+- 10,00
+- 20,00
+
+- 10,00
+- 15,00
+- 20,00
+
+- 10,00
+- 15,00
+- 30,00
+
+- 15,00
+- 20,00
+- 35,00
+
+- 15,00
+- 20,00
+- 35,00
+
+33,75
+15,21
+- 11,83
+
+33,75
+15,21
+- 11,83
+
+38,75
+25,21
+8,17
+
+38,75
+25,21
+8,17
+
+38,75
+25,21
+13,17
+
+38,75
+25,00
+8,17
+
+33,75
+20,00
+8,17
+
+33,75
+20,00
+- 1,83
+
+33,75
+20,00
+- 6,83
+
+33,75
+20,00
+- 1,83
+
+-
+
+0,7598 0,6494 0,5550
+0,16
+0,13
+0,12
+0,16
+0,29
+0,41
+15,21
+15,21
+25,21
+
+0,4744 0,4054 0,3465 0,2962
+0,10
+0,08
+0,51
+0,59
+25,21
+25,21
+25,00
+20,00
+
+0,2531
+20,00
+
+0,2164
+20,00
+
+0,1849
+-
+
+0,75
+
+t+0,75
+
+- 90,00
+- 150,00
+- 275,00
+
+0,59
+
+20,00
+
+19,94 %
+
+0,00
+
+(K.B. t)
+IR m.
+
+Tabell 3 Kassaflöden projekt B utan realoptioner.
+
+rr
+
+17,00 %
+0
+
+Faktor
+1,25
+1
+0,8
+
+Bästa
+Normala
+Sämsta
+df
+Kostn. Besp.
+Kumul. Besp.
+IR
+-
+
+1,0000
+
+100,00
+
+rf
+1,00
+
+3,0 %
+
+r
+
+14,00 %
+
+2,00
+
+3,00
+
+4,00
+
+5,00
+
+6,00
+
+7,00
+
+8,00
+
+9,00
+
+10,00
+
+43,75
+35,00
+28,00
+
+43,75
+35,00
+28,00
+
+43,75
+35,00
+28,00
+
+43,75
+35,00
+28,00
+
+43,75
+35,00
+28,00
+
+43,75
+35,00
+28,00
+
+43,75
+35,00
+28,00
+
+43,75
+35,00
+28,00
+
+48,75
+40,00
+28,00
+
+48,75
+40,00
+33,00
+
+- 10,00
+- 15,00
+- 40,00
+
+- 10,00
+- 15,00
+- 40,00
+
+- 5,00
+- 10,00
+- 20,00
+
+5,00
+10,00
+20,00
+
+- 5,00
+- 10,00
+- 15,00
+
+- 5,00
+- 10,00
+- 25,00
+
+- 10,00
+- 10,00
+- 30,00
+
+- 20,00
+- 20,00
+- 35,00
+
+- 20,00
+- 25,00
+- 40,00
+
+- 20,00
+- 25,00
+- 45,00
+
+33,75
+20,00
+- 12,00
+
+33,75
+20,00
+- 12,00
+
+38,75
+25,00
+8,00
+
+38,75
+25,00
+8,00
+
+38,75
+25,00
+13,00
+
+38,75
+25,00
+3,00
+
+33,75
+25,00
+- 2,00
+
+23,75
+15,00
+- 7,00
+
+28,75
+15,00
+- 12,00
+
+28,75
+15,00
+- 12,00
+
+0,8547 0,7305 0,6244
+20,00
+20,00
+25,00
+
+-
+
+0,5337 0,4561 0,3898 0,3332
+25,00
+25,00
+25,00
+25,00
+
+52
+
+0,2848
+0,2434
+15,00
+15,00
+
+0,2080
+15,00
+
+t+0
+
+- 110,00
+- 150,00
+- 310,00
+
+0,00
+17,33 %
+
+(K.B. t)
+IR m.
+
+Tabell 4 Avrundad kostnadsfördelning enligt projektet A och B före diskontering, i miljoner € (Olhager &
+Selldin 2003:369).
+
+100 %
+
+Grundinvestering
+
+Inv. alt A
+96,74
+
+Inv. alt B
+100,00
+
+30 %
+
+Konsultering
+
+29,02
+
+30
+
+24 %
+
+Mjukvara
+
+23,22
+
+24
+
+19 %
+
+Maskinvara
+
+18,38
+
+19
+
+14 %
+
+Skolning
+
+13,54
+
+14
+
+12 %
+
+Arbetskraft
+
+11,61
+
+12
+
+1%
+
+Diverse
+
+0,97
+
+1
+
+6.3.2 Nettonuvärde
+Nettonuvärdet presenteras också när SÅM resultaten presenteras men för att NNV
+används i BSM modellen är det skäl att visa NNV resultaten före BSM resultaten
+presenteras.
+NNV har kalkylerats genom att tillämpa Ekvationerna [1, 26–27]. I kalkylen används i
+båda projekten totalräntan 17 % till vilket inkluderas systemets produktivitetsökningskrav
+(som blir avkastningskrav). För hur kassaflödena har ställts upp se underrubrik 6.3.1
+kassaflöden. NNV för projekt A i det normala scenariot är ≈ -0,72 miljoner € och NNV
+för projekt B i det normala scenariot är ≈ 1,18 miljoner €, en positiv skillnad på ≈ 0,46
+miljoner € för projekt B. Vilket tyder på att enbart baserande på NNV kalkylen borde
+projekt B väljas. I NNV kalkylen används en total riskjusterad ränta på 17 % när
+nominella triangulära kassaflöden diskonteras och riskfria räntan på 3 % när riskjusterade
+triangulära kassaflöden diskonteras. NNV kalkylerna uppfyller lagen om ett pris.
+För projekt A:s NNV och restvärden och se Tabell 5. För projekt B:s NNV och restvärden
+se Tabell 6. Av båda tabellen kan läsas det sämsta, det normala och det bästa scenariot.
+
+53
+
+Tabell 5 NNV projekt A.
+Input kassaflöden inv. Alt. A utan realoptioner
+år
+100,0
+20,00
+
+20,00
+
+25,00
+
+25,00
+
+25,00
+
+25,00
+
+25,00
+
+15,00
+
+15,00
+
+15,00
+
+Diskonterade kassaflöden inv. Alt. A utan realoptioner
+t+75
+0,75
+1,75
+2,75
+df
+0,889
+0,760
+0,649
+
+3,75
+0,555
+
+4,75
+0,474
+
+5,75
+0,405
+
+6,75
+0,347
+
+7,75
+0,296
+
+8,75
+0,253
+
+9,75
+0,216
+
+10,75
+0,185
+
+13,88
+
+11,86
+
+10,14
+
+8,66
+
+7,40
+
+3,80
+
+3,25
+
+2,77
+
+1,05
+
+Input riskfria nominella triangulära kassaflöden inv. alt. A
+Bästa
+år
+96,74
+33,75
+33,75
+Normala
+år
+96,74
+15,21
+15,21
+Sämsta
+år
+96,74
+- 11,83
+- 11,83
+
+38,75
+25,21
+8,17
+
+38,75
+25,21
+8,17
+
+38,75
+25,21
+13,17
+
+38,75
+25,00
+8,17
+
+33,75
+20,00
+8,17
+
+33,75
+20,00
+1,83
+
+260,76
+114,30
+- 85,08
+
+Diskonterade triangulära kassaflöden inv. alt. A
+t+75
+0,75
+1,75
+2,75
+df
+0,889
+0,760
+0,649
+
+3,75
+0,555
+
+4,75
+0,474
+
+5,75
+0,405
+
+6,75
+0,347
+
+7,75
+0,296
+
+8,75
+0,253
+
+9,75
+0,216
+
+10,75
+0,185
+
+Bästa
+Normala
+Sämsta
+
+21,92
+9,88
+7,68
+
+21,51
+13,99
+4,53
+
+18,38
+11,96
+3,87
+
+15,71
+10,22
+5,34
+
+13,43
+8,66
+2,83
+
+10,00
+5,92
+2,42
+
+8,54
+5,06
+0,46
+
+7,30
+4,33
+1,48
+
+6,24
+3,70
+0,34
+
+Riskjusterade triangulära kassaflöden inv. alt. A
+Koefficient
+0,909
+0,800
+0,704
+
+0,620
+
+0,546
+
+0,481
+
+0,423
+
+0,372
+
+0,328
+
+0,289
+
+0,254
+
+Bästa
+Normala
+Sämsta
+
+24,03
+15,63
+5,06
+
+21,15
+13,76
+4,46
+
+18,62
+12,11
+6,33
+
+16,39
+10,58
+3,45
+
+12,57
+7,45
+3,04
+
+11,07
+6,56
+- 0,60
+
+9,74
+5,77
+1,97
+
+8,58
+5,08
+0,47
+
+Vt
+
+Vt
+Vt
+Vt
+
+Vt
+Vt
+Vt
+
+-
+
+-
+
+-
+
+88,89
+
+85,99
+85,99
+85,99
+
+87,92
+87,92
+87,92
+
+15,20
+
+25,64
+11,55
+- 8,99
+
+27,00
+12,17
+- 9,47
+
+12,99
+
+-
+
+-
+
+23,77
+10,71
+8,34
+
+Diskonterade riskjusterade triangulära kassaflöden inv. alt A
+df
+0,978
+0,950
+0,922
+0,895
+Bästa
+Normala
+Sämsta
+
+Vt
+Vt
+Vt
+
+Cumul. Norm
+
+-
+
+85,99
+85,99
+85,99
+
+25,64
+11,55
+- 8,99
+
+-
+
+85,99
+
+- 74,44
+
+-
+
+-
+
+33,75
+20,00
+1,83
+
+-
+
+-
+
+-
+
+33,75
+20,00
+6,83
+
+-
+
+-
+
+-
+
+0,869
+
+0,844
+
+0,819
+
+0,795
+
+0,772
+
+0,750
+
+0,728
+
+-
+
+21,92
+9,88
+7,68
+
+21,51
+13,99
+4,53
+
+18,38
+11,96
+3,87
+
+15,71
+10,22
+5,34
+
+13,43
+8,66
+2,83
+
+10,00
+5,92
+2,42
+
+-
+
+8,54
+5,06
+0,46
+
+-
+
+7,30
+4,33
+1,48
+
+-
+
+6,24
+3,70
+0,34
+
+-
+
+64,56
+
+- 50,57
+
+- 38,61
+
+- 28,39
+
+- 19,73
+
+- 13,81
+
+-
+
+8,74
+
+-
+
+4,42
+
+-
+
+0,72
+
+195,00
+
+62,68
+- 0,72
+- 85,96
+
+85,00
+11,90
+- 86,42
+
+62,68
+- 0,72
+- 85,96
+
+Tabell 6 NNV projekt B.
+Input kassaflöden inv. Alt. B utan realoptioner
+år
+100,0
+20,00
+
+20,00
+
+25,00
+
+25,00
+
+25,00
+
+25,00
+
+25,00
+
+15,00
+
+15,00
+
+15,00
+
+Diskonterade kassaflöden inv. Alt. B utan realoptioner
+t+0,0
+0
+1
+2
+df
+1,000
+0,855
+0,731
+
+3
+0,624
+
+4
+0,534
+
+5
+0,456
+
+6
+0,390
+
+7
+0,333
+
+8
+0,285
+
+9
+0,243
+
+10
+0,208
+
+15,61
+
+13,34
+
+11,40
+
+9,75
+
+8,33
+
+4,27
+
+3,65
+
+3,12
+
+1,18
+
+Input riskfria nominella triangulära kassaflöden inv. alt. B
+Bästa
+år
+100,00
+33,75
+33,75
+Normala
+år
+100,00
+20,00
+20,00
+Sämsta
+år
+100,00
+- 12,00
+- 12,00
+
+38,75
+25,00
+8,00
+
+38,75
+25,00
+8,00
+
+38,75
+25,00
+13,00
+
+38,75
+25,00
+3,00
+
+33,75
+25,00
+- 2,00
+
+23,75
+15,00
+- 7,00
+
+28,75
+15,00
+- 12,00
+
+28,75
+15,00
+- 12,00
+
+237,50
+110,00
+- 125,00
+
+Diskonterade triangulära kassaflöden inv. alt. B
+t+0,0
+0,00
+1,00
+2,00
+df
+1,000
+0,855
+0,731
+
+3,00
+0,624
+
+4,00
+0,534
+
+5,00
+0,456
+
+6,00
+0,390
+
+7,00
+0,333
+
+8,00
+0,285
+
+9,00
+0,243
+
+10,00
+0,208
+
+Bästa
+Normala
+Sämsta
+
+24,65
+14,61
+8,77
+
+24,19
+15,61
+4,99
+
+20,68
+13,34
+4,27
+
+17,67
+11,40
+5,93
+
+15,11
+9,75
+1,17
+
+11,25
+8,33
+- 0,67
+
+6,76
+4,27
+1,99
+
+7,00
+3,65
+2,92
+
+5,98
+3,12
+2,50
+
+Riskjusterade triangulära kassaflöden inv. alt. B
+Koefficient
+1,0000
+0,8803
+0,7750
+
+0,6823
+
+0,6006
+
+0,5288
+
+0,4655
+
+0,4098
+
+26,44
+17,06
+5,46
+
+23,27
+15,02
+4,81
+
+20,49
+13,22
+6,87
+
+18,04
+11,64
+1,40
+
+Diskonterade riskjusterade triangulära kassaflöden inv. alt B
+df
+1,000
+0,971
+0,943
+0,915
+
+0,888
+
+0,863
+
+0,837
+
+Bästa
+Normala
+Sämsta
+
+Vt
+
+Bästa
+Normala
+Sämsta
+
+Cumul. Norm
+
+Vt
+Vt
+Vt
+
+Vt
+Vt
+Vt
+
+Vt
+Vt
+Vt
+
+-
+
+-
+
+-
+
+100,00
+
+100,00
+100,00
+100,00
+
+100,00
+100,00
+100,00
+
+17,09
+
+28,85
+17,09
+- 10,26
+
+29,71
+17,61
+- 10,56
+
+14,61
+
+-
+
+-
+
+26,16
+15,50
+9,30
+
+-
+
+13,83
+10,24
+0,82
+
+-
+
+-
+
+0,3608
+
+-
+
+0,813
+
+8,57
+5,41
+2,53
+
+0,3176
+
+-
+
+0,789
+
+9,13
+4,76
+3,81
+
+100,00
+100,00
+100,00
+
+28,85
+17,09
+- 10,26
+
+-
+
+24,65
+14,61
+8,77
+
+24,19
+15,61
+4,99
+
+20,68
+13,34
+4,27
+
+17,67
+11,40
+5,93
+
+15,11
+9,75
+1,17
+
+-
+
+11,25
+8,33
+0,67
+
+-
+
+6,76
+4,27
+1,99
+
+-
+
+7,00
+3,65
+2,92
+
+-
+
+100,00
+
+- 82,91
+
+-
+
+68,30
+
+- 52,69
+
+- 39,35
+
+- 27,94
+
+- 18,20
+
+-
+
+9,87
+
+-
+
+5,59
+
+-
+
+1,94
+
+62,14
+1,18
+- 110,74
+
+0,2796
+
+-
+
+0,766
+
+-
+
+54
+
+-
+
+195,00
+
+8,04
+4,19
+3,36
+
+83,67
+14,65
+- 111,84
+
+0,744
+
+-
+
+5,98
+3,12
+2,50
+1,18
+
+62,14
+1,18
+- 110,74
+
+6.3.3 Black-Scholes-Merton modellen och Monte Carlo metod
+I Black, Scholes och Merton modellen och Monte Carlo metoden har tillämpats
+Ekvationerna [2-15], för vidare förklaringar gällande ekvationerna och källkod se
+underrubrikerna 6.1.2 Black-Scholes-Merton modell och Monte Carlo metod och 6.1.3
+kvasi-slumptal. Se vidare för NNV kalkylerna underrubrikerna 6.3.1 kassaflödena och
+6.3.2 nettonuvärde. För projekt B:s NNV i det bästa, det normala och det sämsta scenariot
+se Tabell 5, 6 och 12.
+I BSM kalkylen i normala scenariot används riskfria räntan på 3 % och projekt A:s
+volatilitet är = 20,00 % och projekt B:s volatilitet är = 20,00 %. Nuvärdet av projekt A:s
+kassaflöden i det normala scenariot har beräknats till ≈ 85,28 miljoner € och nuvärdet för
+projekt B:s kassaflöden i det normala scenariot har beräknats till ≈ 101,18 miljoner €.
+Grundinvesteringen för projekt A är ≈ 85,99 miljoner € och grundinvesteringen för
+projekt B är 100,00 miljoner €. Optionens väntetid för projekt A är t = 0,75 år och för
+projekt B = 0 år. Projekt A:s NNV är ≈ -0,72 miljoner € medan projekt B:s NNV är ≈
+1,18 miljoner €, en positiv skillnad på ≈ 0,46 miljoner € för projekt B vilket tyder på att
+enbart baserande på NNV kalkylen borde projekt B väljas. Realoptionsvärdet för projekt
+A i det normala scenariot är ≈ 6,46 miljoner € och för projekt B är = 0 miljoner € för att
+ingen väntetid (option att skjuta upp) har använts i projekt B. Flexibiliteten för projekt A
+i det normala scenariot fås genom att subtrahera projekt B:s NNV (projekt B t = 0) från
+projekt A:s realoptionsvärde. Projekt A:s flexibilitet i det normala scenariot är ≈ 5,29
+miljoner € och projekt B:s flexibilitet är i normala scenariot är = 0 miljoner €. Projekt A:s
+optionsvärde given till projektet i normala scenariot är ≈ 5,75 miljoner € medan projekt
+B:s optionsvärde given till projektet i normala scenariot är = 0. I det normala scenariot
+överstiger projekt A:s realoptionsvärde (≈ 6,46 miljoner €) och flexibilitet (≈ 5,29
+miljoner €) dess negativa NNV (≈ -0,72 miljoner €) och dessutom är dess
+realoptionsvärde och flexibilitet större än projekt B:s NNV (≈ 1,18 miljoner €). Om man
+i normala scenariot subtraherar projekt B:s NNV från A:s flexibilitet blir resultatet ≈ 4,11
+miljoner € och det tyder på att i det normala scenariot överskrider projekt A:s flexibilitet
+projekt B:s NNV med det föregående talet. Dessutom i normala scenariot överstiger
+optionsvärdet givet till projekt A projekt B:s NNV med ≈ 4,57 miljoner €. För att projekt
+A:s flexibilitet och optionsvärdet givet till projektet i det normala scenariot (fast den har
+en negativ NNV) överstiger projekt B:s NNV och för att projekt A:s NNV i det bästa
+55
+
+fallet överstiger projekt B:s NNV kan projekt A väljas. Om inte projekt A kan väljas
+borde projekt B väljas.
+I Figur 2 och 3 visualiseras variationen mot BSM realoptionsvärdet som kan förstås som
+flexibilitetsvariation, dessutom presenteras i figurerna projekt B:s NNV. I Tabell 7
+presenteras projekt A:s BSM modellens resultat i det bästa, det normala och det sämsta
+scenariot och i Tabell 8 presenteras projekt B:s BSM modellens resultat i det normala
+scenariot.
+
+Tabell 7 BSM modellen, projekt A:s resultat i det sämsta, det normala och det bästa scenariot.
+
+Tabell 8 BSM modellen, projekt B:s resultat i det sämsta, det normala och det värsta scenariot.
+
+56
+
+Figur 2 BSM - MC - ROV simulation med kontrollvariabel i det normala scenariot projekt A (blå)
+och projekt B (röd).
+
+Figur 3 BSM - ROV med kvasi-slumptal (Haltonsekvenser) i det normala scenariot projekt A (blå) och
+projekt B(röd).
+
+6.3.4 Binomialmodellen
+I Cox, Ross och Rubinstein binomialmodellkalkylerna har tillämpats Ekvationerna [1720], för vidare förklaringar gällande ekvationerna och källkod se underrubrik 6.1.4
+binomialmodellen. Se vidare för NNV kalkylerna underrubrikerna 6.3.1 kassaflödena och
+6.3.2 nettonuvärde. För projekt B:s NNV i det bästa, det normala och det sämsta scenariot
+se Tabell 5, 6 och 12.
+Som tidssteg i CRR kalkylen har använts n = 100, vilket medför att
+
+= (0,75 / 100),
+
+annars är andra inputen samma som användes i BSM modellens normala scenariot, se
+57
+
+vidare underrubrik 6.3.3 BSM modellen. Projekt A:s NNV är ≈ -0,72 miljoner € medan
+projekt B:s NNV är ≈ 1,18 miljoner €, en positiv skillnad på ≈ 0,46 miljoner € för projekt
+B vilket tyder på att enbart baserande på NNV kalkylen borde projekt B väljas.
+Realoptionsvärdet för projekt A i det normala scenariot är ≈ 6,47 miljoner € och för
+projekt B = 0 för att ingen väntetid (option att skjuta upp) har använts i projekt B.
+Flexibiliteten för projekt A i det normala scenariot fås genom att subtrahera NNV (projekt
+B t = 0) från projekt A:s realoptionsvärde. Projekt A:s flexibilitet i det normala scenariot
+är ≈ 5,29 miljoner € och projekt B:s flexibilitet i det normala scenariot är = 0 miljoner €.
+Projekt A:s optionsvärde given till projektet i normala scenariot är ≈ 5,75 miljoner €
+medan projekt B:s optionsvärde given till projektet i normala scenariot är = 0. I det
+normala scenariot överstiger projekt A:s realoptionsvärde (≈ 6,47 miljoner €) och
+flexibilitet (≈ 5,29 miljoner €) dess negativa NNV (≈ -0,72 miljoner €) och dess
+realoptionsvärde och flexibilitet är större än projekt B:s NNV (≈ 1,18 miljoner €). Om
+man i normala scenariot subtraherar projekt B:s NNV från A:s flexibilitet blir resultatet
+≈ 4,11 miljoner € och det tyder på att i det normala scenariot överskrider projekt A:s
+flexibilitet projekt B:s NNV med det föregående talet. Dessutom överstiger optionsvärdet
+givet till projekt A projekt B:s NNV med ≈ 4,57 miljoner €. För att projekt A:s flexibilitet
+och optionsvärdet givet till projektet i det normala scenariot (fast den har en negativ
+NNV) överstiger projekt B:s NNV och för att projekt A:s NNV i det bästa fallet överstiger
+projekt B:s NNV kan projekt A väljas. Om inte projekt A kan väljas borde projekt B
+väljas.
+I Tabell 9 presenteras projekt A:s CRR binomialmodellens resultat och i Tabell 10 projekt
+B:s CRR binomialmodellens resultat. I Figur 4 visualiseras projekt A:s CRR variation
+kring projekt A:s BSM resultat. I Tabell 11 jämförs projekt A:s och Projekt B:s resultat.
+
+58
+
+Tabell 9 Projekt A:s CRR resultat i det normala scenariot.
+Projektet med optionerna
+NNV (t=0,75)
+
+-0,71769820
+
+Optionsvärde
+Köpoption (t=0,75)
+
+6,46656621
+
+Flexibilitet
+Köpoption-NNV (t=0)
+
+5,28978251
+
+Optionsvärde given till projektet
+Köpoption+NNV (t=75)
+
+5,74886801
+
+Tabell 10 Projekt B:s CRR resultat i det normala scenariot.
+Projektet utan optionerna
+NNV (t=0)
+
+1,17678371
+
+Optionsvärde
+Köpoption (t=0)
+
+0,00000000
+
+Flexibilitet
+Köpoption-NNV (t=0)
+
+0,00000000
+
+Optionsvärde given till projektet
+Köpoption+NNV (t=0)
+
+0,00000000
+
+Figur 4 Variation kring BSM ROV projekt A i det normala scenariot.
+
+59
+
+Tabell 11 CRR skillnaden mellan projekten.
+Skillnaden mellan projekten:
+NNV
+Köpoption
+Optionsvärde given till projekten
+
+Alt.A
+-0,71769820
+6,46656621
+5,74886801
+
+NNV
+Köpoption
+Optionsvärde given till projekten
+
+Alt.B
+1,17678371
+0,00000000
+0,00000000
+
+Flexibilitet projekt alt. A-projekt alt. B NNV
+Optionsvärdet givet till projektet alt. A-projekt alt. B NNV
+
+4,11299880
+4,57208431
+
+6.3.5 Suddiga återbetalningsmetoden
+I suddiga återbetalningsvärdekalkylerna tillämpas Ekvationerna [21-25]. Se underrubrik
+6.3.1 kassaflöden för vidare för beskrivning av kassaflödena och underrubrik 6.3.2
+nettonuvärde för vidare NNV kalkyler.
+Projekt A:s NNV i det bästa scenariot är ≈ 62,68 miljoner € och i det sämsta scenariot ≈
+-85,96 miljoner €. Projekt B:s NNV i det bästa scenariot är ≈ 62,14 miljoner € och i det
+sämsta scenariot ≈ -110,74 miljoner €. Grundinvesteringen för projekt A är ≈ 85,99
+miljoner € och grundinvesteringen för projekt B är 100,00 miljoner €. Optionens väntetid
+för projekt A är t = 0,75 år och för projekt B = 0 år. Projekt A: NNV är ≈ -0,72 miljoner
+€ och projekt B:s NNV är ≈ 1,18 miljoner €, en positiv skillnad på ≈ 0,46 miljoner € för
+projekt B vilket tyder på att enbart baserande på NNV kalkylen borde projekt B väljas.
+Realoptionsvärdet för projekt A i det normala scenariot är ≈ 4,45 miljoner € och för
+projekt B = 0 för att ingen väntetid (option att skjuta upp) har använts i projekt B.
+Flexibiliteten för projekt A i det normala scenariot fås genom att subtrahera projekt B:s
+NNV (projekt B t = 0) från projekt A:s realoptionsvärde. Projekt A:s flexibilitet i det
+normala scenariot är ≈ 3,27 miljoner € och projekt B:s flexibilitet i normala scenariot är
+= 0 miljoner €. Projekt A:s optionsvärde given till projektet i normala scenariot är ≈ 3,73
+miljoner € medan projekt B:s optionsvärde given till projektet i normala scenariot är = 0.
+I det normala scenariot överstiger projekt A:s realoptionsvärde (≈ 4,45 miljoner €) och
+flexibilitet (≈ 3,27 miljoner €) dess negativa NNV (≈ -0,72 miljoner €) och dessutom är
+dess realoptionsvärde och flexibilitet större än projekt B:s NNV (≈ 1,18 miljoner €). Om
+man i normala scenariot subtraherar projekt B:s NNV från projekt A:s flexibilitet blir
+resultatet ≈ 2,10 miljoner € och det tyder på att i det normala scenariot överskrider projekt
+60
+
+A:s flexibilitet projekt B:s NNV med det föregående talet. Dessutom i normala scenariot
+överstiger optionsvärdet givet till projekt A projekt B:s NNV med ≈ 2,55 miljoner €
+medan skillnaden mellan BSM och SÅM resultaten är ≈ 2,01 miljoner € (BSM resultatet
+6,46 miljoner € - SROV resultatet 4,45 miljoner €). Skillnaden mellan projekt A:s NNV
+i bästa och sämsta scenarierna och projekt B:s NNV i bästa och sämsta scenarierna är ≈
+24,25 miljoner € vilket leder till att projekt A:s NNV är mer positivt fördelad i bästa och
+sämsta scenarierna fast projekt A:s NNV i normala scenariot (med realoptionerna
+inkluderade) är lägre än B:s NNV i normala scenariot. För att projekt A:s flexibilitet och
+optionsvärdet givet till projektet i det normala scenariot (fast den har en negativ NNV)
+överstiger projekt B:s NNV och för att projekt A:s NNV i det bästa fallet överstiger
+projekt B:s NNV kan projekt A väljas. Om inte projekt A kan väljas borde projekt B
+väljas.
+I Tabell 12 presenteras projekt A:s och B:s nominella och riskjusterade kassaflöden med
+tre scenarion varifrån NNV har kalkylerats. I Figur 5 visualiseras projekt A:s och B:s
+NNV med tre scenarion och suddiga återbetalningsvärde. I Figur 6 visualiseras projekt
+A:s och B:s återbetalningstider i det bästa, det normala och det sämsta scenariot.
+
+61
+
+Tabell 12 Diskonterade (NV och NNV) nominella och riskjusterade kassaflöden med tre scenarion.
+rr
+
+17,00 %
+
+rf
+
+3%
+
+Input kassaflöden inv. Alt. A utan realoptioner
+år
+100,0
+20,00
+
+20,00
+
+25,00
+
+25,00
+
+25,00
+
+25,00
+
+25,00
+
+15,00
+
+15,00
+
+15,00
+
+Diskonterade kassaflöden inv. Alt. A utan realoptioner
+t+75
+0,75
+1,75
+2,75
+df
+0,889
+0,760
+0,649
+
+3,75
+0,555
+
+4,75
+0,474
+
+5,75
+0,405
+
+6,75
+0,347
+
+7,75
+0,296
+
+8,75
+0,253
+
+9,75
+0,216
+
+10,75
+0,185
+
+Vt
+
+13,88
+
+11,86
+
+10,14
+
+8,66
+
+7,40
+
+3,80
+
+3,25
+
+2,77
+
+1,05
+
+Input riskfria nominella triangulära kassaflöden inv. alt. A
+Bästa
+år
+96,74
+33,75
+33,75
+Normala
+år
+96,74
+15,21
+15,21
+Sämsta
+år
+96,74
+- 11,83
+- 11,83
+
+38,75
+25,21
+8,17
+
+38,75
+25,21
+8,17
+
+38,75
+25,21
+13,17
+
+38,75
+25,00
+8,17
+
+33,75
+20,00
+8,17
+
+33,75
+20,00
+- 1,83
+
+33,75
+20,00
+- 6,83
+
+33,75
+20,00
+1,83
+
+260,76
+114,30
+- 85,08
+
+Diskonterade triangulära kassaflöden inv. alt. A
+t+75
+0,75
+1,75
+2,75
+df
+0,889
+0,760
+0,649
+
+3,75
+0,555
+
+4,75
+0,474
+
+5,75
+0,405
+
+6,75
+0,347
+
+7,75
+0,296
+
+8,75
+0,253
+
+9,75
+0,216
+
+10,75
+0,185
+
+Bästa
+Normala
+Sämsta
+
+21,92
+9,88
+7,68
+
+21,51
+13,99
+4,53
+
+18,38
+11,96
+3,87
+
+15,71
+10,22
+5,34
+
+13,43
+8,66
+2,83
+
+10,00
+5,92
+2,42
+
+8,54
+5,06
+0,46
+
+7,30
+4,33
+1,48
+
+6,24
+3,70
+0,34
+
+Riskjusterade triangulära kassaflöden inv. alt. A
+Koefficient
+0,909
+0,800
+0,704
+
+0,620
+
+0,546
+
+0,481
+
+0,423
+
+0,372
+
+0,328
+
+0,289
+
+0,254
+
+Bästa
+Normala
+Sämsta
+
+24,03
+15,63
+5,06
+
+21,15
+13,76
+4,46
+
+18,62
+12,11
+6,33
+
+16,39
+10,58
+3,45
+
+12,57
+7,45
+3,04
+
+11,07
+6,56
+- 0,60
+
+9,74
+5,77
+1,97
+
+8,58
+5,08
+0,47
+
+Diskonterade riskjusterade triangulära kassaflöden inv. alt A
+df
+0,978
+0,950
+0,922
+0,895
+
+0,869
+
+0,844
+
+0,819
+
+0,795
+
+0,772
+
+0,750
+
+0,728
+
+Bästa
+Normala
+Sämsta
+
+-
+
+7,30
+4,33
+1,48
+
+-
+
+6,24
+3,70
+0,34
+
+-
+
+4,42
+
+-
+
+0,72
+
+Vt
+Vt
+Vt
+
+Vt
+Vt
+Vt
+
+Vt
+Vt
+Vt
+
+-
+
+-
+
+-
+
+88,89
+
+85,99
+85,99
+85,99
+
+87,92
+87,92
+87,92
+
+15,20
+
+25,64
+11,55
+- 8,99
+
+27,00
+12,17
+- 9,47
+
+-
+
+10,00
+5,92
+2,42
+
+-
+
+8,54
+5,06
+0,46
+
+-
+
+64,56
+
+- 50,57
+
+- 38,61
+
+- 28,39
+
+- 19,73
+
+- 13,81
+
+-
+
+8,74
+
+Input kassaflöden inv. Alt. B utan realoptioner
+år
+100,0
+20,00
+
+20,00
+
+25,00
+
+25,00
+
+25,00
+
+25,00
+
+25,00
+
+15,00
+
+15,00
+
+15,00
+
+Diskonterade kassaflöden inv. Alt. B utan realoptioner
+t+0,0
+0
+1
+2
+df
+1,000
+0,855
+0,731
+
+3
+0,624
+
+4
+0,534
+
+5
+0,456
+
+6
+0,390
+
+7
+0,333
+
+8
+0,285
+
+9
+0,243
+
+10
+0,208
+
+15,61
+
+13,34
+
+11,40
+
+9,75
+
+8,33
+
+4,27
+
+3,65
+
+3,12
+
+1,18
+
+Input riskfria nominella triangulära kassaflöden inv. alt. B
+Bästa
+år
+100,00
+33,75
+33,75
+Normala
+år
+100,00
+20,00
+20,00
+Sämsta
+år
+100,00
+- 12,00
+- 12,00
+
+38,75
+25,00
+8,00
+
+38,75
+25,00
+8,00
+
+38,75
+25,00
+13,00
+
+38,75
+25,00
+3,00
+
+33,75
+25,00
+- 2,00
+
+23,75
+15,00
+- 7,00
+
+28,75
+15,00
+- 12,00
+
+28,75
+15,00
+- 12,00
+
+237,50
+110,00
+- 125,00
+
+Diskonterade triangulära kassaflöden inv. alt. B
+t+0,0
+0,00
+1,00
+2,00
+df
+1,000
+0,855
+0,731
+
+3,00
+0,624
+
+4,00
+0,534
+
+5,00
+0,456
+
+6,00
+0,390
+
+7,00
+0,333
+
+8,00
+0,285
+
+9,00
+0,243
+
+10,00
+0,208
+
+Bästa
+Normala
+Sämsta
+
+24,65
+14,61
+8,77
+
+24,19
+15,61
+4,99
+
+20,68
+13,34
+4,27
+
+17,67
+11,40
+5,93
+
+15,11
+9,75
+1,17
+
+11,25
+8,33
+- 0,67
+
+6,76
+4,27
+1,99
+
+7,00
+3,65
+2,92
+
+5,98
+3,12
+2,50
+
+Riskjusterade triangulära kassaflöden inv. alt. B
+Koefficient
+1,0000
+0,8803
+0,7750
+
+0,6823
+
+0,6006
+
+0,5288
+
+0,4655
+
+0,4098
+
+26,44
+17,06
+5,46
+
+23,27
+15,02
+4,81
+
+20,49
+13,22
+6,87
+
+18,04
+11,64
+1,40
+
+Diskonterade riskjusterade triangulära kassaflöden inv. alt B
+df
+1,000
+0,971
+0,943
+0,915
+
+0,888
+
+0,863
+
+0,837
+
+Bästa
+Normala
+Sämsta
+Cumul. Norm
+
+Vt
+Vt
+Vt
+
+- 74,44
+
+-
+
+85,00
+11,90
+- 86,42
+
+13,43
+8,66
+2,83
+
+Vt
+Vt
+Vt
+
+85,99
+
+-
+
+-
+
+15,71
+10,22
+5,34
+
+Bästa
+Normala
+Sämsta
+
+-
+
+-
+
+18,38
+11,96
+3,87
+
+Vt
+Vt
+Vt
+
+25,64
+11,55
+- 8,99
+
+-
+
+23,77
+10,71
+8,34
+
+-
+
+21,51
+13,99
+4,53
+
+Vt
+
+85,99
+85,99
+85,99
+
+-
+
+62,68
+- 0,72
+- 85,96
+
+21,92
+9,88
+7,68
+
+Cumul. Norm
+
+-
+
+12,99
+
+195,00
+
+-
+
+-
+
+-
+
+100,00
+
+100,00
+100,00
+100,00
+
+100,00
+100,00
+100,00
+
+17,09
+
+28,85
+17,09
+- 10,26
+
+29,71
+17,61
+- 10,56
+
+14,61
+
+-
+
+-
+
+26,16
+15,50
+9,30
+
+-
+
+13,83
+10,24
+0,82
+
+-
+
+-
+
+0,3608
+
+-
+
+0,813
+
+8,57
+5,41
+2,53
+
+0,3176
+
+-
+
+0,789
+
+9,13
+4,76
+3,81
+
+100,00
+100,00
+100,00
+
+28,85
+17,09
+- 10,26
+
+-
+
+24,65
+14,61
+8,77
+
+24,19
+15,61
+4,99
+
+20,68
+13,34
+4,27
+
+17,67
+11,40
+5,93
+
+15,11
+9,75
+1,17
+
+-
+
+11,25
+8,33
+0,67
+
+-
+
+6,76
+4,27
+1,99
+
+-
+
+7,00
+3,65
+2,92
+
+-
+
+100,00
+
+- 82,91
+
+-
+
+68,30
+
+- 52,69
+
+- 39,35
+
+- 27,94
+
+- 18,20
+
+-
+
+9,87
+
+-
+
+5,59
+
+-
+
+1,94
+
+195,00
+
+62,14
+1,18
+- 110,74
+
+0,2796
+
+-
+
+0,766
+
+-
+
+62
+
+-
+
+62,68
+- 0,72
+- 85,96
+
+8,04
+4,19
+3,36
+
+83,67
+14,65
+- 111,84
+
+0,744
+
+-
+
+5,98
+3,12
+2,50
+1,18
+
+62,14
+1,18
+- 110,74
+
+Figur 5 Triangulär SÅM var projekt A:s suddiga realoptionsvärde med tre scenarion.
+
+Figur 6 Projekt A:s och B:s återbetalningstider i det bästa, det normala och det sämsta scenariot.
+
+63
+
+6.4 Analys angående resultaten
+Jag har specificerat följande frågor angående exempelfallets resultat:
+1. Vilka datorprogram har tillämpats i värderingen?
+a. Hur ser modellernas och metodernas källkod ut?
+2. Finns det metoder eller modeller som ger ett högre värde än de traditionella
+kapitalinvesteringsteknikerna?
+3. Vilka metoder eller modeller ger liknande värden?
+a. Vilka metoder eller modeller lämpar sig för realoptionsvärdering?
+4. Hurudana skillnader blir det i resultaten när realoptioner värderas med olika typer av
+realoptionsmetoder och modeller?
+5. Hurudana framkommer flexibilitet i materialet och resultaten?
+6. Hurudana
+
+begränsningar
+
+har
+
+kapitalinvesteringstekniker
+
+och
+
+optionsprissättningsmodeller?
+Nedan försöker jag kort besvara frågorna angående empirin (exempelfallet):
+1) Vilka datorprogram har tillämpats i värderingen?
+Jag har använt datorprogrammen Microsoft® Office Excel® 2013 och MATLAB® R2017b
+när jag har konstruerat exempelfallet och genererat resultaten.
+1 a) Hur ser modellernas och metodernas källkod ut?
+För källkod som jag har tillämpat se bilagorna 1–6.
+2) Finns det metoder eller modeller som ger ett högre värde än de traditionella
+kapitalinvesteringsteknikerna?
+Om exempelfallets projekt A i det normala scenariot skulle ha betalat sig tillbaka före
+ekonomiska livslängden slutar och NNV skulle ha varit negativ skulle kassaflödena i det
+bästa scenariot ha lett till att NNV skulle ha varit överoptimistisk för att kostnaderna
+skulle ha blivit så låga. Ur exempelfallet framgår det att fast det antas att det sker
+64
+
+marknadsfluktueringar och gömda kostnader realiseras vilka medför att projektets
+kostnader ökar vilket leder till att NNV blir negativt, kan ändå BSM- och CRR modellernas samt SÅM resultat leda till ett positivt realoptionsvärde.
+3) Vilka metoder eller modeller ger liknande värden?
+NNV -kalkylen tillfredsställer lagen om ett pris. Genom att använda riskfri ränta och
+riskjusterade kassaflöden (enligt Ekvation [27]) i kalkylerna kan man jämföra
+realoptionsvärdet som fås av SÅM med BSM- och CRR- modellernas resultat. När
+tidssteg i CRR-modellen ökas minskar variationen kring BSM- modellens värde och
+närmar sig värdet som fås av BSM- modellen. Bör noteras att de traditionella
+kapitalinvesteringsteknikerna ger ett lägre värde i jämförelse med finansiella
+optionsteorins modeller för att de inte beaktar flexibilitet.
+3 a) Vilka metoder eller modeller lämpar sig för realoptionsvärdering?
+Man kan tillämpa finansiella optionsteorin och SÅM för realoptionsvärdering. SÅM har
+samma brister som kapitalinvesteringsteknikerna, men den ger resultat som går i samma
+riktning med metoderna och modellerna i finansiella optionsteorin. I CRR- och BSMmodellerna används ofta standardavvikelsen av historiska kassaflödessvängningar
+(historisk prisdata) som mått på risk (osäkerhet) istället för enbart riskjusterade
+diskonteringsräntan
+
+(riskfria
+
+ränta
+
++
+
+riskpremie)
+
+som
+
+tillämpas
+
+i
+
+kapitalinvesteringstekniker. För att realoptionsteorin beaktar flexibilitet, och för att den
+förutsätter en riskfri ränta i en riskneutral värld med riskjusterade kassaflöden, kan
+modellerna (och simulationerna som t.ex. Monte Carlo- metoden) som tillämpar dem,
+vara
+
+mer
+
+lämpliga
+
+för
+
+realoptionsvärdering
+
+än
+
+de
+
+traditionella
+
+kapitalinvesteringsteknikerna.
+4) Hurudana skillnader blir det i resultaten när realoptioner värderas med olika typer
+av realoptionsmetoder och modeller?
+Projekt A:s bästa scenario verkar vara realistiskt enligt existerande data. Ur
+exempelfallets kalkyler kan konstateras att om för jämförelsens skull i NNV kalkylerna,
+grundinvesteringarna samt räntan är samma, och om tiden (t) ökas blir projektets NNV
+65
+
+undervärderad (se Tabell 5 och 6 för diskontering utan realoptioner med samma
+kassaflöden, projekt A:s NNV ≈ 1,05 och projekt B:s NNV ≈ 1,18). Med andra ord när
+realoptionerna är inkluderade i projekt A och t = +0,75 samt räntan är samma,
+undervärderar NNV -metoden realoptionerna. Det bör dock noteras att om det sker en
+minskning i tiden (t) och minskning i kalkylräntan kan det leda till att nettonuvärdet
+övervärderar tillväxtpotentialen. Man kan också på detta sätt försöka neutralisera
+nuvärdets underskattning. Dessutom minskar negativa kassaflöden när diskontering görs,
+vilket kan leda till övervärdering. Således leder skillnaderna i värden mellan traditionella
+kapitalinvesteringstekniker
+
+och
+
+optionsprissättningsmodellerna
+
+till
+
+att
+
+optionsprissättningsmodellerna ofta ger ett högre värde än de traditionella
+kapitalinvesteringsteknikerna.
+5) Hur framkommer flexibilitet i materialet och resultaten?
+I exempelfallet BSM, CRR och SÅM överskrider realoptionsvärdena projekt A:s NNV
+och det framkommer en positiv flexibilitet som i sin tur överskrider alternativa projektets
+(projekt B:s) NNV och på så sätt tyder på att den är realistisk och strategiskt lönsammare
+än vad dess NNV visar, alltså får man reda på om realoptionen ger tilläggsvärde utöver
+NNV.
+6) Hurudana
+
+begränsningar
+
+har
+
+kapitalinvesteringstekniker
+
+och
+
+optionsprissättningsmodeller?
+Begränsningar i traditionella investeringstekniker är att de inte tar i beaktande flexibilitet,
+vilket optionsprissättningsmodellerna gör. Vidare begräsningar i nuvärdesmetoden och
+BSM- och CRR- modellerna är att de inte tar i beaktande flera scenarier. För att kunna
+ta i beaktande flera scenarier kräver det ytterligare modellering. Vidare som
+begränsningar bör noteras att då det är fråga om ekonomiska kalkyler är de beroende av
+inputen och man försöker vanligtvis förutspå framtiden med historisk data vilket gör
+kalkylen till estimat. Man borde inte underskatta erfarenhetsbaserade beslut för att de kan
+spegla verkligheten bättre än kalkylen. Som nyttor kan nämnas att det är lätt att presentera
+och visualisera flera scenarier med SÅM med triangulära suddiga kassaflödenas
+spridning i det sämsta, det normala och det bästa scenariot.
+66
+
+7 DISKUSSION
+Först förs diskussion om forskningsfrågor och efter det förs diskussion om allmänna
+frågor och till sist diskuteras forskningsförslagen.
+
+7.1 Diskussion angående forskningsfrågorna
+Jag har specificerat beskrivande forskningsfrågor angående litteraturöversikten nedan:
+1. Hurudana fördelar kan företagsledarna få om de tillämpar realoptionsmetoder och
+modeller?
+a. Vilka är de operativa fördelarna i praktiskt beslutsfattande?
+b. Vilka är de strategiska fördelarna?
+2. Hur värderar man realoptioner i praktiken?
+3. Vilka typer av datorprogram lämpar sig för realoptionsanalys?
+Nedan försöker jag utöver annat material kort besvara forskningsfrågorna:
+1) Hurudana fördelar kan företagsledarna få om de tillämpar realoptionsmetoder och
+modeller?
+Företagsledarna får fördelar av att tillämpa realoptionsmetoder och modeller för att vissa
+av dem beaktar underliggande faktorer som man vet att står i förhållande till optionsvärdet
+(Reuer & Tong 2007:149–150). Företagsledarna får reda på värdet på t.ex. strategiska
+faktorer vilka bestämmer det ekonomiska värdet på realoptionerna (Li et al. 2007:54–55).
+Företagsledarna får en möjlighet att bättre värdera alternativa strategiska handlingar i
+framtiden (Li et al. 2007:50). Sådana handlingar är t.ex. att skjuta upp investeringen,
+investera sekventiellt i tillväxtoptioner samt avyttra investeringen eller byta investering
+(Li et al. 2007:50–51).
+1 a) Vilka är de operativa fördelarna i praktiskt beslutsfattande?
+Enligt Leslie och Michaels (1997:13–14) ger realoptionsstrategin två fördelar: 1) företag
+utnyttjar flexibilitet för att göra mera informerade investeringsbeslut som baseras på ny
+67
+
+information som fås när företaget driver ekonomisk verksamhet i ett konkurrensläge på
+marknaden; 2) företag får möjligheten att använda sig av skapad flexibilitet för att
+säkerställa priser från kunderna. Se vidare underrubrik 4.13.
+1 b) Vilka är de strategiska fördelarna?
+Enligt Amram och Kulatilaka (1999:7) kan strategiska fördelar som fås av
+realoptionsanalys vara att identifiera och värdera optionerna i en strategisk investering,
+att omforma investeringen för att bättre dra nytta av optionerna och att leda proaktivt
+igenom investeringsprocessen på basis av uppkommande optioner. Som en strategisk
+fördel
+
+kan
+
+ses
+
+möjligheten
+
+att
+
+tillämpa
+
+optionsprissättningsmodeller
+
+för
+
+realoptionsanalys. Med en realoptionsanalys kan man försöka förutspå framkommande
+risker, osäkerhet, alternativa optioner och förändringar i organisationen (och dess
+processer), vilka kan leda till strategiska fördelar.
+2) Hur värderar man realoptioner i praktiken?
+Optionsprissättningsmodeller kan intuitivt och praktiskt tillämpas för att värdera projekt,
+verksamhet eller företag (Li et al. 2007:54). Beroende på användaren kan man t.ex. på
+basis av ekvationerna producera algoritmer ur källkod och tillämpa denna källkod i
+programomgivningen eller man kan använda sig av kalkylprogram.
+3) Vilka typer av datorprogram lämpar sig för realoptionsanalys?
+Programmeringsspråken delas till lågnivå och högnivå språk (Kahanwal 2013:2–11).
+Lågnivåprogrammeringsspråken är mindre abstrakta än högnivåprogrammeringsspråken
+(Kahanwal 2013:2). Gällande interpreterande språk kompileras inte källkoden till
+maskinkod (Kahanwal 2013:2). Båda datorprogrammen Microsoft® Office Excel® 2013
+och MATLAB® R2017b använder sig av interpreterande högnivåspråk. Dessutom
+tillämpar sig dessa datorprogram av en interaktiv programomgivning. Båda programmen
+använder sig av ett grafiskt användargränssnitt. Den största skillnaden i dessa
+omgivningar är att den första tillämpar sig mera av skript (MATLAB® R2017b) medan
+den andra (Microsoft® Office Excel® 2013) ägnar sig åt kalkylblad var skript kan
+tillämpas. Andra skillnader har att göra med minnesanvändningen och därmed
+68
+
+snabbheten. Den första (MATLAB® R2017b) allokerar mera
+
+minne under
+
+interpreteringen än den andra (Microsoft® Office Excel® 2013) och kan därför vara
+snabbare i t.ex. simulationer vilka kräver mycket av datorns processor och
+minnesanvändning. Jag har i simulationerna använt MATLAB® R2017b för att den
+generar snabbare resultat, på basis av en prestandajämförelse (riktmärkning) som jag
+gjort, där MATLAB® R2017b presterade bättre än Microsoft® Office Excel® 2013. Ofta
+kräver det tid att lära sig flera programmeringsspråk eller skript, vilket kan vara en negativ
+aspekt i inlärningen, MATLAB® kräver att man ägnar sig åt skriptprogrammering. Om
+en realoptionsanalys ska göras kan det vara lämpligt att använda de program som är mest
+intuitiva för användaren. Datorprogram som använder sig av interpreterande
+högnivåspråk kan lämpa sig bra för att genomföra realoptionsanalyser för att man inte
+behöver programmera själva omgivningen.
+
+7.2 Forskningsförslag
+I vissa fall är litteraturen rätt så gammal t.ex. Olson (2004:23) och Mabert et al. (2000,
+2001) som har forskat i affärssystemens grundinvesteringar m.m. samt Olhager och
+Selledin
+
+(2003)
+
+som
+
+har
+
+forskat
+
+i
+
+affärssystemens
+
+implementeringstider,
+
+kostnadsfördelning, ekonomiska livslängden och organisationen m.m. Utifrån det tidigare
+nämnda kunde ny forskning göras gällande implementeringstiderna, summan av
+grundinvesteringarna och hurudana moduler som har tillämpats och inom hurudana
+organisationsstrukturer.
+Enligt Li et al. (2007:33) kunde forskning göras angående realoptioner inom områden
+som t.ex. värdering och prestation. Närmare värdering och prestationsföljder.
+Prestationsföljderna har att göra med kostnader som formas då optionen skapas och
+inlöses (Li et al. 2007:33). Värdering har att göra med hur realoptioner implementeras i
+praktiken och forskning kunde ske med t.ex. empiriska studier, s.k. fält- och fallstudier
+(Li et al. 2007:33). I vissa fall har forskning gjorts för en tid sedan och denna kunde
+förnyas.
+
+69
+
+KÄLLFÖRTECKNING
+Alchian, A. (1955). The rate of rnterest, fisher's rate of return over costs and Keynes' internal
+rate of return. The American Economic Review, 45(5), 938–943.
+Amram, M., & Kulatilaka, N. (1999). Real options: Managing strategic investment in an
+uncertain world. Harvard business school press.
+Black, F., & Scholes, M. S. (1973). The pricing of options and corporate liabilities.
+Journal of Political Economy, 81: 637–654.
+Boyle, P., Broadie, M., & Glasserman, P. (1997). Monte Carlo methods for security
+pricing. Journal of Economic Dynamics and Control, 21(8-9): 1267–1321.
+Bowman, E. H., & Hurry D. D. (1993). Strategy through the option lens: an integrated
+view of resource investments and incremental choice process. Academy of
+Management Review, 18: 760–782.
+Carmichael, D. (2020). Real options. I Future-proofing–valuing adaptability,
+flexibility, convertibility and options: 31–51. Springer.
+Chen, B. (2020). Lattice metods for option pricing. Hämtad 18 oktober från:
+https://www.mathworks.com/matlabcentral/fileexchange/50177-lattice-methods-foroption-pricing.
+Collan, M. (2012). The pay-off method: Re-inventing investment analysis. CreateSpace.
+Collan, M., Fullér, R., & Mezei, J. (2012). Credibilistic approach to the fuzzy pay-off
+method for real option analysis. Journal of Applied Operational Research, 4(4): 174–
+182.
+Cox, J. C., Ross, S. A., & Rubinstein, M. (1979). Option pricing: A simplified approach.
+Journal of Financial Economics, 7(3): 229–263.
+García, F. A. A., & Heikkilä, M. (2003). Improving investment decision-making by
+expanding key knowledge with real option tools. Journal of Decision Systems,
+(January): 345–368.
+Glasserman, P. (2004). Monte Carlo methods in financial engineering. Springer science
++ Business media, inc.
+Hayes, R. H., & Garvin, D. A. (1982). Managing as if tomorrow mattered. Harvard
+Business Review, 60(May–June): 70–79.
+Hull, J. C. (2018). Options, futures, and other derivative securities (9th. ed.). Pearson
+education.
+70
+
+Häggström, O. (2004). Slumpens skördar: Strövtåg i sannolikhetsteorin. Studentlitteratur.
+Kahanwal, B. (2013). Abstraction level taxonomy of programming language frameworks.
+International Journal of Programming Languages and Applications, 3(4): 1–12.
+Laux, S. E. (1985). Techniques for small-signal analysis of semiconductor devices. IEEE
+Transactions on Computer-Aided Design, 4(4): 472–481.
+Leclercq, V. (2020). Monte Carlo simulations using MATLAB. Hämtad 26 februari 2020
+från: https://www.mathworks.com/matlabcentral/fileexchange/17964-monte-carlosimulations-using-matlab.
+Leslie, K. J., & Michaels, M. P. (1997). The real power of real options. The McKinsey
+Quarterly, (3): 4–22.
+Li, Y., James, B. E., Madhavan, R., & Mahoney, J. T. (2007). Real options: Taking stock
+and looking ahead. I J.J. Reuer & T. W. Tong (Red.), Real options theory: 31–66.
+Elsevier: JAI.
+Luehrman T. A. (1998). Investment opportunities as real options: Getting Started on the
+numbers. Harvard Business Review, (July–August): 51–67.
+Mabert, V. M., Soni, A., & Venkataramanan, M. A. (2000). Enterprise resource planning
+survey of U.S. manufacturing ﬁrms. Production and Inventory Management Journal,
+41(20): 52–58.
+Mabert, V. A., Soni, A., & Venkataramanan, M. A. (2001). Enterprise resource planning:
+Common myths versus evolving reality. Business Horizons, (May–June): 69–76.
+Mabert, V. A., Soni, A., & Venkataramanan, M. A. (2003). Enterprise resource planning:
+Managing the implementation process. European Journal of Operational Research,
+146: 302–314.
+Mauboussin, M. J. (1999). Get real. Using real options in security analysis. Equity
+Research nÆ 10, Crédit Suisse First Boston Corporation.
+Merton, R. C. (1973). Theory of rational option pricing. The Bell Journal of Economics
+and Management Science, 4: 141–183.
+Merton, R. C. (1998). Applications of option-pricing theory: Twenty-ﬁve years later.
+American Economic Review, 88(3): 323–349.
+Moore, G. (1965). The experts look ahead: Cramming more components onto integrated
+circuits. Electronics, 38(8).
+Olhager, J., & Selledin, E. (2003). Enterprise resource planning survey of Swedish
+manufacturing firms. European Journal of Operational Research, 146: 365–373.
+Olson, D. (2004). Managerial issues of enterprise resource planning systems. McGraw
+Hill.
+
+71
+
+Patterson, D., & Hennessy, J. (2007). Computer architecture, a quantitative approach
+(4th. ed.). Morgan Kaufman publishers.
+Patterson, D., & Hennessy, J. (2012). Computer organization and design (4th. ed.).
+Morgan Kaufman publishers.
+Reuer, J. J. , & Tong, T. W. (2007). How do real options matter? Empirical research on
+strategic investments and firm performance. I J. J. Reuer & T. W. Tong (Red.), Real
+options theory: 145–173. Elsevier: JAI.
+Ross, S. M. (2013). Simulation (5th. ed.). Academic press.
+Serway, R. A., & Jewett, Jr. J. W. (2014). Physics for scientists and engineers with
+modern physics (9th. ed.). Brooks/Cole, Cengage learning.
+Tong, T. W., & Reuer, J. J. (2007). Real options in strategic management. I J. J. Reuer &
+T. W. Tong (Red.), Real options theory: 3–28. Elsevier: JAI.
+Trigeorgis, L. G., & Reuer, J. J. (2017). Real options theory in strategic management.
+Strategic Management Journal, 38: 42–63.
+Weste, N. H. E., & Harris, D. M. (2011). CMOS VLSI design: A circuits and systems
+perspective (4th. ed.). Addison–Wesley.
+Zadeh, L. A. (1965). Fuzzy Sets. Information and Control, 8: 338–353.
+
+72
+
+BILAGOR
+BILAGA 1 SÅV VBA MACRO SKRIPT
+' Author: Markku Heikkilä
+Option Explicit
+Function FPOV(ByVal b_beta, a_, a_alpha As Variant) As Variant
+Dim alpha, beta As Variant
+Dim area, area_plus As Variant
+Dim e_value_plus As Variant
+Dim positive_s As Integer
+alpha = a_ - a_alpha
+beta = b_beta - a_
+positive_s = 0
+' Testing area
+Debug.Print alpha, a_, beta
+If alpha = 0 And a_ = 0 And beta = 0 Then
+FPOV = 0
+Else
+If a_alpha <= a_ And a_ <= b_beta Then
+If b_beta >= 0 Then positive_s = positive_s + 1
+If a_ >= 0 Then positive_s = positive_s + 1
+If a_alpha >= 0 Then positive_s = positive_s + 1
+Debug.Print positive_s
+area = a_ + (alpha + beta) / 2
+Debug.Print area
+area_plus = area_plus_value(beta, a_, alpha, positive_s)
+Debug.Print "Positive area:", area_plus
+e_value_plus = e_value_plus_calc(beta, a_, alpha, positive_s)
+Debug.Print "Positive EV:", e_value_plus
+FPOV = area_plus / area * e_value_plus
+Else
+MsgBox "The range does not give a valid fuzzy number. The correct
+order in range is: b + beta, a, a - alpha"
+End If
+End If
+End Function
+Function area_plus_value(ByVal beta, a_, alpha, case_ As Variant)
+Select Case case_
+Case 0
+area_plus_value = 0
+Case 1
+area_plus_value = (beta + a_) / beta * beta / 2
+Case 2
+area_plus_value = a_ + (alpha + beta) / 2 + (-(a_ - alpha) / alpha) *
+(a_ - alpha) / 2
+Debug.Print area_plus_value
+Case 3
+area_plus_value = a_ + (beta + alpha) / 2
+End Select
+End Function
+Function e_value_plus_calc(ByVal beta, a_, alpha, case_ As Variant)
+Select Case case_
+Case 0
+e_value_plus_calc = 0
+Case 1
+e_value_plus_calc = (beta + a_) / 6
+Case 2
+
+73
+
+e_value_plus_calc = a_ / 2 + (beta - alpha) / 6 - (5 / 6) * ((a_ alpha) ^ 3 / (alpha ^ 2))
+Case 3
+e_value_plus_calc = a_ / 2 + (beta + alpha) / 6
+End Select
+End Function
+Function success_rate(ByVal b_beta, b_, a_, a_alpha As Variant) As Variant
+Dim alpha, beta As Variant
+Dim positive_s As Integer
+alpha = a_ - a_alpha
+beta = b_beta - b_
+positive_s = 0
+If alpha = 0 And a_ = 0 And b_ = 0 And beta = 0 Then
+success_rate = 0
+Else
+If a_alpha <= a_ And a_ <= b_ And b_ <= b_beta Then
+If b_beta >= 0 Then positive_s = positive_s + 1
+If b_ >= 0 Then positive_s = positive_s + 1
+If a_ >= 0 Then positive_s = positive_s + 1
+If a_alpha >= 0 Then positive_s = positive_s + 1
+success_rate = area_plus_value(beta, b_, a_, alpha,
+positive_s) / (b_ - a_ + (alpha + beta) / 2)
+Else
+End If
+End If
+End Function
+Sub
+Dim
+Dim
+Dim
+
+FPOV_testing()
+a_, alpha_a, beta_b As Variant
+result As Variant
+r_range As Range
+a_ = 0
+alpha_a = -20
+beta_b = 0
+result = FPOV(beta_b, a_, alpha_a)
+End Sub
+
+74
+
+BILAGA 2 BSM-MC OCH CCR MATLAB SKRIPT
+%Author: Vincent Leclercq
+%Edited: Arthur Kauko
+clear all;
+close all;
+NbSimu = 10: 10: 1000;
+NbPointsA = numel(NbSimu);
+NbPointsB = numel(NbSimu);
+BLpriceA = blsprice(85274318.7791435,85993710.1499550,0.03,0.75,0.20);
+BLpriceB = blsprice(101176783.7076180,100000000.0000000,0.03,0.0,0.20);
+CRRpriceA =
+BinCRR(85274318.7791435,85993710.1499550,0.03,(0.75/100),0.20,100,'CALL',false
+);
+CRRpriceB =
+BinCRR(101176783.7076180,100000000.0000000,0.03,(0.0000000000000001/100),0.20,
+100,'CALL',false);
+
+%Run
+for i = 1 :numel(NbSimu)
+disp(['AB Computing Iteration N°' num2str(i) ' with ' num2str(NbSimu(i)) '
+Simulated Paths']);
+[ResMCCVA(i),CIMCCVA(i,:)] =
+BlsMCCV(85274318.7791435,85993710.1499550,0.03,0.75,0.20,NbSimu(i),1000);
+[ResHaltonA(i),CIHaltonA(i,:)] =
+BlsHalton(85274318.7791435,85993710.1499550,0.03,0.75,0.20,NbSimu(i));
+[ResMCCVB(i),CIMCCVB(i,:)] =
+BlsMCCV(101176783.7076180,100000000.0000000,0.03,0.0,0.20,NbSimu(i),1000);
+[ResHaltonB(i),CIHaltonB(i,:)] =
+BlsHalton(101176783.7076180,100000000.0000000,0.03,0.0,0.20,NbSimu(i));
+end
+%Display results
+h= figure;
+hold on;
+plot(NbSimu,[repmat(BLpriceA,NbPointsA,1)
+ResHaltonA'],'LineWidth',0.5,'Color','b');
+plot(NbSimu,[repmat(BLpriceB,NbPointsB,1)
+ResHaltonB'],'LineWidth',0.5,'Color','r');
+%plot(NbSimu, ResHaltonA,'LineWidth',0.5,'Color','b');
+%plot(NbSimu, ResHaltonB,'LineWidth',0.5,'Color','r');
+set(h,'WindowStyle','Docked');
+grid on;
+xlabel('Antal simulationer');
+ylabel('ROV');
+xlim([NbSimu(1) NbSimu(end)]);
+ylim([-2.0000e+06 8.4600e+06])
+%
+
+75
+
+h= figure;
+Fill(NbSimu',CIMCCVA(:,1),CIMCCVA(:,2),'c',0.3);
+hold on;
+Fill(NbSimu',CIMCCVB(:,1),CIMCCVB(:,2),'m',0.3);
+hold on;
+plot(NbSimu,ResMCCVA,'LineWidth',1,'Color','g');
+plot(NbSimu,ResMCCVB,'LineWidth',1,'Color','y');
+plot(NbSimu,repmat(BLpriceA,NbPointsA,1),'LineWidth',1,'Color','b');
+plot(NbSimu,repmat(BLpriceB,NbPointsB,1),'LineWidth',1,'Color','r');
+xlim([NbSimu(1) NbSimu(end)])
+ylim([-2.0000e+06 8.4600e+06])
+set(h,'WindowStyle','Docked');
+title('');
+xlabel('Antal simulationer');
+ylabel('ROV');
+grid on;
+
+76
+
+BILAGA 3 BSM-MC FYLLNAD MATLAB FUNKTION
+function Fill(Xdata,YLower,YUpper,AreaColor,Alpha)
+%Author: Vincent Leclercq
+if size(Xdata) == size(YLower)
+fill([vertcat(Xdata,Xdata(end:-1:1))],[vertcat(YLower,YUpper(end:1:1))],AreaColor,'FaceAlpha',Alpha);
+else
+warning('MATLAB:InvlaidArgumentSize','The size of the input is not
+consistent');
+end
+
+77
+
+BILAGA 4 BSM-MC KONTROLLVARIABEL MATLAB
+FUNKTION
+function [Price, CI] = BlsMCCV(S0,X,r,T,sigma,NRepl,NPilot)
+%Author: Vincent Leclercq
+%Price a vanilla call using the stock price as a control variable
+nuT = (r - 0.5*sigma^2)*T;
+siT = sigma * sqrt(T);
+%Compute parameters first
+StockVals = S0*exp(nuT+siT*randn(NPilot,1));
+OptionVals = exp(-r*T) * max( 0 , StockVals - X);
+MatCov = cov(StockVals, OptionVals);
+%Compute Expected value and Variacne of our control Variable
+VarY = S0^2 * exp(2*r*T) * (exp(T * sigma^2) - 1);
+ExpY = S0 * exp(r*T);
+%compute the optimal control parameter
+c = - MatCov(1,2) / VarY;
+%Compute the MC expected value
+NewStockVals = S0*exp(nuT+siT*randn(NRepl,1));
+NewOptionVals = exp(-r*T) * max( 0 , NewStockVals - X);
+%Use the control parameter
+ControlVars = NewOptionVals + c * (NewStockVals - ExpY);
+[Price, VarPrice, CI] = normfit(ControlVars);
+
+78
+
+BILAGA 5 BSM HALTON MATLAB FUNKTION
+function [Price , CI]= BlsHalton(S0,X,r,T,sigma,NPoints)
+%Author: Vincent Leclercq
+nuT = (r - 0.5*sigma^2)*T;
+siT = sigma * sqrt(T);
+H = haltonset(1);
+HaltonRandomNumbers = net(H,NPoints);
+Norm = norminv(HaltonRandomNumbers);
+DiscPayoff = exp(-r*T) * max( 0 , S0*exp(nuT+siT*Norm) - X);
+[Price, VarPrice, CI] = normfit(DiscPayoff);
+
+79
+
+BILAGA 6 CCR MATLAB FUNKTION
+function oPrice = binPriceCRR(S0,X,r,dt,sig,steps,oType,earlyExercise)
+%Author: Phil Goddard
+%Edited: Arthur Kauko
+%Calculate the Cox Ross Rubinstein model parameters
+a
+u
+d
+p
+
+=
+=
+=
+=
+
+exp(r*dt);
+exp(sig*sqrt(dt));
+1/u;
+(a-d)/(u-d);
+
+%Loop over each node and calculate the Cox Ross Rubinstein underlying price
+%tree
+priceTree = nan(steps+1,steps+1);
+priceTree(1,1) = S0;
+for idx = 2:steps+1
+priceTree(1:idx-1,idx) = priceTree(1:idx-1,idx-1)*u;
+priceTree(idx,idx) = priceTree(idx-1,idx-1)*d;
+end
+%Calculate the value at expiry
+valueTree = nan(size(priceTree));
+switch oType
+case 'PUT'
+valueTree(:,end) = max(X-priceTree(:,end),0);
+case 'CALL'
+valueTree(:,end) = max(priceTree(:,end)-X,0);
+end
+%Loop backwards to get values at the earlier times
+steps = size(priceTree,2)-1;
+for idx = steps:-1:1
+valueTree(1:idx,idx) = ...
+exp(-r*dt)*(p*valueTree(1:idx,idx+1) ...
++ (1-p)*valueTree(2:idx+1,idx+1));
+if earlyExercise
+switch oType
+case 'PUT'
+valueTree(1:idx,idx) = ...
+max(X-priceTree(1:idx,idx),valueTree(1:idx,idx));
+case 'CALL'
+valueTree(1:idx,idx) = ...
+max(priceTree(1:idx,idx)-X,valueTree(1:idx,idx));
+end
+end
+end
+%Output the option price
+oPrice = valueTree(1);
+
+80
+
+

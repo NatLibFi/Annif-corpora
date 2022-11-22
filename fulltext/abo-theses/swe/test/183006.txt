@@ -1,0 +1,4754 @@
+FAKULTETEN FÖR
+NATURVETENSKAPER OCH TEKNIK
+
+Avhandling Pro Gradu
+
+Epidemiologisk matematiska
+modeller
+Skribent:
+
+Handledare:
+
+Minette Brink
+
+Mikael Lindström
+
+2021
+
+Sammanfattning
+I den här avhandlingen undersöks olika epidemiologiska matematiska modeller
+för att förutspå spridningen av infektionssjukdomar. Syftet med undersökningen
+är att analysera olika matematiska epidemiologiska modeller samt jämföra dem
+med modeller som använts för att uppskatta spridningen av COVID-19.
+Det är många faktorer som påverkar och försvårar skapande av modellerna.
+Människors beteende går inte med exakt noggrannhet att förutspå, populationer
+går inte att begränsa noggrant och ovetskap om hur en infektionssjukdom sprids
+är faktorer som påverkar skapande av modellerna. I avhandlingen presenteras olika modeller var vi analyserar hur människors och infektionssjukdomars beteende
+påverkar ifall en epidemi bryter ut.
+Reproduktionstalet är en viktig del inom matematiska epidemiologiska modeller. Det berättar väntade antalet personer en infekterad person smittar när
+alla andra personer i populationen är mottagliga för smitta. Beroende på modell
+och infektionssjukdomens beteende beräknas reproduktionstalet på olika sätt och
+kan därmed vara svårt att förutspå.
+Kermacks och McKendircks [11] modell är en känd modell inom epidemiologisk matematisk modellering från 1927. Modellen som de skapade används
+fortfarande men med anpassningar för att vara exaktare. Modellen är SIR modellen,
+⎧
+dS
+⎪
+= −βS NI
+⎪
+⎪
+⎨ dt
+dI
+= βS NI − τ1 I
+dt
+⎪
+⎪
+⎪
+⎩ dR = 1 I.
+dt
+
+(1)
+
+τ
+
+Modellen har relativt strikta antaganden och kan därmed sällan användas som sådan. Några anpassningar kan vara att personer inte blir immuna eller tillfrisknar
+inte av en sjukdom, sjukdomen har en latensperiod eller hur man har avgränsat
+populationen och personers beteende. Denna modell och anpassningar kommer
+att behandlas och analyseras i avhandlingen.
+I och med att det är svårt att förutspå människors beteende och att avgränsa
+noggrant populationer är det svårt att estimera spridningen av infektionssjukdomen. Modellen som används för att estimera spridningen av COVID-19 har
+
+2
+
+anpassats separat för Italien, Spanien och USA [13] så att parametrar och data
+är lämpliga. I avhandlingen analyseras även resultaten av modellen. Fastän den
+är välformulerad ger det inte en garanti för att epidemin i verkligheten skulle
+bete sig som förutspått.
+
+Innehåll
+1 Inledning
+
+4
+
+1.1
+
+Begrepp och beteckningar . . . . . . . . . . . . . . . . . . . . . .
+
+5
+
+1.2
+
+Stabilitet för icke-linjära differentialekvationer . . . . . . . . . . .
+
+6
+
+1.2.1
+
+Linjär approximation och stabilitet . . . . . . . . . . . . .
+
+6
+
+1.2.2
+
+Stabilitet för icke-linjära system . . . . . . . . . . . . . . .
+
+7
+
+2 Epidemi i en sluten population
+
+9
+
+3 Reproduktionstalet
+
+11
+
+3.1
+
+Framställningen av reproduktionstal i enkla fall . . . . . . . . . .
+
+12
+
+3.2
+
+Framställning av reproduktionstal i mer komplicerade fall . . . . .
+
+16
+
+3.3
+
+Nästa generationsmatris för indelad population
+
+20
+
+. . . . . . . . . .
+
+4 Första tillväxten av epidemin i realtid
+
+27
+
+5 Kermacks och McKendricks modell
+
+30
+
+5.1
+
+Samarbete mellan Kermack och McKendrick . . . . . . . . . . . .
+
+30
+
+5.2
+
+Beteckningar och definitioner . . . . . . . . . . . . . . . . . . . .
+
+31
+
+5.3
+
+Matematiken i Kermacks och McKendricks modell . . . . . . . . .
+
+33
+
+5.3.1
+
+SIS modellen . . . . . . . . . . . . . . . . . . . . . . . . .
+
+36
+
+5.3.2
+
+SIER modellen . . . . . . . . . . . . . . . . . . . . . . . .
+
+37
+
+5.3.3
+
+Exempel av SIR modellen . . . . . . . . . . . . . . . . . .
+
+38
+
+5.3.4
+
+Smittsamhetstakt och väntetid . . . . . . . . . . . . . . . .
+
+41
+
+Kermack och McKendricks artikels framgång . . . . . . . . . . . .
+
+44
+
+5.4
+
+6 Den slutliga storleken på en epidemi
+6.1
+
+45
+
+Den slutliga storleken av en epidemi i en population utan restriktioner . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1
+
+46
+
+2
+
+INNEHÅLL
+
+6.2
+
+Den slutliga storleken av en epidemi i en ändlig population . . . .
+
+7 Modellering av COVID-19
+7.1
+
+7.2
+
+50
+
+Parametrarna under första vågen av COVID-19 . . . . . . . . . .
+
+53
+
+7.1.1
+
+Italien . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+54
+
+7.1.2
+
+Spanien . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+55
+
+7.1.3
+
+USA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+55
+
+Modellens beteende under den första, andra och eventuellt tredje
+vågen av COVID-19
+
+7.3
+
+48
+
+. . . . . . . . . . . . . . . . . . . . . . . . .
+
+56
+
+7.2.1
+
+Italien . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+56
+
+7.2.2
+
+USA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+57
+
+7.2.3
+
+Spanien . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+58
+
+Uppskattningar för utvecklingen av COVID-19 i Italien och USA .
+
+58
+
+7.3.1
+
+Italien . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+59
+
+7.3.2
+
+USA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+59
+
+8 Avslutning
+
+61
+
+Tabeller
+7.1
+
+Tabell över värden för λ och µ år 2018 [13]. . . . . . . . . . . . . .
+
+51
+
+7.2
+
+Kalibrering av γ för Italien [13]. . . . . . . . . . . . . . . . . . . .
+
+55
+
+7.3
+
+Kalibrering av γ för USA [13]. . . . . . . . . . . . . . . . . . . . .
+
+56
+
+3
+
+KAPITEL 1. INLEDNING
+
+4
+
+Kapitel 1
+Inledning
+När ett virus introduceras, för en population, som kan bilda en endemi, epidemi
+eller pandemi är det vanligt att bilda matematiska modeller för att kunna förutspå virusets beteende. Det som påverkar modellerna är hur populationen är
+utspridd på ett område. Parametrar som bör beaktas i skapande av modeller är
+exempelvis i vilket område det finns åldringar, var det är glesbygd, om området
+är tätt bebott med mera. Som exempel finns det skillnader i hur ofta det förekommer fall av mässling när man jämför Storbritannien och Island. På Island
+förekommer det fler fall med en lägre frekvens än i Storbritannien och en av orsakerna är att Storbritannien är tätare befolkat än Island. En annan faktor som
+påverkar modellerna är hur många sjukdomsfall som inte rapporteras. Orsaken
+till att ett fall inte rapporteras kan vara att personen är symptomfri fastän hen
+har viruset, eller att hen inte låter sig testas. [4]
+Institutet för hälsa och välfärd (THL) bildade i början på 2020 en grupp
+vars uppgift var att bilda matematiska modeller och scenarion för SARS-CoV-2
+(COVID-19) och för att kunna bestämma restriktionsåtgärder som bör vidtas.
+Det som försvårade skapande av modellerna var att man inte visste hur länge
+personer är immuna eller om man får immunitet efter att ha tillfrisknat. En annan faktor som försvårade skapande av modellerna var att människors beteende
+kan vara svårt att förutspå. Det första som intresserade forskarna, efter att epidemin hade brutit ut i Wuhan, Kina, var reproduktionstalet som är förväntade
+antalet personer en infekterad person smittar när alla andra personer i populationen är mottagliga för smitta. Det går inte att räkna ut reproduktionstalet
+utifrån observationer utan det behövs matematiska modeller för att räkna ut
+
+KAPITEL 1. INLEDNING
+
+5
+
+reproduktionstalet. [2]
+I avhandlingen kommer centrala delar inom epidemiologisk matematiska modeller att behandlas. I kapitel 2 beskrivs hur stor betydelse populationen har och
+hur personers beteende kan påverka epidemiologiska modeller. Reproduktionstalet är en av de viktigaste delarna i epidemiologiska modeller. I kapitel 3 behandlas
+olika sätt att framställa reproduktionstalet beroende på infektionssjukdom och
+vilken modell man använt. Kapitel 4 handlar om första tillväxten av epidemin
+och en modell som beskriver början av en epidemi.
+Kermack och McKendricks modell är en viktig modell inom matematisk modellering av infektionssjukdomar, som behandlas i kapitel 5. Där presenteras modellen som Kermack och McKendrick skapade, olika anpassningar av modellen
+samt några exempel. I kapitel 6 behandlas hur en epidemin ser ut i slutskedet
+beroende på om det har vidtagits åtgärder eller inte. Slutligen, i kapitel 7 ser vi
+en anpassning av Kermack och McKendricks modell där man har tillämpat data
+gällande COVID-19 från Spanien, Italien och USA.
+
+1.1
+
+Begrepp och beteckningar
+
+I den här avhandlingen är terminologin främst från boken Mathematical Tools
+for understanding Infectious Disease Dynamics [6]. När andra källor används
+anpassas begreppen så att de är enhetliga genom hela avhandlingen.
+I avhandlingen kommer det att antas att populationen är strukturerad, om
+inte annat nämns. En strukturerad population är en population som kan delas in
+i klasser eller grupper som ger en struktur till populationen.
+En person som kan bli smittad, mottaglig person, är en person som kan bli
+smittad när hen är i kontakt med en infekterad person. Däremot är en infekterad
+person en som har blivit smittad och testar positivt för infektionen med hjälp
+av lämpligt prov. Svar som är fel i provresultaten kommer inte att beaktas för
+att göra modellerna enklare. En infekterad person behöver inte smitta andra
+under inkubationstiden. Inkubationstid är tidsintervallet mellan att en mottaglig
+person har blivit infekterad och sjukdomsutbrottet. Det antas att en person inte
+smittar under inkubationstiden för att göra modellerna enklare. En person som
+är frisk har varit infekterad och kan inte mera smitta personer som är mottagliga
+för smitta. Det antas även, i de flesta fall, att friska personer inte är mottagliga
+
+6
+
+KAPITEL 1. INLEDNING
+
+för sjukdomen, åtminstone temporärt. Låt i(t) beteckna incidensen, antalet nya
+infekterade över en tidsenhet.
+Reproduktionstalet, betecknas R0 , är förväntade antalet personer en infekterad
+person smittar när alla andra personer i populationen är mottagliga för smitta.
+Tröskelvärdet för R0 är 1, när R0 > 1 så ökar och när R0 < 1 så minskar
+spridningen av infektionen i populationen. Alltså när R0 > 1 så finns det en ökad
+risk att en epidemi bildas i en population.
+En mottaglig person kommer att betecknas med S, en infekterad person med
+I och en frisk person med R. Dessa tre grupper bildar SIR modellen. Det finns
+även modeller som SEIR, där E är en person som blivit utsatt för smitta, och
+SIS där man inte kan bli immun mot infektionssjukdomen. Låt N beteckna hela
+populationen som beaktas och S, I, R är ofta angivna som andelar av N .
+
+1.2
+
+Stabilitet för icke-linjära differentialekvationer
+
+I det här avsnittet behandlas stabilitet och approximation av icke-linjära system
+[10].
+
+1.2.1
+
+Linjär approximation och stabilitet
+
+Betrakta
+
+dx
+= f (x)
+(1.1)
+dt
+som en autonom differentialekvation och x(t) en obekant funktion. Funktionen
+x = xss där f (x) = 0 kallas jämviktspunkt till (1.1). Taylors serieutveckling kring
+punkten xss ger
+f (x) ≈ f (xss ) +
+
+df
+df
+(xss )(x − xss ) =
+(xss )(x − xss )
+dx
+dx
+
+(1.2)
+
+där f (xss ) = 0. Följaktligen kan (1.1) approximeras med
+dx
+df
+≈
+(xss )(x − xss ).
+dt
+dx
+Låt a =
+
+df
+(xss )
+dx
+
+och betrakta
+
+dx
+dt
+
+(1.3)
+
+= a(x − xss ). Om a < 0, är den kritiska
+
+punkten xss stabil. Om a > 0 är den kritiska punkten xss instabil. Lösningen till
+
+7
+
+KAPITEL 1. INLEDNING
+
+dx
+dt
+
+= ax − axss ges av
+(1.4)
+
+x(t) = ceat + xss , c ∈ R.
+
+Följaktligen kommer avvikelsen från den kritiska punkten att minska exponentiellt om a < 0.
+
+1.2.2
+
+Stabilitet för icke-linjära system
+
+Låt
+
+⎧
+⎨ dx = f (x, y)
+dt
+⎩ dy = g(x, y)
+
+(1.5)
+
+dt
+
+vara ett autonomt icke-linjärt system och x(t), y(t) obekanta funktioner. Punkterna (x, y) där både f (x, y) = 0 och g(x, y) = 0 kallas jämviktsläge till (1.5).
+Det är möjligt att man får ingen, ett ändligt antal eller oändligt många kritiska
+punkter. För att bestämma toppen och stabilitet av en kritisk punkt (xss , yss )
+approximerar vi (1.5) i en liten omgivning av (xss , yss ) med ett linjärt system
+med konstanta koefficienter
+)︄ (︄
+)︄ (︄
+)︄ (︄ )︄ (︄
+)︄ (︄ )︄
+(︄ )︄ (︄
+dx
+a
+b
+x
+−
+x
+a
+b
+x
+a
+b
+xss
+ss
+dt
+=
+=
+−
+,
+dy
+c
+d
+y
+−
+y
+c
+d
+y
+c
+d
+y
+ss
+ss
+dt
+där
+
+(︄
+)︄
+a b
+c d
+
+(︄
+=
+
+∂f
+(xss , yss )
+∂x
+∂g
+(xss , yss )
+∂x
+
+(1.6)
+
+)︄
+
+∂f
+(xss , yss )
+∂y
+∂g
+(xss , yss )
+∂y
+
+(1.7)
+
+är jacobimatrisen. Denna matris bestämmer stabiliteten för den kritiska punkten
+(xss , yss ).
+Bevis. Enligt Taylors serieutveckling kring punkten (xss , yss ) fås
+f (x, y) ≈ f (xss , yss ) +
+
+∂f
+∂f
+(xss , yss )(x − xss ) +
+(xss , yss )(y − yss )
+∂x
+∂y
+
+(1.8)
+
+g(x, y) ≈ g(xss , yss ) +
+
+∂g
+∂g
+(xss , yss )(x − xss ) +
+(xss , yss )(y − yss ).
+∂x
+∂y
+
+(1.9)
+
+och
+
+Emedan (xss , yss ) är en kritisk punkt, gäller att f (xss , yss ) = 0 och g(xss , yss ) = 0.
+Således kan det icke-linjära systemet (1.5) approximeras med
+dx
+∂f
+∂f
+≈
+(xss , yss )(x − xss ) +
+(xss , yss )(y − yss )
+dt
+∂x
+∂y
+
+(1.10)
+
+8
+
+KAPITEL 1. INLEDNING
+
+och
+
+dy
+∂g
+∂g
+≈
+(xss , yss )(x − xss ) +
+(xss , yss )(y − yss )
+dt
+∂x
+∂y
+
+eller
+
+(︄ )︄
+dx
+dt
+dy
+dt
+
+Låt A =
+
+(︄
+=
+
+∂f
+(xss , yss )
+∂x
+∂g
+(xss , yss )
+∂x
+
+∂f
+(xss , yss )
+∂y
+∂g
+(xss , yss )
+∂y
+
+)︄ (︄
+)︄
+x − xss
+y − yss
+
+.
+
+(1.11)
+
+(1.12)
+
+(︄
+)︄
+a b
+
+vara jacobimatrisen. Nu undersöks stabiliteten för den kritisc d
+ka punkten. Detta beror på typen av egenvärden till A, det vill säga vilka är
+lösningarna λ1 , λ2 av den karaktäristiska ekvationen
+(︄
+)︄
+a−λ
+b
+det(A − λI) = det
+= λ2 − (a + d)λ + det A = 0.
+c
+d−λ
+
+(1.13)
+
+Låt p = a + d, q = det A = ad − bc och ∆ = p2 − 4q. Då följer att
+λ2 − pλ + q = (λ − λ1 )(λ − λ2 ) = λ2 − (λ1 + λ2 )λ + λ1 λ2 .
+
+(1.14)
+
+Således är p summan av egenvärden, q är produkten av egenvärden och ∆ är
+diskriminanten [12].
+En kritisk punkt (xss , yss ) kallas
+• asymptotiskt stabil om p < 0 och q > 0,
+• stabil om p ≤ 0 och q > 0,
+• instabil om p > 0 och q < 0.
+Nu diskuteras kort dessa kriterier. Om q = λ1 λ2 > 0, så är båda egenvärdena
+positiva, negativa eller komplexa konjugat. Om också p = λ1 + λ2 < 0, så är
+båda negativa eller har en negativ reell del. Då är (xss , yss ) asymptotiskt stabil.
+Om ∆ < 0, är egenvärden komplexa konjugat, det vill säga λ1 = α + iβ och
+λ2 = α − iβ. Om också p = λ1 + λ2 = 2α < 0, så är (xss , yss ) asymptotiskt
+stabil. Om p = 0, så är λ2 = −λ1 och q = λ1 λ2 = −λ21 . Om också q > 0, så ger
+λ21 = −q < 0, att λ1 och därmed också λ2 är rena imaginära tal.
+
+KAPITEL 2. EPIDEMI I EN SLUTEN POPULATION
+
+9
+
+Kapitel 2
+Epidemi i en sluten population
+Det här kapitlet är baserat främst på boken Mathematical Tools for understanding Infectious Disease Dynamics [6].
+För att göra det enklare så antas det att populationen är sluten och att
+populationen inte utsätts för immigration eller emigration. Populationen ökar när
+barn föds och minskar när personer dör. Denna process sker under ett bestämt
+tidsintervall, till exempel tio år. När en smittsam sjukdom introduceras för en
+population varar sjukdomen kortare tid än exempelvis tio år i populationen, det
+kan vara frågan om så kort tid som några veckor. För att förenkla modelleringen
+beaktas inte, i de flesta fall, den naturliga ökningen och minskningen av den
+slutna populationen. Det antas även att det är en ny smittsam sjukdom som
+introduceras till populationen, populationen kallas då naiv för sjukdomen.
+Det har betydelse hur populationen eller delpopulationen mäts. Det ska finnas
+en klar definition om hur populationen är mätt och man ska hålla sig till den
+för att analyserna ska vara konsekventa. För att jämföra två olika populationer
+är det viktigt att beakta hur mätningarna gjorts. Populationstätheten har också
+en betydelse. Beroende på vilken sjukdom som undersöks så kan tätheten ha
+en betydande roll, till exempel sjukdomar som sprids med droppsmitta sprids
+lättare då populationstätheten är hög.
+Det är intressant att undersöka när en person från den naiva populationen
+blir smittad av en infektion om det kommer att skapa en epidemi och i så fall hur
+epidemin kommer att bete sig i populationen. Det antas även i vissa modeller
+att en person inte kan smittas två gånger av samma sjukdom, vilket underlättar
+uppskattande. Det betyder att personen blir immun efter att ha tillfrisknat eller
+
+KAPITEL 2. EPIDEMI I EN SLUTEN POPULATION
+
+10
+
+så dör hen.
+För att en person ska bli smittad är det givet att personen måste komma i
+kontakt med infektionen. Olika infektioner smittar på olika sätt, malaria smittar
+via myggbett, HIV smittar bland annat via samlag och COVID-19 smittar via
+droppsmitta [17]. Det finns även infektioner var det är oklart hurdan kontakten
+ska vara för att smitta ska ske. För att förstå hur en infektion smittar skapas en
+modell över vilka personer som är smittade och vilka personer de har varit i kontakt med. Därefter skapas en modell över kontakterna mellan smittade personer
+och mottagliga personer. För att skapa modellerna antas det att en person har
+ett förväntat antal kontakter, c, per tidsenhet med andra personer.
+Innan en epidemi bryter ut så finns det endast ett fåtal smittade personer
+i populationen och resten av populationen är mottaglig för smitta. Då kan det
+antas att en smittad person kommer i kontakt endast med mottagliga personer.
+Sannolikheten för att smitta ska ske, betecknas med p, beror på hur länge en
+smittad person har varit i kontakt med en mottaglig person. Det kan skrivas som
+⎧
+⎪
+0, då τ < T1
+⎪
+⎪
+⎨
+(2.1)
+p, då T1 ≤ τ ≤ T2
+⎪
+⎪
+⎪
+⎩0, då T < τ
+2
+där τ betecknar infektionens ålder, det vill säga hur lång tid det är sedan smitta
+inträffade. Låt 0 < p ≤ 1 och det antas att det finns en latenstid T1 , den tiden
+då en person blivit smittad men ännu inte smittar andra. Under tidsintervallet
+[T1 , T2 ] smittar infekterade personer mottagliga personer. Efter T2 blir smittade
+personer immuna eller så dör de. Om personen inte kan tillfriskna från sjukdomen
+så finns det exempelvis bromsmediciner som möjliggör att personen inte smittar.
+Om personer inte blir immun utan kan insjukna på nytt kan hen bli smittad på
+nytt med sannolikheten p.
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+11
+
+Kapitel 3
+Reproduktionstalet
+Det här kapitlet kommer att handla om reproduktionstalet och är främst baserat
+på boken Mathematical Tools for Understanding Infectious Disease Dynamics [6]
+om inte annan källa nämns. Det finns flera olika sätt att räkna reproduktionstalet.
+Vi börjar med en enkel och begränsad modell och fortsätter sedan med mer
+komplicerade sätt.
+Reproduktionstalet är en väsentlig del för att beskriva hur en epidemi beter
+sig. Det är den viktigaste delen för att skapa modeller för infektionssjukdomar
+och är bland det första som estimeras när en epidemi bryter ut. Dock är det
+inte entydigt att estimera. När man har estimerat reproduktionstalet kan det tas
+nödvändiga åtgärder som hindrar att en stor epidemi bryter ut. I Finland har
+myndigheterna gett direktiv för olika åtgärder och restriktioner för att minska
+på fallen av COVID-19 som till exempel att stänga restauranger, skolor och
+bibliotek. [18].
+Definition 3.1. Reproduktionstalet är förväntade antalet personer en infekterad
+person smittar när alla andra personer i populationen är mottagliga för smitta.
+Reproduktionstalet betecknas med R0 .
+Reproduktionstalet är ett relativt nytt koncept inom epidemiologi. Det härstammar från demografi och ekologi var reproduktionstalet beskrev genomsnittliga antal flickor födda av kvinnor. Den första som introducerade R0 var Richard
+Böckh år 1886. Han använde en tabell år 1879 som beskrev sannolikheten för
+att kvinnor överlever vid födsel av flickor. Han kom fram till att i genomsnitt
+kommer 2, 172 flickor att födas av varje kvinna. Varpå han räknade R0 talet att
+vara 1, 06. [14]
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+3.1
+
+12
+
+Framställningen av reproduktionstal i enkla
+fall
+
+I enkla fall kan reproduktionstalet räknas på följande sätt,
+R0 = pc(T2 − T1 )
+
+(3.1)
+
+där p, T1 och T2 är samma som i (2.1) och c är förväntade antalet kontakter
+mellan en infekterad och en mottaglig person per tidsenhet.
+Tröskelvärdet för R0 är 1, när R0 > 1 så ökar spridningen av infektion och när
+R0 < 1 så minskar spridningen av infektionen i populationen. Alltså när R0 > 1
+så finns det en ökad risk att en epidemi bryter ut i en population.
+För att en epidemi ska bryta ut när R0 > 1 så behövs det ett stort antal både
+smittade och mottagliga personer i populationen. För att framställa R0 rätt
+är demografisk slumpmässighet ett viktigt antagande. Andelen av populationen
+som är infekterade beaktas och inte antalet infekterade personer. Därför måste
+en liten andel av populationen vara smittad för att beräkna R0 .
+För att förenkla infektionsspridning jämförs det med förökning i en population. Populationens ökning från generation till generation är i modeller en liknande händelse som infektionsspridning. Det antas att en liten andel av populationen
+är infekterad för att infektionen ska börja spridas och att i början av epidemin är
+andelen mottagliga personer i populationen stor så att vi kan förbise de personer
+som blir infekterade i början.
+Det antas att personer i en population förökar sig oberoende av varandra och
+antalet avkommor är fördelade enligt fördelningen {qk }∞
+k=0 . En person föder k
+∑︁∞
+stycken barn med sannolikheten qk och k=0 qk = 1. Från det kan utläsas att
+väntade antal barn är R0 , som kan skrivas som
+R0 =
+
+∞
+∑︂
+
+kqk .
+
+(3.2)
+
+k=0
+
+För att använda det här mera generellt skrivs det om till sannolikhetsgenererande
+funktionen
+g(z) =
+
+∞
+∑︂
+
+qk z k , 0 ≤ z ≤ 1.
+
+(3.3)
+
+k=0
+
+Det antas att q0 > 0, det betyder att det finns en positiv sannolikhet att en
+person inte får någon avkomma. För att börja enkelt beaktas först en enpersons
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+13
+
+population. Då dör populationen ut med sannolikheten q0 efter ett generationssteg. Låt zn beteckna sannolikheten för att en population dör ut efter n generationer. Då är z0 = q0 och vidare zn = g(zn−1 ). I den första generationen föds k
+stycken personer. För att populationen ska dö ut innan generation n ska varje
+generation ända till n − 1 ha dött som härstammar från de k stycken personer
+i första generationen. Sannolikheten för att det ska ske vid varje gren av generationer från k personerna är zn−1 . Sannolikheterna är oberoende så vi får att
+sannolikheten för att samtliga grenar av generationer från de k personerna dör
+k
+ut är zn−1
+. Det kvarstår att summera för alla möjliga värden av k med lämpliga
+
+vikten qk , alltså
+zn = q0 +
+
+∞
+∑︂
+
+k
+= g(zn−1 ).
+qk zn−1
+
+(3.4)
+
+k=1
+
+Låt g vara växande vilket betyder att zn är växande (se beviset av sats 3.2), zn
+är begränsad av 1 så gränsvärdet existerar och är z∞ = limn→∞ zn . Enligt hur
+zn definierats är z∞ sannolikheten för att populationen påbörjad av den första
+personen kommer att dö ut. Denna beskrivning går att jämföra med ett mindre
+utbrott. När z∞ = 1 kommer populationen att dö ut med sannolikheten 1. När
+0 < z∞ < 1 existerar komplementet som är 1 − z∞ . Alltså R0 < 1 när z∞ = 1
+och R0 > 1 då 0 < z∞ < 1. Även om R0 > 1 så kan sjukdomen dö ut av olika
+orsaker då antalet infekterade är lågt.
+Sats 3.2. Sannolikheten att epidemin dör ut i ett tidigt skede fastän R0 > 1 fås
+från att z∞ är den minsta roten i [0, 1] till ekvationen z = g(z).
+Bevis. Anta att q0 > 0 och därmed är g(0) = q0 > 0. På grund av att g är
+växande, så är g(q0 ) > g(0) = q0 eller z1 > z0 . Det här implicerar att z2 = g(z1 ) >
+g(z0 ) = z1 . Genom induktion fås att zn växer. För att g(z) ≤ g(1) = 1 är följden
+begränsad. En begränsad och växande följd har ett gränsvärde, som i det här
+fallet kallas för z∞ . Genom att beräkna gränsvärdet då n → ∞ då zn = g(zn−1 )
+fås z∞ = g(z∞ ), då g är kontinuerlig. Låt w beteckna den minsta lösningen till
+ekvationen z = g(z). Då w > 0 och därmed är w = g(w) > 0 = q0 = z0 . Genom
+att applicera g upprepade gånger fås att w > zn för alla n. Då n → ∞ fås att
+w ≥ z∞ . Men för att w definierades som den minsta roten så måste det vara
+likhet, alltså w = z∞ .
+Tolkningen av villkoret för hållbarhet är följande. Sannolikheten att dö ut är
+lika med sannolikheten att dö ut genast adderat med, summan över k, sanno-
+
+14
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+likheten att dö ut betingat att infektera k andra personer. Matematisk uttryckt
+är
+
+∞
+∑︂
+
+z∞ = q0 +
+
+(3.5)
+
+k
+qk z∞
+= g(z∞ )
+
+k=1
+
+där det har använts oberoendehet för att skriva sannolikheten att alla k grenar
+k
+dör ut vid z∞
+.
+
+Under tidsintervaller ∆T följer mängden kontakter poissonfördelningen X ∼
+Po(k), k > 0 med parametern c. Fördelningen beskriver sannolikheten att kontakterna k är jämnt fördelade
+(c∆T )k −c∆T
+e
+, k = 0, 1, 2, ...
+P (x = k) =
+k!
+Antalet kontakter följer poissonfördelningen med medelvärdet c∆T .
+
+(3.6)
+
+Sats 3.3. När kontakterna leder till smitta med sannolikheten p är antalet fall
+av smitta även poissonfördelat med parametern pc∆T .
+Bevis. Om k personer har haft kontakt och m av dem är infekterade personer är
+sannolikheten
+
+där
+
+(︁ k )︁
+m
+
+=
+
+(︃ )︃
+k m
+p (1 − p)k−m ,
+m
+
+k!
+.
+m!(k−m)!
+
+(3.7)
+
+Därmed är sannolikheten för att m personer är infekterade
+∞ (︃ )︃
+∑︂
+k m
+(c∆T )k −c∆T
+e
+p (1 − p)k−m
+m
+k!
+k=m
+
+∞
+∑︂
+pm
+(1 − p)k−m
+m −c∆T
+=
+(c∆T ) e
+(c∆T )k−m
+m!
+(k
+−
+m)!
+k=m
+∞
+∑︂
+pm
+(1 − p)l
+m −c∆T
+(c∆T ) e
+(c∆T )l
+=
+m!
+l!
+l=0
+
+(3.8)
+
+pm
+(c∆T )m e−c∆T e(1−p)c∆T
+m!
+(pc∆T )m −pc∆T
+=
+e
+m!
+
+=
+
+Genererande fördelningsfunktionen för poissonfördelningen med parametern
+λ är
+g(z) =
+
+∞
+∑︂
+k=0
+
+z
+
+k −λ
+kλ e
+
+k!
+
+=
+
+∞
+∑︂
+(λz)k e−λ
+
+k!
+
+k=0
+−λ λz
+
+=e
+
+e
+
+∞
+∑︂
+(λz)k e−λz
+k=0
+
+k!
+
+(3.9)
+λ(z−1)
+
+=e
+
+.
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+Där
+
+λk e−λ
+k!
+
+= qk och
+
+∑︁∞
+
+k=0
+
+(λz)k e−λz
+k!
+
+15
+
+= 1, emedan termerna i summan är san-
+
+nolikheten då Po(λz) blir 1. Den första likheten fås från definitionen för genererande fördelningsfunktionen för poissonfördelningen. Tillsammans med att
+R0 = pc∆T = pc(T2 − T1 ) = λ fås att z∞ då R0 > 1 är en entydig rot i intervallet
+(0, 1) för ekvationen
+z = eR0 (z−1) .
+
+(3.10)
+
+För att undvika missförståndet att det här gäller generellt lägger vi till sannolikheten för mindre utbrott z∞ =
+
+1
+R0
+
+för en annan delmodell för smittsamhet,
+
+där ∆T inte är fixerat utan en godtycklig variabel som följer från exponentiella
+fördelningen.
+Sats 3.4. Låt ∆T vara exponentiellt fördelad med parametern α. Då gäller
+∫︂ ∞
+g(z) = α
+epc∆T (z−1) e−α∆T d(∆T )
+0
+(3.11)
+α
+=
+.
+α − pc(z − 1)
+Bevis. För ett givet ∆T är sannolikheten för att m personer blir infekterade
+(pc∆T )m −pc∆T
+e
+.
+m!
+−α∆T
+
+αe
+
+Enligt sats 3.3 följer att sannolikhetstäthetsfunktionen för ∆T är
+
+med α > 0. Därmed fås
+∫︂ ∞
+(pc∆T )m −pc∆T
+qm = α
+e−α∆T
+e
+d(∆T )
+m!
+0
+
+och
+
+∫︂
+g(z) = α
+
+(3.12)
+
+∞
+
+e−α∆T epc∆T (z−1) d(∆T ).
+
+(3.13)
+
+0
+
+Emedan g(z) är en potensserie är omskrivningen mellan summan och integralen
+i nedanstående beräkningen giltig,
+∫︂ ∞
+∞
+m
+∑︂
+m
+−α∆T (pc∆T )
+g(z) =
+z α
+e
+e−pc∆T d(∆T )
+m!
+0
+m=0
+]︄
+∫︂ ∞ [︄∑︂
+∞
+m −pc∆T
+(pc∆T
+)
+e
+=α
+zm
+e−α∆T d(∆T )
+m!
+0
+∫︂ ∞ 0
+=α
+epc∆T (z−1) e−α∆T d(∆T ),
+
+(3.14)
+
+0
+
+varför (3.13) gäller.
+När man räknar ut integralen fås
+g(z) =
+
+α
+.
+α − pc(z − 1)
+
+(3.15)
+
+16
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+Nu undersöks det ännu att z∞ =
+som har rötterna z = 1 och z =
+
+1
+R0
+
+α
+.
+pc
+
+stämmer. Vi har ekvationen z =
+
+α
+α−pc(z−1)
+
+Det finns endast två rötter alltså ekvationen
+
+stämmer.
+
+3.2
+
+Framställning av reproduktionstal i mer komplicerade fall
+
+I det här avsnittet kommer det att visas ett annat sätt för att framställa reproduktionstalet. Det antas att en infektion har ändligt antal tillstånd 1, 2, ..., n. För
+att bestämma R0 fås följande induktionsproblem: anta en population med demografisk stadigt tillstånd. Populationen kommer i kontakt med en ny infektion
+som populationen inte har någon historia av. Kommer då den nya infektionen
+att skapa ett utbrott i populationen?
+För att förenkla används det deterministiska synsättet, med specifikt indata
+får vi samma utdata, och systemet görs linjärt. Alltså beaktas inte att infektionen
+i sig själv minskar antalet personer som är mottagliga för smitta. Antagande
+om demografiskt stadigt tillstånd betyder att infektionen har en miljö som är
+konstant.
+Reproduktionstalet är matematiskt karaktäriserat som en demografisk process. För att kunna jämföra generationer i en demografisk process med generationer av smitta kommer avkomman att vara en ny infektion orsakad av smitta,
+så kallad epidemiologisk födsel. När en generation ökar i storlek betyder det att
+epidemin växer, alltså indikerar tillväxtfaktorn i generationer på en potentiell
+tillväxt i epidemin. Det betyder att R0 motsvarar tillväxtfaktorn.
+Väntevärdet för nya fall som har infektionstillstånd i orsakad av en person
+med infektionstillstånd j, under tiden då personen i tillstånd j är smittsam, där
+alla kontakter med personen i tillstånd j är med mottagliga personer betecknas
+med kij . Med denna definition av kij fås n2 icke-negativa tal. Det intressanta
+är att söka ett värde med två följande egenskaper, introduktionen av infektionen
+lyckas om och endast om värdet är större än 1 och värdet har en biologisk tolkning
+liknande till ett homogent fall. För att klargöra det här presenteras följande
+exempel.
+(︄
+Exempel 3.5. Låt K = (kij ) =
+
+0
+
+100
+
+10
+
+0
+
+)︄
+som kan beskriva en infektion som
+
+17
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+sprids mellan djur och människor, som har ett djur och människotillstånd av infektion. Ett djur i tillstånd 1 skapar i medeltal 10 nya fall med infektionstillstånd
+2. Varje person i infektionstillstånd 2 skapar i medeltal 100 nya fall med infektionstillstånd 1. Eftersom ett djur inte kan smitta ett annat djur, utan djuret
+smittar enbart människor som i sin tur enbart smittar djur, alternerar faktorerna 10 och 100. Alltså tar det två generationer för infektionen att åter bli i
+ursprungstillstånd. Varje generationstal multipliceras med 10 · 100 = 1000. Då
+√
+fås varje generations multiplikationsfaktor 1000.
+Generationer av smittade personer kan beskrivas med vektorer. Det jte elementet av vektorn är antalet fall vid infektionstillstånd j i den specifika generationen. Vektorn för nästa generation fås från vektorn som beskriver nuvarande
+generationen multiplicerat med matrisen K, som kallas för nästa generationsmatris. Alltså
+ny
+
+ϕ
+
+=
+
+n
+∑︂
+
+kij ϕgammal
+j
+
+(3.16)
+
+j=1
+
+där ϕ
+
+ny
+
+är antalet personer i mottagligt tillstånd i som är smittade av en person
+
+med infektionstillstånd j, summerade med totala tillstånd j. Då fås
+ϕny = Kϕgammal ⇒ ϕm+1 = Kϕm .
+
+(3.17)
+
+Låt K m = K · . . . · K (m stycken K), så gäller likheterna
+ϕm = Kϕm−1 = K 2 ϕ(m−2) = · · · = K m ϕ0
+
+(3.18)
+
+där ϕ0 är generation 0 som börjar processen. Vidare är K är en icke-negativ
+matris, alltså K = (kij ) > 0, i > 1 och n ≥ j och även vektorerna ϕ ≥ 0 är
+icke-negativa.
+Den naturliga normen för vektorer, som mäter vektorers storlek, är
+||ϕ|| =
+
+n
+∑︂
+
+|ϕj |,
+
+(3.19)
+
+j=1
+
+där ϕ = (ϕ1 , . . . , ϕn )⊤ . Alltså är ||ϕ|| totala antalet fall i en generation som
+beskrivs med ϕ. Normen av matrisen K beskrivs som vanligt med
+||Kϕ||
+= sup ||Kϕ||
+||ϕ||̸=0 ||ϕ||
+||ϕ||=1
+
+||K|| = sup
+
+(3.20)
+
+18
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+Inom epidemiologi kan ||K|| tolkas som den maximala multipeln för det totala
+antalet fall, när fördelningen med avseende på stadiet av infektionen kan ta alla
+möjliga former. Från det tidigare exemplet 3.5 fås att ||K|| = 100. Det här betyder att ϕ0 kan väljas godtyckligt
+(︂
+)︂⊤ men att fördelningen
+(︂
+)︂⊤ bestäms av dynamiken.
+I exempel 3.5 är ϕ0 = 0 10
+och ϕ1 = 100 0
+är antalet fall multiplicerade med 100. Däremot multipliceras antalet fall med 10 i nästa generation.
+Följaktligen är normen av K för grov att bestämma nästa generations tillväxt.
+Därför undersöks multiplikationen i m generationer för varje generation. Alltså
+1
+
+är exponenten 1/m av tillväxten i m generationer intressant i ||K m || m .
+Generellt behöver man ha tålamod och beakta m → ∞. Det här gränsvärdet kallas för spektralradien, och betecknat med ρ(K). Enligt definitionen är
+spektralradien det långsiktiga medelvärdet per generationens multiplikationstal.
+Från det här fås karaktäriseringen av R0
+1
+
+R0 = ρ(K) = lim ||K m || m
+m→∞
+
+(3.21)
+
+där K är nästa generationsmatris. Då är spektralradien R0 ett egenvärde av K
+som kallas dominerande egenvärdet där |λ| ≤ R0 för alla egenvärden λ av K.
+Det antas att R0 är strikt dominant, alltså |λ| < R0 för alla egenvärden
+λ (som är olika R0 ) av K och att R0 är ett algebraiskt enkelt egenvärde. Det
+betyder att det finns endast en faktor λ − R0 i den karaktäristiska ekvationen
+det(λI − K) = 0. Egenvektorn ψ d (d står för dominerande) för R0 kan väljas så
+att alla dess komponenter är icke-negativa och att deras summa är lika med ett,
+alltså är ψ d normaliserad. Från det här kan det visas att
+K m ϕ0 = c(ϕ0 )R0m ψ d + o(R0m ) för m → ∞
+där o(R0m ) uttrycker att
+
+[K m ϕ0 −c(ϕ0 )R0m ψ d ]
+R0m
+
+(3.22)
+
+→ 0 då m → ∞.
+
+Den normaliserade dominanta egenvektorn, ψ d , beskriver den stabiliserade
+distributionen. Då fås två egenskaper, invarians och attraktion. Om ϕ0 = ψ d
+fås att K m ψ d = R0m ψ d , då är fördelningen oförändrad från generation till generation när talen multipliceras med R0 . För generella förstagenerationsvektorer
+liknar situationen mer och mer det här specialfallet. Endast skalären c(ϕ0 ) hålls
+oförändrad.
+När R0 är strikt dominerande, algebraiskt enkelt, är ϕ0 sådant att c(ϕ0 ) ̸= 0.
+Då är det klart att när nästa generationsmatris, K, appliceras upprepade gånger
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+19
+
+kommer den normaliserade fördelningen att konvergera mot den stabila fördelningen ψ d . Därtill kommer generationsmultipeln att konvergera mot R0 . Den
+normaliserade stabila fördelningen kan beskrivas som sannolikhetsfördelningen
+för stadiet av infektion.
+Definition 3.6. Den icke-negativa matrisen K är oreducerbar om för varje indexpar i och j finns ett heltal m = m(i, j) > 0 så att (Kijm ) > 0. K är primitiv
+om det finns ett m för alla i och j, alltså om det finns ett m så att alla element
+i K m är strikt positiva.
+En oreducerbar matris är en matris vars rader och kolumner inte kan permuteras så att den omvandlas till övre blockets triangelform.
+Följande slutsatser kan dras om K är primitivt.
+• R0 är strikt dominerande
+• ψ d och ψ d∗ har strikt positiva komponenter (och som en konsekvens c(ϕ0 ) >
+0 för vilken som helst icke trivialt positivt ϕ0 )
+• R0 är ett algebraiskt enkelt egenvärde
+• Inga andra egenvärden har positiva egenvektorer.
+När K är nästan oreducerbar, håller de tre sista egenskaperna, men på cirkeln
+av radien R0 i komplexa talplanet finns det andra egenvärden. Dessa egenvärden
+är rötter från ekvationen λm = R0m för något m, alltså måste de vara i formen
+λ = R0 exp (i 2πl
+) där l = 1, . . . , m − 1.
+m
+Det viktiga antagande är att antalet personer som är involverade i förändringen är stort. Då fås skarpa tröskelvärden, R0 < 1 som inte leder till epidemi
+och om R0 > 1 leder det till en epidemi som påverkar andelen av populationen
+som blivit infekterad. I verkligheten är tröskelvärdet inte lika skarpt som i modellerna. Det beror på att det är osäkert om en mottaglig person blir smittad
+när hen kommer i kontakt med en smittad person. Även om R0 > 1 så kan det
+leda till ett mindre utbrott och fastän R0 är lite mindre än 1 så kan det leda till
+ett större utbrott. Det är vanligt att i stället för att bestämma slutliga storleken
+av epidemin så bestäms en sannolikhetsfördelning för den slutliga storleken av
+epidemin.
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+3.3
+
+20
+
+Nästa generationsmatris för indelad population
+
+Tidigare definierades R0 med hjälp av generationer som leder till karaktärisering
+av önskade egenskaper från homogena till heterogena system. I den här delen
+kommer det att behandlas hur generationsbeskrivningen av infekterade personer
+är relaterad till en realtidsbeskrivning. Det kommer även att presenteras tre olika
+nästa generationsmatriser, en av dem behandlades redan tidigare, K.
+I indelade modeller kan personers infektioner vara diskretuppdelade i en ändlig mängd stadier. Mängden av personer kan delas i delmängder, som kan beskriva
+olika stadier av sjukdomen. Tidigare definierades R0 , som spektralradien av nästa generationsmatris K, som är baserad på alla möjliga delmängder i systemet.
+Alltså R0 är stadiet av sjukdomen som en person har genast efter att hen blivit
+infekterad. Det är vanligt att en sjukdom har flera stadier än stadiet då man
+insjuknar. Dessa stadier beaktas exempelvis i SEIR modellen. I SEIR modellen finns det två stadier då en person blir infekterad, E betecknar latenstiden
+och I betecknar infektionsstadiet. I det här fallet är det endast E som är stadiet
+av infektion för alla personer som blir smittade. Personen som blivit smittad
+börjar med stadiet E, alltså en person kan inte genast komma till stadiet I efter smitta. I det här fallet är nästa generationsmatrisen, K, en endimensionell
+matris. Man kan även bilda en tvådimensionell matris genom att bilda skilda
+generationsmodeller både för E och I.
+För att beräkna R0 behövs ekvationer som finns i systemet med ordinära
+differentialekvationer
+
+⎧
+dS
+⎪
+= −βS NI
+⎪
+⎪
+⎨ dt
+
+dI
+= βS NI − τ1 I
+dt
+⎪
+⎪
+⎪
+⎩ dR = 1 I.
+dt
+τ
+
+(3.23)
+
+Systemet beskriver uppkomst av ny infektion och när infektionen ändrar stadie
+bland infekterade personer. Ekvationssystemet kommer att kallas infektionsdelsystem. Först ska infektionsdelsystem göras linjärt som består av icke-linjära
+ekvationer som handlar om infektionsfria stadiga stadiet, som i regel finns (det
+behandlas närmare i avsnitt 1.2 och kapitel 5). Att göra systemet linjärt betyder
+epidemiologiskt att R0 beskriver den potentiella spridningen av en population
+när den introduceras för en mottaglig population. Det antas även att popula-
+
+21
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+tionen är tillräckligt stor så att andelen mottagliga i populationen inte ändras
+märkbart i början av spridningen.
+Låt x vara vektorn som beskriver storleken på den infekterade delpopulationen. Låt det linjära infektionsdelsystemet vara i formen
+
+dx
+dt
+
+= (T + Σ)x. Matrisen
+
+T beskriver smitta och matrisen Σ beskriver förändring i stadiet av infektion (till
+exempel när en person går från mottaglig till infekterad) och när personer tillfrisknar eller dör efter att varit infekterade. Alla epidemiologiska händelser som
+leder till en ny infektion hör till T och alla händelser i infektionsstadierna hör
+till Σ. Elementen i matrisen T betecknas med Tij som är graden då en infekterad
+person i stadie j, lägger till en annan person till infektionsstadiet i. Elementen
+i icke-negativa matrisen −Σ−1 som är den väntade tiden en person kommer att
+tillbringa i stadiet i givet att hen är i stadie j. Från det här kan det definieras
+en annan nästa generationsmatris
+KS = −T Σ−1 ,
+
+(3.24)
+
+som kommer att kallas nästa generationsmatris med stor värdemängd. Elementen
+i (KS )ij beskriver det väntade antalet nya infektioner börjande från stadie i,
+orsakad av en infekterad person i stadie j. Generellt gäller inte att KS är lika
+med nästa generationsmatris K. Vanligtvis har KS större dimension än K, det
+här beror på att KS beskriver generationer av infekterade personer uppdelade i
+de olika infektionsstadierna. Medan nästa generationsmatris K är definierad så
+att den beskriver endast indelningen av infektionen.
+Man kan beräkna KS med matrisbeskrivningen av det linjära infektionsdelsystemet. Denna matris bestämmer utvecklingen av generationerna av personer
+i alla infektionsstadier. Nästa generationsmatris K bestäms av delmängden av
+dessa stadier och motsvarar KS . Från epidemiologisk synvinkel kan infektionsstadier som också är stadier av infektion skiljas från de stadier som inte är det.
+Det här går att observera från T .
+Exempel 3.7. I det här exemplet beaktas följande stadier:
+• S: mottaglig
+• E1 latenstid i kategori 1
+• E2 latenstid i kategori 2
+
+22
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+• I: Infekterad och smittsam
+• R: tillfrisknad och därmed immun eller död på grund av sjukdomen
+• p och (1 − p): två olika kategorier i population
+• β: graden för smitta
+• µ: graden av födsel och dödlighet per capita
+• v1 och v2 : graden för att lämna respektive latensgrupp och gå in i smittsamma stadiet
+• α: graden för att lämna smittsamma stadiet
+Den linjäriserade modellen för infekterade delsystemet ges av
+⎧
+dE1
+⎪
+= pβI − (v1 + µ)E1
+⎪
+⎪
+⎨ dt
+dE2
+= (1 − p)βI − (v2 + µ)E2
+dt
+⎪
+⎪
+⎪
+⎩ dI = v E + v E − (α + µ)I
+1
+
+dt
+
+med matriserna
+
+1
+
+⎛
+
+2
+
+(3.25)
+
+2
+
+0 0
+
+pβ
+
+⎞
+(3.26)
+
+⎟
+⎜
+⎟
+T =⎜
+⎝0 0 (1 − p)β ⎠
+0 0
+0
+och
+
+⎛
+
+−(v1 + µ)
+
+0
+
+0
+
+−(v2 + µ)
+
+v1
+
+v2
+
+⎜
+Σ=⎜
+⎝
+
+0
+
+⎞
+
+Nästa generationsmatris med stor värdemängd KS blir
+⎛
+⎞⎛
+1
+0
+0 0
+pβ
+v1 +µ
+⎜
+⎟
+⎜
+1
+⎟⎜
+KS = −T Σ−1 = ⎜
+0
+v2 +µ
+⎝0 0 (1 − p)β ⎠ ⎝
+v1
+v2
+0 0
+0
+(v1 +µ)(α+µ)
+(v2 +µ)(α+µ)
+⎛
+⎞
+=
+
+pβv1
+(v1 +µ)(α+µ)
+⎜ (1−p)βv
+1
+⎜
+⎝ (v1 +µ)(α+µ)
+
+0
+
+pβv2
+(v2 +µ)(α+µ)
+(1−p)βv2
+(v2 +µ)(α+µ)
+
+0
+
+pβ
+α+µ
+⎟
+(1−p)β ⎟
+.
+α+µ ⎠
+
+0
+
+(3.27)
+
+⎟
+⎟.
+⎠
+−(α + µ)
+0
+
+0
+
+⎞
+
+⎟
+0 ⎟
+⎠
+
+1
+(α+µ)
+
+(3.28)
+
+23
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+Låt R0 vara det dominanta egenvärdet för KS som fås av den karaktäristiska
+ekvationen
+(︃
+
+2
+
+λ −λ
+
+(1 − p)βv2
+pβv1
++
+(v1 + µ)(α + µ) (v2 + µ)(α + µ)
+
+)︃
+= 0.
+
+(3.29)
+
+Då fås
+(︃
+
+)︃
+pv1
+(1 − p)v2
+β
+R0 =
++
+.
+(3.30)
+v1 + µ
+v2 + µ
+α+µ
+Matrisen ϵ består av enhetsvektorer ei för alla i så att raden i i T är olika
+noll. Då är ϵ en matris vars kolumner består av enhetsvektorer som relaterar till
+rader som är olika noll i T . I det här exemplet fås
+⎛
+⎞
+1 0
+⎜
+⎟
+⎟.
+ϵ=⎜
+0
+1
+⎝
+⎠
+0 0
+
+(3.31)
+
+Då består K av
+K = ϵ⊤ KS ϵ = −ϵ⊤ T Σ−1 ϵ.
+⎛
+1
+(︄
+)︄
+⎜ v1 +µ
+0 0
+pβ
+⎜
+K=
+0
+0 0 (1 − p)β ⎝
+v1
+(v1 +µ)(α+µ)
+
+(︄
+=
+
+pβv1
+(v1 +µ)(α+µ)
+(1−p)βv1
+(v1 +µ)(α+µ)
+
+pβv2
+(v2 +µ)(α+µ)
+(1−p)βv2
+(v2 +µ)(α+µ)
+
+(3.32)
+0
+
+⎞
+⎟
+
+1
+⎟
+v2 +µ
+⎠
+v2
+(v2 +µ)(α+µ)
+
+(3.33)
+
+)︄
+
+Det dominerande egenvärdet för K fås av den karaktäristiska ekvationen
+(︃
+)︃
+pβv1
+(1 − p)βv2
+2
+λ −λ
++
+= 0,
+(3.34)
+(v1 + µ)(α + µ) (v2 + µ)(α + µ)
+som är samma som för KS (3.30).
+Den sista raden i matrisen T , i exemplet 3.7, består endast av nollor, det
+betyder att personer inte genast kan komma i stadie I efter att de blivit smittade. Alltså har systemet endast två stadier av infektion. Alla personer börjar
+sjukdomen i antingen stadie E1 eller E2 . Därför är nästa generationsmatris K
+tvådimensionell och
+är tredimensionell.
+(︄ KS )︄
+a b
+Betrakta A =
+, där a, b, c, d ∈ R+ . Spåret av A, tr(A), definieras som
+c d
+tr(A) = a + d. Låt λ1 och λ2 vara egenvärden till A. Då ges spektralradien av A
+genom
+ρ(A) = max{|λ1 |, |λ2 |}.
+
+(3.35)
+
+24
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+Det gäller att det(λI − A) = det
+
+(︄
+λ−a
+
+b
+
+)︄
+
+= 0, det vill säga (λ − a)(λ −
+c
+d−λ
+d)bc = λ2 − (a + d)λ + ad − bc = 0. Här av fås
+√︁
+a + d + (a + d)2 − 4(ad − cb)
+ρ(A) =
+2
+√︁
+(3.36)
+tr(A) + tr(A)2 − 4 det(A)
+=
+.
+2
+Alltså det dominerande egenvärdet till K fås som
+]︂
+√︁
+1 [︂
+R0 = ρ(K) =
+tr(K) + tr(K)2 − 4 det(K) .
+2
+
+(3.37)
+
+I exempel 3.7 är det(K) = 0, alltså K är en singulär matris. På grund av att
+K är en 2 × 2 matris fås R0 = tr(K). Förutom att det är enkelt att hitta R0 i en
+2 × 2 matris finns det andra fördelar med att det(K) = 0. Då det(K) = 0 kan vi
+minska på dimensionen i matrisen. Det här är vanligt när incidensen motsvara
+två eller då flera olika stadier av infektion förekommer oberoende av tid. Med
+det menas att det finns stokastiskt endast ett stadie av infektion även om det
+egentligen finns två olika stadier av infektion. Alltså är sannolikhetsfördelningen
+över stadie av infektion fixerad, den epidemiologiska tolkningen är alltså att
+smitta inte är infekterade personers ansvar.
+När dimensionerna minskas på K fås en matris som kallas nästa generationsmatris med liten värdemängd och betecknas med KL . Om minskning av
+dimensionerna i K är möjligt, bestäms KL från K. För att komma fram till
+KL undersöks raderna och kolumnerna i T . I exempel 3.7 har T två kolumner
+bestående endast av nollor och en kolumn som är olika noll. För
+(︂ att framställa
+)︂⊤
+kolumnerna i T multipliceras varje kolumn med vektorn C = p 1 − p 0 .
+De två första kolumnerna är C multiplicerat med noll och den sista kolumnen är
+C multiplicerat med β. För att framställa
+raderna
+i T multipliceras raderna på
+(︂
+)︂
+motsvarande sätt med vektorn R = 0 0 β . Den första raden är R multiplicerat med p, andra raden är R multiplicerat med (1 − p) och sista raden är R
+multiplicerat med noll. Då fås att R och C är en uppdelning av matrisen T , så
+att T = CR vilket betyder att Tij = Ci Rj . Då fås KL
+KL = −RΣ−1 C.
+
+(3.38)
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+25
+
+Genom att använda definitionen för KL och matriserna i exempel 3.7 fås
+⎛
+⎞
+p
+(︂
+)︂
+⎜
+⎟
+⎟
+KL = −RΣ−1 C = 0 0 β Σ−1 ⎜
+⎝1 − p⎠
+(3.39)
+0
+)︃
+(︃
+(1 − p)βv2
+pβv1
++
+=
+(v1 + µ)(α + µ) (v2 + µ)(α + µ)
+På grund av att KL är en endimensionell matris så är det samma som det dominanta egenvärdet, alltså får vi uttrycket för R0 som nämnts tidigare.
+Ett annat sätt som inte är lika vanligt att bestämma KL är att bestämma
+en delmängd av infektionsstadie som är stadie av smittsamhet. Det här stadiet
+är då en person som är infekterad kan smitta en person som är mottaglig. Det
+här går att jämföra med att räkna nyfödda eller personer som blivit myndiga i
+en population. I exempel 3.7 finns det två stadier av infektion (E1 och E2 ) och
+ett stadie av smittsamhet (I). Då kan K minskas till att den endast visar stadiet
+av smittsamhet, beskriver generationsprocessen och det går att beräkna R0 från
+KL .
+Sats 3.8. Det gäller även allmänt att det största egenvärdet för K är också det
+största egenvärdet för både KL och KS .
+Bevis. Börjar med att visa att K och KS har samma egenvärden som är olika noll.
+Låt v ̸= 0 vara egenvektorn för K med egenvärdet λ. Då är Kv = −ϵ⊤ T Σ−1 ϵv =
+λv. Multiplicera denna likhet med ϵ, och får ϵ(−ϵ⊤ )T Σ−1 ϵv = ϵλv. Från tidigare
+vet vi att ϵϵ⊤ T = T , varför ϵv är egenvektorn för KS med egenvärdet λ och då
+är egenvärden för K och KL samma och olika noll. Det är omöjligt att ϵv = 0
+eftersom det skulle implicera att λv = Kv = 0 och därmed vore v = 0 för λ ̸= 0.
+Nu visas att KS och KL har samma egenvärden olika noll. Låt v ̸= 0 vara
+egenvektorn för KL med egenvärdet λ. Då är KL v = −RΣ−1 Cv = λv. Multiplicera likheten med C för att få −CRΣ−1 Cv = λCv. Men CR = T , vilket betyder
+att Cv är egenvektorn till KS med egenvärdet λ. Det är omöjligt att Cv = 0 för
+det skulle implicera att λv = KL v = 0 och därmed vore v = 0 för λ ̸= 0.
+Matriserna K, KS och KL har därmed samma egenvärden som är olika noll
+och därmed samma dominanta egenvärde och samma rank.
+Sammanfattningsvis så har tre olika nästa generationsmatriser behandlats
+K, KS och KL . För att beräkna R0 bör det största egenvärdet av K beräknas,
+
+KAPITEL 3. REPRODUKTIONSTALET
+
+26
+
+R0 = ρ(K). I de flesta fall är endast K och KS relevanta och R0 kan beräknas
+från någondera matriser. På grund av att K har färre dimensioner än KS så
+är det enklare att komma till ett explicit uttryck för R0 med hjälp av K. Ur
+epidemiologisk synvinkel beskriver elementen i matrisen K = (kij ) stadiet av
+infektion och för varje stadie av infektion j har en person börjat sin infektion
+i stadie j. Följ sedan personen genom påföljande infektions liv och bestäm hur
+många nya fall hen är väntad att skapa för varje stadie av infektion i.
+
+KAPITEL 4. FÖRSTA TILLVÄXTEN AV EPIDEMIN I REALTID
+
+27
+
+Kapitel 4
+Första tillväxten av epidemin i
+realtid
+Det här kapitlet kommer att handla om första tillväxten av epidemin i realtid
+och är främst baserat på boken Mathematical Tools for understanding Infectious
+Disease Dynamics [6]. Sannolikheten som beskriver att det inte nödvändigtvis
+blir en exponentiell tillväxt fastän R0 > 1 betecknas med z∞ . I enkla fall kan
+man härleda uttryck för R0 och z∞ .
+Nackdelen med att mäta tillväxten i generationer är att de inte motsvarar
+det man observerar. Det här beror på att generationer ofta överlappar varandra.
+Därför kan epidemins exponentiella tillväxt i början skrivas som
+Cert
+
+(4.1)
+
+för något r > 0 som är antalet fall som registreras fram till tiden t och C > 0 är
+en konstant.
+Definition 4.1. Incidens, i(t), är antalet nya fall per tidsenhet, till exempel per
+dag. Incidens är lika med graden av infektionen multiplicerat med delpopulationen
+som består av mottagliga personer.
+I det här fallet är incidensen proportionell till derivatan, ert . Incidensen är
+ofta lägre i insamlat data än vad den är i verkligheten eftersom alla fall inte
+rapporteras. Nya fall vid tiden t beror på antalet kontakter mottagliga personer
+har med personer som är smittade före tiden t. Det antas i en deterministisk
+beskrivning att antalet smittade personer är lika med det väntade värdet för
+
+KAPITEL 4. FÖRSTA TILLVÄXTEN AV EPIDEMIN I REALTID
+
+28
+
+antalet smittade personer. När antaganden om kontakter, risken för smitta och
+elementära bokföringen läggs ihop fås ekvationen för incidensen i början av en
+epidemi
+
+T2
+
+∫︂
+
+i(t − τ )dτ
+
+i(t) = pc
+
+(4.2)
+
+T1
+
+där p, T1 , T2 och τ beskrivs i (2.1). Ett nytt fall vid tiden t är resultatet av
+en kontakt med en infekterad som hade blivit infekterad tidigare, exempelvis
+vid tidpunkten t − τ för något positivt τ . För att vara smittsam bör τ vara i
+intervallet T1 ≤ τ ≤ T2 . Infekterade personer skapar kontakter med hastigheten
+c och smittar infektionssjukdomen vidare med sannolikheten p. Om vi delar upp
+incidensen, antalet nya fall per tidsenhet, i sannolikheterna för värdet av τ av
+smitta, alltså personen som är ansvarig för smitta, så fås (4.2).
+Sats 4.2. Substitutionen i(t) = keλt , k > 0, λ ∈ (−∞, ∞) i (4.2) uppfyller
+ekvationen
+
+∫︂
+
+T2
+
+1 = pc
+
+e−λτ dτ =: f (λ).
+
+(4.3)
+
+T1
+
+Dessutom gäller R0 = pc(T2 −T1 ) = f (0) = 1, limλ→∞ f (λ) = 0 och limλ→−∞ f (λ) =
+∞.
+Bevis. Insättning av i(t) = keλt i (4.2) ger
+∫︂
+
+λt
+
+T2
+
+ke = kpc
+
+eλt−λτ dτ,
+
+(4.4)
+
+T1
+
+och vidare emedan k > 0, eλt > 0, att
+∫︂
+1 = pc
+
+T2
+
+(4.5)
+
+e−λτ dτ.
+
+T1
+
+För λ > 0 fås för högersidan av (4.3) att 1 = f (0) = pc(T2 − T1 ) = R0 . Vidare
+gäller att
+d
+dλ
+
+(︃ ∫︂
+pc
+
+T2
+
+T1
+
+−λτ
+
+e
+
+)︃
+dτ
+
+∫︂
+
+T2
+
+= −pc
+
+τ e−λτ dτ < 0,
+
+(4.6)
+
+T1
+
+varför f (λ) är en avtagande funktion. Emedan limλ→∞ maxT1 ≤τ ≤T2 e−λτ = 0,
+följer att limλ→∞ f (λ) = 0. På samma sätt gäller att limλ→−∞ maxT1 ≤τ ≤T2 e−λτ =
+∞, om T1 > 0. Om T1 = 0 så är gränserna för τ , γ ≤ τ ≤ T2 för fixerat γ > 0
+och därmed gäller samma argument. I dessa fall fås limλ→−∞ f (λ) = ∞.
+
+KAPITEL 4. FÖRSTA TILLVÄXTEN AV EPIDEMIN I REALTID
+
+29
+
+Det här kan sammanfattas som att det finns en reell rot λ = r, alltså visar
+(4.3) entydigt vad exponentiella ökningsgraden är för den här modellen. Det finns
+inte en explicit formel för r, i jämförelse med R0 . Låt r > 0 om och endast om
+R0 > 1 och r < 0 om och endast om R0 < 1. Det här betyder att det endast finns
+en ökning i real tid om och endast om det finns en ökning i generationsmodellen.
+Notera även att r = 0 om och endast om R0 = 1 och att det inte generellt gäller
+att för ett högt R0 värde är r högt. Till exempel även om människor kan få många
+barn när de är relativt gamla så kan populationsökningen vara långsam. Ur ett
+matematiskt perspektiv så är R0 endast beroende av T2 − T1 , medan ekvationen
+för r har magnituden av T1 och T2 en stor betydelse. Därtill är R0 dimensionslös
+medan r beror på enheten av tid som använts.
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+30
+
+Kapitel 5
+Kermacks och McKendricks modell
+Det här kapitlet kommer främst att handla om Kermacks och McKendricks modell. Kapitlet börjar med en genomgång hur Kermack och McKendirck arbetade.
+Därefter gås det igenom begrepp och definitioner, sedan matematiken kring modellen och tolkningar samt till sist en kort analys över artikeln [11] de publicerade
+år 1927 och dess popularitet.
+
+5.1
+
+Samarbete mellan Kermack och McKendrick
+
+Det här avsnittet baserar sig på artikeln The 1927 epidemic model of Kermack
+and McKendrick [5].
+Under 1800-talet fanns det en uppfattning om att dålig luftkvalitet orsakar
+malaria. Senare framkom det att malaria är ett virus men det var ännu oklart
+hur malaria smittar. År 1897 upptäckte Ronald Ross att malaria smittar via
+myggbett. Ross var mångbegåvad och fortsatte att undersöka malaria och kom
+fram till att om förhållandet mellan myggor och tätheten bland människor är
+tillräckligt låg kan man eliminera malaria.
+År 1901 åkte Ross till Sierra Leone för att vidta åtgärder för att minska
+malaria fallen. Till arbetsgruppen hörde Anderson Grey McKendrick, 25 år, som
+hade studerat vid universitet i Glasgow, därefter genomfört militären och sedan
+studerat tropisk medicin. Under tiden i Sierra Leone väckte Ross intresse för
+matematik och spridning av infektionssjukdomar hos McKendrick, som visade
+sig vara begåvad i de här ämnena.
+Efter tiden i Sierra Leone tillbringade McKendrick två årtionden i Indien där
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+31
+
+han studerade sjukdomen rabies. Han återvände till Skottland 1920 och började
+arbeta på Royal College of Physicians i Edinburgh. Ett år senare började den 23
+åriga biokemisten William Ogilvy Kermack arbeta på samma högskola och tre
+år senare blev han dessvärre blind på grund av en laboratorieexplosion. Trots
+olyckan slutade han inte att arbeta. Det är oklart när samarbetet mellan McKendirck och Kermack började men år 1927 gav de ut artikeln A contribution to
+the mathematical theory of epidemics. [11]
+
+5.2
+
+Beteckningar och definitioner
+
+Det här avsnittet baserar sig främst på boken Basic models in epidemiology [3].
+Kermacks och McKendircks modell är en grupperingsmodell där populationen
+är indelad i grupper. Modellen kallas SIR modellen och det finns tillämpningar
+SIS, eller SEIR, beroende på infektionssjukdomens beteende. Modellen baserar
+sig på att det finns en mottaglig population var det introduceras en obekant
+infektionssjukdom. Modellen fokuserar på att en liten grupp av personer blir
+infekterade som sedan smittar andra. Populationen är ofta delad i tre grupper
+S, I och R. Tid är en viktigt variabel i modellen, som betecknas med t.
+En annan modell är SIS modellen, där personer går från att varit infekterade
+till mottagliga, för det finns ingen immunitet för infektionssjukdomen. Sådana
+sjukdomar är vanligen orsakade av bakterier. Det finns även sjukdomar var personer inte lämnar infektionsstadiet, till exempel HIV. SEIR modellen är liknande
+som SIR men det finns en grupp E som betecknar gruppen som är exponerade.
+Under en epidemi är populationsstorleken konstant. Det betyder att det inte
+sker en demografisk utveckling utan personer som dött under epidemin antas ha
+dött av sjukdomen. Det här antagandet är rimligt när det kommer till infektionssjukdomar som varar en kort tidsperiod, exempelvis en vecka. När en ny
+infektionssjukdom introduceras är alla personer i populationen mottagliga för
+smitta, populationen är med andra ord naiv. Det antas även att populationen
+är homogen. I SIR modellen antas det att personer tillfrisknar eller dör efter
+infektion [14].
+• S(t) är personer som är mottagliga vid tidpunkt t.
+• I(t) är personer som är infekterade och smittar personer som är mottagliga
+vid tidpunkten t.
+
+32
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+• R(t) är personer som inte är mottagliga för smitta och smittar inte andra
+vid tidpunkten t. Till gruppen hör personer som är immuna, karantänsatta, som har tillfrisknat och är därmed immuna eller dött på grund av
+sjukdomen.
+Modellen skapas genom att derivera storleken av varje grupp och det antas
+att antalet personer i varje grupp är en differentierbar funktion över tid. Det här
+är fördelaktigt om det är många personer i varje grupp, annars kan resultatet bli
+snävt. Då fås Kermack och McKendricks modell [11],
+⎧
+dS
+⎪
+= −βS NI
+⎪
+⎪
+⎨ dt
+dI
+= βS NI − τ1 I
+dt
+⎪
+⎪
+⎪
+⎩ dR = 1 I
+dt
+
+(5.1)
+
+τ
+
+där N (t) är hela populationen som påverkas vid tidpunkten t och N (t) = S(t) +
+I(t) + R(t). En person går från att vara i gruppen mottaglig, S, till gruppen
+infekterad, I, till gruppen död eller immun, R. Om gruppen R(t) som har en
+egenskap att de inte mera kommer i kontakt med varken gruppen S(t) eller I(t)
+så är populationen N (t) := S(t) + I(t).
+Sannolikheten att en mottaglig person kommer i kontakt med en infekterad
+person är
+
+I
+.
+N
+
+Kontaktprocessen för att sprida smitta är baserad på kontakter
+
+mellan mottagliga och infekterade. Låt β = β(N ) beteckna effektiva kontakthastigheten som är en funktion av storleken av den aktiva populationen. Det är
+vanligt att anta att β = pϕ(N ) där p är sannolikheten för smitta per kontakt
+och ϕ(N ) är kontakthastigheten per person. Då fås att ϕS är medelvärdet av
+kontakter som mottagliga personer har per tidsenhet. Mottagliga personer har
+kontakter med personer från grupperna S, I och R, på grund av att det antas att gruppen är homogent blandat, så är kontakten med infekterade personer
+proportionerlig med
+ϕS NI ,
+
+1
+.
+N
+
+Det totala medelvärdet för hur ofta kontakter sker är då
+
+dock är det viktigt att observera att alla kontakter inte leder till infektion.
+
+Den effektiva kontakthastigheten, även kallad incidens, är β(N )S NI . Om N är
+konstant är ökningen av nya infektioner proportionerligt till både S och I. Det
+här gäller även om N är icke-konstant men β(N ) := pN det vill säga, en linjär
+funktion av N .
+Att personer förflyttas från gruppen I till gruppen R är konstant
+
+1
+,
+τ
+
+per
+
+33
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+person per tidsenhet. Det här antyder att fördelningen över hur lång tid en person
+tillbringar i grupp I är exponentiellt fördelad med medelvärdet τ .
+Ett nyckelantagande i Kermack och McKendricks modell är incidensen av
+infektionssjukdom.
+Definition 5.1. Graden av infektion är sannolikheten per tidsenhet, till exempel
+en dag, att en mottaglig person blir infekterad.
+Om det antas att en person som blivit smittad överförs till gruppen infekterade och därmed kommer hen att påverka graden av infektion. Det här varar
+medan hen hör till gruppen infekterade och personen kommer att sluta påverka när hen tillfrisknar. Personen kommer att lämna gruppen med en konstant
+sannolikhet per tidsenhet. [5]
+
+5.3
+
+Matematiken i Kermacks och McKendricks
+modell
+
+Det här avsnittet är främst baserat på artikeln Basic models in epidemiology [3]
+och på boken Mathematical Tools for Understanding Infectious Disease Dynamics
+[6].
+På grund av att populationen är konstant så är S + I + R = K eller som
+andelar av K,
+
+1
+(S
+K
+
++ I + R) = 1. Det går att eliminera R från (5.1) genom att
+
+R = K − S − I. Vi kan bilda ett tvådimensionellt ekvationssystem,
+⎧
+⎨ dS = −βS I
+dt
+K
+⎩ dI = βS I − 1 I
+dt
+K
+τ
+
+(5.2)
+
+där β är antalet kontakter per tidsenhet och τ är mätt i tidsenheter.
+I ekvationssystemet (5.2) är
+då t ≥ 0. För alla t är
+S(t) ≤ S(0) <
+om S(0) >
+
+K
+βτ
+
+K
+βτ
+
+dI(t)
+dt
+
+dS(t)
+dt
+
+< 0 om och endast om S <
+
+som implicerar
+
+så är
+
+dI(t)
+dt
+
+< 0 för alla t, det vill säga att S är avtagande
+
+dI(t)
+dt
+
+K
+.
+βτ
+
+Om S(0) <
+
+K
+βτ
+
+så är
+
+< 0 för alla t och infektionen dör ut. Men
+
+> 0 vilket implicerarar att S(t) ≥
+
+är avtagande för i t så minskar S(t) <
+
+K
+βτ
+
+K
+βτ
+
+på grund av att S
+
+under epidemin och då är
+
+dI
+dt
+
+< 0. Om
+
+få antal infekterade personer introduceras till en naiv population vid tidpunkten
+noll, så att I(0) = ϵ > 0, R(0) = 0 och S(0) = K − ϵ ≈ K fås tröskelvärdet
+R0 = βτ.
+
+(5.3)
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+34
+
+Om R0 < 1 dör infektionen ut och om R0 > 1 bildas det en epidemi i
+populationen. För att förenkla analysprocessen antas det att K = 1. Det bör
+noteras att det här antagandet inte påverkar R0 eftersom β antas vara konstant
+men det innebär en skillnad eftersom Kermack och McKendrick antog att β =
+pK. Alltså måste β mätas i andra enheter.
+För att förenkla analysen av systemet (5.2) antas det att K = 1, då fås
+⎧
+⎨ dS = −βS(t)I(t)
+dt
+
+⎩ dI = βS(t)I(t) − 1 I(t)
+dt
+τ
+Jämviktspunkterna för systemet ges då av,
+⎧
+⎨ dS = −βS(t)I(t) = 0
+dt
+⎩ dI = βS(t)I(t) − 1 I(t) = 0.
+dt
+
+(5.4)
+
+(5.5)
+
+τ
+
+En jämviktspunkt är (S∞ , 0), med godtyckligt S∞ , då 0 ≤ S∞ ≤ 1, för K = 1.
+Låt
+
+⎧
+⎨ dS = −βS(t)I(t) =: u(S, I)
+dt
+⎩ dI = βS(t)I(t) − 1 I(t) =: v(S, I)
+dt
+
+τ
+
+Då fås som i avsnitt 1.2 att
+(︄ )︄ (︄
+)︄ (︄ )︄ (︄
+)︄ (︄ )︄
+dS
+du
+du
+(S
+,
+0)
+(S
+,
+0)
+S
+0
+−βS
+S
+∞
+∞
+∞
+dt
+dS
+dI
+=
+=
+.
+dI
+dv
+dv
+1
+(S
+,
+0)
+(S
+,
+0)
+I
+0
+βS
+−
+I
+∞
+∞
+∞
+dt
+dS
+dI
+τ
+(︄
+Låt A =
+
+0
+
+−βS∞
+
+(5.6)
+
+(5.7)
+
+)︄
+
+och egenvärdena fås genom det(A − λI2 ) = 0, där λ är
+0 βS∞ − τ1
+egenvärden och I2 är 2 × 2 enhetsmatrisen.
+(︄(︄
+)︄
+(︄
+)︄)︄
+0 −βS∞
+1 0
+det(A − λI2 ) = det
+−λ
+0 βS∞ − τ1
+0 1
+(5.8)
+(︄
+)︄
+(︃
+)︃
+−λ
+−βS∞
+1
+= det
+= −λ βS∞ − − λ
+= 0,
+1
+τ
+0 βS∞ − − λ
+τ
+
+varför λ1 = 0 och λ2 = βS∞ − τ1 . På grund av egenskaper hos egenvärden kan man
+inte dra slutsater från egenvärdet λ1 = 0. Däremot är egenvärdet λ2 = βS∞ −
+
+1
+τ
+
+nyttigt för analysen. Emedan |λ2 | > 0, så är R0 = max{|λ1 |, |λ2 |} = |λ2 |
+Gränsvärdet S(∞) beror på startpunkten S(0), men S(∞) > 0 för alla S(0).
+Det betyder att alla personer i populationen inte kommer att bli infekterade.
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+35
+
+Samma fenomen kan även observeras i data från tidigare epidemier. Nu påstås
+det att banan som går mellan punkterna (S(0), 0) och (S(∞), 0) har sambandet,
+1
+1
+ln S(∞) = S(0) −
+ln S(0).
+(5.9)
+S(∞) −
+βτ
+βτ
+Det fås från (5.4)
+βSI − τ1 I
+dI
+dI dt
+1
+=
+·
+=
+= −1 +
+.
+dS
+dt dS
+−βSI
+τ βS
+För att få I beräknas
+∫︂
+∫︂
+dI
+1
+1
+= −1 +
+ds = −S +
+ln S + C
+dS
+τ βS
+τβ
+var följer att
+1
+1
+−S+
+ln S + C = I ⇔ C = I + S −
+ln S,
+τβ
+τβ
+där C är en konstant. På grund av att I(∞) = I(0) = 0 fås att
+1
+1
+S(∞) −
+ln S(∞) = S(0) −
+ln S(0) = R0 .
+βτ
+βτ
+I modellen antas det att kontakthastigheten β är konstant. Det här
+
+(5.10)
+
+(5.11)
+
+(5.12)
+
+(5.13)
+är inte
+
+alltid fallet utan β kan variera beroende på sjukdomens beteende och hur människor beter sig. Därför kan det vara svårt att uppskatta β och R0 . Fastän β
+kan variera är S(0) ≈ K när en sjukdom introduceras i en population som är
+mottaglig och S(∞), andelen personer med antikroppar, det här kan uppskattas
+från serologiskt data. Den här relationen gör det möjligt att beräkna βτ när man
+har kunskap om S(0) och S(∞). Då fås
+S(0) − S(∞) =
+
+1
+[ln S(0) − ln S(∞)]
+βτ
+S(0)
+
+ln S(∞)
+1
+S(0)
+ln
+⇔ βτ =
+.
+=
+βτ S(∞)
+S(0) − S(∞)
+Data i exemplet nedan är från artikeln Viral infections of humans [7].
+
+(5.14)
+
+Exempel 5.2. Under en epidemi vet man att S(0) = 0, 911 och att S(∞) =
+0, 5133 Då får från (5.14) att
+0,911
+ln 0,5133
+
+= 1, 44 > 1.
+(5.15)
+0, 911 − 0, 5133
+Det kan antas att τ är ungefär 3 dagar och då är β ≈ 0, 48 per dag. Så länge
+R0 = βτ =
+
+som S(0) >
+0, 911 >
+
+1
+1,44
+
+1
+βτ
+
+är det möjligt att en epidemi bryter ut. I det här fallet har vi
+
+det vill säga 0, 911 > 0, 694, alltså det finns en möjlighet att en
+
+epidemi bryter ut.
+
+36
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+5.3.1
+
+SIS modellen
+
+Den enklaste formen av SIS modellen är [11],
+⎧
+⎨ dS(t) = −βS(t) I(t) + 1 I(t)
+dt
+N
+τ
+dI(t)
+I(t)
+⎩
+= βS(t)
+− 1 I(t),
+dt
+
+N
+
+(5.16)
+
+τ
+
+där S + I = N och personer förflyttas tillbaka till grupp S med graden τ1 I istället
+för att förflyttas till grupp R. I det här fallet är populationen också konstant,
+N = K. Det kan antas som tidigare att K = 1 och förhållandet I(t) = K − S(t)
+gäller för att förenkla modellen,
+(︃
+)︃ (︃
+)︃
+S(t)
+K
+dS(t)
+= 1−
+−βS(t) +
+dt
+K
+τ
+
+(5.17)
+
+med två jämviktspunkter
+S(t) = K och S(t) =
+Från den andra jämviktspunkten fås S(t) =
+1
+βτ
+
+<
+
+S(t)
+K
+
+K
+βτ
+
+K
+.
+βτ
+som är lika med
+
+(5.18)
+1
+βτ
+
+=
+
+S(t)
+.
+K
+
+Om
+
+eller βτ > 1 så är båda jämviktspunkterna i intervallet 0 < S(t) ≤ K.
+
+Däremot, om
+
+1
+βτ
+
+>
+
+S(t)
+K
+
+eller βτ < 1, är endast jämviktspunkten S = K relevant.
+
+Det antas att β är konstant som implicerar att K kan vara lika med 1.
+För att göra ekvationssystemet linjärt görs som i teorin i kapitel 1.2. Först
+linjäriseras systemet i jämviktspunkten S(t) = 1 (eller I = 0). Då fås
+(︃
+)︃
+dS(t)
+1
+= (1 − S(t)) −βS(t) +
+=: u(S)
+dt
+τ
+
+(5.19)
+
+och när u(S) deriveras fås
+du
+1
+= −β + 2βS − .
+dS
+τ
+
+(5.20)
+
+När S = 1 fås att
+
+du
+1
+=β−
+(5.21)
+dS
+τ
+Jämvikten är asymptotiskt stabil om β − τ1 < 0 eller βτ < 1 och instabil om
+βτ > 1.
+Nu undersöks det linjäriserade ekvationssystemet i jämviktspunkten S =
+
+1
+,
+βτ
+
+som är intressant endast om βτ > 1. Då fås
+du
+1
+= − β.
+dS
+τ
+
+(5.22)
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+Jämvikten är asymptotiskt stabil om
+
+1
+τ
+
+37
+
+− β < 0 eller βτ > 1. Resultatet tyder på
+
+att det alltid finns en asymptotiskt stabil jämviktspunkt som lösningen tenderar
+mot. Om βτ < 1 är jämviktspunkterna S = 1 och I = 0 tyder det på att
+infektionssjukdomen kommer att försvinna. Om βτ > 1 och de asymptotiska
+stabila jämviktspunkterna är S =
+
+1
+βτ
+
+och I = 1 −
+
+1
+βτ
+
+> 0 så kallas punkterna
+
+endemisk jämviktspunkt. Då kommer infektionssjukdomen att spridas.
+
+5.3.2
+
+SIER modellen
+
+SIER modellen skiljer sig från SIR modellen genom att de finns en exponeringstid hos infektionssjukdomen. Med andra ord betyder det att en smittad person
+inte genast smittar andra utan först i infektionsstadiet I. Exponeringstiden är en
+bestämd längd, ω, med sannolikheten Q(s) för att personer ska hållas kvar i gruppen exponerade vid tiden s efter att ha blivit exponerad för infektionssjukdomen.
+Analysen av infektionssjukdomsmodeller med exponerings- och infektionstid av
+bestämd längd minskar analysen av differential-differensekvationer med två förseningar i tid.
+I exemplet nedan beaktas en SEIR modell, där E betecknar gruppen som
+är exponerad. SIR och SIS modellerna är speciella fall med exponeringstiden ω
+lika med 0.
+Exempel 5.3. Låt SEIR modellen vara utan födslar och dödlighet där S + E +
+I + R = K. Låt SEIR modellen ha en exponeringsperiod av bestämd längd ω och
+en infektionsperiod av bestämda längden τ . Då är
+⎧
+dS(t)
+⎪
+= −βS(t) I(t)
+⎪
+dt
+K
+⎪
+⎪
+⎪
+⎪ dE(t)
+I(t)
+⎨
+= βS(t) K − βS(t − ω) I(t−ω)
+dt
+K
+dI(t)
+−ω)
+⎪
+⎪
+= βS(t − ω) I(t−ω)
+− βS(t − τ − ω) I(t−τ
+⎪
+dt
+K
+K
+⎪
+⎪
+⎪
+⎩ dR(t)
+−ω)
+= βS(t − τ − ω) I(t−τ
+dt
+K
+och ekvationssystemet kan också skrivas som
+⎧
+dS(t)
+⎪
+= −βS(t) I(t)
+⎪
+dt
+K
+⎪
+⎪
+⎪
+⎪
+⎨E(t) = ∫︁ t βS(x) I(x) dx
+K
+t−ω
+∫︁
+t−ω
+⎪
+⎪I(t) = t−τ −ω βS(x) I(x)
+dx
+⎪
+K
+⎪
+⎪
+⎪
+⎩ dR(t)
+−ω)
+= βS(t − τ − ω) I(t−τ
+.
+dt
+K
+
+(5.23)
+
+(5.24)
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+38
+
+Vi kan skriva det här som två ekvationer, ty E och R är bestämda när S och I
+är bekanta, nämligen
+⎧
+⎨ dS(t) = −βS(t) I(t)
+dt
+K
+⎩I(t) = ∫︁ t−ω βS(x) I(x) dx.
+t−τ −ω
+
+K
+
+Det här kan skrivas som en ekvation,
+∫︂ t−ω
+dS(x)
+dx = S(t − τ − ω) − S(t − ω)
+I(t) = −
+dx
+t−τ −ω
+och då
+
+dS(t)
+dt
+
+(5.25)
+
+(5.26)
+
+= −βS(t) I(t)
+fås
+K
+dS(t)
+[S(t − τ − ω) − S(t − ω)]
+= −βS(t)
+.
+dt
+K
+
+(5.27)
+
+För att den här enkla differential-differensekvationen med två förseningar ska
+gälla måste det läggas till data från starten för att τ + ω ≤ t ≤ 0 ska vara
+ett välformulerat problem. Det här beror på att varje konstant är en lösning till
+differential-differensekvationen. Det är möjligt att bevisa att S(t) är avtagande
+och närmar sig en gräns S(∞) > 0 då t → ∞. Gränsvärdet kommer att bero på
+ursprungsdata. Analysen av den här modellen är mer komplicerad än analysen
+av Kermacks och McKendricks ursprungliga SIR modell, men tröskelvärdet för
+reproduktionstalet är samma för båda modellerna.
+
+5.3.3
+
+Exempel av SIR modellen
+
+Mässling är en sjukdom som har undersökts i flera olika populationer med olika
+jämviktspunkter. Soper [15] formulerade en SIR modell år 1929 med en konstant
+grad av födslar µK i gruppen S och en konstant takt av dödlighet µK i gruppen
+R. Då fås
+
+⎧
+dS
+⎪
+= − βS
+I + µK
+⎪
+⎪
+K
+⎨ dt
+dI
+= βS
+I − τ1 I
+dt
+K
+⎪
+⎪
+⎪
+⎩ dR = 1 I − µK.
+dt
+
+(5.28)
+
+τ
+
+Den här modellen är inte realistisk eftersom kopplingen mellan födsel bland mottagliga och dödlighet är ohållbar. Den är också matematiskt ohållbar om R(0)
+och I(0) är tillräckligt små eftersom då kommer R(t) att bli negativt. Den här
+modellen antar att β är en funktion av K och då bör man vara noggrann med
+enheterna.
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+39
+
+Hethcote [9] kom fram till att bristerna i Sopers modell löses med att anta
+att dödlighet i respektive grupp är proportionell med antalet personer i gruppen.
+Det leder till att populationsstorleken hålls konstant. Nu fås följande modell,
+⎧
+dS
+⎪
+= −βS KI + L1 (K − S)
+⎪
+⎪
+⎨ dt
+dI
+(5.29)
+= βS KI − τ1 I − L1 I
+dt
+⎪
+⎪
+⎪
+⎩ dR = 1 I − 1 R,
+dt
+
+τ
+
+L
+
+där L är medelvärdet för livslängden då
+
+1
+L
+
+är graden för dödlighet. Här gäller även
+
+att S + I + R = K. Då kan ekvationssystemet skrivas om genom att eliminera
+R, och det följer
+⎧
+⎨ dS = −βS I + 1 (K − S)
+dt
+K
+L
+⎩ dI = βS I − 1 I − 1 I = I (︁β S −
+dt
+K
+τ
+L
+K
+
+1
+τ
+
+−
+
+1
+L
+
+)︁
+
+(5.30)
+.
+
+Jämviktspunkterna fås genom att
+⎧
+⎨ dS = −βS I + 1 (K − S) = 0
+dt
+K
+L
+⎩ dI = βS I − 1 I − 1 I = 0
+dt
+
+eller
+
+K
+
+τ
+
+(5.31)
+
+L
+
+⎧
+⎨β SI = 1 (K − S)
+K
+L
+(︁
+⎩I β S − 1 − 1 )︁ = 0.
+K
+τ
+L
+
+(5.32)
+
+En jämviktspunkt är S(t) = K, I = 0 (infektionssjukdom försvinner). Om
+(︁ S
+)︁
+dI
+> 0, alltså om β K
+− τ1 − L1 > 0,
+dt
+β
+
+S(t) 1
+1
+S(t)
+1
+1
+τ +L
+S(t)
+− − >0⇔β
+> + ⇔
+<
+.
+K
+τ
+L
+K
+τ
+L
+βτ L
+K
+
+I början av epidemin är S(0) ≈ K och då fås
+(︃
+)︃
+τ +L
+L
+< 1 ⇔ βτ
+> 1.
+βτ L
+L+τ
+Det finns en annan jämviktspunkt S(t) =
+
+τ +L
+K
+βτ L
+
+(5.33)
+
+(5.34)
+
+med I > 0 (endemisk jämvikts-
+
+punkt). Genom linjärisering är det enkelt att visa om
+(︃
+)︃
+L
+βτ
+< 1,
+L+τ
+
+(5.35)
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+är jämviktspunkten S = K, I = 0 asymptotiskt stabil, medan om
+)︃
+(︃
+L
+>1
+βτ
+L+τ
+
+40
+
+(5.36)
+
+är jämviktspunkten instabil.
+Tröskelvärdet
+
+(︃
+R0 = βτ
+
+L
+L+τ
+
+)︃
+
+(5.37)
+
+är analogt med Kermack och McKendricks modell förutom att τ måste korrigeras för att ta i beaktande naturlig dödlighet under infektionsperioden, alltså
+korrigerar
+
+(︃
+τ
+
+L
+L+τ
+
+)︃
+
+(5.38)
+
+medeltalet över dödlighet under infektionsperioden.
+Jämviktspunkten S = K, I = 0 är alltså instabil och man kan visa att
+endemiska jämviktspunkten är asymptotiskt stabil om R0 > 1. Således tillåter
+modellen endemiska jämviktspunkter. Både SIR modellen med, födsel och dödlighet, och SIS modellen stöder endemiska jämviktspunkter. Alltså är kravet för
+stödet av endemiska jämviktspunkter flödet av nya mottagliga, antingen genom
+födslar eller tillfrisknande utan immunitet.
+Generellt om β(N ) := pϕ(N ) är villkoret R0 > 1 ekvivalent med
+ϕ(S(0)) >
+
+τ +L
+,
+pτ L
+
+(5.39)
+
+eller om ϕ har en invers med villkoret
+−1
+
+S(0) > Nkritisk = ϕ
+
+(︃
+
+τ +L
+pτ L
+
+)︃
+.
+
+(5.40)
+
+Alltså måste den mottagliga populationen nå ett kritiskt värde för att en epidemi
+ska uppstå. Uppskattningen av det kritiska värdet N beror på kunskapen av funktionen β(N ). Grova uppskattningar av Nkritisk har gjorts på basen av antagandet
+β(N ) = pN . Då har Nkritiskt beräknats från indirekt data med formeln
+Nkritiskt =
+
+τ +L
+.
+pτ L
+
+(5.41)
+
+Ett exempel med de här uppskattningarna är att åtminstone 300 000 personer
+kommer att insjukna i influensa i städer på fastlandet medan åtminstone 500 000
+personer kommer att insjukna på öar. Orsaken att värdena är olika är för att p och
+
+41
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+infektionsåldern av infektionen varierar. Ett annat alternativ är att använda data.
+Då fås, om N är minst 300 000 i städer och p är tillräckligt stort, att endemin
+uppehålls. Samma resultat gäller för öar så länge som N är minst 500 000. För
+att summera dessa resultat måste data vara konsistent med samma funktion
+β(N ), alltså då måste p variera mellan öar och städer. [1]
+Tröskelvärden är viktiga för att bestämma tillvägagångssättet för att kontrollera och utrota smittspridningen av sjukdomen. För att en infektionssjukdom ska
+utrotas bör R0 < 1. Det här kan ske genom att personer i populationen blir immuna efter insjuknande och då flyttas personen från grupp S till R och då minskar
+K. Graden av immuniseringen av en andel, q, av populationen är samma som
+(︁ L )︁
+att byta ut K till K(1 − q). Därmed ersätts reproduktionstalet R0 = βτ L+τ
+(︁ L )︁
+med βτ L+τ
+(1 − q). Villkoret
+(︃
+βτ
+
+L
+L+τ
+
+)︃
+
+(1 − q) < 1 ger 1 − q <
+
+1
+1
+eller q > 1 −
+,
+R0
+R0
+
+(5.42)
+
+som garanterar att det lyckats.
+Flockimmunitet bildas när en tillräckligt stor andel är immuna så att infektionssjukdomen inte sprids mera. Exempel på en sjukdom som hela världen är
+immun mot är smittkoppor. Det har man lyckats uppnå genom vaccinering.
+
+5.3.4
+
+Smittsamhetstakt och väntetid
+
+I de tidigare modellerna har det antagits att takten av förflyttning mellan grupperna har varit proportionerlig till storleken av gruppen, som till exempel graden
+av tillfrisknande τ1 I. I verkligheten betyder inte dessa antaganden att tillfrisknande beror på storleken av gruppen infekterade. En bättre formulering i stället
+för differentialekvationen
+dI(t)
+I(t) 1
+= βS(t)
+− I(t)
+dt
+N
+τ
+är
+
+∫︂
+I(t) =
+
+t
+
+βS
+0
+
+I(x) − 1 (t−x)
+dx.
+e τ
+N (x)
+
+(5.43)
+
+(5.44)
+
+Om t är tillräckligt stort för att personer som var infekterade i början då t = 0
+som har återhämtat sig och vi antar att N (x) = K. Då är integralekvationen
+
+42
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+ekvivalent med differentialekvationen. Då ger derivering av integralen
+∫︂ t
+I(t)
+I(x) d − 1 (t−x)
+dI(t)
+= βS(t)
++
+βS(x)
+e τ
+dx
+dt
+K
+K dt
+0
+∫︂
+I(t) 1 t
+I(x) − 1 (t−x)
+= βS(t)
+−
+βS(x)
+e τ
+dx
+K
+τ 0
+K
+I(t) 1
+= βS(t)
+− I(t).
+K
+τ
+
+(5.45)
+
+1
+
+Integralekvationen tolkas så att e− τ s är sannolikheten att man är infekterad vid
+tidpunkten s efter att man blivit infekterad. Låt
+βS(x)
+
+I(x) − 1 (t−x)
+e τ
+K
+
+(5.46)
+
+beskriva antalet personer som blir infekterade vid tidpunkt x och är infekterade
+(t − x) tidsenheter senare. Integralen
+∫︂ t
+I(x) − 1 (t−x)
+e τ
+dx
+βS(x)
+K
+0
+
+(5.47)
+
+är integralen över tiden x ≤ t av antalet infekterade vid tidpunkt t. Genomsnittliga infektionstiden är
+
+∫︂
+
+∞
+
+1
+
+(5.48)
+
+e− τ s ds = τ.
+
+0
+
+En liknande tolkning kan anpassas för proportionalitetskonstanten
+
+1
+L
+
+för död-
+
+lighetsgraden i grupperna i SIR modellen var födsel och dödlighet beaktas. Låt
+1
+
+e− L s
+
+(5.49)
+
+vara sannolikheten för överlevnad till åldern s och därmed är L förväntade genomsnittliga livslängden.
+Det går att ge en tolkning för den väntade tiden av graden av infektion i SIR
+modellen med födsel och dödlighet. I den endemiska jämviktspunkten (S∞ , I∞ ) är
+graden av nya infektioner βS∞ IK∞ . Låt β IK∞ vara graden av infektion per mottaglig
+person. Om det antas att en exponentiell sannolikhetsfördelning över infektion
+av en person, beskriver medelvärdet för tiden en person tillbringar i gruppen
+mottagliga före infektion är
+A=
+
+K
+.
+βI∞
+
+K
+.
+βI∞
+
+Låt då medelvärdet för infektionsåldern vara
+
+Låt (S∞ , I∞ ) vara den endemiska jämviktspunkten som tidigare, med
+
+I∞ > 0 som löser ekvationerna
+⎧
+⎨βS∞ I∞ = 1 (K − S∞ )
+K
+L
+⎩ I∞ (βS − 1 − 1 ) = 0
+∞
+K
+τ
+L
+
+(5.50)
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+varav det fås
+
+⎧
+⎨S∞ =
+⎩I =
+∞
+
+τ +L
+K
+βτ L
+K
+(K
+βLS∞
+
+− S∞ )
+
+(︃
+
+)︃
+
+43
+
+(5.51)
+
+Reproduktionstalet är då
+L
+τ +L
+
+R0 = βτ
+
+=
+
+K
+,
+S∞
+
+(5.52)
+
+med R0 > 1. Från dessa förhållanden fås att
+L
+S∞
+I∞
+K
+K
+= βL
+=
+(1 −
+)=
+− 1 = R0 − 1.
+A
+K
+S∞
+K
+S∞
+
+(5.53)
+
+Relationen
+
+L
+(5.54)
+A
+är användbar för att uppskatta reproduktionstalet då L och A kan mätas. Notera
+R0 = 1 +
+
+att denna härledning antar att infektionsstadiet är endemiskt och därmed är
+R0 > 1.
+Ett specialfall är att i stället för att anta att graden av tillfrisknande är exponentiellt fördelad, anta att P (s) är sannolikheten för återstående infektion vid
+tidpunkten s efter att personen blivit infekterad. P (s) är en avtagande funktion
+med P (0) = 1. Låt
+
+∫︂
+
+∞
+
+P (s)ds
+
+τ=
+
+(5.55)
+
+0
+
+vara genomsnittet av infektionstiden. Ett viktigt specialfall är
+⎧
+⎨1, 0 ≤ s ≤ τ
+P (s) =
+⎩0, s > τ
+
+(5.56)
+
+motsvarande till en bestämd infektionsperiod τ . Då är integralekvationen för I(t)
+∫︂ t
+I(t) =
+βS(x)I(x)P (t − x)dx
+(5.57)
+0
+
+som kan skrivas som
+
+∫︂
+
+t
+
+I(t) =
+
+βS(x)I(x)dx
+
+(5.58)
+
+t−τ
+
+som är ekvivalent med differentialekvationen
+dI(t)
+= βS(t)I(t) − βS(t − τ )I(t − τ ).
+dt
+
+(5.59)
+
+KAPITEL 5. KERMACKS OCH MCKENDRICKS MODELL
+
+5.4
+
+44
+
+Kermack och McKendricks artikels framgång
+
+I början av september 2021 har Kermacks och McKendricks artikel [11] citerats
+103 330 gånger och artikeln har laddats ner från Royal Society 49 938 (jämfört
+med 2019, då hade artikeln citerats 6 230 gånger och laddats ner 21 695 gånger)
+sen den publicerades elektroniskt år 1997. Det här kan tolkas som att artikeln är
+lyckad. Enligt Diekmann finns det orsak till tvivel att artikeln läses ordentligt.
+Orsaken är att det finns en tro om att artikeln handlar om SIR systemet, vilket
+kan bero på att den inte lästs utan personer har hört eller läst om den i artiklar eller andra sammanhang. En annan orsak är att SIR modellen (5.1) är en
+standardform av att skapa modeller för tillämpade matematiker och att många
+teorier och verktyg finns. Däremot har förnybara ekvationer oändligt många dimensioner. Enligt Diekmann är artikeln, [11] en bra artikel men det är vanligt
+att de viktiga insikterna förbises. [5]
+
+KAPITEL 6. DEN SLUTLIGA STORLEKEN PÅ EN EPIDEMI
+
+45
+
+Kapitel 6
+Den slutliga storleken på en
+epidemi
+I en sluten population kommer andelen av mottagliga personer att minska när
+infekterade personer tillfrisknar eller dör. Det här betyder att en epidemi är
+ändlig i tid som går mot oändligheten. Det här kapitlet är baserat på boken
+Mathematical Tools for understanding Infectious Disease Dynamics [6].
+Låt s = S/N vara andelen personer som är mottagliga för smitta i en sluten
+population N . Låt s(∞) vara andelen mottagliga personer i slutet av epidemins
+utbrott. Komplementet för s(∞) är 1 − s(∞) som är andelen av populationen
+som blivit infekterade, alltså slutliga storleken av epidemin. Ett viktigt resultat
+är att s(∞) är en lösning av den slutliga storleksekvationen
+ln s(∞) = R0 (s(∞) − 1)
+
+(6.1)
+
+s(∞) = e−R0 (1−s(∞)) .
+
+(6.2)
+
+och kan även skrivas som
+
+Ekvation (6.1) kommer från (5.12),
+1
+1
+ln S(t) − S(t) − I(t) =
+ln S(0) − S(0) − I(0)
+βτ
+βτ
+
+(6.3)
+
+Med s(t) = S(t)/N fås att
+[︃
+]︃
+S(0) + I(0) I(t)
+ln s(t) = ln s(0) + N βτ s(t) −
++
+.
+N
+N
+
+(6.4)
+
+KAPITEL 6. DEN SLUTLIGA STORLEKEN PÅ EN EPIDEMI
+
+46
+
+Då t → ∞ går I(t) → 0. Låt S(0) + I(0) = N . Då limt→∞ s(t) = 1 så fås således
+då t → ∞ att
+ln s(∞) = R0 (s(∞) − 1),
+
+(6.5)
+
+där R0 = N βτ .
+Sats 6.1. Då R0 < 1 är den relevanta lösningen s(∞) till (6.1) given av s(∞) =
+1. Då R0 > 1 finns den relevanta lösningen s(∞) i intervallet (0, 1).
+Bevis. Funktionen h(s) = ln s − R0 (s − 1) uppfyller h(1) = 0, h′ (1) = 1 −
+R0 , h′′ (s) = −1/s2 < 0 för 0 < s < 1. Därtill, h(s) ↓ −∞ då s ↓ 0 och
+h(s) ↓ −∞ då s → ∞. Egenskapen h′′ (s) < 0 garanterar att det finns högst två
+rötter. För att h(1) = 0 och h′ (1) = 1 − R0 , vet vi att h(s) > 0 för s < 1 då
+R0 < 1 och för s > 1 då R0 > 1. Kontinuiteten för h och faktumet att h(s) ↓ −∞
+för både s ↓ 0 och s → ∞ implicerar att för R0 ̸= 1 finns det alltid ett annat
+nollställe som är större än ett och därmed irrelevant då R0 < 1. Då nollställe är
+mindre än ett och kallas s(∞) då R0 > 1. För specialfallet R0 = 1 har vi s = 1
+som är ett dubbel nollställe. När R0 < 1 fås att s(∞) = 1 vilket betyder att den
+nya infektionen som introducerats i den slutna populationen inte leder till ett
+omfattande utbrott av en epidemi. När R0 > 1 existerar det en entydig lösning
+i intervallet (0, 1).
+Det går att dra slutsatsen att en viss andel av s(∞) slipper att bli infekterade som beror på R0 i ekvation (6.2). Ju större R0 är, desto mindre andel av
+populationen blir inte infekterade. Andelen blir egentligen obefintligt liten om
+R0 är stort.
+
+6.1
+
+Den slutliga storleken av en epidemi i en population utan restriktioner
+
+Det antas att det för en population inte vidtas åtgärder för att minska smittspridningen. Det antas även att infektionen i fråga är såpass allvarlig att det finns en
+stor sannolikhet att den leder till död. När infektionen sprider sig i populationen
+minskar populationen men infektionens spridning fortsätter i samma grad. I det
+här fallet är antalet kontakter per tidsenhet oberoende av populationsstorleken.
+
+KAPITEL 6. DEN SLUTLIGA STORLEKEN PÅ EN EPIDEMI
+
+47
+
+Det här leder till att graden av epidemin inte minskar så snabbt som det tidigare antogs då populationstätheten och antalet kontakter mellan personer per
+tidsenhet är proportionell till populationens storlek. Det finns två parametrar i
+den slutliga storleksekvationen, sannolikheten att man överlever infektionen f
+och R0 . Populationen kommer att ha två delar: andelen som inte får sjukdomen
+som betecknas med s(∞) och andelen som överlevt infektionen som betecknas
+med n(∞). Låt n(∞), s(∞) och konstanten f ha relationen
+n(∞) − s(∞) = f (1 − s(∞)).
+
+(6.6)
+
+För att komma fram till ett annat samband mellan n(∞), s(∞) och R0 ser
+vi på följande exempel.
+Exempel 6.2. Beakta följande ekvationssystem,
+⎧
+dS
+⎪
+= −γ SI
+⎪
+⎪
+N
+⎨ dt
+dI
+= γ SI
+− αI
+dt
+N
+⎪
+⎪
+⎪
+⎩ dN = −(1 − f )αI,
+
+(6.7)
+
+dt
+
+där γ är produkten av väntade antalet kontakter per tidsenhet och sannolikheten
+för att smitta ska ske. Längden av infektionstiden är exponentiellt fördelad med
+parametern α. Om man beräknar, så fås
+γ SI
+dS
+γS
+R0 S
+N
+=
+=
+=
+dN
+(1 − f )αI
+(1 − f )αN
+(1 − f )N
+där R0 =
+
+γ
+α
+
+(6.8)
+
+i det här fallet. Vi omskriver
+dS
+R0 S
+=
+dN
+(1 − f )N
+
+(6.9)
+
+dS
+R0 dN
+=
+S
+1−f N
+och integrerar båda sidorna från σ till t. Då fås
+
+(6.10)
+
+till
+
+ln
+
+S(t)
+R0
+N (t)
+=
+ln
+.
+S(σ)
+1 − f N (σ)
+
+(6.11)
+
+Nu följer att
+S(t)
+=
+S(σ)
+
+(︃
+
+N (t)
+N (σ)
+
+R0
+)︃ 1−f
+
+.
+
+(6.12)
+
+48
+
+KAPITEL 6. DEN SLUTLIGA STORLEKEN PÅ EN EPIDEMI
+
+Då σ ↓ −∞ går både S(σ) och N (σ) mot ursprungliga storleken av populationen.
+Så när vi beräknar gränsvärdena då σ ↓ −∞ och t ↑ ∞ fås sambandet
+n(∞) = s(∞)
+
+(1−f )
+R0
+
+(6.13)
+
+.
+
+Andelen som varit infekterade som överlevt är n(∞) − s(∞) och andelen
+infekterade är 1−s(∞). Om f betecknar sannolikheten för överlevnad gäller (6.6).
+Om f och R0 är okända men det finns data efter epidemin som gör det möjligt
+att estimera s(∞) och n(∞) kan den slutliga storleksekvationen uppskattas,
+f=
+Man får f =
+
+1 − n(∞) ln s(∞)
+n(∞) − s(∞)
+, R0 =
+.
+1 − s(∞)
+1 − s(∞) ln n(∞))
+
+n(∞)−s(∞)
+1−s(∞)
+
+direkt från (6.6). Däremot fås R0 =
+
+1−n(∞) ln s(∞)
+1−s(∞) ln n(∞
+
+(6.14)
+genom
+
+att räkna logaritmen av (6.13), ty
+ln s(∞)
+ln n(∞)
+1 − s(∞) − n(∞) + s(∞) ln s(∞)
+=
+1 − s(∞)
+ln n(∞)
+1 − n(∞) ln s(∞)
+=
+.
+1 − s(∞) ln n(∞)
+
+R0 = (1 − f )
+
+(6.15)
+
+När personer dör finns det en direkt och en indirekt effekt. Den direkta effekten är att andelen 1 − f av 1 − s(∞) dör. Den indirekta effekten är att s(∞)
+avtar eftersom immuna personer hindrar smittspridning, däremot kan inte döda
+personer göra det. Den indirekta effekten är det som gör att modeller med populationer som vidtar åtgärder och populationer som inte vidtar åtgärder är olika.
+När R0 är stort och s(∞) är litet (ungefär e−R0 ) är indirekta effekten obetydlig.
+Däremot om R0 är något ovanför tröskelvärdet kan den indirekta effekten vara
+betydande.
+
+6.2
+
+Den slutliga storleken av en epidemi i en ändlig population
+
+I den deterministiska beskrivningen av en epidemi i en sluten population fanns
+beteckningen 1 − s(∞) som beskrev andelen som blir påverkade av epidemin.
+Det antas att en population består av N personer och av dessa personer har en
+
+49
+
+KAPITEL 6. DEN SLUTLIGA STORLEKEN PÅ EN EPIDEMI
+
+person blivit smittad från en utomstående källa. När delmodellerna för kontakter
+och smitta har specificerats kan sannolikhetsfördelningen för antalet nya infektioner bestämmas. I den här delen kommer binomialfördelningen att användas i
+stället för poissonfördelningen, eftersom det är ändligt många personer som är
+mottagliga för smitta i populationen.
+När R0 < 1 är fördelningen för slutliga storleken av epidemin nära 0. När
+
+k
+N
+
+används i stället för k, som beskriver den slutliga storleken, och då N → ∞, närmar sig fördelningen 0. Det betyder att den obetydliga andelen av populationen
+påverkas.
+När R0 > 1 har fördelningen för den slutliga storleken av epidemin en dubbel
+topp. Den första toppen beskriver det mindre utbrottet var infektionen dör ut
+innan den hinner påverka en stor andel av populationen. Den andra toppen beskriver det större utbrottet, var ungefär 1 − s(∞) av populationen blir smittade.
+Delningen mellan den mindre och större utbrottet har en större betydelse om
+
+k
+N
+
+skalas och N → ∞. Då är andelen z∞ av totala sannolikheten, 1, centrerad kring
+0, medan 1 − z∞ närmar sig 1 − s(∞). Om 1 − s(∞) skalas lämpligt beskrivs
+√
+den av normalfördelningen med standardavvikelsen 1/ N . Det finns två observationer gällande det deterministiska framställningssättet. Även om R0 > 1 kan
+det bildas endast ett mindre utbrott och 1 − s(∞) är medelvärdet för storleken
+av det större utbrottet. Det har introducerats flera olika sätt att klassificera olika infektionssjukdomar beroende på populationstätheten, kontaktprocessen och
+sannolikheten att infektionen smittar. Det finns ett samband mellan de olika
+delarna
+R0 > 1 ⇐⇒ r > 0 ⇐⇒ s(∞) < 1 ⇐⇒ z∞ < 1,
+
+(6.16)
+
+r definieras i kapitel 4.
+När modeller skapas ska man beakta om latensperioden är lång för infektionssjukdomen. Om latensperioden är lång kan det ha en stor påverkan på R0 men
+liten verkan på r. Däremot är ordningen för R0 och s(∞) för två icke-dödliga
+infektioner alltid lika om det är frågan om likformigt fördelade grupper.
+
+KAPITEL 7. MODELLERING AV COVID-19
+
+50
+
+Kapitel 7
+Modellering av COVID-19
+Det här kapitlet baserar sig på artikeln A SIR-type model describing the successive waves of COVID-19 [13]. Som tidigare nämnts kan SIR modellen inte
+göra precisa uppskattningar när det gäller infektionssjukdomar som COVID-19.
+I det här avsnittet har SIR modellen anpassats så att det går att göra lämpliga uppskattningar med officiella data från Italien, Spanien och USA gällande
+ökningen av COVID-19. I den här anpassningen av SIR modellen antas det att
+populationen inte är konstant och graden av infektion och dödlighet minskar exponentiellt. På så vis får man även information om antalet aktiva fall, kumulativ
+dödlighet, dagliga antalet nya fall och dödsfall som är orsakade av COVID-19.
+Man har provat modellen och den passar till existerande data från den första
+successiva vågen av COVID-19 i Italien, Spanien och USA. Orsaken att man valt
+de här länderna är att de har påverkats allvarligt av pandemin och har publicerat
+data kring COVID-19. Det kommer även att presenteras uppskattningar av hur
+pandemin kommer att fortskrida i Italien och USA med flera olika scenarier.
+Ett problem med SIR modellen är att det antas att populationen är konstant,
+vilket kan stämma relativt bra när det är fråga om en infektionssjukdom som
+inte varar längre än några veckor. Däremot när det är fråga om COVID-19 så
+finns det en demografisk utveckling då pandemin bröt ut under vintern 2020 och
+är ännu aktiv under hösten 2021. Det stämmer inte överens med verkligheten att
+graden av smitta som sker vid kontakt och att graden av personer som flyttar från
+gruppen infekterade till gruppen immuna är konstant. När de här parametrar är
+konstanta beaktas inte åtgärder som vidtagits för att minska smittspridnignen.
+I artikeln [13] har man använt en typ av autonom SIR modell som beaktar att
+
+51
+
+KAPITEL 7. MODELLERING AV COVID-19
+
+parametrarna inte är konstanta. När modellen appliceras på de här tre länderna
+kalibreras den enligt data som samlats under en tidsperiod som är minst 30
+dagar. Man beaktar data som samlats in minst tio dagar efter att det har utlysts
+begränsningar i respektive land.
+Den anpassade SIR modellen ser ut på följande sätt
+⎧
+dS
+⎪
+= (λ − µ)S + λ(I + R) − βSI
+⎪
+⎪
+⎨ dt
+dI
+= βSI − γI − dµ
+I − µI
+dt
+dt
+⎪
+⎪
+⎪
+⎩ dR = γI − µR,
+
+(7.1)
+
+dt
+
+där graden av smittsamhet β och graden av dödlighet
+
+dµ
+dt
+
+orsakad av COVID-19
+
+inte är konstanta. Från data kan man se att i områden där man i början av pandemin har applicerat strikta begränsningar gällande att hålla socialt avstånd,
+har både β och
+och
+
+dµ0
+.
+dt
+
+dµ
+dt
+
+minskat exponentiellt jämfört med deras standardvärden β0
+
+Det har troligtvis att göra med att utvecklingen av variablerna är flyktig
+
+och därför behövs det tid för att de ska nå deras asymptotiska värde. Tillfriskningsgraden γ är inte nödvändigtvis konstant. Dock har observationer utifrån
+data visat att γ är relativt stabil i de tre länderna. Månatliga förändringar i γ
+skapar betydande förändringar i de andra epidemiologiska parametrarna. Graden
+av födsel λ > 0 är konstant och samma för alla tre kategorier S, I och R. Det
+antas även att alla avkommor är mottagliga för infektionen och att de inte är
+immuna när de föds. Det antas även att dödlighetsgraden µ > 0 då det förekommer dödlighet som är orsakad av annat än COVID-19. Värden för λ och µ fås
+från tabell 7.1.
+Land
+
+Graden av födsel λ Graden av dödlighet µ
+
+Population N
+
+Italien
+
+1, 99258 · 10−5
+
+2, 866523 · 10−5
+
+6, 05 · 107
+
+Spanien
+
+2, 174293 · 10−5
+
+2, 494899 · 10−5
+
+4, 7 · 107
+
+USA
+
+3, 178082 · 10−5
+
+2, 356164 · 10−5
+
+3, 282 · 10−5
+
+Tabell 7.1: Tabell över värden för λ och µ år 2018 [13].
+Det ska inte tas för givet att tillfriskningsgraden γ är konstant, även om
+data tyder på det. Tillfrisknande eller dödligheten beror på hur personen som
+insjuknat reagerar på viruset. Det kan väntas att i ett övergående stadie finns
+variationer på graden av tillfrisknande och dödlighet tills asymptotiska värden är
+
+KAPITEL 7. MODELLERING AV COVID-19
+
+52
+
+tillgängliga. Det här verkar ha skett i USA och Italien gällande tillfrisknande och
+dödlighet. Oberoende antas det att γ är konstant under varje kalendermånad
+eller under undersökningsperioden i varje land. Låt γ vara baserat på medelvärdet av observerade månatliga värdet för γ. Normalt är γ likformigt fördelat
+med få undantag. För att bestämma β och
+
+dµ
+dt
+
+har det observerats en signifikant
+
+minskning i infektions- och dödlighetsgraden i data under studien. Funktionerna
+β och
+
+dµ
+dt
+
+är definierade genom en exponentiell regression. Enligt data närmar
+
+sig dödlighetsgraden sitt asymptotiska värde under ett relativt kort tidsintervall.
+Det går att förklara med att det sker förändringar i sociala beteenden som kan
+skapa en övergångsfas där parametrarna i modellen kan ändra och sedan närmar
+de sig sitt standardvärde.
+I undersökning används en normaliserad modell,
+S(t)
+N
+I(t)
+IN (t) =
+N
+R(t)
+RN (t) =
+,
+N
+SN (t) =
+
+(7.2)
+
+där N = S + I + R som är den fullständiga populationen. Från (7.1) och (7.2)
+fås följande modell
+⎧
+dSN
+⎪
+= (λ − µ)SN + λ(IN + RN ) − βSN IN
+⎪
+⎪
+⎨ dt
+dIN
+= βSN IN − γIN − µIN
+dt
+⎪
+⎪
+⎪
+⎩ dRN = γI − µR ,
+N
+N
+dt
+
+där parametrarna λ, µ, β,
+
+dµ(t)
+dt
+
+(7.3)
+
+och γ är normaliserade.
+
+Genom att numeriskt integrera (7.3) fås SN (t), IN (t) och RN (t). För att få
+antalet infekterade och I(t) och antalet tillfrisknade R(t) multipliceras IN (t) och
+RN (t) med N ,
+I(t)
+·N
+N
+(7.4)
+R(t)
+R(t) =
+· N.
+N
+När modellen är rätt kalibrerad kommer I och R vara precisa uppskattningar.
+I(t) =
+
+53
+
+KAPITEL 7. MODELLERING AV COVID-19
+
+Andra relevanta parametrar kan även noggrant uppskattas. Man definierar
+∫︂ t
+dµ(t)
+(ξ) · I(ξ)dξ
+d(t) =
+t−1 dt
+∫︂ t
+dµ(t)
+D(t) =
+ξ · I(ξ)dξ
+dt
+0
+(7.5)
+∫︂ t
+γ(ξ) · I(ξ)dξ
+r(t) =
+t−1
+∫︂ t
+β(ξ) · S(ξ) · I(ξ)dξ
+i(t) =
+t−1
+
+där d(t) är antalet döda fram till dag t, D(t) är det ihopsamlade antalet döda
+fram till dag t, r(t) är antalet nya fall av infektion fram till dag t och i(t) är
+dagliga antalet fall tillfrisknade fram till dag t.
+
+7.1
+
+Parametrarna under första vågen av COVID19
+
+I det här avsnittet kommer funktionerna β(t),
+
+och γ(t) anpassas till första
+
+dµ(t)
+dt
+
+vågen. Först kommer det att beskrivas metoder för att få bra uppskattningar av
+β(t) och
+
+dµ(t)
+dt
+
+för respektive område. Uppskattningen är delad i två delar. Först
+
+beräknas den dagliga infektions- och dödsgraden från data. Låt βe och
+
+dµe
+dt
+
+vara
+
+empiriska infektions- och dödlighetsgraden orsakade av COVID-19 som beräknas
+på följande sätt
+
+ie (t + 1)
+Ie (t)
+(7.6)
+dµe
+de (t + 1)
+(t + 1) =
+dt
+Ie (t)
+där ie (t) är antalet rapporterade nya infektioner under dag t, de (t) är antalet
+βe (t + 1) =
+
+rapporterade dödsfall under dag t och Ie (t) är antalet rapporterade aktiva fall
+under dag t. Det ihopsamlade antalet dödsfall, observerade fram till dag t, kommer att betecknas med De (t). Efter att βe (t) och
+dµ(t)
+dt
+
+dµe (t)
+dt
+
+är bekanta kan β(t) och
+
+uppskattas med
+β(t) = β0 + eaβ +bβ t
+
+där bβ , b dµ
+dt
+
+a dµ +b dµ t
+dµ(t)
+dµ0
+=
++ e dt dt
+dt
+dt
+< 0. Därmed antas det att parametrarna β(t) och
+
+nentiellt till deras standardvärde β0 respektive
+
+dµ0
+.
+dt
+
+(7.7)
+dµ(t)
+dt
+
+minskar expo-
+
+Värdena aβ och bβ beräknas
+
+54
+
+KAPITEL 7. MODELLERING AV COVID-19
+
+med en linjär regressionsmodell med punkterna
+(7.8)
+
+(t, log |βe (t) − β0 |)
+På motsvarande sätt fås a dµ och b dµ med punkterna
+dt
+dt
+⃓
+⃓)︃
+(︃
+⃓ dµe (t) dµ0 ⃓
+⃓ .
+−
+t, log ⃓⃓
+dt
+dt ⃓
+
+(7.9)
+
+För att bestämma γ beräknas den observerade dagliga tillfriskningsgraden
+γe (t) som
+re (t + 1)
+,
+(7.10)
+Ie (t)
+där re (t) är antalet observerade tillfrisknade under dag t. För att anpassa modelγe (t + 1) =
+
+len i respektive land kommer det att antas att γ är konstant varje kalendermånad
+eller under anpassningstiden av funktionerna β(t) och
+
+dµ(t)
+.
+dt
+
+Värdena för γ kom-
+
+mer att väljas i enlighet med γe (t).
+
+7.1.1
+
+Italien
+
+Begränsningar för att minska spridningen av COVID-19 togs i bruk den 10 mars
+2020 i Italien. Data för Italiens del börjar 10 dagar senare, den 20 mars. Denna
+dag betecknas som dag noll för Italiens del i studien. Först bestäms infektionsoch dödsgraden under dagen t, β(t) respektive
+
+dµ(t)
+,
+dt
+
+används antalet rapporterade
+
+dagliga nya fall under dag t, som betecknas med ie (t). Låt re (t) vara rapporterade
+tillfrisknande under dag t och de (t) rapporterade dödsfall under dag t. Låt även
+Ie (t) vara antalet rapporterade aktiva fall vid tidpunkten t. Låt Re (t) och De (t)
+vara totala antalet tillfrisknade respektive döda fram till dagen t. Som tidigare,
+ges β(t) och
+
+dµ(t)
+dt
+
+av (7.7). Från data kan det observeras att β0 = 0, 009 vilket
+
+minskar på avståndet mellan βe och β. Från data kan det även observeras att
+dµ0
+dt
+
+= 0, 0008 vilket minskar på avståndet mellan
+
+dµe
+dt
+
+och
+
+dµ
+.
+dt
+
+För att använda
+
+modellen (7.3) behövs λ och µ som fås från tabell 7.1. Nu behövs endast γ för att
+beräkna modellen för Italiens fall. Det visar sig att det månatliga medelvärdet
+av γe (t) har stabiliserats sedan slutet av juli med värdet 0, 0160. Oberoende,
+under de första månaderna av pandemin var värdena för γe (t) generellt större.
+Medelvärdena för γe (t) i tidsperioder, som betecknas med γ, och ses i tabell 7.2.
+För att granska att modellen stämmer har man jämfört de rapporterade aktiva fallen Ie (t) med resultatet från I(t) under 40 dagar. Jämförelsen visar att
+uppskattningen är bra och kan användas [13].
+
+55
+
+KAPITEL 7. MODELLERING AV COVID-19
+
+Tidsperiod
+
+Värden för γ
+
+Kalibreringsperiod
+
+0, 0191
+
+Maj
+
+0, 0375
+
+Juni
+
+0, 0405
+
+Juli
+
+0, 0233
+
+Augusti och vidare
+
+0, 0160
+
+Tabell 7.2: Kalibrering av γ för Italien [13].
+
+7.1.2
+
+Spanien
+
+Spanska regeringen bestämde att ta i bruk begränsningar för att minska på spridningen av COVID-19 den 14 mars 2020. På samma sätt som i Italien börjar data
+tio dagar efter att begränsningarna togs i bruk, alltså den 24 mars. På samma
+sätt är det här dag noll för Spaniens del. Låt β(t) och
+sätt som i (7.7). Passliga värden för β0 är 0, 015 och
+
+dµ(t)
+beräknas på samma
+dt
+dµ0
+för dt är 0, 00055. Låt γ
+
+vara medelvärdet av γe (t) från 24 mars till 18 maj. Spanien publicerade inte data
+över dagliga antalet personer som tillfrisknat efter 18 maj 2020 av okänd orsak.
+Det här leder till att man inte kan veta hur många aktiva fall det finns i Spanien
+efter den 18 maj 2020.
+När man vet β(t) och
+
+dµ(t)
+dt
+
+samt har bestämt β0 och
+
+dµ0
+dt
+
+för Spanien görs
+
+en 37 dagars simulering av modellen och resultatet jämförs med data. Låt γ =
+0, 0375 under den 37 dagar lång undersökningsperioden. Det insamlade data
+passar relativt bra överens med simuleringen [13].
+
+7.1.3
+
+USA
+
+Den här anpassningen börjar på samma sätt som de två tidigare. Data som
+används är från 2 april till 2 maj 2020. Orsaken till det är att man i de flesta
+delstater införde begränsningar för att minska smittspridningen av COVID-19 tio
+dagar före den 2 april. Låt β0 = 0, 0165 och
+
+dµ0
+dt
+
+= 0, 00032. För γ är medelvärdet
+
+för månatliga värden av γe (t) homogena, som i Italien. Värdena för γ finns i
+tabell 7.3
+För att granska att modellen stämmer har man jämfört de rapporterade aktiva fallen Ie (t) med resultatet från I(t). Jämförelsen visar att uppskattningen
+är bra och kan användas [13].
+
+56
+
+KAPITEL 7. MODELLERING AV COVID-19
+
+Tidsperiod
+
+Värden för γ
+
+April
+
+0, 0090
+
+Maj
+
+0, 0160
+
+Juni
+
+0, 0165
+
+Juli
+
+0, 0185
+
+Augusti
+
+0, 0165
+
+September
+
+0, 0160
+
+Oktober
+
+0, 0190
+
+November
+
+0, 0200
+
+Tabell 7.3: Kalibrering av γ för USA [13].
+
+7.2
+
+Modellens beteende under den första, andra
+och eventuellt tredje vågen av COVID-19
+
+I det här avsnittet analyseras utvecklingen av COVID-19 med modellen som
+beskrivits tidigare. Om inga signifikanta förändringar sker gällande förhållandena
+stämmer β(t),
+
+dµ(t)
+dt
+
+och γ som definierades tidigare. Dock inträffade signifikanta
+
+förändringar i alla tre länder som undersöktes i slutet av undersökningsperioden,
+bland annat lättades det på begränsningarna. Det ledde till ökade antal kontakter
+och ökad sannolikhet att en kontakt leder till infektion.
+Förändringarna påverkade inte dödligheten men de ökade spridningen av infektionen. För att simulera den andra vågen måste β(t) kalibreras på nytt vid ett
+lämpligt tillfälle. Resten av parametrarna kan hållas som de tidigare definierats.
+Den nya funktionen för smitta kommer att betecknas med β ∗ (t). Orsaken till
+den andra vågen var främst socialt beteende och inte miljöförändringar. Det går
+att se att den andra vågen började redan i juni vilket tyder på att människors
+beteende, som till exempel att åka på semester, påverkade att den andra vågen
+började.
+
+7.2.1
+
+Italien
+
+I Italien kan man observera en stadig tillväxt av värdet βe (t) från och med juli.
+Värden för
+
+dµe (t)
+dt
+
+har mer förutsägbart beteende än βe (t). Därmed, för att si-
+
+mulera den andra vågen av COVID-19 i Italien, kan det antas att
+
+dµ(t)
+dt
+
+redan
+
+KAPITEL 7. MODELLERING AV COVID-19
+
+har uppskattats till dess standardvärde
+
+dµ0
+dt
+
+57
+
+till juli. Däremot måste β omformas
+
+enligt värden från och med juli βe (t). Låt β(t) ersättas med β ∗ (t), där β(t) och
+β ∗ (t) är lika enda till 16 juli (t = 117). För Italien beskrivs β ∗ (t) av
+⎧
+⎪
+⎪
+β(t)
+om t ≤ 117,
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+β(117) + 5,5β0 −β(117)
+(t − 117) om 117 < t ≤ 164,
+⎪
+30
+⎪
+⎪
+⎪
+⎪
+⎨5, 5β0
+om 164 < t ≤ 195,
+∗
+β (t) =
+⎪
+0
+⎪
+5, 5β0 + 4,5β
+(t − 195)
+om 195 < t ≤ 210,
+⎪
+15
+⎪
+⎪
+⎪
+⎪
+⎪
+10β0
+om 210 < t ≤ 225,
+⎪
+⎪
+⎪
+⎪
+⎪
+⎩10β0 − 4,5β0 (t − 225)
+om 225 < t ≤ 240.
+15
+
+(7.11)
+
+Där t = 117 motsvarar 16 juli, t = 164 motsvarar 31 augusti, t = 195 motsvarar
+1 oktober, t = 210 motsvarar 16 oktober, t = 225 motsvarar 31 oktober och
+t = 240 motsvarar 15 november. Jämförelsen mellan β(t) och β ∗ (t) visar att
+uppskattningen är bra och kan användas [13].
+
+7.2.2
+
+USA
+
+I USA hade redan en andra våg av COVID-19 brutit ut under sommaren, och
+dödligheten ökade i augusti. Den andra vågen började i juli då det sker en kraftig
+ökning i βe (t) samtidigt som smittan fördubblades. Under augusti minskade βe (t)
+och stabiliserades till sitt standardvärde β0 i september. I början av oktober ökade
+βe (t) igen vilket skapade en tredje våg av COVID-19 i USA. Låt β ∗ (t) beskriva
+smittan i den andra och tredje vågen,
+⎧
+⎪
+⎪
+β(t)
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+β(69) + 2β0 −β(69)
+⎪
+15
+⎪
+⎪
+⎪
+⎪
+⎨2β0
+β ∗ (t) =
+⎪
+⎪
+2β0 − β150 (t − 120)
+⎪
+⎪
+⎪
+⎪
+⎪
+⎪
+β0
+⎪
+⎪
+⎪
+⎪
+⎪
+⎩β0 + 1,5β0 (t − 182)
+40
+
+om t ≤ 69,
+om 69 < t ≤ 84,
+om 84 < t ≤ 120,
+om 120 < t ≤ 135,
+
+(7.12)
+
+om 135 < t ≤ 182,
+om 182 < t ≤ 227.
+
+Där t = 69 motsvarar 10 juni, t = 84 motsvarar 25 juni, t = 120 motsvarar 31
+juli, t = 135 motsvarar 15 augusti, t = 182 motsvarar 1 oktober och t = 227
+motsvarar 8 november. Resultatet som fås med dessa val av β ∗ (t) modellerar
+
+58
+
+KAPITEL 7. MODELLERING AV COVID-19
+
+med bra noggrannhet det epidemiologiska läget i USA under den andra och
+tredje vågen [13].
+
+7.2.3
+
+Spanien
+
+På grund av att Spanien inte publicerar antalet dagligen tillfrisknade personer
+efter 18 maj 2020 är svårt att skapa funktionen för smitta β ∗ (t) under den andra
+vågen, eftersom det inte går att beräkna βe (t). Genom att använda en heuristisk
+process har man hittat en funktion β ∗ (t) så att resultatet sammanfaller med
+insamlat data för kumulativa incidensen per
+⎧
+⎪
+⎪
+β(t)
+⎪
+⎪
+⎪
+⎪
+⎪
+−β(89)
+⎪
+β(89) + 6,2β056
+(t − 89)
+⎪
+⎪
+⎪
+⎪
+⎪
+0)
+⎪
+(t − 145)
+6, 2β0 − 2,2β
+⎪
+⎪
+16
+⎨
+β ∗ (t) = 4β0
+⎪
+⎪
+⎪
+⎪
+0
+⎪
+4β0 − 1,5β
+(t − 181)
+⎪
+20
+⎪
+⎪
+⎪
+⎪
+0
+⎪
+(t − 201)
+⎪2, 5β0 + 2,1β
+15
+⎪
+⎪
+⎪
+⎪
+⎩4, 6β0 − 2,1β0 (t − 216)
+20
+
+100 000 invånare. Då blir β ∗ (t)
+om t ≤ 89,
+om 89 < t ≤ 145,
+om 145 < t ≤ 161,
+om 161 < t ≤ 181,
+
+(7.13)
+
+om 181 < t ≤ 201,
+om 201 < t ≤ 216,
+om 216 < t ≤ 236.
+
+Där t = 89 motsvarar 21 juni, t = 145 motsvarar 16 augusti, t = 161 motsvarar
+1 september, t = 181 motsvarar 21 september, t = 201 motsvarar 11 oktober,
+t = 216 motsvarar 26 oktober och t = 236 motsvarar 15 november. Fastän β ∗ (t)
+beräknats på ett annat sätt i det här fallet, visar det sig ändå vara ett lämpligt
+sätt att modellera pandemin i Spanien under den andra vågen. Därför kan β ∗ (t)
+användas för att göra uppskattningar av utvecklingen av aktiva fall I(t) och
+antalet individer som är immuna R(t).
+
+7.3
+
+Uppskattningar för utvecklingen av COVID19 i Italien och USA
+
+I det här avsnittet kommer modellen projiceras på Italiens och USA:s utveckling
+av COVID-19. Spaniens data är bristfälligt och därför kommer Spanien inte att
+beaktas i den här delen.
+
+59
+
+KAPITEL 7. MODELLERING AV COVID-19
+
+7.3.1
+
+Italien
+
+Om man analyserar data från Italien från mitten av november kan man se att
+nya infektioner, kumulativ incidens, daglig dödlighet och andra epidemiologiska
+indikatorer ökar och stabiliseras kring höga värden. Däremot har funktionen för
+smitta, βe (t), minskat sedan november i Italien. Den här minskningen kommer
+att påverka signifikanta epidemiologiska värden under följande veckor, börjande
+från 16 november 2020 (t = 241). För att uppskatta kommer funktionen
+(som i det här stadiet kommer att vara samma som
+
+dµ0
+)
+dt
+
+dµ(t)
+dt
+
+att vara samma som
+
+tidigare. Funktionen β ∗ (t) kommer att utökas till t ≥ 241,
+⎧
+⎨10β0 − 4,5β0 (t − 225) om 225 ≤ t < 255,
+15
+∗
+β (t) =
+⎩β
+om t ≥ 255.
+0
+
+(7.14)
+
+Observera att t = 225 motsvarar 15 november och t = 255 motsvarar 30 november.
+Resultatet från modellen för daglig dödlighet och kumulativa incidensen under 14 dagar per 100 000 invånare har två olika scenarier. I det sämre scenariot
+antas att tillfriskningskonstanten γ har samma värde som i augusti, γ = 0, 0160.
+I det mer optimistiska scenariot har γ samma värde som i juni, γ = 0, 0405. I det
+sämre scenariot kommer incidensen inte under 50 före mitten av april 2021. Det
+här leder till att från 16 november 2020 kan ungefär 62 000 personer ha dött före
+mitten av april 2021. I det bättre scenariot skulle kumulativa incidensen falla
+under 50 i början av 2021. Då skulle 16 000 personer dö mellan 16 november
+2020 och början av 2021 och ungefär 4 700 fler under resten av året 2021. Den
+daglig dödligheten skulle inte sjunka under 10 förrän i slutet av mars 2021, och
+dagliga nya fall skulle inte falla under 50 innan mitten av april 2021.
+
+7.3.2
+
+USA
+
+Det kan läsas från USA:s data att den tredje vågen ökar och inte visar några
+tecken på att minska till mitten av november 2020. Även om en drastisk förändring skulle ske fram till mitten av november med en linjär minskning av β ∗ (t)
+till standardvärde β0 , på exempelvis 15 dagar, skulle dödstalet ändå vara minst
+1000 per dag ända till slutet av januari 2021. För att beräkna uppskattningen
+
+KAPITEL 7. MODELLERING AV COVID-19
+
+60
+
+utökas β ∗ (t) så att
+∗
+
+β (t) =
+
+⎧
+⎨ 43 β0 −
+16
+
+⎩β
+
+0
+
+9β0
+(t
+80
+
+− 227) om 227 ≤ t < 242,
+om t ≥ 260.
+
+(7.15)
+
+Där t = 227 motsvarar 16 november och t = 242 motsvarar 30 november. Med
+denna smittsamhetsfunktion skulle pandemin spridas i USA i flera månader,
+incidens skulle vara över 100 fall ännu i mars 2021.
+
+KAPITEL 8. AVSLUTNING
+
+61
+
+Kapitel 8
+Avslutning
+Det skulle vara enkelt att förutspå infektionssjukdomars spridning om människors beteende skulle vara begränsat. Då skulle man i vissa fall kunna använda
+Kermacks och McKendricks modeller för att skapa modeller av spridningen och
+de kunde förutspå spridningen noggrant. I de flesta länder är inte människors
+beteende begränsat fastän det vidtas åtgärder för att minska på spridningen av
+en infektionssjukdom. Infektionssjukdomen sprids ofta oberoende och det kan
+vara svårt att kontrollera smittspridningen.
+Som det tidigare nämnts är reproduktionstalet, R0 , ett av de viktigaste elementen inom epidemiologisk matematiska modeller. Talet berättar om förväntade
+antalet personer en infekterad person smittar i en mottaglig population. Även om
+R0 är en viktig del i modeller är det ofta svårt att bestämma. Infektionssjukdomens beteende och hur den smittar har en betydelse för hur man ska beräkna
+R0 . Även för samma infektionssjukdom finns det flera olika R0 -värden, beroende
+på vilken modell man har använt [16].
+Kermack och Mckendricks modell publicerades 1927 och används fortfarande
+men med modifikationer. Den ursprungliga modellen var SIR modellen, som man
+har utvecklat. Modellerna som SIR, SEIR och SIS har begränsade antaganden
+vilka sällan är realistiska i verkligheten. Det leder till att modellerna behöver
+anpassas när de används för att förutspå spridningen av en infektionssjukdom.
+Det kan man observera i kapitel 7 där parametrarna ändrades för att bättre
+beskriva till exempel populationsändringen.
+Hur populationen mäts och definieras har en stor betydelse när man uppskattar infektionssjukdomars spridning. För att kunna bekräfta en undersökning
+
+KAPITEL 8. AVSLUTNING
+
+62
+
+måste det framkomma hur populationen mäts. Det är även viktigt att parametrarna är väl beskrivna för att man ska kunna förstå och analysera modellen som
+använts.
+Ingen person kan förutspå framtiden. Modeller som skapats för att förutspå
+spridningen av COVID-19 har man, som i kapitel 7, testat modellerna på existerande data för att se om modellen ger liknande resultat som data. Det förutsätter
+att omgivningen var infektionssjukdomen sprids och människors beteende hålls
+konstant i populationen även i framtiden. Det går givetvis att göra flera uppskattningar med att beakta olika omständigheter men det kan vara svårt att
+vidta åtgärder på basen av dem när resultatet av modellen kan vara olika.
+
+Litteraturförteckning
+[1] Anderson, R. M (1982). Population Dynamics of Infectious Diseases: Theory
+and Applications. Springer: New York.
+[2] Auranen, K. & Leino, T. (2020). Korona epidemian mallinnuksen lähtökohdat ja ongelmat. Hämtad 2 juli 2021, från https://www.duodecimlehti.
+fi/xmedia/duo/duo15773.pdf.
+[3] Brauer, F. & Castillo-Chavez, C. (1994) Basic models in epidemiology. Hämtad 2 september 2021, från https://ecommons.cornell.edu/bitstream
+/handle/1813/31835/BU-1249-M.pdf;jsessionid=4C1E66F5B0202ABF9
+A603A3ABC435EE8?sequence=1
+[4] Britton, T. (2020). Mathematics of Corona Outbreak. Hämtad 12 januari
+2021, från https://www.youtube.com/watch?v=gSqIwXl6IjQ.
+[5] Diekmann, O. (2019) The 1927 epidemic model of Kermack and McKendrick: a success story or a tragicomedy?. Janhunen, J. (Red.), Sphinx
+2019-2020 : vuosikirja = årsbok = yearbook (s. 35 − 40). Societas Scientiarum Fennica 2020: Helsingfors.
+[6] Diekmann, O., Heesterbeek, H. & Britton, T. (2012). Mathematical Tools
+for Understanding Infectious Disease Dynamics. Princeton University Press:
+Princeton. Hämtad 13 april 2021, från https://abo.finna.fi/Record/ab
+o_electronic_aa.9913493842905972.
+[7] Evans, A. (1982) Viral infections of humans. Plenum Medical Bokk Company: New York.
+[8] Gupta, A.K. & Nagar, D. K. (1999). Matrix Variate Distributions. Hämtad
+28 juni 2021, från https://www-taylorfrancis-com.ezproxy.vasa.abo
+63
+
+LITTERATURFÖRTECKNING
+
+64
+
+.fi/books/mono/10.1201/9780203749289/matrix-variate-distributi
+ons-gupta-nagar
+[9] Hethcote, H.W. (1976). Qualitative analyses of communicable disease models Mathematical Biosciences. Vol. 28, 335−356. Hämtad 6 september 2021,
+från http://people.kzoo.edu/barth/math280/articles/communicabl
+e_disease.pdf
+[10] Keshet. L. (2007). Science 1 Problems. Hämtad 27 september, från https:
+//personal.math.ubc.ca/~keshet/Sci1/chapter15Problems.pdf
+[11] Kermack, W. O. & McKendrick, A. G. (1927). A contribution to the mathematical theory of epidemics. Proceedings of the Royal Society, A115, s.
+700-721. Hämtad 18 maj 2021, från https://royalsocietypublishing.o
+rg/doi/10.1098/rspa.1927.0118.
+[12] Lindström, M. (2020) Linjär Algebra - Kompendium. Åbo Akademi: Åbo.
+[13] Muñoz-Fernández, G.A., Seoane, J.M. & Seoane-Sepúlveda J.B. (2021). A
+SIR-type model describing the successive waves of COVID-19. Chaos, Solitons and Fractals. Vol. 14. Hämtad 20 oktober 2021, från https://www.sc
+iencedirect.com/science/article/abs/pii/S0960077921000357
+[14] Sallet, G. (2018). Mathematical Epidemiology. Université de Lorraine: Lorraine. Hämtad 17 maj 2021, från https://iecl.univ-lorraine.fr/file
+s/2021/03/Lecture-Notes-Pretoria-2018.pdf.
+[15] Soper, H. E. (1929). Interpretation of preiodicity in diesease prevalence.
+Journal of the Royal Statistical Society, Vol. 92, 34−73. Hämtad 6 september
+2021, från https://www.jstor.org/stable/2341437?seq=1#metadata_i
+nfo_tab_contents
+[16] THL. (2020). Koronavirusepidemian mallentaminen. Hämtad 26 oktober
+2021, från https://thl.fi/documents/10531/5814325/THL+korona+
+mallinnuswebinaarin+kalvot+20.4.2020.pdf/cc23f5f0-87a0-8080-7b
+5c-121b5532bf5c?t=1587534905262.
+[17] THL. (2021). Koronaviruksen tarttuminen ja itämisaika. Hämtad 25 maj
+2021, från https://thl.fi/fi/web/infektiotaudit-ja-rokotukset/a
+
+LITTERATURFÖRTECKNING
+
+65
+
+jankohtaista/ajankohtaista-koronaviruksesta-covid-19/tarttumin
+en-ja-suojautuminen-koronavirus/koronaviruksen-tarttuminen-jaitamisaika.
+[18] THL. (2021). Koronaepidemia: alueiden tilanne, sousitukset ja rajoitukset.
+Hämtad 9 juni 2021, från https://thl.fi/fi/web/infektiotaudit-jarokotukset/ajankohtaista/ajankohtaista-koronaviruksesta-covid19/tilannekatsaus-koronaviruksesta/koronaepidemia-alueiden-til
+anne-suositukset-ja-rajoitukset.
+
+

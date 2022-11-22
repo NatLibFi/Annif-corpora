@@ -1,0 +1,4133 @@
+Do President Donald Trump´s tweets
+affect the stock market?
+An analysis of company-specific tweets.
+
+Christian Hoven
+Master’s Thesis in Economics
+Supervisor: Edvard Johansson
+Faculty of Social Sciences, Business and Economics
+Åbo Akademi University
+2020
+
+Christian Hoven
+
+Åbo Akademi University – Faculty of Social Sciences, Business and
+Economics
+
+Abstract for master’s thesis
+Subject: Economics
+Author: Christian Hoven
+Title: Do President Donald Trump´s
+An analysis of company-specific tweets
+
+tweets
+
+affect
+
+the
+
+stock
+
+market?
+
+Supervisor: Edvard Johansson
+Abstract:
+Donald J. Trump, the 45th president of the USA, has been an avid user of the social
+media platform Twitter before and during his presidency. He has frequently used this
+platform to communicate with the public. Trump tweets almost every, sometimes even
+multiple times per day. Since he became elected as president of the USA he has tweeted
+about a company on multiple occasions. What happens to the stock of these companies
+when arguably the most powerful man on the planet voices his opinion to the millions
+of people that read his tweets? That is the question that seeks to be answered within this
+thesis.
+The purpose of this thesis is to examine if and how the stocks of publicly listed
+companies are affected when President Donald Trump tweets about the companies. To
+attempt to ascertain whether such an effect exists and if so, how large it is, the effects
+of company-specific tweets on abnormal return, abnormal trading volume and volatility
+are analysed. To determine this, all tweets from Trump’s official Twitter accounts,
+@realDonaldTrump and @POTUS, from November 9, 2016 to January 31, 2020 that
+mention a company publicly traded on the U.S. stock market have been analysed. The
+results were achieved by using OLS regressions with fixed effects on a company level,
+while also controlling for company size and the first three lags of abnormal return,
+abnormal trading volume, and volatility, respectively.
+The results in this thesis indicate that when Trump tweets the stock market reacts. More
+specifically, when Trump posts a tweet with a positive connotation towards a company,
+1
+
+Christian Hoven
+the abnormal return of that company increases, while tweets with a negative connotation
+decrease abnormal return. This effect is greater for tweets that were posted during the
+opening hours of the U.S. stock exchange, and smaller for tweets posted before
+President Trump’s inauguration. Companies operating within the automobile industry
+experience a larger impact than other companies on their abnormal return when
+President Trump tweets about them. The opposite is the case for companies operating
+in the defense industry.
+President Trump’s tweets also impact abnormal trading volume of the stocks of the
+companies he mentions in his tweets. In this case there is no distinction between positive
+and negative tweets. All of President Trump’s company-specific tweets increase
+abnormal trading volume. Tweets posted when the U.S. stock exchange was open have
+a larger impact on trading volume than those posted when the U.S. stock market is
+closed. President Trump’s tweets that were posted before his inauguration had a smaller
+effect on volatility than those posted after.
+When President Trump tweets, the U.S. stock market becomes more volatile. Tweets
+from President Trump increase the volatility of the stocks of the companies mentioned
+in those tweets. Again, the effect is greater when the tweets are posted during the
+opening hours of the U.S. stock exchange, and smaller when the tweet was posted before
+Trump was sworn in as president.
+Keywords: Event study, social media, Twitter, stock market, Trump, OLS-regression
+Date: 09.06.2020
+
+Number of pages: 46
+
+The abstract is approved as maturity test:
+
+2
+
+Christian Hoven
+
+Table of Contents
+Åbo Akademi University – Faculty of Social Sciences, Business and Economics . 1
+Abstract for master’s thesis .............................................................................. 1
+1.
+
+Introduction...................................................................................................... 5
+
+2.
+
+Theory and methodology.................................................................................. 7
+2.1.
+
+Previous literature ...................................................................................... 7
+
+2.2.
+
+Twitter data ..............................................................................................10
+
+2.3.
+
+Stock market data .....................................................................................14
+
+2.3.1.
+
+Abnormal return ................................................................................14
+
+2.3.2.
+
+Abnormal trading volume ..................................................................16
+
+2.3.3.
+
+Volatility ...........................................................................................16
+
+2.4.
+
+3.
+
+2.4.1.
+
+Abnormal return ................................................................................19
+
+2.4.2.
+
+Abnormal trading volume ..................................................................20
+
+2.4.3.
+
+Volatility ...........................................................................................21
+
+Results ............................................................................................................21
+3.1.
+
+4.
+
+Empirical model .......................................................................................17
+
+Abnormal return .......................................................................................22
+
+3.1.1.
+
+Automobile industry ..........................................................................24
+
+3.1.2.
+
+Banking sector ...................................................................................26
+
+3.1.3.
+
+Defence industry ................................................................................28
+
+3.2.
+
+Abnormal trading volume .........................................................................30
+
+3.3.
+
+Volatility ..................................................................................................33
+
+3.4.
+
+Discussion ................................................................................................34
+
+Conclusion ......................................................................................................37
+
+Summary in Swedish – Svensk sammanfattning......................................................39
+Påverkar president Donald Trumps tweetar aktiemarknaden? En analys av
+företagsspecifika tweetar. ....................................................................................39
+3
+
+Christian Hoven
+References ..............................................................................................................42
+Websites .............................................................................................................46
+Appendix ................................................................................................................47
+
+4
+
+Christian Hoven
+
+1. Introduction
+Donald J. Trump, the 45th President of the United States, is known to frequently
+communicate to the public via the social media platform Twitter, often multiple times
+per day. His tweets have caused some controversy and are often vary unpredictable.
+As the president of the USA, Donald Trump is one of the most powerful people
+according to Forbes (2018) and one of the most influential people in the world
+according to Time Magazine (2019). Therefore, he has the power to influence the
+decisions of many people. That means that his opinions, which are reflected in his
+tweets, may have the power to affect investment decisions of many investors. His
+tweets may also include information on future decisions he will make as president of
+the USA, concerning things such as trade tariffs, government contracts and bailouts.
+These decisions may affect the future of a company. That is why it is interesting to
+find out if the tweets he posts that mention companies are affecting the stock market.
+Figure 1 below shows what happened to the price and trading volume of Toyotas stock
+around the time Trump posted a Tweet about Toyota. This shows that right after the
+tweet was posted the price fell and the trading volume increased. This singular case
+does not in itself indicate that Trump´s tweets influence stocks, but it shows that the
+tweet in this case might have done so. This pattern warrants analysing more tweets to
+find out if they have a statistically significant effect on company stocks. Other tweets
+may also affect stocks as investors may find new information relevant to the future of
+the company in the statements in the tweets.
+
+5
+
+Christian Hoven
+
+Figure 1.1: Toyota’s stock price and trading volume on January 5, 2017
+
+The figure shows the price and trading volume of Toyota ADR in a 60-minute window around January
+5, 2017 when Trump tweeted “Toyota Motor said will build new plant in Baja, Mexico, to build Corolla
+cars for U.S. NO WAY! Build plant in U.S. or pay big border tax.” Source: Ge, Kurov & Wolfe (2018)
+
+The question I aim to answer is interesting for a couple of reasons. Firstly, President
+Trump tweets very often. It is therefore of importance to know how these tweets affect
+the stocks of companies mentioned in said tweets. This will give President Trump and
+other influential people knowledge on what kind of an effect their tweets that mention
+companies have on stocks. With the help of this information influential people will
+know how their tweets affect stocks and can therefore adjust their tweeting behaviour
+to mitigate possible losses for companies. Knowing how the market reacts to President
+Trump´s tweets may also be important for investors if they want to capitalise on the
+change in stock price these tweets may cause. Secondly, there has not been done much
+of research on how company-specific tweets affect the stock market. This thesis will
+also contribute to this body of research, while also being more specific on how
+Trump´s tweets affect the return of stocks.
+
+6
+
+Christian Hoven
+
+2. Theory and methodology
+In this chapter I will discuss the theory behind my thesis and the methodology I will
+use to analyse the effects of President Donald Trump’s tweets on stocks. Chapter 2.1
+will present the previous literature relevant to my thesis. In chapter 2.2, I will discuss
+the data I obtained from twitter. Chapter 2.3 will discuss the stock market data and the
+formulas used to calculate key values.
+
+2.1.
+
+Previous literature
+
+At the time of writing I have only found a few studies that analyse how President
+Trump´s company-specific tweets affect the company´s stock. One of them is Stock
+market reactions to presidential statements: Evidence from company-specific tweets
+by Ge, Kurov and Wolfe (2018). They reviewed tweets from November 9, 2016 to
+July 31, 2017. They find that Trump´s tweets move stock prices, where tweets that
+mention a company in a positive manner increase stock price ad tweets that mention a
+company in a negative manner decrease stock price. They also find that President
+Trump´s tweets increase trading volume, volatility, and institutional investor attention.
+They found that the effect tweets have on the stock was larger before the presidential
+inauguration on January 20, 2017. Ge, Kurov and Wolfe (2018) controlled for previous
+news related to Trump’s tweets and found that even tweets that were preceded by other
+news affected stocks.
+Brans and Scholtens (2020) also analysed the impact of Trump’s company-specific
+tweets on stock return in their article Under his thumb the effect of president Donald
+Trump’s Twitter messages on the US stock market. Theirs is an event study that
+analyses the effect of tweets that mention publicly traded companies from November
+8, 2016 to November 8, 2018. They find that tweets with a negative sentiment affect
+abnormal return in an economically significant way. They do not find a significant
+response from other types of tweets. This indicates that the market reacts more
+strongly to negative tweets.
+
+7
+
+Christian Hoven
+In their paper Using Social Media Analytics: The Effect of President Trump's Tweets
+on Companies' Performance Juma'h and Alnsour (2018) analyse if Trump’s tweets
+affect major financial indexes in the USA or companies’ excess return. Their sample
+period is from the middle of February 2016 to the middle of August 2017. Through
+their event study they do not find significant effects of Trump’s tweets, related to
+economy or finance terms, or related to individual companies, on financial indexes or
+company stock return.
+There is also an analysis of how Trump’s tweets affect the stock market as a whole.
+Burggraf, Fendel and Huynh (2019) analysed this in their paper Political news and
+stock prices: evidence from Trump’s trade war. They analysed tweets from September
+14, 2018 to May 28, 2019 that mention key words related to Trump’s trade war on
+China. They then used a structural vector autoregressive model to examine how these
+tweets impact S&P 500 return and investor uncertainty via the VIX index. Through
+their analysis Burggraf, Fendel and Huynh (2019) find that Trump’s tweets related to
+the US-China trade war cause a drop in S&P 500 return and increase investor
+uncertainty. The also find that the tweets have a different impact on different
+industries.
+There are other studies that have analysed connections between twitter and the stock
+market, for example, The Wisdom of Twitter Crowds: Predicting Stock Market
+Reactions to FOMC Meetings Via Twitter Feeds by Azar & Lo (2016). They analysed
+if it is possible to base investment decisions on Twitter sentiment. They found that
+portfolios created using twitter data can outperform a passive buy-and-hold strategy.
+They analysed tweets that cite the Federal reserve that were posted around Federal
+Open Markets Committee meetings. They identify Twitter sentiment by using natural
+language processing techniques and assigning a polarity score to each twitter message.
+This study shows that social media can have a significant effect on investments in the
+stock market. Fiala, Kapounek & Veselý (2015) also studied the effects of investor
+sentiment. They analysed tweets with either positive or negative sentiment towards
+Apple and Microsoft. They used algorithms to identify tweets referencing the two
+companies and whether the tweets were positive or negative towards these companies.
+The found that Twitter sentiment affects the stock price of these companies. Bollen,
+Mao, & Zeng (2011) analysed if public mood as measured from large-scale collection
+of Twitter posts is correlated or even predictive of Dow Jones Industrial Average
+8
+
+Christian Hoven
+values. They found that public mood can be tracked using Twitter and text processing.
+Through some, but not all, methods they found that Twitter mood is predictive of the
+Dow Jones Industrial Average. Chen et al. (2014) analyse user-generated opinions
+from the website Seeking Alpha, one of the largest investment-related social-media
+websites in the United States according to them. They look at the frequency of negative
+words in articles and comments on Seeking Alpha, and find that the frequency of
+negative words in articles and comments negatively predict stock returns
+My hypotheses for the results of this analysis will largely be based on the results from
+Ge, Kurov & Wolfe (2018), as I expect that my analysis will have similar results
+compared to theirs, unless the tweets Trump has posted after their sample period ended
+have changed in nature for some reason. I believe that President Trump´s tweets will
+affect the price of the stock of the company that is mentioned in the tweet. Tweets that
+mention something positive about the company will increase the price of the stock,
+while negative tweets will decrease the price. This will be because it is possible that
+the market interprets the message in Trump´s tweets as new information, and previous
+literature has found that public news releases influence the stock market and stock
+prices (Brooks, Patel and Su, 2003, Chan, 2003 and Vega, 2006). Ryan and Taffler
+(2004) found that news events affect the trading volume of the stocks of the companies
+mentioned in these news events. In their study Neuhierl, Scherbina and Sclusche
+(2013) identified that press releases, which are a type of news, increase stock volatility.
+If Trump´s tweets are treated as news by investors it is likely that they will impact the
+stock price, trading volume, and volatility.
+There can also be more behavioural reasons behind President Trump’s tweets
+influencing the stock market, like people being influenced by Trump´s opinions and
+therefore changing their investment behaviour. According to Hoffmann and
+Broekhuizen (2009), people can change their investment behaviour by being
+influenced by other people. Chen et al. (2014) mention the Cogent Research (2008)
+that states that one in four adults in the US rely on investment advice transmitted via
+social media outlets. Because of this Donald Trump´s tweets may influence the
+investment behaviour of many people and that, in turn, may influence the stock market.
+I also believe that a tweet from Trump will increase the trading volume and the
+volatility of the stock of the company that is mentioned in the tweet. This is because
+he has a very large following on both of his Twitter accounts. A tweet from Trump
+9
+
+Christian Hoven
+will therefore give that company increased attention, which will increase both the
+trading volume (Yuan, 2015) and the stock´s volatility (Andrei and Hasler, 2014).
+Yuan (2008) also found that attention causes investors to adjust their stock positions,
+which will increase trading volume and may have an impact on stock prices. During
+times when market makers face attention limits stocks with more attention may
+experience greater liquidity (Corwin and Coughenour, 2008).
+Fang and Peress (2011) found that media coverage can affect stock return even if it
+does not contain any genuine news. Engelberg and Parsons (2011) also identify that
+not only news, but media influences trading. The results in Sabherwal, Sarkar and
+Zhangs (2011) paper show that when stocks are heavily discussed, even without that
+discussion containing material news, abnormal return of those stocks is affected. This
+combined with the fact that previous research found that attention alone can affect the
+stock market shows that even if Trump’s tweets are not considered as news they may
+still affect the stock market as long as they increase attention or media coverage, which
+can be seen as a form of attention.
+Based on the previous literature it is easy to see that there are many different possible
+reasons for President Trump’s tweets to affect company stocks, hence it is likely that
+the results in this thesis will show that Trump’s tweets affect stocks.
+
+2.2.
+
+Twitter data
+
+I will gather tweets from both of President Donald Trump´s Twitter accounts:
+@realDonaldTrump and @POTUS. The sample period I will use is from November
+9, 2016, the day Trump got elected as president, to January 31, 2020. Even though
+President Trump was not inaugurated until January 20, 2017, I will include the tweets
+since he was elected, as his twitter following was already strong and it was known he
+would become president and would be able to affect policies in the future. During this
+time there have been 811 trading days on the U.S. stock market and during the same
+time Trump has tweeted about 421 different publicly traded companies that are listed
+on the U.S. stock exchange. The resulting number of panel observations is 34,062.
+
+1
+
+All the companies present in this sample are listed in table A.2 in the appendix
+
+10
+
+Christian Hoven
+During the sample period President Trump has posted 124 tweets where he mentions
+a publicly traded company. This tweet number is reached after I have done as I will
+describe later, and I counted multiple tweets about one company that were posted on
+the same day as one tweet. I have also counted tweets where multiple companies are
+mentioned as multiple tweets about a single company. Only 50 of these tweets were
+posted during the trading hours of the United States stock exchange. As most of the
+tweets were posted when the U.S. stock market was closed, I will use daily stock
+prices, trading volume and volatility. The same decision, to focus on daily data, was
+made in previous literature (Demirer and Kutan, 2010 and Ge, Kurov and Wolfe,
+2018).
+I will only focus on the U.S. stock market as President Trump´s decisions, policies and
+opinions likely mostly affect companies that operate in the Unites States. I would also
+run into a few complications if I were to include companies that are not traded in the
+US. Firstly, the trading hours in other countries are different, because of time zones,
+and that may change how a tweet affects a company´s stock. Secondly, and more
+importantly, the stocks in other countries are traded using different currencies.
+Changes in the exchange rate between U.S. dollars and the local currency might skew
+my results. I will not have to exclude too many companies, as most of the companies
+Trump has tweeted about are listed the U.S. stock market. The companies that Trump
+mentioned in tweets during the sample period that are not traded on the U.S. stock
+exchange are: Airbus, Bayer, BMW, Foxconn, Huawei, Hyundai, Lotte Group, Mazda,
+Samsung, Softbank, Volkswagen and ZTE. Trump has tweeted about these companies
+18 times. President Trump also mentioned Aetna and ESPN. These companies are
+privately held companies and therefore I can´t include them in my analysis. Ge, Kurov
+and Wolfe (2018) have done the only analysis of President Trump´s company-specific
+tweets on the company’s stock I have found. They also chose to focus only on the U.S.
+stock market.
+As Trump´s relationship with the media is strained, I will not include tweets about
+media companies as the effect his tweets have may be different for these companies.
+It is possible that the content and nature of Trump’s tweets directed towards media
+companies differs from those aimed at other companies. It is also possible that his
+followers interpret the content of such tweets differently because they are aware of his
+opinion about certain media outlets. Ge, Kurov and Wolfe (2018) also eliminated
+11
+
+Christian Hoven
+media companies from their analysis. As I will eliminate certain tweets that mention
+other companies if the main message is about a media company. Such as tweets about
+the Washington Post, where Trump calls it the Amazon Washington Post or tweets
+about CNN, where he mentions that AT&T is the owner of CNN.
+Tweets that were posted during the time the United States stock market was closed
+will be assigned to next trading day, as also done by Ge, Kurov and Wolfe (2018). I
+will do this because that is the day investors will be able to trade on the tweets and the
+possible new information they may contain. There are instances when President Trump
+posts multiple tweets about the same company on a single day. For example, the
+following tweets about Amazon on March 31, 2018. “While we are on the subject, it
+is reported that the U.S. Post Office will lose $1.50 on average for each package it
+delivers for Amazon. That amounts to Billions of Dollars. The Failing N.Y. Times
+reports that “the size of the company’s lobbying staff has ballooned,” and that...“ and
+“...does not include the Fake Washington Post, which is used as a “lobbyist” and
+should so REGISTER. If the P.O. “increased its parcel rates, Amazon’s shipping costs
+would rise by $2.6 Billion.” This Post Office scam must stop. Amazon must pay real
+costs (and taxes) now!”. That message was split into two tweets, because the message
+is too long for one tweet. This can happen when a single message is split into multiple
+tweets, due to the restrictions on tweet length, or because Trump posts two different
+tweets about the same company during one day. In these cases, I will again follow the
+example of Ge, Kurov, and Wolfe (2018), and count those tweets as a single tweet as
+the effects of these tweets will be combined in the daily data. In the case where a single
+tweet mentions two different companies, I will essentially count that tweet as two
+tweets, one for each company. This is important in cases where the message of the
+tweet is positive towards one company and negative towards the other, such as a tweet
+about Boeing and Lockheed Martin on December 22, 2016. “Based on the tremendous
+cost and cost overruns of the Lockheed Martin F-35, I have asked Boeing to price-out
+a comparable F-18 Super Hornet!”. In that tweet the message is positive about Boeing
+and negative about Lockheed Martin. Ge, Kurov and Wolfe (2018) did the same with
+tweets that mention multiple companies in their paper.
+I will also classify tweets as either positive or negative. This will be done based on the
+message in the tweet and whether it has a positive or negative tone towards the
+company. For example, the following tweet about Rexnord on December 2, 2016 is
+12
+
+Christian Hoven
+negative towards the company. “Rexnord of Indiana is moving to Mexico and rather
+viciously firing all of its 300 workers. This is happening all over our country. No
+more!”. While this tweet about Ford from January 4, 2016 is positive. “Thank you to
+Ford for scrapping a new plant in Mexico and creating 700 new jobs in the U.S. This
+is just the beginning - much more to follow”. Most previous studies on impact of social
+media on the stock market analyse big data. They look at a large number of messages
+and posts from multiple people. They aim to extract an overall sentiment of market
+participants from the data. As a result of this they cannot take into account the actual
+content of the messages and posts and the context in which these were made. In
+contrast to this, I will read each tweet and manually assign either a positive or a
+negative value based on the message and context of the tweets towards the company.
+This is possible because I only look at posts from one user, and therefore the amount
+of posts is much lower. I determine if the tone of the tweet is positive or negative
+towards the company in the same way that Ge, Kurov and Wolfe (2018) have done in
+their study. Tweets that are about jobs will be classified as positive if Trump applauds
+a company for keeping jobs in the USA or bringing them back from abroad. This is
+based on the fact that this has been an important issue for President Trump, as he stated
+in the 2016 Republican primary debate in South Carolina: “I'm going to bring jobs
+back from China. I'm going to bring jobs back from Mexico and from Japan, where
+they're all every country throughout the world now Vietnam, that's the new one.”. On
+the other hand, tweets about companies that move jobs out of the USA will be
+classified as negative.
+Tweets about government cost will be classified as positive if the content of the tweet
+suggests that the company may help reduce government costs. If a tweet is about
+companies whose good or service the government purchases at high cost it is classified
+as negative. This is because Trump will not want to spend unnecessary government
+funds and his promises to reduce federal debt. Trump stated “We’ve got to get rid of
+the $19 trillion in debt” during an interview with Bob Woodward and Robert Costa
+on April 3, 2016.
+There are of course many tweets about different subjects than those mentioned above.
+In these cases, I will classify the tweets based on the general tone of the tweet and
+whether the message it contains is positive or negative towards the company. Whether
+a tweet has been classified as positive or negative is shown in table A.1 in the appendix.
+13
+
+Christian Hoven
+
+2.3.
+
+Stock market data
+
+I have gathered all the company stock data from Yahoo! Finance. The market data
+(stock market return, risk free return, small-minus-big market capitalization and highminus-low book-to-market ratio) I have taken from Kenneth French´s website. As I
+will use daily data in my analysis, the data I have collected is also in daily data.
+
+Table 2.1: Summary Statistics
+
+Median
+Mean
+Minimum
+Maximun
+Std Dev
+
+Return
+0.0649
+0.0567
+-26.7760
+214.3535
+2.2727
+
+Absolute
+Absolute
+Absolute
+Value
+Abnormal Abnormal
+Value
+Abnormal Abnormal Trading
+Trading
+Return
+Return
+Return
+Volume
+Volume Volatility
+0.8080
+-0.6725
+0.9453
+-0.1318
+0.2784
+1.0464
+1.2332
+-0.6838
+1.2825
+0.0001
+0.3749
+1.3201
+0.0000 -29.2708
+0.0001
+-0.9836
+0.0000
+0.0000
+214.3535 212.9950 212.9950
+48.4456
+48.4456
+31.3044
+1.9098
+2.1465
+1.8521
+0.7112
+0.6044
+1.1675
+
+This table shows the summary statistics for the stock data from the sample period (9 November 2016
+to 31 January 2020). All values are for daily data. Return and abnormal return values are in
+percentages
+
+Compared to the data in Ge, Kurov and Wolfe’s (2018) paper, the standard deviation
+in my sample is higher across the board indicating a more volatile market during my
+sample period. The extremes are also higher and lower respectively in my data. Both
+the mean and the median for abnormal return and absolute value abnormal return are
+higher in my dataset than that from Ge, Kurov and Wolfe (2018), which is no surprise
+as the stock market has performed well since Trump became president. The median
+and mean of abnormal trading volume are lower in my data, while those values for
+volatility are higher compared the data of Ge, Kurov and Wolfe (2018).
+
+2.3.1. Abnormal return
+To obtain abnormal return, I will first calculate the daily return for each stock in
+percentage terms using the closing price, using the following formula
+
+14
+
+Christian Hoven
+
+𝑅𝑖𝑡 =
+
+𝐶𝑖𝑡 − 𝐶𝑖𝑡−1
+𝐶𝑖𝑡−1
+
+(1)
+
+Where Rit is the return and Cit is the closing price. I will then calculate excess return
+(ERit) as return minus risk free return (RFit).
+𝐸𝑅𝑖𝑡 = 𝑅𝑖𝑡 − 𝑅𝐹𝑡
+
+(2)
+
+I will then estimate the standard Fama-French three-factor model (Fama and French,
+1993), in the same way that Ge, Kurov and Wolfe (2018) did. To keep my model more
+comparable to the one Ge, Kurov and Wolfe (2018) used I will not be using the FamaFrench five-factor model (Fama and French, 2015) even though the five-factor model
+has the potential to control for more variables.
+I will use an OLS regression according to the following equation.
+𝐸𝑅𝑖𝑡 = 𝛽0 + 𝛽1 (𝑅𝑀𝑡 − 𝑅𝐹𝑡 ) + 𝛽2 𝑆𝑀𝐵𝑡 + 𝛽3 𝐻𝑀𝐿𝑡 + 𝜀𝑖𝑡
+
+(3)
+
+Where ERit is excess return, RMt is the stock market return, RFt is risk free return,
+SMBt is small-minus-big market capitalization and HMLt is high-minus-low book-tomarket ratio. Estimating the excess return like this will allow me to calculate abnormal
+return. I will use the coefficients from the regression above in the formula below to
+calculate the abnormal return for each company.
+𝐴𝑅𝑖𝑡 = 𝐸𝑅𝑖𝑡 − [𝛽0 + 𝛽1 (𝑅𝑀𝑡 − 𝑅𝐹𝑡 ) + 𝛽2 𝑆𝑀𝐵𝑡 + 𝛽3 𝐻𝑀𝐿𝑡 ]
+
+(4)
+
+The reason I will use abnormal return instead of simply using return is because
+abnormal return controls for market movement, while return does not.
+In his paper, MacKinlay (1997) recommends that one does not use the same estimation
+and event window, nor should they overlap. If the event and estimation windows
+overlap the events that are studied may affect the estimation and skew the results.
+Because of this recommendation I will be using data from the 9 November 2015 to the
+8 November 2016 to estimate excess return and ensure the events in the sample used
+for the rest of the study do not affect the estimation. Ge, Kurov and Wolfe (2018) also
+did this, but they opted for a shorter time period for the estimation, while I chose to
+include the entire year prior to the event window.
+
+15
+
+Christian Hoven
+
+2.3.2. Abnormal trading volume
+Abnormal volume is reached by dividing the difference between trading volume for a
+given day and the average trading volume of the entire sample period by the average
+trading volume of the entire sample period, as done by Joseph, Wintoki and Zhang
+(2011).
+𝐴𝑉𝑖𝑡 = (𝑉𝑖𝑡 − 𝑉𝑖,𝑎𝑣𝑔 )/𝑉𝑖,𝑎𝑣𝑔
+
+(5)
+
+Vit is the trading volume for company i on day t and Vi,avg is the average daily volume
+over the entire sample period for company i.
+Ge, Kurov and Wolfe (2018) calculated abnormal trading volume by dividing the
+difference between trading volume for a given day and the average trading volume of
+the previous five days by the average trading volume of the previous five days. I won´t
+use this method because there are instances where a company is mentioned in President
+Trump´s tweets more than once within a five-day period. This may lead to a situation
+where the five-day average trading volume for the second tweet is higher than first
+tweet within five days, as the five-day average trading volume for the second tweet
+includes the increase in trading volume from the first tweet. In this case the abnormal
+trading volume for the second tweet calculated by this method would be lower than it
+actually is. Therefore, results using this method might be skewed downward.
+
+2.3.3. Volatility
+To calculate volatility, I will use a method proposed by Rogers and Satchell (1991).
+𝜎𝑖𝑡2 = (𝐻𝑖𝑡 − 𝐶𝑖𝑡 )(𝐻𝑖𝑡 − 𝑂𝑖𝑡 ) + (𝐿𝑖𝑡 − 𝐶𝑖𝑡 )(𝐿𝑖𝑡 − 𝑂𝑖𝑡 )
+
+(6)
+
+Where σit2 is the variance and Hit, Lit, Cit and Oit are the natural logarithms of the high,
+low, closing, and opening prices of the stock. I will take the square root out of the
+variance to get the standard deviation and then multiply that value by 100 to get
+volatility. Ge, Kurov and Wolfe (2018) made the same calculations to get the volatility
+of the stock in their paper. Calculating volatility this way is advantageous compared
+to more commonly used ways, as those only give one value for volatility over the entire
+sample period. The method used here, developed by Rodgers and Satchell (1991) gives
+16
+
+Christian Hoven
+a volatility value for each day, which is needed to estimate the effects of President
+Donald Trump´s tweets on volatility when using daily data.
+
+2.4.
+
+Empirical model
+
+The method I will use for my analysis is based on the method Ge, Kurov and Wolfe
+(2018) used in their paper Stock market reactions to presidential statements:
+Evidence from company-specific tweets. They analyse the effects of President Trump´s
+tweets that mention publicly traded companies, on stock prices, trading volume,
+volatility, and institutional investor attention. Ge, Kurov and Wolfe (2018) acquire
+their results by using OLS regressions with fixed effects for each company. In their
+basic model they only include the Twitter variable as an independent variable. They
+also use an OLS regression with a dummy variable for the time period before Trump´s
+inauguration as President and term interacting the Twitter variable and the preinauguration dummy, which has the value one for the time before Trump was
+inaugurated as President of the United States. In my analysis I will also use an OLS
+regression with fixed effects for each company. I will use the fixed effects because it
+will help me to control for omitted variable bias. The use of fixed effects will control
+for all variables that don´t change over time. What will differentiate my analysis from
+that of Ge, Kurov and Wolfe (2018) is that I will include a dummy variable for tweets
+that were posted during the opening hours of the U.S. stock exchange. I will do this
+because Ge, Kurov and Wolfe (2018) found that stock prices reverse during the
+following trading days after a tweet and that the increase in trading volume usually
+reverts to normal levels quite fast. Ge, Kurov and Wolfe (2018) suggested that future
+research could analyse whether certain industries are more influenced by tweets than
+others and if company size plays a role in the effect a tweet has on the company´s
+stock. I will include separate dummy variables for companies that operate in the
+defence industry, the automobile industry, and the banking sector, because they are
+dependent on government contracts or may be dependent on government bailouts. I
+will be taking company size into account by using total annual revenue as a proxy,
+because total revenue is often used to describe how large a company is. I will use the
+total revenue value from the day after it was reported until the total revenue for the
+17
+
+Christian Hoven
+following year is reported. As is often done in previous research, I will use the natural
+logarithm of total annual revenue. I won´t include institutional investor attention in my
+analysis, as I want to focus more on return, trading volume and volatility. These values
+are more commonly used while making investment decisions and are likely more
+important to the companies themselves.
+The sample period Ge, Kurov and Wolfe (2018) use is from November 9, 2016 to July
+31, 2017. During this time there were 181 trading days on the U.S. stock exchange. In
+their sample they have 19 companies. My sample period will be from November 8,
+2016 to January 31, 2020. This will increase the number of trading days during the
+sample period to 811. In my sample period Trump tweeted about 42 different
+companies. This means that I have a much larger sample than Ge, Kurov and Wolfe
+(2018) did.
+Even though I use a fixed effects model there is still a risk that some omitted variables
+may affect my results. One concern may be other news sources reporting the same
+information that is contained within Trump´s tweets. These other sources may be what
+influence the stock. Ge, Kurov and Wolfe (2018) tested this and found that tweets that
+were not preceded by other news sources had a larger effect on the stock than tweets
+that were preceded by other news sources. They also state that there is evidence
+indicating that Trump´s tweets have an effect even when there is preceding news about
+the company. Ge, Kurov and Wolfe (2018) controlled for preceding news by searching
+for news on and before the day of a tweet on the Factiva global news database. They
+then use the same regressions they had done before, but only used tweets that were an
+original source of news (not preceded by other news).
+As the methodology used in this thesis can be classed as an event study, I will discuss
+event studies and their benefits and potential drawbacks.
+An event study is a statistical technique that estimates the stock price impact
+of occurrences such as mergers, earnings announcements, and so forth. The
+basic notion is to disentangle the effects of two types of information on stock
+prices – information that is specific to the firm under question (e.g., dividend
+announcement) and information that is likely to affect stock prices marketwide
+(e.g., change in interest rates). (Mitchell and Netter, 1994)
+
+18
+
+Christian Hoven
+A tweet from Trump about a company is most likely going to fall under the category
+“information that is specific to the firm under question” mentioned by Mitchell and
+Netter (1994). According to MacKinlay (1997), who also states that an event study
+measures the impact of a specific event, some of the most successful event studies
+have been in the area of finance typically focusing on abnormal return. Binder (1998)
+also found that event studies are good as they show statistical power and wide
+applicability. This is a good sign for the validity of this thesis as that description would
+also fit this research. Mackinlay (1997) also states that it is important for an event
+study to precisely identify the date of the event. In the case of this thesis it has been
+easy to do that. All tweets posted have a timestamp, thus it is possible to know not
+only what day the tweets were posted, but what minute. As the tweets are the events
+in this study, it is very much possible to identify the precise date, and time, of the
+event. Other key factors for an event study is that the event is unexpected, and the
+information is freely available to the market. Trump’s tweets are both unexpected and
+freely available for anyone to read. Brans and Scholtens (2020) agree with this.
+
+2.4.1. Abnormal return
+When analysing how President Donald Trump´s tweets affect stock market return I
+will be using a fixed effects panel model.
+𝐴𝑅𝑖𝑡 = 𝛼0 + 𝛼1 𝑇𝑖𝑡 + 𝛼2 𝑆𝑂𝑖𝑡 + 𝛼3 𝑆𝑂𝑖𝑡 × 𝑇𝑖𝑡 + 𝛼4 𝐼𝑡 + 𝛼5 𝐼𝑡 × 𝑇𝑖𝑡 + 𝛼6 𝑆𝑖𝑡
+
+(7)
+
++ 𝜃𝑖 + 𝜀𝑖𝑡
+Where ARit is abnormal return, Tit is the Twitter variable, It is the dummy variable for
+post-inauguration, Sit is the indicator for company size and θi are company specific
+fixed effects. I will also include a dummy variable for tweets posted during the trading
+hours of the U.S. stock exchange (SOit). I will include this variable because I expect
+tweets posted when the U.S. stock exchange is closed to have a lower effect on the
+abnormal return than tweets posted during the opening hours of the U.S. stock
+exchange. I expect this to be the case because Ge, Kurov and Wolfe (2018) found that
+the effect of Trump´s tweets on stock prices is temporary and reverses during the
+following days after the tweet. This reversal effect may already happen before the
+market opens as initial overreaction from investors may not be as large if they have
+19
+
+Christian Hoven
+had time to process the information in the tweets while the market is closed. I will also
+include interaction terms between the Twitter variable and both the dummy for tweets
+posted post-inauguration and tweets posted during the trading hours of the U.S. stock
+exchange. This is a similar model used by Ge, Kurov and Wolfe (2018), though they
+didn’t include a dummy variable for tweets posted outside the opening hours of the
+U.S. stock exchange, nor did they use an indicator for company size. Additionally, I
+will include variables for companies operating in the defence2 and automobile3
+industries and the banking4 sector as well as interaction terms between these variables
+and the Twitter variable. I will also include the first three lags of abnormal return as
+control variables.
+
+2.4.2. Abnormal trading volume
+In determining the effect of Trump´s tweets on trading volume of a company´s stock,
+I use abnormal trading volume. To determine this effect, I estimate a fixed effects
+panel model.
+𝐴𝑉𝑖𝑡 = 𝛾0 + 𝛾1 |𝑇𝑖𝑡 | + 𝛾2 𝑆𝑂𝑖𝑡 + 𝛾3 𝑆𝑂𝑖𝑡 × 𝑇𝑖𝑡 + 𝛾4 𝐼𝑡 + 𝛾5 𝐼𝑡 × 𝑇𝑖𝑡 + 𝛾6 𝑆𝑖𝑡
+
+(8)
+
++ 𝜃𝑖 + 𝜀𝑖𝑡
+Where 𝜃 i are company-specific fixed effects, It is the post-inauguration dummy and Sit
+is the indicator for company size. I will also use a dummy variable for tweets that were
+posted during the time the U.S. stock exchange was open (SOit). I will be doing this,
+because Ge, Kurov and Wolfe (2018) found that the spike in trading volume usually
+doesn´t last very long. Therefore, tweets posted during the opening hours of the U.S.
+stock market might have a larger effect on trading volume than those posted when the
+market is closed. As control variables I will also include the first three lags of abnormal
+trading volume. The Twitter variable, Tit, will be absolute as I expect both positive and
+negative tweets to increase trading volume. Ryan and Taffler (2004) did not classify
+news as positive or negative in their analysis. Therefore, I will also expect President
+Trump´s tweets, both positive and negative, to increase trading volume. Furthermore,
+the model I have built is not suited for differentiating between positive and negative
+2
+
+Boeing, Lockheed Martin, and Navistar
+Fiat Chrysler, Ford, General Motors, Navistar, Toyota, and Workhorse
+4
+JPMorgan Chase and Wells Fargo
+3
+
+20
+
+Christian Hoven
+tweets and how they affect trading volume. If I would not use an absolute of the twitter
+variable and γ1 is positive, as I expect it will be, negative tweets would reduce trading
+volume. This would contradict previous research, and reason.
+
+2.4.3. Volatility
+To estimate the effect of Trump´s tweets on volatility, I use a similar model as for
+estimating the effect on trading volume.
+𝜎𝑖𝑡 = 𝛿0 + 𝛿1 |𝑇𝑖𝑡 | + 𝛿2 𝜎𝑖𝑡−1 + 𝛿3 𝑆𝑂𝑖𝑡 + 𝛾3 𝑆𝑂𝑖𝑡 × 𝑇𝑖𝑡 + 𝛾4 𝐼𝑡 + 𝛾5 𝐼𝑡 × 𝑇𝑖𝑡
+
+(9)
+
++ 𝛾6 𝑆𝑖𝑡 + 𝜃𝑖 + 𝜀𝑖𝑡
+Where σit stands for volatility, SOit stands for the dummy for tweets posted during the
+opening hours of the stock market, It stands for the post-inauguration dummy and Sit
+is the company size indicator. As with trading volume the twitter variable is absolute.
+Neuhierl, Scherbina and Sclusche (2013) did not differ between positive and negative
+press releases and found that press releases increase volatility, therefore I will expect
+to find that both positive and negative tweets increase volatility. That is why I use the
+absolute value of the Twitter variable. The model is not suitable to differentiate
+between positive and negative tweets for the reasons described in the previous section
+about abnormal trading volume. I will include the first three lags of volatility in the
+model to account for persistence of volatility. Ge, Kurov and Wolfe (2018) used a
+similar model.
+
+3. Results
+In this chapter I will present the results of the regressions presented on chapter 2.4. In
+chapter 3.1 I will present the results for the effect of Trump’s tweets on abnormal
+return. Chapter 3.2 will present the results for the effect of Trump’s tweets on abnormal
+trading volume. Finally, in chapter 3.3 I will present the results for the effect of
+Trump’s tweets on volatility.
+
+21
+
+Christian Hoven
+
+3.1.
+
+Abnormal return
+
+Table 3.1 summarises the effects President Donald Trump’s tweets have on abnormal
+return using fixed effects models, with fixed effects for the 42 companies in the
+sample. Model 1 is the same used by Ge, Kurov and Wolfe (2018) in their basic model
+and Model 2 is the same they used to control for the differences between the time
+before and after Trump was sworn in as president. Model 3 adds a dummy variable for
+tweets posted within the opening hours of the U.S. stock market and natural logarithm
+of total revenue. In Model 4 I have included the three first lags of abnormal return as
+control variables for momentum. In all the models the effect of the Twitter variable on
+abnormal return is statistically significant with a positive coefficient. This indicates
+that Trump’s tweets affect abnormal return. This is in line with my hypothesis and
+with what Ge, Kurov and Wolfe (2018) found. Taking the coefficient of model 1 as an
+example, a positive tweet would increase abnormal return by 2.26 percent on average,
+while a negative tweet would decrease abnormal return by 2.26 percent on average.
+This value is quite a bit higher than the 0.635 percent Ge, Kurov and Wolfe (2018)
+found. The coefficient in Model 3 and 4 is much closer to Ge, Kurov and Wolfe’s
+(2018) value. As shown in Table 2.1, the standard deviation of abnormal return for the
+sample is 1.8521 percent. Therefore, the coefficients for the Twitter variable are also
+economically significant.
+The interaction term between the inauguration dummy and the Twitter variable is also
+statistically significantly. Surprisingly, the coefficient is negative. This indicates that
+tweets Trump posted before he was sworn in as president have a smaller effect on
+abnormal return. This contradicts the results from Ge, Kurov and Wolfe (2018). This
+may be due to that Trump’s tweet have had a greater effect on abnormal return after
+the sample period of Ge, Kurov and Wolfe (2018) ended.
+The interaction term between the dummy variable for tweets posted during the trading
+hours of the stock market and the Twitter variable is statistically significant with a
+positive coefficient. This is in line with my hypothesis, as it indicates that tweets posted
+when the stock market was open had a greater effect on abnormal return than tweets
+posted when the stock market was closed.
+
+22
+
+Christian Hoven
+Because there are interaction terms, which include the Twitter variable that are
+statistically significant in Model 2, 3 and 4, there is some uncertainty about the
+importance of the Twitter variable in these models. Still, the results show that Trump’s
+tweets affect abnormal return, the effect being smaller for tweets posted before he was
+sworn in as president and larger for tweets posted when the stock market was open.
+The R-squared value is rather low in all models, and therefore the omitted variable
+bias may be quite high. The same is the case for the models in chapter 3.1.1., 3.1.2.,
+and 3.1.3.
+The inauguration dummy, which equals one before Trump was sworn in as president,
+is statistically significant in all models where it is present. The same is true for the
+logarithm of total annual revenue.
+
+23
+
+Christian Hoven
+
+Table 3.1: The effects of President Trump’s tweets on abnormal return
+Variables
+Twitter variable
+
+(1)
+Model 1
+
+(2)
+Model 2
+
+(3)
+Model 3
+
+(4)
+Model 4
+
+0.0226***
+(0.00193)
+
+0.0248***
+(0.00211)
+0.00700***
+(0.000469)
+-0.0160***
+(0.00512)
+
+0.00988***
+(0.00268)
+0.00635***
+(0.000467)
+-0.0148***
+(0.00513)
+0.0351***
+(0.00318)
+0.0254***
+(0.00404)
+-0.00941***
+(0.000553)
+
+-0.00686***
+(0.000116)
+
+-0.00733***
+(0.000120)
+
+0.0920***
+(0.00585)
+
+0.00989***
+(0.00267)
+0.00598***
+(0.000470)
+-0.0148***
+(0.00512)
+0.0353***
+(0.00317)
+0.0254***
+(0.00404)
+-0.00891***
+(0.000559)
+0.00712
+(0.00545)
+-0.00550
+(0.00545)
+0.0545***
+(0.00545)
+0.0871***
+(0.00590)
+
+34,062
+0.004
+42
+
+34,062
+0.011
+42
+
+34,062
+0.025
+42
+
+34,062
+0.028
+42
+
+Pre-inauguration dummy
+Pre-inauguration x Twitter
+Inside trading hours dummy
+Inside trading hours x Twitter
+ln(total revenue)
+Abnormal return lag 1
+Abnormal return lag 2
+Abnormal return lag 3
+Constant
+Observations
+R-squared
+Number of companies
+
+Standard errors in parentheses
+*** p<0.01, ** p<0.05, * p<0.1
+Twitter variable: 1 for days with a positive tweet, -1 for days with a negative tweet, 0 for days without
+tweet. Pre-inauguration dummy: 1 for days before and on the day of Trump’s inauguration
+(20.01.2017), 0 on days after Trump’s inauguration. Inside trading hours dummy: 1 for days where a
+tweet was posted inside the trading hours of the U.S. stock market, 0 on other days. ln(total revenue):
+natural logarithm of total revenue as of the latest earnings report.
+
+3.1.1. Automobile industry
+The models I have used to obtain the results presented in table 3.3 are the same as
+Model 3 and 4 in the previous chapter, except that I have added a dummy variable for
+the automotive industry and an interaction term between the dummy variable for the
+automotive industry and the Twitter variable. The dummy variable for the automotive
+industry has the value one for companies that operate in the automotive industry and
+
+24
+
+Christian Hoven
+zero for all other companies. The automotive dummy variable is omitted from the
+regression because its effects are already captured in the company-fixed effects.
+Similarly, as for the regression without an automotive dummy, the Twitter variable is
+statistically significant, but this time the coefficient is negative. The interaction term
+between the inauguration dummy and the Twitter variable is also statistically
+significant and the coefficient for that interaction term is positive, which means that
+tweets posted before Trump was inaugurated as president have more of an effect on
+abnormal return than those posted after his inauguration. The interaction term between
+the automotive dummy and the Twitter variable is statistically significant and the
+coefficient is positive. Even though the coefficient for the Twitter variable itself is
+negative the coefficient of the interaction term between the automotive dummy and
+the Twitter variable compensates for this. The aggregated coefficient of these two
+variables is 0.05552, which is much larger than the coefficient for the twitter variable
+when the automotive dummy was not included. This number is again economically
+significant.
+These results indicate that tweets about companies in the automotive industry have a
+greater effect on abnormal return than tweets about other companies, which is in line
+with my hypothesis. As two interaction terms that include the Twitter variable are
+highly significant in these models, the importance of the Twitter variable itself is
+uncertain. Because of this uncertainty, the coefficient for the Twitter variable being
+negative does not necessarily mean that positive tweets about companies in other
+industries than automobile decrease abnormal return.
+
+25
+
+Christian Hoven
+
+Table 3.2: The effects of President Trump’s tweets on abnormal return in the
+automobile industry
+Variables
+Twitter variable
+Pre-inauguration dummy
+Pre-inauguration x Twitter
+Inside trading hours dummy
+Inside trading hours x Twitter
+Automobile industry dummy
+Automobile industry x Twitter
+ln(total revenue)
+
+(1)
+Model 1
+
+(2)
+Model 2
+
+-0.00688**
+(0.00290)
+0.00633***
+(0.000465)
+-0.0275***
+(0.00518)
+0.0309***
+(0.00318)
+0.0276***
+(0.00403)
+-
+
+-0.00688**
+(0.00290)
+0.00597***
+(0.000469)
+-0.0275***
+(0.00517)
+0.0311***
+(0.00317)
+0.0277***
+(0.00403)
+-
+
+0.0623***
+(0.00424)
+-0.00936***
+(0.000552)
+
+0.0915***
+(0.00583)
+
+0.0624***
+(0.00423)
+-0.00886***
+(0.000557)
+0.00662
+(0.00543)
+-0.00526
+(0.00543)
+0.0547***
+(0.00543)
+0.0866***
+(0.00588)
+
+34,062
+0.031
+42
+
+34,062
+0.034
+42
+
+Abnormal return lag 1
+Abnormal return lag 2
+Abnormal return lag 3
+Constant
+Observations
+R-squared
+Number of companies
+
+Standard errors in parentheses
+*** p<0.01, ** p<0.05, * p<0.1
+Twitter variable: 1 for days with a positive tweet, -1 for days with a negative tweet, 0 for days without
+tweet. Pre-inauguration dummy: 1 for days before and on the day of Trump’s inauguration
+(20.01.2017), 0 on days after Trump’s inauguration. Inside trading hours dummy: 1 for days where a
+tweet was posted inside the trading hours of the U.S. stock market, 0 on other days. ln(total revenue):
+natural logarithm of total revenue as of the latest earnings report.
+
+3.1.2. Banking sector
+The inclusion of an interaction term between a banking sector dummy and the Twitter
+variable yields some interesting results as shown in table 3.3. The dummy for the
+banking sector is omitted because of collinearity with the fixed effects. The interaction
+26
+
+Christian Hoven
+term itself is not statistically significant, but what is more interesting is that the
+inclusion of this variable does not change the significance and barely changes the
+coefficients of the other variables in the model compared to the results in table 3.1.
+This indicates that the abnormal return of companies operating in the banking sector
+is not affected differently than that of companies operating in different industries.
+These findings may not be very reliable as there are only two companies in my sample
+which operate in the banking sector, but still indicate that the abnormal return of
+companies in the banking sector are not affected differently by Trump’s tweets than
+others in my sample.
+
+27
+
+Christian Hoven
+
+Table 3.3: The effects of President Trump’s tweets on abnormal return in the
+banking sector
+Variables
+Twitter variable
+Pre-inauguration dummy
+Pre-inauguration x Twitter
+Inside trading hours dummy
+Inside trading hours x Twitter
+Bank sector dummy
+Bank sector x Twitter
+ln(total revenue)
+
+(1)
+Model 1
+
+(2)
+Model 2
+
+0.00992***
+(0.00269)
+0.00635***
+(0.000467)
+-0.0149***
+(0.00513)
+0.0351***
+(0.00321)
+0.0254***
+(0.00405)
+-
+
+0.00991***
+(0.00268)
+0.00598***
+(0.000470)
+-0.0148***
+(0.00512)
+0.0353***
+(0.00320)
+0.0255***
+(0.00404)
+-
+
+-0.00224
+(0.0153)
+-0.00941***
+(0.000553)
+
+0.0920***
+(0.00585)
+
+-0.000905
+(0.0153)
+-0.00891***
+(0.000559)
+0.00712
+(0.00545)
+-0.00550
+(0.00545)
+0.0545***
+(0.00545)
+0.0871***
+(0.00590)
+
+34,062
+0.025
+42
+
+34,062
+0.028
+42
+
+Abnormal return lag 1
+Abnormal return lag 2
+Abnormal return lag 3
+Constant
+Observations
+R-squared
+Number of companies
+
+Standard errors in parentheses
+*** p<0.01, ** p<0.05, * p<0.1
+Twitter variable: 1 for days with a positive tweet, -1 for days with a negative tweet, 0 for days without
+tweet. Pre-inauguration dummy: 1 for days before and on the day of Trump’s inauguration
+(20.01.2017), 0 on days after Trump’s inauguration. Inside trading hours dummy: 1 for days where a
+tweet was posted inside the trading hours of the U.S. stock market, 0 on other days. ln(total revenue):
+natural logarithm of total revenue as of the latest earnings report.
+
+3.1.3. Defence industry
+Table 3.5 shows the effects Trump’s tweets have on abnormal return when controlling
+for companies operating in the defence industry. Otherwise the models are the same
+as Model 3 and 4 in table 3.1. The Twitter variable is statistically significant in both
+28
+
+Christian Hoven
+models and has positive coefficients. The same is the case for the interaction term
+between the dummy for tweets posted during the opening hours of the stock market
+and the Twitter variable, while the interaction term between the pre-inauguration
+dummy and the Twitter variable is statistically significant with a negative coefficient.
+This has the same implications as the results in chapter 3.1. Tweets affect abnormal
+return, where tweets posted during the opening hours of the stock market and after
+Trump was inaugurated have a larger effect.
+The dummy variable for defence industry is omitted because of collinearity with the
+fixed effects. The interaction term between the defence industry dummy and the
+Twitter variable is statistically significant and negative. This does not necessarily mean
+that positive Tweets about companies in the defence industry decrease abnormal
+return, as the coefficient for the Twitter variable is positive. The effect of the Twitter
+variable and the interaction term between the defence industry dummy and the Twitter
+variable very nearly cancel each other out. The aggregated coefficient of these two
+variables is -0.0031, which is a very small effect.
+Because of the statistical significance of the interaction term between the defence
+industry and the Twitter variable the importance of the Twitter variable itself is
+uncertain. The results in table 3.5 indicate that tweets about companies in the defence
+industry affect the abnormal return less than tweets about companies in other
+industries, which is surprising as the defence industry only can sell to the US
+government or to others with the permission from the US government. On the other
+hand, the defence budget for the US is very large, almost 732 billion U.S. dollars in
+20195, and somewhat guarantees a steady cash flow for companies in the defence
+industry.
+There are limitations to these results as two of the three companies in my sample
+operating in the defence industry, Boeing and Navistar, also operate in other industries.
+This may have skewed the results.
+
+5
+
+Source: Stockholm International Peace Research Institute, SIPRI Military Expenditure Database.
+
+29
+
+Christian Hoven
+
+Table 3.4: The effects of President Trump’s tweets on abnormal return in the
+defence industry
+Variables
+Twitter variable
+Pre-inauguration dummy
+Pre-inauguration x Twitter
+Inside trading hours dummy
+Inside trading hours x Twitter
+Defence industry dummy
+Defence industry x Twitter
+ln(total revenue)
+
+(1)
+Model 1
+
+(2)
+Model 2
+
+0.0111***
+(0.00274)
+0.00634***
+(0.000467)
+-0.0131**
+(0.00520)
+0.0355***
+(0.00318)
+0.0245***
+(0.00407)
+-
+
+0.0111***
+(0.00274)
+0.00597***
+(0.000470)
+-0.0131**
+(0.00519)
+0.0357***
+(0.00318)
+0.0245***
+(0.00406)
+-
+
+-0.0144**
+(0.00716)
+-0.00941***
+(0.000553)
+
+0.0920***
+(0.00584)
+
+-0.0142**
+(0.00715)
+-0.00891***
+(0.000559)
+0.00706
+(0.00545)
+-0.00548
+(0.00545)
+0.0545***
+(0.00545)
+0.0871***
+(0.00590)
+
+34,062
+0.025
+42
+
+34,062
+0.028
+42
+
+Abnormal return lag 1
+Abnormal return lag 2
+Abnormal return lag 3
+Constant
+Observations
+R-squared
+Number of companies
+
+Standard errors in parentheses
+*** p<0.01, ** p<0.05, * p<0.1
+Twitter variable: 1 for days with a positive tweet, -1 for days with a negative tweet, 0 for days without
+tweet. Pre-inauguration dummy: 1 for days before and on the day of Trump’s inauguration
+(20.01.2017), 0 on days after Trump’s inauguration. Inside trading hours dummy: 1 for days where a
+tweet was posted inside the trading hours of the U.S. stock market, 0 on other days. ln(total revenue):
+natural logarithm of total revenue as of the latest earnings report.
+
+3.2.
+
+Abnormal trading volume
+
+Table 3.6 presents the effects Trump’s tweets have on abnormal trading volume.
+Model 1 and 2 are the same that Ge, Kurov and Wolfe (2018) used in their analysis.
+30
+
+Christian Hoven
+Model 3 includes a dummy for tweets posted when the stock market was open and the
+natural logarithm of total revenue as a control variable. Model 4 further includes the
+first three lags of abnormal trading volume as control variables for momentum. In this
+model the Twitter variable is absolute, which means that there is no longer a distinction
+between positive and negative tweets. This is done because previous research has not
+made a distinction between positive and negative tweets or pieces of news in similar
+models.
+There is no interaction term between the dummy for tweets posted during the opening
+hours of the stock market and the Twitter variable, because as the Twitter variable is
+absolute the interaction term and the stock market open dummy variable are identical.
+In Model 1 and 2 the Twitter variable is highly statistically significant with a positive
+coefficient. Taking Model 1 as an example, a tweet from Trump increases abnormal
+trading volume by 60.6 percent on average. This effect is also economically significant
+as the standard deviation of absolute abnormal trading volume is 60.44 percent, as
+shown in Table 2.1. These results are similar to those of Ge, Kurov and Wolfe (2018),
+except that the coefficients in my results are about twice as large in Model 1 and one
+and a half times larger in Model 2. What differs from the results of Ge, Kurov and
+Wolfe (2018) is that the coefficient of the interaction term between the preinauguration dummy and the Twitter variable is negative. This means that tweets
+posted before the Trump’s inauguration had a lower effect on trading volume, while
+Ge, Kurov and Wolfe (2018) found that these tweets had a higher impact on trading
+volume. This indicates that the tweets Trump posted after their sample period have had
+a greater effect on abnormal trading volume.
+The statistical significance for the Twitter variable drops in Model 3 and 4, as does the
+coefficient. This is due to the inclusion of the dummy variable for tweets posted when
+the stock market was open, which is the same as the interaction term between that
+variable and the Twitter variable. That variable is highly statistically significant with
+a high coefficient. As the statistical significance for the Twitter variable disappears in
+Model 4 it may be that only tweets posted when the stock market is open affect
+abnormal trading volume. However, that model also includes two variables that are
+interaction terms with the Twitter variable, so the importance of the Twitter variable
+is uncertain.
+31
+
+Christian Hoven
+The results from these models indicate that Trump’s tweets posted during the opening
+hours of the U.S. stock market increase abnormal trading volume, while other tweets
+also may increase abnormal trading volume. Tweets posted before Trump was sworn
+in as president seem to have a smaller effect on trading volume.
+The low R-squared value in all models may be of concern as it means there could exist
+an omitted variable bias.
+
+Table 3.5: The effects of President Trump’s tweets on abnormal trading
+volume
+Variables
+Twitter variable
+
+(1)
+Model 1
+
+(2)
+Model 2
+
+(3)
+Model 3
+
+(4)
+Model 4
+
+0.606***
+(0.0640)
+
+0.682***
+(0.0702)
+0.0821***
+(0.0157)
+-0.502***
+(0.171)
+
+0.202**
+(0.0879)
+0.0375**
+(0.0154)
+-0.317*
+(0.168)
+1.127***
+(0.128)
+-
+
+0.101
+(0.0744)
+0.0175
+(0.0130)
+-0.281**
+(0.143)
+1.059***
+(0.108)
+-
+
+-0.675***
+(0.0182)
+
+Pre-inauguration dummy
+Pre-inauguration x Twitter
+Inside trading hours dummy
+Inside trading hours x Twitter
+ln(total revenue)
+
+-0.00213
+(0.00386)
+
+-0.00767*
+(0.00400)
+
+7.118***
+(0.192)
+
+-0.275***
+(0.0159)
+0.491***
+(0.00544)
+0.0160***
+(0.00606)
+0.0864***
+(0.00544)
+2.903***
+(0.168)
+
+34,062
+0.003
+42
+
+34,062
+0.004
+42
+
+34,062
+0.045
+42
+
+34,062
+0.316
+42
+
+Abnormal trading volume lag 1
+Abnormal trading volume lag 2
+Abnormal trading volume lag 3
+Constant
+Observations
+R-squared
+Number of companies
+
+Standard errors in parentheses
+*** p<0.01, ** p<0.05, * p<0.1
+Twitter variable: 1 for days with a positive tweet, -1 for days with a negative tweet, 0 for days without
+tweet. Pre-inauguration dummy: 1 for days before and on the day of Trump’s inauguration
+(20.01.2017), 0 on days after Trump’s inauguration. Inside trading hours dummy: 1 for days where a
+tweet was posted inside the trading hours of the U.S. stock market, 0 on other days. ln(total revenue):
+natural logarithm of total revenue as of the latest earnings report.
+
+32
+
+Christian Hoven
+
+3.3.
+
+Volatility
+
+Table 3.7 presents the effects President Trump’s tweets have on volatility. These
+models are the same as in previous chapters, except that the dependent variable is
+volatility and the lags are of volatility.
+Model 1 and 2 are again the same as the models Ge, Kurov and Wolfe (2018) used.
+According to Model 1 a tweet from Trump increases volatility by 0.372 on average.
+My findings in these models are similar to theirs, except that the coefficients in my
+models are larger and the coefficient of the interaction term between the preinauguration dummy and the Twitter variable is negative. This indicates that tweets
+posted after the sample period of Ge, Kurov and Wolfe (2018) have had a larger impact
+on volatility. Though this interaction term is not statistically significant, and the results
+are therefore uncertain.
+On the other hand, the dummy for tweets posted when the stock market was open in
+Model 3 and 4 is statistically significant and is identical with the interaction term of
+the stock market dummy and the Twitter variable. Because the Twitter variable is no
+longer significant when this interaction term is included in the model, it seems that
+only tweets that are posted during the opening hours of the stock market increase
+volatility. This effect is economically significant as the standard deviation for volatility
+is 1.1675, as shown in Table 2.1. Because there is an interaction term that includes the
+Twitter variable in Model 3 and 4, the importance of the Twitter variable is uncertain.
+The results from these Models indicate that tweets that Trump posts during the opening
+hours of the U.S. stock market increase volatility. Other tweets may also increase
+volatility. There does not seem to be any difference between tweets posted before and
+after Trump was sworn in as president.
+The R-squared value is quite low in all models, therefore there may exist an omitted
+variable bias.
+
+33
+
+Christian Hoven
+
+Table 3.6: The effects of President Trump’s tweets on volatility
+Variables
+Twitter variable
+
+(1)
+Model 1
+
+(2)
+Model 2
+
+(3)
+Model 3
+
+(4)
+Model 4
+
+0.372***
+(0.0807)
+
+0.417***
+(0.0885)
+-0.118***
+(0.0197)
+-0.196
+(0.215)
+
+0.177
+(0.112)
+-0.151***
+(0.0197)
+-0.0980
+(0.215)
+0.565***
+(0.164)
+-
+
+0.145
+(0.111)
+-0.114***
+(0.0194)
+-0.0389
+(0.212)
+0.459***
+(0.162)
+-
+
+-0.491***
+(0.0232)
+
+Pre-inauguration dummy
+Pre-inauguration x Twitter
+Inside trading hours dummy
+Inside trading hours x Twitter
+ln(total revenue)
+
+1.319***
+(0.00486)
+
+1.327***
+(0.00504)
+
+6.510***
+(0.245)
+
+-0.553***
+(0.0230)
+0.0427***
+(0.00268)
+0.0173***
+(0.00282)
+0.0138***
+(0.00268)
+7.043***
+(0.243)
+
+34,062
+0.001
+42
+
+34,062
+0.002
+42
+
+34,062
+0.015
+42
+
+34,062
+0.041
+42
+
+Volatility lag 1
+Volatility lag 2
+Volatility lag 3
+Constant
+Observations
+R-squared
+Number of companies
+
+Standard errors in parentheses
+*** p<0.01, ** p<0.05, * p<0.1
+Twitter variable: 1 for days with a positive tweet, -1 for days with a negative tweet, 0 for days without
+tweet. Pre-inauguration dummy: 1 for days before and on the day of Trump’s inauguration
+(20.01.2017), 0 on days after Trump’s inauguration. Inside trading hours dummy: 1 for days where a
+tweet was posted inside the trading hours of the U.S. stock market, 0 on other days. ln(total revenue):
+natural logarithm of total revenue as of the latest earnings report.
+
+3.4.
+
+Discussion
+
+Even though President Trump’s tweets may not always seem to be particularly thought
+out, there must be some sort of reasoning behind them. The choices Trump makes
+when deciding which companies to tweet about are bound to affect the sample of
+companies in this thesis. There also has to be some reasoning behind when he tweets.
+Even though the sample of companies in this thesis is quite large, it is likely not a
+perfect representation of the market as a whole. This is because Trump has most likely
+34
+
+Christian Hoven
+chosen to tweet about these companies, not selected them at random. As many of the
+tweets Trump has posted that mention companies centre around jobs or production
+outside of the U.S., there is a bias towards companies that produce physical goods.
+There are particularly many companies operating in the automobile industry. Still, the
+companies in this thesis operate in varied industries and are of different sizes.
+Therefore, the results should give a good indication of how Trump’s tweets affect the
+average company, especially those companies Trump chooses to tweet about. The
+results for the different industries (automobile, defence, and banking) will give a better
+picture of how Trump’s tweets affect those types of companies. Especially the results
+for the automobile industry should be rather accurate as the sample of eight companies
+is the largest of the three industries I analysed.
+Then there is the question of the timing of the tweets. Again, there has to be some
+reason why he posts when he does. Some of the tweets may have been posted on days
+where the same information about the company was published via other sources. This
+should not affect the results too much, as Ge, Kurov and Wolfe (2018) found that
+Trump’s tweets have an effect even when news preceded the tweet. There are also
+tweets which most likely were not preceded by news. For example, tweets where
+Trump mentions a meeting he had with the CEO of the company. The timing of the
+tweets should not pose to large a problem.
+Unless Trump changes the way he decides when and about what companies to tweet,
+future tweets will likely have similar effects as those analysed in this thesis.
+Despite the fact that Trump does decide when, why, and about what company he
+tweets, his tweets are still an exogenous variable in the context of this analysis. It is
+unlikely that either abnormal return, abnormal trading volume or volatility determine
+when or about which company Trump tweets.
+According to Corrado (2011), event-induced variance may be an issue in event studies
+where the sample is not the entire population. In the case of this study, where the
+sample is 42 companies, the sample is not the entire population as there are many more
+companies traded on the US stock exchange. This means that the results may have
+been affected by event-induced variance. That should not detract from the overall
+validity of the results as event-induced variance mostly skews the standard errors
+(Harrington and Shrider, 2007).
+35
+
+Christian Hoven
+A limitation to this study is that I have manually collected all the tweets as well as
+stock and market data. Because of this there is the possibility of errors in the data
+collection process. This could have led to exclusion of events from the dataset.
+Based on the results in this thesis President Trump should consider being careful when
+tweeting about companies, especially when the content of those tweets is negative. A
+negative tweet from Trump may have negative consequences for a company, as I have
+found that negative tweets decrease abnormal return. Investors may place greater
+weight on bad news in certain scenarios (Williams, 2015), which means that the
+potential detrimental effects of such tweets may be larger than my estimates. Not only
+Trump, but also other high-ranking officials with a similar potential to influence
+people’s investment behaviour should take into consideration how their public
+statements can affect companies. Celebrities should also take this into consideration
+as their endorsement affects stocks (Agrawal and Kamakura, 1995). Risk seeking
+investors may want to use the results in this thesis to trade on stocks when Trump posts
+a company-specific tweet by identifying whether the tweet is positive or negative and
+then either buying or shorting the stock. Though this seems like a risky trade strategy.
+Nearly all results in this thesis are in line with my hypotheses and with previous
+research from Ge, Kurov and Wolfe (2018). The only exceptions are that tweets have
+a smaller, not larger, impact before Trump’s inauguration and that the abnormal return
+of companies in the defence industry is affected less be Trump’s tweets than other
+companies in the sample. There are, however, completely reasonable explanations
+behind those results. There is some previous research that did not find that Trump’s
+tweets impact stocks, but they used smaller and older samples or different methods.
+I have contributed to the existing body of research by examining if there is a difference
+between tweets that are posted during our outside of the opening hours of the U.S.
+stock market and if there is a difference how companies operating in the automobile
+and defence industry and in the banking sector are impacted by Trump’s tweets. I have
+also significantly increased the sample period and controlled for company size and
+momentum. With the help of this thesis the understanding of how President Trump’s
+tweeting behaviour affects stocks is significantly increased. This thesis also expands
+our knowledge of how social media can impact financial markets. This thesis provides
+more information on how the social media posts of a single, albeit very influential,
+36
+
+Christian Hoven
+person can impact the stock market. As this thesis is a type of event study, that body
+of research has also been expanded. Though I must admit that I doubt any major leaps
+have been made in that area.
+Future research could investigate how other industries than those mentioned in this
+thesis are affected by Trump’s tweets. There may also be other firm-level attributes
+that change the impact of Trump’s tweets. For example, if the company also operates
+outside of the USA or not. How companies of different size are affected could also be
+examined, as this research only controlled for company size, but did not examine if
+companies of different sizes are affected differently. Finding out how long the effects
+of Trump’s tweets last is also something that could be of interest to future research.
+Finding suitable control variables that would increase the value of R-squared and thus
+improve the validity of the results could be important to future research on this topic.
+Controlling for news events that precede a tweet from Trump is also something future
+research could look into. As event-induced variance may influence the results of event
+studies, it would be beneficial for future research to control for event-induced variance.
+As Williams (2015) found that negative news influences investors more than positive
+news in certain scenarios it could be interesting if future research into this topic were
+to analyse if that is also the case for the impact of Trump’s company-specific tweets.
+As Trump’s tweets reach investors quickly and market therefore may react to them
+quickly, future research could benefit from using more high frequency data.
+
+4. Conclusion
+The New York Stock Exchange happens to be the biggest casino in the world.
+The only thing that makes it different from the average casino is that the players
+dress in blue pinstripe suits and carry leather briefcases. (Trump, 1987,
+Trump: The Art of the Deal)
+In this thesis I have attempted to investigate how tweets where President Trump
+mentions a company affect the abnormal return, abnormal trading volume, and
+volatility of the stock of the company mentioned in the tweet. As I have identified that
+Trump’s company-specific tweets affect stocks, The New York Stock Exchange may
+not be a casino after all.
+37
+
+Christian Hoven
+As the research in this thesis has demonstrated Trump’s company-specific tweets
+affect abnormal trading volume. Tweets that are positive towards the company
+increase abnormal return, while tweets that are negative towards the company have the
+opposite effect. Before Trump was inaugurated the affect of tweets was smaller,
+compared to after his inauguration. Tweets posted during the opening hours of the
+stock market have a greater impact on abnormal return than those posted outside of
+the opening hours. Companies operating in the automobile industry experience a
+greater impact, than the rest of the companies in the sample, on abnormal return after
+a tweet from Trump, while companies operating in the defence industry experience a
+smaller impact. The results indicate that companies in the banking sector are affected
+the same as the other companies in the sample.
+All of Trump’s company-specific tweets that are posted during the trading hours
+increase abnormal trading volume and all other of Trump’s company-specific tweets
+may increase abnormal trading volume. As was the case for abnormal return, tweets
+posted after Trump’s inauguration have a great effect on abnormal trading volume than
+those posted before his inauguration.
+The results for Trump’s company-specific tweets effects on volatility are similar to
+those on abnormal trading volume. All company-specific tweets posted when the stock
+exchange was closed may increase volatility, and tweets posted when the stock
+exchange was open do increase volatility. Again, tweets posted before Trump’s
+inauguration have a smaller impact on volatility than those posted after his
+inauguration.
+All of the ways Trump’s tweets impact stocks mentioned above are not only
+statistically, but also economically significant. A tweet from Trump can not only
+generate a large amount of trading volume and volatility, but also has the potential to
+increase or decrease a company’s stock value by millions of U.S. dollars.
+
+38
+
+Christian Hoven
+
+Summary in Swedish – Svensk sammanfattning
+Påverkar president Donald Trumps tweetar aktiemarknaden? En analys
+av företagsspecifika tweetar.
+Donald J. Trump, USA:s 45:e president är känd för att ofta kommunicera med
+allmänheten via Twitter. Som USA:s president är Trump en av världens mäktigaste
+och mest inflytelserika personer. Det betyder att han kan påverka många människors
+val och beteende. De åsikter och tankar han publicerar i sina tweetar kan alltså påverka
+investerares beteende på aktiemarknaden. Det är även möjligt att Trumps tweetar
+innehåller ny information, om till exempel handelstariffer och statskontrakt, som kan
+ha en effekt på aktier.
+På grund av inflytandet Trumps tweetar kan ha på aktiemarknaden är det intressant att
+undersöka hur tweetar där han nämner ett börsnoterat företag påverkar det företagets
+aktie. Att veta hur Trumps företagsspecifika tweetar påverkar företagets aktie är även
+intressant eftersom Trump tweetar så ofta. Att veta hur Trumps tweetar påverkar aktier
+kan hjälpa honom och andra inflytelserika personer att se över när de laddar upp
+tweetar och hurdant meddelande de innehåller för att minska på risken att företag gör
+förluster. För investerare är det intressant att veta hur Trumps tweetar påverkar aktier,
+eftersom investerare då kan reagera på Trumps tweetar på ett optimalt sätt för att öka
+på vinster, eller minska på förluster.
+Den här avhandlingen baserar sig på en undersökning gjord av Ge, Kurov och Wolfe
+(2018). De undersökte också om Trumps tweetar där han nämner företag har en effekt
+på företagets aktie. De kom fram till att Trumps tweetar påverkar avkastning,
+handelsvolym, volatilitet och uppmärksamhet från institutionella investerare. De fann
+att positiva tweetar ökar avkastningen, negativa tweetar sänker avkastningen och alla
+tweetar ökar på handelsvolym, volatilitet och uppmärksamhet från institutionella
+investerare. Ge, Kurov och Wolfe (2018) gjorde sin undersökning betydligt tidigare i
+Trumps presidentskap än då den här avhandlingen skrevs och har därför ett mindre
+sampel.
+
+39
+
+Christian Hoven
+I skrivande stund finns det ingen annan tidigare forskning som undersöker effekten av
+Trumps tweetar på aktier. Det finns dock annan forskning som tangerar ämnet och kan
+stöda teorin bakom varför Trumps tweetar påverkar aktier. Bland annat Azar och Lo
+(2016) och Fiala, Kapounek och Veselý (2015) har kommit fram till att man genom att
+analysera stora mängder meddelanden på sociala medier, bland annat Twitter, kan se
+att dessa meddelanden har en effekt på aktiemarknaden. Sociala medier kan alltså ha
+en effekt på aktiemarknaden och det går att analysera rörelser på aktiemarknaden med
+hjälp av sociala medier. Tidigare forskning har också kommit fram till att nyheter
+påverkar aktiepris (Chan, 2003 och Vega, 2006), handelsvolym (Ryan och
+Taffler,2004) och volatilitet (Neuhierl, Scherbina och Sclusche, 2013). Ifall
+investerare tolkar de meddelanden som Trump skriver i sina tweetar som nyheter är
+det möjligt att Trumps tweetar påverkar aktiepris, handelsvolym och volatilitet. Det
+finns även forskning som kommit fram till att människors investeringsbeteende kan
+påverkas av andra människor, så som vänner och familj (Hoffman och Broekhuizen,
+2009), och att en av fyra amerikaner använder sig av investeringsråd som publicerade
+på sociala medier (Chen et al., 2014).
+I den här avhandlingen har tweetar från båda President Trumps båda officiella
+twitterkonton, @realDonaldTrump och @POTUS, samlats under sampelperioden från
+den 9 november 2016 till den 31 januari 2020. På grund av att de flesta tweetar har
+laddats upp då USA:s börs var stängd har jag använt dagliga data i min analys. Trump
+har vid flera tillfällen laddat upp flera tweetar som nämner samma företag under
+samma dag och laddat upp sådana tweetar där han nämner flera olika företag i samma
+tweet. På grund detta har jag räknat flera tweetar under samma dag om samma företag
+som en tweet och en tweet om flera företag som en tweet per företag som nämns. Jag
+har även klassat tweetar som antingen positiva eller negativa gentemot företaget
+baserat på budskapet i dem. Eftersom Trump har ett dåligt förhållande med medier,
+som tidningar och nyhetsstationer har jag lämnat bort tweetar om företag som är aktiva
+inom sådana branscher. Ge, Kurov och Wolfe (2018) lämnade också bort företag inom
+mediebranschen av samma orsak.
+All aktiedata jag har använt kommer från Yahoo! Finance, medan all marknadsdata
+kommer från Kenneth Frenchs webbsida. Till aktiedata hör dagliga data över bland
+annat aktiepris och handelsvolym. Till marknadsdata hör bland annat dagliga data över
+marknadens riskfria avkastning.
+40
+
+Christian Hoven
+Den empiriska modellen som används i den här avhandlingen för att analysera effekten
+av Trumps tweetar på företagsaktier baserar sig på metoden Ge, Kurov och Wolfe
+(2018) använde i sin analys. Jag har undersökt hur Trumps tweetar påverkar
+avkastning, handelsvolym och volatilitet. Precis som de gjorde använde jag OLSregressioner med företagsfixa effekter. Jag har även kontrollvariabler för tweetar som
+laddats upp efter att Trump blev invald som president, men innan han svors in, och för
+tweetar som laddats upp då USA:s börs var öppen. Ge, Kurov och Wolfe (2018) hade
+också en kontrollvariabel för tiden innan Trump svors in som president, men inte en
+variabel för tweetar som laddats upp då börsen var öppen. Det som Ge, Kurov och
+Wolfe (2018) inte har gjort men jag har gjort i den här avhandlingen är att kontrollera
+för företagens storlek och undersöka om företag som agerar inom bilindustrin,
+försvarsindustrin eller banksektorn påverkas annorlunda av Trumps tweetar än andra
+företag.
+Resultaten för analysen av tweetarnas effekt på avkastning tyder på att tweetarna
+påverkar avkastningen. Positiva tweetar höjer avkastningen, medan negativa tweetar
+sänker avkastningen. Det här är i linje med resultaten Ge, Kurov och Wolfe (2018)
+kom fram till. Det som skiljer sig från deras resultat är att de kom fram till att tweetar
+som laddades upp innan Trump blev president har en större effekt på avkastningen,
+medan min analys visar att tweetar som laddades upp innan Trump blev president har
+en mindre effekt på avkastningen. Detta kan bero på att tweetar som laddats upp efter
+Ge, Kurov och Wolfes (2018) sampel påverkar avkastningen i större grad. Jag har
+också kommit fram till att tweetar som laddats upp med börsen var öppen har än större
+effekt på avkastning än andra tweetar.
+Enligt de resultat jag har fått har Trumps tweetar en större effekt på avkastningen för
+företag inom bilbranschen, medan avkastningen för företag inom försvarsbranschen
+påverkas mindre av Trumps tweetar. Avkastningen för företag inom banksektorn
+påverkas likadant som företag inom resten av samplet av Trumps tweetar.
+De resultat jag har kommit fram till tyder på att Trumps tweetar kan höja på
+handelsvolymen, vilket är i linje med Ge, Kurov och Wolfes (2018) resultat. Dock
+kommer jag fram till att tweetar som laddats upp innan Trump blev president har en
+mindre effekt, medan Ge, Kurov och Wolfe (2018) kom fram till att dessa tweetar har
+en större effekt. Detta tyder igen på att tweetar som laddats upp efter Ge, Kurov och
+41
+
+Christian Hoven
+Wolfes (2018) sampel har en större effekt på handelsvolymen. Jag har även kommit
+fram till att tweetar som Trump laddade upp då börsen var öppen höjer på
+handelsvolymen.
+Resultaten i den här avhandlingen tyder på att Trumps tweetar höjer på volatiliteten,
+detta gäller främst de tweetar som laddats upp då USA:s börs var öppen. Det resultatet
+är inte helt i linje med det Ge, Kurov och Wolfe (2018) kom fram till. De kom fram
+till att alla tweetar höjer på volatiliteten. Dock hade de inte en variabel för tweetar som
+laddades upp under börsens öppettider. I de modeller utan den variabeln visar
+resultaten att Trumps tweetar höjer på volatiliteten.
+Sammanfattningsvis kommer jag i denna avhandling fram till att Trumps tweetar har
+en effekt på aktiers avkastning, där positiva tweetar höjer på avkastningen medan
+negativa tweetar sänker på avkastningen. Denna effekt är större för företag inom
+bilindustrin, medan den är mindre för företag inom försvarsindustrin. Tweetar som
+laddades upp då USA:s börs var öppen hade också en större påverkan på avkastningen.
+Det hittades inte lika tecken starka på att Trumps tweetar påverkar handelsvolym, men
+tweetar som laddades upp under USA:s börs öppettider visades höja handelsvolymen.
+Resultaten för effekten av Trumps tweetar på volatiliteten är liknande som för
+handelsvolym. Tweetar som laddats upp när börsen var öppen höjer på volatiliteten,
+medan andra tweetar har en mindre effekt. För alla dessa tre utfallsvariabler gäller att
+tweetar Trump laddade upp innan han svors in som president har en mindre effekt.
+
+References
+Agrawal, J., & Kamakura, W. A. (1995). The economic worth of celebrity endorsers:
+An event study analysis. Journal of marketing, 59(3), 56-62.
+Andrei, D., & Hasler, M. (2014). Investor attention and stock market volatility. The
+review of financial studies, 28(1), 33-72.
+Azar, P., & Lo, A. W. (2016) The Wisdom of Twitter Crowds: Predicting Stock
+Market Reactions to FOMC Meetings Via Twitter Feeds.
+
+42
+
+Christian Hoven
+Bartov, E., Faurel, L., & Mohanram, P. S. (2018). Can Twitter help predict firm-level
+earnings and stock returns?. The Accounting Review, 93(3), 25-57.
+Binder, J. (1998). The event study methodology since 1969. Review of quantitative
+Finance and Accounting, 11(2), 111-137..
+Bollen, J., Mao, H., & Zeng, X. (2011). Twitter mood predicts the stock
+market. Journal of computational science, 2(1), 1-8.
+Brans, H., & Scholtens, B. (2020). Under his thumb the effect of president Donald
+Trump’s Twitter messages on the US stock market. PloS one, 15(3), e0229931.
+Brooks, R. M., Patel, A., & Su, T. (2003). How the equity market responds to
+unanticipated events. The Journal of Business, 76(1), 109-133.
+Burggraf, T., Fendel, R., & Huynh, T. L. D. (2019). Political news and stock prices:
+evidence from Trump’s trade war. Applied Economics Letters, 1-4.
+Chan, W. S. (2003). Stock price reaction to news and no-news: drift and reversal
+after headlines. Journal of Financial Economics, 70(2), 223-260.
+Chen, H., De, P., Hu, Y. J., & Hwang, B. H. (2014). Wisdom of crowds: The value
+of stock opinions transmitted through social media. The Review of Financial Studies,
+27(5), 1367-1403.
+Corrado, C. J. (2011). Event studies: A methodology review. Accounting &
+Finance, 51(1), 207-234.
+Corwin, S. A., & Coughenour, J. F. (2008). Limited attention and the allocation of
+effort in securities trading. The Journal of Finance, 63(6), 3031-3067.
+Demirer, R., & Kutan, A. M. (2010). The behavior of crude oil spot and futures
+prices around OPEC and SPR announcements: An event study perspective. Energy
+Economics, 32(6), 1467-1476.
+43
+
+Christian Hoven
+
+Engelberg, J. E., & Parsons, C. A. (2011). The causal impact of media in financial
+markets. The Journal of Finance, 66(1), 67-97.
+Fama, E. F., & French, K. R. (1993). Common risk factors in the returns on stocks
+and bonds. Journal of Financial Economics, 33, 3-56.
+Fama, E. F., & French, K. R. (2015). A five-factor asset pricing model. Journal of
+financial economics, 116(1), 1-22.
+Fang, L., & Peress, J. (2009). Media coverage and the cross‐section of stock
+returns. The Journal of Finance, 64(5), 2023-2052.
+Fiala, V., Kapounek, S., & Veselý, O. (2015). Impact of Social Media on the Stock
+Market: Evidence from Tweets. European Journal of Business Science and
+Technology, 1(1), 24-35.
+Ge, Q., Kurov, A., & Wolfe, M. H. (2018). Stock market reactions to presidential
+statements: Evidence from company-specific tweets.
+Harrington, S. E., & Shrider, D. G. (2007). All events induce variance: Analyzing
+abnormal returns when effects vary across firms. Journal of Financial and
+Quantitative Analysis, 42(1), 229-256.
+Hoffmann, A. O., & Broekhuizen, T. L. (2009). Susceptibility to and impact of
+interpersonal influence in an investment context. Journal of the Academy of
+Marketing Science, 37(4), 488-503.
+Joseph, K., Wintoki, M. B., & Zhang, Z. (2011). Forecasting abnormal stock returns
+and trading volume using investor sentiment: Evidence from online search.
+International Journal of Forecasting, 27(4), 1116-1127.
+
+44
+
+Christian Hoven
+
+Juma'h, A., & Alnsour, Y. (2018). Using Social Media Analytics: The Effect of
+President Trump's Tweets on Companies' Performance. Journal of Accounting and
+Management Information Systems, 17(2018), 100-121.
+MacKinlay, A. C. (1997). Event studies in economics and finance. Journal of
+economic literature, 35(1), 13-39.
+Mitchell, M. L., & Netter, J. M. (1994). The role of financial economics in securities
+fraud cases: Applications at the Securities and Exchange Commission. The Business
+Lawyer, 545-590.
+Neuhierl, A., Scherbina, A., & Schlusche, B. (2013). Market reaction to corporate
+press releases. Journal of Financial and Quantitative Analysis, 48(4), 1207-1240.
+Rogers, L. C. G., & Satchell, S. E. (1991). Estimating variance from high, low and
+closing prices. The Annals of Applied Probability, 504-512.
+Ryan, P., & Taffler, R. J. (2004). Are economically significant stock returns and
+trading volumes driven by firm‐specific news releases?. Journal of Business Finance
+& Accounting, 31(1‐2), 49-82.
+Sabherwal, S., Sarkar, S. K., & Zhang, Y. (2011). Do internet stock message boards
+influence trading? Evidence from heavily discussed stocks with no fundamental
+news. Journal of Business Finance & Accounting, 38(9‐10), 1209-1237.
+Trump, D. J., & Schwartz, T. (1987). Trump: The art of the deal. Ballantine Books.
+Vega, C. (2006). Stock price reaction to public and private information. Journal of
+Financial Economics, 82(1), 103-133.
+Williams, C. D. (2015). Asymmetric responses to earnings news: A case for
+ambiguity. The Accounting Review, 90(2), 785-817.
+
+45
+
+Christian Hoven
+Yuan, Y. (2008). Attention and trading. Financial Institutions Center, Wharton
+School, University of Pennsylvania.
+Yuan, Y. (2015). Market-wide attention, trading, and stock returns. Journal of
+Financial Economics, 116(3), 548-564.
+
+Websites
+Forbes The World´s Most Powerful People: https://www.forbes.com/powerfulpeople/list/#tab:overall (24.03.2020)
+Donald Trump interview with Bob Woodward and Robert Costa, April 3, 2016:
+https://www.washingtonpost.com/news/post-politics/wp/2016/04/02/transcriptdonald-trump-interview-with-bob-woodward-and-robert-costa/ (18.02.2020)
+Kenneth R. French´s website:
+https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html
+Republican Candidates Debate in Greenville, South Carolina, February 13, 2016:
+https://www.presidency.ucsb.edu/documents/republican-candidates-debategreenville-south-carolina (19.02.2020)
+Stockholm International Peace Research Institute, SIPRI Military Expenditure:
+Database: https://www.sipri.org/databases/milex (06.06.2020)
+TIME 100 most influential people of 2019: https://time.com/collection/100-most
+influential-people-2019/ (14.11.2019)
+Yahoo Finance: https://finance.yahoo.com/
+
+46
+
+Christian Hoven
+
+Appendix
+Table A.1: Tweet information
+Date and
+time (EST
+17/11/2016
+21:01
+
+Company
+(Ticker)
+Ford (F)
+
+17/11/2016
+21:15
+
+Ford (F)
+
+24/11/2016
+10:11
+
+Carrier
+A.C.
+Company (UTX)
+
+29/03/2018
+07:57
+
+Carrier
+A.C.
+Company (UTX)
+
+29/11/2016
+22:40
+
+Carrier
+A.C.
+Company (UTX)
+
+30/11/2016
+13:21
+
+Carrier
+A.C.
+Company (UTX)
+
+30/11/2016
+15:00
+
+Carrier
+A.C.
+Company (UTX)
+
+30/11/2016
+22:48
+
+Carrier
+A.C.
+Company (UTX)
+
+01/12/2016
+09:38
+
+Carrier
+A.C.
+Company (UTX)
+
+02/12/2016
+22:06
+
+Rexnord (RXN)
+
+06/12/2016
+08:52
+
+Boeing (BA)
+
+11/12/2016
+10:29
+
+ExxonMobil
+(XOM)
+
+13/12/2016
+06:43
+
+ExxonMobil
+(XOM)
+
+22/12/2016
+17:26
+
+Boeing (BA)
+
+22/12/2016
+17:26
+
+Lockheed Martin
+(LMT)
+
+Tweet
+
+Sentiment
+
+Just got a call from my friend Bill Ford, Chairman
+of Ford, who advised me that he will be keeping the
+Lincoln plant in Kentucky - no Mexico
+I worked hard with Bill Ford to keep the Lincoln
+plant in Kentucky. I owed it to the great State of
+Kentucky for their confidence in me!
+I am working hard, even on Thanksgiving, trying to
+get Carrier A.C. Company to stay in the U.S.
+(Indiana). MAKING PROGRESS - Will know
+soon!
+I will be going to Indiana on Thursday to make a
+major announcement concerning Carrier A.C.
+staying in Indianapolis. Great deal for workers!
+Big day on Thursday for Indiana and the great
+workers of that wonderful state. We will keep our
+companies and jobs in the U.S. Thanks Carrier
+Great interview on foxandfriends by SteveDoocy
+w/ Carrier employee-who has a message for
+#PEOTUS
+realDonaldTrump
+&
+#VPEOTUSmike_pence.
+Its not uncommon for a Republican to be probusiness. But President-elect Donald Trump
+showed Tuesday night hes pro-worker, too, by
+saving 1,000 jobs at the Carrier plant in Indiana.
+Look forward to going to Indiana tomorrow in order
+to be with the great workers of Carrier. They will
+sell many air conditioners!
+Getting ready to leave for the Great State of Indiana
+and meet the hard working and wonderful people of
+Carrier A.C.
+Rexnord of Indiana is moving to Mexico and rather
+viciously firing all of its 300 workers. This is
+happening all over our country. No more!
+Boeing is building a brand new 747 Air Force One
+for future presidents, but costs are out of control,
+more than $4 billion. Cancel order!
+Whether I choose him or not for "State"- Rex
+Tillerson, the Chairman & CEO of ExxonMobil, is
+a world class player and dealmaker. Stay tuned!
+I have chosen one of the truly great business leaders
+of the world, Rex Tillerson, Chairman and CEO of
+ExxonMobil, to be Secretary of State.
+Based on the tremendous cost and cost overruns of
+the Lockheed Martin F-35, I have asked Boeing to
+price-out a comparable F-18 Super Hornet!
+Based on the tremendous cost and cost overruns of
+the Lockheed Martin F-35, I have asked Boeing to
+price-out a comparable F-18 Super Hornet!
+
++
++
++
+
++
++
++
+
++
+
++
++
++
++
++
+-
+
+47
+
+Christian Hoven
+03/01/2017
+07:30
+
+General
+(GM)
+
+Motors
+
+03/01/2017
+11:44
+04/01/2017
+08:19
+
+Ford (F)
+
+05/01/2017
+13:14
+
+Toyota (TM)
+
+09/01/2017
+09:14
+
+Fiat
+Chrysler
+(FCAU)
+
+09/01/2017
+09:16
+
+Ford (F)
+
+09/01/2017
+09:16
+
+Fiat
+Chrysler
+(FCAU)
+
+17/01/2017
+12:55
+17/01/2017
+12:55
+24/01/2017
+19:46
+
+General Motors
+(GM)
+Walmart (WMT)
+
+24/01/2017
+19:46
+
+General
+(GM)
+
+Motors
+
+30/01/2017
+07:16
+
+Delta
+(DAL)
+
+Airline
+
+02/02/2017
+12:56
+03/02/2017
+13:26
+
+Harley-Davidson
+(HOG)
+Harley-Davidson
+HOG)
+
+08/02/2017
+10:51
+
+Nordstrom
+(JWN)
+
+08/02/2017
+14:22
+
+Intel (INTC)
+
+17/02/2017
+06:38
+
+Boeing (BA)
+
+23/02/2017
+16:11
+06/03/2017
+16:19
+06/03/2017
+16:22
+
+Cisco (CSCO)
+
+06/03/2017
+22:29
+
+ExxonMobil
+(XOM)
+
+Ford (F)
+
+Ford (F)
+
+ExxonMobil
+(XOM)
+ExxonMobil
+(XOM)
+
+General Motors is sending Mexican made model of
+Chevy Cruze to U.S. car dealers-tax free across
+border. Make in U.S.A.or pay big border tax!
+"@DanScavino: Ford to scrap Mexico plant, invest
+in Michigan due to Trump policies"
+Thank you to Ford for scrapping a new plant in
+Mexico and creating 700 new jobs in the U.S. This
+is just the beginning - much more to follow
+Toyota Motor said will build a new plant in Baja,
+Mexico, to build Corolla cars for U.S. NO WAY!
+Build plant in U.S. or pay big border tax.
+It's finally happening - Fiat Chrysler just announced
+plans to invest $1BILLION in Michigan and Ohio
+plants, adding 2000 jobs. This after...
+Ford said last week that it will expand in Michigan
+and U.S. instead of building a BILLION dollar plant
+in Mexico. Thank you Ford & Fiat C!
+Ford said last week that it will expand in Michigan
+and U.S. instead of building a BILLION dollar plant
+in Mexico. Thank you Ford & Fiat C!
+Thank you to General Motors and Walmart for
+starting the big jobs push back into the U.S.!
+Thank you to General Motors and Walmart for
+starting the big jobs push back into the U.S.!
+Great meeting with Ford CEO Mark Fields and
+General Motors CEO Mary Barra at the
+@WhiteHouse today.
+Great meeting with Ford CEO Mark Fields and
+General Motors CEO Mary Barra at the
+@WhiteHouse today.
+Only 109 people out of 325,000 were detained and
+held for questioning. Big problems at airports were
+caused by Delta computer outage,.....
+Great meeting with @harleydavidson executives
+from Milwaukee, Wisconsin at the @WhiteHouse
+#ICYMI- Remarks by President Trump Before
+Meeting with Harley-Davidson Executives and
+Union Representatives:
+My daughter Ivanka has been treated so unfairly by
+@Nordstrom. She is a great person -- always
+pushing me to do the right thing! Terrible!
+Thank you Brian Krzanich, CEO of @Intel. A great
+investment ($7 BILLION) in American
+INNOVATION and JOBS! #AmericaFirst
+Going to Charleston, South Carolina, in order to
+spend time with Boeing and talk jobs! Look forward
+to it.
+'Cisco chairman John Chambers explains how
+Trump will be a boon to tech startups'
+'President Trump Congratulates Exxon Mobil for
+Job-Creating Investment Program'
+45,000 construction & manufacturing jobs in the
+U.S. Gulf Coast region. $20 billion investment. We
+are already winning again, America!
+Buy American & hire American are the principles
+at the core of my agenda, which is: JOBS, JOBS,
+JOBS! Thank you @exxonmobil.
+
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
+
+48
+
+Christian Hoven
+06/03/2017
+22:50
+
+ExxonMobil
+(XOM)
+
+24/03/2017
+12:59
+
+Charter
+Communications
+(CHTR)
+
+28/03/2017
+06:36
+
+Ford (F)
+
+07/05/2017
+18:58
+
+Rexnord (RXN)
+
+20/07/2017
+23:31
+
+Corning (GLW)
+
+20/07/2017
+23:31
+
+Merck (MRK)
+
+20/07/2017
+23:31
+
+Pfizer (PFE)
+
+04/08/2017
+06:02
+
+Toyota (TM)
+
+14/08/2017
+08:54
+
+Merck (MRK)
+
+14/08/2017
+18:09
+
+Merck (MRK)
+
+16/08/2017
+06:12
+
+Amazon
+(AMZN)
+
+22/09/2017
+13:54
+
+American
+Airlines (AAL)
+
+02/11/2017
+14:58
+
+Broadcom
+(AVGO)
+
+02/11/2017
+15:33
+
+Broadcom
+(AVGO)
+
+08/12/2017
+10:18
+
+Wells Fargo &
+Company (WFC)
+
+29/12/2017
+08:04
+
+Amazon
+(AMZN)
+
+10/01/2018
+18:37
+
+Toyota (TM)
+
+Thank you to @exxonmobil for your $20 billion
+investment that is creating more than 45,000
+manufacturing & construction jobs in the USA!
+Today, I was thrilled to announce a commitment of
+$25 BILLION & 20K AMERICAN JOBS over the
+next 4 years. THANK YOU Charter
+Communications!
+Big announcement by Ford today. Major
+investment to be made in three Michigan plants. Car
+companies coming back to U.S. JOBS! JOBS!
+JOBS!
+Rexnord of Indiana made a deal during the Obama
+Administration to move to Mexico. Fired their
+employees. Tax product big that's sold in U.S.
+Billions of dollars in investments & thousands of
+new jobs in America! An initiative via Corning,
+Merck & Pfizer: http://45.wh.gov/jKxBRE
+Billions of dollars in investments & thousands of
+new jobs in America! An initiative via Corning,
+Merck & Pfizer: http://45.wh.gov/jKxBRE
+Billions of dollars in investments & thousands of
+new jobs in America! An initiative via Corning,
+Merck & Pfizer: http://45.wh.gov/jKxBRE
+Toyota & Mazda to build a new $1.6B plant here in
+the U.S.A. and create 4K new American jobs. A
+great investment in American manufacturing!
+Now that Ken Frazier of Merck Pharma has
+resigned
+from
+President's
+Manufacturing
+Council,he will have more time to LOWER
+RIPOFF DRUG PRICES!
+.@Merck Pharma is a leader in higher & higher
+drug prices while at the same time taking jobs out
+of the U.S. Bring jobs back & LOWER PRICES!
+Amazon is doing great damage to tax paying
+retailers. Towns, cities and states throughout the
+U.S. are being hurt - many jobs being lost!
+Thank you to Doug Parker and American Airlines
+for all of the help you have given to the U.S. with
+Hurricane flights. Fantastic job!
+Today, we are thrilled to welcome @Broadcom
+CEO Hock Tan to the WH to announce he is moving
+their HQ’s from Singapore back to the U.S.A.....
+Broadcom's move to America=$20 BILLION of
+annual rev into U.S.A., $3+ BILLION/yr. in
+research/engineering & $6 BILLION/yr. in
+manufacturing.
+Fines and penalties against Wells Fargo Bank for
+their bad acts against their customers and others will
+not be dropped, as has incorrectly been reported, but
+will be pursued and, if anything, substantially
+increased. I will cut Regs but make penalties severe
+when caught cheating!
+Why is the United States Post Office, which is
+losing many billions of dollars a year, while
+charging Amazon and others so little to deliver their
+packages, making Amazon richer and the Post
+Office dumber and poorer? Should be charging
+MUCH MORE!
+Cutting taxes and simplifying regulations makes
+America the place to invest! Great news as Toyota
+
++
++
+
++
+
++
++
++
++
+-
+
++
++
++
+
+-
+
+-
+
++
+49
+
+Christian Hoven
+
+10/01/2018
+23:29
+
+Toyota (TM)
+
+11/01/2018
+21:49
+
+Fiat
+Chrysler
+(FCAU)
+
+11/01/2018
+21:53
+
+Fiat
+Chrysler
+(FCAU)
+
+13/01/2018
+08:13
+
+Fiat
+Chrysler
+(FCAU)
+
+17/01/2018
+18:28
+
+Apple (AAPL)
+
+17/01/2018
+18:32
+
+Fiat
+Chrysler
+(FCAU)
+
+24/01/2018
+06:58
+
+Disney (DIS)
+
+24/01/2018
+06:58
+
+J.P.
+Morgan
+Chase (JPM)
+
+28/01/2018
+08:18
+
+Fiat
+Chrysler
+(FCAU)
+
+29/03/2018
+07:57
+
+Amazon
+(AMZN)
+
+and Mazda announce they are bringing 4,000 JOBS
+and investing $1.6 BILLION in Alabama, helping
+to further grow our economy!
+Good news: Toyota and Mazda announce giant new
+Huntsville, Alabama, plant which will produce over
+300,000 cars and SUV’s a year and employ 4000
+people. Companies are coming back to the U.S. in a
+very big way. Congratulations Alabama!
+More great news as a result of historical Tax Cuts
+and Reform: Fiat Chrysler announces plan to invest
+more than $1 BILLION in Michigan plant,
+relocating their heavy-truck production from
+Mexico to Michigan, adding 2,500 new jobs and
+paying $2,000 bonus to U.S. employees!
+Chrysler is moving a massive plant from Mexico to
+Michigan, reversing a years long opposite trend.
+Thank you Chrysler, a very wise decision. The
+voters in Michigan are very happy they voted for
+Trump/Pence. Plenty of more to follow!
+Yesterday was a big day for the stock market. Jobs
+are coming back to America. Chrysler is coming
+back to the USA, from Mexico and many others will
+follow. Tax cut money to employees is pouring into
+our economy with many more companies
+announcing. American business is hot again!
+I promised that my policies would allow companies
+like Apple to bring massive amounts of money back
+to the United States. Great to see Apple follow
+through as a result of TAX CUTS. Huge win for
+American workers and the USA!
+During the campaign, I promised to MAKE
+AMERICA GREAT AGAIN by bringing
+businesses and jobs back to our country. I am very
+proud to see companies like Chrysler moving
+operations from Mexico to Michigan where there
+are so many great American workers!
+Tremendous investment by companies from all over
+the world being made in America. There has never
+been anything like it. Now Disney, J.P. Morgan
+Chase and many others. Massive Regulation
+Reduction and Tax Cuts are making us a
+powerhouse again. Long way to go! Jobs, Jobs,
+Jobs!
+Tremendous investment by companies from all over
+the world being made in America. There has never
+been anything like it. Now Disney, J.P. Morgan
+Chase and many others. Massive Regulation
+Reduction and Tax Cuts are making us a
+powerhouse again. Long way to go! Jobs, Jobs,
+Jobs!
+Our economy is better than it has been in many
+decades. Businesses are coming back to America
+like never before. Chrysler, as an example, is
+leaving Mexico and coming back to the USA.
+Unemployment is nearing record lows. We are on
+the right track!
+I have stated my concerns with Amazon long before
+the Election. Unlike others, they pay little or no
+taxes to state & local governments, use our Postal
+System as their Delivery Boy (causing tremendous
+
++
+
++
+
++
+
++
+
++
+
++
+
++
+
++
+
++
+
+-
+
+50
+
+Christian Hoven
+
+31/03/2018
+08:45
+
+Amazon
+(AMZN)
+
+31/03/2018
+08:52
+
+Amazon
+(AMZN)
+
+02/04/2018
+09:35
+
+Amazon
+(AMZN)
+
+03/04/2018
+09:55
+
+Amazon
+(AMZN)
+
+25/04/2018
+10:11
+
+Apple (AAPL)
+
+01/05/2018
+15:42
+
+Southwest
+Airlines (LUV)
+
+11/05/2018
+19:49
+
+AT&T (T)
+
+26/06/2018
+07:16
+
+Harley-Davidson
+(HOG)
+
+26/06/2018
+07:37
+
+Harley-Davidson
+(HOG)
+
+26/06/2018
+08:17
+
+Harley-Davidson
+(HOG)
+
+27/06/2018
+11:26
+
+Harley-Davidson
+(HOG)
+
+loss to the U.S.), and are putting many thousands of
+retailers out of business!
+While we are on the subject, it is reported that the
+U.S. Post Office will lose $1.50 on average for each
+package it delivers for Amazon. That amounts to
+Billions of Dollars. The Failing N.Y. Times reports
+that “the size of the company’s lobbying staff has
+ballooned,” and that...
+...does not include the Fake Washington Post, which
+is used as a “lobbyist” and should so REGISTER. If
+the P.O. “increased its parcel rates, Amazon’s
+shipping costs would rise by $2.6 Billion.” This
+Post Office scam must stop. Amazon must pay real
+costs (and taxes) now!
+Only fools, or worse, are saying that our money
+losing Post Office makes money with Amazon.
+THEY LOSE A FORTUNE, and this will be
+changed. Also, our fully tax paying retailers are
+closing stores all over the country...not a level
+playing field!
+I am right about Amazon costing the United States
+Post Office massive amounts of money for being
+their Delivery Boy. Amazon should pay these costs
+(plus) and not have them bourne by the American
+Taxpayer. Many billions of dollars. P.O. leaders
+don’t have a clue (or do they?)!
+Looking forward to my meeting with Tim Cook of
+Apple. We will be talking about many things,
+including how the U.S. has been treated unfairly for
+many years, by many countries, on trade.
+Today, it was my great honor to thank and welcome
+heroic crew members and passengers of Southwest
+Airlines Flight 1380 at the @WhiteHouse!
+Why doesn’t the Fake News Media state that the
+Trump Administration’s Anti-Trust Division has
+been, and is, opposed to the AT&T purchase of
+Time Warner in a currently ongoing Trial. Such a
+disgrace in reporting!
+Early this year Harley-Davidson said they would
+move much of their plant operations in Kansas City
+to Thailand. That was long before Tariffs were
+announced. Hence, they were just using
+Tariffs/Trade War as an excuse. Shows how
+unbalanced & unfair trade is, but we will fix it.....
+....When I had Harley-Davidson officials over to the
+White House, I chided them about tariffs in other
+countries, like India, being too high. Companies are
+now coming back to America. Harley must know
+that they won’t be able to sell back into U.S. without
+paying a big tax!
+A Harley-Davidson should never be built in another
+country-never! Their employees and customers are
+already very angry at them. If they move, watch, it
+will be the beginning of the end - they surrendered,
+they quit! The Aura will be gone and they will be
+taxed like never before!
+Harley-Davidson should stay 100% in America,
+with the people that got you your success. I’ve done
+so much for you, and then this. Other companies are
+coming back where they belong! We won’t forget,
+
+-
+
+-
+
+-
+
+-
+
++
+
++
+-
+
+-
+
+-
+
+-
+
+-
+
+51
+
+Christian Hoven
+
+03/07/2018
+10:00
+
+Harley-Davidson
+(HOG)
+
+09/07/2018
+13:08
+
+Pfizer (PFE)
+
+10/07/2018
+18:37
+
+Pfizer (PFE)
+
+19/07/2018
+06:23
+
+Novartis (NVS)
+
+19/07/2018
+06:23
+
+Pfizer (PFE)
+
+19/07/2018
+09:11
+
+Google (GOOG)
+
+12/08/2018
+08:57
+
+Harley-Davidson
+(HOG)
+
+24/08/2018
+05:57
+
+Target (TGT)
+
+28/08/2018
+11:02
+
+Google (GOOG)
+
+28/08/2018
+11:02
+
+Google (GOOG)
+
+08/09/2018
+11:45
+
+Apple (AAPL)
+
+and neither will your customers or your now very
+HAPPY competitors!
+Now that Harley-Davidson is moving part of its
+operation out of the U.S., my Administration is
+working with other Motor Cycle companies who
+want to move into the U.S. Harley customers are not
+happy with their move - sales are down 7% in 2017.
+The U.S. is where the Action is!
+Pfizer & others should be ashamed that they have
+raised drug prices for no reason. They are merely
+taking advantage of the poor & others unable to
+defend themselves, while at the same time giving
+bargain basement prices to other countries in
+Europe & elsewhere. We will respond!
+Just talked with Pfizer CEO and @SecAzar on our
+drug pricing blueprint. Pfizer is rolling back price
+hikes, so American patients don’t pay more. We
+applaud Pfizer for this decision and hope other
+companies do the same. Great news for the
+American people!
+Thank you to Novartis for not increasing your prices
+on prescription drugs. Likewise to Pfizer. We are
+making a big push to actually reduce the prices,
+maybe substantially, on prescription drugs.
+Thank you to Novartis for not increasing your prices
+on prescription drugs. Likewise to Pfizer. We are
+making a big push to actually reduce the prices,
+maybe substantially, on prescription drugs.
+I told you so! The European Union just slapped a
+Five Billion Dollar fine on one of our great
+companies, Google. They truly have taken
+advantage of the U.S., but not for long!
+Many @harleydavidson owners plan to boycott the
+company if manufacturing moves overseas. Great!
+Most other companies are coming in our direction,
+including Harley competitors. A really bad move!
+U.S. will soon have a level playing field, or better.
+Target CEO raves about the Economy. “This is the
+best consumer environment I’ve seen in my career.”
+A big statement from a top executive. But virtually
+everybody is saying this, & when our Trade Deals
+are made, & cost cutting done, you haven’t seen
+anything yet! @DRUDGE_REPORT
+Google search results for “Trump News” shows
+only the viewing/reporting of Fake News Media. In
+other words, they have it RIGGED, for me & others,
+so that almost all stories & news is BAD. Fake CNN
+is prominent. Republican/Conservative & Fair
+Media is shut out. Illegal? 96% of....
+....results on “Trump News” are from National LeftWing Media, very dangerous. Google & others are
+suppressing voices of Conservatives and hiding
+information and news that is good. They are
+controlling what we can & cannot see. This is a very
+serious situation-will be addressed!
+Apple prices may increase because of the massive
+Tariffs we may be imposing on China - but there is
+an easy solution where there would be ZERO tax,
+and indeed a tax incentive. Make your products in
+
+-
+
+-
+
++
+
++
+
++
+
++
+
+-
+
++
+
+-
+
+-
+
+-
+
+52
+
+Christian Hoven
+
+09/09/2018
+09:49
+
+Ford (F)
+
+21/10/2018
+18:48
+
+Facebook (FB)
+
+26/10/2018
+10:05
+
+Twitter (TWTR)
+
+12/11/2018
+13:13
+
+AT&T (T)
+
+12/11/2018
+13:13
+
+Comcast
+(CMCSA)
+
+27/11/2018
+14:05
+
+General
+(GM)
+
+Motors
+
+27/11/2018
+14:05
+
+General
+(GM)
+
+Motors
+
+28/11/2018
+09:49
+
+General
+(GM)
+
+Motors
+
+28/11/2018
+11:09
+
+Steel Dynamics
+
+29/11/2018
+06:37
+
+General
+(GM)
+
+14/12/2018
+13:19
+
+Apple (AAPL)
+
+Motors
+
+the United States instead of China. Start building
+new plants now. Exciting! #MAGA
+“Ford has abruptly killed a plan to sell a Chinesemade small vehicle in the U.S. because of the
+prospect of higher U.S. Tariffs.” CNBC. This is just
+the beginning. This car can now be BUILT IN THE
+U.S.A. and Ford will pay no tariffs!
+Facebook has just stated that they are setting up a
+system to “purge” themselves of Fake News. Does
+that mean CNN will finally be put out of business?
+Twitter has removed many people from my account
+and, more importantly, they have seemingly done
+something that makes it much harder to join - they
+have stifled growth to a point where it is obvious to
+all. A few weeks ago it was a Rocket Ship, now it is
+a Blimp! Total Bias?
+American Cable Association has big problems with
+Comcast. They say that Comcast routinely violates
+Antitrust Laws. “These guys are acting much worse,
+and have much more potential for damage to
+consumers, than anything AT&T-Time Warner
+would do.” Charlie Gasparino
+American Cable Association has big problems with
+Comcast. They say that Comcast routinely violates
+Antitrust Laws. “These guys are acting much worse,
+and have much more potential for damage to
+consumers, than anything AT&T-Time Warner
+would do.” Charlie Gasparino
+Very disappointed with General Motors and their
+CEO, Mary Barra, for closing plants in Ohio,
+Michigan and Maryland. Nothing being closed in
+Mexico & China. The U.S. saved General Motors,
+and this is the THANKS we get! We are now
+looking at cutting all @GM subsidies, including....
+....for electric cars. General Motors made a big
+China bet years ago when they built plants there
+(and in Mexico) - don’t think that bet is going to pay
+off. I am here to protect America’s Workers!
+.....and G.M. would not be closing their plants in
+Ohio, Michigan & Maryland. Get smart Congress.
+Also, the countries that send us cars have taken
+advantage of the U.S. for decades. The President
+has great power on this issue - Because of the G.M.
+event, it is being studied now!
+Steel Dynamics announced that it will build a brand
+new 3 million ton steel mill in the Southwest that
+will create 600 good-paying U.S. JOBS. Steel JOBS
+are coming back to America, just like I predicted.
+Congratulations to Steel Dynamics!
+General Motors is very counter to what other auto,
+and other, companies are doing. Big Steel is
+opening and renovating plants all over the country.
+Auto companies are pouring into the U.S., including
+BMW, which just announced a major new plant.
+The U.S.A. is booming!
+Thank you to @tim_cook for agreeing to expand
+operations in the U.S. and thereby creating
+thousands of jobs! Connected retweet: "Apple Red
+heart Austin! Proud to announce our newest campus
+there, along with plans for new sites in Seattle, San
+
++
+
++
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
++
+
+-
+
++
+
+53
+
+Christian Hoven
+
+18/12/2018
+07:26
+
+Facebook (FB)
+
+18/12/2018
+07:26
+
+Twitter (TWTR)
+
+18/12/2018
+07:26
+
+Google (GOOG)
+
+27/02/2019
+04:20
+
+Fiat
+Chrysler
+(FCAU)
+
+14/03/2019
+11:18
+
+Toyota (TM)
+
+16/03/2019
+16:01
+
+General
+(GM)
+
+16/03/2019
+16:01
+
+Toyota (TM)
+
+16/03/2019
+16:07
+
+Google (GOOG)
+
+18/03/2019
+06:37
+
+General
+(GM)
+
+18/03/2019
+20:32
+
+Twitter (TWTR)
+
+Motors
+
+Motors
+
+Diego and Culver City, CA as Apple expands
+operations and creates thousands of jobs across the
+US."
+Facebook, Twitter and Google are so biased toward
+the Dems it is ridiculous! Twitter, in fact, has made
+it much more difficult for people to join
+@realDonaldTrump. They have removed many
+names & greatly slowed the level and speed of
+increase.
+They
+have
+acknowledged-done
+NOTHING!
+Facebook, Twitter and Google are so biased toward
+the Dems it is ridiculous! Twitter, in fact, has made
+it much more difficult for people to join
+@realDonaldTrump. They have removed many
+names & greatly slowed the level and speed of
+increase.
+They
+have
+acknowledged-done
+NOTHING!
+Facebook, Twitter and Google are so biased toward
+the Dems it is ridiculous! Twitter, in fact, has made
+it much more difficult for people to join
+@realDonaldTrump. They have removed many
+names & greatly slowed the level and speed of
+increase.
+They
+have
+acknowledged-done
+NOTHING!
+Fiat Chrysler will be adding more than 6,500 JOBS
+in Michigan (Detroit area), doubling its hourly
+workforce as part of a 4.5 Billion Dollar investment.
+Thank you Fiat Chrysler. They are all coming back
+to the USA, it’s where the action is!
+Congratulations @Toyota! BIG NEWS for U.S.
+Auto Workers! The USMCA is already fixing the
+broken NAFTA deal.
+Because the economy is so good, General Motors
+must get their Lordstown, Ohio, plant open, maybe
+in a different form or with a new owner, FAST!
+Toyota is investing 13.5 $Billion in U.S., others
+likewise. G.M. MUST ACT QUICKLY. Time is of
+the essence!
+Because the economy is so good, General Motors
+must get their Lordstown, Ohio, plant open, maybe
+in a different form or with a new owner, FAST!
+Toyota is investing 13.5 $Billion in U.S., others
+likewise. G.M. MUST ACT QUICKLY. Time is of
+the essence!
+Google is helping China and their military, but not
+the U.S. Terrible! The good news is that they helped
+Crooked Hillary Clinton, and not Trump....and how
+did that turn out?
+General Motors and the UAW are going to start
+“talks” in September/October. Why wait, start them
+now! I want jobs to stay in the U.S.A. and want
+Lordstown (Ohio), in one of the best economies in
+our history, opened or sold to a company who will
+open it up fast! Car companies.....
+Rep. Devin Nunes Files $250M Defamation
+Lawsuit Against Twitter, Two Anonymous Twitter
+Accounts
+https://thedailybeast.com/rep-devinnunes-files-dollar250m-defamation-lawsuitagainst-twitter-two-anonymous-twitter-
+
+-
+
+-
+
+-
+
++
+
++
+-
+
++
+
+-
+
+-
+
+-
+
+54
+
+Christian Hoven
+
+19/03/2019
+08:57
+
+Facebook (FB)
+
+19/03/2019
+08:57
+
+Google (GOOG)
+
+19/03/2019
+08:57
+
+Twitter (TWTR)
+
+20/03/2019
+15:51
+
+Ford (F)
+
+27/03/2019
+14:38
+
+Google (GOOG)
+
+27/03/2019
+14:38
+
+Google (GOOG)
+
+15/04/2019
+06:29
+
+Boeing (BA)
+
+23/04/2019
+07:04
+
+Harley-Davidson
+(HOG)
+
+02/05/2019
+17:33
+
+United
+Steel (X)
+
+04/05/2019
+14:31
+
+Twitter (TWTR)
+
+08/05/2019
+11:18
+
+General
+(GM)
+
+States
+
+Motors
+
+accounts?source=twitter&via=desktop
+via
+@thedailybeast
+Facebook, Google and Twitter, not to mention the
+Corrupt Media, are sooo on the side of the Radical
+Left Democrats. But fear not, we will win anyway,
+just like we did before! #MAGA
+Facebook, Google and Twitter, not to mention the
+Corrupt Media, are sooo on the side of the Radical
+Left Democrats. But fear not, we will win anyway,
+just like we did before! #MAGA
+Facebook, Google and Twitter, not to mention the
+Corrupt Media, are sooo on the side of the Radical
+Left Democrats. But fear not, we will win anyway,
+just like we did before! #MAGA
+Great news from @Ford! They are investing nearly
+$1 BILLION in Flat Rock, Michigan for auto
+production on top of a $1 BILLION investment last
+month in a facility outside of Chicago. Companies
+are pouring back into the United States - they want
+to be where the action is!
+Just met with @SundarPichai, President of
+@Google, who is obviously doing quite well. He
+stated strongly that he is totally committed to the
+U.S. Military, not the Chinese Military....
+....Also discussed political fairness and various
+things that @Google can do for our Country.
+Meeting ended very well!
+What do I know about branding, maybe nothing
+(but I did become President!), but if I were Boeing,
+I would FIX the Boeing 737 MAX, add some
+additional great features, & REBRAND the plane
+with a new name. No product has suffered like this
+one. But again, what the hell do I know?
+“Harley Davidson has struggled with Tariffs with
+the EU, currently paying 31%. They’ve had to move
+production overseas to try and offset some of that
+Tariff that they’ve been hit with which will rise to
+66% in June of 2021.” @MariaBartiromo So unfair
+to U.S. We will Reciprocate!
+Congrats to @U_S_Steel for investing $1+
+BILLION in America's most INNOVATIVE steel
+mill. 232 Tariffs make Pennsylvania and USA more
+prosperous/secure by bringing Steel and Aluminum
+industries BACK. Tariffs are working. Pittsburgh is
+again The Steel City. USA Economy is
+BOOMING!
+How can it be possible that James Woods (and
+many others), a strong but responsible Conservative
+Voice, is banned from Twitter? Social Media &
+Fake News Media, together with their partner, the
+Democrat Party, have no idea the problems they are
+causing for themselves. VERY UNFAIR!
+GREAT NEWS FOR OHIO! Just spoke to Mary
+Barra, CEO of General Motors, who informed me
+that, subject to a UAW agreement etc., GM will be
+selling their beautiful Lordstown Plant to
+Workhorse, where they plan to build Electric
+Trucks. GM will also be spending $700,000,000 in
+Ohio...
+
+-
+
+-
+
+-
+
++
+
++
+
++
+-
+
+-
+
++
+
+-
+
++
+
+55
+
+Christian Hoven
+08/05/2019
+11:18
+
+Workhorse
+(WKHS)
+
+08/05/2019
+11:18
+
+General
+(GM)
+
+13/05/2019
+17:53
+
+Rockwell
+Automation
+(ROK)
+
+14/05/2019
+17:14
+
+Sempra
+(SRE)
+
+14/06/2019
+18:37
+
+Lockheed Martin
+(LMT)
+
+14/06/2019
+18:37
+
+Lockheed Martin
+(LMT)
+
+10/07/2019
+20:06
+
+Lockheed Martin
+(LMT)
+
+10/07/2019
+20:06
+26/07/2019
+11:25
+
+Lockheed Martin
+(LMT)
+Apple (AAPL)
+
+06/08/2019
+13:51
+
+Google (GOOG)
+
+06/08/2019
+13:51
+
+Google (GOOG)
+
+06/08/2019
+13:51
+
+Google (GOOG)
+
+Motors
+
+Energy
+
+GREAT NEWS FOR OHIO! Just spoke to Mary
+Barra, CEO of General Motors, who informed me
+that, subject to a UAW agreement etc., GM will be
+selling their beautiful Lordstown Plant to
+Workhorse, where they plan to build Electric
+Trucks. GM will also be spending $700,000,000 in
+Ohio...
+....in 3 separate locations, creating another 450 jobs.
+I have been working nicely with GM to get this
+done. Thank you to Mary B, your GREAT
+Governor, and Senator Rob Portman. With all the
+car companies coming back, and much more, THE
+USA IS BOOMING!
+Great to welcome Chairman Shin from Lotte Group
+to the WH. They just invested $3.1 BILLION into
+Louisiana-biggest investment in U.S. EVER from a
+South Korean company, & thousands more jobs for
+Americans. Great partners like ROK know the U.S.
+economy is running stronger than ever!
+With incredible grit, skill, and pride, the 7,000
+workers here at Sempra Energy are helping lead the
+American Energy Revolution. They are not only
+making our nation WEALTHIER but they are
+making America SAFER by building a future of
+American Energy INDEPENDENCE!
+Just spoke to Marillyn Hewson, CEO of
+@LockheedMartin, about continuing operations for
+the @Sikorsky in Coatesville, Pennsylvania. She
+will be taking it under advisement and will be
+making a decision soon....
+....While Pennsylvania is BOOMING, I don’t want
+there to be even a little glitch in Coatesville – every
+job counts. I want Lockhead to BOOM along with
+it!
+I was just informed by Marillyn Hewson, CEO of
+Lockheed Martin, of her decision to keep the
+Sikorsky Helicopter Plant in Coatesville,
+Pennsylvania, open and humming! We are very
+proud of Pennsylvania and the people who work
+there....
+....Thank you to Lockheed Martin, one of the USA’s
+truly great companies!
+Apple will not be given Tariff waiver, or relief, for
+Mac Pro parts that are made in China. Make them
+in the USA, no Tariffs!
+.@sundarpichai of Google was in the Oval Office
+working very hard to explain how much he liked
+me, what a great job the Administration is doing,
+that Google was not involved with China’s military,
+that they didn’t help Crooked Hillary over me in the
+2016 Election, & that they...
+... are NOT planning to illegally subvert the 2020
+Election despite all that has been said to the
+contrary. It all sounded good until I watched Kevin
+Cernekee, a Google engineer, say terrible things
+about what they did in 2016 and that they want to
+“Make sure that Trump losses...
+...in 2020.” Lou Dobbs stated that this is a fraud on
+the American public. @peterschweizer stated with
+certainty that they suppressed negative stories on
+
++
+
++
+
++
+
++
+
++
+
++
+
++
+
++
++
+
++
+
++
+
+56
+
+Christian Hoven
+
+08/08/2019
+10:38
+
+Caterpillar
+(CAT)
+
+08/08/2019
+10:38
+
+Boeing (BA)
+
+08/08/2019
+10:38
+
+Deere
+&
+Company (DE)
+
+08/08/2019
+10:38
+
+Caterpillar
+(CAT)
+
+08/08/2019
+10:38
+
+Boeing (BA)
+
+08/08/2019
+10:38
+
+Deere
+&
+Company (DE)
+
+08/08/2019
+10:38
+
+Caterpillar
+(CAT)
+
+08/08/2019
+10:38
+
+Boeing (BA)
+
+08/08/2019
+10:38
+
+Deere
+&
+Company (DE)
+
+15/08/2019
+16:18
+
+Walmart (WMT)
+
+Hillary Clinton, and boosted negative stories on
+Donald Trump. All very illegal. We are watching
+Google very closely!
+As your President, one would think that I would be
+thrilled with our very strong dollar. I am not! The
+Fed’s high interest rate level, in comparison to other
+countries, is keeping the dollar high, making it more
+difficult for our great manufacturers like
+Caterpillar, Boeing,.....
+As your President, one would think that I would be
+thrilled with our very strong dollar. I am not! The
+Fed’s high interest rate level, in comparison to other
+countries, is keeping the dollar high, making it more
+difficult for our great manufacturers like
+Caterpillar, Boeing,.....
+As your President, one would think that I would be
+thrilled with our very strong dollar. I am not! The
+Fed’s high interest rate level, in comparison to other
+countries, is keeping the dollar high, making it more
+difficult for our great manufacturers like
+Caterpillar, Boeing,.....
+....John Deere, our car companies, & others, to
+compete on a level playing field. With substantial
+Fed Cuts (there is no inflation) and no quantitative
+tightening, the dollar will make it possible for our
+companies to win against any competition. We have
+the greatest companies...
+....John Deere, our car companies, & others, to
+compete on a level playing field. With substantial
+Fed Cuts (there is no inflation) and no quantitative
+tightening, the dollar will make it possible for our
+companies to win against any competition. We have
+the greatest companies...
+....John Deere, our car companies, & others, to
+compete on a level playing field. With substantial
+Fed Cuts (there is no inflation) and no quantitative
+tightening, the dollar will make it possible for our
+companies to win against any competition. We have
+the greatest companies...
+....in the world, there is nobody even close, but
+unfortunately the same cannot be said about our
+Federal Reserve. They have called it wrong at every
+step of the way, and we are still winning. Can you
+imagine what would happen if they actually called
+it right?
+....in the world, there is nobody even close, but
+unfortunately the same cannot be said about our
+Federal Reserve. They have called it wrong at every
+step of the way, and we are still winning. Can you
+imagine what would happen if they actually called
+it right?
+....in the world, there is nobody even close, but
+unfortunately the same cannot be said about our
+Federal Reserve. They have called it wrong at every
+step of the way, and we are still winning. Can you
+imagine what would happen if they actually called
+it right?
+Walmart, a great indicator as to how the U.S. is
+doing, just released outstanding numbers. Our
+
++
+
++
+
++
+
++
+
++
+
++
+
++
+
++
+
++
+
++
+
+57
+
+Christian Hoven
+
+16/08/2019
+19:04
+
+Apple (AAPL)
+
+19/08/2019
+11:52
+
+Google (GOOG)
+
+21/08/2019
+18:50
+
+Ford (F)
+
+21/08/2019
+18:50
+
+General
+
+21/08/2019
+19:01
+
+Ford (F)
+
+30/08/2019
+08:06
+
+General
+
+15/09/2019
+18:54
+
+General
+
+19/09/2019
+20:03
+30/09/2019
+14:55
+
+Facebook (FB)
+
+30/09/2019
+15:04
+
+Apple (AAPL)
+
+30/10/2019
+12:19
+
+General
+
+30/10/2019
+12:19
+
+Fiat
+Chrysler
+(FCAU)
+
+Motors
+
+(GM)
+
+Motors
+
+(GM)
+
+Motors
+
+(GM)
+
+Navistar (NAV)
+
+Motors
+
+(GM)
+
+Country, unlike others, is doing great! Don’t let the
+Fake News convince you otherwise.
+Having dinner tonight with Tim Cook of Apple.
+They will be spending vast sums of money in the
+U.S. Great!
+Wow, Report Just Out! Google manipulated from
+2.6 million to 16 million votes for Hillary Clinton
+in 2016 Election! This was put out by a Clinton
+supporter, not a Trump Supporter! Google should
+be sued. My victory was even bigger than thought!
+@JudicialWatch
+The Legendary Henry Ford and Alfred P. Sloan, the
+Founders of Ford Motor Company and General
+Motors, are “rolling over” at the weakness of
+current car company executives willing to spend
+more money on a car that is not as safe or good, and
+cost $3,000 more to consumers. Crazy!
+The Legendary Henry Ford and Alfred P. Sloan, the
+Founders of Ford Motor Company and General
+Motors, are “rolling over” at the weakness of
+current car company executives willing to spend
+more money on a car that is not as safe or good, and
+cost $3,000 more to consumers. Crazy!
+Henry Ford would be very disappointed if he saw
+his modern-day descendants wanting to build a
+much more expensive car, that is far less safe and
+doesn’t work as well, because execs don’t want to
+fight California regulators. Car companies should
+know....
+General Motors, which was once the Giant of
+Detroit, is now one of the smallest auto
+manufacturers there. They moved major plants to
+China, BEFORE I CAME INTO OFFICE. This was
+done despite the saving help given them by the
+USA. Now they should start moving back to
+America again?
+Here we go again with General Motors and the
+United Auto Workers. Get together and make a
+deal!
+Nice meeting with Mark Zuckerberg of @Facebook
+in the Oval Office today.
+Navistar will be building a new 250 MILLION
+DOLLAR truck factory in San Antonio with 600
+new jobs. Congratulations San Antonio and Texas!
+America makes the GREATEST trucks in the
+world!
+Great news! @Apple announced that it is building
+its new Mac Pro in Texas. This means hundreds of
+American jobs in Austin and for suppliers across the
+Country. Congratulations to the Apple team and
+their workers!
+Thank you @GM, @FiatChrysler_NA, @Toyota,
+and @GloblAutomkrs for standing with us for
+Better, Cheaper, Safer Cars for Americans.
+California has treated the Auto Industry very poorly
+for many years, harming Workers and Consumers.
+We are fixing this problem!
+Thank you @GM, @FiatChrysler_NA, @Toyota,
+and @GloblAutomkrs for standing with us for
+Better, Cheaper, Safer Cars for Americans.
+
++
+-
+
+-
+
+-
+
+-
+
+-
+
++
++
+
++
+
++
+
++
+
+58
+
+Christian Hoven
+
+30/10/2019
+12:19
+
+Toyota (TM)
+
+01/11/2019
+07:52
+
+General
+
+14/11/2019
+09:32
+
+Walmart (WMT)
+
+23/11/2019
+18:18
+
+Apple (AAPL)
+
+23/11/2019
+23:53
+14/01/2020
+18:36
+
+Apple (AAPL)
+
+16/01/2020
+10:59
+
+Amazon
+
+Motors
+
+(GM)
+
+Apple (AAPL)
+
+(AMZN)
+
+California has treated the Auto Industry very poorly
+for many years, harming Workers and Consumers.
+We are fixing this problem!
+Thank you @GM, @FiatChrysler_NA, @Toyota,
+and @GloblAutomkrs for standing with us for
+Better, Cheaper, Safer Cars for Americans.
+California has treated the Auto Industry very poorly
+for many years, harming Workers and Consumers.
+We are fixing this problem!
+Wow, a blowout JOBS number just out, adjusted for
+revisions and the General Motors strike, 303,000.
+This is far greater than expectations. USA ROCKS!
+Walmart announces great numbers. No impact from
+Tariffs (which are contributing $Billions to our
+Treasury). Inflation low (do you hear that Powell?)!
+Today I opened a major Apple Manufacturing plant
+in Texas that will bring high paying jobs back to
+America. Today Nancy Pelosi closed Congress
+because she doesn’t care about American Workers!
+Pushed hard to have Apple build in USA!
+We are helping Apple all of the time on TRADE and
+so many other issues, and yet they refuse to unlock
+phones used by killers, drug dealers and other
+violent criminal elements. They will have to step up
+to the plate and help our great Country, NOW!
+MAKE AMERICA GREAT AGAIN.
+Amazon Calls 'Profiles in Corruption' the 'Most
+Anticipated' Nonfiction Book
+
++
+
++
++
+
++
+-
+
++
+
+This table lists all the tweets that that were used in this thesis. The tweets are from both of President
+Donald Trump’s official Twitter accounts @realDonaldTrump and @POTUS. Date and time are shown
+in Easter Standard Time. In the connotation column a “+” indicates a positive tweet, while a “-“ indicates
+a negative tweet
+
+59
+
+Christian Hoven
+
+Table A.2: Company list
+Amazon.com, Inc.
+
+American Airlines Group Inc.
+
+Apple Inc.
+
+AT&T Inc.
+
+The Boeing Company
+
+Broadcom Inc.
+
+Raytheon Technologies Corporation (Carrier A.C.)
+
+Caterpillar Inc.
+
+Charter Communications, Inc.
+
+Cisco Systems, Inc.
+
+Comcast Corporation
+
+Corning Incorporated
+
+Deere & Company
+
+Delta Air Lines, Inc.
+
+The Walt Disney Company
+
+Exxon Mobil Corporation
+
+Facebook, Inc.
+
+Fiat Chrysler Automobiles N.V.
+
+Ford Motor Company
+
+General Motors Company
+
+Alphabet Inc. (Google)
+
+Harley-Davidson, Inc.
+
+Intel Corporation
+
+JPMorgan Chase & Co.
+
+Lockheed Martin Corporation
+
+Merck & Co., Inc.
+
+Navistar International Corporation
+
+Nordstrom, Inc.
+
+Novartis AG
+
+Pfizer Inc.
+
+Rexnord Corporation
+
+Rockwell Automation, Inc.
+
+Sempra Energy
+
+Southwest Airlines Co.
+
+Steel Dynamics, Inc.
+
+Target Corporation
+
+Toyota Motor Corporation
+
+Twitter, Inc.
+
+United States Steel Corporation
+
+Walmart Inc.
+
+Wells Fargo & Company
+
+Workhorse Group Inc.
+
+Company names displayed as listed on Yahoo! Finance
+
+60
+
+
