@@ -6,18 +6,15 @@ on:
   workflow_dispatch
 jobs:
   sync-to-hfhub:
-    name: Sync with Hugging Face Hub
+    name: Sync to Hugging Face Hub
     runs-on: ubuntu-latest
     steps:
-      - name: Sync with Hugging Face Hub
-        uses: juhoinkinen/huggingface-sync-action@v0.0.8
+      - name: Sync to Hugging Face Hub
+        uses: juhoinkinen/huggingface-sync-action@v0.0.10
         with:
-          # The github repo you are syncing from. Required.
-          github_repo_id: 'NatLibFi/Annif-corpora'
-        
           # The Hugging Face repo id you want to sync to. (ex. 'username/reponame')
           # A repo with this name will be created if it doesn't exist. Required.
-          huggingface_repo_id: 'juhoinkinen/Annif-corpora-test-2'
+          huggingface_repo_id: 'juhoinkinen/Annif-corpora-3'
         
           # Hugging Face token with write access. Required.
           # Here, we provide a token that we called `HF_TOKEN` when we added the secret to our GitHub repo.
@@ -31,6 +28,4 @@ jobs:
           # as a private repo.
           #
           # Note: this param has no effect if the repo already exists.
-          private: true
-
-          branch: 'master'
+          private: false
