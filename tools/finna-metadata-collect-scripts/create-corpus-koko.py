@@ -9,14 +9,6 @@ from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, OWL, DCTERMS, SKOS
 
 
-# To convert to the final format:
-# zcat finna-all-2020-02-swe.tsv.gz |shuf|gzip >yso-finna-sv.tsv.gz
-# zcat finna-all-2020-02-eng.tsv.gz |shuf|gzip >yso-finna-en.tsv.gz
-# The Finnish file must be split:
-# zcat finna-all-2020-02-fin.tsv.gz |shuf|split -l 2000000 --numeric-suffixes=1 --additional-suffix=.tsv - yso-finna-fi-
-# gzip yso-finna-fi-*.tsv
-
-
 KOKO = Namespace('http://www.yso.fi/onto/koko/')
 COMPLAIN = True  # whether to complain about unknown labels
 FINNA_BASE = 'finna-all-'
@@ -34,7 +26,7 @@ TESTSET_FORMATS = {
 
 if len(sys.argv) != 3:
     print('''Not enough arguments. Usage:
-	./create-corpus-koko.py BATCH PATH_TO_YSO''')
+	./create-corpus-koko.py BATCH PATH_TO_ONTOLOGY''')
     sys.exit(1)
 else:
     batch = sys.argv[1]
@@ -68,17 +60,17 @@ def label_to_uris(label, voc, lang, complain=COMPLAIN):
 uris = label_to_uris('kissa', koko, 'fi')  # YSO: kissa
 print(uris)
 assert URIRef('http://www.yso.fi/onto/koko/p37252') in uris
-uris = label_to_uris('Ingmanin talo', koko, 'fi')  # YSO: Casagranden talo
+uris = label_to_uris('Ingmanin talo', koko, 'fi')  # Casagranden talo
 print(uris)
 assert URIRef('http://www.yso.fi/onto/koko/p62854') in uris
 # uris = label_to_uris('siirtäminen', 'ysa', ysa, 'fi')  # YSO: siirto
 # 23.9.2020 No more YSO: siirto (liikuttaminen) + siirto (viestintä)
 #print(uris)
 # assert URIRef('http://www.yso.fi/onto/yso/p5700') in uris
-uris = label_to_uris('lähioikeudet', koko, 'fi')  # YSO: lähioikeudet
+uris = label_to_uris('lähioikeudet', koko, 'fi')  # lähioikeudet
 print(uris)
 assert URIRef('http://www.yso.fi/onto/koko/p11360') in uris
-uris = label_to_uris('kulttuuri', koko, 'fi')  # YSO: kulttuuri
+uris = label_to_uris('kulttuuri', koko, 'fi')  # kulttuuri
 print(uris)
 assert URIRef('http://www.yso.fi/onto/koko/p31131') in uris
 # uris = label_to_uris('Helsinki -- Kallio', 'ysa', ysa, 'fi')  # YSO-paikat: Kallio (Helsinki)
@@ -172,6 +164,19 @@ def cleanup(text):
     return " ".join(text.split())
 
 
+printed = set()
+
+
+def is_printed(text, subjects):
+    global printed
+
+    current = hash((text, tuple(subjects)))
+    if current in printed:
+        return True
+    printed.add(current)
+    return False
+
+
 def print_record(line_dict, subjects, ind):
     # if title == '' and summary == '':
     #     return
@@ -182,6 +187,9 @@ def print_record(line_dict, subjects, ind):
     title = line_dict['title']
     summary = line_dict['summary'][0] if len(line_dict['summary']) == 1 else ''
     text = cleanup(title + ' ¤ ' + summary)
+
+    if is_printed(text, subjects):
+        return
 
     if is_testset_member(text):
         if format == TESTSET_FORMATS["image"]:
@@ -233,6 +241,18 @@ def main(ndjson_in):
             print(f'Line {ind}: No subjects found')
 
 
+print('Processing records')
+with gzip.open(FINNA_BASE + batch + '-with-koko-uris.ndjson.gz', 'rt') as inputf:
+    with (
+        gzip.open('koko-train.tsv.gz', 'wt') as trainf,
+        gzip.open('koko-test-images.tsv.gz', 'wt') as testimagesf,
+        gzip.open('koko-test-physobjects.tsv.gz', 'wt') as testphysobjectsf,
+        gzip.open('koko-test-arts.tsv.gz', 'wt') as testartsf,
+        gzip.open('koko-test-others.tsv.gz', 'wt') as testotherf,
+    ):
+        main(inputf)
+
+
 # print('Processing Swedish records')
 # with gzip.open(FINNA_BASE + batch + '-with-koko-uris-swe.ndjson.gz', 'rt') as inputf:
 #     with gzip.open(FINNA_BASE + batch + '-with-koko-uris-swe.tsv.gz', 'wt') as outputf:
@@ -247,15 +267,3 @@ def main(ndjson_in):
 # with gzip.open(FINNA_BASE + batch + '-with-koko-uris-fin.ndjson.gz', 'rt') as inputf:
 #     with gzip.open(FINNA_BASE + batch + '-with-koko-uris-fin.tsv.gz', 'wt') as outputf:
 #         main(inputf, outputf)
-
-
-print('Processing records')
-with gzip.open(FINNA_BASE + batch + '-with-koko-uris.ndjson.gz', 'rt') as inputf:
-    with (
-        gzip.open(FINNA_BASE + batch + '-with-koko-uris-train.tsv.gz', 'wt') as trainf,
-        gzip.open(FINNA_BASE + batch + '-with-koko-uris-test-images.tsv.gz', 'wt') as testimagesf,
-        gzip.open(FINNA_BASE + batch + '-with-koko-uris-test-physobjects.tsv.gz', 'wt') as testphysobjectsf,
-        gzip.open(FINNA_BASE + batch + '-with-koko-uris-test-arts.tsv.gz', 'wt') as testartsf,
-        gzip.open(FINNA_BASE + batch + '-with-koko-uris-test-others.tsv.gz', 'wt') as testotherf,
-    ):
-        main(inputf)
