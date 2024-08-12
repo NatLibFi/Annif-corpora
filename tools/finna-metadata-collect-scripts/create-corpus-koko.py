@@ -9,6 +9,10 @@ from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, OWL, DCTERMS, SKOS
 
 
+# Create the input file with the command:
+# zgrep "\\\/onto\\\/koko" finna-all-YYYY-MM-DD.ndjson.gz | gzip > finna-all-YYYY-MM-DD-with-koko-uris.ndjson.gz
+
+
 KOKO = Namespace('http://www.yso.fi/onto/koko/')
 COMPLAIN = True  # whether to complain about unknown labels
 FINNA_BASE = 'finna-all-'
@@ -23,6 +27,7 @@ TESTSET_FORMATS = {
 }  # TODO Add rakennukset, ehkä "image": "0/Image/", type: arkistomateriaali
 # Kuvat, esineet, rakennukset ja taideteokset erikseen (tai esineet + taideteokset samassa nipussa
 
+MIN_SUBJECTS = 3
 
 if len(sys.argv) != 3:
     print('''Not enough arguments. Usage:
@@ -191,6 +196,9 @@ def print_record(line_dict, subjects, ind):
     if is_printed(text, subjects):
         return
 
+    if len(subjects) < MIN_SUBJECTS:
+        return
+
     if is_testset_member(text):
         if format == TESTSET_FORMATS["image"]:
             file = testimagesf
@@ -251,19 +259,3 @@ with gzip.open(FINNA_BASE + batch + '-with-koko-uris.ndjson.gz', 'rt') as inputf
         gzip.open('koko-test-others.tsv.gz', 'wt') as testotherf,
     ):
         main(inputf)
-
-
-# print('Processing Swedish records')
-# with gzip.open(FINNA_BASE + batch + '-with-koko-uris-swe.ndjson.gz', 'rt') as inputf:
-#     with gzip.open(FINNA_BASE + batch + '-with-koko-uris-swe.tsv.gz', 'wt') as outputf:
-#         main(inputf, outputf)
-
-# print('Processing English records')
-# with gzip.open(FINNA_BASE + batch + '-with-koko-uris-eng.ndjson.gz', 'rt') as inputf:
-#     with gzip.open(FINNA_BASE + batch + '-with-koko-uris-eng.tsv.gz', 'wt') as outputf:
-#         main(inputf, outputf)
-
-# print('Processing Finnish records')
-# with gzip.open(FINNA_BASE + batch + '-with-koko-uris-fin.ndjson.gz', 'rt') as inputf:
-#     with gzip.open(FINNA_BASE + batch + '-with-koko-uris-fin.tsv.gz', 'wt') as outputf:
-#         main(inputf, outputf)
