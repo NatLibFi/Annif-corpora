@@ -15,6 +15,8 @@ from simplemma.language_detector import langdetect
 
 
 KOKO = Namespace('http://www.yso.fi/onto/koko/')
+YSO = Namespace('http://www.yso.fi/onto/yso/')
+
 COMPLAIN = True  # whether to complain about unknown labels
 FINNA_BASE = 'finna-all-'
 
@@ -42,6 +44,14 @@ else:
 koko = Graph()
 koko.parse(koko_path, format='turtle')
 print('Number of triples in KOKO: ', len(koko))
+
+
+# Create an index for YSO to KOKO mappings
+yso_to_koko = {}
+for s, p, o in koko.triples((None, URIRef("http://www.w3.org/2004/02/skos/core#exactMatch"), None)):
+    if o.startswith(YSO):
+        yso_to_koko[o] = s
+print('Number of entries in YSO-to-KOKO mapping: ', len(yso_to_koko))
 
 
 def label_to_uris(label, voc, lang, complain=COMPLAIN):
@@ -92,6 +102,8 @@ assert label_to_uris('not found', koko, 'fi') == uris
 
 @functools.lru_cache(maxsize=30000)
 def replace_concept(uri):
+    if uri is None:
+        return []
     replacement_candidates = list(koko.objects(uri, DCTERMS.isReplacedBy)) + \
                              list(koko.objects(uri, SKOS.narrowMatch))
     replacements = [rc for rc in replacement_candidates if rc.startswith(KOKO)]
@@ -135,11 +147,12 @@ def get_subject_uris(subject_dicts_in):
     for subject_dict in subject_dicts_in:
         if "id" in subject_dict.keys() and subject_dict["id"].startswith(KOKO):
             uris = [subject_dict["id"]]
-            # print(uris)
+        elif "id" in subject_dict.keys() and subject_dict["id"].startswith(YSO):
+            yso_uri = subject_dict["id"]
+            koko_uri = yso_to_koko.get(URIRef(yso_uri))
+            uris = [koko_uri]  # if koko_uri != "None" else []
         else:
             continue
-
-        # uris = []
 
         # TODO
         # if len(subject_dict['heading']) > 1:
@@ -212,7 +225,7 @@ def print_record(line_dict, subjects, ind):
 
     lang = detect_language(text)
     if lang != 'fi':
-        print(f"Not Finnish: {text}")
+        print(f"Not Finnish: {text[:500]}")
         return
 
     if is_testset_member(text):
