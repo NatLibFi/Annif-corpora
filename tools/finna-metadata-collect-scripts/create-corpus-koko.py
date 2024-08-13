@@ -159,7 +159,6 @@ def get_subject_uris(subject_dicts_in):
                 if check_concept(URIRef(newuri)):
                     subjects_out.append(newuri)
 
-    # print(set(subjects_out))
     return set(subjects_out)
 
 
@@ -203,7 +202,9 @@ def print_record(line_dict, subjects, ind):
     summary = line_dict['summary'][0] if len(line_dict['summary']) == 1 else ''
     text = cleanup(title + ' ¤ ' + summary)
 
-    if is_printed(text, subjects):
+    if is_printed(title, subjects):
+        return
+    if is_printed(summary, subjects):
         return
 
     if len(subjects) < MIN_SUBJECTS:
@@ -231,7 +232,6 @@ def print_record(line_dict, subjects, ind):
         file = trainf
 
     print(
-        # ' ¤ '.join((title, summary))
         text
         + '\t'
         + '\t'.join(
