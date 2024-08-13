@@ -7,6 +7,7 @@ import unicodedata
 
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, OWL, DCTERMS, SKOS
+from simplemma.language_detector import langdetect
 
 
 # Create the input file with the command:
@@ -182,6 +183,15 @@ def is_printed(text, subjects):
     return False
 
 
+def detect_language(text):
+    results = langdetect(text, lang=('fi', 'sv', 'en'))
+    if not results:
+        return None
+    elif results[0][1] < 0.05:  # accuracy threshold
+        return None
+    return results[0][0]
+
+
 def print_record(line_dict, subjects, ind):
     # if title == '' and summary == '':
     #     return
@@ -197,6 +207,11 @@ def print_record(line_dict, subjects, ind):
         return
 
     if len(subjects) < MIN_SUBJECTS:
+        return
+
+    lang = detect_language(text)
+    if lang != 'fi':
+        print(f"Not Finnish: {text}")
         return
 
     if is_testset_member(text):
