@@ -30,7 +30,7 @@ TESTSET_FORMATS = {
 }  # TODO Add rakennukset, ehkä "image": "0/Image/", type: arkistomateriaali
 # Kuvat, esineet, rakennukset ja taideteokset erikseen (tai esineet + taideteokset samassa nipussa
 
-MIN_SUBJECTS = 3
+MIN_SUBJECTS = 4
 
 if len(sys.argv) != 3:
     print('''Not enough arguments. Usage:
@@ -52,6 +52,8 @@ for s, p, o in koko.triples((None, URIRef("http://www.w3.org/2004/02/skos/core#e
     if o.startswith(YSO):
         yso_to_koko[o] = s
 print('Number of entries in YSO-to-KOKO mapping: ', len(yso_to_koko))
+
+assert str(yso_to_koko[URIRef('http://www.yso.fi/onto/yso/p6182')]) == 'http://www.yso.fi/onto/koko/p5300'  # Lääkärit
 
 
 def label_to_uris(label, voc, lang, complain=COMPLAIN):
