@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
+import json
 import traceback
 import time
 import sys
 import sickle
+import requests
 from lxml import etree
 
 # monkey patch sickle.response to handle large XML responses
@@ -25,8 +27,21 @@ if len(sys.argv) > 1:
 else:
     current_token = None
 
+
+def fetch_extra_field(field, record_id):
+    url = f'https://api.finna.fi/api/v1/record?id={record_id}&field[]=rawData'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        if 'records' in data and len(data['records']) > 0:
+            raw_data = data['records'][0].get('rawData', {})
+            return raw_data.get(field, None)
+    return None
+
+
+
 while True:
-    params = { 	'metadataPrefix': 'oai_vufind_json',
+    params = {  'metadataPrefix': 'oai_vufind_json',
                 'set': 'non_dedup',
                 'timeout': 30 }
 
@@ -48,9 +63,14 @@ while True:
                 print(records.oai_response.raw, file=sys.stderr)
                 current_token = None
             if 'metadata' in rec.metadata and len(rec.metadata['metadata']) > 0:
-                json_data = rec.metadata['metadata'][0]
-                print(json_data)
-        
+                json_data = json.loads(rec.metadata['metadata'][0])
+
+                record_id = rec.header.identifier.removeprefix("oai:finna.fi:")
+                first_indexed = fetch_extra_field("first_indexed", record_id)
+                json_data['first_indexed'] = first_indexed
+
+                print(json.dumps(json_data))
+
         if current_token is None:
             # all records received, no token - we have probably reached the end
             print("No further records, all done.", file=sys.stderr)
