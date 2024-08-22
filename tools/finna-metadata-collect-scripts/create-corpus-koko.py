@@ -5,6 +5,7 @@ import json
 import sys
 import unicodedata
 
+from datetime import datetime
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, OWL, DCTERMS, SKOS
 from simplemma.language_detector import langdetect
@@ -20,9 +21,7 @@ YSO = Namespace('http://www.yso.fi/onto/yso/')
 COMPLAIN = True  # whether to complain about unknown labels
 FINNA_BASE = 'finna-all-'
 
-# TESTSET_BEGIN_YEAR = 0  # There is not publicationDates in most records, need
-# to do test/train split other way
-TESTSET_FRACTION = 0.1
+TESTSET_BEGIN_YEAR = 2024  # Compared to first_indexed timestamp
 TESTSET_FORMATS = {
     "image": "0/Image/",
     "physicalobject": "0/PhysicalObject/",
@@ -177,8 +176,24 @@ def get_subject_uris(subject_dicts_in):
     return set(subjects_out)
 
 
-def is_testset_member(text):
-    return hash(text) % 100 < int(TESTSET_FRACTION * 100)
+def is_testset_member(rec):
+    if rec['first_indexed'] is None:
+        return False
+    dt = datetime.strptime(rec['first_indexed'], '%Y-%m-%dT%H:%M:%SZ')
+    if dt.year >= TESTSET_BEGIN_YEAR:
+        return True
+    return False
+
+
+def read_timestamps():
+    ts_filename = 'finna-with-koko-uris-first-indexed-timestamps.ndjson.gz'
+    timestamps = {}
+    with gzip.open(ts_filename, 'rt') as ts_file:
+        for ind, line in enumerate(ts_file):
+            ts_record = json.loads(line)
+            timestamps.update(ts_record)
+    return timestamps
+
 
 def cleanup(text):
     return " ".join(text.split())
@@ -230,7 +245,7 @@ def print_record(line_dict, subjects, ind):
         print(f"Not Finnish: {text[:500]}")
         return
 
-    if is_testset_member(text):
+    if is_testset_member(line_dict):
         if format == TESTSET_FORMATS["image"]:
             file = testimagesf
         elif format == TESTSET_FORMATS["workofart"]:
@@ -274,10 +289,13 @@ def main(ndjson_in):
 
         subjects = get_subject_uris(line_dict['subjectsExtended'])
         if subjects:
+            line_dict["first_indexed"] = first_indexed_ts[line_dict["id"]]
             print_record(line_dict, subjects, ind)
         elif COMPLAIN:
             print(f'Line {ind}: No subjects found')
 
+
+first_indexed_ts = read_timestamps()
 
 print('Processing records')
 with gzip.open(FINNA_BASE + batch + '-with-koko-uris.ndjson.gz', 'rt') as inputf:
