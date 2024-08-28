@@ -12,7 +12,7 @@ from simplemma.language_detector import langdetect
 
 
 # Create the input file with the command:
-# zgrep "\\\/onto\\\/koko" finna-all-YYYY-MM-DD.ndjson.gz | gzip > finna-all-YYYY-MM-DD-with-koko-uris.ndjson.gz
+# zgrep "\\\/onto\\\/koko" finna-all-YYYY-MM-DD.ndjson.gz | gzip > finna-koko-YYYY-MM-DD-with-koko-uris.ndjson.gz
 
 
 KOKO = Namespace('http://www.yso.fi/onto/koko/')
@@ -252,11 +252,7 @@ def print_record(line_dict, subjects, ind):
             file = testartsf
         elif format == TESTSET_FORMATS["physicalobject"]:
             file = testphysobjectsf
-        # elif format in ("0/Book/", "0/OtherText/", "0/Document/"):
-            # print(f"known train: {format}")
-            # file = testotherf
         else:
-            # print(f'unknown format for testset: {line_dict["formats"]}')
             file = testotherf
     else:
         file = trainf
@@ -300,10 +296,10 @@ first_indexed_ts = read_timestamps()
 print('Processing records')
 with gzip.open(FINNA_BASE + batch + '-with-koko-uris.ndjson.gz', 'rt') as inputf:
     with (
-        gzip.open('koko-train.tsv.gz', 'wt') as trainf,
-        gzip.open('koko-test-images.tsv.gz', 'wt') as testimagesf,
-        gzip.open('koko-test-physobjects.tsv.gz', 'wt') as testphysobjectsf,
-        gzip.open('koko-test-arts.tsv.gz', 'wt') as testartsf,
-        gzip.open('koko-test-others.tsv.gz', 'wt') as testotherf,
+        gzip.open('finna-koko-train.tsv.gz', 'wt') as trainf,
+        gzip.open('finna-koko-test-images.tsv.gz', 'wt') as testimagesf,
+        gzip.open('finna-koko-test-physobjects.tsv.gz', 'wt') as testphysobjectsf,
+        gzip.open('finna-koko-test-arts.tsv.gz', 'wt') as testartsf,
+        gzip.open('finna-koko-test-others.tsv.gz', 'wt') as testotherf,
     ):
         main(inputf)
