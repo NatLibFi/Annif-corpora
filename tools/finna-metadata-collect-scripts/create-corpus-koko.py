@@ -6,6 +6,7 @@ import sys
 import unicodedata
 
 from datetime import datetime
+from collections import defaultdict
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, OWL, DCTERMS, SKOS
 from simplemma.language_detector import langdetect
@@ -21,15 +22,16 @@ YSO = Namespace('http://www.yso.fi/onto/yso/')
 COMPLAIN = True  # whether to complain about unknown labels
 FINNA_BASE = 'finna-all-'
 
+MIN_SUBJECTS = 4
+
 TESTSET_BEGIN_YEAR = 2024  # Compared to first_indexed timestamp
 TESTSET_FORMATS = {
     "image": "0/Image/",
     "physicalobject": "0/PhysicalObject/",
     "workofart": "0/WorkOfArt/",
 }  # TODO Add rakennukset, ehkä "image": "0/Image/", type: arkistomateriaali
-# Kuvat, esineet, rakennukset ja taideteokset erikseen (tai esineet + taideteokset samassa nipussa
+MAX_TEST_RECORDS = 3000
 
-MIN_SUBJECTS = 4
 
 if len(sys.argv) != 3:
     print('''Not enough arguments. Usage:
@@ -221,6 +223,29 @@ def detect_language(text):
     return results[0][0]
 
 
+rec_type_counter = defaultdict(int)
+
+
+def choose_testset_type(format):
+    global rec_type_counter
+
+    if rec_type_counter[format] >= MAX_TEST_RECORDS:
+        return None
+    if rec_type_counter["other"] >= MAX_TEST_RECORDS:
+        return None
+
+    rec_type_counter[format] += 1
+    if format == TESTSET_FORMATS["image"]:
+        return testimagesf
+    elif format == TESTSET_FORMATS["workofart"]:
+        return testartsf
+    elif format == TESTSET_FORMATS["physicalobject"]:
+        return testphysobjectsf
+
+    rec_type_counter["other"] += 1
+    return testotherf
+
+
 def print_record(line_dict, subjects, ind):
     # if title == '' and summary == '':
     #     return
@@ -246,16 +271,12 @@ def print_record(line_dict, subjects, ind):
         return
 
     if is_testset_member(line_dict):
-        if format == TESTSET_FORMATS["image"]:
-            file = testimagesf
-        elif format == TESTSET_FORMATS["workofart"]:
-            file = testartsf
-        elif format == TESTSET_FORMATS["physicalobject"]:
-            file = testphysobjectsf
-        else:
-            file = testotherf
+        file = choose_testset_type(format)
     else:
         file = trainf
+
+    if file is None:
+        return
 
     print(
         text
