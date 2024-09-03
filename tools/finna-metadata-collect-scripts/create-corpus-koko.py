@@ -24,13 +24,10 @@ FINNA_BASE = 'finna-all-'
 
 MIN_SUBJECTS = 4
 
-TESTSET_BEGIN_YEAR = 2024  # Compared to first_indexed timestamp
-VALIDATIONSET_BEGIN_YEAR = 2023
 TESTSET_FORMATS = {
     "image": "0/Image/",
     "physicalobject": "0/PhysicalObject/",
 }
-MAX_TEST_RECORDS = 3000
 
 
 if len(sys.argv) != 3:
@@ -216,52 +213,64 @@ def detect_language(text):
 
 
 def choose_subset(rec):
-    rec_split = choose_subset_split(rec)
+    rec_type = choose_subset_type(rec)
+    rec_split = choose_subset_split(rec, rec_type)
     if rec_split == "train":
         return rec_split
-    rec_type = choose_subset_type(rec)
     return rec_split + '_' + rec_type
 
 
-def choose_subset_split(rec):
-    if rec['first_indexed'] is None:
-        return 'train'
+rec_subset_counter = defaultdict(int)
+rec_subset_limits = {
+    # 'train':                  ,
+    'validation_images':        3000,
+    'validation_physobjects':   3000,
+    'validation_others':        1000,
+    'test_images':              3000,
+    'test_physobjects':         3000,
+    'test_others':              1000,
+}
+
+
+def choose_subset_split(rec, rec_type):
+    global rec_subset_counter
 
     dt = datetime.strptime(rec['first_indexed'], '%Y-%m-%dT%H:%M:%SZ')
     if dt is None:
+        rec_subset_counter["train"] += 1
         return 'train'
-    elif dt.year >= TESTSET_BEGIN_YEAR:
+
+    key = "test_" + rec_type
+    if rec_subset_counter[key] < rec_subset_limits[key]:
+        rec_subset_counter[key] += 1
+        if rec_subset_counter[key] == rec_subset_limits[key]:
+            print(f"Reached {rec_subset_counter[key]} records in set {key} with timestamp {str(dt)}")
         return 'test'
-    elif dt.year >= VALIDATIONSET_BEGIN_YEAR:
+    key = "validation_" + rec_type
+
+    if rec_subset_counter[key] < rec_subset_limits[key]:
+        rec_subset_counter[key] += 1
+        if rec_subset_counter[key] == rec_subset_limits[key]:
+            print(f"Reached {rec_subset_counter[key]} records in set {key} with timestamp {str(dt)}")
         return 'validation'
+
+    rec_subset_counter["train"] += 1
     return 'train'
 
 
-# rec_type_counter = defaultdict(int)
-
-
 def choose_subset_type(rec):
-    # global rec_type_counter
-
     # TODO Is picking first element ok?
     format = rec["formats"][0]["value"] if rec["formats"] else ""
 
-    # if rec_type_counter[format + '-' + split] >= MAX_TEST_RECORDS:
-    #     return None
-    # if rec_type_counter["other"] >= MAX_TEST_RECORDS:
-    #     return None
-
-    # rec_type_counter[format] += 1
     if format == TESTSET_FORMATS["image"]:
         return "images"
     elif format == TESTSET_FORMATS["physicalobject"]:
         return "physobjects"
-
-    # rec_type_counter["other"] += 1
     return "others"
 
 
-def print_record(rec, subjects):
+def print_record(rec):
+    subjects = rec['subjects']
     title = rec['title']
     summary = rec['summary'][0] if len(rec['summary']) == 1 else ''
     text = cleanup(title + ' ¤ ' + summary)
@@ -293,6 +302,8 @@ def print_record(rec, subjects):
 def main(ndjson_in):
     """Prints the title (nimike) and subjects (aiheet) contained in the json
     objects of the input."""
+
+    records = []
     for ind, line in enumerate(ndjson_in):
         line_dict = json.loads(line)
         if 'title' not in line_dict:
@@ -309,13 +320,18 @@ def main(ndjson_in):
             continue
 
         subjects = get_subject_uris(line_dict['subjectsExtended'])
-        if subjects:
-            line_dict["first_indexed"] = first_indexed_ts[line_dict["id"]]
-            print_record(line_dict, subjects)
-            print(f'Line {ind}: No subjects found')
+        ts = first_indexed_timestamps[line_dict["id"]]
+
+        if subjects and ts:
+            line_dict["first_indexed"] = ts
+            line_dict["subjects"] = subjects
+            records.append(line_dict)
+
+    for rec in sorted(records, key=lambda d: d['first_indexed'], reverse=True):
+        print_record(rec)
 
 
-first_indexed_ts = read_timestamps()
+first_indexed_timestamps = read_timestamps()
 
 
 tsv_files = {
