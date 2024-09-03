@@ -29,8 +29,7 @@ VALIDATIONSET_BEGIN_YEAR = 2023
 TESTSET_FORMATS = {
     "image": "0/Image/",
     "physicalobject": "0/PhysicalObject/",
-    "workofart": "0/WorkOfArt/",
-}  # TODO Add rakennukset, ehkä "image": "0/Image/", type: arkistomateriaali
+}
 MAX_TEST_RECORDS = 3000
 
 
@@ -255,8 +254,6 @@ def choose_subset_type(rec):
     # rec_type_counter[format] += 1
     if format == TESTSET_FORMATS["image"]:
         return "images"
-    elif format == TESTSET_FORMATS["workofart"]:
-        return "arts"
     elif format == TESTSET_FORMATS["physicalobject"]:
         return "physobjects"
 
@@ -325,11 +322,9 @@ tsv_files = {
     'train':                    gzip.open('finna-koko-train.tsv.gz', 'wt'),
     'validation_images':        gzip.open('finna-koko-validation-images.tsv.gz', 'wt'),
     'validation_physobjects':   gzip.open('finna-koko-validation-physobjects.tsv.gz', 'wt'),
-    'validation_arts':          gzip.open('finna-koko-validation-arts.tsv.gz', 'wt'),
     'validation_others':        gzip.open('finna-koko-validation-others.tsv.gz', 'wt'),
     'test_images':              gzip.open('finna-koko-test-images.tsv.gz', 'wt'),
     'test_physobjects':         gzip.open('finna-koko-test-physobjects.tsv.gz', 'wt'),
-    'test_arts':                gzip.open('finna-koko-test-arts.tsv.gz', 'wt'),
     'test_others':              gzip.open('finna-koko-test-others.tsv.gz', 'wt'),
 }
 
