@@ -223,12 +223,12 @@ def choose_subset(rec):
 rec_subset_counter = defaultdict(int)
 rec_subset_limits = {
     # 'train':                  ,
-    'validation_images':        3000,
-    'validation_physobjects':   3000,
-    'validation_others':        1000,
-    'test_images':              3000,
-    'test_physobjects':         3000,
-    'test_others':              1000,
+    'validation_images':        4000,
+    'validation_physobjects':   4000,
+    'validation_others':        2000,
+    'test_images':              4000,
+    'test_physobjects':         4000,
+    'test_others':              2000,
 }
 
 
