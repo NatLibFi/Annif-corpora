@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import csv
 import gzip
 import functools
 import json
@@ -13,7 +14,7 @@ from simplemma.language_detector import langdetect
 
 
 # Create the input file with the command:
-# zgrep "\\\/onto\\\/koko" finna-all-YYYY-MM-DD.ndjson.gz | gzip > finna-koko-YYYY-MM-DD-with-koko-uris.ndjson.gz
+# zgrep "\\\/onto\\\/koko" finna-all-YYYY-MM-DD.ndjson.gz | gzip > finna-all-YYYY-MM-DD-with-koko-uris.ndjson.gz
 
 
 KOKO = Namespace('http://www.yso.fi/onto/koko/')
@@ -273,6 +274,11 @@ def print_record(rec):
     subjects = rec['subjects']
     title = rec['title']
     summary = rec['summary'][0] if len(rec['summary']) == 1 else ''
+
+    # hotfix for records with a broken summary
+    if summary == "Cannot invoke method trim() on null object":
+        summary = ''
+
     text = cleanup(title + ' ¤ ' + summary)
 
     if is_printed(title, subjects):
@@ -287,16 +293,13 @@ def print_record(rec):
         print(f"Detected lang {lang} not Finnish: {text[:500]}")
         return
 
-    file = tsv_files[choose_subset(rec)]
-    if file is None:
+    writer = csv_writers[choose_subset(rec)]
+    if writer is None:
         return
 
-    print(
-        text
-        + '\t'
-        + '\t'.join(
-            (str(subj)for subj in subjects)
-    ), file=file)
+    # ["id","text","title","summary","images","subject_uris"]
+    row = [rec["id"], text, cleanup(title), cleanup(summary), " ".join(rec["images"]), " ".join([str(subj) for subj in subjects])]
+    writer.writerow(row)
 
 
 def main(ndjson_in):
@@ -320,7 +323,7 @@ def main(ndjson_in):
             continue
 
         subjects = get_subject_uris(line_dict['subjectsExtended'])
-        ts = first_indexed_timestamps[line_dict["id"]]
+        ts = first_indexed_timestamps.get(line_dict["id"])
 
         if subjects and ts:
             line_dict["first_indexed"] = ts
@@ -334,21 +337,30 @@ def main(ndjson_in):
 first_indexed_timestamps = read_timestamps()
 
 
-tsv_files = {
-    'train':                    gzip.open('finna-koko-train.tsv.gz', 'wt'),
-    'validation_images':        gzip.open('finna-koko-validation-images.tsv.gz', 'wt'),
-    'validation_physobjects':   gzip.open('finna-koko-validation-physobjects.tsv.gz', 'wt'),
-    'validation_others':        gzip.open('finna-koko-validation-others.tsv.gz', 'wt'),
-    'test_images':              gzip.open('finna-koko-test-images.tsv.gz', 'wt'),
-    'test_physobjects':         gzip.open('finna-koko-test-physobjects.tsv.gz', 'wt'),
-    'test_others':              gzip.open('finna-koko-test-others.tsv.gz', 'wt'),
+csv_files = {
+    'train':                    gzip.open('finna-koko-train.csv.gz', 'wt', newline=''),
+    'validation_images':        gzip.open('finna-koko-validation-images.csv.gz', 'wt', newline=''),
+    'validation_physobjects':   gzip.open('finna-koko-validation-physobjects.csv.gz', 'wt', newline=''),
+    'validation_others':        gzip.open('finna-koko-validation-others.csv.gz', 'wt', newline=''),
+    'test_images':              gzip.open('finna-koko-test-images.csv.gz', 'wt', newline=''),
+    'test_physobjects':         gzip.open('finna-koko-test-physobjects.csv.gz', 'wt', newline=''),
+    'test_others':              gzip.open('finna-koko-test-others.csv.gz', 'wt', newline=''),
 }
 
+print('Creating output files')
+csv_writers = {
+    key: csv.writer(f)
+    for key, f in csv_files.items()
+}
+
+# write CSV header rows
+for writer in csv_writers.values():
+    writer.writerow(["id","text","title","summary","images","subject_uris"])
 
 print('Processing records')
 with gzip.open(FINNA_BASE + batch + '-with-koko-uris.ndjson.gz', 'rt') as inputf:
     main(inputf)
 
 
-for tsvf in tsv_files.values():
-    tsvf.close()
+for csvf in csv_files.values():
+    csvf.close()
