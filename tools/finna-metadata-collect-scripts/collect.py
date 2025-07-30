@@ -26,7 +26,7 @@ else:
     current_token = None
 
 while True:
-    params = { 	'metadataPrefix': 'oai_vufind_json',
+    params = { 	'metadataPrefix': 'oai_finna_json',
                 'set': 'non_dedup',
                 'timeout': 30 }
 
