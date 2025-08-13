@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
+import csv
 import gzip
 import functools
 import json
 import sys
 import unicodedata
 
+from datetime import datetime
+from collections import defaultdict
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, OWL, DCTERMS, SKOS
 from simplemma.language_detector import langdetect
@@ -20,17 +23,13 @@ YSO = Namespace('http://www.yso.fi/onto/yso/')
 COMPLAIN = True  # whether to complain about unknown labels
 FINNA_BASE = 'finna-all-'
 
-# TESTSET_BEGIN_YEAR = 0  # There is not publicationDates in most records, need
-# to do test/train split other way
-TESTSET_FRACTION = 0.1
+MIN_SUBJECTS = 4
+
 TESTSET_FORMATS = {
     "image": "0/Image/",
     "physicalobject": "0/PhysicalObject/",
-    "workofart": "0/WorkOfArt/",
-}  # TODO Add rakennukset, ehkä "image": "0/Image/", type: arkistomateriaali
-# Kuvat, esineet, rakennukset ja taideteokset erikseen (tai esineet + taideteokset samassa nipussa
+}
 
-MIN_SUBJECTS = 4
 
 if len(sys.argv) != 3:
     print('''Not enough arguments. Usage:
@@ -56,50 +55,51 @@ print('Number of entries in YSO-to-KOKO mapping: ', len(yso_to_koko))
 assert str(yso_to_koko[URIRef('http://www.yso.fi/onto/yso/p6182')]) == 'http://www.yso.fi/onto/koko/p5300'  # Lääkärit
 
 
-def label_to_uris(label, voc, lang, complain=COMPLAIN):
-    #print("looking up '{}' from {} in language {}".format(label, source, lang))
-    # Remove trailing "." present in labels of some records
-    value = Literal(unicodedata.normalize('NFC', label.rstrip('.')), lang)
+# # TODO
+# def label_to_uris(label, voc, lang, complain=COMPLAIN):
+#     #print("looking up '{}' from {} in language {}".format(label, source, lang))
+#     # Remove trailing "." present in labels of some records
+#     value = Literal(unicodedata.normalize('NFC', label.rstrip('.')), lang)
 
-    for prop in (SKOS.prefLabel, SKOS.altLabel):
-        vocuri = voc.value(None, prop, value, any=True)
-        if vocuri is not None:
-            if vocuri.startswith(KOKO):
-                return [vocuri]
-            for matchprop in (SKOS.exactMatch, SKOS.closeMatch):
-                matches = [match for match in voc.objects(vocuri, matchprop)
-                           if match.startswith(YSO)]
-                if matches:
-                    return matches
-    if complain:
-        print("Unknown label '{}'".format(label))
-    return []
+#     for prop in (SKOS.prefLabel, SKOS.altLabel):
+#         vocuri = voc.value(None, prop, value, any=True)
+#         if vocuri is not None:
+#             if vocuri.startswith(KOKO):
+#                 return [vocuri]
+#             for matchprop in (SKOS.exactMatch, SKOS.closeMatch):
+#                 matches = [match for match in voc.objects(vocuri, matchprop)
+#                            if match.startswith(KOKO)]
+#                 if matches:
+#                     return matches
+#     if complain:
+#         print("Unknown label '{}'".format(label))
+#     return []
 
-uris = label_to_uris('kissa', koko, 'fi')  # YSO: kissa
-print(uris)
-assert URIRef('http://www.yso.fi/onto/koko/p37252') in uris
-uris = label_to_uris('Ingmanin talo', koko, 'fi')  # Casagranden talo
-print(uris)
-assert URIRef('http://www.yso.fi/onto/koko/p62854') in uris
-# uris = label_to_uris('siirtäminen', 'ysa', ysa, 'fi')  # YSO: siirto
-# 23.9.2020 No more YSO: siirto (liikuttaminen) + siirto (viestintä)
-#print(uris)
-# assert URIRef('http://www.yso.fi/onto/yso/p5700') in uris
-uris = label_to_uris('lähioikeudet', koko, 'fi')  # lähioikeudet
-print(uris)
-assert URIRef('http://www.yso.fi/onto/koko/p11360') in uris
-uris = label_to_uris('kulttuuri', koko, 'fi')  # kulttuuri
-print(uris)
-assert URIRef('http://www.yso.fi/onto/koko/p31131') in uris
-# uris = label_to_uris('Helsinki -- Kallio', 'ysa', ysa, 'fi')  # YSO-paikat: Kallio (Helsinki)
+# uris = label_to_uris('kissa', koko, 'fi')  # YSO: kissa
+# print(uris)
+# assert URIRef('http://www.yso.fi/onto/koko/p37252') in uris
+# uris = label_to_uris('Ingmanin talo', koko, 'fi')  # Casagranden talo
+# print(uris)
+# assert URIRef('http://www.yso.fi/onto/koko/p62854') in uris
+# # uris = label_to_uris('siirtäminen', 'ysa', ysa, 'fi')  # YSO: siirto
+# # 23.9.2020 No more YSO: siirto (liikuttaminen) + siirto (viestintä)
 # #print(uris)
-# assert URIRef('http://www.yso.fi/onto/yso/p105606') in uris
-# uris = label_to_uris('Zambia', koko, 'fi')  # YSO-paikat: Sambia
-# #print(uris)
-# assert URIRef('http://www.yso.fi/onto/yso/p104983') in uris
-uris = []
-print(uris)
-assert label_to_uris('not found', koko, 'fi') == uris
+# # assert URIRef('http://www.yso.fi/onto/yso/p5700') in uris
+# uris = label_to_uris('lähioikeudet', koko, 'fi')  # lähioikeudet
+# print(uris)
+# assert URIRef('http://www.yso.fi/onto/koko/p11360') in uris
+# uris = label_to_uris('kulttuuri', koko, 'fi')  # kulttuuri
+# print(uris)
+# assert URIRef('http://www.yso.fi/onto/koko/p31131') in uris
+# # uris = label_to_uris('Helsinki -- Kallio', 'ysa', ysa, 'fi')  # YSO-paikat: Kallio (Helsinki)
+# # #print(uris)
+# # assert URIRef('http://www.yso.fi/onto/yso/p105606') in uris
+# # uris = label_to_uris('Zambia', koko, 'fi')  # YSO-paikat: Sambia
+# # #print(uris)
+# # assert URIRef('http://www.yso.fi/onto/yso/p104983') in uris
+# uris = []
+# print(uris)
+# assert label_to_uris('not found', koko, 'fi') == uris
 
 
 @functools.lru_cache(maxsize=30000)
@@ -177,8 +177,15 @@ def get_subject_uris(subject_dicts_in):
     return set(subjects_out)
 
 
-def is_testset_member(text):
-    return hash(text) % 100 < int(TESTSET_FRACTION * 100)
+def read_timestamps():
+    ts_filename = 'finna-with-koko-uris-first-indexed-timestamps.ndjson.gz'
+    timestamps = {}
+    with gzip.open(ts_filename, 'rt') as ts_file:
+        for ind, line in enumerate(ts_file):
+            ts_record = json.loads(line)
+            timestamps.update(ts_record)
+    return timestamps
+
 
 def cleanup(text):
     return " ".join(text.split())
@@ -206,57 +213,100 @@ def detect_language(text):
     return results[0][0]
 
 
-def print_record(line_dict, subjects, ind):
-    # if title == '' and summary == '':
-    #     return
+def choose_subset(rec):
+    rec_type = choose_subset_type(rec)
+    rec_split = choose_subset_split(rec, rec_type)
+    if rec_split == "train":
+        return rec_split
+    return rec_split + '_' + rec_type
 
-    # year = int(line_dict["publicationDates"][0]) if line_dict["publicationDates"] else -1  # TODO Is picking first element ok?
-    format = line_dict["formats"][0]["value"] if line_dict["formats"] else ""  # TODO Is picking first element ok?
 
-    title = line_dict['title']
-    summary = line_dict['summary'][0] if len(line_dict['summary']) == 1 else ''
+rec_subset_counter = defaultdict(int)
+rec_subset_limits = {
+    # 'train':                  ,
+    'validation_images':        4000,
+    'validation_physobjects':   4000,
+    'validation_others':        2000,
+    'test_images':              4000,
+    'test_physobjects':         4000,
+    'test_others':              2000,
+}
+
+
+def choose_subset_split(rec, rec_type):
+    global rec_subset_counter
+
+    dt = datetime.strptime(rec['first_indexed'], '%Y-%m-%dT%H:%M:%SZ')
+    if dt is None:
+        rec_subset_counter["train"] += 1
+        return 'train'
+
+    key = "test_" + rec_type
+    if rec_subset_counter[key] < rec_subset_limits[key]:
+        rec_subset_counter[key] += 1
+        if rec_subset_counter[key] == rec_subset_limits[key]:
+            print(f"Reached {rec_subset_counter[key]} records in set {key} with timestamp {str(dt)}")
+        return 'test'
+    key = "validation_" + rec_type
+
+    if rec_subset_counter[key] < rec_subset_limits[key]:
+        rec_subset_counter[key] += 1
+        if rec_subset_counter[key] == rec_subset_limits[key]:
+            print(f"Reached {rec_subset_counter[key]} records in set {key} with timestamp {str(dt)}")
+        return 'validation'
+
+    rec_subset_counter["train"] += 1
+    return 'train'
+
+
+def choose_subset_type(rec):
+    # TODO Is picking first element ok?
+    format = rec["formats"][0]["value"] if rec["formats"] else ""
+
+    if format == TESTSET_FORMATS["image"]:
+        return "images"
+    elif format == TESTSET_FORMATS["physicalobject"]:
+        return "physobjects"
+    return "others"
+
+
+def print_record(rec):
+    subjects = rec['subjects']
+    title = rec['title']
+    summary = rec['summary'][0] if len(rec['summary']) == 1 else ''
+
+    # hotfix for records with a broken summary
+    if summary == "Cannot invoke method trim() on null object":
+        summary = ''
+
     text = cleanup(title + ' ¤ ' + summary)
 
     if is_printed(title, subjects):
         return
     if is_printed(summary, subjects):
         return
-
     if len(subjects) < MIN_SUBJECTS:
         return
 
     lang = detect_language(text)
     if lang != 'fi':
-        print(f"Not Finnish: {text[:500]}")
+        print(f"Detected lang {lang} not Finnish: {text[:500]}")
         return
 
-    if is_testset_member(text):
-        if format == TESTSET_FORMATS["image"]:
-            file = testimagesf
-        elif format == TESTSET_FORMATS["workofart"]:
-            file = testartsf
-        elif format == TESTSET_FORMATS["physicalobject"]:
-            file = testphysobjectsf
-        # elif format in ("0/Book/", "0/OtherText/", "0/Document/"):
-            # print(f"known train: {format}")
-            # file = testotherf
-        else:
-            # print(f'unknown format for testset: {line_dict["formats"]}')
-            file = testotherf
-    else:
-        file = trainf
+    writer = csv_writers[choose_subset(rec)]
+    if writer is None:
+        return
 
-    print(
-        text
-        + '\t'
-        + '\t'.join(
-            (str(subj)for subj in subjects)
-    ), file=file)
+    # ["id","text","title","summary","images","subject_uris"]
+    row = [rec["id"], text, cleanup(title), cleanup(summary), " ".join(rec["images"]), " ".join([str(subj) for subj in subjects])]
+    writer.writerow(row)
 
 
 def main(ndjson_in):
     """Prints the title (nimike) and subjects (aiheet) contained in the json
     objects of the input."""
+
+    records = []
     for ind, line in enumerate(ndjson_in):
         line_dict = json.loads(line)
         if 'title' not in line_dict:
@@ -273,19 +323,44 @@ def main(ndjson_in):
             continue
 
         subjects = get_subject_uris(line_dict['subjectsExtended'])
-        if subjects:
-            print_record(line_dict, subjects, ind)
-        elif COMPLAIN:
-            print(f'Line {ind}: No subjects found')
+        ts = first_indexed_timestamps.get(line_dict["id"])
 
+        if subjects and ts:
+            line_dict["first_indexed"] = ts
+            line_dict["subjects"] = subjects
+            records.append(line_dict)
+
+    for rec in sorted(records, key=lambda d: d['first_indexed'], reverse=True):
+        print_record(rec)
+
+
+first_indexed_timestamps = read_timestamps()
+
+
+csv_files = {
+    'train':                    gzip.open('finna-koko-train.csv.gz', 'wt', newline=''),
+    'validation_images':        gzip.open('finna-koko-validation-images.csv.gz', 'wt', newline=''),
+    'validation_physobjects':   gzip.open('finna-koko-validation-physobjects.csv.gz', 'wt', newline=''),
+    'validation_others':        gzip.open('finna-koko-validation-others.csv.gz', 'wt', newline=''),
+    'test_images':              gzip.open('finna-koko-test-images.csv.gz', 'wt', newline=''),
+    'test_physobjects':         gzip.open('finna-koko-test-physobjects.csv.gz', 'wt', newline=''),
+    'test_others':              gzip.open('finna-koko-test-others.csv.gz', 'wt', newline=''),
+}
+
+print('Creating output files')
+csv_writers = {
+    key: csv.writer(f)
+    for key, f in csv_files.items()
+}
+
+# write CSV header rows
+for writer in csv_writers.values():
+    writer.writerow(["id","text","title","summary","images","subject_uris"])
 
 print('Processing records')
 with gzip.open(FINNA_BASE + batch + '-with-koko-uris.ndjson.gz', 'rt') as inputf:
-    with (
-        gzip.open('koko-train.tsv.gz', 'wt') as trainf,
-        gzip.open('koko-test-images.tsv.gz', 'wt') as testimagesf,
-        gzip.open('koko-test-physobjects.tsv.gz', 'wt') as testphysobjectsf,
-        gzip.open('koko-test-arts.tsv.gz', 'wt') as testartsf,
-        gzip.open('koko-test-others.tsv.gz', 'wt') as testotherf,
-    ):
-        main(inputf)
+    main(inputf)
+
+
+for csvf in csv_files.values():
+    csvf.close()
