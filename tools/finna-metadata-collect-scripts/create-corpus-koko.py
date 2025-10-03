@@ -273,7 +273,7 @@ def choose_subset_type(rec):
 def print_record(rec):
     subjects = rec['subjects']
     title = rec['title']
-    summary = rec['summary'][0] if len(rec['summary']) == 1 else ''
+    summary = rec['summary'][0] if len(rec['summary']) >= 1 else ''
 
     # hotfix for records with a broken summary
     if summary == "Cannot invoke method trim() on null object":
@@ -297,8 +297,26 @@ def print_record(rec):
     if writer is None:
         return
 
-    # ["id","text","title","summary","images","subject_uris"]
-    row = [rec["id"], text, cleanup(title), cleanup(summary), " ".join(rec["images"]), " ".join([str(subj) for subj in subjects])]
+    try:
+        format_id = rec['formats'][-1]['value']
+        format_name = rec['formats'][-1]['translated']
+    except IndexError:
+        format_id = format_name = 'formaatti_tuntematon'
+
+    try:
+        inst_id = rec['institutions'][0]['value'].replace(' ', '_')
+        inst_name = rec['institutions'][0]['translated']
+    except KeyError:
+        inst_id = inst_name = 'organisaatio_tuntematon'
+
+    try:
+        coll_id = "-".join(rec['collections']).replace(' ', '_')
+        coll_name = "; ".join(rec['collections'])
+    except KeyError:
+        coll_id = coll_name = 'kokoelma_tuntematon'
+
+    # ["id","format_id","format_name","inst_id","inst_name","coll_id","coll_name","text","title","summary","images","subject_uris"]
+    row = [rec["id"], format_id, cleanup(format_name), inst_id, cleanup(inst_name), coll_id, cleanup(coll_name), text, cleanup(title), cleanup(summary), " ".join(rec["images"]), " ".join([str(subj) for subj in subjects])]
     writer.writerow(row)
 
 
@@ -355,7 +373,7 @@ csv_writers = {
 
 # write CSV header rows
 for writer in csv_writers.values():
-    writer.writerow(["id","text","title","summary","images","subject_uris"])
+    writer.writerow(["id","format_id","format_name","inst_id","inst_name","coll_id","coll_name","text","title","summary","images","subject_uris"])
 
 print('Processing records')
 with gzip.open(FINNA_BASE + batch + '-with-koko-uris.ndjson.gz', 'rt') as inputf:
