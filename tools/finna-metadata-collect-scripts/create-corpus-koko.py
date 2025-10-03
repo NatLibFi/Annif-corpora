@@ -231,10 +231,13 @@ rec_subset_limits = {
     'test_physobjects':         4000,
     'test_others':              2000,
 }
+LIMIT_PER_SOURCE = 0.05
 
 
 def choose_subset_split(rec, rec_type):
     global rec_subset_counter
+
+    src = rec['id'].split('.')[0]
 
     dt = datetime.strptime(rec['first_indexed'], '%Y-%m-%dT%H:%M:%SZ')
     if dt is None:
@@ -243,17 +246,23 @@ def choose_subset_split(rec, rec_type):
 
     key = "test_" + rec_type
     if rec_subset_counter[key] < rec_subset_limits[key]:
-        rec_subset_counter[key] += 1
-        if rec_subset_counter[key] == rec_subset_limits[key]:
-            print(f"Reached {rec_subset_counter[key]} records in set {key} with timestamp {str(dt)}")
-        return 'test'
-    key = "validation_" + rec_type
+        src_key = f"{key}_{src}"
+        if rec_subset_counter[src_key] < rec_subset_limits[key] * LIMIT_PER_SOURCE:
+            rec_subset_counter[key] += 1
+            rec_subset_counter[src_key] += 1
+            if rec_subset_counter[key] == rec_subset_limits[key]:
+                print(f"Reached {rec_subset_counter[key]} records in set {key} with timestamp {str(dt)}")
+            return 'test'
 
+    key = "validation_" + rec_type
     if rec_subset_counter[key] < rec_subset_limits[key]:
-        rec_subset_counter[key] += 1
-        if rec_subset_counter[key] == rec_subset_limits[key]:
-            print(f"Reached {rec_subset_counter[key]} records in set {key} with timestamp {str(dt)}")
-        return 'validation'
+        src_key = f"{key}_{src}"
+        if rec_subset_counter[src_key] < rec_subset_limits[key] * LIMIT_PER_SOURCE:
+            rec_subset_counter[key] += 1
+            rec_subset_counter[src_key] += 1
+            if rec_subset_counter[key] == rec_subset_limits[key]:
+                print(f"Reached {rec_subset_counter[key]} records in set {key} with timestamp {str(dt)}")
+            return 'validation'
 
     rec_subset_counter["train"] += 1
     return 'train'
