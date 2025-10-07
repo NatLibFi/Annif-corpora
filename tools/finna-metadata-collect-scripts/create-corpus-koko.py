@@ -231,10 +231,13 @@ rec_subset_limits = {
     'test_physobjects':         4000,
     'test_others':              2000,
 }
+LIMIT_PER_SOURCE = 0.05
 
 
 def choose_subset_split(rec, rec_type):
     global rec_subset_counter
+
+    src = rec['id'].split('.')[0]
 
     dt = datetime.strptime(rec['first_indexed'], '%Y-%m-%dT%H:%M:%SZ')
     if dt is None:
@@ -243,17 +246,23 @@ def choose_subset_split(rec, rec_type):
 
     key = "test_" + rec_type
     if rec_subset_counter[key] < rec_subset_limits[key]:
-        rec_subset_counter[key] += 1
-        if rec_subset_counter[key] == rec_subset_limits[key]:
-            print(f"Reached {rec_subset_counter[key]} records in set {key} with timestamp {str(dt)}")
-        return 'test'
-    key = "validation_" + rec_type
+        src_key = f"{key}_{src}"
+        if rec_subset_counter[src_key] < rec_subset_limits[key] * LIMIT_PER_SOURCE:
+            rec_subset_counter[key] += 1
+            rec_subset_counter[src_key] += 1
+            if rec_subset_counter[key] == rec_subset_limits[key]:
+                print(f"Reached {rec_subset_counter[key]} records in set {key} with timestamp {str(dt)}")
+            return 'test'
 
+    key = "validation_" + rec_type
     if rec_subset_counter[key] < rec_subset_limits[key]:
-        rec_subset_counter[key] += 1
-        if rec_subset_counter[key] == rec_subset_limits[key]:
-            print(f"Reached {rec_subset_counter[key]} records in set {key} with timestamp {str(dt)}")
-        return 'validation'
+        src_key = f"{key}_{src}"
+        if rec_subset_counter[src_key] < rec_subset_limits[key] * LIMIT_PER_SOURCE:
+            rec_subset_counter[key] += 1
+            rec_subset_counter[src_key] += 1
+            if rec_subset_counter[key] == rec_subset_limits[key]:
+                print(f"Reached {rec_subset_counter[key]} records in set {key} with timestamp {str(dt)}")
+            return 'validation'
 
     rec_subset_counter["train"] += 1
     return 'train'
@@ -273,7 +282,7 @@ def choose_subset_type(rec):
 def print_record(rec):
     subjects = rec['subjects']
     title = rec['title']
-    summary = rec['summary'][0] if len(rec['summary']) == 1 else ''
+    summary = rec['summary'][0] if len(rec['summary']) >= 1 else ''
 
     # hotfix for records with a broken summary
     if summary == "Cannot invoke method trim() on null object":
@@ -297,8 +306,26 @@ def print_record(rec):
     if writer is None:
         return
 
-    # ["id","text","title","summary","images","subject_uris"]
-    row = [rec["id"], text, cleanup(title), cleanup(summary), " ".join(rec["images"]), " ".join([str(subj) for subj in subjects])]
+    try:
+        format_id = rec['formats'][-1]['value']
+        format_name = rec['formats'][-1]['translated']
+    except IndexError:
+        format_id = format_name = 'formaatti_tuntematon'
+
+    try:
+        inst_id = rec['institutions'][0]['value'].replace(' ', '_')
+        inst_name = rec['institutions'][0]['translated']
+    except KeyError:
+        inst_id = inst_name = 'organisaatio_tuntematon'
+
+    try:
+        coll_id = "-".join(rec['collections']).replace(' ', '_')
+        coll_name = "; ".join(rec['collections'])
+    except KeyError:
+        coll_id = coll_name = 'kokoelma_tuntematon'
+
+    # ["id","format_id","format_name","inst_id","inst_name","coll_id","coll_name","text","title","summary","images","subject_uris"]
+    row = [rec["id"], format_id, cleanup(format_name), inst_id, cleanup(inst_name), coll_id, cleanup(coll_name), text, cleanup(title), cleanup(summary), " ".join(rec["images"]), " ".join([str(subj) for subj in subjects])]
     writer.writerow(row)
 
 
@@ -355,7 +382,7 @@ csv_writers = {
 
 # write CSV header rows
 for writer in csv_writers.values():
-    writer.writerow(["id","text","title","summary","images","subject_uris"])
+    writer.writerow(["id","format_id","format_name","inst_id","inst_name","coll_id","coll_name","text","title","summary","images","subject_uris"])
 
 print('Processing records')
 with gzip.open(FINNA_BASE + batch + '-with-koko-uris.ndjson.gz', 'rt') as inputf:
